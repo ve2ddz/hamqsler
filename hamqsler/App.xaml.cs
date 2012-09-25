@@ -27,6 +27,25 @@ namespace hamqsler
 		{
 			MainWindow win = new MainWindow();
 			win.Show();
+			throw new Exception();
+		}
+		
+		/// <summary>
+		/// Called if an exception is not handled elsewhere.
+		/// Only thing to do is maybe display a message, log the exception, and terminate
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+		{
+			// TODO: Inplement DispatcherUnhandledException using ExceptionLogger
+			// Close each window so that program will terminate.
+			// This call is needed because ShutDownMode is set to LastWindowClose
+			foreach (Window w in this.Windows)
+			{
+				w.Hide();
+			}
+//			this.Shutdown();
 		}
 	}
 }
