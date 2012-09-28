@@ -49,11 +49,9 @@ namespace hamqsler
 		void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
 		{
 			// TODO: Inplement DispatcherUnhandledException using ExceptionLogger
-			// Close each window so that program will terminate.
-			// This call is needed because ShutDownMode is set to LastWindowClose
-			foreach (Window w in this.Windows)
+			if(logger != null)
 			{
-				w.Hide();
+				logger.Log(e.Exception, true, false);
 			}
 			this.Shutdown();
 		}

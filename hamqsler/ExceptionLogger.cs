@@ -234,12 +234,16 @@ namespace hamqsler
             if (e.Data.Count > 0)
             {
                 msg += "Data:\r\n";
-                foreach (object data in e.Data)
+                foreach (DictionaryEntry data in e.Data)
                 {
-                    Log("data= " + data, "logTrace");
-                    DictionaryEntry pair = (DictionaryEntry) data;
-                    msg += "   " + pair.Key.ToString() + ": " + pair.Value.ToString() + "\r\n";
-                    Log("datastring= " + msg, "logTrace");
+                	// while there may be an entry in e.Data, the value may be null
+                	if(data.Value != null)
+                	{
+	                    Log("data= " + data, "logTrace");
+	                    DictionaryEntry pair = (DictionaryEntry) data;
+	                    msg += "   " + pair.Key.ToString() + ": " + pair.Value.ToString() + "\r\n";
+	                    Log("datastring= " + msg, "logTrace");
+                	}
                 }
             }
             msg += "Trace:\r\n";
