@@ -89,11 +89,10 @@ namespace hamqsler
 					ShowHamQslerCreatedLabel));
 //				});
 			}
-/*			// create ExceptionLogger
-			logger = new ExceptionLogger(Environment.GetFolderPath(
-					Environment.SpecialFolder.MyDocuments) + "/hamqsler/Logs/hamqsler.log");
-			LogRuntimeInfo(logger);		// output run start info
-			// load existing UserPreferences file, or create new one
+			// create ExceptionLogger
+			((App)Application.Current).CreateExceptionLogger();
+			((App)Application.Current).LogRuntimeInfo();		// output run start info
+/*			// load existing UserPreferences file, or create new one
 			bool userPrefsError = false;
 			bool showUserPrefsLabel;
 			userPrefs = MainClass.GetUserPreferences(logger, out showUserPrefsLabel, out userPrefsError);
