@@ -61,9 +61,9 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Window_Loaded(object sender, RoutedEventArgs e)
+		void Window_ContentRendered(object sender, EventArgs e)
 		{
-			// TODO: Implement SplashPage.Window_Loaded
+			// TODO: Add program startup functions here
 		}
 	}
 }
