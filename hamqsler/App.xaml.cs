@@ -27,7 +27,6 @@ namespace hamqsler
 		{
 			MainWindow win = new MainWindow();
 			win.Show();
-			throw new Exception();
 		}
 		
 		/// <summary>
@@ -45,7 +44,7 @@ namespace hamqsler
 			{
 				w.Hide();
 			}
-//			this.Shutdown();
+			this.Shutdown();
 		}
 	}
 }

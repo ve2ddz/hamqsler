@@ -38,5 +38,16 @@ namespace hamqsler
 		{
 			InitializeComponent();
 		}
+		
+		/// <summary>
+		/// Shutdown the program when MainWindow closes
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void Window_Closed(object sender, EventArgs e)
+		{
+			// Force program shutdown (required because App shutdown mode set to OnExplicitShutdown)
+			Application.Current.Shutdown();
+		}
 	}
 }
