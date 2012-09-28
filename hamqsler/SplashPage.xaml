@@ -1,7 +1,7 @@
 ﻿<Window x:Class="hamqsler.SplashPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Title="hamqsler" Height="350" Width="500"
+	Title="hamqsler" Height="350" Width="550"
 	Closing="Window_Closing" ContentRendered="Window_ContentRendered">
 	<StackPanel>
 		<Label>
@@ -29,5 +29,12 @@
 							FontFamily="Times New Roman" Foreground="DarkBlue">HamQSLer</TextBlock>
 			</Canvas>
 		</Label>
+		<Separator></Separator>
+		<Label Name="hamqslerCreatedLabel" Visibility="Collapsed"
+						>Created hamqsler directories in and/or copied Samples " +
+							"files to your 'Documents' directory.</Label>
+		<Label Name="hamqslerCreatedProblemLabel" Visibility="Collapsed"
+						>Problem creating hamqsler directories or copying " +
+							"files to your 'Documents' directory</Label>
 	</StackPanel>
 </Window>

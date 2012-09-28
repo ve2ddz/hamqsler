@@ -20,12 +20,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace hamqsler
 {
@@ -63,7 +65,109 @@ namespace hamqsler
 		/// <param name="e"></param>
 		void Window_ContentRendered(object sender, EventArgs e)
 		{
-			// TODO: Add program startup functions here
+			Thread thr = new Thread(new ThreadStart(InitializeApplication));
+			thr.Start();
+
 		}
+		
+		public delegate void RunDelegate();
+
+		
+		private void InitializeApplication()
+		{
+			// check and create hamqsler directories and copy sample files
+			bool directoriesError = false;
+			bool showHamqslerLabel = ((App)Application.Current).BuildHamQslerDirectories(ref directoriesError);
+			if(directoriesError)		// error occurred creating directories
+			{
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new
+				                            RunDelegate(ShowHamQslerCreatedProblemLabel));
+			}
+			else if(showHamqslerLabel)		// created directories/copied files
+			{
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+					ShowHamQslerCreatedLabel));
+//				});
+			}
+/*			// create ExceptionLogger
+			logger = new ExceptionLogger(Environment.GetFolderPath(
+					Environment.SpecialFolder.MyDocuments) + "/hamqsler/Logs/hamqsler.log");
+			LogRuntimeInfo(logger);		// output run start info
+			// load existing UserPreferences file, or create new one
+			bool userPrefsError = false;
+			bool showUserPrefsLabel;
+			userPrefs = MainClass.GetUserPreferences(logger, out showUserPrefsLabel, out userPrefsError);
+			if(userPrefsError)			// error reading or writing UserPreferences file
+			{
+				splash.ShowUserPrefsErrorLabel();
+			}
+			else if(showUserPrefsLabel)		// UserPreferences file has been created
+			{
+				splash.ShowUserPrefsCreatedLabel();
+			}
+			// check for new program version and data file updates
+			bool webError;
+			bool newHamQslerVersion = false;
+			splash.ShowCheckingForUpdatesLabel();
+			// updates will contain program and file names with most recent versions available for download
+			Dictionary<string, string>updates = MainClass.GetProgramVersions(logger, out webError);
+			if(webError)		// error retrieving file containing version info
+			{
+				splash.ShowWebErrorLabel();
+			}
+			else
+			{
+				// have version info, so check if any updates needed
+				foreach(string key in updates.Keys)
+				{
+					switch(key)
+					{
+					case "HamQsler":
+						newHamQslerVersion = CheckHamQslerVersion(updates[key]);
+						if(newHamQslerVersion)
+						{
+							splash.ShowNewHamQslerVersionLabel();
+						}
+						break;
+					}
+				}
+			}
+			splash.HideCheckingForUpdatesLabel();
+			
+			if(!directoriesError && !userPrefsError && !showHamqslerLabel &&
+					!showUserPrefsLabel && !webError && !newHamQslerVersion)		// done initializing so start up MainWindow
+			{
+				Application.Invoke(delegate {
+					CreateAndShowMainWindow();
+				});
+			}
+			if(directoriesError || newHamQslerVersion)		// terminate class error
+			{
+				splash.ShowTerminateButton();
+			}
+			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
+						newHamQslerVersion)
+			{
+				splash.ShowContinueButton();
+			}*/
+			
+		}
+
+		/// <summary>
+		/// Shows the hamQslerCreatedLabel.
+		/// </summary>
+		public void ShowHamQslerCreatedLabel()
+		{
+			hamqslerCreatedLabel.Visibility = Visibility.Visible;
+		}
+		
+		/// <summary>
+		/// Shows the hamQslerCreatedProblemLabel.
+		/// </summary>
+		public void ShowHamQslerCreatedProblemLabel()
+		{
+			hamqslerCreatedProblemLabel.Visibility = Visibility.Visible;
+		}
+		
 	}
 }
