@@ -99,6 +99,8 @@ namespace hamqsler
 							Environment.CurrentDirectory + "/Samples");
 				if (!samplesInfo.Exists)
 				{
+					terminate = true;
+					showHamqslerCreatedLabel = false;
 					return showHamqslerCreatedLabel;
 				}
 				FileInfo[] files = samplesInfo.GetFiles();

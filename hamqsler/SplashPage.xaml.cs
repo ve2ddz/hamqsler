@@ -131,12 +131,14 @@ namespace hamqsler
 			} */
 			if(directoriesError || newHamQslerVersion)		// terminate class error
 			{
-				ShowTerminateButton();
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+					ShowTerminateButton));
 			}
 			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
-						newHamQslerVersion)
+						directoriesError || newHamQslerVersion)
 			{
-				ShowContinueButton();
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+					ShowContinueButton));
 			}
 			
 		}

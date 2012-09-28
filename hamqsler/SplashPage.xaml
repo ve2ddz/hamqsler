@@ -37,9 +37,11 @@
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 				<Button Grid.Column="1" Name="okButton" Margin="3"
-						Padding="3" Click="OkButton_Click">Continue</Button>
+						Padding="3" Click="OkButton_Click"
+						 Visibility="Collapsed" IsDefault="true">Continue</Button>
 				<Button Grid.Column="2" Name="termButton" Margin="3,3,10,3"
-						Padding="3" Click="TermButton_Click">Terminate</Button>
+						Padding="3" Click="TermButton_Click"
+				         Visibility="Collapsed" IsCancel="true">Terminate</Button>
 			</Grid>
 		</StackPanel>
 		<StackPanel>
