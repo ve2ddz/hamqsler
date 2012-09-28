@@ -46,17 +46,6 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Called when SplashPage is closing to display MainWindow
-		/// </summary>
-		/// <param name="sender">not used</param>
-		/// <param name="e">not used</param>
-		void Window_Closing(object sender, EventArgs e)
-		{
-			App app = (App)Application.Current;
-			app.ShowMainWindow();
-		}
-		
-		/// <summary>
 		/// Perform all startup functions such as:
 		/// Load or create UserPreferences, and
 		/// check if new version of program is available.
@@ -92,10 +81,10 @@ namespace hamqsler
 			// create ExceptionLogger
 			((App)Application.Current).CreateExceptionLogger();
 			((App)Application.Current).LogRuntimeInfo();		// output run start info
-/*			// load existing UserPreferences file, or create new one
+			// load existing UserPreferences file, or create new one
 			bool userPrefsError = false;
-			bool showUserPrefsLabel;
-			userPrefs = MainClass.GetUserPreferences(logger, out showUserPrefsLabel, out userPrefsError);
+			bool showUserPrefsLabel = false;
+/*			userPrefs = MainClass.GetUserPreferences(logger, out showUserPrefsLabel, out userPrefsError);
 			if(userPrefsError)			// error reading or writing UserPreferences file
 			{
 				splash.ShowUserPrefsErrorLabel();
@@ -103,11 +92,11 @@ namespace hamqsler
 			else if(showUserPrefsLabel)		// UserPreferences file has been created
 			{
 				splash.ShowUserPrefsCreatedLabel();
-			}
+			}*/
 			// check for new program version and data file updates
-			bool webError;
+			bool webError = false;
 			bool newHamQslerVersion = false;
-			splash.ShowCheckingForUpdatesLabel();
+/*			splash.ShowCheckingForUpdatesLabel();
 			// updates will contain program and file names with most recent versions available for download
 			Dictionary<string, string>updates = MainClass.GetProgramVersions(logger, out webError);
 			if(webError)		// error retrieving file containing version info
@@ -139,16 +128,16 @@ namespace hamqsler
 				Application.Invoke(delegate {
 					CreateAndShowMainWindow();
 				});
-			}
+			} */
 			if(directoriesError || newHamQslerVersion)		// terminate class error
 			{
-				splash.ShowTerminateButton();
+				ShowTerminateButton();
 			}
 			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
 						newHamQslerVersion)
 			{
-				splash.ShowContinueButton();
-			}*/
+				ShowContinueButton();
+			}
 			
 		}
 
@@ -168,5 +157,45 @@ namespace hamqsler
 			hamqslerCreatedProblemLabel.Visibility = Visibility.Visible;
 		}
 		
+		/// <summary>
+		/// Shows the OkButton.
+		/// </summary>
+		public void ShowContinueButton()
+		{
+			okButton.Visibility = Visibility.Visible;
+		}
+		
+		/// <summary>
+		/// Shows the termButton.
+		/// </summary>
+		public void ShowTerminateButton()
+		{
+			termButton.Visibility = Visibility.Visible;
+		}
+		
+		/// <summary>
+		/// Handles okButton clicks - show the main window and close this one
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">RoutedEventArgs object for this event</param>
+		void OkButton_Click(object sender, RoutedEventArgs e)
+		{
+			App app = (App)Application.Current;
+			app.ShowMainWindow();
+			this.Close();
+			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// Handles termButton clicks - close this window so that the application terminates
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void TermButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+			Application.Current.Shutdown();
+			e.Handled = true;
+		}
 	}
 }
