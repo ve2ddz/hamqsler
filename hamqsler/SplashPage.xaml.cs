@@ -81,7 +81,7 @@ namespace hamqsler
 			if(directoriesError)		// error occurred creating directories
 			{
 				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new
-				                            RunDelegate(ShowHamQslerCreatedProblemLabel));
+				                       RunDelegate(ShowHamQslerCreatedProblemLabel));
 			}
 			else if(showHamqslerLabel)		// created directories/copied files
 			{
