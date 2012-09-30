@@ -61,12 +61,20 @@ namespace hamqsler
 		
 		public delegate void RunDelegate();
 
-		
+		/// <summary>
+		/// Performs actions such as:
+		/// 1. Creating the hamqsler folder and subfolders in My Documents, and
+		///    copies sample files to it.
+		/// 2. Creates the ExceptionLogger object
+		/// 3. Loads or creates the UserPreferences object
+		/// 4. Checks if new program components are available for download
+		/// Note: this method must be run under the main thread
+		/// </summary>
 		private void InitializeApplication()
 		{
 			// check and create hamqsler directories and copy sample files
 			bool directoriesError = false;
-			bool showHamqslerLabel = ((App)Application.Current).BuildHamQslerDirectories(ref directoriesError);
+			bool showHamqslerLabel = ((App)Application.Current).BuildHamQslerDirectories(out directoriesError);
 			if(directoriesError)		// error occurred creating directories
 			{
 				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new
@@ -84,15 +92,18 @@ namespace hamqsler
 			// load existing UserPreferences file, or create new one
 			bool userPrefsError = false;
 			bool showUserPrefsLabel = false;
-/*			userPrefs = MainClass.GetUserPreferences(logger, out showUserPrefsLabel, out userPrefsError);
+			((App)Application.Current).GetUserPreferences(
+					out showUserPrefsLabel, out userPrefsError);
 			if(userPrefsError)			// error reading or writing UserPreferences file
 			{
-				splash.ShowUserPrefsErrorLabel();
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+					ShowUserPrefsErrorLabel));
 			}
 			else if(showUserPrefsLabel)		// UserPreferences file has been created
 			{
-				splash.ShowUserPrefsCreatedLabel();
-			}*/
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+					ShowUserPrefsCreatedLabel));
+			}
 			// check for new program version and data file updates
 			bool webError = false;
 			bool newHamQslerVersion = false;
@@ -174,6 +185,22 @@ namespace hamqsler
 		{
 			termButton.Visibility = Visibility.Visible;
 		}
+		
+		/// <summary>
+		/// Shows the userPrefsErrorLabel.
+		/// </summary>
+		public void ShowUserPrefsErrorLabel()
+		{
+			userPrefsErrorLabel.Visibility = Visibility.Visible;
+		}
+		
+		/// <summary>
+		/// Shows the userPrefsCreatedLabel.
+		/// </summary>
+		public void ShowUserPrefsCreatedLabel()
+		{
+			userPrefsCreatedLabel.Visibility = Visibility.Visible;
+	}
 		
 		/// <summary>
 		/// Handles okButton clicks - show the main window and close this one

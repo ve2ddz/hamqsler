@@ -4,6 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Security;
 using System.Threading;
 using System.Windows.Threading;
 using System.Xml;
@@ -17,12 +18,24 @@ namespace hamqsler
 	public partial class App : Application
 	{
 		private SplashPage splash;
-		private ExceptionLogger logger;
-		public ExceptionLogger Logger
+		private static ExceptionLogger logger;
+		public static ExceptionLogger Logger
 		{
 			get {return logger;}
 		}
 		
+		private UserPreferences userPrefs;
+		public UserPreferences UserPreferences
+		{
+			get {return userPrefs;}
+			set {userPrefs = value;}
+		}
+		
+		/// <summary>
+		/// Application startup code
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		void Application_Startup(object sender, StartupEventArgs e)
 		{
 			// create and show SplashPage
@@ -44,8 +57,8 @@ namespace hamqsler
 		/// Called if an exception is not handled elsewhere.
 		/// Only thing to do is maybe display a message, log the exception, and terminate
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">not used</param>
+		/// <param name="e">DispatcherUnhandledExceptionEventArgs object</param>
 		void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
 		{
 			// TODO: Inplement DispatcherUnhandledException using ExceptionLogger
@@ -60,9 +73,13 @@ namespace hamqsler
 		/// Helper method that creates the hamqsler directory and subdirectories in the user's 
 		/// 'Documents' directory (in My Documents directory in Windows, in home directory in Unix systems)
 		/// </summary>
-		public bool BuildHamQslerDirectories(ref bool terminate)
+		/// <param name="terminate">boolean indicating if an error occurred creating the directories
+		/// or their contents.</param>
+		/// <returns>boolean indicating if directories have been created</returns>
+		public bool BuildHamQslerDirectories(out bool terminate)
 		{
 			bool showHamqslerCreatedLabel = false;
+			terminate = false;
 			try
 			{
 				// check if hamqsler directory exists and create it if it doesn't
@@ -175,5 +192,20 @@ namespace hamqsler
 			                ));
 			
 		}
+
+		/// <summary>
+		/// Create the user preferences object. Actual work is done in UserPreferences class
+		/// </summary>
+		/// <param name="userPrefsIntialized">boolean indicating whether the prefs obejct was
+		/// initialized.</param>
+		/// <param name="userPrefsError">boolean indicating if an error occurred while loading
+		/// the prefs object</param>
+		internal void GetUserPreferences(
+				out bool userPrefsIntialized, out bool userPrefsError)
+		{
+			userPrefs = UserPreferences.CreateUserPreferences(logger, false, out userPrefsIntialized,
+			                                                  out userPrefsError);
+		}
+		
 	}
 }

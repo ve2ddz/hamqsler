@@ -55,6 +55,11 @@
 			<Label Name="hamqslerCreatedProblemLabel" Visibility="Collapsed"
 							>Problem creating hamqsler directories or copying 
 							files to your 'Documents' directory</Label>
+			<Label Name="userPrefsErrorLabel" Visibility="Collapsed"
+							>Error occurred while attempting to access user
+							preferences file. Preferences have been created.</Label>
+			<Label Name="userPrefsCreatedLabel" Visibility="Collapsed"
+							>User preferences file did not exist. It has been created.</Label>
 		</StackPanel>
 	</DockPanel>
 </Window>
