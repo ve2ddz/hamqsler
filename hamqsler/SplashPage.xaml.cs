@@ -107,33 +107,28 @@ namespace hamqsler
 			// check for new program version and data file updates
 			bool webError = false;
 			bool newHamQslerVersion = false;
-/*			splash.ShowCheckingForUpdatesLabel();
+			this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+				ShowCheckingForUpdatesLabel));
 			// updates will contain program and file names with most recent versions available for download
-			Dictionary<string, string>updates = MainClass.GetProgramVersions(logger, out webError);
+			((App)Application.Current).GetProgramVersions(out webError,
+				                  						  out newHamQslerVersion);
 			if(webError)		// error retrieving file containing version info
 			{
-				splash.ShowWebErrorLabel();
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+					ShowWebErrorLabel));
 			}
 			else
-			{
-				// have version info, so check if any updates needed
-				foreach(string key in updates.Keys)
+			{			
+				if(newHamQslerVersion)
 				{
-					switch(key)
-					{
-					case "HamQsler":
-						newHamQslerVersion = CheckHamQslerVersion(updates[key]);
-						if(newHamQslerVersion)
-						{
-							splash.ShowNewHamQslerVersionLabel();
-						}
-						break;
-					}
+					this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+						ShowNewHamQslerVersionLabel));
 				}
 			}
-			splash.HideCheckingForUpdatesLabel();
+			this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+				HideCheckingForUpdatesLabel));
 			
-			if(!directoriesError && !userPrefsError && !showHamqslerLabel &&
+/*			if(!directoriesError && !userPrefsError && !showHamqslerLabel &&
 					!showUserPrefsLabel && !webError && !newHamQslerVersion)		// done initializing so start up MainWindow
 			{
 				Application.Invoke(delegate {
@@ -201,6 +196,38 @@ namespace hamqsler
 		{
 			userPrefsCreatedLabel.Visibility = Visibility.Visible;
 	}
+		
+		/// <summary>
+		/// Shows the webErrorLabel.
+		/// </summary>
+		public void ShowWebErrorLabel()
+		{
+			webErrorLabel.Visibility = Visibility.Visible;
+		}
+		
+		/// <summary>
+		/// Shows the newHamQslerVersionLabel.
+		/// </summary>
+		public void ShowNewHamQslerVersionLabel()
+		{
+			newHamQslerVersionLabel.Visibility = Visibility.Visible;
+		}
+		
+		/// <summary>
+		/// Shows the checkingForUpdatesLabel.
+		/// </summary>
+		public void ShowCheckingForUpdatesLabel()
+		{
+			checkingForUpdatesLabel.Visibility = Visibility.Visible;
+		}
+		
+		/// <summary>
+		/// Hides the checkingForUpdatesLabel.
+		/// </summary>
+		public void HideCheckingForUpdatesLabel()
+		{
+			checkingForUpdatesLabel.Visibility = Visibility.Collapsed;
+		}
 		
 		/// <summary>
 		/// Handles okButton clicks - show the main window and close this one

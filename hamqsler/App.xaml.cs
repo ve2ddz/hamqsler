@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Windows;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Security;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows;
 using System.Windows.Threading;
 using System.Xml;
 using System.Configuration;
@@ -17,6 +21,7 @@ namespace hamqsler
 	/// </summary>
 	public partial class App : Application
 	{
+		private const int WEBREQUESTTIMEOUT = 10000;		// 10 seconds
 		private SplashPage splash;
 		private static ExceptionLogger logger;
 		public static ExceptionLogger Logger
@@ -59,7 +64,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">DispatcherUnhandledExceptionEventArgs object</param>
-		void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+		private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
 		{
 			// TODO: Inplement DispatcherUnhandledException using ExceptionLogger
 			if(logger != null)
@@ -207,5 +212,154 @@ namespace hamqsler
 			                                                  out userPrefsError);
 		}
 		
+		/// <summary>
+		/// Reads and checks version info from hamqslerVersion.txt on website versus versions currently
+		/// being used.
+		/// </summary>
+		/// <param name='webError'>
+		/// Boolean indicating if an error was encountered while attempting to retrieve the version info
+		/// </param>
+		/// <param name="newHamQSLerVersion">
+		/// Boolean indicating if a new version of HamQSLer is available for download</param>
+		internal void GetProgramVersions(out bool webError, out bool newHamQslerVersion)
+        {
+			webError = false;
+			newHamQslerVersion = false;
+			Dictionary<string, string> versions = new Dictionary<string, string>();
+            // create request for website
+            HttpWebRequest httpRequest = null;
+            HttpWebResponse response = null;
+            StreamReader resStream = null;
+			// get this program's version info
+	        Version ver = Assembly.GetExecutingAssembly().GetName().Version;
+            string location = string.Format("http://www.va3hj.ca/hamqslerVersion.txt?ver={0}.{1}.{2}",
+                    ver.Major, ver.Minor, ver.Build);
+            try
+            {
+            	// build the http request
+                httpRequest = (HttpWebRequest)WebRequest.Create(location);
+                httpRequest.Timeout = WEBREQUESTTIMEOUT;
+                // TODO: Uncomment this code when UserPreferences HttpProxy properties are defined
+/*				string proxy = userPrefs.HttpProxyServer;
+				int proxyPort = userPrefs.HttpProxyServerPortNumber;
+                if (proxy != string.Empty)
+                {
+                    httpRequest.Proxy = new WebProxy(proxy, proxyPort);
+                }*/
+				// get OS information for including in UserAgentt
+				string os = "Unknown";
+                string osVer = Environment.OSVersion.VersionString;
+                Regex osRegex = new Regex("(Windows NT [\\d]\\.[\\d])");
+                Match match = osRegex.Match(osVer);
+				os = match.Value;
+                httpRequest.UserAgent = string.Format("HamQsler ({0}; [{1}])",
+                            os, CultureInfo.CurrentCulture.Name);
+
+                // *** Retrieve request info headers
+                response = (HttpWebResponse)httpRequest.GetResponse();
+
+                Encoding enc = Encoding.UTF8;
+                // get response from website
+                resStream = new StreamReader(response.GetResponseStream(), enc);
+				Regex updates = new Regex("([a-zA-Z]+)\\s([0-9]{6})");
+				// build the Dictionary of names and versions from the contents of hamqslerVersion.txt
+				// It is expected that each line will contain a file or program name and its version.
+				// Version is exactly 6 digits containing 2 digits for Major build number,
+				// 2 digits for Minor build number, and 2 digits for Build number
+				while(!resStream.EndOfStream)
+				{
+					string resp = resStream.ReadLine();
+					MatchCollection matches = updates.Matches(resp);
+					versions.Add(matches[0].Groups[1].Value, matches[0].Groups[2].Value);
+				}
+			}
+            catch (SecurityException e)
+            {
+                logger.Log(e);
+				webError = true;
+            }
+            catch (WebException e)
+            {
+                DecodeWebException(e);
+				webError = true;
+            }
+            catch (Exception e)
+            {
+                logger.Log("Error retrieving version info: " + e.Message);
+				webError = true;
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                }
+                if (resStream != null)
+                {
+                    resStream.Close();
+                }
+            }
+            if(!webError)
+            {
+				// have version info, so check if any updates available
+				foreach(string key in versions.Keys)
+				{
+					switch(key)
+					{
+					case "HamQsler":
+							newHamQslerVersion = CheckHamQslerVersion(versions[key]);
+						break;
+					}
+				}
+            }
+
+        }
+		
+    	/// <summary>
+    	/// Decodes and logs web exception info
+    	/// </summary>
+    	/// <param name="e">WebException being decoded</param>
+        private void DecodeWebException(WebException e)
+        {
+        	// get status and response
+            WebExceptionStatus status = e.Status;
+            // process the status
+            switch(status)
+            {
+                case WebExceptionStatus.Timeout:
+                    break;
+                case WebExceptionStatus.ConnectFailure:
+                    logger.Log("Website access error: ConnectFailure.\r\n"
+                        + "Probable cause is one of:\r\n"
+                        + "\tWrong proxy server name or IP address specified;\r\n"
+                        + "\tWrong proxy server port number;\r\n"
+                        + "\tProxy server is down;\r\n"
+                        + "\tYour Internet connection is down; or,\r\n"
+                        + "\twww.va3hj.ca is down.");
+                    break;
+                default:
+                    logger.Log("Website access error: " + status.ToString()
+                        + "\r\nError: " + e.Message);
+                    break;
+            }
+        }
+		
+		/// <summary>
+		/// Checks program version number
+		/// </summary>
+		/// <returns>
+		/// Boolean indicating whether a new version of the program is available or not
+		/// </returns>
+		private bool CheckHamQslerVersion(string version)
+		{
+			// get this program's version info
+	        Version ver = Assembly.GetExecutingAssembly().GetName().Version;
+			
+			string vers = string.Format("{0:d2}{1:d2}{2:d2}", ver.Major, ver.Minor, ver.Build);
+			if(vers.CompareTo(version) < 0)
+				return true;
+			else
+				return false;
+		}
 	}
 }

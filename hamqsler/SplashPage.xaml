@@ -60,6 +60,13 @@
 							preferences file. Preferences have been created.</Label>
 			<Label Name="userPrefsCreatedLabel" Visibility="Collapsed"
 							>User preferences file did not exist. It has been created.</Label>
+			<Label Name="webErrorLabel" Visibility="Collapsed"
+						    >Error occurred attempting to retrieve update information. See
+							 Log file for details of error.</Label>
+			<Label Name="newHamQslerVersionLabel" Visibility="Collapsed"
+							>New version of HamQSLer is available.</Label>
+			<Label Name="checkingForUpdatesLabel" Visibility="Collapsed"
+							>Checking for program update and data file revisions.</Label>
 		</StackPanel>
 	</DockPanel>
 </Window>
