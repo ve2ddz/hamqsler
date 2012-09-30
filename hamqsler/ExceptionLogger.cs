@@ -34,6 +34,11 @@ namespace hamqsler
 	/// </summary>
     public class ExceptionLogger
     {
+    	public const bool SHOWTRACE = true;
+    	public const bool DONTSHOWTRACE = false;
+    	public const bool SHOWMESSAGE = true;
+    	public const bool DONTSHOWMESSAGE = false;
+    	
         private Dictionary<string, bool> debugTypes = new Dictionary<string, bool>();
         private bool badLog = true;
         private FileInfo logInfo = null;
@@ -204,7 +209,8 @@ namespace hamqsler
         /// <param name="e">Exception to log</param>
         /// <param name="showTrace">Boolean indicating whether to log the exception's trace info</param>
         /// <param name="showMessage">Boolean indicating whether to display a message about the exception</param>
-        public void Log(Exception e, bool showTrace=true, bool showMessage=true)
+        public void Log(Exception e, bool showTrace=ExceptionLogger.SHOWTRACE, 
+                        bool showMessage=ExceptionLogger.SHOWMESSAGE)
         {
             Log("Inside Log(Exception e", "logTrace");
             string msg = GetExceptionInfo(e, showTrace);
@@ -226,7 +232,7 @@ namespace hamqsler
         /// <param name="e">Exception to retrieve info from</param>
         /// <param name="showTrace">Boolean indicating whether to retrieve the trace info</param>
         /// <returns></returns>
-        private string GetExceptionInfo(Exception e, bool showTrace)
+        private string GetExceptionInfo(Exception e, bool showTrace=SHOWTRACE)
         {
             Log("Inside GetExceptionInfo", "logTrace");
             string msg = e.GetType() + "\r\n";

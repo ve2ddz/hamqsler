@@ -64,7 +64,7 @@ namespace hamqsler
 			// TODO: Inplement DispatcherUnhandledException using ExceptionLogger
 			if(logger != null)
 			{
-				logger.Log(e.Exception, true, false);
+				logger.Log(e.Exception, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
 			}
 			this.Shutdown();
 		}
