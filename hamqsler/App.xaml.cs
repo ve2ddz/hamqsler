@@ -36,6 +36,13 @@ namespace hamqsler
 			set {userPrefs = value;}
 		}
 		
+		private static readonly string hamqslerFolder = Environment.GetFolderPath(
+        		Environment.SpecialFolder.MyDocuments) + "/hamqsler/";
+		public string HamqslerFolder
+		{
+			get {return hamqslerFolder;}
+		}
+		
 		/// <summary>
 		/// Application startup code
 		/// </summary>

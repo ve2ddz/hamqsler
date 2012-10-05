@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security;
 using System.Windows;
@@ -56,15 +57,776 @@ namespace hamqsler
             set { SetValue(NameQthProperty, value); }
         }
         
-        
+		// check for new versions on startup?
+		private static readonly DependencyProperty CheckForNewVersionsProperty = 
+			DependencyProperty.Register("CheckForNewVersions", typeof(bool),
+			                            typeof(UserPreferences), new PropertyMetadata(true));
+		public bool CheckForNewVersions
+		{
+			get {return (bool)GetValue(CheckForNewVersionsProperty);}
+			set {SetValue(CheckForNewVersionsProperty, value);}
+		}
+		// HTTP proxy server
+		private static readonly DependencyProperty HttpProxyServerProperty =
+			DependencyProperty.Register("HttpProxyServer", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata(string.Empty));
+		public string HttpProxyServer
+		{
+			get {return (string)GetValue(HttpProxyServerProperty);}
+			set {SetValue(HttpProxyServerProperty, value);}
+		}
+		// HTTP proxy server port number
+		private static readonly DependencyProperty HttpProxyServerPortNumberProperty =
+			DependencyProperty.Register("HttpProxyServerPortNumber", typeof(int),
+			                            typeof(UserPreferences), new PropertyMetadata(80));
+		public int HttpProxyServerPortNumber
+		{
+			get {return (int)GetValue(HttpProxyServerPortNumberProperty);}
+			set {SetValue(HttpProxyServerPortNumberProperty, value);}
+		}
+		// default folder for ADIF files
+		// used in FileChooser dialogs when opening or saving ADIF files
+		private static readonly DependencyProperty DefaultAdifFilesFolderProperty = 
+			DependencyProperty.Register("DefaultAdifFilesFolder", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata(
+			                            	((App)Application.Current).HamqslerFolder));
+		public string DefaultAdifFilesFolder
+		{
+			get {return (string)GetValue(DefaultAdifFilesFolderProperty);}
+			set {SetValue(DefaultAdifFilesFolderProperty, value);}
+		}
+		
+		// reload ADIF files on startup?
+		private static readonly DependencyProperty AdifReloadOnStartupProperty =
+			DependencyProperty.Register("AdifReloadOnStartup", typeof(bool),
+			                            typeof(UserPreferences), new PropertyMetadata(false));
+		public bool AdifReloadOnStartup
+		{
+			get {return (bool)GetValue(AdifReloadOnStartupProperty);}
+			set {SetValue(AdifReloadOnStartupProperty, value);}
+		}
+		
+		// ADIF files to reload
+		private static readonly DependencyProperty AdifFilesProperty = 
+			DependencyProperty.Register("AdifFiles", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata(new List<string>()));
+		public List<string> AdifFiles
+		{
+			get {return (List<string>)GetValue(AdifFilesProperty);}
+		}
+		
+		private static readonly DependencyProperty DefaultImagesFolderProperty = 
+			DependencyProperty.Register("DefaultImagesFolder", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata(
+			                            	((App)Application.Current).HamqslerFolder));
+		public string DefaultImagesFolder
+		{
+			get {return (string)GetValue(DefaultImagesFolderProperty);}
+			set {SetValue(DefaultImagesFolderProperty, value);}
+		}
+		
+		// reload Card files on startup?
+		private static readonly DependencyProperty CardsReloadOnStartupProperty =
+			DependencyProperty.Register("CardsReloadOnStartup", typeof(bool),
+			                            typeof(UserPreferences), new PropertyMetadata(false));
+		public bool CardsReloadOnStartup
+		{
+			get {return (bool)GetValue(CardsReloadOnStartupProperty);}
+			set {SetValue(CardsReloadOnStartupProperty, value);}
+		}
+		
+		// card files to reload
+		private static readonly DependencyProperty CardFilesProperty = 
+			DependencyProperty.Register("CardFiles", typeof(List<string>),
+			                            typeof(UserPreferences), new PropertyMetadata(new List<string>()));
+		public List<string> CardFiles
+		{
+			get {return (List<string>)GetValue(CardFilesProperty);}
+		}
+		
+		// default folder for Card files
+		private static readonly DependencyProperty DefaultCardFilesFolderProperty =
+			DependencyProperty.Register("DefaultCardFilesFolder", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata(
+			                            	((App)Application.Current).HamqslerFolder));
+		public string DefaultCardFilesFolder
+		{
+			get {return (string)GetValue(DefaultCardFilesFolderProperty);}
+			set {SetValue(DefaultCardFilesFolderProperty, value);}
+		}
+		
+		// Default font face to display text items in
+		private static readonly DependencyProperty DefaultTextItemsFontFaceProperty =
+			DependencyProperty.Register("DefaultTextItemsFontFace", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Arial"));
+		public string DefaultTextItemsFontFace
+		{
+			get {return (string)GetValue(DefaultTextItemsFontFaceProperty);}
+			set {SetValue(DefaultTextItemsFontFaceProperty, value);}
+		}
+		
+/*		// Default text items
+		private TextParts callsign;
+		public TextParts Callsign
+		{
+			get {return callsign;}
+			set {callsign = value;}
+		}
+		
+		private TextParts nameQth;
+		public TextParts NameQth
+		{
+			get {return nameQth;}
+			set {nameQth = value;}
+		}
+		
+		private TextParts salutation;
+		public TextParts Salutation
+		{
+			get {return salutation;}
+			set {salutation = value;}
+		}*/
+
+		// Default font face to display QSOs box text in
+		private static readonly DependencyProperty DefaultQsosBoxFontFaceProperty =
+			DependencyProperty.Register("DefaultQsosBoxFontFace", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Arial"));
+		public string DefaultQsosBoxFontFace
+		{
+			get {return (string)GetValue(DefaultQsosBoxFontFaceProperty);}
+			set {SetValue(DefaultQsosBoxFontFaceProperty, value);}
+		}
+		
+		// Default confirming text
+/*		private TextParts confirmingText;
+		public TextParts ConfirmingText
+		{
+			get {return confirmingText;}
+			set {confirmingText = value;}
+		}*/
+		
+		// Default confirming via text
+		private static readonly DependencyProperty ViaTextProperty =
+			DependencyProperty.Register("ViaText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("via"));
+		public string ViaText
+		{
+			get {return (string)GetValue(ViaTextProperty);}
+			set {SetValue(ViaTextProperty, value);}
+		}
+		
+		// Date Text Headers
+		private static readonly DependencyProperty YYYYMMDDTextProperty =
+			DependencyProperty.Register("YYYYMMDDText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("YYYY-MM-DD"));
+		public string YYYYMMDDText
+		{
+			get {return (string)GetValue(YYYYMMDDTextProperty);}
+			set {SetValue(YYYYMMDDTextProperty, value);}
+		}
+		
+		private static readonly DependencyProperty DDMMMYYTextProperty = 
+			DependencyProperty.Register("DDMMMYYText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("DD-MMM-YY"));
+		public string DDMMMYYText
+		{
+			get {return (string)GetValue(DDMMMYYTextProperty);}
+			set {SetValue(DDMMMYYTextProperty, value);}
+		}
+		
+		private static readonly DependencyProperty DDMMYYTextProperty =
+			DependencyProperty.Register("DDMMYYText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("DD-MM-YY"));
+		public string DDMMYYText
+		{
+			get {return (string)GetValue(DDMMYYTextProperty);}
+			set {SetValue(DDMMYYTextProperty, value);}
+		}
+		
+		// Default date format
+		private static readonly DependencyProperty DefaultDateFormatProperty =
+			DependencyProperty.Register("DefaultDateFormat", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("YYYY-MM-DD"));
+		public string DefaultDateFormat
+		{
+			get {return (string)GetValue(DefaultDateFormatProperty);}
+			set {SetValue(DefaultDateFormatProperty, value);}
+		}
+		
+		// Time header text
+		private static readonly DependencyProperty TimeTextProperty = 
+			DependencyProperty.Register("TimeText", typeof(string),
+			                             typeof(UserPreferences), new PropertyMetadata("Time"));
+		public string TimeText
+		{
+			get {return (string)GetValue(TimeTextProperty);}
+			set {SetValue(TimeTextProperty, value);}
+		}
+		
+		// Mode header text
+		private static readonly DependencyProperty ModeTextProperty = 
+			DependencyProperty.Register("ModeText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Mode"));
+		public string ModeText
+		{
+			get {return (string)GetValue(ModeTextProperty);}
+			set {SetValue(ModeTextProperty, value);}
+		}
+		
+		// Band header text
+		private static readonly DependencyProperty BandTextProperty = 
+			DependencyProperty.Register("BandText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Band"));
+		public string BandText
+		{
+			get {return (string)GetValue(BandTextProperty);}
+			set {SetValue(BandTextProperty, value);}
+		}
+		
+		// Frequency header text
+		private static readonly DependencyProperty FrequencyTextProperty = 
+			DependencyProperty.Register("FrequencyText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("MHz"));
+		public string FrequencyText
+		{
+			get {return (string)GetValue(FrequencyTextProperty);}
+			set {SetValue(FrequencyTextProperty, value);}
+		}
+		
+		// RST header text
+		private static readonly DependencyProperty RSTTextProperty = 
+			DependencyProperty.Register("RSTText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("RST"));
+		public string RSTText
+		{
+			get {return (string)GetValue(RSTTextProperty);}
+			set {SetValue(RSTTextProperty, value);}
+		}
+		
+		// QSL header text
+		private static readonly DependencyProperty QSLTextProperty = 
+			DependencyProperty.Register("QSLText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("QSL"));
+		public string QSLText
+		{
+			get {return (string)GetValue(QSLTextProperty);}
+			set {SetValue(QSLTextProperty, value);}
+		}
+		
+		// QSL Please text
+		private static readonly DependencyProperty PseTextProperty = 
+			DependencyProperty.Register("PseText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Pse"));
+		public string PseText
+		{
+			get {return (string)GetValue(PseTextProperty);}
+			set {SetValue(PseTextProperty, value);}
+		}
+		
+		// QSL Thanks text
+		private static readonly DependencyProperty TnxTextProperty = 
+			DependencyProperty.Register("TnxText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Tnx"));
+		public string TnxText
+		{
+			get {return (string)GetValue(TnxTextProperty);}
+			set {SetValue(TnxTextProperty, value);}
+		}
+		
+		// January text
+		private static readonly DependencyProperty JanuaryTextProperty = 
+			DependencyProperty.Register("JanuaryText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Jan"));
+		public string JanuaryText
+		{
+			get {return (string)GetValue(JanuaryTextProperty);}
+			set {SetValue(JanuaryTextProperty, value);}
+		}
+		
+		// February text
+		private static readonly DependencyProperty FebruaryTextProperty = 
+			DependencyProperty.Register("FebruaryText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Feb"));
+		public string FebruaryText
+		{
+			get {return (string)GetValue(FebruaryTextProperty);}
+			set {SetValue(FebruaryTextProperty, value);}
+		}
+		
+		// March text
+		private static readonly DependencyProperty MarchTextProperty = 
+			DependencyProperty.Register("MarchText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Mar"));
+		public string MarchText
+		{
+			get {return (string)GetValue(MarchTextProperty);}
+			set {SetValue(MarchTextProperty, value);}
+		}
+		
+		// April text
+		private static readonly DependencyProperty AprilTextProperty = 
+			DependencyProperty.Register("AprilText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Apr"));
+		public string AprilText
+		{
+			get {return (string)GetValue(AprilTextProperty);}
+			set {SetValue(AprilTextProperty, value);}
+		}
+		
+		// May text
+		private static readonly DependencyProperty MayTextProperty = 
+			DependencyProperty.Register("MayText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("May"));
+		public string MayText
+		{
+			get {return (string)GetValue(MayTextProperty);}
+			set {SetValue(MayTextProperty, value);}
+		}
+		
+		// June text
+		private static readonly DependencyProperty JuneTextProperty = 
+			DependencyProperty.Register("JuneText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Jun"));
+		public string JuneText
+		{
+			get {return (string)GetValue(JuneTextProperty);}
+			set {SetValue(JuneTextProperty, value);}
+		}
+		
+		// July text
+		private static readonly DependencyProperty JulyTextProperty = 
+			DependencyProperty.Register("JulyText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Jul"));
+		public string JulyText
+		{
+			get {return (string)GetValue(JulyTextProperty);}
+			set {SetValue(JulyTextProperty, value);}
+		}
+		
+		// August text
+		private static readonly DependencyProperty AugustTextProperty = 
+			DependencyProperty.Register("AugustText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Aug"));
+		public string AugustText
+		{
+			get {return (string)GetValue(AugustTextProperty);}
+			set {SetValue(AugustTextProperty, value);}
+		}
+		
+		// September text
+		private static readonly DependencyProperty SeptemberTextProperty = 
+			DependencyProperty.Register("SeptemberText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Sep"));
+		public string SeptemberText
+		{
+			get {return (string)GetValue(SeptemberTextProperty);}
+			set {SetValue(SeptemberTextProperty, value);}
+		}
+		
+		// October text
+		private static readonly DependencyProperty OctoberTextProperty = 
+			DependencyProperty.Register("OctoberText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Oct"));
+		public string OctoberText
+		{
+			get {return (string)GetValue(OctoberTextProperty);}
+			set {SetValue(OctoberTextProperty, value);}
+		}
+		
+		// November text
+		private static readonly DependencyProperty NovemberTextProperty = 
+			DependencyProperty.Register("NovemberText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Nov"));
+		public string NovemberText
+		{
+			get {return (string)GetValue(NovemberTextProperty);}
+			set {SetValue(NovemberTextProperty, value);}
+		}
+		
+		// December text
+		private static readonly DependencyProperty DecemberTextProperty = 
+			DependencyProperty.Register("DecemberText", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("Dec"));
+		public string DecemberText
+		{
+			get {return (string)GetValue(DecemberTextProperty);}
+			set {SetValue(DecemberTextProperty, value);}
+		}
+		
+		// Frequency substitution for 2190m
+		private static readonly DependencyProperty Frequency2190mProperty = 
+			DependencyProperty.Register("Frequency2190m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("0.136"));
+		public string Frequency2190m
+		{
+			get {return (string)GetValue(Frequency2190mProperty);}
+			set {SetValue(Frequency2190mProperty, value);}
+		}
+		
+		// Frequency substitution for 560m
+		private static readonly	DependencyProperty Frequency560mProperty = 
+			DependencyProperty.Register("Frequency560m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("0.501"));
+		public string Frequency560m
+		{
+			get {return (string)GetValue(Frequency560mProperty);}
+			set {SetValue(Frequency560mProperty, value);}
+		}
+		
+		// Frequency substitution for 160m
+		private static readonly DependencyProperty Frequency160mProperty = 
+			DependencyProperty.Register("Frequency160m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("1.8"));
+		public string Frequency160m
+		{
+			get {return (string)GetValue(Frequency160mProperty);}
+			set {SetValue(Frequency160mProperty, value);}
+		}
+		
+		// Frequency substitution for 80m
+		private static readonly DependencyProperty Frequency80mProperty = 
+			DependencyProperty.Register("Frequency80m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("3.5"));
+		public string Frequency80m
+		{
+			get {return (string)GetValue(Frequency80mProperty);}
+			set {SetValue(Frequency80mProperty, value);}
+		}
+		
+		// Frequency substitution for 60m
+		private static readonly DependencyProperty Frequency60mProperty = 
+			DependencyProperty.Register("Frequency60m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("5.2"));
+		public string Frequency60m
+		{
+			get {return (string)GetValue(Frequency60mProperty);}
+			set {SetValue(Frequency60mProperty, value);}
+		}
+		
+		// Frequency substitution for 40m
+		private static readonly DependencyProperty Frequency40mProperty = 
+			DependencyProperty.Register("Frequency40m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("7"));
+		public string Frequency40m
+		{
+			get {return (string)GetValue(Frequency40mProperty);}
+			set {SetValue(Frequency40mProperty, value);}
+		}
+		
+		// Frequency substitution for 30m
+		private static readonly DependencyProperty Frequency30mProperty = 
+			DependencyProperty.Register("Frequency30m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("10.1"));
+		public string Frequency30m
+		{
+			get {return (string)GetValue(Frequency30mProperty);}
+			set {SetValue(Frequency30mProperty, value);}
+		}
+		
+		// Frequency substituion for 20m
+		private static readonly DependencyProperty Frequency20mProperty = 
+			DependencyProperty.Register("Frequency20m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("14"));
+		public string Frequency20m
+		{
+			get {return (string)GetValue(Frequency20mProperty);}
+			set {SetValue(Frequency20mProperty, value);}
+		}
+		
+		// Frequency substitution for 17m
+		private static readonly DependencyProperty Frequency17mProperty = 
+			DependencyProperty.Register("Frequency17m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("18.1"));
+		public string Frequency17m
+		{
+			get {return (string)GetValue(Frequency17mProperty);}
+			set {SetValue(Frequency17mProperty, value);}
+		}
+		
+		// Frequency substitution for 15m
+		private static readonly DependencyProperty Frequency15mProperty = 
+			DependencyProperty.Register("Frequency15m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("21"));
+		public string Frequency15m
+		{
+			get {return (string)GetValue(Frequency15mProperty);}
+			set {SetValue(Frequency15mProperty, value);}
+		}
+		
+		// Frequency substitution for 12m
+		private static readonly DependencyProperty Frequency12mProperty = 
+			DependencyProperty.Register("Frequency12m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("24.9"));
+		public string Frequency12m
+		{
+			get {return (string)GetValue(Frequency12mProperty);}
+			set {SetValue(Frequency12mProperty, value);}
+		}
+		
+		// Frequency substitution for 10m
+		private static readonly DependencyProperty Frequency10mProperty = 
+			DependencyProperty.Register("Frequency10m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("28"));
+		public string Frequency10m
+		{
+			get {return (string)GetValue(Frequency10mProperty);}
+			set {SetValue(Frequency10mProperty, value);}
+		}
+		
+		// Frequency substitution for 6m
+		private static readonly DependencyProperty Frequency6mProperty = 
+			DependencyProperty.Register("Frequency6m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("50"));
+		public string Frequency6m
+		{
+			get {return (string)GetValue(Frequency6mProperty);}
+			set {SetValue(Frequency6mProperty, value);}
+		}
+		
+		// Frequency substitution for 4m
+		private static readonly DependencyProperty Frequency4mProperty = 
+			DependencyProperty.Register("Frequency4m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("144"));
+		public string Frequency4m
+		{
+			get {return (string)GetValue(Frequency4mProperty);}
+			set {SetValue(Frequency4mProperty, value);}
+		}
+		
+		// Frequency substitution for 2m
+		private static readonly DependencyProperty Frequency2mProperty = 
+			DependencyProperty.Register("Frequency2m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata(string.Empty));
+		public string Frequency2m
+		{
+			get {return (string)GetValue(Frequency2mProperty);}
+			set {SetValue(Frequency2mProperty, value);}
+		}
+		
+		// Frequency substitution for 1.25m
+		private static readonly DependencyProperty Frequency1p25mProperty = 
+			DependencyProperty.Register("Frequency1p25m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("222"));
+		public string Frequency1p25m
+		{
+			get {return (string)GetValue(Frequency1p25mProperty);}
+			set {SetValue(Frequency1p25mProperty, value);}
+		}
+		
+		// Frequency substitution for 70cm
+		private static readonly DependencyProperty Frequency70cmProperty = 
+			DependencyProperty.Register("Frequency70cm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("420"));
+		public string Frequency70cm
+		{
+			get {return (string)GetValue(Frequency70cmProperty);}
+			set {SetValue(Frequency70cmProperty, value);}
+		}
+		
+		// Frequency substitution for 33cm
+		private static readonly DependencyProperty Frequency33cmProperty = 
+			DependencyProperty.Register("Frequency33cm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("902"));
+		public string Frequency33cm
+		{
+			get {return (string)GetValue(Frequency33cmProperty);}
+			set {SetValue(Frequency33cmProperty, value);}
+		}
+		
+		// Frequency substitution for 23cm
+		private static readonly DependencyProperty Frequency23cmProperty = 
+			DependencyProperty.Register("Frequency23cm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("1240"));
+		public string Frequency23cm
+		{
+			get {return (string)GetValue(Frequency23cmProperty);}
+			set {SetValue(Frequency23cmProperty, value);}
+		}
+		
+		// Frequency substitution for 13cm
+		private static readonly DependencyProperty Frequency13cmProperty = 
+			DependencyProperty.Register("Frequency13cm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("2300"));
+		public string Frequency13cm
+		{
+			get {return (string)GetValue(Frequency13cmProperty);}
+			set {SetValue(Frequency13cmProperty, value);}
+		}
+		
+		// Frequency substitution for 9cm
+		private static readonly DependencyProperty Frequency9cmProperty	= 
+			DependencyProperty.Register("Frequency9cm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("3300"));
+		public string Frequency9cm
+		{
+			get {return (string)GetValue(Frequency9cmProperty);}
+			set {SetValue(Frequency9cmProperty, value);}
+		}
+		
+		// Frequency substitution for 6cm
+		private static readonly DependencyProperty Frequency6cmProperty = 
+			DependencyProperty.Register("Frequency6cm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("5650"));
+		public string Frequency6cm
+		{
+			get {return (string)GetValue(Frequency6cmProperty);}
+			set {SetValue(Frequency6cmProperty, value);}
+		}
+		
+		// Frequency substitution for 3cm
+		private static readonly DependencyProperty Frequency3cmProperty = 
+			DependencyProperty.Register("Frequency3cm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("10000"));
+		public string Frequency3cm
+		{
+			get {return (string)GetValue(Frequency3cmProperty);}
+			set {SetValue(Frequency3cmProperty, value);}
+		}
+		
+		// Frequency substitution for 1.25cm
+		private static readonly DependencyProperty Frequency1p25cmProperty = 
+			DependencyProperty.Register("Frequency1p25cm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("24000"));
+		public string Frequency1p25cm
+		{
+			get {return (string)GetValue(Frequency1p25cmProperty);}
+			set {SetValue(Frequency1p25cmProperty, value);}
+		}
+		
+		// Frequency substitution for 6mm
+		private static readonly DependencyProperty Frequency6mmProperty = 
+			DependencyProperty.Register("Frequency6mm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("47000"));
+		public string Frequency6mm
+		{
+			get {return (string)GetValue(Frequency6mmProperty);}
+			set {SetValue(Frequency6mmProperty, value);}
+		}
+		
+		// Frequency substitution for 4mm
+		private static readonly DependencyProperty Frequency4mmProperty = 
+			DependencyProperty.Register("Frequency4mm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("75500"));
+		public string Frequency4mm
+		{
+			get {return (string)GetValue(Frequency4mmProperty);}
+			set {SetValue(Frequency4mmProperty, value);}
+		}
+		
+		// Frequency substitution for 2.5mm
+		private static readonly DependencyProperty Frequency2p5mmProperty = 
+			DependencyProperty.Register("Frequency2p5mmProperty", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("119980"));
+		public string Frequency2p5mm
+		{
+			get {return (string)GetValue(Frequency2p5mmProperty);}
+			set {SetValue(Frequency2p5mmProperty, value);}
+		}
+		
+		// Frequency substitution for 2mm
+		private static readonly DependencyProperty Frequency2mmProperty =
+			DependencyProperty.Register("Frequency2mm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("142000"));
+		public string Frequency2mm
+		{
+			get {return (string)GetValue(Frequency2mmProperty);}
+			set {SetValue(Frequency2mmProperty, value);}
+		}
+		
+		// Frequency substitution for 1mm
+		private static readonly DependencyProperty Frequency1mmProperty = 
+			DependencyProperty.Register("Frequency1mm", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("241000"));
+		public string Frequency1mm
+		{
+			get {return (string)GetValue(Frequency1mmProperty);}
+			set {SetValue(Frequency1mmProperty, value);}
+		}
+		
+		// Default printer
+		private static readonly DependencyProperty DefaultPrinterProperty = 
+			DependencyProperty.Register("DefaultPrinter", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata(string.Empty));
+		public string DefaultPrinter
+		{
+			get {return (string)GetValue(DefaultPrinterProperty);}
+			set {SetValue(DefaultPrinterProperty, value);}
+		}
+		
+		// Default page size
+		private static readonly DependencyProperty DefaultPageSizeProperty = 
+			DependencyProperty.Register("DefaultPageSize", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata(string.Empty));
+		public string DefaultPageSize
+		{
+			get {return (string)GetValue(DefaultPageSizeProperty);}
+			set {SetValue(DefaultPageSizeProperty, value);}
+		}
+		
+		// 3.5 by 5.5 cards layout
+/*		private CardLayout2.OrientationLayout bureauOrientationLayout = CardLayout2.OrientationLayout.PTL;
+		public CardLayout2.OrientationLayout BureauOrientationLayout
+		{
+			get {return bureauOrientationLayout;}
+			set {bureauOrientationLayout = value;}
+		}
+		
+		// 4.25 by 5.5 cards layout
+		private CardLayout2.OrientationLayout fourX5OrientationLayout = CardLayout2.OrientationLayout.PTL;
+		public CardLayout2.OrientationLayout FourX5OrientationLayout
+		{
+			get {return fourX5OrientationLayout;}
+			set {fourX5OrientationLayout = value;}
+		}
+		
+		// 4 by 6 cards layout
+		private CardLayout2.OrientationLayout fourX6OrientationLayout = CardLayout2.OrientationLayout.PTL;
+		public CardLayout2.OrientationLayout FourX6OrientationLayout
+		{
+			get {return fourX6OrientationLayout;}
+			set {fourX6OrientationLayout = value;}
+		}*/
+		
+		// Print card outlines
+		private static readonly DependencyProperty PrintCardOutlinesProperty = 
+			DependencyProperty.Register("PrintCardOutlines", typeof(bool),
+			                            typeof(UserPreferences), new PropertyMetadata(false));
+		public bool PrintCardOutlines
+		{
+			get {return (bool)GetValue(PrintCardOutlinesProperty);}
+			set {SetValue(PrintCardOutlinesProperty, value);}
+		}
+		
+		// Fill last page with blank cards
+		private static readonly DependencyProperty FillLastPageWithBlankCardsProperty = 
+			DependencyProperty.Register("FillLastPageWithBlankCards", typeof(bool),
+			                            typeof(UserPreferences), new PropertyMetadata(false));
+		public bool FillLastPageWithBlankCards
+		{
+			get {return (bool)GetValue(FillLastPageWithBlankCardsProperty);}
+			set {SetValue(FillLastPageWithBlankCardsProperty, value);}
+		}
+		
+		// Set card margins to printer page margins
+		private static readonly DependencyProperty SetCardMarginsToPrinterPageMarginsProperty = 
+			DependencyProperty.Register("SetCardMarginsToPrinterPageMargins", typeof(bool),
+			                            typeof(UserPreferences), new PropertyMetadata(false));
+		public bool SetCardMarginsToPrinterPageMargins
+		{
+			get {return (bool)GetValue(SetCardMarginsToPrinterPageMarginsProperty);}
+			set {SetValue(SetCardMarginsToPrinterPageMarginsProperty, value);}
+		}
+		
+        [NonSerialized]
         private ExceptionLogger logger = null;
         public ExceptionLogger Logger
         {
             set { logger = value; }
         }
         
-        private static string userPreferencesFilename =  Environment.GetFolderPath(
-        		Environment.SpecialFolder.MyDocuments) + "/hamqsler/.hamqsler";
+        [NonSerialized]
+        private static string userPreferencesFilename =  ((App)Application.Current).HamqslerFolder
+        	+ ".hamqsler";
         public static string UserPreferencesFilename
         {
         	get {return userPreferencesFilename;}
