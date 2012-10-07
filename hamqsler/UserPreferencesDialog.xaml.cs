@@ -34,9 +34,35 @@ namespace hamqsler
 	/// </summary>
 	public partial class UserPreferencesDialog : Window
 	{
+		private UserPreferences userPrefs;
+		
 		public UserPreferencesDialog()
 		{
 			InitializeComponent();
+
+			// create a clone of the UserPreferences object
+			userPrefs = new UserPreferences(((App)Application.Current).UserPreferences);
+			propertiesDisplay.DataContext = userPrefs;
 		}
+		
+		void OkButton_Click(object sender, RoutedEventArgs e)
+		{
+			userPrefs.SerializeAsXml();
+			((App)Application.Current).UserPreferences = userPrefs;
+			e.Handled = true;
+			this.Close();
+		}
+		
+		void ApplyButton_Click(object sender, RoutedEventArgs e)
+		{
+			((App)Application.Current).UserPreferences = userPrefs;
+			e.Handled = true;
+		}
+		
+		void CancelButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
+		
 	}
 }

@@ -29,6 +29,10 @@ namespace hamqsler
 			get {return logger;}
 		}
 		
+		/// <summary>
+		/// UserPreferences object. Stored in App because it is created before MainWindow is 
+		/// created.
+		/// </summary>
 		private UserPreferences userPrefs;
 		public UserPreferences UserPreferences
 		{

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="hamqsler.UserPreferencesDialog"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Title="User Preferences" Height="450" Width="830">
+	Title="User Preferences" Height="500" Width="830">
 	<Window.Resources>
 		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 	
@@ -14,7 +14,12 @@
 			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
-		<ListBox Grid.Column="0" Margin="5">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<ListBox Grid.Column="0" Grid.Row="0" Margin="5" MaxHeight="420">
 			<ListBoxItem Name="VersionCheck">Program Version Check</ListBoxItem>
 			<ListBoxItem Name="ProxySettings">HTTP Proxy Settings</ListBoxItem>
 			<ListBoxItem Name="AdifFilesAndFolder">ADIF Files and Folder</ListBoxItem>
@@ -37,13 +42,18 @@
 			<ListBoxItem Name="_4x6CardsPageLayout">4 X 6 Inch (10 X 15 cm) Cards Page Layout</ListBoxItem>
 			<ListBoxItem Name="PrintOptions">Print Options</ListBoxItem>
 		</ListBox>
-		<StackPanel Grid.Column="1">
-			<StackPanel>
+		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="420">
+			<StackPanel Orientation="Horizontal">
 				<StackPanel.Visibility>
 					<Binding ElementName="VersionCheck" Path="IsSelected" 
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
-				<TextBlock>Version Check Properties</TextBlock>
+				<TextBlock Margin="5">Check for Program and Data File Updates:</TextBlock>
+				<CheckBox Name="programUpdatesCheckBox" Margin="5" 
+				          ToolTip="Check this if you want program to check website 
+for updates to program and associated data files"
+						  IsChecked="{Binding Path=CheckForNewVersions, Mode=TwoWay}"
+						  />
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
@@ -185,6 +195,15 @@
 				</StackPanel.Visibility>
 				<TextBlock>Print Options Properties</TextBlock>
 			</StackPanel>
+		</StackPanel>
+		<Separator Grid.Row="1" Grid.ColumnSpan="2"/>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="2">
+			<Button Name="applyButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25"
+				Click="ApplyButton_Click">Apply</Button>
+			<Button Name="okButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25" IsDefault="True"
+				Click="OkButton_Click">OK</Button>
+			<Button Name="cancelButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25" IsCancel="True"
+				Click="CancelButton_Click">Cancel</Button>
 		</StackPanel>
 	</Grid>
 </Window>

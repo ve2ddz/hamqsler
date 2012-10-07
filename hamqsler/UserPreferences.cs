@@ -143,6 +143,7 @@ namespace hamqsler
 		public List<string> CardFiles
 		{
 			get {return (List<string>)GetValue(CardFilesProperty);}
+			set {SetValue(CardFilesProperty, value);}
 		}
 		
 		// default folder for Card files
@@ -850,7 +851,84 @@ namespace hamqsler
 		/// <param name="userPrefs">UserPreferences object to clone</param>
 		public UserPreferences(UserPreferences prefs)
 		{
+			CheckForNewVersions = prefs.CheckForNewVersions;
+			HttpProxyServer = prefs.HttpProxyServer;
+			HttpProxyServerPortNumber = prefs.HttpProxyServerPortNumber;
+			DefaultAdifFilesFolder = prefs.DefaultAdifFilesFolder;
+			AdifReloadOnStartup = prefs.AdifReloadOnStartup;
+			AdifFiles = prefs.AdifFiles;
+			DefaultImagesFolder = prefs.DefaultImagesFolder;
+			CardsReloadOnStartup = prefs.CardsReloadOnStartup;
+			CardFiles = prefs.CardFiles;
+			DefaultCardFilesFolder = prefs.DefaultCardFilesFolder;
+			DefaultTextItemsFontFace = prefs.DefaultTextItemsFontFace;
 			Callsign = prefs.Callsign;
+			NameQth = prefs.NameQth;
+//			Salutation = prefs.Salutation;
+			DefaultQsosBoxFontFace = prefs.DefaultQsosBoxFontFace;
+//			ConfirmingText = prefs.ConfirmingText;
+			ViaText = prefs.ViaText;
+			YYYYMMDDText = prefs.YYYYMMDDText;
+			DDMMMYYText = prefs.DDMMMYYText;
+			DDMMYYText = prefs.DDMMYYText;
+			DefaultDateFormat = prefs.DefaultDateFormat;
+			TimeText = prefs.TimeText;
+			ModeText = prefs.ModeText;
+			BandText = prefs.BandText;
+			FrequencyText = prefs.FrequencyText;
+			RSTText = prefs.RSTText;
+			QSLText = prefs.QSLText;
+			PseText = prefs.PseText;
+			TnxText = prefs.TnxText;
+			JanuaryText = prefs.JanuaryText;
+			FebruaryText = prefs.FebruaryText;
+			MarchText = prefs.MarchText;
+			AprilText = prefs.AprilText;
+			MayText = prefs.MayText;
+			JuneText = prefs.JuneText;
+			JulyText = prefs.JulyText;
+			AugustText = prefs.AugustText;
+			SeptemberText = prefs.SeptemberText;
+			OctoberText = prefs.OctoberText;
+			NovemberText = prefs.NovemberText;
+			DecemberText = prefs.DecemberText;
+			Frequency2190m = prefs.Frequency2190m;
+			Frequency560m = prefs.Frequency560m;
+			Frequency160m = prefs.Frequency160m;
+			Frequency80m = prefs.Frequency80m;
+			Frequency60m = prefs.Frequency60m;
+			Frequency40m = prefs.Frequency40m;
+			Frequency30m = prefs.Frequency30m;
+			Frequency20m = prefs.Frequency20m;
+			Frequency17m = prefs.Frequency17m;
+			Frequency15m = prefs.Frequency15m;
+			Frequency12m = prefs.Frequency12m;
+			Frequency10m = prefs.Frequency10m;
+			Frequency6m = prefs.Frequency6m;
+			Frequency4m = prefs.Frequency4m;
+			Frequency2m = prefs.Frequency2m;
+			Frequency1p25m = prefs.Frequency1p25m;
+			Frequency70cm = prefs.Frequency70cm;
+			Frequency33cm = prefs.Frequency33cm;
+			Frequency23cm = prefs.Frequency23cm;
+			Frequency13cm = prefs.Frequency13cm;
+			Frequency9cm = prefs.Frequency9cm;
+			Frequency6cm = prefs.Frequency6cm;
+			Frequency3cm = prefs.Frequency3cm;
+			Frequency1p25cm = prefs.Frequency1p25cm;
+			Frequency6mm = prefs.Frequency6mm;
+			Frequency4mm = prefs.Frequency4mm;
+			Frequency2p5mm = prefs.Frequency2p5mm;
+			Frequency2mm = prefs.Frequency2mm;
+			Frequency1mm = prefs.Frequency1mm;
+			DefaultPrinter = prefs.DefaultPrinter;
+			DefaultPageSize = prefs.DefaultPageSize;
+//			BureauOrientationLayout = prefs.BureauOrientationLayout;
+//			FourX5OrientationLayout = prefs.FourX5OrientationLayout;
+//			FourX6OrientationLayout = prefs.FourX6OrientationLayout;
+			PrintCardOutlines = prefs.PrintCardOutlines;
+			FillLastPageWithBlankCards = prefs.FillLastPageWithBlankCards;
+			SetCardMarginsToPrinterPageMargins = prefs.SetCardMarginsToPrinterPageMargins;
 		}
 
         /// <summary>
@@ -1059,7 +1137,7 @@ namespace hamqsler
        /// <summary>
         /// Saves the User Preferences into /hamqsler/.hamqsler
         /// </summary>
-        private void SerializeAsXml()
+        internal void SerializeAsXml()
         {
             // get path to prefs file
             XmlSerializer xmlFormat = new XmlSerializer(typeof(UserPreferences));

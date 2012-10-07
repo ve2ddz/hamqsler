@@ -40,6 +40,9 @@ namespace hamqsler
 	/// </summary>
 	public partial class SplashPage : Window
 	{
+		private bool userPrefsError = false;
+		private bool showUserPrefsLabel = false;
+		
 		public SplashPage()
 		{
 			InitializeComponent();
@@ -90,20 +93,10 @@ namespace hamqsler
 			((App)Application.Current).CreateExceptionLogger();
 			((App)Application.Current).LogRuntimeInfo();		// output run start info
 			// load existing UserPreferences file, or create new one
-			bool userPrefsError = false;
-			bool showUserPrefsLabel = false;
-			((App)Application.Current).GetUserPreferences(
-					out showUserPrefsLabel, out userPrefsError);
-			if(userPrefsError)			// error reading or writing UserPreferences file
-			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-					ShowUserPrefsErrorLabel));
-			}
-			else if(showUserPrefsLabel)		// UserPreferences file has been created
-			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-					ShowUserPrefsCreatedLabel));
-			}
+			// it is necessary to run this on the UI thread because UserPreferences is a
+			// Dependency object.
+			this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+				GetUserPreferences));
 			// check for new program version and data file updates
 			bool webError = false;
 			bool newHamQslerVersion = false;
@@ -145,6 +138,26 @@ namespace hamqsler
 			{
 				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
 					ShowContinueButton));
+			}
+			
+		}
+		
+		/// <summary>
+		/// Load or create UserPreferences object and show related labels as appropriate
+		/// </summary>
+		public void GetUserPreferences()
+		{
+			((App)Application.Current).GetUserPreferences(
+					out showUserPrefsLabel, out userPrefsError);
+			if(userPrefsError)			// error reading or writing UserPreferences file
+			{
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+					ShowUserPrefsErrorLabel));
+			}
+			else if(showUserPrefsLabel)		// UserPreferences file has been created
+			{
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
+					ShowUserPrefsCreatedLabel));
 			}
 			
 		}
