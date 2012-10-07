@@ -1,0 +1,190 @@
+﻿<Window x:Class="hamqsler.UserPreferencesDialog"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Title="User Preferences" Height="450" Width="830">
+	<Window.Resources>
+		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+	
+		<Style TargetType="ListBoxItem">
+			<Setter Property="Margin" Value="5,1,5,1"/>
+		</Style>
+	</Window.Resources>	
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<ListBox Grid.Column="0" Margin="5">
+			<ListBoxItem Name="VersionCheck">Program Version Check</ListBoxItem>
+			<ListBoxItem Name="ProxySettings">HTTP Proxy Settings</ListBoxItem>
+			<ListBoxItem Name="AdifFilesAndFolder">ADIF Files and Folder</ListBoxItem>
+			<ListBoxItem Name="CardsFilesAndFolder">Cards Files and Folder</ListBoxItem>
+			<ListBoxItem Name="ImagesFolder">Images Folder</ListBoxItem>
+			<ListBoxItem Name="DefaultTextFont">Default Text Font</ListBoxItem>
+			<ListBoxItem Name="CallsignText">Callsign Text</ListBoxItem>
+			<ListBoxItem Name="NameAndQTHText">Name and QTH Text</ListBoxItem>
+			<ListBoxItem Name="SalutationText">Salutation Text</ListBoxItem>
+			<ListBoxItem Name="DefaultQSOsBoxFont">Default QSOs Box Font</ListBoxItem>
+			<ListBoxItem Name="ConfirmingText">Confirming Text</ListBoxItem>
+			<ListBoxItem Name="DateFormats">Date Formats</ListBoxItem>
+			<ListBoxItem Name="HeaderText">Header Text</ListBoxItem>
+			<ListBoxItem Name="QSLText">QSL Text</ListBoxItem>
+			<ListBoxItem Name="MonthAbreviations">Month Abreviations</ListBoxItem>
+			<ListBoxItem Name="BandsFrequencies">Bands / Frequencies</ListBoxItem>
+			<ListBoxItem Name="DefaultPrinterAndPageSize">Default Printer and Page Size</ListBoxItem>
+			<ListBoxItem Name="BureauCardsPageLayout">Bureau Cards Page Layout</ListBoxItem>
+			<ListBoxItem Name="_4x5CardsPageLayout">4¼ X 5½ Inch Cards Page Layout</ListBoxItem>
+			<ListBoxItem Name="_4x6CardsPageLayout">4 X 6 Inch (10 X 15 cm) Cards Page Layout</ListBoxItem>
+			<ListBoxItem Name="PrintOptions">Print Options</ListBoxItem>
+		</ListBox>
+		<StackPanel Grid.Column="1">
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="VersionCheck" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Version Check Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="ProxySettings" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Proxy Settings Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="AdifFilesAndFolder" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Adif Files And Folder Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="CardsFilesAndFolder" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Cards Files and Folder Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="ImagesFolder" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Images Folder Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="DefaultTextFont" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Default Text Font Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="CallsignText" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Callsign Text Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="NameAndQTHText" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Name and QTH Text Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="SalutationText" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Salutation Text Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="DefaultQSOsBoxFont" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Default QSOs Box Font Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="ConfirmingText" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Confirming Text Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="DateFormats" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Date Formats Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="HeaderText" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Header Text Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="QSLText" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>QSL Text Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="MonthAbreviations" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Month Abreviations Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="BandsFrequencies" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Bands / Frequencies Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="DefaultPrinterAndPageSize" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Default Printer and Page Size Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="BureauCardsPageLayout" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Bureau Cards Page Layout Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="_4x5CardsPageLayout" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>4¼ X 5½ Inch Cards Page Layout Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="_4x6CardsPageLayout" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>4 X 6 Inch Cards Page Layout Properties</TextBlock>
+			</StackPanel>
+			<StackPanel>
+				<StackPanel.Visibility>
+					<Binding ElementName="PrintOptions" Path="IsSelected" 
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</StackPanel.Visibility>
+				<TextBlock>Print Options Properties</TextBlock>
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</Window>

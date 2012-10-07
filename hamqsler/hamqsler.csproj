@@ -74,10 +74,15 @@
     <Compile Include="SplashPage.xaml.cs">
       <DependentUpon>SplashPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserPreferencesDialog.xaml.cs">
+      <DependentUpon>UserPreferencesDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml" />
     <Page Include="SplashPage.xaml" />
+    <Page Include="UserPreferencesDialog.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

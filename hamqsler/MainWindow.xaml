@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Window
-	x:Class="hamqsler.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="hamqsler.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:hamqsler"
 	Title="hamqsler"
 	Height="600"
 	Width="1000"
 	Closed="Window_Closed">
+	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:MainWindow.UserPreferencesCommand}"
+						Executed="UserPreferencesCommand_Executed"/>
+	</Window.CommandBindings>
 	<DockPanel>
 		<Menu
 			DockPanel.Dock="Top">
@@ -45,7 +51,8 @@
 				<MenuItem Header="Delete Item"/>
 				<MenuItem Header="Clear Background Image"/>
 				<Separator/>
-				<MenuItem Header="User Preferences..."/>
+				<MenuItem Header="User Preferences..." 
+				          Command="{x:Static local:MainWindow.UserPreferencesCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Select"/>
 			<MenuItem Header="Help">
