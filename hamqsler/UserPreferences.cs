@@ -108,11 +108,12 @@ namespace hamqsler
 		
 		// ADIF files to reload
 		private static readonly DependencyProperty AdifFilesProperty = 
-			DependencyProperty.Register("AdifFiles", typeof(string),
+			DependencyProperty.Register("AdifFiles", typeof(List<string>),
 			                            typeof(UserPreferences), new PropertyMetadata(new List<string>()));
 		public List<string> AdifFiles
 		{
 			get {return (List<string>)GetValue(AdifFilesProperty);}
+			set {SetValue(AdifFilesProperty, value);}
 		}
 		
 		private static readonly DependencyProperty DefaultImagesFolderProperty = 
