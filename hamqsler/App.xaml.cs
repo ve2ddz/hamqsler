@@ -251,12 +251,12 @@ namespace hamqsler
                 httpRequest = (HttpWebRequest)WebRequest.Create(location);
                 httpRequest.Timeout = WEBREQUESTTIMEOUT;
                 // TODO: Uncomment this code when UserPreferences HttpProxy properties are defined
-/*				string proxy = userPrefs.HttpProxyServer;
+				string proxy = userPrefs.HttpProxyServer;
 				int proxyPort = userPrefs.HttpProxyServerPortNumber;
                 if (proxy != string.Empty)
                 {
                     httpRequest.Proxy = new WebProxy(proxy, proxyPort);
-                }*/
+                }
 				// get OS information for including in UserAgentt
 				string os = "Unknown";
                 string osVer = Environment.OSVersion.VersionString;
@@ -323,8 +323,7 @@ namespace hamqsler
 					}
 				}
             }
-
-        }
+		}
 		
     	/// <summary>
     	/// Decodes and logs web exception info

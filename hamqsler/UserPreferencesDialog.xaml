@@ -55,13 +55,28 @@ for updates to program and associated data files"
 						  IsChecked="{Binding Path=CheckForNewVersions, Mode=TwoWay}"
 						  />
 			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="ProxySettings" Path="IsSelected" 
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Proxy Settings Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5">Proxy Server:</TextBlock>
+				<TextBox Grid.Row="0" Grid.Column="1"  Margin="5"
+						Text="{Binding Path=HttpProxyServer, Mode=TwoWay}"
+				/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5">Proxy Server Port:</TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1" MaxLength="6" Margin="5"
+						Text="{Binding Path=HttpProxyServerPortNumber, Mode=TwoWay}"
+				/>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="AdifFilesAndFolder" Path="IsSelected" 
