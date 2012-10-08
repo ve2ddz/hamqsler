@@ -63,8 +63,6 @@ namespace hamqsler
 
 		}
 		
-//		private delegate void RunDelegate();
-
 		/// <summary>
 		/// Performs actions such as:
 		/// 1. Creating the hamqsler folder and subfolders in My Documents, and

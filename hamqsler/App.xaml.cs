@@ -250,7 +250,6 @@ namespace hamqsler
             	// build the http request
                 httpRequest = (HttpWebRequest)WebRequest.Create(location);
                 httpRequest.Timeout = WEBREQUESTTIMEOUT;
-                // TODO: Uncomment this code when UserPreferences HttpProxy properties are defined
 				string proxy = userPrefs.HttpProxyServer;
 				int proxyPort = userPrefs.HttpProxyServerPortNumber;
                 if (proxy != string.Empty)
