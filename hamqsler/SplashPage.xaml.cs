@@ -57,12 +57,13 @@ namespace hamqsler
 		/// <param name="e"></param>
 		void Window_ContentRendered(object sender, EventArgs e)
 		{
-			Thread thr = new Thread(new ThreadStart(InitializeApplication));
-			thr.Start();
+//			Thread thr = new Thread(new ThreadStart(InitializeApplication));
+//			thr.Start();
+			InitializeApplication();
 
 		}
 		
-		public delegate void RunDelegate();
+//		private delegate void RunDelegate();
 
 		/// <summary>
 		/// Performs actions such as:
@@ -75,19 +76,19 @@ namespace hamqsler
 		/// </summary>
 		private void InitializeApplication()
 		{
+			Cursor oldCursor = this.Cursor;
+			this.Cursor = Cursors.Wait;
+			UpdateUI();
 			// check and create hamqsler directories and copy sample files
 			bool directoriesError = false;
 			bool showHamqslerLabel = ((App)Application.Current).BuildHamQslerDirectories(out directoriesError);
 			if(directoriesError)		// error occurred creating directories
 			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new
-				                       RunDelegate(ShowHamQslerCreatedProblemLabel));
+				ShowHamQslerCreatedProblemLabel();
 			}
 			else if(showHamqslerLabel)		// created directories/copied files
 			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-					ShowHamQslerCreatedLabel));
-//				});
+				ShowHamQslerCreatedLabel();
 			}
 			// create ExceptionLogger
 			((App)Application.Current).CreateExceptionLogger();
@@ -95,51 +96,55 @@ namespace hamqsler
 			// load existing UserPreferences file, or create new one
 			// it is necessary to run this on the UI thread because UserPreferences is a
 			// Dependency object.
-			this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-				GetUserPreferences));
+			GetUserPreferences();
 			// check for new program version and data file updates
 			bool webError = false;
 			bool newHamQslerVersion = false;
-			this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-				ShowCheckingForUpdatesLabel));
+			ShowCheckingForUpdatesLabel();
 			// updates will contain program and file names with most recent versions available for download
-			((App)Application.Current).GetProgramVersions(out webError,
-				                  						  out newHamQslerVersion);
-			if(webError)		// error retrieving file containing version info
+			// cannot proceed until UserPreferences have been created.
+			if(((App)Application.Current).UserPreferences.CheckForNewVersions)
 			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-					ShowWebErrorLabel));
-			}
-			else
-			{			
-				if(newHamQslerVersion)
+				((App)Application.Current).GetProgramVersions(out webError,
+					                  						  out newHamQslerVersion);
+				if(webError)		// error retrieving file containing version info
 				{
-					this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-						ShowNewHamQslerVersionLabel));
+					ShowWebErrorLabel();
 				}
+				else
+				{			
+					if(newHamQslerVersion)
+					{
+						ShowNewHamQslerVersionLabel();
+					}
+				}
+				HideCheckingForUpdatesLabel();
 			}
-			this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-				HideCheckingForUpdatesLabel));
 			
-/*			if(!directoriesError && !userPrefsError && !showHamqslerLabel &&
-					!showUserPrefsLabel && !webError && !newHamQslerVersion)		// done initializing so start up MainWindow
-			{
-				Application.Invoke(delegate {
-					CreateAndShowMainWindow();
-				});
-			} */
 			if(directoriesError || newHamQslerVersion)		// terminate class error
 			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-					ShowTerminateButton));
+				ShowTerminateButton();
 			}
 			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
 						directoriesError || newHamQslerVersion)
 			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-					ShowContinueButton));
+				ShowContinueButton();
 			}
+			this.Cursor = oldCursor;
 			
+		}
+		
+		/// <summary>
+		/// Force an update of the window.
+		/// This method was created as the result of a post by Muljadi Budiman and one of the commenters.
+		/// http://geekswithblogs.net/NewThingsILearned/archive/2008/08/25/refresh--update-wpf-controls.aspx
+		/// </summary>
+		private void UpdateUI()
+		{
+			// while this method could probably be inlined, it is written as a separate method
+			// to allow proper crediting and to provide separation in case the method has to
+			// be modified. It is called from many locations in the InitializeApplication processing.
+			this.Dispatcher.Invoke(DispatcherPriority.ContextIdle, (Action)delegate() {});
 		}
 		
 		/// <summary>
@@ -151,13 +156,11 @@ namespace hamqsler
 					out showUserPrefsLabel, out userPrefsError);
 			if(userPrefsError)			// error reading or writing UserPreferences file
 			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-					ShowUserPrefsErrorLabel));
+				ShowUserPrefsErrorLabel();
 			}
 			else if(showUserPrefsLabel)		// UserPreferences file has been created
 			{
-				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new RunDelegate(
-					ShowUserPrefsCreatedLabel));
+				ShowUserPrefsCreatedLabel();
 			}
 			
 		}
@@ -168,6 +171,7 @@ namespace hamqsler
 		public void ShowHamQslerCreatedLabel()
 		{
 			hamqslerCreatedLabel.Visibility = Visibility.Visible;
+			UpdateUI();
 		}
 		
 		/// <summary>
@@ -176,6 +180,7 @@ namespace hamqsler
 		public void ShowHamQslerCreatedProblemLabel()
 		{
 			hamqslerCreatedProblemLabel.Visibility = Visibility.Visible;
+			UpdateUI();
 		}
 		
 		/// <summary>
@@ -184,6 +189,7 @@ namespace hamqsler
 		public void ShowContinueButton()
 		{
 			okButton.Visibility = Visibility.Visible;
+//			UpdateUI();
 		}
 		
 		/// <summary>
@@ -192,6 +198,7 @@ namespace hamqsler
 		public void ShowTerminateButton()
 		{
 			termButton.Visibility = Visibility.Visible;
+//			UpdateUI();
 		}
 		
 		/// <summary>
@@ -200,6 +207,7 @@ namespace hamqsler
 		public void ShowUserPrefsErrorLabel()
 		{
 			userPrefsErrorLabel.Visibility = Visibility.Visible;
+			UpdateUI();
 		}
 		
 		/// <summary>
@@ -208,6 +216,7 @@ namespace hamqsler
 		public void ShowUserPrefsCreatedLabel()
 		{
 			userPrefsCreatedLabel.Visibility = Visibility.Visible;
+			UpdateUI();
 	}
 		
 		/// <summary>
@@ -216,6 +225,7 @@ namespace hamqsler
 		public void ShowWebErrorLabel()
 		{
 			webErrorLabel.Visibility = Visibility.Visible;
+			UpdateUI();
 		}
 		
 		/// <summary>
@@ -224,6 +234,7 @@ namespace hamqsler
 		public void ShowNewHamQslerVersionLabel()
 		{
 			newHamQslerVersionLabel.Visibility = Visibility.Visible;
+			UpdateUI();
 		}
 		
 		/// <summary>
@@ -232,6 +243,7 @@ namespace hamqsler
 		public void ShowCheckingForUpdatesLabel()
 		{
 			checkingForUpdatesLabel.Visibility = Visibility.Visible;
+			UpdateUI();
 		}
 		
 		/// <summary>
@@ -240,6 +252,7 @@ namespace hamqsler
 		public void HideCheckingForUpdatesLabel()
 		{
 			checkingForUpdatesLabel.Visibility = Visibility.Collapsed;
+			UpdateUI();
 		}
 		
 		/// <summary>
