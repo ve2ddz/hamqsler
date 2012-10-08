@@ -64,5 +64,27 @@ namespace hamqsler
 			this.Close();
 		}
 		
+		/// <summary>
+		/// Handler for DefaultAdifFilesFolderButton click events.
+		/// Allows user to select a default folder to contain the ADIF files
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">RoutedEventArgs object</param>
+		void DefaultAdifFilesFolderButton_Click(object sender, RoutedEventArgs e)
+		{
+			//open and display FolderBrowserDialog
+			System.Windows.Forms.FolderBrowserDialog folderDialog = 
+					new System.Windows.Forms.FolderBrowserDialog();
+			folderDialog.Description = "Select the default folder for ADIF files";
+			
+			System.Windows.Forms.DialogResult res = folderDialog.ShowDialog();
+			if(res == System.Windows.Forms.DialogResult.OK)
+			{
+				// new folder selected, so update UserPreferences object
+				userPrefs.DefaultAdifFilesFolder = folderDialog.SelectedPath;
+			}
+			e.Handled = true;
+		}
+		
 	}
 }

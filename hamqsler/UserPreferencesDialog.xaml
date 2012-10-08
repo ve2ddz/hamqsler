@@ -77,13 +77,35 @@ for updates to program and associated data files"
 						Text="{Binding Path=HttpProxyServerPortNumber, Mode=TwoWay}"
 				/>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="AdifFilesAndFolder" Path="IsSelected" 
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Adif Files And Folder Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
+						>Reload ADIF Files on Startup:</TextBlock>
+				<CheckBox Name="reloadAdifCheckButton" Margin="5"
+						  Grid.Row="0" Grid.Column="1" 
+				          ToolTip="Check this if you want program to reload your ADIF
+files when you restart HamQSLer"
+						  IsChecked="{Binding Path=AdifReloadOnStartup, Mode=TwoWay}"/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
+						>Default ADIF Files Folder:</TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
+						Text="{Binding Path=DefaultAdifFilesFolder}"/>
+				<Button Name="DefaultAdifFilesFolderButton" Grid.Row="1" Grid.Column="2"
+						Margin="5" Width="30" Click="DefaultAdifFilesFolderButton_Click"
+						ToolTip="Select a new default folder">...</Button>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="CardsFilesAndFolder" Path="IsSelected" 
