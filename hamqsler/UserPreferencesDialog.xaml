@@ -103,7 +103,7 @@ files when you restart HamQSLer"
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
 						Text="{Binding Path=DefaultAdifFilesFolder}"/>
 				<Button Name="DefaultAdifFilesFolderButton" Grid.Row="1" Grid.Column="2"
-						Margin="5" Width="30" Click="DefaultAdifFilesFolderButton_Click"
+						Margin="5" MinWidth="30" Click="DefaultAdifFilesFolderButton_Click"
 						ToolTip="Select a new default folder">...</Button>
 			</Grid>
 			<StackPanel>
