@@ -76,6 +76,7 @@ namespace hamqsler
 			System.Windows.Forms.FolderBrowserDialog folderDialog = 
 					new System.Windows.Forms.FolderBrowserDialog();
 			folderDialog.Description = "Select the default folder for ADIF files";
+			folderDialog.SelectedPath = userPrefs.DefaultAdifFilesFolder;
 			
 			System.Windows.Forms.DialogResult res = folderDialog.ShowDialog();
 			if(res == System.Windows.Forms.DialogResult.OK)
