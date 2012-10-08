@@ -106,13 +106,35 @@ files when you restart HamQSLer"
 						Margin="5" MinWidth="30" Click="DefaultAdifFilesFolderButton_Click"
 						ToolTip="Select a new default folder">...</Button>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="CardsFilesAndFolder" Path="IsSelected" 
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Cards Files and Folder Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
+						>Reload Card Files on Startup:</TextBlock>
+				<CheckBox Name="reloadCardFilesCheckButton" Margin="5"
+						  Grid.Row="0" Grid.Column="1" 
+				          ToolTip="Check this if you want program to reload your cards
+when you restart HamQSLer"
+						  IsChecked="{Binding Path=CardsReloadOnStartup, Mode=TwoWay}"/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
+						>Default Card Files Folder:</TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
+						Text="{Binding Path=DefaultCardFilesFolder}"/>
+				<Button Name="DefaultCardFilesFolderButton" Grid.Row="1" Grid.Column="2"
+						Margin="5" MinWidth="30" Click="DefaultCardFilesFolderButton_Click"
+						ToolTip="Select a new default folder">...</Button>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="ImagesFolder" Path="IsSelected" 

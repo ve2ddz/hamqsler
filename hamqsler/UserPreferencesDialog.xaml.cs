@@ -87,5 +87,28 @@ namespace hamqsler
 			e.Handled = true;
 		}
 		
+		/// <summary>
+		/// Handler for DefaultCardFilesFolderButton click events.
+		/// Allows user to select a default folder to contain the card files
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">RoutedEventArgs object</param>
+		void DefaultCardFilesFolderButton_Click(object sender, RoutedEventArgs e)
+		{
+			//open and display FolderBrowserDialog
+			System.Windows.Forms.FolderBrowserDialog folderDialog = 
+					new System.Windows.Forms.FolderBrowserDialog();
+			folderDialog.Description = "Select the default folder for card files";
+			folderDialog.SelectedPath = userPrefs.DefaultCardFilesFolder;
+			
+			System.Windows.Forms.DialogResult res = folderDialog.ShowDialog();
+			if(res == System.Windows.Forms.DialogResult.OK)
+			{
+				// new folder selected, so update UserPreferences object
+				userPrefs.DefaultCardFilesFolder = folderDialog.SelectedPath;
+			}
+			e.Handled = true;
+		}
+		
 	}
 }
