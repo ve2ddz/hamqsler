@@ -110,5 +110,28 @@ namespace hamqsler
 			e.Handled = true;
 		}
 		
+		/// <summary>
+		/// Handler for DefaultImagesFolderButton click events.
+		/// Allows user to select a default folder that contain image files
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">RoutedEventArgs object</param>
+		void DefaultImagesFolderButton_Click(object sender, RoutedEventArgs e)
+		{
+			//open and display FolderBrowserDialog
+			System.Windows.Forms.FolderBrowserDialog folderDialog = 
+					new System.Windows.Forms.FolderBrowserDialog();
+			folderDialog.Description = "Select the default folder for image files";
+			folderDialog.SelectedPath = userPrefs.DefaultImagesFolder;
+			
+			System.Windows.Forms.DialogResult res = folderDialog.ShowDialog();
+			if(res == System.Windows.Forms.DialogResult.OK)
+			{
+				// new folder selected, so update UserPreferences object
+				userPrefs.DefaultImagesFolder = folderDialog.SelectedPath;
+			}
+			e.Handled = true;
+		}
+		
 	}
 }

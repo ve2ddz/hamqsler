@@ -135,13 +135,26 @@ when you restart HamQSLer"
 						Margin="5" MinWidth="30" Click="DefaultCardFilesFolderButton_Click"
 						ToolTip="Select a new default folder">...</Button>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="ImagesFolder" Path="IsSelected" 
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Images Folder Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Margin="5" Grid.Row="0" Grid.Column="0">Default Images Folder:</TextBlock>
+				<TextBox Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"
+						Text="{Binding Path=DefaultImagesFolder}"/>
+				<Button Name="DefaultImagesFolderButton" Grid.Row="0" Grid.Column="2"
+						Margin="5" MinWidth="30" Click="DefaultImagesFolderButton_Click"
+						ToolTip="Select a new default folder">...</Button>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="DefaultTextFont" Path="IsSelected" 
