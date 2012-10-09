@@ -1,14 +1,21 @@
 ﻿<Window x:Class="hamqsler.UserPreferencesDialog"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Title="User Preferences" Height="500" Width="830">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:hamqsler"
+		xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"        
+        Title="User Preferences" Height="500" Width="830">
 	<Window.Resources>
 		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-	
+		
 		<Style TargetType="ListBoxItem">
 			<Setter Property="Margin" Value="5,1,5,1"/>
 		</Style>
-	</Window.Resources>	
+		<CollectionViewSource Source="{x:Static Fonts.SystemFontFamilies}" x:Key="fontCVS">
+			<CollectionViewSource.SortDescriptions>
+				<scm:SortDescription PropertyName="Source"/>
+			</CollectionViewSource.SortDescriptions>
+		</CollectionViewSource>
+	</Window.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
@@ -45,15 +52,15 @@
 		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="420">
 			<StackPanel Orientation="Horizontal">
 				<StackPanel.Visibility>
-					<Binding ElementName="VersionCheck" Path="IsSelected" 
+					<Binding ElementName="VersionCheck" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock Margin="5">Check for Program and Data File Updates:</TextBlock>
-				<CheckBox Name="programUpdatesCheckBox" Margin="5" 
-				          ToolTip="Check this if you want program to check website 
-for updates to program and associated data files"
-						  IsChecked="{Binding Path=CheckForNewVersions, Mode=TwoWay}"
-						  />
+				<CheckBox Name="programUpdatesCheckBox" Margin="5"
+				          ToolTip="Check this if you want program to check website
+				          for updates to program and associated data files"
+				          IsChecked="{Binding Path=CheckForNewVersions, Mode=TwoWay}"
+				/>
 			</StackPanel>
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -65,16 +72,16 @@ for updates to program and associated data files"
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 				<Grid.Visibility>
-					<Binding ElementName="ProxySettings" Path="IsSelected" 
+					<Binding ElementName="ProxySettings" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</Grid.Visibility>
 				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5">Proxy Server:</TextBlock>
 				<TextBox Grid.Row="0" Grid.Column="1"  Margin="5"
-						Text="{Binding Path=HttpProxyServer, Mode=TwoWay}"
+				         Text="{Binding Path=HttpProxyServer, Mode=TwoWay}"
 				/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5">Proxy Server Port:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" MaxLength="6" Margin="5"
-						Text="{Binding Path=HttpProxyServerPortNumber, Mode=TwoWay}"
+				         Text="{Binding Path=HttpProxyServerPortNumber, Mode=TwoWay}"
 				/>
 			</Grid>
 			<Grid>
@@ -88,23 +95,23 @@ for updates to program and associated data files"
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 				<Grid.Visibility>
-					<Binding ElementName="AdifFilesAndFolder" Path="IsSelected" 
+					<Binding ElementName="AdifFilesAndFolder" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</Grid.Visibility>
 				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
-						>Reload ADIF Files on Startup:</TextBlock>
+					>Reload ADIF Files on Startup:</TextBlock>
 				<CheckBox Name="reloadAdifCheckButton" Margin="5"
-						  Grid.Row="0" Grid.Column="1" 
+				          Grid.Row="0" Grid.Column="1"
 				          ToolTip="Check this if you want program to reload your ADIF
-files when you restart HamQSLer"
-						  IsChecked="{Binding Path=AdifReloadOnStartup, Mode=TwoWay}"/>
+				          files when you restart HamQSLer"
+				          IsChecked="{Binding Path=AdifReloadOnStartup, Mode=TwoWay}"/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
-						>Default ADIF Files Folder:</TextBlock>
+					>Default ADIF Files Folder:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
-						Text="{Binding Path=DefaultAdifFilesFolder}"/>
+				         Text="{Binding Path=DefaultAdifFilesFolder}"/>
 				<Button Name="DefaultAdifFilesFolderButton" Grid.Row="1" Grid.Column="2"
-						Margin="5" MinWidth="30" Click="DefaultAdifFilesFolderButton_Click"
-						ToolTip="Select a new default folder">...</Button>
+				        Margin="5" MinWidth="30" Click="DefaultAdifFilesFolderButton_Click"
+				        ToolTip="Select a new default folder">...</Button>
 			</Grid>
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -117,23 +124,23 @@ files when you restart HamQSLer"
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 				<Grid.Visibility>
-					<Binding ElementName="CardsFilesAndFolder" Path="IsSelected" 
+					<Binding ElementName="CardsFilesAndFolder" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</Grid.Visibility>
 				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
-						>Reload Card Files on Startup:</TextBlock>
+					>Reload Card Files on Startup:</TextBlock>
 				<CheckBox Name="reloadCardFilesCheckButton" Margin="5"
-						  Grid.Row="0" Grid.Column="1" 
+				          Grid.Row="0" Grid.Column="1"
 				          ToolTip="Check this if you want program to reload your cards
-when you restart HamQSLer"
-						  IsChecked="{Binding Path=CardsReloadOnStartup, Mode=TwoWay}"/>
+				          when you restart HamQSLer"
+				          IsChecked="{Binding Path=CardsReloadOnStartup, Mode=TwoWay}"/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
-						>Default Card Files Folder:</TextBlock>
+					>Default Card Files Folder:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
-						Text="{Binding Path=DefaultCardFilesFolder}"/>
+				         Text="{Binding Path=DefaultCardFilesFolder}"/>
 				<Button Name="DefaultCardFilesFolderButton" Grid.Row="1" Grid.Column="2"
-						Margin="5" MinWidth="30" Click="DefaultCardFilesFolderButton_Click"
-						ToolTip="Select a new default folder">...</Button>
+				        Margin="5" MinWidth="30" Click="DefaultCardFilesFolderButton_Click"
+				        ToolTip="Select a new default folder">...</Button>
 			</Grid>
 			<Grid >
 				<Grid.ColumnDefinitions>
@@ -145,124 +152,142 @@ when you restart HamQSLer"
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 				<Grid.Visibility>
-					<Binding ElementName="ImagesFolder" Path="IsSelected" 
+					<Binding ElementName="ImagesFolder" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</Grid.Visibility>
 				<TextBlock Margin="5" Grid.Row="0" Grid.Column="0">Default Images Folder:</TextBlock>
 				<TextBox Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"
-						Text="{Binding Path=DefaultImagesFolder}"/>
+				         Text="{Binding Path=DefaultImagesFolder}"/>
 				<Button Name="DefaultImagesFolderButton" Grid.Row="0" Grid.Column="2"
-						Margin="5" MinWidth="30" Click="DefaultImagesFolderButton_Click"
-						ToolTip="Select a new default folder">...</Button>
+				        Margin="5" MinWidth="30" Click="DefaultImagesFolderButton_Click"
+				        ToolTip="Select a new default folder">...</Button>
+			</Grid>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
+					<Binding ElementName="DefaultTextFont" Path="IsSelected"
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Default Text FontFace:</TextBlock>
+				<ComboBox ItemsSource="{Binding Source={StaticResource fontCVS}}"
+						  Text="{Binding DefaultTextItemsFontFace, Mode=TwoWay}" 
+				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5,300,5,5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">Sample:</TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1" Margin="5,300,5,5" FontSize="36"
+						FontFamily="{Binding DefaultTextItemsFontFace}" FontWeight="Bold"
+						>ABCDEFabcdef123456</TextBox>
 			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="DefaultTextFont" Path="IsSelected" 
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Default Text Font Properties</TextBlock>
-			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
-					<Binding ElementName="CallsignText" Path="IsSelected" 
+					<Binding ElementName="CallsignText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Callsign Text Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="NameAndQTHText" Path="IsSelected" 
+					<Binding ElementName="NameAndQTHText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Name and QTH Text Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="SalutationText" Path="IsSelected" 
+					<Binding ElementName="SalutationText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Salutation Text Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="DefaultQSOsBoxFont" Path="IsSelected" 
+					<Binding ElementName="DefaultQSOsBoxFont" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Default QSOs Box Font Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="ConfirmingText" Path="IsSelected" 
+					<Binding ElementName="ConfirmingText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Confirming Text Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="DateFormats" Path="IsSelected" 
+					<Binding ElementName="DateFormats" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Date Formats Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="HeaderText" Path="IsSelected" 
+					<Binding ElementName="HeaderText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Header Text Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="QSLText" Path="IsSelected" 
+					<Binding ElementName="QSLText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>QSL Text Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="MonthAbreviations" Path="IsSelected" 
+					<Binding ElementName="MonthAbreviations" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Month Abreviations Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="BandsFrequencies" Path="IsSelected" 
+					<Binding ElementName="BandsFrequencies" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Bands / Frequencies Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="DefaultPrinterAndPageSize" Path="IsSelected" 
+					<Binding ElementName="DefaultPrinterAndPageSize" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Default Printer and Page Size Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="BureauCardsPageLayout" Path="IsSelected" 
+					<Binding ElementName="BureauCardsPageLayout" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Bureau Cards Page Layout Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="_4x5CardsPageLayout" Path="IsSelected" 
+					<Binding ElementName="_4x5CardsPageLayout" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>4¼ X 5½ Inch Cards Page Layout Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="_4x6CardsPageLayout" Path="IsSelected" 
+					<Binding ElementName="_4x6CardsPageLayout" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>4 X 6 Inch Cards Page Layout Properties</TextBlock>
 			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
-					<Binding ElementName="PrintOptions" Path="IsSelected" 
+					<Binding ElementName="PrintOptions" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<TextBlock>Print Options Properties</TextBlock>
@@ -271,11 +296,11 @@ when you restart HamQSLer"
 		<Separator Grid.Row="1" Grid.ColumnSpan="2"/>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="2">
 			<Button Name="applyButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25"
-				Click="ApplyButton_Click">Apply</Button>
+			        Click="ApplyButton_Click">Apply</Button>
 			<Button Name="okButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25" IsDefault="True"
-				Click="OkButton_Click">OK</Button>
+			        Click="OkButton_Click">OK</Button>
 			<Button Name="cancelButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25" IsCancel="True"
-				Click="CancelButton_Click">Cancel</Button>
+			        Click="CancelButton_Click">Cancel</Button>
 		</StackPanel>
 	</Grid>
 </Window>

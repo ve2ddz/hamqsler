@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security;
 using System.Windows;
+using System.Windows.Media;
 using System.Xml.Serialization;
 
 namespace hamqsler
@@ -160,7 +161,8 @@ namespace hamqsler
 		// Default font face to display text items in
 		private static readonly DependencyProperty DefaultTextItemsFontFaceProperty =
 			DependencyProperty.Register("DefaultTextItemsFontFace", typeof(string),
-			                            typeof(UserPreferences), new PropertyMetadata("Arial"));
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata("Arial"));
 		public string DefaultTextItemsFontFace
 		{
 			get {return (string)GetValue(DefaultTextItemsFontFaceProperty);}
@@ -192,7 +194,8 @@ namespace hamqsler
 		// Default font face to display QSOs box text in
 		private static readonly DependencyProperty DefaultQsosBoxFontFaceProperty =
 			DependencyProperty.Register("DefaultQsosBoxFontFace", typeof(string),
-			                            typeof(UserPreferences), new PropertyMetadata("Arial"));
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata("Arial"));
 		public string DefaultQsosBoxFontFace
 		{
 			get {return (string)GetValue(DefaultQsosBoxFontFaceProperty);}
