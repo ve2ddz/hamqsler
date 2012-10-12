@@ -284,13 +284,49 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 					<ComboBoxItem>DD-MM-YY</ComboBoxItem>
 				</ComboBox>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="HeaderText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Header Text Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Time Header Text:</TextBlock>
+				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+						Text="{Binding TimeText, Mode=TwoWay}"
+						ToolTip="Text printed in Time column header in QSOs Box."/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Mode Header Text:</TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+						Text="{Binding ModeText, Mode=TwoWay}"
+						ToolTip="Text printed in Mode column header in QSOs Box."/>
+				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Band Header Text:</TextBlock>
+				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+						Text="{Binding BandText, Mode=TwoWay}"
+						ToolTip="Text printed in Band header in QSOs Box."/>
+				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Frequency Header Text:</TextBlock>
+				<TextBox Grid.Row="3" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+						 Text="{Binding FrequencyText, Mode=TwoWay}"
+						ToolTip="Text printed in Frequency header in QSOs Box."/>
+				<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>RST Header Text:</TextBlock>
+				<TextBox Grid.Row="4" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+						Text="{Binding RSTText, Mode=TwoWay}"
+						ToolTip="Text printed in RST header in QSOs Box."/>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="QSLText" Path="IsSelected"
