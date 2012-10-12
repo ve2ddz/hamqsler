@@ -166,7 +166,6 @@
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -208,13 +207,30 @@
 				</StackPanel.Visibility>
 				<TextBlock>Salutation Text Properties</TextBlock>
 			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="DefaultQSOsBoxFont" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Default QSOs Box Font Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Default QSOs Box FontFace:</TextBlock>
+				<ComboBox ItemsSource="{Binding Source={StaticResource fontCVS}}"
+						  Text="{Binding DefaultQsosBoxFontFace, Mode=TwoWay}" 
+				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5,300,5,5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">Sample:</TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1" Margin="5,300,5,5" FontSize="36"
+						FontFamily="{Binding DefaultTextItemsFontFace}" FontWeight="Bold"
+						>ABCDEFabcdef123456</TextBox>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="ConfirmingText" Path="IsSelected"
