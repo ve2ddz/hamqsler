@@ -238,13 +238,52 @@
 				</StackPanel.Visibility>
 				<TextBlock>Confirming Text Properties</TextBlock>
 			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="DateFormats" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Date Formats Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>YYYY-MM-DD Text:</TextBlock>
+				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding YYYYMMDDText,
+							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+							ToolTip="Text that is displayed in the header of the date column
+in the QSOs Box when the selected date format is 'YYYY-MM-DD'."/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>DD-MMM-YY Text:</TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding DDMMMYYText,
+							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+				         	ToolTip="Text that is displayed in the header of the date column
+in the QSOs Box when the selected date format is 'DD-MMM-YY'."/>
+
+				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>DD-MM-YY Text:</TextBlock>
+				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding  DDMMYYText,
+							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+				         	ToolTip="Text that is displayed in the header of the date column
+in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
+
+				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>Default Date Format:</TextBlock>
+				<ComboBox Grid.Row="3" Grid.Column="1" Margin="5" 
+				          	Text="{Binding DefaultDateFormat, Mode=TwoWay}" MaxWidth="250"
+							ToolTip="Date format that is initially applied when a new card is created.">
+					<ComboBoxItem>YYYY-MM-DD</ComboBoxItem>
+					<ComboBoxItem>DD-MMM-YY</ComboBoxItem>
+					<ComboBoxItem>DD-MM-YY</ComboBoxItem>
+				</ComboBox>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="HeaderText" Path="IsSelected"
