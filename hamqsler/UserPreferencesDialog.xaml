@@ -327,13 +327,37 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						Text="{Binding RSTText, Mode=TwoWay}"
 						ToolTip="Text printed in RST header in QSOs Box."/>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="QSLText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>QSL Text Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>QSL Header Text:</TextBlock>
+				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
+						Text="{Binding QSLText, Mode=TwoWay}"
+						ToolTip="Text displayed as header in the QSL column in QSOs Box."/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>QSL Please Text:</TextBlock>
+				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
+						Text="{Binding PseText, Mode=TwoWay}"
+						ToolTip="Text printed in QSL column for each QSO when 'QSL_RCVD' value is anything other than 'Yes'."/>
+				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>QSL Thanks Text:</TextBlock>
+				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
+						Text="{Binding TnxText, Mode=TwoWay}"
+						ToolTip="Text printed in QSL column for each QSO when 'QSL_RCVD' value is 'Yes'.}"/>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="MonthAbreviations" Path="IsSelected"
