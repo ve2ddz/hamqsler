@@ -34,6 +34,11 @@ namespace hamqsler
 	/// </summary>
 	public partial class UserPreferencesDialog : Window
 	{
+		// routed commands
+		public static RoutedCommand ApplyButtonCommand = new RoutedCommand();
+		public static RoutedCommand OkButtonCommand = new RoutedCommand();
+		public static RoutedCommand CancelButtonCommand = new RoutedCommand();
+
 		private UserPreferences userPrefs;
 		
 		public UserPreferencesDialog()
@@ -45,21 +50,43 @@ namespace hamqsler
 			propertiesDisplay.DataContext = userPrefs;
 		}
 		
-		void OkButton_Click(object sender, RoutedEventArgs e)
+		/// <summary>
+		/// Handles CanExecute command for OK and Cancel buttons
+		/// </summary>
+		/// <param name="sender">Not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void OkAndApplyButtonCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			if(Validation.GetHasError(F2190m))
+			{
+				e.CanExecute = false;
+			}
+		}
+		
+		/// <summary>
+		/// Handles OK button clicked event
+		/// </summary>
+		/// <param name="sender">Button that was clicked</param>
+		/// <param name="e">ExecutedRoutedEventArgs object</param>
+		private void OkAndApplyButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			userPrefs.SerializeAsXml();
 			((App)Application.Current).UserPreferences = userPrefs;
 			e.Handled = true;
-			this.Close();
+			Button button = sender as Button;
+			if(button != null && button.Name == "okButton")
+			{
+				this.Close();
+			}
 		}
 		
-		void ApplyButton_Click(object sender, RoutedEventArgs e)
-		{
-			((App)Application.Current).UserPreferences = userPrefs;
-			e.Handled = true;
-		}
-		
-		void CancelButton_Click(object sender, RoutedEventArgs e)
+		/// <summary>
+		/// Handles Cancel button clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void CancelButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			this.Close();
 		}
@@ -70,7 +97,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">RoutedEventArgs object</param>
-		void DefaultAdifFilesFolderButton_Click(object sender, RoutedEventArgs e)
+		private void DefaultAdifFilesFolderButton_Click(object sender, RoutedEventArgs e)
 		{
 			//open and display FolderBrowserDialog
 			System.Windows.Forms.FolderBrowserDialog folderDialog = 
@@ -93,7 +120,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">RoutedEventArgs object</param>
-		void DefaultCardFilesFolderButton_Click(object sender, RoutedEventArgs e)
+		private void DefaultCardFilesFolderButton_Click(object sender, RoutedEventArgs e)
 		{
 			//open and display FolderBrowserDialog
 			System.Windows.Forms.FolderBrowserDialog folderDialog = 
@@ -116,7 +143,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">RoutedEventArgs object</param>
-		void DefaultImagesFolderButton_Click(object sender, RoutedEventArgs e)
+		private void DefaultImagesFolderButton_Click(object sender, RoutedEventArgs e)
 		{
 			//open and display FolderBrowserDialog
 			System.Windows.Forms.FolderBrowserDialog folderDialog = 
@@ -132,6 +159,7 @@ namespace hamqsler
 			}
 			e.Handled = true;
 		}
+		
 		
 	}
 }

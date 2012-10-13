@@ -85,5 +85,11 @@
     <Page Include="SplashPage.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Qsos\Qsos.csproj">
+      <Project>{4457D328-BC0E-4D99-AB72-77A51D111B74}</Project>
+      <Name>Qsos</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

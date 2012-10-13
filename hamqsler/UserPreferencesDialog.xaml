@@ -10,12 +10,31 @@
 		<Style TargetType="ListBoxItem">
 			<Setter Property="Margin" Value="5,1,5,1"/>
 		</Style>
+		<Style TargetType="{x:Type TextBox}">
+			<Style.Triggers>
+				<Trigger Property="Validation.HasError" Value="True">
+					<Setter Property="ToolTip"
+						Value="{Binding RelativeSource={RelativeSource Self},
+								Path=(Validation.Errors)[0].ErrorContent}"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
 		<CollectionViewSource Source="{x:Static Fonts.SystemFontFamilies}" x:Key="fontCVS">
 			<CollectionViewSource.SortDescriptions>
 				<scm:SortDescription PropertyName="Source"/>
 			</CollectionViewSource.SortDescriptions>
 		</CollectionViewSource>
 	</Window.Resources>
+	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:UserPreferencesDialog.ApplyButtonCommand}"
+						Executed="OkAndApplyButtonCommand_Executed"
+						CanExecute="OkAndApplyButtonCommand_CanExecute"/>
+		<CommandBinding Command="{x:Static local:UserPreferencesDialog.OkButtonCommand}"
+						Executed="OkAndApplyButtonCommand_Executed"
+						CanExecute="OkAndApplyButtonCommand_CanExecute"/>
+		<CommandBinding Command="{x:Static local:UserPreferencesDialog.CancelButtonCommand}"
+						Executed="CancelButtonCommand_Executed"/>
+	</Window.CommandBindings>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
@@ -456,13 +475,58 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						Text="{Binding DecemberText, Mode=TwoWay}"
 						ToolTip="Text for December"/>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
 					<Binding ElementName="BandsFrequencies" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Bands / Frequencies Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.ColumnSpan="8" Margin="5,2,5,1" HorizontalAlignment="Center"
+						Foreground="Blue"
+						>Value to display in Frequency column in QSOs Box when a band is specified for a QSO,
+				</TextBlock>
+				<TextBlock Grid.Row="1" Grid.ColumnSpan="8" Margin="5,1,5,5" HorizontalAlignment="Center"
+						Foreground="Blue"
+						>but no frequency is specified. Values must be in MHz and within band limits.</TextBlock>
+				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">2190m:</TextBlock>
+				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="8"
+						Name="F2190m">
+					<TextBox.Text>
+						<Binding Path="Frequency2190m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+			</Grid>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="DefaultPrinterAndPageSize" Path="IsSelected"
@@ -502,11 +566,11 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 		<Separator Grid.Row="1" Grid.ColumnSpan="2"/>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="2">
 			<Button Name="applyButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25"
-			        Click="ApplyButton_Click">Apply</Button>
+			        Command="{x:Static local:UserPreferencesDialog.ApplyButtonCommand}">Apply</Button>
 			<Button Name="okButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25" IsDefault="True"
-			        Click="OkButton_Click">OK</Button>
+			        Command="{x:Static local:UserPreferencesDialog.OkButtonCommand}">OK</Button>
 			<Button Name="cancelButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25" IsCancel="True"
-			        Click="CancelButton_Click">Cancel</Button>
+			        Command="{x:Static local:UserPreferencesDialog.CancelButtonCommand}">Cancel</Button>
 		</StackPanel>
 	</Grid>
 </Window>

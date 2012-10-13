@@ -17,10 +17,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Qsos;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Security;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
@@ -32,7 +36,7 @@ namespace hamqsler
     /// It is serialized to file .hamqsler in the hamqsler folder
 	/// </summary>
 	[Serializable]
-	public class UserPreferences : DependencyObject
+	public class UserPreferences : DependencyObject, IDataErrorInfo
 	{
         /// <summary>
         /// Default callsign for the card
@@ -836,15 +840,51 @@ namespace hamqsler
         {
         	get {return userPreferencesFilename;}
         }
+        
+        // property required by IDataErrorInfo interface, but not used by WPF
+        public string Error
+        {
+        	get {return null;}
+        }
 
         /// <summary>
         ///  Default constructor used by the deserialization process.
         /// Do not call this directly, use the static CreateUserPreferences method instead
-
         /// </summary>
 		public UserPreferences()
 		{
 
+		}
+		
+		// Errorn handling for IDataErrorInfo interface
+		public string this[string propertyName]
+		{
+			get 
+			{
+				string result = null;
+				Regex regexData = new Regex("^[0-9,.]*$");
+				Regex regexDecimalSep = new Regex("[.,][0-9]*[,.]");
+				if(propertyName == "Frequency2190m")
+				{
+					if(regexDecimalSep.IsMatch(Frequency2190m))
+					   {
+					   	result = "Only a single decimal separator is allowed.";
+					   	return result;
+					   }
+					if(!regexData.IsMatch(Frequency2190m))
+					{
+						result = "Only numbers and a single decimal separator are allowed.";
+						return result;
+					}
+					HamBand band = HamBands.getHamBand("2190m");
+					float freq = float.Parse(Frequency2190m, NumberStyles.AllowDecimalPoint,
+					                    CultureInfo.InvariantCulture);
+					if(freq < band.LowerEdge || freq > band.UpperEdge)
+						result = string.Format("String must be between {0} and {1} MHz", 
+						                       band.LowerEdge, band.UpperEdge);
+				}
+				return result;
+			}
 		}
 		
 		/// <summary>
