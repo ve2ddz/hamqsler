@@ -58,7 +58,35 @@ namespace hamqsler
 		private void OkAndApplyButtonCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = true;
-			if(Validation.GetHasError(F2190m))
+			if(Validation.GetHasError(F2190m) ||
+			  Validation.GetHasError(F560m)	||
+			  Validation.GetHasError(F160m) ||
+			  Validation.GetHasError(F80m)	||
+			  Validation.GetHasError(F60m)	||
+			  Validation.GetHasError(F40m)	||
+			  Validation.GetHasError(F30m)	||
+			  Validation.GetHasError(F20m)	||
+			  Validation.GetHasError(F17m)	||
+			  Validation.GetHasError(F15m)	||
+			  Validation.GetHasError(F12m)	||
+			  Validation.GetHasError(F10m)	||
+			  Validation.GetHasError(F6m)	||
+			  Validation.GetHasError(F4m)	||
+			  Validation.GetHasError(F2m)	||
+			  Validation.GetHasError(F1p25m)||
+			  Validation.GetHasError(F70cm)	||
+			  Validation.GetHasError(F33cm)	||
+			  Validation.GetHasError(F23cm)	||
+			  Validation.GetHasError(F13cm)	||
+			  Validation.GetHasError(F9cm)	||
+			  Validation.GetHasError(F6cm)	||
+			  Validation.GetHasError(F3cm)	||
+			  Validation.GetHasError(F1p25cm) ||
+			  Validation.GetHasError(F6mm)	||
+			  Validation.GetHasError(F4mm)	||
+			  Validation.GetHasError(F2p5mm)||
+			  Validation.GetHasError(F2mm)	||
+			  Validation.GetHasError(F1mm))
 			{
 				e.CanExecute = false;
 			}

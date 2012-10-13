@@ -595,7 +595,7 @@ namespace hamqsler
 		// Frequency substitution for 4m
 		private static readonly DependencyProperty Frequency4mProperty = 
 			DependencyProperty.Register("Frequency4m", typeof(string),
-			                            typeof(UserPreferences), new PropertyMetadata("144"));
+			                            typeof(UserPreferences), new PropertyMetadata("70"));
 		public string Frequency4m
 		{
 			get {return (string)GetValue(Frequency4mProperty);}
@@ -605,7 +605,7 @@ namespace hamqsler
 		// Frequency substitution for 2m
 		private static readonly DependencyProperty Frequency2mProperty = 
 			DependencyProperty.Register("Frequency2m", typeof(string),
-			                            typeof(UserPreferences), new PropertyMetadata(string.Empty));
+			                            typeof(UserPreferences), new PropertyMetadata("144"));
 		public string Frequency2m
 		{
 			get {return (string)GetValue(Frequency2mProperty);}
@@ -856,7 +856,10 @@ namespace hamqsler
 
 		}
 		
-		// Errorn handling for IDataErrorInfo interface
+				
+		/// <summary>
+		/// Error handling for IDataErrorInfo interface
+		/// </summary>
 		public string this[string propertyName]
 		{
 			get 
@@ -864,20 +867,21 @@ namespace hamqsler
 				string result = null;
 				Regex regexData = new Regex("^[0-9,.]*$");
 				Regex regexDecimalSep = new Regex("[.,][0-9]*[,.]");
-				if(propertyName == "Frequency2190m")
+				HamBand band = null;
+				string strFreq = GetBandProperties(propertyName, out band);
+				if(strFreq != null)
 				{
-					if(regexDecimalSep.IsMatch(Frequency2190m))
-					   {
-					   	result = "Only a single decimal separator is allowed.";
-					   	return result;
-					   }
-					if(!regexData.IsMatch(Frequency2190m))
+					if(regexDecimalSep.IsMatch(strFreq))
+				   {
+				   	result = "Only a single decimal separator is allowed.";
+				   	return result;
+				   }
+					if(!regexData.IsMatch(strFreq))
 					{
 						result = "Only numbers and a single decimal separator are allowed.";
 						return result;
 					}
-					HamBand band = HamBands.getHamBand("2190m");
-					float freq = float.Parse(Frequency2190m, NumberStyles.AllowDecimalPoint,
+					float freq = float.Parse(strFreq, NumberStyles.AllowDecimalPoint,
 					                    CultureInfo.InvariantCulture);
 					if(freq < band.LowerEdge || freq > band.UpperEdge)
 						result = string.Format("String must be between {0} and {1} MHz", 
@@ -889,7 +893,6 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor used to create a clone of a UserPrefs object
-
 		/// </summary>
 		/// <param name="userPrefs">UserPreferences object to clone</param>
 		public UserPreferences(UserPreferences prefs)
@@ -1431,5 +1434,131 @@ namespace hamqsler
                 if (fStream != null)
                     fStream.Close();
             }
-        }	}
+        }	
+        
+        private string GetBandProperties(string property, out HamBand band)
+        {
+        	string freq = null;
+        	band = null;
+        	switch (property) {
+        		case "Frequency2190m":
+        			freq = Frequency2190m;
+        			band = HamBands.getHamBand("2190m");
+        			break;
+        		case "Frequency560m":
+        			freq = Frequency560m;
+        			band = HamBands.getHamBand("560m");
+        			break;
+        		case "Frequency160m":
+        			freq = Frequency160m;
+        			band = HamBands.getHamBand("160m");
+        			break;
+        		case "Frequency80m":
+        			freq = Frequency80m;
+        			band = HamBands.getHamBand("80m");
+        			break;
+        		case "Frequency60m":
+        			freq = Frequency60m;
+        			band = HamBands.getHamBand("60m");
+        			break;
+        		case "Frequency40m":
+        			freq = Frequency40m;
+        			band = HamBands.getHamBand("40m");
+        			break;
+        		case "Frequency30m":
+        			freq = Frequency30m;
+        			band = HamBands.getHamBand("30m");
+        			break;
+        		case "Frequency20m":
+        			freq = Frequency20m;
+        			band = HamBands.getHamBand("20m");
+        			break;
+        		case "Frequency17m":
+        			freq = Frequency17m;
+        			band = HamBands.getHamBand("17m");
+        			break;
+        		case "Frequency15m":
+        			freq = Frequency15m;
+        			band = HamBands.getHamBand("15m");
+        			break;
+        		case "Frequency12m":
+        			freq = Frequency12m;
+        			band = HamBands.getHamBand("12m");
+        			break;
+        		case "Frequency10m":
+        			freq = Frequency10m;
+        			band = HamBands.getHamBand("10m");
+        			break;
+        		case "Frequency6m":
+        			freq = Frequency6m;
+        			band = HamBands.getHamBand("6m");
+        			break;
+        		case "Frequency4m":
+        			freq = Frequency4m;
+        			band = HamBands.getHamBand("4m");
+        			break;
+        		case "Frequency2m":
+        			freq = Frequency2m;
+        			band = HamBands.getHamBand("2m");
+        			break;
+        		case "Frequency1p25m":
+        			freq = Frequency1p25m;
+        			band = HamBands.getHamBand("1.25m");
+        			break;
+        		case "Frequency70cm":
+        			freq = Frequency70cm;
+        			band = HamBands.getHamBand("70cm");
+        			break;
+        		case "Frequency33cm":
+        			freq = Frequency33cm;
+        			band = HamBands.getHamBand("33cm");
+        			break;
+        		case "Frequency23cm":
+        			freq = Frequency23cm;
+        			band = HamBands.getHamBand("23cm");
+        			break;
+        		case "Frequency13cm":
+        			freq = Frequency13cm;
+        			band = HamBands.getHamBand("13cm");
+        			break;
+        		case "Frequency9cm":
+        			freq = Frequency9cm;
+        			band = HamBands.getHamBand("9cm");
+        			break;
+        		case "Frequency6cm":
+        			freq = Frequency6cm;
+        			band = HamBands.getHamBand("6cm");
+        			break;
+        		case "Frequency3cm":
+        			freq = Frequency3cm;
+        			band = HamBands.getHamBand("3cm");
+        			break;
+        		case "Frequency1p25cm":
+        			freq = Frequency1p25cm;
+        			band = HamBands.getHamBand("1.25cm");
+        			break;
+        		case "Frequency6mm":
+        			freq = Frequency6mm;
+        			band = HamBands.getHamBand("6mm");
+        			break;
+        		case "Frequency4mm":
+        			freq = Frequency4mm;
+        			band = HamBands.getHamBand("4mm");
+        			break;
+        		case "Frequency2p5mm":
+        			freq = Frequency2p5mm;
+        			band = HamBands.getHamBand("2.5mm");
+        			break;
+        		case "Frequency2mm":
+        			freq = Frequency2mm;
+        			band = HamBands.getHamBand("2mm");
+        			break;
+        		case "Frequency1mm":
+        			freq = Frequency1mm;
+        			band = HamBands.getHamBand("1mm");
+        			break;
+        	}
+        	return freq;
+        }
+	}
 }

@@ -45,7 +45,8 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<ListBox Grid.Column="0" Grid.Row="0" Margin="5" MaxHeight="420">
+		<ListBox Grid.Column="0" Grid.Row="0" Margin="5" MaxHeight="420" Name="propertiesBox"
+				IsEnabled="{Binding ElementName=okButton, Path=IsEnabled}">
 			<ListBoxItem Name="VersionCheck">Program Version Check</ListBoxItem>
 			<ListBoxItem Name="ProxySettings">HTTP Proxy Settings</ListBoxItem>
 			<ListBoxItem Name="AdifFilesAndFolder">ADIF Files and Folder</ListBoxItem>
@@ -499,8 +500,6 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 				<Grid.Visibility>
 					<Binding ElementName="BandsFrequencies" Path="IsSelected"
@@ -515,10 +514,374 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						>but no frequency is specified. Values must be in MHz and within band limits.</TextBlock>
 				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">2190m:</TextBlock>
-				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="8"
+				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F2190m">
 					<TextBox.Text>
 						<Binding Path="Frequency2190m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">560m:</TextBlock>
+				<TextBox Grid.Row="3" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F560m">
+					<TextBox.Text>
+						<Binding Path="Frequency560m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">160m:</TextBlock>
+				<TextBox Grid.Row="4" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F160m">
+					<TextBox.Text>
+						<Binding Path="Frequency160m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">80m:</TextBlock>
+				<TextBox Grid.Row="5" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F80m">
+					<TextBox.Text>
+						<Binding Path="Frequency80m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">60m:</TextBlock>
+				<TextBox Grid.Row="6" Grid.Column="1" Margin="5" MaxWidth="70" MaxLength="8"
+						Name="F60m">
+					<TextBox.Text>
+						<Binding Path="Frequency60m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="7" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">40m:</TextBlock>
+				<TextBox Grid.Row="7" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F40m">
+					<TextBox.Text>
+						<Binding Path="Frequency40m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="8" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">30m:</TextBlock>
+				<TextBox Grid.Row="8" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F30m">
+					<TextBox.Text>
+						<Binding Path="Frequency30m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="9" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">20m:</TextBlock>
+				<TextBox Grid.Row="9" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F20m">
+					<TextBox.Text>
+						<Binding Path="Frequency20m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="10" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">17m:</TextBlock>
+				<TextBox Grid.Row="10" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F17m">
+					<TextBox.Text>
+						<Binding Path="Frequency17m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="11" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">15m:</TextBlock>
+				<TextBox Grid.Row="11" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F15m">
+					<TextBox.Text>
+						<Binding Path="Frequency15m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="2" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">12m:</TextBlock>
+				<TextBox Grid.Row="2" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F12m">
+					<TextBox.Text>
+						<Binding Path="Frequency12m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">10m:</TextBlock>
+				<TextBox Grid.Row="3" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F10m">
+					<TextBox.Text>
+						<Binding Path="Frequency10m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">6m:</TextBlock>
+				<TextBox Grid.Row="4" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F6m">
+					<TextBox.Text>
+						<Binding Path="Frequency6m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">4m:</TextBlock>
+				<TextBox Grid.Row="5" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F4m">
+					<TextBox.Text>
+						<Binding Path="Frequency4m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">2m:</TextBlock>
+				<TextBox Grid.Row="6" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F2m">
+					<TextBox.Text>
+						<Binding Path="Frequency2m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="7" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">1.25m:</TextBlock>
+				<TextBox Grid.Row="7" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F1p25m">
+					<TextBox.Text>
+						<Binding Path="Frequency1p25m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="8" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">70cm:</TextBlock>
+				<TextBox Grid.Row="8" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F70cm">
+					<TextBox.Text>
+						<Binding Path="Frequency70cm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="9" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">33cm:</TextBlock>
+				<TextBox Grid.Row="9" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F33cm">
+					<TextBox.Text>
+						<Binding Path="Frequency33cm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="10" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">23cm:</TextBlock>
+				<TextBox Grid.Row="10" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F23cm">
+					<TextBox.Text>
+						<Binding Path="Frequency23cm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="11" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">13cm:</TextBlock>
+				<TextBox Grid.Row="11" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F13cm">
+					<TextBox.Text>
+						<Binding Path="Frequency13cm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="2" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">9cm:</TextBlock>
+				<TextBox Grid.Row="2" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F9cm">
+					<TextBox.Text>
+						<Binding Path="Frequency9cm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="3" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">6cm:</TextBlock>
+				<TextBox Grid.Row="3" Grid.Column="7" Margin="5" MaxWidth="70" MaxLength="8"
+						Name="F6cm">
+					<TextBox.Text>
+						<Binding Path="Frequency6cm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="4" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">3cm:</TextBlock>
+				<TextBox Grid.Row="4" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F3cm">
+					<TextBox.Text>
+						<Binding Path="Frequency3cm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="5" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">1.25cm:</TextBlock>
+				<TextBox Grid.Row="5" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F1p25cm">
+					<TextBox.Text>
+						<Binding Path="Frequency1p25cm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="6" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">6mm:</TextBlock>
+				<TextBox Grid.Row="6" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F6mm">
+					<TextBox.Text>
+						<Binding Path="Frequency6mm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="7" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">4mm:</TextBlock>
+				<TextBox Grid.Row="7" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F4mm">
+					<TextBox.Text>
+						<Binding Path="Frequency4mm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="8" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">2.5mm:</TextBlock>
+				<TextBox Grid.Row="8" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F2p5mm">
+					<TextBox.Text>
+						<Binding Path="Frequency2p5mm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="9" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">2mm:</TextBlock>
+				<TextBox Grid.Row="9" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F2mm">
+					<TextBox.Text>
+						<Binding Path="Frequency2mm" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="10" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">1mm:</TextBlock>
+				<TextBox Grid.Row="10" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F1mm">
+					<TextBox.Text>
+						<Binding Path="Frequency1mm" NotifyOnValidationError="True"
 						UpdateSourceTrigger="PropertyChanged">
 							<Binding.ValidationRules>
 								<DataErrorValidationRule/>
