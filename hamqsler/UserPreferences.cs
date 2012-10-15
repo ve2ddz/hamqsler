@@ -1436,10 +1436,25 @@ namespace hamqsler
             }
         }	
         
+        /// <summary>
+        /// Retrieves both the text to display in the frequency column for a band when no freq is specified,
+        /// and the HamBand object for the band
+        /// </summary>
+        /// <param name="property">Name of the UserPreferences property that contains the text</param>
+        /// <param name="band">HamBand object that corresponds to the property</param>
+        /// <returns>String that contains the text to display</returns>
         private string GetBandProperties(string property, out HamBand band)
         {
         	string freq = null;
         	band = null;
+        	// At first glance this would appear to be a good candidate for polymorphism.
+        	// However, this is called from the IDataErrorInfo validation routine (this[string propName])
+        	// where only the property name as a string is provided. The only solution I can think of
+        	// is to create a Dictionary whose key is the property name and value contains
+        	// both the address of the property and the band name. This would tend to require even
+        	// more code to be written, and would obfuscate what is actually going on.
+        	// HACK: When adding new bands, be sure to add a case in this switch
+        	// HACK: Is there a way to convert a property name to call the actual property?
         	switch (property) {
         		case "Frequency2190m":
         			freq = Frequency2190m;
