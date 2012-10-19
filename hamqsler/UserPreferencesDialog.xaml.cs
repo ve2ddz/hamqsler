@@ -102,7 +102,7 @@ namespace hamqsler
 			userPrefs.SerializeAsXml();
 			((App)Application.Current).UserPreferences = userPrefs;
 			e.Handled = true;
-			Button button = sender as Button;
+			Button button = e.OriginalSource as Button;
 			if(button != null && button.Name == "okButton")
 			{
 				this.Close();
