@@ -45,26 +45,36 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<ListBox Grid.Column="0" Grid.Row="0" Margin="5" MaxHeight="420" Name="propertiesBox"
+		<TreeView Grid.Column="0" Grid.Row="0" Margin="5" MaxHeight="420" Name="propertiesBox"
 				IsEnabled="{Binding ElementName=okButton, Path=IsEnabled}">
-			<ListBoxItem Name="VersionCheck">Program Version Check</ListBoxItem>
-			<ListBoxItem Name="ProxySettings">HTTP Proxy Settings</ListBoxItem>
-			<ListBoxItem Name="AdifFilesAndFolder">ADIF Files and Folder</ListBoxItem>
-			<ListBoxItem Name="CardsFilesAndFolder">Cards Files and Folder</ListBoxItem>
-			<ListBoxItem Name="ImagesFolder">Images Folder</ListBoxItem>
-			<ListBoxItem Name="DefaultTextFont">Default Text Font</ListBoxItem>
-			<ListBoxItem Name="CallsignText">Callsign Text</ListBoxItem>
-			<ListBoxItem Name="NameAndQTHText">Name and QTH Text</ListBoxItem>
-			<ListBoxItem Name="SalutationText">Salutation Text</ListBoxItem>
-			<ListBoxItem Name="DefaultQSOsBoxFont">Default QSOs Box Font</ListBoxItem>
-			<ListBoxItem Name="ConfirmingText">Confirming Text</ListBoxItem>
-			<ListBoxItem Name="DateFormats">Date Formats</ListBoxItem>
-			<ListBoxItem Name="HeaderText">Header Text</ListBoxItem>
-			<ListBoxItem Name="QSLText">QSL Text</ListBoxItem>
-			<ListBoxItem Name="MonthAbreviations">Month Abreviations</ListBoxItem>
-			<ListBoxItem Name="BandsFrequencies">Bands / Frequencies</ListBoxItem>
-			<ListBoxItem Name="PrintOptions">Print Options</ListBoxItem>
-		</ListBox>
+			<TreeViewItem Header="Program">
+				<TreeViewItem Name="VersionCheck" Header="Program Version Check"/>
+				<TreeViewItem Name="ProxySettings" Header="HTTP Proxy Settings"/>
+			</TreeViewItem>			
+			<TreeViewItem Header="Files and Folders">
+				<TreeViewItem Name="AdifFilesAndFolder" Header="ADIF Files and Folder"/>
+				<TreeViewItem Name="CardsFilesAndFolder" Header="Cards Files and Folder"/>
+				<TreeViewItem Name="ImagesFolder" Header="Images Folder"/>
+			</TreeViewItem>
+			<TreeViewItem Header="TextItems">
+				<TreeViewItem Name="DefaultTextFont" Header="Default Text Font"/>
+				<TreeViewItem Name="CallsignText" Header="Callsign Text"/>
+				<TreeViewItem Name="NameAndQTHText" Header="Name and QTH Text"/>
+				<TreeViewItem Name="SalutationText" Header="Salutation Text"/>
+			</TreeViewItem>
+			<TreeViewItem Header="QSOs Box">
+				<TreeViewItem Name="DefaultQSOsBoxFont" Header="Default QSOs Box Font"/>
+				<TreeViewItem Name="ConfirmingText" Header="Confirming Text"/>
+				<TreeViewItem Name="DateFormats" Header="Date Formats"/>
+				<TreeViewItem Name="HeaderText" Header="Header Text"/>
+				<TreeViewItem Name="QSLText" Header="QSL Text"/>
+				<TreeViewItem Name="MonthAbreviations" Header="Month Abreviations"/>
+				<TreeViewItem Name="BandsFrequencies" Header="Bands / Frequencies"/>
+			</TreeViewItem>
+			<TreeViewItem Header="Print Settings">
+				<TreeViewItem Name="PrintOptions" Header="Print Options"/>
+			</TreeViewItem>
+		</TreeView>
 		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="420">
 			<StackPanel Orientation="Horizontal">
 				<StackPanel.Visibility>
