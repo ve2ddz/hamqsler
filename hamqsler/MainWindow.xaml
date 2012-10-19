@@ -12,8 +12,7 @@
 						Executed="UserPreferencesCommand_Executed"/>
 	</Window.CommandBindings>
 	<DockPanel>
-		<Menu
-			DockPanel.Dock="Top">
+		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="Cards">
 				<MenuItem Header="_New">
 					<MenuItem Header="Bureau Card"/>
@@ -62,6 +61,11 @@
 				<MenuItem Header="View Log File..."/>
 			</MenuItem>
 		</Menu>
-		<TabControl></TabControl>
+		<TabControl Margin="5">
+			<TabItem Header="QSOs">
+				<local:QSOsView Margin="3">
+				</local:QSOsView>
+			</TabItem>
+		</TabControl>
 	</DockPanel>
 </Window>
