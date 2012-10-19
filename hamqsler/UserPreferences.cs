@@ -752,50 +752,6 @@ namespace hamqsler
 			set {SetValue(Frequency1mmProperty, value);}
 		}
 		
-		// Default printer
-		private static readonly DependencyProperty DefaultPrinterProperty = 
-			DependencyProperty.Register("DefaultPrinter", typeof(string),
-			                            typeof(UserPreferences), new PropertyMetadata(string.Empty));
-		public string DefaultPrinter
-		{
-			get {return (string)GetValue(DefaultPrinterProperty);}
-			set {SetValue(DefaultPrinterProperty, value);}
-		}
-		
-		// Default page size
-		private static readonly DependencyProperty DefaultPageSizeProperty = 
-			DependencyProperty.Register("DefaultPageSize", typeof(string),
-			                            typeof(UserPreferences), new PropertyMetadata(string.Empty));
-		public string DefaultPageSize
-		{
-			get {return (string)GetValue(DefaultPageSizeProperty);}
-			set {SetValue(DefaultPageSizeProperty, value);}
-		}
-		
-		// 3.5 by 5.5 cards layout
-/*		private CardLayout2.OrientationLayout bureauOrientationLayout = CardLayout2.OrientationLayout.PTL;
-		public CardLayout2.OrientationLayout BureauOrientationLayout
-		{
-			get {return bureauOrientationLayout;}
-			set {bureauOrientationLayout = value;}
-		}
-		
-		// 4.25 by 5.5 cards layout
-		private CardLayout2.OrientationLayout fourX5OrientationLayout = CardLayout2.OrientationLayout.PTL;
-		public CardLayout2.OrientationLayout FourX5OrientationLayout
-		{
-			get {return fourX5OrientationLayout;}
-			set {fourX5OrientationLayout = value;}
-		}
-		
-		// 4 by 6 cards layout
-		private CardLayout2.OrientationLayout fourX6OrientationLayout = CardLayout2.OrientationLayout.PTL;
-		public CardLayout2.OrientationLayout FourX6OrientationLayout
-		{
-			get {return fourX6OrientationLayout;}
-			set {fourX6OrientationLayout = value;}
-		}*/
-		
 		// Print card outlines
 		private static readonly DependencyProperty PrintCardOutlinesProperty = 
 			DependencyProperty.Register("PrintCardOutlines", typeof(bool),
@@ -967,11 +923,6 @@ namespace hamqsler
 			Frequency2p5mm = prefs.Frequency2p5mm;
 			Frequency2mm = prefs.Frequency2mm;
 			Frequency1mm = prefs.Frequency1mm;
-			DefaultPrinter = prefs.DefaultPrinter;
-			DefaultPageSize = prefs.DefaultPageSize;
-//			BureauOrientationLayout = prefs.BureauOrientationLayout;
-//			FourX5OrientationLayout = prefs.FourX5OrientationLayout;
-//			FourX6OrientationLayout = prefs.FourX6OrientationLayout;
 			PrintCardOutlines = prefs.PrintCardOutlines;
 			FillLastPageWithBlankCards = prefs.FillLastPageWithBlankCards;
 			SetCardMarginsToPrinterPageMargins = prefs.SetCardMarginsToPrinterPageMargins;

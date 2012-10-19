@@ -63,10 +63,6 @@
 			<ListBoxItem Name="QSLText">QSL Text</ListBoxItem>
 			<ListBoxItem Name="MonthAbreviations">Month Abreviations</ListBoxItem>
 			<ListBoxItem Name="BandsFrequencies">Bands / Frequencies</ListBoxItem>
-			<ListBoxItem Name="DefaultPrinterAndPageSize">Default Printer and Page Size</ListBoxItem>
-			<ListBoxItem Name="BureauCardsPageLayout">Bureau Cards Page Layout</ListBoxItem>
-			<ListBoxItem Name="_4x5CardsPageLayout">4¼ X 5½ Inch Cards Page Layout</ListBoxItem>
-			<ListBoxItem Name="_4x6CardsPageLayout">4 X 6 Inch (10 X 15 cm) Cards Page Layout</ListBoxItem>
 			<ListBoxItem Name="PrintOptions">Print Options</ListBoxItem>
 		</ListBox>
 		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="420">
@@ -890,34 +886,6 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 					</TextBox.Text>
 				</TextBox>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
-					<Binding ElementName="DefaultPrinterAndPageSize" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Default Printer and Page Size Properties</TextBlock>
-			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
-					<Binding ElementName="BureauCardsPageLayout" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Bureau Cards Page Layout Properties</TextBlock>
-			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
-					<Binding ElementName="_4x5CardsPageLayout" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>4¼ X 5½ Inch Cards Page Layout Properties</TextBlock>
-			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
-					<Binding ElementName="_4x6CardsPageLayout" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>4 X 6 Inch Cards Page Layout Properties</TextBlock>
-			</StackPanel>
 			<StackPanel>
 				<StackPanel.Visibility>
 					<Binding ElementName="PrintOptions" Path="IsSelected"
