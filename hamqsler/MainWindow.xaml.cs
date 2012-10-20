@@ -44,6 +44,7 @@ namespace hamqsler
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
 		public static RoutedCommand AddQsosCommand = new RoutedCommand();
 		public static RoutedCommand ClearQsosCommand = new RoutedCommand();
+		public static RoutedCommand ExportQsosCommand = new RoutedCommand();
 		public static RoutedCommand UserPreferencesCommand = new RoutedCommand();
 		
 		public MainWindow()
@@ -51,13 +52,32 @@ namespace hamqsler
 			InitializeComponent();
 		}
 		
-		
+		/// <summary>
+		/// CanExecute routine for Add Qsos menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void AddQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = qsosView.DisplayQsos.Count > 0;
 		}
 		
+		/// <summary>
+		/// CanExecute routine for Clear Qsos menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void ClearQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = qsosView.DisplayQsos.Count > 0;
+		}
+		
+		/// <summary>
+		/// CanExecute routine for Export Qsos menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void ExportQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = qsosView.DisplayQsos.Count > 0;
 		}
@@ -145,6 +165,42 @@ namespace hamqsler
 		{
 			qsosView.DisplayQsos.Clear();
 		}
-
+		
+		/// <summary>
+		/// Handles Export Qsos menu item processing
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void ExportQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// get QSOs as Adif stream in bytes
+			Byte[] asciiAdif = qsosView.DisplayQsos.GetQsosAsAdif2();
+			// determine file to store in
+			SaveFileDialog saveDialog = new SaveFileDialog();
+			saveDialog.InitialDirectory = 
+				((App)Application.Current).UserPreferences.DefaultAdifFilesFolder;
+			saveDialog.Filter = "Adif files (*.adi) | *.adi";
+			saveDialog.Title = "Select File to Save QSOs to";
+			if(saveDialog.ShowDialog() == true)
+			{
+				string fileName = saveDialog.FileName;
+				// make sure filename ends in .adi
+				if(fileName.Substring(fileName.Length-4).ToLower() != ".adi")
+				{
+					fileName += ".adi";
+				}
+				if(File.Exists(fileName))
+				{
+					File.Delete(fileName);
+				}
+				// write stream to file
+				StreamWriter writer = File.CreateText(fileName);
+				foreach(byte b in asciiAdif)
+				{
+					writer.Write(Convert.ToChar(b).ToString());
+				}
+				writer.Close();
+			}
+		}
 	}
 }

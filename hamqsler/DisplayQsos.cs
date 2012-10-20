@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace hamqsler
 {
@@ -202,6 +204,53 @@ namespace hamqsler
 				adif = adif.Substring(index + 5);   // remove qso from the string
 			}
 			return null;
+		}
+		
+		/// <summary>
+		/// Generates a byte array containing QSO info in Adif 2 format (ASCII)
+		/// </summary>
+		/// <returns>Byte array containing Adif file contents in ASCII</returns>
+		public Byte[] GetQsosAsAdif2()
+		{
+			string adif = GenerateAdifHeader();		// generate header
+			// add each QSO
+			foreach(QsoWithInclude qwi in this)
+			{
+				Qso qso = qwi.Qso;
+				if(IsDirty)
+				{
+					qso.setField("qsl_sent_via", qwi.Manager);
+				}
+				adif += qso.ToAdifString() + "\r\n";
+			}
+			// change encoding to ASCII
+			ASCIIEncoding ascii = new ASCIIEncoding();
+			Byte[] encodedBytes = ascii.GetBytes(adif);
+			return encodedBytes;
+		}
+		
+		/// <summary>
+		/// Create ADIF header
+		/// </summary>
+		/// <returns>string containing ADIF header</returns>
+		private string GenerateAdifHeader()
+		{
+			// build the ADIF header
+			string vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			DateTime now = DateTime.Now.ToUniversalTime();
+			string datetime = string.Format("{0:D4}-{1:D2}-{2:D2} {3:D2}:{4:D2}:{5:D2} UTC",
+			                                now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
+			string adif = string.Format("ADIF file created by HamQSLer version {0}\r\n"
+			                            + "Copyright (c) 2012 - {1} by VA3HJ Software\r\n"
+			                            + "http://www.va3hj.ca\r\n\r\n"
+			                            + "Created: {2}\r\n\r\n"
+			                            + "<ADIF_VERS:3>2.0\r\n"
+			                            + "<PROGRAM:8>HamQSLer\r\n"
+			                            + "<PROGRAMVERSION:{3}>{0}\r\n"
+			                            + "<EOH>\r\n",
+			                            vers, now.Year, datetime,
+			                            vers.Length);
+			return adif;
 		}
 	}
 }

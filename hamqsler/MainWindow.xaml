@@ -14,6 +14,8 @@
 						Executed="AddQsosCommand_Executed" CanExecute="AddQsosCommand_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.ClearQsosCommand}"
 						Executed="ClearQsosCommand_Executed" CanExecute="ClearQsosCommand_CanExecute"/>
+		<CommandBinding Command="{x:Static local:MainWindow.ExportQsosCommand}"
+						Executed="ExportQsosCommand_Executed" CanExecute="ExportQsosCommand_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.UserPreferencesCommand}"
 						Executed="UserPreferencesCommand_Executed"/>
 	</Window.CommandBindings>
@@ -47,7 +49,8 @@
 						Command="{x:Static local:MainWindow.AddQsosCommand}"/>
 				<MenuItem Header="Clear QSOs"
 						Command="{x:Static local:MainWindow.ClearQsosCommand}"/>
-				<MenuItem Header="Export QSOs..."/>
+				<MenuItem Header="Export QSOs..."
+						Command="{x:Static local:MainWindow.ExportQsosCommand}"/>
 				<Separator/>
 				<MenuItem Header="Include All QSOs"/>
 				<MenuItem Header="Exclude All QSOs"/>
