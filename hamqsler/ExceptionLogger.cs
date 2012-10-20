@@ -18,7 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+using Qsos;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace hamqsler
 	/// <summary>
 	/// Class for handling the logging and display of exceptions
 	/// </summary>
-    public class ExceptionLogger
+	public class ExceptionLogger : Qsos.Logger
     {
     	public const bool SHOWTRACE = true;
     	public const bool DONTSHOWTRACE = false;

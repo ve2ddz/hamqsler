@@ -147,9 +147,13 @@ namespace hamqsler
 		{
 			include = true;
 			callsign = q.getValue("Call");
-			manager = q.getValue("qsl_via");
-			date = q.getValue("date");
-			time = q.getValue("time");
+			manager = q.getValue("qsl_via", string.Empty);
+			date = q.getValue("qso_date");
+			time = q.getValue("time_on", null);
+			if(time == null)
+			{
+				time = q.getValue("time_off", string.Empty);
+			}
 			band = q.getValue("band", string.Empty);
 			frequency = q.getValue("freq", string.Empty);
 			mode = q.getValue("mode");

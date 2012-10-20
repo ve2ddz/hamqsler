@@ -19,34 +19,17 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace hamqsler
 {
 	/// <summary>
-	/// Interaction logic for QSOsView.xaml
+	/// Comparer for QsoWithInclude objects (compares on DateTime property)
 	/// </summary>
-	public partial class QSOsView : UserControl
+	public class DateTimeComparer : Comparer<QsoWithInclude>
 	{
-		private static DependencyProperty DisplayQsosProperty = DependencyProperty.Register(
-			"DisplayQsos", typeof(DisplayQsos), typeof(MainWindow), 
-			new PropertyMetadata(new DisplayQsos()));
-		public DisplayQsos DisplayQsos
+		public override int Compare(QsoWithInclude q1, QsoWithInclude q2)
 		{
-			get {return (DisplayQsos)GetValue(DisplayQsosProperty);}
-			set {SetValue(DisplayQsosProperty, value);}
-		}
-		
-
-		public QSOsView()
-		{
-			InitializeComponent();
+			return q1.DateTime.CompareTo(q2.DateTime);
 		}
 	}
 }

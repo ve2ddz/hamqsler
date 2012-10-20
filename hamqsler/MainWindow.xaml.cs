@@ -17,8 +17,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Microsoft.Win32;
+using Qsos;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +29,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace hamqsler
 {
@@ -34,6 +38,7 @@ namespace hamqsler
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
 		public static RoutedCommand UserPreferencesCommand = new RoutedCommand();
 		
 		public MainWindow()
@@ -56,6 +61,41 @@ namespace hamqsler
 		{
 			UserPreferencesDialog userPrefsDialog = new UserPreferencesDialog();
 			userPrefsDialog.ShowDialog();
+		}
+		
+		/// <summary>
+		/// Handles Input Qsos menu item processing
+		/// </summary>
+		/// <param name="sender">not used </param>
+		/// <param name="e">not used</param>
+		public void ImportQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// create and show an OpenFileDialog to get the ADIF file to load
+			OpenFileDialog openDialog = new OpenFileDialog();
+			openDialog.InitialDirectory = ((App)Application.Current).UserPreferences.DefaultAdifFilesFolder;
+			openDialog.Multiselect = false;
+			openDialog.Filter = "Adif Files (*.adi)|*.adi";
+			openDialog.CheckFileExists = true;
+			if(openDialog.ShowDialog() == true)
+			{
+				// get the file name
+				string adifFileName = openDialog.FileName;
+				try
+				{
+					// import the QSOs from the ADIF file
+					string error = qsosView.DisplayQsos.ImportQsos(adifFileName);
+					if(error != null)
+					{
+						MessageBox.Show(error, "Import Error", MessageBoxButton.OK,
+						                MessageBoxImage.Warning);
+					}
+				}
+				catch(Exception ex)
+				{
+					App.Logger.Log(ex);
+					return;
+				}
+			}
 		}
 	}
 }

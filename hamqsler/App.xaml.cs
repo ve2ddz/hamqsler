@@ -41,7 +41,7 @@ namespace hamqsler
 		}
 		
 		private static readonly string hamqslerFolder = Environment.GetFolderPath(
-        		Environment.SpecialFolder.MyDocuments) + "/hamqsler/";
+        		Environment.SpecialFolder.MyDocuments) + "\\hamqsler\\";
 		public string HamqslerFolder
 		{
 			get {return hamqslerFolder;}
