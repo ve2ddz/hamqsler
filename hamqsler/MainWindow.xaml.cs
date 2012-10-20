@@ -43,6 +43,7 @@ namespace hamqsler
 
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
 		public static RoutedCommand AddQsosCommand = new RoutedCommand();
+		public static RoutedCommand ClearQsosCommand = new RoutedCommand();
 		public static RoutedCommand UserPreferencesCommand = new RoutedCommand();
 		
 		public MainWindow()
@@ -52,6 +53,11 @@ namespace hamqsler
 		
 		
 		private void AddQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = qsosView.DisplayQsos.Count > 0;
+		}
+		
+		private void ClearQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = qsosView.DisplayQsos.Count > 0;
 		}
@@ -128,6 +134,16 @@ namespace hamqsler
 					return;
 				}
 			}
+		}
+		
+		/// <summary>
+		/// Handles Clear Qsos menu item processing
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ClearQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			qsosView.DisplayQsos.Clear();
 		}
 
 	}
