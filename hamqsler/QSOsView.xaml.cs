@@ -46,7 +46,7 @@ namespace hamqsler
 		{
 			get {return sortOrder;}
 		}
-		
+		// RoutedCommands
 		public static RoutedCommand DateTimeRadioButtonClickCommand = new RoutedCommand();
 		public static RoutedCommand CallRadioButtonClickCommand = new RoutedCommand();
 		public static RoutedCommand BureauRadioButtonClickCommand = new RoutedCommand();
@@ -60,27 +60,49 @@ namespace hamqsler
 			set {SetValue(DisplayQsosProperty, value);}
 		}
 		
-
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public QSOsView()
 		{
 			InitializeComponent();
 		}
 		
+		/// <summary>
+		/// CanExecute for DateTimeRadioButton
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void DateTimeRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = DisplayQsos.Count > 0;
 		}
 		
+		/// <summary>
+		/// CanExecute for CallRadioButton
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void CallRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = DisplayQsos.Count > 0;
 		}
 		
+		/// <summary>
+		/// CanExecute for BureauRadioButton
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BureauRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = DisplayQsos.Count > 0;
 		}
 		
+		/// <summary>
+		/// Handles DateTimeRadioButton click events
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void DateTimeRadioButtonClick_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			sortOrder = OrderOfSort.DATETIME;
@@ -88,6 +110,11 @@ namespace hamqsler
 			DisplayQsos.SortQSOs(dt);
 		}
 		
+		/// <summary>
+		/// Handles CallRadioButton click events
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void CallRadioButtonClick_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			sortOrder = OrderOfSort.CALL;
@@ -95,6 +122,11 @@ namespace hamqsler
 			DisplayQsos.SortQSOs(cc);
 		}
 		
+		/// <summary>
+		/// Handles BureauRadioButton click events
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void BureauRadioButtonClick_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			sortOrder = OrderOfSort.BUREAU;

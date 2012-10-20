@@ -79,8 +79,10 @@ namespace hamqsler
             Comparer<QsoWithInclude> comparer = null;
             switch(so)
             {
-            		// some code is repeated in each
-            	case QSOsView.OrderOfSort.DATETIME:
+            		// some code is repeated in each case because there is no way
+            		// to define var qs before being used, and it is out of scope
+            		// outside the switch
+            	case QSOsView.OrderOfSort.DATETIME:		// sort by date/time
            			var qs = from qsoWith in qList2
 		            	orderby qsoWith.DateTime
 		            	select qsoWith;
@@ -90,7 +92,7 @@ namespace hamqsler
 		            }
 			        comparer = new DateTimeComparer();
            			break;
-           		case QSOsView.OrderOfSort.CALL:
+           		case QSOsView.OrderOfSort.CALL:			// sort by manager, call, date and time
            			qs = from qsoWith in qList2
            				orderby qsoWith.ManagerCallDateTime
            				select qsoWith;
@@ -100,7 +102,7 @@ namespace hamqsler
 		            }
 		            comparer = new CallComparer();
            			break;
-           		case QSOsView.OrderOfSort.BUREAU:
+           		case QSOsView.OrderOfSort.BUREAU:		// sort by bureau, manager, call, date and time
            			qs = from qsoWith in qList2
            				orderby qsoWith.BureauManagerCallDateTime
            				select qsoWith;
