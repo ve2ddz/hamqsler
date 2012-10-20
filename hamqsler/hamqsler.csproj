@@ -65,6 +65,8 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BureauComparer.cs" />
+    <Compile Include="CallComparer.cs" />
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="QSOsView.xaml.cs">

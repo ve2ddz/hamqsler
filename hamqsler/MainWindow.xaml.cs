@@ -39,7 +39,7 @@ namespace hamqsler
 	public partial class MainWindow : Window
 	{
 		
-		public delegate string AddOrImportDelegate(string fName);
+		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
 		public static RoutedCommand AddQsosCommand = new RoutedCommand();
@@ -115,7 +115,7 @@ namespace hamqsler
 				try
 				{
 					// import the QSOs from the ADIF file
-					string error = importOrAdd(adifFileName);
+					string error = importOrAdd(adifFileName, qsosView.SortOrder);
 					if(error != null)
 					{
 						MessageBox.Show(error, "Import Error", MessageBoxButton.OK,

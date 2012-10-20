@@ -34,6 +34,23 @@ namespace hamqsler
 	/// </summary>
 	public partial class QSOsView : UserControl
 	{
+		public enum OrderOfSort 
+		{
+			DATETIME=1, 
+			CALL, 
+			BUREAU
+		
+		}
+		private OrderOfSort sortOrder = OrderOfSort.DATETIME;
+		public OrderOfSort SortOrder
+		{
+			get {return sortOrder;}
+		}
+		
+		public static RoutedCommand DateTimeRadioButtonClickCommand = new RoutedCommand();
+		public static RoutedCommand CallRadioButtonClickCommand = new RoutedCommand();
+		public static RoutedCommand BureauRadioButtonClickCommand = new RoutedCommand();
+		
 		private static DependencyProperty DisplayQsosProperty = DependencyProperty.Register(
 			"DisplayQsos", typeof(DisplayQsos), typeof(MainWindow), 
 			new PropertyMetadata(new DisplayQsos()));
@@ -48,5 +65,42 @@ namespace hamqsler
 		{
 			InitializeComponent();
 		}
+		
+		private void DateTimeRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = DisplayQsos.Count > 0;
+		}
+		
+		private void CallRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = DisplayQsos.Count > 0;
+		}
+		
+		private void BureauRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = DisplayQsos.Count > 0;
+		}
+		
+		private void DateTimeRadioButtonClick_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			sortOrder = OrderOfSort.DATETIME;
+			DateTimeComparer dt = new DateTimeComparer();
+			DisplayQsos.SortQSOs(dt);
+		}
+		
+		private void CallRadioButtonClick_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			sortOrder = OrderOfSort.CALL;
+			CallComparer cc = new CallComparer();
+			DisplayQsos.SortQSOs(cc);
+		}
+		
+		private void BureauRadioButtonClick_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			sortOrder = OrderOfSort.BUREAU;
+			BureauComparer bc = new BureauComparer();
+			DisplayQsos.SortQSOs(bc);
+		}
+		
 	}
 }

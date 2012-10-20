@@ -2,6 +2,14 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:local="clr-namespace:hamqsler">
+	<UserControl.CommandBindings>
+		<CommandBinding Command="{x:Static local:QSOsView.DateTimeRadioButtonClickCommand}"
+				Executed="DateTimeRadioButtonClick_Executed" CanExecute="DateTimeRadioButtonClick_CanExecute"/>
+		<CommandBinding Command="{x:Static local:QSOsView.CallRadioButtonClickCommand}"
+				Executed="CallRadioButtonClick_Executed" CanExecute="CallRadioButtonClick_CanExecute"/>
+		<CommandBinding Command="{x:Static local:QSOsView.BureauRadioButtonClickCommand}"
+				Executed="BureauRadioButtonClick_Executed" CanExecute="BureauRadioButtonClick_CanExecute"/>
+	</UserControl.CommandBindings>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -58,9 +66,16 @@
 		<StackPanel Margin="0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="200">
 			<GroupBox Header="Sort Cards By">
 				<StackPanel Orientation="Vertical">
-					<RadioButton Content="Date/Time"/>
-					<RadioButton Content="Call"/>
-					<RadioButton Content="Bureau"/>
+					<RadioButton Name="dateTimeRadioButton" Content="Date/Time" IsChecked="true" Margin="5"
+							ToolTip="Sort QSOs by date and time." 
+					             Command="{x:Static local:QSOsView.DateTimeRadioButtonClickCommand}"/>
+					<RadioButton Name="callRadioButton" Content="Call" Margin="5"
+								ToolTip="Sort QSOs by manager and callsign, then date and time."
+								Command="{x:Static local:QSOsView.CallRadioButtonClickCommand}"/>
+					<RadioButton Name="bureauRadioButton" Content="Bureau" Margin="5"
+								ToolTip="Sort QSOs by bureau then manager and callsign, then date and time."
+					             Command="{x:Static local:QSOsView.BureauRadioButtonClickCommand}"/>
+
 				</StackPanel>
 			</GroupBox>
 			<Separator Margin="1"/>

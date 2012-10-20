@@ -52,10 +52,10 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="adifFile">Full file name of the ADIF file</param>
 		/// <returns>Error string if any errors, or null if none</returns>
-		public string ImportQsos(string adifFile)
+		public string ImportQsos(string adifFile, QSOsView.OrderOfSort so)
 		{
             this.Clear();			// remove all entries from the ObservableCollection
-            return AddQsos(adifFile);
+            return AddQsos(adifFile, so);
 		}
 		
 		/// <summary>
@@ -63,7 +63,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="adifFile">full name of the Adif file</param>
 		/// <returns>Error string if any errors, or null if none</returns>
-		public string AddQsos(string adifFile)
+		public string AddQsos(string adifFile, QSOsView.OrderOfSort so)
 		{
 			QsoWithIncludeEqualityComparer eComparer = new QsoWithIncludeEqualityComparer();
 			List<QsoWithInclude>qList = new List<QsoWithInclude>();
@@ -75,17 +75,44 @@ namespace hamqsler
 			string error = AddQsosFromAdifFile(adifFile, ref qList, out qsoError);
 			// make sure we do not have any duplicates
             var qList2 = qList.Distinct<QsoWithInclude>(eComparer);
-            var qs = from qsoWith in qList2
-            	orderby qsoWith.DateTime
-            	select qsoWith;
             List<QsoWithInclude> qList3 = new List<QsoWithInclude>();
-            foreach (QsoWithInclude qw in qs) 
+            Comparer<QsoWithInclude> comparer = null;
+            switch(so)
             {
-            	qList3.Add(qw);
-            }
+            		// some code is repeated in each
+            	case QSOsView.OrderOfSort.DATETIME:
+           			var qs = from qsoWith in qList2
+		            	orderby qsoWith.DateTime
+		            	select qsoWith;
+		            foreach (QsoWithInclude qw in qs) 
+		            {
+		            	qList3.Add(qw);
+		            }
+			        comparer = new DateTimeComparer();
+           			break;
+           		case QSOsView.OrderOfSort.CALL:
+           			qs = from qsoWith in qList2
+           				orderby qsoWith.ManagerCallDateTime
+           				select qsoWith;
+		            foreach (QsoWithInclude qw in qs) 
+		            {
+		            	qList3.Add(qw);
+		            }
+		            comparer = new CallComparer();
+           			break;
+           		case QSOsView.OrderOfSort.BUREAU:
+           			qs = from qsoWith in qList2
+           				orderby qsoWith.BureauManagerCallDateTime
+           				select qsoWith;
+		            foreach (QsoWithInclude qw in qs) 
+		            {
+		            	qList3.Add(qw);
+		            }
+		            comparer = new BureauComparer();
+           			break;
+             }
             // now add the items in sorted order
-            DateTimeComparer dtComparer = new DateTimeComparer();
-            qList3.Sort(dtComparer);
+            qList3.Sort(comparer);
             this.Clear();
             foreach(QsoWithInclude qwi in qList3)
             {
@@ -97,6 +124,28 @@ namespace hamqsler
                     "See the log file for details.";
             }
             return null;	// no error
+		}
+		
+		/// <summary>
+		/// Sort QSOs based on a comparer
+		/// </summary>
+		/// <param name="comparer">Comparer object used to sort</param>
+		public void SortQSOs(Comparer<QsoWithInclude> comparer)
+		{
+			// to sort we must move the QSOs to a List
+			List<QsoWithInclude> qList = new List<QsoWithInclude>();
+			foreach(QsoWithInclude q in this)
+			{
+				qList.Add(q);
+			}
+			// sort and put QSOs back
+            qList.Sort(comparer);
+            this.Clear();
+            foreach(QsoWithInclude qwi in qList)
+            {
+            	this.Add(qwi);
+            }
+			
 		}
 		
 		/// <summary>
