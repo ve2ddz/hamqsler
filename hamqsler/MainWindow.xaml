@@ -10,6 +10,8 @@
 	<Window.CommandBindings>
 		<CommandBinding Command="{x:Static local:MainWindow.ImportQsosCommand}"
 						Executed="ImportQsosCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.AddQsosCommand}"
+						Executed="AddQsosCommand_Executed" CanExecute="AddQsosCommand_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.UserPreferencesCommand}"
 						Executed="UserPreferencesCommand_Executed"/>
 	</Window.CommandBindings>
@@ -39,7 +41,8 @@
 				<MenuItem Header="Input QSOs..."/>
 				<MenuItem Header="Import QSOs..." 
 						Command="{x:Static local:MainWindow.ImportQsosCommand}"/>
-				<MenuItem Header="Add QSOs..."/>
+				<MenuItem Header="Add QSOs..."
+						Command="{x:Static local:MainWindow.AddQsosCommand}"/>
 				<MenuItem Header="Clear QSOs"/>
 				<MenuItem Header="Export QSOs..."/>
 				<Separator/>

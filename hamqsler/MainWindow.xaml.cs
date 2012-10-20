@@ -38,12 +38,22 @@ namespace hamqsler
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		
+		public delegate string AddOrImportDelegate(string fName);
+
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
+		public static RoutedCommand AddQsosCommand = new RoutedCommand();
 		public static RoutedCommand UserPreferencesCommand = new RoutedCommand();
 		
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+		
+		
+		private void AddQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = qsosView.DisplayQsos.Count > 0;
 		}
 		
 		/// <summary>
@@ -64,11 +74,33 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Handles Input Qsos menu item processing
+		/// Handles Import Qsos menu item processing
 		/// </summary>
 		/// <param name="sender">not used </param>
 		/// <param name="e">not used</param>
 		public void ImportQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			ImportOrAddQsos(qsosView.DisplayQsos.ImportQsos);		
+		}
+		
+		
+		/// <summary>
+		/// Handles Add Qsos menu item processing
+		/// </summary>
+		/// <param name="sender">not used </param>
+		/// <param name="e">not used</param>
+		public void AddQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			ImportOrAddQsos(qsosView.DisplayQsos.AddQsos);
+		}
+		
+		/// <summary>
+		/// Handles importing or adding QSOs from an ADIF file. This method eliminates
+		/// the duplication of code in ImportQsosCommand_Executed and AddQsosCommand_Executed
+		/// whose only difference is the DisplayQsos method that is called.
+		/// </summary>
+		/// <param name="importOrAdd">delegated method to call (in DisplayQsos)</param>
+		private void ImportOrAddQsos(AddOrImportDelegate importOrAdd)
 		{
 			// create and show an OpenFileDialog to get the ADIF file to load
 			OpenFileDialog openDialog = new OpenFileDialog();
@@ -83,7 +115,7 @@ namespace hamqsler
 				try
 				{
 					// import the QSOs from the ADIF file
-					string error = qsosView.DisplayQsos.ImportQsos(adifFileName);
+					string error = importOrAdd(adifFileName);
 					if(error != null)
 					{
 						MessageBox.Show(error, "Import Error", MessageBoxButton.OK,
@@ -97,5 +129,6 @@ namespace hamqsler
 				}
 			}
 		}
+
 	}
 }

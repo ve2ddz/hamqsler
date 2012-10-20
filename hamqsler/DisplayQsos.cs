@@ -23,6 +23,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 
 namespace hamqsler
 {
@@ -53,8 +54,62 @@ namespace hamqsler
 		/// <returns>Error string if any errors, or null if none</returns>
 		public string ImportQsos(string adifFile)
 		{
-			ExceptionLogger logger = App.Logger;
             this.Clear();			// remove all entries from the ObservableCollection
+            return AddQsos(adifFile);
+		}
+		
+		/// <summary>
+		/// Add QSOs from the ADIF file and store for display
+		/// </summary>
+		/// <param name="adifFile">full name of the Adif file</param>
+		/// <returns>Error string if any errors, or null if none</returns>
+		public string AddQsos(string adifFile)
+		{
+			QsoWithIncludeEqualityComparer eComparer = new QsoWithIncludeEqualityComparer();
+			List<QsoWithInclude>qList = new List<QsoWithInclude>();
+			foreach(QsoWithInclude qwi in this)
+			{
+				qList.Add(qwi);
+			}
+			bool qsoError;
+			string error = AddQsosFromAdifFile(adifFile, ref qList, out qsoError);
+			// make sure we do not have any duplicates
+            var qList2 = qList.Distinct<QsoWithInclude>(eComparer);
+            var qs = from qsoWith in qList2
+            	orderby qsoWith.DateTime
+            	select qsoWith;
+            List<QsoWithInclude> qList3 = new List<QsoWithInclude>();
+            foreach (QsoWithInclude qw in qs) 
+            {
+            	qList3.Add(qw);
+            }
+            // now add the items in sorted order
+            DateTimeComparer dtComparer = new DateTimeComparer();
+            qList3.Sort(dtComparer);
+            this.Clear();
+            foreach(QsoWithInclude qwi in qList3)
+            {
+            	this.Add(qwi);
+            }
+            if (qsoError)
+            {
+                return "One or more QSOs contains an invalid field.\n\rThese QSOs have not been imported.\n\r" +
+                    "See the log file for details.";
+            }
+            return null;	// no error
+		}
+		
+		/// <summary>
+		/// Adds QSOs from the specified ADIF file to the list
+		/// </summary>
+		/// <param name="adifFile">Name of the ADIF file</param>
+		/// <param name="qList">QSOs list to add the ADIF file QSOs to</param>
+		/// <param name="qsoError">Bool indicating that a QSO related error occurred.</param>
+		/// <returns>Error string or null</returns>
+		private string AddQsosFromAdifFile(string adifFile, ref List<QsoWithInclude> qList, out bool qsoError)
+		{
+			ExceptionLogger logger = App.Logger;
+			qsoError = false;
 			// read all of the ADIF file
 			string adifFileContents = File.ReadAllText(adifFile);
 			// bypass header if any
@@ -73,9 +128,8 @@ namespace hamqsler
 			}
 			adif = adif.Substring(adif.IndexOf('<'));  // skip any characters before first qso record
 			Qso q;
-            bool qsoError = false;      // keep track of bad QSOs; display MessageBox if one or more errors
+            qsoError = false;      // keep track of bad QSOs; display MessageBox if one or more errors
             // for each ADIF record
-            List<QsoWithInclude>qList = new List<QsoWithInclude>();
 			while ((index = adif.ToUpper().IndexOf("<EOR>")) != -1)
 			{
 				string qsoStr = adif.Substring(0, index) + "<EOR>";
@@ -96,19 +150,7 @@ namespace hamqsler
 				
 				adif = adif.Substring(index + 5);   // remove qso from the string
 			}
-            // now add the items in sorted order
-            DateTimeComparer dtComparer = new DateTimeComparer();
-            qList.Sort(dtComparer);
-            foreach(QsoWithInclude qwi in qList)
-            {
-            	this.Add(qwi);
-            }
-            if (qsoError)
-            {
-                return "One or more QSOs contains an invalid field.\n\rThese QSOs have not been imported.\n\r" +
-                    "See the log file for details.";
-            }
-            return null;	// no error
+			return null;
 		}
 	}
 }

@@ -72,6 +72,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="QsoWithInclude.cs" />
+    <Compile Include="QsoWithIncludeEqualityComparer.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="MainWindow.xaml.cs">
