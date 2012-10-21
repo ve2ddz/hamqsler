@@ -19,8 +19,9 @@
  */
  using Qsos;
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -251,6 +252,44 @@ namespace hamqsler
 			                            vers, now.Year, datetime,
 			                            vers.Length);
 			return adif;
+		}
+		
+		/// <summary>
+		/// Sets the Include value for every Qso
+		/// </summary>
+		public void IncludeAllQsos()
+		{
+			//This seems overkill (retrieve the items, delete the collection,
+			// make the change and add back to collection.
+			// At first glance, a call to OnCollectionChanged would seem to be better,
+			// but there is no action for making a change to one of more elements,
+			// only add, remove, reset, move.
+			List<QsoWithInclude> list = this.ToList();
+			this.Clear();
+			foreach(QsoWithInclude qso in list)
+			{
+				qso.Include = true;
+				this.Add(qso);
+			}
+		}
+		
+		/// <summary>
+		/// Clears the Include value for every Qso
+		/// </summary>
+		public void ExcludeAllQsos()
+		{
+			//This seems overkill (retrieve the items, delete the collection,
+			// make the change and add back to collection.
+			// At first glance, a call to OnCollectionChanged would seem to be better,
+			// but there is no action for making a change to one of more elements,
+			// only add, remove, reset, move.
+			List<QsoWithInclude> list = this.ToList();
+			this.Clear();
+			foreach(QsoWithInclude qso in list)
+			{
+				qso.Include = false;
+				this.Add(qso);
+			}
 		}
 	}
 }

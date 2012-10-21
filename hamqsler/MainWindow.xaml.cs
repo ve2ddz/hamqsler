@@ -45,6 +45,8 @@ namespace hamqsler
 		public static RoutedCommand AddQsosCommand = new RoutedCommand();
 		public static RoutedCommand ClearQsosCommand = new RoutedCommand();
 		public static RoutedCommand ExportQsosCommand = new RoutedCommand();
+		public static RoutedCommand IncludeAllQsosCommand = new RoutedCommand();
+		public static RoutedCommand ExcludeAllQsosCommand = new RoutedCommand();
 		public static RoutedCommand UserPreferencesCommand = new RoutedCommand();
 		
 		public MainWindow()
@@ -78,6 +80,26 @@ namespace hamqsler
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
 		private void ExportQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = qsosView.DisplayQsos.Count > 0;
+		}
+		
+		/// <summary>
+		/// CanExecute routine for Include All Qsos menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void IncludeAllQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = qsosView.DisplayQsos.Count > 0;
+		}
+		
+		/// <summary>
+		/// CanExecute routine for Exclude All Qsos menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void ExcludeAllQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = qsosView.DisplayQsos.Count > 0;
 		}
@@ -202,5 +224,26 @@ namespace hamqsler
 				writer.Close();
 			}
 		}
+		
+		/// <summary>
+		/// Handles Include All Qsos menu item processing
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void IncludeAllQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			qsosView.DisplayQsos.IncludeAllQsos();
+		}
+		
+		/// <summary>
+		/// Handles Exclude All Qsos menu item processing
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void ExcludeAllQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			qsosView.DisplayQsos.ExcludeAllQsos();
+		}
+		
 	}
 }

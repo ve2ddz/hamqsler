@@ -20,7 +20,8 @@
 		</Grid.RowDefinitions>
 		<GroupBox Margin="0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Width="750">
 			<ScrollViewer Margin="1">
-				<ListView Margin="1" ItemsSource="{Binding RelativeSource=
+				<ListView Margin="1" x:Name="qsosListView"
+				          ItemsSource="{Binding RelativeSource=
 							{RelativeSource FindAncestor, AncestorType={x:Type local:QSOsView}}, Path=DisplayQsos}">
 					<ListView.View>
 						<GridView>
