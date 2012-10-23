@@ -26,6 +26,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Text.RegularExpressions;
 
 namespace hamqsler
 {
@@ -34,7 +35,10 @@ namespace hamqsler
 	/// </summary>
 	public partial class QsoInputDialog : Window
 	{
+		private static int BEEPFREQUENCY = 800;		// Hz
+		private static int BEEPDURATION = 200;		// ms
 		private DisplayQsos dispQsos;
+		private QsoInputData QsoData = new QsoInputData();
 		
 		/// <summary>
 		/// Constructor
@@ -44,6 +48,101 @@ namespace hamqsler
 		{
 			dispQsos = qsos;
 			InitializeComponent();
+			this.DataContext = QsoData;
 		}
+		
+		/// <summary>
+		/// Preview text input to CallsignBox and consume any non-valid characters.
+		/// Note that only A-Z, a-z, 0-9, and / are allowed in callsigns
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">TextCompositionEventArgs object. This object has a
+		/// property that contains the character that was entered.</param>
+		void CallsignBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex callReg = new Regex("[A-Za-z0-9/]");
+			if(!callReg.IsMatch(e.Text))	// check valid character
+			{
+				// not valid
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
+		}
+		
+		/// <summary>
+		/// Preview text input to ManagerBox and consume any non-valid characters.
+		/// Note that only A-Z, a-z, 0-9 are allowed in manager.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">TextCompositionEventArgs object. This object has a
+		/// property that contains the character that was entered.</param>
+		void ManagerBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex mgrReg = new Regex("[A-Za-z0-9]");
+			if(!mgrReg.IsMatch(e.Text))	// check valid character
+			{
+				// not valid
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
+		}
+		
+		/// <summary>
+		/// Preview text input to StartDateBox and consume any non-valid characters.
+		/// Note that only 0-9 are allowed in dates.
+		/// Dates are validated when keyboard focus leaves the TextBox.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">TextCompositionEventArgs object. This object has a
+		/// property that contains the character that was entered.</param>
+		void StartDateBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex dateReg = new Regex("[0-9]");
+			if(!dateReg.IsMatch(e.Text))	// check valid character
+			{
+				// not valid
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
+		}
+		
+		/// <summary>
+		/// Preview text input to StartTimeBox and consume any non-valid characters.
+		/// Note that only 0-9 are allowed in times.
+		/// Times are validated when keyboard focus leaves the TextBox.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">TextCompositionEventArgs object. This object has a
+		/// property that contains the character that was entered.</param>
+		void StartTimeBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex timeReg = new Regex("[0-9]");
+			if(!timeReg.IsMatch(e.Text))	// check valid character
+			{
+				// not valid
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
+		}
+		
+		/// <summary>
+		/// Preview text input to FrequencyBox and consume any non-valid characters.
+		/// Note that only 0-9, ',' and '.' are allowed in frequencies.
+		/// Frequencies are validated when keyboard focus leaves the TextBox.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">TextCompositionEventArgs object. This object has a
+		/// property that contains the character that was entered.</param>
+		void FrequencyBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex freqReg = new Regex("[0-9,\\.]");
+			if(!freqReg.IsMatch(e.Text))	// check valid character
+			{
+				// not valid
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
+		}
+		
 	}
 }

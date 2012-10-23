@@ -69,6 +69,7 @@
     <Compile Include="CallComparer.cs" />
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
+    <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
