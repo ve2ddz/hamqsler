@@ -41,6 +41,7 @@ namespace hamqsler
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
+		public static RoutedCommand InputQsosCommand = new RoutedCommand();
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
 		public static RoutedCommand AddQsosCommand = new RoutedCommand();
 		public static RoutedCommand ClearQsosCommand = new RoutedCommand();
@@ -243,6 +244,17 @@ namespace hamqsler
 		private void ExcludeAllQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			qsosView.DisplayQsos.ExcludeAllQsos();
+		}
+		
+		/// <summary>
+		/// Handles Input Qsos menu item processing
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void InputQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			QsoInputDialog qsoDialog = new QsoInputDialog(qsosView.DisplayQsos);
+			qsoDialog.ShowDialog();
 		}
 		
 	}

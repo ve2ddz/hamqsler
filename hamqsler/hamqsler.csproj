@@ -69,6 +69,10 @@
     <Compile Include="CallComparer.cs" />
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
+    <Compile Include="QsoInputDialog.xaml.cs">
+      <DependentUpon>QsoInputDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="QSOsView.xaml.cs">
       <DependentUpon>QSOsView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -92,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml" />
+    <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />
     <Page Include="SplashPage.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />
