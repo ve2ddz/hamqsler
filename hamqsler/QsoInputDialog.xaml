@@ -35,7 +35,7 @@
 				VerticalAlignment="Center">Callsign:</TextBlock>
 		<TextBox Name="CallsignBox" Grid.Row="0" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
 				ToolTip="The contacted station's callsign" MinWidth="96" MaxLength="15"
-				PreviewTextInput="CallsignBox_PreviewTextInput">
+				PreviewTextInput="CallsignBox_PreviewTextInput" CharacterCasing="Upper">
 			<TextBox.Text>
 				<Binding Path="Callsign" NotifyOnValidationError="True"
 				UpdateSourceTrigger="LostFocus" Mode="TwoWay">
@@ -49,7 +49,7 @@
 				VerticalAlignment="Center">Manager (optional):</TextBlock>
 		<TextBox Name="ManagerBox" Grid.Row="1" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
 				ToolTip="The contacted station's QSL manager's callsign" MinWidth="96" MaxLength="15"
-				PreviewTextInput="ManagerBox_PreviewTextInput">
+				PreviewTextInput="ManagerBox_PreviewTextInput" CharacterCasing="Upper">
 			<TextBox.Text>
 				<Binding Path="Manager" NotifyOnValidationError="True"
 				UpdateSourceTrigger="LostFocus" Mode="TwoWay">
