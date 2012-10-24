@@ -46,6 +46,10 @@ namespace Qsos
 			int day = Int32.Parse(sDay);
 			if(date.CompareTo("19451101") < 0)
 				return false;
+			DateTime now = DateTime.UtcNow;
+			string strNow = string.Format("{0:yyyyMMdd}", now);
+			if(date.CompareTo(strNow) > 0)
+				return false;
 			if(month < 1)
 				return false;
 			if(month > 12)
@@ -57,6 +61,11 @@ namespace Qsos
 			return true;
 		}
 		
+		/// <summary>
+		/// Validate time
+		/// </summary>
+		/// <param name="time">the time to validate</param>
+		/// <returns>true if time is valid, false otherwise</returns>
 		public static bool TimeIsValid(string time)
 		{
 			Regex reg4 = new Regex("^[0-9]{4}$");
