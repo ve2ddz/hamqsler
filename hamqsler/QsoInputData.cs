@@ -17,6 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Qsos;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -137,12 +138,108 @@ namespace hamqsler
         /// <summary>
 		/// Error handling for IDataErrorInfo interface
 		/// </summary>
+		/// <returns>validation string (error string, or null if no error)</returns>
 		public string this[string propertyName]
 		{
 			get
 			{
+				if(propertyName == "Callsign")
+				{
+					return ValidateCallsign();
+				}
+				else if(propertyName == "Manager")
+				{
+					return ValidateManager();
+				}
+				else if(propertyName == "StartDate")
+				{
+					return ValidateStartDate();
+				}
+				else if(propertyName == "StartTime")
+				{
+					return ValidateStartTime();
+				}
 				return null;
 			}
 		}
+		
+		/// <summary>
+		/// Helper method that validates a callsign
+		/// </summary>
+		/// <returns>validation string (error string or null if no error)</returns>
+		private string ValidateCallsign()
+		{
+			CallSign call;
+			try
+			{
+				call = new CallSign(Callsign);
+			}
+			catch(QsoException)
+			{
+				return "Not a valid callsign";
+			}
+			if(!CallSign.IsValid(call.Call))
+			{
+				return "Not a valid callsign";
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Helper method that validates manager callsign
+		/// </summary>
+		/// <returns>validation string (error string or null if no error)</returns>
+		private string ValidateManager()
+		{
+			if(Manager == string.Empty)
+			{
+				return null;
+			}
+			CallSign mgrCall;
+			try
+			{
+				mgrCall = new CallSign(Manager);
+			}
+			catch (QsoException)
+			{
+				return "Not a valid callsign";
+			}
+			if(mgrCall.FullCall != mgrCall.Call)
+			{
+				return "Manager callsign must not contain modifiers (e.g. VA3HJ, not XE1/VA3HJ)";
+			}
+			if(!CallSign.IsValid(Manager))
+			{
+				return "Not a valid callsign";
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Helper method that validates start date
+		/// </summary>
+		/// <returns>Validation string (error string, or null if no error)</returns>
+		private string ValidateStartDate()
+		{
+			if(!DateTimeValidator.DateIsValid(StartDate))
+			{
+				return "Date is not valid. Must be between 19451101 and today";
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Helper method that validates start time
+		/// </summary>
+		/// <returns>Validation string (error string, or null if no error)</returns>
+		private string ValidateStartTime()
+		{
+			if(!DateTimeValidator.TimeIsValid(StartTime))
+			{
+				return "Time is not valid must be between 000000 and 235959, or 0000 and 2359";
+			}
+			return null;
+		}
+			
 	}
 }

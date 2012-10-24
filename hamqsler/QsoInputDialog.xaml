@@ -34,11 +34,11 @@
 		<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
 				VerticalAlignment="Center">Callsign:</TextBlock>
 		<TextBox Name="CallsignBox" Grid.Row="0" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
-				ToolTip="The contacted station's callsign" MinWidth="96" MaxLength="15"
+				MinWidth="96" MaxLength="15"
 				PreviewTextInput="CallsignBox_PreviewTextInput" CharacterCasing="Upper">
 			<TextBox.Text>
-				<Binding Path="Callsign" NotifyOnValidationError="True"
-				UpdateSourceTrigger="LostFocus" Mode="TwoWay">
+				<Binding Path="Callsign"
+				UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
 						<DataErrorValidationRule/>
 					</Binding.ValidationRules>
@@ -48,11 +48,11 @@
 		<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
 				VerticalAlignment="Center">Manager (optional):</TextBlock>
 		<TextBox Name="ManagerBox" Grid.Row="1" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
-				ToolTip="The contacted station's QSL manager's callsign" MinWidth="96" MaxLength="15"
+				MinWidth="96" MaxLength="15"
 				PreviewTextInput="ManagerBox_PreviewTextInput" CharacterCasing="Upper">
 			<TextBox.Text>
-				<Binding Path="Manager" NotifyOnValidationError="True"
-				UpdateSourceTrigger="LostFocus" Mode="TwoWay">
+				<Binding Path="Manager"
+				UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
 						<DataErrorValidationRule/>
 					</Binding.ValidationRules>
@@ -61,13 +61,13 @@
 		</TextBox>
 		<TextBlock Grid.Row="2" Grid.Column="0" Margin="5"
 				HorizontalAlignment="Right" VerticalAlignment="Center"
-				>Start Date:</TextBlock>
+				>Start Date (YYYYMMDD):</TextBlock>
 		<TextBox Name="StartDateBox" Grid.Row="2" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
-				ToolTip="Start date for the QSO in the format 'YYYYMMDD'" MinWidth="96" MaxLength="8"
+				MinWidth="96" MaxLength="8"
 				PreviewTextInput="StartDateBox_PreviewTextInput">
 			<TextBox.Text>
-				<Binding Path="StartDate" NotifyOnValidationError="True"
-				UpdateSourceTrigger="LostFocus" Mode="TwoWay">
+				<Binding Path="StartDate"
+				UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
 						<DataErrorValidationRule/>
 					</Binding.ValidationRules>
@@ -75,14 +75,13 @@
 			</TextBox.Text>
 		</TextBox>
 		<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
-				VerticalAlignment="Center">Start Time:</TextBlock>
+				VerticalAlignment="Center">Start Time (HHMMSS or HHMM):</TextBlock>
 		<TextBox Name="StartTimeBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"
-				ToolTip="Start time of the QSO in one of the following formats: 'HHMM' or 'HHMMSS'"
 				Margin="5" MinWidth="96" MaxLength="6"
 				PreviewTextInput="StartTimeBox_PreviewTextInput">
 			<TextBox.Text>
-				<Binding Path="StartTime" NotifyOnValidationError="True"
-				UpdateSourceTrigger="LostFocus" Mode="TwoWay">
+				<Binding Path="StartTime"
+				UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
 						<DataErrorValidationRule/>
 					</Binding.ValidationRules>
