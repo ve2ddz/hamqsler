@@ -159,7 +159,7 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Preview text input to FrequencyBox and consume any non-valid characters.
-		/// Note that only 0-9, ',' and '.' are allowed in frequencies.
+		/// Note that only 0-9 and '.' are allowed in frequencies.
 		/// Frequencies are validated when keyboard focus leaves the TextBox.
 		/// </summary>
 		/// <param name="sender">not used</param>
