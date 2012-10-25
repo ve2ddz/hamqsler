@@ -821,8 +821,8 @@ namespace hamqsler
 			get 
 			{
 				string result = null;
-				Regex regexData = new Regex("^[0-9,.]*$");
-				Regex regexDecimalSep = new Regex("[.,][0-9]*[,.]");
+				Regex regexData = new Regex("^[0-9\\.]*$");
+				Regex regexDecimalSep = new Regex("[\\.][0-9]*[\\.]");
 				HamBand band = null;
 				string strFreq = GetBandProperties(propertyName, out band);
 				if(strFreq != null)
@@ -1526,5 +1526,7 @@ namespace hamqsler
         	}
         	return freq;
         }
+        
+        // TODO: Add PreviewTextInput to every band/frequency field in UserPreferencesDialog to allow only [0-9\\.]
 	}
 }

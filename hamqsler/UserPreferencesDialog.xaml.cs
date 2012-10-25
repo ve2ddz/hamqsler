@@ -20,12 +20,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+
 
 namespace hamqsler
 {
@@ -38,6 +40,9 @@ namespace hamqsler
 		public static RoutedCommand ApplyButtonCommand = new RoutedCommand();
 		public static RoutedCommand OkButtonCommand = new RoutedCommand();
 		public static RoutedCommand CancelButtonCommand = new RoutedCommand();
+
+		private static int BEEPFREQUENCY = 800;		// Hz
+		private static int BEEPDURATION = 200;		// ms
 
 		private UserPreferences userPrefs;
 		
@@ -188,6 +193,24 @@ namespace hamqsler
 			e.Handled = true;
 		}
 		
+		/// <summary>
+		/// Preview text input to Band/Frequency TextBoxes and consume any non-valid characters.
+		/// Note that only 0-9 and '.' are allowed in frequencies.
+		/// Frequencies are validated when keyboard focus leaves the TextBox.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">TextCompositionEventArgs object. This object has a
+		/// property that contains the character that was entered.</param>
+		private void BandFrequency_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex freqReg = new Regex("[0-9\\.]");
+			if(!freqReg.IsMatch(e.Text))	// check valid character
+			{
+				// not valid
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
+		}
 		
 	}
 }
