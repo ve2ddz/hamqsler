@@ -1527,6 +1527,5 @@ namespace hamqsler
         	return freq;
         }
         
-        // TODO: Add PreviewTextInput to every band/frequency field in UserPreferencesDialog to allow only [0-9\\.]
 	}
 }
