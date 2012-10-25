@@ -134,5 +134,17 @@ namespace hamqsler
 			DisplayQsos.SortQSOs(bc);
 		}
 		
+		public Comparer<QsoWithInclude> GetComparer()
+		{
+			Comparer<QsoWithInclude> comparer = null;
+			if(SortOrder == OrderOfSort.DATETIME)
+				comparer = new DateTimeComparer();
+			else if(SortOrder == OrderOfSort.CALL)
+				comparer = new CallComparer();
+			else if(SortOrder == OrderOfSort.BUREAU)
+				comparer = new BureauComparer();
+			return comparer;
+		}
+		
 	}
 }

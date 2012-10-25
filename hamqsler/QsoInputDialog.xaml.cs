@@ -17,6 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Qsos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,6 +36,11 @@ namespace hamqsler
 	/// </summary>
 	public partial class QsoInputDialog : Window
 	{
+		// routed commands
+		public static RoutedCommand AddButtonCommand = new RoutedCommand();
+		public static RoutedCommand OkButtonCommand = new RoutedCommand();
+		public static RoutedCommand CancelButtonCommand = new RoutedCommand();
+			
 		private static int BEEPFREQUENCY = 800;		// Hz
 		private static int BEEPDURATION = 200;		// ms
 		private DisplayQsos dispQsos;
@@ -49,6 +55,32 @@ namespace hamqsler
 			dispQsos = qsos;
 			InitializeComponent();
 			this.DataContext = QsoData;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for Add+ button
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void AddButtonCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute =  (QsoData["Callsign"] == null && QsoData["Manager"] == null &&
+			        QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
+			        QsoData.Mode != string.Empty &&
+			        (QsoData.Band != string.Empty || QsoData.Frequency != string.Empty));
+		}
+		
+		/// <summary>
+		/// CanExecute handler for OK button
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void OkButtonCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = (QsoData["Callsign"] == null && QsoData["Manager"] == null &&
+			        QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
+			        QsoData.Mode != string.Empty &&
+			        (QsoData.Band != string.Empty || QsoData.Frequency != string.Empty));
 		}
 		
 		/// <summary>
@@ -142,6 +174,79 @@ namespace hamqsler
 				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
 				e.Handled = true;			// consume the event so that the character is not processed
 			}
+		}
+		
+		/// <summary>
+		/// Executed handler for Add+ button. Saves the QSO info
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void AddButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			Qso qso = BuildQsoFromInput();
+			QsoWithInclude qwi = new QsoWithInclude(qso);
+			dispQsos.Add(qwi);
+			QsoData.ClearQsoData();
+		}
+		
+		/// <summary>
+		/// Executed handler for OK button. Saves QSO info and closes dialog
+		/// </summary>
+		/// <param name="sender">source for the event</param>
+		/// <param name="e">ExecutedRoutedEventArgs</param>
+		void OkButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			AddButtonCommand_Executed(sender, e);
+			this.Close();
+		}
+		
+		/// <summary>
+		/// Executed handler for Cancel button. Just closes the dialog without saving QSO info
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void CancelButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			this.Close();
+		}
+		
+		/// <summary>
+		/// Helper method that builds a QSO object from the info input in dialog
+		/// </summary>
+		/// <returns>QSO object built from input</returns>
+		private Qso BuildQsoFromInput()
+		{
+			Qso qso = new Qso(App.Logger);
+			qso.setField("call", QsoData.Callsign);
+			if(QsoData.Manager != string.Empty)
+			{
+				qso.setField("qsl_via", QsoData.Manager);
+			}
+			qso.setField("qso_date", QsoData.StartDate);
+			qso.setField("time_on", QsoData.StartTime);
+			qso.setField("mode", QsoData.Mode);
+			qso.setField("rst_sent", QsoData.RST);
+			if(QsoData.Band != string.Empty)
+			{
+				qso.setField("band", QsoData.Band);
+			}
+			if(QsoData.Frequency != string.Empty)
+			{
+				qso.setField("freq", QsoData.Frequency);
+			}
+			if(QsoData.Rcvd != string.Empty)
+			{
+				qso.setField("qsl_rcvd", QsoData.Rcvd.Substring(0,1));
+			}
+			if(QsoData.Sent != string.Empty)
+			{
+				qso.setField("qsl_sent", QsoData.Sent.Substring(0,1));
+			}
+			if(QsoData.SentVia != string.Empty)
+			{
+				qso.setField("qsl_sent_via", QsoData.SentVia.Substring(0,1));
+			}
+			return qso;
 		}
 		
 	}

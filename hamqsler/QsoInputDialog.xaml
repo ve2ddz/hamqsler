@@ -13,7 +13,17 @@
 				</Trigger>
 			</Style.Triggers>
 		</Style>
-		</Window.Resources>
+	</Window.Resources>
+	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:QsoInputDialog.AddButtonCommand}"
+						CanExecute="AddButtonCommand_CanExecute"
+						Executed="AddButtonCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:QsoInputDialog.OkButtonCommand}"
+						CanExecute="OkButtonCommand_CanExecute"
+						Executed="OkButtonCommand_Executed"/>
+		<CommandBinding	Command="{x:Static local:QsoInputDialog.CancelButtonCommand}"
+						Executed="CancelButtonCommand_Executed"/>
+	</Window.CommandBindings>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
@@ -272,6 +282,7 @@
 		<Separator Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="5"/>
 		<Grid Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Margin="5">
 			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="Auto"/>
@@ -279,14 +290,17 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
-			<Button Name="AddButton" Grid.Row="0" Grid.Column="0" Margin="5"
-					MinWidth="75" ToolTip="Add this QSO to list">Add+</Button>
-			<Button Name="OkButton" Grid.Row="0" Grid.Column="1" Margin="5"
+			<Button Name="AddButton" Grid.Row="0" Grid.Column="1" Margin="5"
+					MinWidth="75" ToolTip="Add this QSO to list"
+					Command="{x:Static local:QsoInputDialog.AddButtonCommand}">Add+</Button>
+			<Button Name="OkButton" Grid.Row="0" Grid.Column="2" Margin="5"
 					MinWidth="75" ToolTip="Add this QSO to list and close dialog"
-					IsDefault="True">OK</Button>
-			<Button Name="CancelButton" Grid.Row="0" Grid.Column="2" Margin="5"
+					IsDefault="True"
+					Command="{x:Static local:QsoInputDialog.OkButtonCommand}">OK</Button>
+			<Button Name="CancelButton" Grid.Row="0" Grid.Column="3" Margin="5"
 					MinWidth="75" ToolTip="Close dialog without adding this QSO"
-					IsCancel="True">Cancel</Button>
+					IsCancel="True"
+					Command="{x:Static local:QsoInputDialog.CancelButtonCommand}">Cancel</Button>
 		</Grid>
 	</Grid>
 </Window>

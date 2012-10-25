@@ -255,6 +255,8 @@ namespace hamqsler
 		{
 			QsoInputDialog qsoDialog = new QsoInputDialog(qsosView.DisplayQsos);
 			qsoDialog.ShowDialog();
+			Comparer<QsoWithInclude> comparer = qsosView.GetComparer();
+			qsosView.DisplayQsos.SortQSOs(comparer);
 		}
 		
 	}

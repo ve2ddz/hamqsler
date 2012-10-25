@@ -63,7 +63,7 @@ namespace hamqsler
 		public string StartTime
 		{
 			get {return (string)GetValue(StartTimeProperty);}
-			set {SetValue(StartDateProperty, value);}
+			set {SetValue(StartTimeProperty, value);}
 		}
 		
 		private static readonly DependencyProperty ModeProperty =
@@ -123,7 +123,7 @@ namespace hamqsler
 		private static readonly DependencyProperty SentViaProperty =
 			DependencyProperty.Register("SentVia", typeof(string), typeof(QsoInputData),
 			                            new PropertyMetadata(string.Empty));
-		private string SentVia
+		public string SentVia
 		{
 			get {return (string)GetValue(SentViaProperty);}
 			set {SetValue(SentViaProperty, value);}
@@ -239,6 +239,24 @@ namespace hamqsler
 				return "Time is not valid must be between 000000 and 235959, or 0000 and 2359";
 			}
 			return null;
+		}
+		
+		/// <summary>
+		/// Set all properties to empty string
+		/// </summary>
+		public void ClearQsoData()
+		{
+			Callsign = string.Empty;
+			Manager = string.Empty;
+			StartDate = string.Empty;
+			StartTime = string.Empty;
+			Mode = string.Empty;
+			RST = string.Empty;
+			Band = string.Empty;
+			Frequency = string.Empty;
+			Rcvd = string.Empty;
+			Sent  =string.Empty;
+			SentVia = string.Empty;
 		}
 			
 	}
