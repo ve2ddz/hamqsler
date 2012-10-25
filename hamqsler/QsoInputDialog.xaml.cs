@@ -167,7 +167,7 @@ namespace hamqsler
 		/// property that contains the character that was entered.</param>
 		void FrequencyBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
-			Regex freqReg = new Regex("[0-9,\\.]");
+			Regex freqReg = new Regex("[0-9\\.]");
 			if(!freqReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid

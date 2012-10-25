@@ -20,6 +20,7 @@
 using Qsos;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 
 namespace hamqsler
@@ -159,6 +160,18 @@ namespace hamqsler
 				{
 					return ValidateStartTime();
 				}
+				else if(propertyName == "Mode")
+				{
+					return ValidateMode();
+				}
+				else if(propertyName == "Band")
+				{
+					return ValidateBand();
+				}
+				else if(propertyName == "Frequency")
+				{
+					return ValidateFrequency();
+				}
 				return null;
 			}
 		}
@@ -237,6 +250,75 @@ namespace hamqsler
 			if(!DateTimeValidator.TimeIsValid(StartTime))
 			{
 				return "Time is not valid must be between 000000 and 235959, or 0000 and 2359";
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Helper method that validates mode (cannot be string.Empty)
+		/// </summary>
+		/// <returns>Validation string (error string, or null if no error)</returns>
+		private string ValidateMode()
+		{
+			if(Mode == string.Empty)
+			{
+				return "A mode must be specified";
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Helper method that validates band
+		/// </summary>
+		/// <returns>Validation string (error string, or null if no error</returns>
+		private string ValidateBand()
+		{
+			if(Frequency != string.Empty)
+			{
+				float freq;
+				float.TryParse(Frequency, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out freq);
+				HamBand hb;
+				try
+				{
+					hb = HamBands.getHamBand(freq);
+				}
+				catch(QsoException)
+				{
+					return "Frequency is not within an enumerated ham band and therefore cannot " +
+						"be validated against this Band setting";
+				}
+				if(Band != hb.Band)
+				{
+					return "Band does not contain the specified frequency";
+				}
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Helper method that validates frequency
+		/// </summary>
+		/// <returns>Validation string (error string, or null if no error)</returns>
+		private string ValidateFrequency()
+		{
+			if(Frequency == string.Empty)
+			{
+				return null;
+			}
+			float freq;
+			float.TryParse(Frequency, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out freq);
+			HamBand hb;
+			try
+			{
+				hb = HamBands.getHamBand(freq);
+			}
+			catch(QsoException)
+			{
+				return "Frequency is not within an enumerated ham band";
+			}
+			if(Band != string.Empty && Band != hb.Band)
+			{
+				return "Frequency is not within the selected band";
 			}
 			return null;
 		}
