@@ -158,6 +158,7 @@ namespace hamqsler
 		{
 			SetBands();					// create and show bands checkboxes
 			SetModes();					// create and show modes checkboxes
+			SetRcvdStatuses();			// create and show rcvd statuses checkboxes
 			SetSentStatuses();			// create and show sent statuses checkboxes
 			SetSentViaStatuses();		// create and show sent via statuses checkboxes
 			InvalidateVisual();
@@ -258,6 +259,26 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Creates and shows checkboxes for each QSL rcvd status
+		/// </summary>
+		private void SetRcvdStatuses()
+		{
+			// remove old checkboxes
+			RcvdPanel.Children.RemoveRange(0, RcvdPanel.Children.Count);
+			// create button for each status
+			foreach(string status in DisplayQsos.GetRcvdStatuses())
+			{
+				CheckBox bcb = new CheckBox();
+				bcb.Content = status;
+				bcb.IsChecked = true;
+				bcb.Margin=new Thickness(20, 5, 20, 5);
+				bcb.Checked += OnRcvdCheckBoxChecked;
+				bcb.Unchecked += OnRcvdCheckBoxChecked;
+				RcvdPanel.Children.Add(bcb);
+			}
+		}
+		
+		/// <summary>
 		/// Handler for Checked and Unchecked bands checkboxes (not including AllBands)
 		/// </summary>
 		/// <param name="sender">checkbox being checked or unchecked</param>
@@ -298,16 +319,29 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Handler for Checked and Unchecked events on the QSL rcvd checkboxes
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnRcvdCheckBoxChecked(object sender, RoutedEventArgs e)
+		{
+			SetIncludes();
+		}
+		
+		/// <summary>
 		/// Sets Include for each QSO based on bands, modes, qsl statuses and date/time settings
 		/// </summary>
 		private void SetIncludes()
 		{
 			Dictionary<string, bool>bandDict = CreateBandDictionary();
 			Dictionary<string, bool>modeDict = CreateModeDictionary();
+			Dictionary<string, bool>rcvdDict = CreateRcvdDictionary();
 			Dictionary<string, bool>sentDict = CreateSentDictionary();
 			Dictionary<string, bool>sentViaDict = CreateSentViaDictionary();
-			DisplayQsos.SetIncludes(ref bandDict, ref modeDict, ref sentDict,
-			                       ref sentViaDict);
+			DisplayQsos.SetIncludes(ref bandDict, ref modeDict, 
+			                        ref rcvdDict,
+			                        ref sentDict,
+			                        ref sentViaDict);
 		}
 		
 		/// <summary>
@@ -384,6 +418,25 @@ namespace hamqsler
 				}
 			}
 			return sents;
+		}
+
+		/// <summary>
+		/// Helper method that creates a Dictionary containing the rcvd statuses and IsChecked
+		/// value of the corresponding checkbox as value;
+		/// </summary>
+		/// <returns></returns>
+		private Dictionary<string, bool> CreateRcvdDictionary()
+		{
+			Dictionary<string, bool> rcvds = new Dictionary<string, bool>();
+			foreach(UIElement element in RcvdPanel.Children)
+			{
+				CheckBox cb = element as CheckBox;
+				if(cb != null)
+				{
+					rcvds.Add(cb.Content.ToString(), (bool)cb.IsChecked);
+				}
+			}
+			return rcvds;
 		}
 
 	}

@@ -357,6 +357,22 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Get list of QSO rcvd statuses in the QSOs
+		/// </summary>
+		/// <returns>list of rcvd statuses</returns>
+		public List<string> GetRcvdStatuses()
+		{
+			List<string> rcvds = new List<string>();
+			foreach(QsoWithInclude qwi in this)
+			{
+				rcvds.Add(qwi.Rcvd);
+			}
+			List<string> rcvds2 = new List<string>(rcvds.Distinct());
+			rcvds2.Sort();
+			return rcvds2;
+		}
+		
+		/// <summary>
 		/// Set the Include property of each QSO based on selection criteria
 		/// (settings of the various band, mode, and qsl status checkboxes, and the date/time values
 		/// </summary>
@@ -364,6 +380,7 @@ namespace hamqsler
 		/// <param name="modes">Dictionary showing checked state of each mode checkbox in QsosView</param>
 		public void SetIncludes(ref Dictionary<string, bool> bands,
 		                        ref Dictionary<string, bool> modes,
+		                        ref Dictionary<string, bool> rcvdStatuses,
 		                        ref Dictionary<string, bool> sentStatuses,
 		                        ref Dictionary<string, bool> sentViaStatuses)
 		{
@@ -375,6 +392,8 @@ namespace hamqsler
 				qwi.Include = bands[band];
 				string mode = qwi.Mode;
 				qwi.Include = qwi.Include && modes[mode];
+				string rcvd = qwi.Rcvd;
+				qwi.Include = qwi.Include && rcvdStatuses[rcvd];
 				string sent = qwi.Sent;
 				qwi.Include = qwi.Include && sentStatuses[sent];
 				string sentVia = qwi.SentVia;
