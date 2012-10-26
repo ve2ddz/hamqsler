@@ -291,5 +291,40 @@ namespace hamqsler
 				this.Add(qso);
 			}
 		}
+		
+		/// <summary>
+		/// Gets list of bands in the QSOs
+		/// </summary>
+		/// <returns>list of bands</returns>
+		public List<string> GetBands()
+		{
+			List<string> bands = new List<string>();
+			foreach(QsoWithInclude qwi in this)
+			{
+				bands.Add(qwi.Band);
+			}
+			List<string> bands2 = new List<string>(bands.Distinct());
+			bands2.Sort(new BandComparer());
+			return bands2;
+		}
+		
+		/// <summary>
+		/// Set the Include property of each QSO based on checked/unchecked state of a band button
+		/// </summary>
+		/// <param name="band">Band to compare to in each QSO</param>
+		/// <param name="isChecked">Value to set Include to</param>
+		public void SetIncludesByBand(string band, bool isChecked)
+		{
+			List<QsoWithInclude> qsos = this.ToList();
+			this.Clear();
+			foreach(QsoWithInclude qwi in qsos)
+			{
+				if(qwi.Band.ToLower() == band)
+				{
+					qwi.Include = isChecked;
+				}
+				this.Add(qwi);
+			}
+		}
 	}
 }

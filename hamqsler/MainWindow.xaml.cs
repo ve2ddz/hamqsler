@@ -129,7 +129,8 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		public void ImportQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			ImportOrAddQsos(qsosView.DisplayQsos.ImportQsos);		
+			ImportOrAddQsos(qsosView.DisplayQsos.ImportQsos);
+			qsosView.ShowIncludeSelectors();
 		}
 		
 		
@@ -141,6 +142,7 @@ namespace hamqsler
 		public void AddQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			ImportOrAddQsos(qsosView.DisplayQsos.AddQsos);
+			qsosView.ShowIncludeSelectors();
 		}
 		
 		/// <summary>
@@ -187,6 +189,7 @@ namespace hamqsler
 		private void ClearQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			qsosView.DisplayQsos.Clear();
+			qsosView.ShowIncludeSelectors();
 		}
 		
 		/// <summary>
@@ -257,6 +260,7 @@ namespace hamqsler
 			qsoDialog.ShowDialog();
 			Comparer<QsoWithInclude> comparer = qsosView.GetComparer();
 			qsosView.DisplayQsos.SortQSOs(comparer);
+			qsosView.ShowIncludeSelectors();
 		}
 		
 	}

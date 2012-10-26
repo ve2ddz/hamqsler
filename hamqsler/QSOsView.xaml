@@ -82,7 +82,35 @@
 			<Separator Margin="1"/>
 			<TabControl Margin="0,5,0,0">
 				<TabItem Header="Band">
-				
+					<Grid Name="BandGrid">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+
+
+						<CheckBox Name="AllBands" Margin="20,5,20,5" Checked="AllBands_Checked"
+						          Unchecked="AllBands_Checked"
+							IsChecked="True">All Bands</CheckBox>
+					</Grid>
 				</TabItem>
 				<TabItem Header="Mode">
 				

@@ -46,6 +46,10 @@ namespace hamqsler
 		{
 			get {return sortOrder;}
 		}
+		
+		// indicates whether already processing AllBands.Checked or AllBands.Unchecked event
+		private bool allBandsUpdating = false;
+		
 		// RoutedCommands
 		public static RoutedCommand DateTimeRadioButtonClickCommand = new RoutedCommand();
 		public static RoutedCommand CallRadioButtonClickCommand = new RoutedCommand();
@@ -134,6 +138,10 @@ namespace hamqsler
 			DisplayQsos.SortQSOs(bc);
 		}
 		
+		/// <summary>
+		/// Method for creating a Comparer based on QSO sort order
+		/// </summary>
+		/// <returns>comparer object for sorting</returns>
 		public Comparer<QsoWithInclude> GetComparer()
 		{
 			Comparer<QsoWithInclude> comparer = null;
@@ -146,5 +154,121 @@ namespace hamqsler
 			return comparer;
 		}
 		
+		/// <summary>
+		/// Create and show the various include selectors (bands, modes, dates/times, and qsl statuses)
+		/// </summary>
+		public void ShowIncludeSelectors()
+		{
+			SetBands();					// create and show bands checkboxes
+			InvalidateVisual();
+		}
+		
+		/// <summary>
+		/// Creates ans shows checkboxes for each band in the QSOs
+		/// </summary>
+		private void SetBands()
+		{
+			// remove old checkboxes
+			for(int i = BandGrid.Children.Count-1; i > 0; i--)
+			{
+				CheckBox cb = BandGrid.Children[i] as CheckBox;
+				if(cb != null && cb.Name != "AllBands")
+				{
+					BandGrid.Children.Remove(cb);
+				}
+			}
+			// add in new checkboxes
+			int numCheckBoxes = 1;
+			foreach(string band in DisplayQsos.GetBands())
+			{
+				CheckBox bcb = new CheckBox();
+				bcb.Content = band.ToLower();
+				bcb.IsChecked = AllBands.IsChecked;
+				bcb.Margin=new Thickness(20, 5, 20, 5);
+				bcb.Checked += OnBandCheckBoxChecked;
+				bcb.Unchecked += OnBandCheckBoxChecked;
+				BandGrid.Children.Add(bcb);
+				int column = 0;
+				if(numCheckBoxes%2 != 0)
+					column = 2;
+				Grid.SetColumn(bcb, column);
+				Grid.SetRow(bcb, numCheckBoxes/2);
+				numCheckBoxes++;
+			}
+		}
+		
+		/// <summary>
+		/// Handler for Checked and Unchecked bands checkboxes (not including AllBands)
+		/// </summary>
+		/// <param name="sender">checkbox being checked or unchecked</param>
+		/// <param name="e">not used</param>
+		private void OnBandCheckBoxChecked(object sender, RoutedEventArgs e)
+		{
+			CheckBox cb = sender as CheckBox;
+			if(!((bool)(cb.IsChecked)))
+			{
+				AllBands.IsChecked = false;
+			}
+			else
+			{
+				bool allChecked = true;
+				foreach(UIElement element in BandGrid.Children)
+				{
+					CheckBox cbInGrid = element as CheckBox;
+					if(cbInGrid != null && cbInGrid.Name != "AllBands")
+					{
+						allChecked = allChecked && (bool)cbInGrid.IsChecked;
+					}
+				}
+				AllBands.IsChecked = allChecked;
+			}
+			DisplayQsos.SetIncludesByBand(cb.Content.ToString().ToLower(), (bool)cb.IsChecked);
+		}
+		
+		/// <summary>
+		/// AllBands Checked and UnChecked event handler
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void AllBands_Checked(object sender, RoutedEventArgs e)
+		{
+			// This code works in conjunction with the OnBandCheckBoxChecked event handler.
+			// Every bands checkbox is set according to the AllBands.IsChecked property,
+			// which causes the OnBandCheckBoxChecked being called for each checkbox.
+			// If more than one checkbox was unchecked when the AllBands checkbox was checked,
+			// OnBandCheckBoxChecked will reset AllBands.IsChecked to false, raising an
+			// Unchecked event and firing this handler again. The result would be that the AllBands
+			// checkbox and the first band checkbox would be unchecked.
+			// allBandsUpdating is a flag used to prevent the processing of multiple Checked/Unchecked
+			// events concurrently. By doing so, the Unchecked event caused by OnBandCheckBoxChecked
+			// processing is ignored, and the stated problem does not occur.
+			// Note that AllBands.IsChecked is set to false as long as there is still one checkbox
+			// that is not checked, but once the last checkbox is checked, AllBands.IsChecked will
+			// be set correctly.
+			if(!allBandsUpdating)
+			{
+				allBandsUpdating = true;		// show that event is being handled
+				bool check = (bool)AllBands.IsChecked;
+				foreach(UIElement element in BandGrid.Children)
+				{
+					// check or uncheck every bands checkbox
+					CheckBox cbInGrid = element as CheckBox;
+					if(cbInGrid != null && cbInGrid.Name != "AllBands")
+					{
+						cbInGrid.IsChecked = check;
+					}
+				}
+				// set the Include property of every QSO appropriately
+				if(check)
+				{
+					DisplayQsos.IncludeAllQsos();
+				}
+				else
+				{
+					DisplayQsos.ExcludeAllQsos();
+				}
+				allBandsUpdating = false;		// done, so allow other events
+			}
+		}
 	}
 }
