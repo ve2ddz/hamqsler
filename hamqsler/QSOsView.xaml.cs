@@ -167,14 +167,7 @@ namespace hamqsler
 		private void SetBands()
 		{
 			// remove old checkboxes
-			for(int i = BandGrid.Children.Count-1; i > 0; i--)
-			{
-				CheckBox cb = BandGrid.Children[i] as CheckBox;
-				if(cb != null && cb.Name != "AllBands")
-				{
-					BandGrid.Children.Remove(cb);
-				}
-			}
+			BandGrid.Children.RemoveRange(0, BandGrid.Children.Count);
 			// add in new checkboxes
 			int numCheckBoxes = 0;
 			foreach(string band in DisplayQsos.GetBands())
@@ -201,14 +194,7 @@ namespace hamqsler
 		private void SetModes()
 		{
 			// remove old checkboxes
-			for(int i = ModeGrid.Children.Count-1; i > 0; i--)
-			{
-				CheckBox cb = ModeGrid.Children[i] as CheckBox;
-				if(cb != null && cb.Name != "AllModes")
-				{
-					ModeGrid.Children.Remove(cb);
-				}
-			}
+			ModeGrid.Children.RemoveRange(0, ModeGrid.Children.Count);
 			// add in new checkboxes
 			int numCheckBoxes = 0;
 			foreach(string mode in DisplayQsos.GetModes())

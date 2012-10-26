@@ -146,7 +146,7 @@ namespace hamqsler
 		public QsoWithInclude(Qso q)
 		{
 			include = true;
-			callsign = q.getValue("Call");
+			callsign = q.getValue("call");
 			manager = q.getValue("qsl_via", string.Empty);
 			date = q.getValue("qso_date");
 			time = q.getValue("time_on", null);
@@ -154,13 +154,13 @@ namespace hamqsler
 			{
 				time = q.getValue("time_off", string.Empty);
 			}
-			band = q.getValue("band", string.Empty);
+			band = q.getValue("band", string.Empty).ToLower();
 			frequency = q.getValue("freq", string.Empty);
-			mode = q.getValue("mode");
+			mode = q.getValue("mode").ToUpper();
 			rst = q.getValue("rst", string.Empty);
-			sent = q.getValue("qsl_sent", string.Empty);
-			rcvd = q.getValue("qsl_rcvd", string.Empty);
-			sentVia = q.getValue("qsl_sent_via", string.Empty);
+			sent = q.getValue("qsl_sent", string.Empty).ToUpper();
+			rcvd = q.getValue("qsl_rcvd", string.Empty).ToUpper();
+			sentVia = q.getValue("qsl_sent_via", string.Empty).ToUpper();
 			string mcall = (CallSign.IsValid(manager) ? manager : callsign);
 			bureau = QslBureaus.QslBureaus.Bureau(mcall);
 			qso = q;
