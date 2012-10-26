@@ -87,7 +87,32 @@ namespace hamqsler
 		private string sent;
 		public string Sent
 		{
-			get {return sent;}
+			get 
+			{
+				string status;
+				switch(sent)
+				{
+					case "Y":
+						status = "Yes";
+						break;
+					case "N":
+						status = "No";
+						break;
+					case "R":
+						status = "Requested";
+						break;
+					case "Q":
+						status = "Queued";
+						break;
+					case "I":
+						status = "Ignore";
+						break;
+					default:
+						status = sent;
+						break;
+				}
+				return status;
+			}
 		}
 		
 		private string rcvd;
