@@ -159,6 +159,7 @@ namespace hamqsler
 			SetBands();					// create and show bands checkboxes
 			SetModes();					// create and show modes checkboxes
 			SetSentStatuses();			// create and show sent statuses checkboxes
+			SetSentViaStatuses();		// create and show sent via statuses checkboxes
 			InvalidateVisual();
 		}
 		
@@ -237,6 +238,26 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Creates and shows checkboxes for each QSL sent via status
+		/// </summary>
+		private void SetSentViaStatuses()
+		{
+			// remove old checkboxes
+			SentViaPanel.Children.RemoveRange(0, SentViaPanel.Children.Count);
+			// create button for each status
+			foreach(string status in DisplayQsos.GetSentViaStatuses())
+			{
+				CheckBox bcb = new CheckBox();
+				bcb.Content = status;
+				bcb.IsChecked = true;
+				bcb.Margin=new Thickness(20, 5, 20, 5);
+				bcb.Checked += OnSentViaCheckBoxChecked;
+				bcb.Unchecked += OnSentViaCheckBoxChecked;
+				SentViaPanel.Children.Add(bcb);
+			}
+		}
+		
+		/// <summary>
 		/// Handler for Checked and Unchecked bands checkboxes (not including AllBands)
 		/// </summary>
 		/// <param name="sender">checkbox being checked or unchecked</param>
@@ -267,6 +288,16 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Handler for Checked and Unchecked events on the QSL sent via checkboxes
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSentViaCheckBoxChecked(object sender, RoutedEventArgs e)
+		{
+			SetIncludes();
+		}
+		
+		/// <summary>
 		/// Sets Include for each QSO based on bands, modes, qsl statuses and date/time settings
 		/// </summary>
 		private void SetIncludes()
@@ -274,7 +305,9 @@ namespace hamqsler
 			Dictionary<string, bool>bandDict = CreateBandDictionary();
 			Dictionary<string, bool>modeDict = CreateModeDictionary();
 			Dictionary<string, bool>sentDict = CreateSentDictionary();
-			DisplayQsos.SetIncludes(ref bandDict, ref modeDict, ref sentDict);
+			Dictionary<string, bool>sentViaDict = CreateSentViaDictionary();
+			DisplayQsos.SetIncludes(ref bandDict, ref modeDict, ref sentDict,
+			                       ref sentViaDict);
 		}
 		
 		/// <summary>
@@ -324,6 +357,25 @@ namespace hamqsler
 		{
 			Dictionary<string, bool> sents = new Dictionary<string, bool>();
 			foreach(UIElement element in SentPanel.Children)
+			{
+				CheckBox cb = element as CheckBox;
+				if(cb != null)
+				{
+					sents.Add(cb.Content.ToString(), (bool)cb.IsChecked);
+				}
+			}
+			return sents;
+		}
+
+		/// <summary>
+		/// Helper method that creates a Dictionary containing the sent via statuses and IsChecked
+		/// value of the corresponding checkbox as value;
+		/// </summary>
+		/// <returns></returns>
+		private Dictionary<string, bool> CreateSentViaDictionary()
+		{
+			Dictionary<string, bool> sents = new Dictionary<string, bool>();
+			foreach(UIElement element in SentViaPanel.Children)
 			{
 				CheckBox cb = element as CheckBox;
 				if(cb != null)
