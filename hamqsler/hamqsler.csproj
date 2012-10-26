@@ -81,6 +81,9 @@
     </Compile>
     <Compile Include="QsoWithInclude.cs" />
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
+    <Compile Include="RcvdConverter.cs" />
+    <Compile Include="SentConverter.cs" />
+    <Compile Include="SentViaConverter.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="MainWindow.xaml.cs">
