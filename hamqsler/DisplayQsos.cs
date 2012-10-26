@@ -309,20 +309,37 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Set the Include property of each QSO based on checked/unchecked state of a band button
+		/// Gets list of modes in the QSOs
 		/// </summary>
-		/// <param name="band">Band to compare to in each QSO</param>
-		/// <param name="isChecked">Value to set Include to</param>
-		public void SetIncludesByBand(string band, bool isChecked)
+		/// <returns>list of modes</returns>
+		public List<string> GetModes()
+		{
+			List<string> modes = new List<string>();
+			foreach(QsoWithInclude qwi in this)
+			{
+				modes.Add(qwi.Mode);
+			}
+			List<string> modes2 = new List<string>(modes.Distinct());
+			modes2.Sort();
+			return modes2;
+		}
+		
+		/// <summary>
+		/// Set the Include property of each QSO based on selection criteria
+		/// (settings of the various band, mode, and qsl status checkboxes, and the date/time values
+		/// </summary>
+		/// <param name="bands">Dictionary showing the checked state of each band checkbox in QsosView</param>
+		/// <param name="modes">Dictionary showing checked state of each mode checkbox in QsosView</param>
+		public void SetIncludes(ref Dictionary<string, bool> bands, ref Dictionary<string, bool> modes)
 		{
 			List<QsoWithInclude> qsos = this.ToList();
 			this.Clear();
 			foreach(QsoWithInclude qwi in qsos)
 			{
-				if(qwi.Band.ToLower() == band)
-				{
-					qwi.Include = isChecked;
-				}
+				string band = qwi.Band.ToLower();
+				qwi.Include = bands[band];
+				string mode = qwi.Mode;
+				qwi.Include = qwi.Include && modes[mode];
 				this.Add(qwi);
 			}
 		}
