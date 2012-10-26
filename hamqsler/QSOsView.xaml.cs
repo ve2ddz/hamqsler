@@ -243,16 +243,6 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void OnBandCheckBoxChecked(object sender, RoutedEventArgs e)
 		{
-			CheckBox cb = sender as CheckBox;
-			bool allChecked = true;
-			foreach(UIElement element in BandGrid.Children)
-			{
-				CheckBox cbInGrid = element as CheckBox;
-				if(cbInGrid != null && cbInGrid.Name != "AllBands")
-				{
-					allChecked = allChecked && (bool)cbInGrid.IsChecked;
-				}
-			}
 			SetIncludes();
 		}
 		
@@ -263,12 +253,6 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void OnModeCheckBoxChecked(object sender, RoutedEventArgs e)
 		{
-			CheckBox cb = sender as CheckBox;
-//			bool allChecked = true;
-			foreach(UIElement element in ModeGrid.Children)
-			{
-				CheckBox cbInGrid = element as CheckBox;
-			}
 			SetIncludes();
 		}
 		
