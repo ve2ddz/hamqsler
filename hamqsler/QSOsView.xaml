@@ -11,7 +11,6 @@
 				Executed="BureauRadioButtonClick_Executed" CanExecute="BureauRadioButtonClick_CanExecute"/>
 	</UserControl.CommandBindings>
 	<UserControl.Resources>
-		<local:SentConverter x:Key="SentConverter"/>
 		<local:RcvdConverter x:Key="RcvdConverter"/>
 		<local:SentViaConverter x:Key="SentViaConverter"/>
 	</UserControl.Resources>
@@ -58,7 +57,7 @@
 								<GridViewColumn Header="RST" DisplayMemberBinding="{Binding Path=RST,
 										Mode=OneWay}"/>
 								<GridViewColumn Header="Sent" DisplayMemberBinding="{Binding Path=Sent,
-										Mode=OneWay, Converter={StaticResource SentConverter}}"/>
+										Mode=OneWay}"/>
 								<GridViewColumn Header="Rcvd" DisplayMemberBinding="{Binding Path=Rcvd,
 										Mode=OneWay, Converter={StaticResource RcvdConverter}}"/>
 								<GridViewColumn Header="Sent Via" DisplayMemberBinding="{Binding
@@ -167,7 +166,17 @@
 				
 				</TabItem>
 				<TabItem Header="QSL Status">
-				
+					<StackPanel>
+						<GroupBox Header="Rcvd Status">
+							<StackPanel Name="RcvdPanel"/>
+						</GroupBox>
+						<GroupBox Header="Sent Status">
+							<StackPanel Name="SentPanel"/>
+						</GroupBox>
+						<GroupBox Header="Sent Via Status">
+							<StackPanel Name="SentViaPanel"/>
+						</GroupBox>
+					</StackPanel>
 				</TabItem>
 			</TabControl>
 		</StackPanel>

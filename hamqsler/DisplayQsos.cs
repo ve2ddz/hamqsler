@@ -325,12 +325,29 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Get list of QSL sent statuses in the QSOs
+		/// </summary>
+		/// <returns>list of sent statuses</returns>
+		public List<string> GetSentStatuses()
+		{
+			List<string> sents = new List<string>();
+			foreach(QsoWithInclude qwi in this)
+			{
+				sents.Add(qwi.Sent);
+			}
+			List<string> sents2 = new List<string>(sents.Distinct());
+			sents2.Sort();
+			return sents2;
+		}
+		
+		/// <summary>
 		/// Set the Include property of each QSO based on selection criteria
 		/// (settings of the various band, mode, and qsl status checkboxes, and the date/time values
 		/// </summary>
 		/// <param name="bands">Dictionary showing the checked state of each band checkbox in QsosView</param>
 		/// <param name="modes">Dictionary showing checked state of each mode checkbox in QsosView</param>
-		public void SetIncludes(ref Dictionary<string, bool> bands, ref Dictionary<string, bool> modes)
+		public void SetIncludes(ref Dictionary<string, bool> bands, ref Dictionary<string, bool> modes,
+		                       ref Dictionary<string, bool> sentStatuses)
 		{
 			List<QsoWithInclude> qsos = this.ToList();
 			this.Clear();
@@ -340,6 +357,8 @@ namespace hamqsler
 				qwi.Include = bands[band];
 				string mode = qwi.Mode;
 				qwi.Include = qwi.Include && modes[mode];
+				string sent = qwi.Sent;
+				qwi.Include = qwi.Include && sentStatuses[sent];
 				this.Add(qwi);
 			}
 		}

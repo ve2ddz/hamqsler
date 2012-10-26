@@ -157,7 +157,8 @@ namespace hamqsler
 		public void ShowIncludeSelectors()
 		{
 			SetBands();					// create and show bands checkboxes
-			SetModes();
+			SetModes();					// create and show modes checkboxes
+			SetSentStatuses();			// create and show sent statuses checkboxes
 			InvalidateVisual();
 		}
 		
@@ -216,6 +217,26 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Creates and shows checkboxes for each QSL sent status
+		/// </summary>
+		private void SetSentStatuses()
+		{
+			// remove old checkboxes
+			SentPanel.Children.RemoveRange(0, SentPanel.Children.Count);
+			// create button for each status
+			foreach(string status in DisplayQsos.GetSentStatuses())
+			{
+				CheckBox bcb = new CheckBox();
+				bcb.Content = status;
+				bcb.IsChecked = true;
+				bcb.Margin=new Thickness(20, 5, 20, 5);
+				bcb.Checked += OnSentCheckBoxChecked;
+				bcb.Unchecked += OnSentCheckBoxChecked;
+				SentPanel.Children.Add(bcb);
+			}
+		}
+		
+		/// <summary>
 		/// Handler for Checked and Unchecked bands checkboxes (not including AllBands)
 		/// </summary>
 		/// <param name="sender">checkbox being checked or unchecked</param>
@@ -223,22 +244,14 @@ namespace hamqsler
 		private void OnBandCheckBoxChecked(object sender, RoutedEventArgs e)
 		{
 			CheckBox cb = sender as CheckBox;
-			if(!((bool)(cb.IsChecked)))
+			bool allChecked = true;
+			foreach(UIElement element in BandGrid.Children)
 			{
-//				AllBands.IsChecked = false;
-			}
-			else
-			{
-				bool allChecked = true;
-				foreach(UIElement element in BandGrid.Children)
+				CheckBox cbInGrid = element as CheckBox;
+				if(cbInGrid != null && cbInGrid.Name != "AllBands")
 				{
-					CheckBox cbInGrid = element as CheckBox;
-					if(cbInGrid != null && cbInGrid.Name != "AllBands")
-					{
-						allChecked = allChecked && (bool)cbInGrid.IsChecked;
-					}
+					allChecked = allChecked && (bool)cbInGrid.IsChecked;
 				}
-//				AllBands.IsChecked = allChecked;
 			}
 			SetIncludes();
 		}
@@ -251,23 +264,21 @@ namespace hamqsler
 		private void OnModeCheckBoxChecked(object sender, RoutedEventArgs e)
 		{
 			CheckBox cb = sender as CheckBox;
-			if(!((bool)(cb.IsChecked)))
+//			bool allChecked = true;
+			foreach(UIElement element in ModeGrid.Children)
 			{
-//				AllModes.IsChecked = false;
+				CheckBox cbInGrid = element as CheckBox;
 			}
-			else
-			{
-				bool allChecked = true;
-				foreach(UIElement element in ModeGrid.Children)
-				{
-					CheckBox cbInGrid = element as CheckBox;
-					if(cbInGrid != null && cbInGrid.Name != "AllModes")
-					{
-						allChecked = allChecked && (bool)cbInGrid.IsChecked;
-					}
-				}
-//				AllModes.IsChecked = allChecked;
-			}
+			SetIncludes();
+		}
+		
+		/// <summary>
+		/// Handler for Checked and Unchecked events on the QSL Sent checkboxes
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnSentCheckBoxChecked(object sender, RoutedEventArgs e)
+		{
 			SetIncludes();
 		}
 		
@@ -278,7 +289,8 @@ namespace hamqsler
 		{
 			Dictionary<string, bool>bandDict = CreateBandDictionary();
 			Dictionary<string, bool>modeDict = CreateModeDictionary();
-			DisplayQsos.SetIncludes(ref bandDict, ref modeDict);
+			Dictionary<string, bool>sentDict = CreateSentDictionary();
+			DisplayQsos.SetIncludes(ref bandDict, ref modeDict, ref sentDict);
 		}
 		
 		/// <summary>
@@ -317,6 +329,25 @@ namespace hamqsler
 				}
 			}
 			return modes;
+		}
+		
+		/// <summary>
+		/// Helper method that creates a Dictionary containing the sent statuses and IsChecked
+		/// value of the corresponding checkbox as value;
+		/// </summary>
+		/// <returns></returns>
+		private Dictionary<string, bool> CreateSentDictionary()
+		{
+			Dictionary<string, bool> sents = new Dictionary<string, bool>();
+			foreach(UIElement element in SentPanel.Children)
+			{
+				CheckBox cb = element as CheckBox;
+				if(cb != null)
+				{
+					sents.Add(cb.Content.ToString(), (bool)cb.IsChecked);
+				}
+			}
+			return sents;
 		}
 
 	}
