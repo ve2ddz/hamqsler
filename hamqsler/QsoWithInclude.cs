@@ -118,13 +118,66 @@ namespace hamqsler
 		private string rcvd;
 		public string Rcvd
 		{
-			get {return rcvd;}
+			get 
+			{
+				string retValue = string.Empty;
+				switch(rcvd)
+				{
+					case "Y":
+						retValue = "Yes";
+						break;
+					case "N":
+						retValue = "No";
+						break;
+					case "R":
+						retValue = "Requested";
+						break;
+					case "V":
+						retValue = "Verified";
+						break;
+					case "I":
+						retValue = "Ignore";
+						break;
+					case "":
+						retValue = string.Empty;
+						break;
+					default:
+						retValue = "***";
+						break;
+				}
+				return retValue;
+			}
 		}
 		
 		private string sentVia;
 		public string SentVia
 		{
-			get {return sentVia;}
+			get 
+			{
+				string retValue = string.Empty;
+				switch(sentVia)
+				{
+					case "B":
+						retValue = "Bureau";
+						break;
+					case "D":
+						retValue = "Direct";
+						break;
+					case "E":
+						retValue = "Electronic";
+						break;
+					case "M":
+						retValue = "Manager";
+						break;
+					case "":
+						retValue = string.Empty;
+						break;
+					default:
+						retValue = "***";
+						break;
+				}
+				return retValue;
+			}
 		}
 		
 		private string bureau;

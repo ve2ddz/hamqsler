@@ -10,10 +10,6 @@
 		<CommandBinding Command="{x:Static local:QSOsView.BureauRadioButtonClickCommand}"
 				Executed="BureauRadioButtonClick_Executed" CanExecute="BureauRadioButtonClick_CanExecute"/>
 	</UserControl.CommandBindings>
-	<UserControl.Resources>
-		<local:RcvdConverter x:Key="RcvdConverter"/>
-		<local:SentViaConverter x:Key="SentViaConverter"/>
-	</UserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -59,10 +55,9 @@
 								<GridViewColumn Header="Sent" DisplayMemberBinding="{Binding Path=Sent,
 										Mode=OneWay}"/>
 								<GridViewColumn Header="Rcvd" DisplayMemberBinding="{Binding Path=Rcvd,
-										Mode=OneWay, Converter={StaticResource RcvdConverter}}"/>
+										Mode=OneWay}"/>
 								<GridViewColumn Header="Sent Via" DisplayMemberBinding="{Binding
-										Path=SentVia, Mode=OneWay,
-										Converter={StaticResource SentViaConverter}}"/>
+										Path=SentVia, Mode=OneWay}"/>
 							</GridView.Columns>
 						</GridView>
 					</ListView.View>
