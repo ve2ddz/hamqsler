@@ -424,7 +424,7 @@ namespace hamqsler
 		/// <returns>true if qwi date and time within the dates and times, false otherwise</returns>
 		private bool IncludeByDatesTimes(QsoWithInclude qwi, StartEndDateTime datesTimes)
 		{
-			// Will do a string comparison so concatenate date and time together
+			// Will do string comparisons so concatenate date and time together
 			string qsoStartDateTime = qwi.DateTime;
 			string startDateTime = datesTimes.ValidStartDate + datesTimes.ValidStartTime;
 			string endDateTime = datesTimes.ValidEndDate + datesTimes.ValidEndTime;
