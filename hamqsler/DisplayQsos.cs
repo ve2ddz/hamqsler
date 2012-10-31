@@ -387,6 +387,10 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="bands">Dictionary showing the checked state of each band checkbox in QsosView</param>
 		/// <param name="modes">Dictionary showing checked state of each mode checkbox in QsosView</param>
+		/// <param name="seDateTime">Start and end dates and times for inclusion of QSOs</param>
+		/// <param name="rcvdStatuses">Dictionary showing checked state of each rcvd checkbox in QsosView</param>
+		/// <param name="sentStatuses">Dictionary showing checked state of each sent checkbox in QsosView</param>
+		/// <param name="sentViaStatuses">Dictionary showing checked state of each sent via checkbox in QsosView</param>
 		public void SetIncludes(ref Dictionary<string, bool> bands,
 		                        ref Dictionary<string, bool> modes,
 		                        ref StartEndDateTime seDateTime,
