@@ -49,8 +49,25 @@
 								</GridViewColumn>
 								<GridViewColumn Header="Call" DisplayMemberBinding="{Binding Path=Callsign,
 										Mode=OneWay}"/>
-								<GridViewColumn Header="Manager" DisplayMemberBinding="{Binding Path=Manager,
-										Mode=TwoWay}"/>
+								<GridViewColumn Header="Manager">
+									<GridViewColumn.CellTemplate>
+										<DataTemplate>
+											<TextBox Margin="1" MinWidth="75"  CharacterCasing="Upper"
+													HorizontalAlignment="Center"
+													Visibility="Visible"
+													TextChanged="ManagerBoxes_TextChanged">
+												<TextBox.Text>
+													<Binding Path="Manager"
+													UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+														<Binding.ValidationRules>
+															<DataErrorValidationRule/>
+														</Binding.ValidationRules>
+													</Binding>
+												</TextBox.Text>
+											</TextBox>
+										</DataTemplate>
+									</GridViewColumn.CellTemplate>
+								</GridViewColumn>
 								<GridViewColumn Header="Date" DisplayMemberBinding="{Binding Path=Date,
 										Mode=OneWay}"/>
 								<GridViewColumn Header="Time" DisplayMemberBinding="{Binding Path=Time,

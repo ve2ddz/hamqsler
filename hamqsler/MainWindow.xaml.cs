@@ -82,7 +82,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void ExportQsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = qsosView.DisplayQsos.Count > 0;
+			e.CanExecute = qsosView.DisplayQsos.Count > 0 && qsosView.DisplayQsos.IsDirty;
 		}
 		
 		/// <summary>
@@ -199,6 +199,9 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void ExportQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
+			// The only change that can be made is to update one or more managers.
+			// Transfer managers back to the actual Qsos
+			qsosView.DisplayQsos.UpdateQSOsWithManager();
 			// get QSOs as Adif stream in bytes
 			Byte[] asciiAdif = qsosView.DisplayQsos.GetQsosAsAdif2();
 			// determine file to store in
@@ -226,6 +229,7 @@ namespace hamqsler
 					writer.Write(Convert.ToChar(b).ToString());
 				}
 				writer.Close();
+				qsosView.DisplayQsos.IsDirty = false;
 			}
 		}
 		

@@ -17,16 +17,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- using QslBureaus;
- using Qsos;
+using QslBureaus;
+using Qsos;
 using System;
+using System.ComponentModel;
 
 namespace hamqsler
 {
 	/// <summary>
 	/// QSO object adjusted for display in a QsosView
 	/// </summary>
-	public class QsoWithInclude
+	public class QsoWithInclude : IDataErrorInfo
 	{
 		private bool include;
 		public bool Include
@@ -242,6 +243,60 @@ namespace hamqsler
 			string mcall = (CallSign.IsValid(manager) ? manager : callsign);
 			bureau = QslBureaus.QslBureaus.Bureau(mcall);
 			qso = q;
+		}
+		
+		/// <summary>
+		/// Error accessor from the IDataErrorInfo interface. This is not used.
+		/// </summary>
+		public string Error
+		{
+			get
+			{
+				return null;
+			}
+		}
+		
+		/// <summary>
+		/// Validator from the IDataErrorInfo interface
+		/// </summary>
+		public string this[string propertyName]
+		{
+			get
+			{
+				if(propertyName == "Manager")
+				{
+					if(Manager == string.Empty)
+					{
+						return null;
+					}
+					CallSign mgr;
+					try
+					{
+						mgr = new CallSign(Manager);
+					}
+					catch(QsoException)
+					{
+						return "Must either be empty or a valid callsign";
+					}
+					if(mgr.FullCall == mgr.Call)
+					{
+						return null;
+					}
+					else
+					{
+						return "Must either be empty or a valid callsign";
+					}
+				}
+				return null;
+			}
+		}
+		
+		/// <summary>
+		/// Update the 'qsl_via field of the QSO with the value in Manager
+		/// </summary>
+		public void UpdateManager()
+		{
+			this.Qso.setField("qsl_via", Manager);
 		}
 	}
 }

@@ -476,5 +476,16 @@ namespace hamqsler
 				endTime = string.Empty;
 			}
 		}
+		
+		/// <summary>
+		/// Update each QSO with the contents of the corresponding QsoWithInclude.Manager property
+		/// </summary>
+		public void UpdateQSOsWithManager()
+		{
+			foreach(QsoWithInclude qwi in this)
+			{
+				qwi.UpdateManager();
+			}
+		}
 	}
 }

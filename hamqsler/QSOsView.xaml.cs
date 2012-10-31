@@ -498,5 +498,19 @@ namespace hamqsler
 			// to that of latest QSO
 			SetDatesTimes();
 		}
+		
+		/// <summary>
+		/// Handler for TextChanged event on Manager boxes
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void ManagerBoxes_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			// Text property of the TextBox is bound to the appropriate QSO
+			// so that the property is changed. All we need to do is
+			// set IsDirty to true to show that a change to at least one of
+			// the QSOs took place
+			DisplayQsos.IsDirty = true;
+		}
 	}
 }
