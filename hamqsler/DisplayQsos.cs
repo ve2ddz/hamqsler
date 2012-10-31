@@ -50,6 +50,15 @@ namespace hamqsler
 		{
 		}
 		
+		public DisplayQsos(DisplayQsos qsos)
+		{
+			IsDirty = qsos.IsDirty;
+			foreach(QsoWithInclude qwi in qsos)
+			{
+				this.Add(qwi);
+			}
+		}
+		
 		/// <summary>
 		/// Import QSOs from the ADIF file and store for display
 		/// </summary>
@@ -380,6 +389,7 @@ namespace hamqsler
 		/// <param name="modes">Dictionary showing checked state of each mode checkbox in QsosView</param>
 		public void SetIncludes(ref Dictionary<string, bool> bands,
 		                        ref Dictionary<string, bool> modes,
+		                        ref StartEndDateTime seDateTime,
 		                        ref Dictionary<string, bool> rcvdStatuses,
 		                        ref Dictionary<string, bool> sentStatuses,
 		                        ref Dictionary<string, bool> sentViaStatuses)
@@ -389,16 +399,77 @@ namespace hamqsler
 			foreach(QsoWithInclude qwi in qsos)
 			{
 				string band = qwi.Band.ToLower();
-				qwi.Include = bands[band];
+				bool include = bands[band];
 				string mode = qwi.Mode;
-				qwi.Include = qwi.Include && modes[mode];
+				include = include && modes[mode];
+				include = include && IncludeByDatesTimes(qwi, seDateTime);
 				string rcvd = qwi.Rcvd;
-				qwi.Include = qwi.Include && rcvdStatuses[rcvd];
+				include =include && rcvdStatuses[rcvd];
 				string sent = qwi.Sent;
-				qwi.Include = qwi.Include && sentStatuses[sent];
+				include = include && sentStatuses[sent];
 				string sentVia = qwi.SentVia;
-				qwi.Include = qwi.Include && sentViaStatuses[sentVia];
+				include = include && sentViaStatuses[sentVia];
+				qwi.Include = include;
 				this.Add(qwi);
+			}
+		}
+		
+		/// <summary>
+		/// Helper method that determines if the start date and time of the Qso is between the
+		/// start date/time and the end date/time
+		/// </summary>
+		/// <param name="qwi">QsoWithInclude object to compare</param>
+		/// <param name="datesTimes">StartEndDateTime object containing the start and end
+		/// dates and times for the comparison</param>
+		/// <returns>true if qwi date and time within the dates and times, false otherwise</returns>
+		private bool IncludeByDatesTimes(QsoWithInclude qwi, StartEndDateTime datesTimes)
+		{
+			// Will do a string comparison so concatenate date and time together
+			string qsoStartDateTime = qwi.DateTime;
+			string startDateTime = datesTimes.ValidStartDate + datesTimes.ValidStartTime;
+			string endDateTime = datesTimes.ValidEndDate + datesTimes.ValidEndTime;
+			// compare start date/time
+			int startCompare = String.Compare(qsoStartDateTime, startDateTime, true);
+			if(startCompare < 0)		// if qwi.DateTime earlier than start date/time
+			{
+				return false;
+			}
+			else		// if later than start date/tome
+			{
+				int endCompare = String.Compare(qsoStartDateTime, endDateTime, true);
+				if(endCompare <= 0)		// if qwi.DateTime earlier/equal to end date/time
+				{
+					return true;
+				}
+				return false;			// qwi.DateTime later than end date/time
+			}
+		}
+		
+		/// <summary>
+		/// Retrieve the earliest and latest dates and times for QSOs within this collection
+		/// </summary>
+		/// <param name="startDate">date of earliest QSO</param>
+		/// <param name="startTime">time of earliest QSO</param>
+		/// <param name="endDate">date of latest QSO</param>
+		/// <param name="endTime">time of latest QSO</param>
+		public void GetStartEndDatesTimes(out string startDate, out string startTime,
+		                                 out string endDate, out string endTime)
+		{
+			if(this.Count > 0)		// if at least one QSO, get dates/times
+			{
+				DisplayQsos dispQsos = new DisplayQsos(this);
+				dispQsos.SortQSOs(new DateTimeComparer());
+				startDate = dispQsos.Items[0].Date;
+				startTime = dispQsos.Items[0].Time;
+				endDate = dispQsos.Items[dispQsos.Count - 1].Date;
+				endTime = dispQsos.Items[dispQsos.Count - 1].Time;
+			}
+			else					// no QSOs, so set to empty strings
+			{
+				startDate = string.Empty;
+				startTime = string.Empty;
+				endDate = string.Empty;
+				endTime = string.Empty;
 			}
 		}
 	}

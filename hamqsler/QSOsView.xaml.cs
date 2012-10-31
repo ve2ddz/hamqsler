@@ -17,6 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Qsos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -45,6 +46,12 @@ namespace hamqsler
 		public OrderOfSort SortOrder
 		{
 			get {return sortOrder;}
+		}
+		
+		private StartEndDateTime startEndDateTime = new StartEndDateTime();
+		public StartEndDateTime StartEndDateTime
+		{
+			get {return startEndDateTime;}
 		}
 		
 		// RoutedCommands
@@ -161,7 +168,7 @@ namespace hamqsler
 			SetRcvdStatuses();			// create and show rcvd statuses checkboxes
 			SetSentStatuses();			// create and show sent statuses checkboxes
 			SetSentViaStatuses();		// create and show sent via statuses checkboxes
-			InvalidateVisual();
+			SetDatesTimes();			// set and show start and end dates/times
 		}
 		
 		/// <summary>
@@ -216,6 +223,23 @@ namespace hamqsler
 				Grid.SetRow(bcb, numCheckBoxes/2);
 				numCheckBoxes++;
 			}
+		}
+		
+		/// <summary>
+		/// Gets and sets the start and end dates/times based on contents of DisplayQsos
+		/// </summary>
+		private void SetDatesTimes()
+		{
+			string startDate;
+			string startTime;
+			string endDate;
+			string endTime;
+			DisplayQsos.GetStartEndDatesTimes(out startDate, out startTime,
+			                                 out endDate, out endTime);
+			startEndDateTime.StartDate = startDate;
+			startEndDateTime.StartTime = startTime;
+			startEndDateTime.EndDate = endDate;
+			startEndDateTime.EndTime = endTime;
 		}
 		
 		/// <summary>
@@ -338,7 +362,8 @@ namespace hamqsler
 			Dictionary<string, bool>rcvdDict = CreateRcvdDictionary();
 			Dictionary<string, bool>sentDict = CreateSentDictionary();
 			Dictionary<string, bool>sentViaDict = CreateSentViaDictionary();
-			DisplayQsos.SetIncludes(ref bandDict, ref modeDict, 
+			DisplayQsos.SetIncludes(ref bandDict, ref modeDict,
+			                        ref startEndDateTime,
 			                        ref rcvdDict,
 			                        ref sentDict,
 			                        ref sentViaDict);
@@ -438,6 +463,40 @@ namespace hamqsler
 			}
 			return rcvds;
 		}
-
+		
+		/// <summary>
+		/// Handler for TextChanged events on the date and time textboxes
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void DatesTimes_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			string startDateTime = startEndDateTime.ValidStartDate + 
+				startEndDateTime.ValidStartTime;
+			string endDateTime = startEndDateTime.ValidEndDate + 
+				startEndDateTime.EndTime;
+			// if start later than end, show error message to indicate that no QSOs will be included
+			if(String.Compare(startDateTime, endDateTime, true) > 0)
+			{
+				MessageBox.Show("Start date and time later than end date and time.\n\r" +
+				                "No QSOs are included.", "Date/Time Error",
+				                MessageBoxButton.OK, MessageBoxImage.Warning);
+			}
+			// now go set Include for each QSO
+			SetIncludes();
+		}
+		
+		
+		/// <summary>
+		/// Handler for Reset button click event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void ResetButton_Click(object sender, RoutedEventArgs e)
+		{
+			// reset start date and time to that of earliest QSO, and end date and time
+			// to that of latest QSO
+			SetDatesTimes();
+		}
 	}
 }
