@@ -8,6 +8,8 @@
 	Width="1000"
 	Closed="Window_Closed">
 	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:MainWindow.QsosCommand}"
+						CanExecute="QsosCommand_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.InputQsosCommand}"
 						Executed="InputQsosCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.ImportQsosCommand}"
@@ -49,7 +51,8 @@
 				<Separator/>
 				<MenuItem Header="Quit"/>
 			</MenuItem>
-			<MenuItem Header="QSOs">
+			<MenuItem Header="QSOs"
+						Command="{x:Static local:MainWindow.QsosCommand}">
 				<MenuItem Header="Input QSOs..."
 						Command="{x:Static local:MainWindow.InputQsosCommand}"/>
 				<MenuItem Header="Import QSOs..." 

@@ -41,6 +41,7 @@ namespace hamqsler
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
+		public static RoutedCommand QsosCommand = new RoutedCommand();
 		public static RoutedCommand InputQsosCommand = new RoutedCommand();
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
 		public static RoutedCommand AddQsosCommand = new RoutedCommand();
@@ -53,6 +54,23 @@ namespace hamqsler
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+		
+		/// <summary>
+		/// CanExecute for QSOs dropdown menu
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void QsosCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			if(qsosTab != null)
+			{
+				e.CanExecute = qsosTab.IsSelected;
+			}
+			else
+			{
+				e.CanExecute =false;
+			}
 		}
 		
 		/// <summary>
