@@ -58,6 +58,7 @@ namespace hamqsler
 		public static RoutedCommand DateTimeRadioButtonClickCommand = new RoutedCommand();
 		public static RoutedCommand CallRadioButtonClickCommand = new RoutedCommand();
 		public static RoutedCommand BureauRadioButtonClickCommand = new RoutedCommand();
+		public static RoutedCommand ResortButtonClickCommand = new RoutedCommand();
 		
 		private static DependencyProperty DisplayQsosProperty = DependencyProperty.Register(
 			"DisplayQsos", typeof(DisplayQsos), typeof(MainWindow), 
@@ -80,7 +81,7 @@ namespace hamqsler
 		/// CanExecute for DateTimeRadioButton
 		/// </summary>
 		/// <param name="sender">not used</param>
-		/// <param name="e">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void DateTimeRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = DisplayQsos.Count > 0;
@@ -90,7 +91,7 @@ namespace hamqsler
 		/// CanExecute for CallRadioButton
 		/// </summary>
 		/// <param name="sender">not used</param>
-		/// <param name="e">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void CallRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = DisplayQsos.Count > 0;
@@ -99,11 +100,21 @@ namespace hamqsler
 		/// <summary>
 		/// CanExecute for BureauRadioButton
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void BureauRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = DisplayQsos.Count > 0;
+		}
+		
+		/// <summary>
+		/// CanExecute for ResortButton
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void ResortButtonClickCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = !(SortOrder == OrderOfSort.DATETIME) && DisplayQsos.NeedsSorting;
 		}
 		
 		/// <summary>
@@ -511,6 +522,21 @@ namespace hamqsler
 			// set IsDirty to true to show that a change to at least one of
 			// the QSOs took place
 			DisplayQsos.IsDirty = true;
+			if(SortOrder != OrderOfSort.DATETIME)
+			{
+				DisplayQsos.NeedsSorting = true;
+			}
+		}
+		
+		/// <summary>
+		/// Handler for ResortButton click event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void ResortButtonClickCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			Comparer<QsoWithInclude> comparer = GetComparer();
+			DisplayQsos.SortQSOs(comparer);
 		}
 	}
 }

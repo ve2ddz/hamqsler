@@ -35,12 +35,20 @@ namespace hamqsler
 	/// </summary>
 	public class DisplayQsos : ObservableCollection<QsoWithInclude>
 	{
-		
+	// one or more QSOs have been modified (only Manager field is modifiable)
 		private bool isDirty = false;
 		public bool IsDirty
 		{
 			get {return isDirty;}
 			set {isDirty = value;}
+		}
+		
+		// Manager field of one or more QSOs has been modified. A resort is needed
+		private bool needsSorting = false;
+		public bool NeedsSorting
+		{
+			get {return needsSorting;}
+			set {needsSorting = value;}
 		}
 		
 		/// <summary>
@@ -50,6 +58,10 @@ namespace hamqsler
 		{
 		}
 		
+		/// <summary>
+		/// Copy constructor
+		/// </summary>
+		/// <param name="qsos">DisplayQsos object to copy</param>
 		public DisplayQsos(DisplayQsos qsos)
 		{
 			IsDirty = qsos.IsDirty;
@@ -137,6 +149,7 @@ namespace hamqsler
                 return "One or more QSOs contains an invalid field.\n\rThese QSOs have not been imported.\n\r" +
                     "See the log file for details.";
             }
+            NeedsSorting = false;
             return null;	// no error
 		}
 		
@@ -159,7 +172,7 @@ namespace hamqsler
             {
             	this.Add(qwi);
             }
-			
+            NeedsSorting = false;			
 		}
 		
 		/// <summary>
@@ -227,10 +240,6 @@ namespace hamqsler
 			foreach(QsoWithInclude qwi in this)
 			{
 				Qso qso = qwi.Qso;
-				if(IsDirty)
-				{
-					qso.setField("qsl_sent_via", qwi.Manager);
-				}
 				adif += qso.ToAdifString() + "\r\n";
 			}
 			// change encoding to ASCII
@@ -486,6 +495,15 @@ namespace hamqsler
 			{
 				qwi.UpdateManager();
 			}
+		}
+		
+		/// <summary>
+		/// Remove all QSOs
+		/// </summary>
+		public new void Clear()
+		{
+			base.Clear();
+			NeedsSorting = false;
 		}
 	}
 }

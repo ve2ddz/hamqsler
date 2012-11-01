@@ -194,7 +194,28 @@ namespace hamqsler
 		
 		public string ManagerCallDateTime
 		{
-			get {return manager + "-" + callsign + date + time;}
+			get 
+			{
+				// assume manager is valid
+				string mcdt = manager + "-" + callsign + date + time;
+				if(manager != string.Empty)
+				{
+					try
+					{
+						// now check if manager is valid and modify return value if not
+						CallSign mgr = new CallSign(Manager);
+						if(mgr.FullCall != mgr.Call)
+						{
+							mcdt = "-" + callsign + date + time;
+						}
+					}
+					catch(QsoException)		// thrown if manager not valid callsign
+					{
+						mcdt = "-" + callsign + date + time;
+					}
+				}
+				return mcdt;
+			}
 		}
 			
 		public string BureauManagerCallDateTime
