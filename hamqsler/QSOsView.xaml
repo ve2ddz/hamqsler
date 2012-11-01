@@ -95,54 +95,54 @@
 				</ListView>
 			</ScrollViewer>
 		</GroupBox>
-		<StackPanel Margin="0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="200">
-			<GroupBox Header="Sort Cards By">
-				<StackPanel Orientation="Vertical">
-					<RadioButton Name="dateTimeRadioButton" Content="Date/Time" IsChecked="true" Margin="5"
-							ToolTip="Sort QSOs by date and time." 
-					             Command="{x:Static local:QSOsView.DateTimeRadioButtonClickCommand}"/>
-					<RadioButton Name="callRadioButton" Content="Call" Margin="5"
-								ToolTip="Sort QSOs by manager and callsign, then date and time."
-								Command="{x:Static local:QSOsView.CallRadioButtonClickCommand}"/>
-					<RadioButton Name="bureauRadioButton" Content="Bureau" Margin="5"
-								ToolTip="Sort QSOs by bureau then manager and callsign, then date and time."
-					             Command="{x:Static local:QSOsView.BureauRadioButtonClickCommand}"/>
-					<Separator Margin="3"/>
-					<Button Name="ResortButton" Margin="5" Width="75" Content="Sort"
-								ToolTip="Sort QSOs again"
-								Command="{x:Static local:QSOsView.ResortButtonClickCommand}"/>
-				</StackPanel>
-			</GroupBox>
-			<Separator Margin="1"/>
-			<TabControl Margin="0,5,0,0">
-				<TabItem Header="Band">
-					<Grid Name="BandGrid">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto"/>
-							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="Auto"/>
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-						</Grid.RowDefinitions>
-					</Grid>
-				</TabItem>
-				<TabItem Header="Mode">
-					<ScrollViewer VerticalScrollBarVisibility="Auto">
+		<ScrollViewer CanContentScroll="True"
+				 Grid.Row="0" Grid.Column="1" Width="200" HorizontalAlignment="Right">
+			<StackPanel Margin="0">
+				<GroupBox Header="Sort Cards By">
+					<StackPanel Orientation="Vertical">
+						<RadioButton Name="dateTimeRadioButton" Content="Date/Time" IsChecked="true" Margin="5"
+								ToolTip="Sort QSOs by date and time." 
+						             Command="{x:Static local:QSOsView.DateTimeRadioButtonClickCommand}"/>
+						<RadioButton Name="callRadioButton" Content="Call" Margin="5"
+									ToolTip="Sort QSOs by manager and callsign, then date and time."
+									Command="{x:Static local:QSOsView.CallRadioButtonClickCommand}"/>
+						<RadioButton Name="bureauRadioButton" Content="Bureau" Margin="5"
+									ToolTip="Sort QSOs by bureau then manager and callsign, then date and time."
+						             Command="{x:Static local:QSOsView.BureauRadioButtonClickCommand}"/>
+						<Separator Margin="3"/>
+						<Button Name="ResortButton" Margin="5" Width="75" Content="Sort"
+									ToolTip="Sort QSOs again"
+									Command="{x:Static local:QSOsView.ResortButtonClickCommand}"/>
+					</StackPanel>
+				</GroupBox>
+				<TabControl Margin="0,5,0,0">
+					<TabItem Header="Band">
+						<Grid Name="BandGrid">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+						</Grid>
+					</TabItem>
+					<TabItem Header="Mode">
 						<Grid x:Name="ModeGrid">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
@@ -189,103 +189,103 @@
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
 						</Grid>				
-					</ScrollViewer>
-				</TabItem>
-				<TabItem Header="Date/Time"  DataContext="{Binding Path=StartEndDateTime,
-							RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QSOsView}}}">
-					<AdornerDecorator>
-						<Grid Name="DateTimeGrid">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="*"/>						
-							</Grid.ColumnDefinitions>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="Auto"/>
-							</Grid.RowDefinitions>
-							<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-									HorizontalAlignment="Right">Start Date:</TextBlock>
-							<TextBox Grid.Row="0" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
-									Name="StartDateTextBox" MinWidth="75" MaxLength="8"
-									TextChanged="DatesTimes_TextChanged">
-								<TextBox.Text>
-									<Binding Path="StartDate"
-									UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-										<Binding.ValidationRules>
-											<DataErrorValidationRule/>
-										</Binding.ValidationRules>
-									</Binding>
-								</TextBox.Text>
-							</TextBox>
-							<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-									HorizontalAlignment="Right">Start Time:</TextBlock>
-							<TextBox Grid.Row="1" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
-									MinWidth="75" MaxLength="6" Name="StartTimeTextBox"
-									TextChanged="DatesTimes_TextChanged">
-								<TextBox.Text>
-									<Binding Path="StartTime"
-									UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-										<Binding.ValidationRules>
-											<DataErrorValidationRule/>
-										</Binding.ValidationRules>
-									</Binding>
-								</TextBox.Text>
-							</TextBox>
-							<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-									HorizontalAlignment="Right">End Date:</TextBlock>
-							<TextBox Grid.Row="2" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
-									Name="EndDateTextBox" MinWidth="75" MaxLength="8"
-									TextChanged="DatesTimes_TextChanged">
-								<TextBox.Text>
-									<Binding Path="EndDate"
-									UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-										<Binding.ValidationRules>
-											<DataErrorValidationRule/>
-										</Binding.ValidationRules>
-									</Binding>
-								</TextBox.Text>
-							</TextBox>
-							<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-									HorizontalAlignment="Right">End Time:</TextBlock>
-							<TextBox Grid.Row="3" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
-									Name="EndTimeTextBox" MinWidth="75" MaxLength="6"
-									TextChanged="DatesTimes_TextChanged">
-								<TextBox.Text>
-									<Binding Path="EndTime"
-									UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-										<Binding.ValidationRules>
-											<DataErrorValidationRule/>
-										</Binding.ValidationRules>
-									</Binding>
-								</TextBox.Text>
-							</TextBox>
-							<Separator Grid.Row="4" Grid.ColumnSpan="2" Margin="3"/>
-							<Button Name="ResetButton" Grid.Row="5" Grid.ColumnSpan="2" Margin="5"
-									HorizontalAlignment="Center" Content="Reset" MinWidth="75"
-									ToolTip="Reset start date/time to date/time of earliest Qso,
+					</TabItem>
+					<TabItem Header="Date/Time"  DataContext="{Binding Path=StartEndDateTime,
+								RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QSOsView}}}">
+						<AdornerDecorator>
+							<Grid Name="DateTimeGrid">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="*"/>						
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+								</Grid.RowDefinitions>
+								<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+										HorizontalAlignment="Right">Start Date:</TextBlock>
+								<TextBox Grid.Row="0" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
+										Name="StartDateTextBox" MinWidth="75" MaxLength="8"
+										TextChanged="DatesTimes_TextChanged">
+									<TextBox.Text>
+										<Binding Path="StartDate"
+										UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+											<Binding.ValidationRules>
+												<DataErrorValidationRule/>
+											</Binding.ValidationRules>
+										</Binding>
+									</TextBox.Text>
+								</TextBox>
+								<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+										HorizontalAlignment="Right">Start Time:</TextBlock>
+								<TextBox Grid.Row="1" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
+										MinWidth="75" MaxLength="6" Name="StartTimeTextBox"
+										TextChanged="DatesTimes_TextChanged">
+									<TextBox.Text>
+										<Binding Path="StartTime"
+										UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+											<Binding.ValidationRules>
+												<DataErrorValidationRule/>
+											</Binding.ValidationRules>
+										</Binding>
+									</TextBox.Text>
+								</TextBox>
+								<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+										HorizontalAlignment="Right">End Date:</TextBlock>
+								<TextBox Grid.Row="2" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
+										Name="EndDateTextBox" MinWidth="75" MaxLength="8"
+										TextChanged="DatesTimes_TextChanged">
+									<TextBox.Text>
+										<Binding Path="EndDate"
+										UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+											<Binding.ValidationRules>
+												<DataErrorValidationRule/>
+											</Binding.ValidationRules>
+										</Binding>
+									</TextBox.Text>
+								</TextBox>
+								<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+										HorizontalAlignment="Right">End Time:</TextBlock>
+								<TextBox Grid.Row="3" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
+										Name="EndTimeTextBox" MinWidth="75" MaxLength="6"
+										TextChanged="DatesTimes_TextChanged">
+									<TextBox.Text>
+										<Binding Path="EndTime"
+										UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+											<Binding.ValidationRules>
+												<DataErrorValidationRule/>
+											</Binding.ValidationRules>
+										</Binding>
+									</TextBox.Text>
+								</TextBox>
+								<Separator Grid.Row="4" Grid.ColumnSpan="2" Margin="3"/>
+								<Button Name="ResetButton" Grid.Row="5" Grid.ColumnSpan="2" Margin="5"
+										HorizontalAlignment="Center" Content="Reset" MinWidth="75"
+										ToolTip="Reset start date/time to date/time of earliest Qso,
 and end date/time to date/time of latest QSO"
-									Click="ResetButton_Click"/>
-						</Grid>
-					</AdornerDecorator>
-				</TabItem>
-				<TabItem Header="QSL Status">
-					<StackPanel>
-						<GroupBox Header="Rcvd Status">
-							<StackPanel Name="RcvdPanel"/>
-						</GroupBox>
-						<GroupBox Header="Sent Status">
-							<StackPanel Name="SentPanel"/>
-						</GroupBox>
-						<GroupBox Header="Sent Via Status">
-							<StackPanel Name="SentViaPanel"/>
-						</GroupBox>
-					</StackPanel>
-				</TabItem>
-			</TabControl>
-		</StackPanel>
+										Click="ResetButton_Click"/>
+							</Grid>
+						</AdornerDecorator>
+					</TabItem>
+					<TabItem Header="QSL Status">
+						<StackPanel>
+							<GroupBox Header="Rcvd Status">
+								<StackPanel Name="RcvdPanel"/>
+							</GroupBox>
+							<GroupBox Header="Sent Status">
+								<StackPanel Name="SentPanel"/>
+							</GroupBox>
+							<GroupBox Header="Sent Via Status">
+								<StackPanel Name="SentViaPanel"/>
+							</GroupBox>
+						</StackPanel>
+					</TabItem>
+				</TabControl>
+			</StackPanel>
+		</ScrollViewer>
 	</Grid>
 </UserControl>
