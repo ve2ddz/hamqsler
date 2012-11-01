@@ -29,6 +29,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace hamqsler
@@ -283,6 +284,19 @@ namespace hamqsler
 			Comparer<QsoWithInclude> comparer = qsosView.GetComparer();
 			qsosView.DisplayQsos.SortQSOs(comparer);
 			qsosView.ShowIncludeSelectors();
+		}
+		
+		/// <summary>
+		/// Handles New -> Bureau Card menu item processing
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void BureauCardMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			// create a CardTabItem and add it to the mainTabControl
+			CardTabItem cardTab = new CardTabItem(5.5 * 96, 3.5 * 96);
+			mainTabControl.Items.Add(cardTab);
+			cardTab.IsSelected = true;		// select the new tab
 		}
 		
 	}

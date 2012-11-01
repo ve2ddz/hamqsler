@@ -68,6 +68,12 @@
     <Compile Include="BandComparer.cs" />
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
+    <Compile Include="Card.cs" />
+    <Compile Include="CardItem.cs" />
+    <Compile Include="CardTabItem.xaml.cs">
+      <DependentUpon>CardTabItem.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="QsoInputData.cs" />
@@ -98,6 +104,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CardTabItem.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />

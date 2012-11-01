@@ -33,7 +33,7 @@
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="Cards">
 				<MenuItem Header="_New">
-					<MenuItem Header="Bureau Card"/>
+					<MenuItem Name="BureauCardMenuItem" Header="Bureau Card" Click="BureauCardMenuItem_Click"/>
 					<MenuItem Header="4 1/4 by 5 1/2 inch Card"/>
 					<MenuItem Header="4 by 6 inch (10 by 15 cm) Card"/>
 				</MenuItem>
