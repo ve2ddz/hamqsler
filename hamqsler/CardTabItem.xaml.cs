@@ -34,7 +34,7 @@ namespace hamqsler
 	/// </summary>
 	public partial class CardTabItem : TabItem
 	{
-		private Card card = null;
+		private Card QslCard = null;
 		
 		/// <summary>
 		/// CardTabItem constructor
@@ -45,12 +45,25 @@ namespace hamqsler
 		{
 			InitializeComponent();
 			// create a card and position it in the middle of the CardCanvas
-			card = new Card(cardWidth, cardHeight);
+			QslCard = new Card(cardWidth, cardHeight);
 			double left = (CardCanvas.Width - cardWidth) / 2;
 			double top = (CardCanvas.Height - cardHeight) / 2;
-			Canvas.SetLeft(card, left);
-			Canvas.SetTop(card, top);
-			this.CardCanvas.Children.Add(card);
+			Canvas.SetLeft(QslCard, left);
+			Canvas.SetTop(QslCard, top);
+			this.CardCanvas.Children.Add(QslCard);
+			this.DataContext = QslCard;
+			cardProperties.Visibility = Visibility.Visible;
+		}
+		
+		/// <summary>
+		/// Handles PrintCardOutlines checkbox clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void PrintCardOutlines_Clicked(object sender, RoutedEventArgs e)
+		{
+			// force redisplay of the card
+			QslCard.InvalidateVisual();
 		}
 		
 	}

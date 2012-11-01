@@ -21,15 +21,29 @@
 			</ScrollViewer>
 			<ScrollViewer Width="250" HorizontalAlignment="Right" Grid.Column="1">
 				<StackPanel>
-					<GroupBox Name="cardProperties" Header="Card Properties">
+					<GroupBox Name="cardProperties" Header="Card Properties" Visibility="Collapsed">
+						<StackPanel>
+							<CheckBox Content="Print Card Outlines" Margin="5"
+									IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"
+									Click="PrintCardOutlines_Clicked"/>
+							<CheckBox Content="Fill Last Page With Blank Cards" Margin="5"
+									IsChecked="{Binding Path=FillLastPageWithBlankCards, Mode=TwoWay}"/>
+							<CheckBox Content="Set Card Margins To Printer Margins" Margin="5"
+									IsChecked="{Binding Path=SetCardMarginsToPrinterPageMargins,
+											Mode=TwoWay}"/>
+						</StackPanel>
 					</GroupBox>
-					<GroupBox Name="backgroundImageProperties" Header="Background Image Properties">
+					<GroupBox Name="backgroundImageProperties" Header="Background Image Properties"
+							 Visibility="Collapsed">
 					</GroupBox>
-					<GroupBox Name="secondaryImageProperties" Header="Secondary Image Properties">
+					<GroupBox Name="secondaryImageProperties" Header="Secondary Image Properties"
+							 Visibility="Collapsed">
 					</GroupBox>
-					<GroupBox Name="textItemProperties" Header="Text Item Properties">
+					<GroupBox Name="textItemProperties" Header="Text Item Properties"
+							 Visibility="Collapsed">
 					</GroupBox>
-					<GroupBox Name="qsosBoxProperties" Header="QSOs Box Properties">
+					<GroupBox Name="qsosBoxProperties" Header="QSOs Box Properties"
+							 Visibility="Collapsed">
 					</GroupBox>
 				</StackPanel>
 			</ScrollViewer>

@@ -30,6 +30,34 @@ namespace hamqsler
 	{
 		private UserPreferences userPreferences;
 		
+		private static readonly DependencyProperty PrintCardOutlinesProperty =
+			DependencyProperty.Register("PrintCardOutlines", typeof(bool), typeof(Card),
+			                            new PropertyMetadata(true));
+		public bool PrintCardOutlines
+		{
+			get {return (bool)GetValue(PrintCardOutlinesProperty);}
+			set {SetValue(PrintCardOutlinesProperty, value);}
+		}
+		
+		private static readonly DependencyProperty FillLastPageWithBlankCardsProperty =
+			DependencyProperty.Register("FillLastPageWithBlankCards", typeof(bool), typeof(Card),
+			                            new PropertyMetadata(true));
+		public bool FillLastPageWithBlankCards
+		{
+			get {return (bool)GetValue(FillLastPageWithBlankCardsProperty);}
+			set {SetValue(FillLastPageWithBlankCardsProperty, value);}
+		}
+		
+		private static readonly DependencyProperty SetCardMarginsToPrinterPageMarginsProperty =
+			DependencyProperty.Register("SetCardMarginsToPrinterPageMargins", typeof(bool),
+			                            typeof(Card), new PropertyMetadata(true));
+		public bool SetCardMarginsToPrinterPageMargins
+		{
+			get {return (bool)GetValue(SetCardMarginsToPrinterPageMarginsProperty);}
+			set {SetValue(SetCardMarginsToPrinterPageMarginsProperty, value);}
+		}
+			                     
+		
 		/// <summary>
 		/// default constructor
 		/// </summary>
@@ -47,6 +75,9 @@ namespace hamqsler
 		public Card(double width, double height)
 		{
 			userPreferences = ((App)Application.Current).UserPreferences;
+			PrintCardOutlines = userPreferences.PrintCardOutlines;
+			FillLastPageWithBlankCards = userPreferences.PrintCardOutlines;
+			SetCardMarginsToPrinterPageMargins = userPreferences.SetCardMarginsToPrinterPageMargins;
 			DisplayRectangle = new Rect(0, 0, width, height);
 		}
 		
@@ -59,7 +90,11 @@ namespace hamqsler
 			base.OnRender(dc);
 			Brush brush = Brushes.White;
 			Pen pen = new Pen(Brushes.Transparent, 1);
-			dc.DrawRectangle(brush, new Pen(brush, 1), DisplayRectangle);
+			if(PrintCardOutlines)
+			{
+				pen = new Pen(Brushes.Black, 1);
+			}
+			dc.DrawRectangle(brush, pen, DisplayRectangle);
 		}
 	}
 	
