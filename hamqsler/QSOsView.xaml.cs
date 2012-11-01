@@ -538,5 +538,17 @@ namespace hamqsler
 			Comparer<QsoWithInclude> comparer = GetComparer();
 			DisplayQsos.SortQSOs(comparer);
 		}
+		/// <summary>
+		/// Handler for click events on the Include checkboxes in qsosListView
+		/// </summary>
+		/// <param name="sender">Include checkbox that was clicked</param>
+		/// <param name="e">not used</param>
+		void IncludeClicked(object sender, RoutedEventArgs e)
+		{
+			CheckBox cb = sender as CheckBox;
+			// we must allow for selection of multiple rows in the listview
+			System.Collections.IList list = qsosListView.SelectedItems;
+			DisplayQsos.SetIncludesChecked(list, (bool)cb.IsChecked);
+		}
 	}
 }

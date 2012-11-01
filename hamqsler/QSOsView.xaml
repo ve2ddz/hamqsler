@@ -46,7 +46,8 @@
 											<CheckBox Margin="10,1,1,1" Width="15"
 												      HorizontalAlignment="Center"
 												      Visibility="Visible"
-												      IsChecked="{Binding Path=Include, Mode=TwoWay}"/>
+												      IsChecked="{Binding Path=Include, Mode=TwoWay}"
+													  Click="IncludeClicked"/>
 										</DataTemplate>
 									</GridViewColumn.CellTemplate>
 								</GridViewColumn>

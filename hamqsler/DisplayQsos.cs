@@ -505,5 +505,26 @@ namespace hamqsler
 			base.Clear();
 			NeedsSorting = false;
 		}
+		
+		/// <summary>
+		/// Set the Include property of all the Qsos in a list
+		/// </summary>
+		/// <param name="list">List of all Qsos to set the Include property on</param>
+		/// <param name="check">Value to set Include to</param>
+		public void SetIncludesChecked(System.Collections.IList list, bool check)
+		{
+			// set the Include property for each Qso
+			foreach(QsoWithInclude qwi in list)
+			{
+				qwi.Include = check;
+			}
+			// necessary to remove and add all Qsos so that display is updated.
+			List<QsoWithInclude> qsos = this.ToList();
+			this.Clear();
+			foreach(QsoWithInclude qso in qsos)
+			{
+				this.Add(qso);
+			}
+		}
 	}
 }
