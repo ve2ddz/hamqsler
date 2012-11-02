@@ -65,6 +65,7 @@ namespace hamqsler
 		{
 			userPreferences = ((App)Application.Current).UserPreferences;
 			DisplayRectangle = new Rect(0, 0, 0, 0);
+			QslCard = this;
 		}
 		
 		/// <summary>
@@ -79,6 +80,7 @@ namespace hamqsler
 			FillLastPageWithBlankCards = userPreferences.PrintCardOutlines;
 			SetCardMarginsToPrinterPageMargins = userPreferences.SetCardMarginsToPrinterPageMargins;
 			DisplayRectangle = new Rect(0, 0, width, height);
+			QslCard = this;
 		}
 		
 		/// <summary>
@@ -96,6 +98,7 @@ namespace hamqsler
 			}
 			dc.DrawRectangle(brush, pen, DisplayRectangle);
 		}
+		
 	}
 	
 }

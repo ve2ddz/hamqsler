@@ -28,9 +28,16 @@ namespace hamqsler
 	/// </summary>
 	abstract public class CardItem : UIElement
 	{
-public static readonly DependencyProperty DisplayRectangleProperty =
-            DependencyProperty.Register("DisplayRectangle", typeof(Rect),
-        typeof(CardItem), new PropertyMetadata(new Rect(0, 0, 0, 0)));
+		private Card qslCard;
+		public Card QslCard
+		{
+			get {return qslCard;}
+			set {qslCard = value;}
+		}
+		
+		private static readonly DependencyProperty DisplayRectangleProperty =
+		            DependencyProperty.Register("DisplayRectangle", typeof(Rect),
+		        typeof(CardItem), new PropertyMetadata(new Rect(0, 0, 0, 0)));
 
         public Rect DisplayRectangle
         {
