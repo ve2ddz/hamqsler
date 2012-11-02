@@ -212,27 +212,65 @@
 						FontFamily="{Binding DefaultTextItemsFontFace}" FontWeight="Bold"
 						>ABCDEFabcdef123456</TextBox>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.Visibility>
 					<Binding ElementName="CallsignText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Callsign Text Properties</TextBlock>
-			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
+				</Grid.Visibility>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="375"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Default Callsign:</TextBlock>
+				<TextBox Grid.Column="1" Margin="5" MaxLength="15"  FontSize="36"
+				         CharacterCasing="Upper"
+						FontFamily="{Binding DefaultTextItemsFontFace}"
+						FontWeight="Bold" PreviewTextInput="CallsignBox_PreviewTextInput" >
+					<TextBox.Text>
+						<Binding Path="Callsign"
+								UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+			</Grid>
+			<Grid>
+				<Grid.Visibility>
 					<Binding ElementName="NameAndQTHText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Name and QTH Text Properties</TextBlock>
-			</StackPanel>
-			<StackPanel>
-				<StackPanel.Visibility>
+				</Grid.Visibility>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Default Name and QTH:</TextBlock>
+				<TextBox Grid.Column="1" Margin="5" MinHeight="50"
+						FontFamily="{Binding DefaultTextItemsFontFace}"
+						Text="{Binding Path=NameQth, Mode=TwoWay}"
+						AcceptsReturn="True"
+						ToolTip="Your name and address">
+				</TextBox>
+			</Grid>
+			<Grid>
+				<Grid.Visibility>
 					<Binding ElementName="SalutationText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Salutation Text Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center"
+					>Default Salutation Text:</TextBlock>
+				<TextBox Grid.Column="1" Margin="5"
+						FontFamily="{Binding DefaultTextItemsFontFace}"
+						ToolTip="Salutation to be printed on the card (e.g. 'Thanks for the QSO. 73, ')"
+						Text="{Binding Path=Salutation, Mode=TwoWay}"/>
+			</Grid>
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
@@ -254,16 +292,26 @@
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5,300,5,5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">Sample:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5,300,5,5" FontSize="36"
-						FontFamily="{Binding DefaultTextItemsFontFace}" FontWeight="Bold"
+						FontFamily="{Binding DefaultQsosBoxFontFace}" FontWeight="Bold"
 						>ABCDEFabcdef123456</TextBox>
 			</Grid>
-			<StackPanel>
-				<StackPanel.Visibility>
+			<Grid>
+				<Grid.Visibility>
 					<Binding ElementName="ConfirmingText" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<TextBlock>Confirming Text Properties</TextBlock>
-			</StackPanel>
+				</Grid.Visibility>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>Confirming Text:</TextBlock>
+				<TextBox Grid.Column="1" Margin="5"
+						FontFamily="{Binding DefaultQsosBoxFontFace}"
+						Text="{Binding Path=ConfirmingText, Mode=TwoWay}"
+						ToolTip="Confirming text printed in the QSOs Box (e.g. 'Confirming 2-Way QSO With ')"
+						/>
+			</Grid>
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>

@@ -212,5 +212,23 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Preview text input to CallsignBox and consume any non-valid characters.
+		/// Note that only A-Z, a-z, 0-9, and / are allowed in callsigns
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">TextCompositionEventArgs object. This object has a
+		/// property that contains the character that was entered.</param>
+		void CallsignBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex callReg = new Regex("[A-Za-z0-9/]");
+			if(!callReg.IsMatch(e.Text))	// check valid character
+			{
+				// not valid
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
+		}
+		
 	}
 }

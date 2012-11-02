@@ -38,30 +38,6 @@ namespace hamqsler
 	[Serializable]
 	public class UserPreferences : DependencyObject, IDataErrorInfo
 	{
-        /// <summary>
-        /// Default callsign for the card
-        /// </summary>
-        private static readonly DependencyProperty CallsignProperty =
-            DependencyProperty.Register("Callsign", typeof(string), typeof(UserPreferences),
-            new PropertyMetadata("MyCall"));
-        public string Callsign
-        {
-            get { return (string)GetValue(CallsignProperty); }
-            set { SetValue(CallsignProperty, value); }
-        }
-        
-        /// <summary>
-        /// Default Name and QTH text for the card
-        /// </summary>
-        private static readonly DependencyProperty NameQthProperty =
-            DependencyProperty.Register("NameQth", typeof(string), typeof(UserPreferences),
-            new PropertyMetadata("MyQTH"));
-        public string NameQth
-        {
-            get { return (string)GetValue(NameQthProperty); }
-            set { SetValue(NameQthProperty, value); }
-        }
-        
 		// check for new versions on startup?
 		private static readonly DependencyProperty CheckForNewVersionsProperty = 
 			DependencyProperty.Register("CheckForNewVersions", typeof(bool),
@@ -173,22 +149,56 @@ namespace hamqsler
 			set {SetValue(DefaultTextItemsFontFaceProperty, value);}
 		}
 		
-/*		// Default text items
-		private TextParts callsign;
+		// Default text items
+        /// <summary>
+        /// Default callsign for the card
+        /// </summary>
+        private static readonly DependencyProperty CallsignProperty =
+            DependencyProperty.Register("Callsign", typeof(string), typeof(UserPreferences),
+            new PropertyMetadata("MyCall"));
+        public string Callsign
+        {
+            get { return (string)GetValue(CallsignProperty); }
+            set { SetValue(CallsignProperty, value); }
+        }
+        
+/*		private TextParts callsign;
 		public TextParts Callsign
 		{
 			get {return callsign;}
 			set {callsign = value;}
-		}
+		}*/
 		
-		private TextParts nameQth;
+        /// <summary>
+        /// Default Name and QTH text for the card
+        /// </summary>
+        private static readonly DependencyProperty NameQthProperty =
+            DependencyProperty.Register("NameQth", typeof(string), typeof(UserPreferences),
+            new PropertyMetadata("MyQTH"));
+        public string NameQth
+        {
+            get { return (string)GetValue(NameQthProperty); }
+            set { SetValue(NameQthProperty, value); }
+        }
+        
+/*		private TextParts nameQth;
 		public TextParts NameQth
 		{
 			get {return nameQth;}
 			set {nameQth = value;}
+		}*/
+		
+		// Default salutation for the card
+		private static readonly DependencyProperty SalutationProperty =
+			DependencyProperty.Register("Salutation", typeof(string), typeof(UserPreferences),
+			                            new PropertyMetadata("Thanks for the QSO(s). 73, "));
+		public string Salutation
+		{
+			get {return (string)GetValue(SalutationProperty);}
+			set {SetValue(SalutationProperty, value);}
 		}
 		
-		private TextParts salutation;
+/*		private TextParts salutation;
 		public TextParts Salutation
 		{
 			get {return salutation;}
@@ -204,6 +214,16 @@ namespace hamqsler
 		{
 			get {return (string)GetValue(DefaultQsosBoxFontFaceProperty);}
 			set {SetValue(DefaultQsosBoxFontFaceProperty, value);}
+		}
+		
+		// Default confirming text displayed in the QSOs Box
+		private static readonly DependencyProperty ConfirmingTextProperty =
+			DependencyProperty.Register("ConfirmingText", typeof(string), typeof(UserPreferences),
+			                            new PropertyMetadata("Confirming 2-Way QSOs With "));
+		public string ConfirmingText
+		{
+			get {return (string)GetValue(ConfirmingTextProperty);}
+			set {SetValue(ConfirmingTextProperty, value);}
 		}
 		
 		// Default confirming text
@@ -821,30 +841,59 @@ namespace hamqsler
 			get 
 			{
 				string result = null;
-				Regex regexData = new Regex("^[0-9\\.]*$");
-				Regex regexDecimalSep = new Regex("[\\.][0-9]*[\\.]");
-				HamBand band = null;
-				string strFreq = GetBandProperties(propertyName, out band);
-				if(strFreq != null)
+				if(propertyName == "Callsign")
 				{
-					if(regexDecimalSep.IsMatch(strFreq))
-				   {
-				   	result = "Only a single decimal separator is allowed.";
-				   	return result;
-				   }
-					if(!regexData.IsMatch(strFreq))
+					result = ValidateCallsign();
+				}
+				else		// a frequency
+				{
+					Regex regexData = new Regex("^[0-9\\.]*$");
+					Regex regexDecimalSep = new Regex("[\\.][0-9]*[\\.]");
+					HamBand band = null;
+					string strFreq = GetBandProperties(propertyName, out band);
+					if(strFreq != null)
 					{
-						result = "Only numbers and a single decimal separator are allowed.";
-						return result;
+						if(regexDecimalSep.IsMatch(strFreq))
+					   {
+						   	result = "Only a single decimal separator is allowed.";
+						   	return result;
+					   }
+						if(!regexData.IsMatch(strFreq))
+						{
+							result = "Only numbers and a single decimal separator are allowed.";
+							return result;
+						}
+						float freq = float.Parse(strFreq, NumberStyles.AllowDecimalPoint,
+						                    CultureInfo.InvariantCulture);
+						if(freq < band.LowerEdge || freq > band.UpperEdge)
+							result = string.Format("String must be between {0} and {1} MHz", 
+							                       band.LowerEdge, band.UpperEdge);
 					}
-					float freq = float.Parse(strFreq, NumberStyles.AllowDecimalPoint,
-					                    CultureInfo.InvariantCulture);
-					if(freq < band.LowerEdge || freq > band.UpperEdge)
-						result = string.Format("String must be between {0} and {1} MHz", 
-						                       band.LowerEdge, band.UpperEdge);
 				}
 				return result;
 			}
+		}
+		
+		/// <summary>
+		/// Helper method that validates a callsign
+		/// </summary>
+		/// <returns>validation string (error string or null if no error)</returns>
+		private string ValidateCallsign()
+		{
+			CallSign call;
+			try
+			{
+				call = new CallSign(Callsign);
+			}
+			catch(QsoException)
+			{
+				return "Not a valid callsign";
+			}
+			if(!CallSign.IsValid(call.Call))
+			{
+				return "Not a valid callsign";
+			}
+			return null;
 		}
 		
 		/// <summary>
@@ -866,9 +915,9 @@ namespace hamqsler
 			DefaultTextItemsFontFace = prefs.DefaultTextItemsFontFace;
 			Callsign = prefs.Callsign;
 			NameQth = prefs.NameQth;
-//			Salutation = prefs.Salutation;
+			Salutation = prefs.Salutation;
 			DefaultQsosBoxFontFace = prefs.DefaultQsosBoxFontFace;
-//			ConfirmingText = prefs.ConfirmingText;
+			ConfirmingText = prefs.ConfirmingText;
 			ViaText = prefs.ViaText;
 			YYYYMMDDText = prefs.YYYYMMDDText;
 			DDMMMYYText = prefs.DDMMMYYText;
