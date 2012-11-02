@@ -194,7 +194,6 @@
   <QslBureau Bureau="W9H2" Regex="^[AKNW]H2.*"/>
   <QslBureau Bureau="W9H3" Regex="^[AKNW]H3.*"/>
   <QslBureau Bureau="W9H6" Regex="^[AKNW]H[67].*"/>
-  <QslBureau Bureau="W9H8" Regex="^[AKNW]H8.*"/>
   <QslBureau Bureau="W9L0" Regex="^[AKNW]L.*"/>
   <QslBureau Bureau="XE00" Regex="^X[A-I].*|^4[A-C].*|^6[D-J].*"/>
   <QslBureau Bureau="XT00" Regex="^XT.*"/>
@@ -212,7 +211,6 @@
   <QslBureau Bureau="Z300" Regex="^Z3.*"/>
   <QslBureau Bureau="ZB00"  Regex="^ZB.*"/>
   <QslBureau Bureau="ZC40" Regex="^ZC4.*"/>
-  <QslBureau Bureau="ZD80" Regex="^ZD8.*"/>
   <QslBureau Bureau="ZF00" Regex="^ZF.*"/>
   <QslBureau Bureau="ZL00" Regex="^Z[K-M].*"/>
   <QslBureau Bureau="ZP00" Regex="^ZP.*"/>

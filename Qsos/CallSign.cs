@@ -92,6 +92,7 @@ namespace Qsos
 			"LM9L40Y",
 			"OEH20",
 			"SX1912",
+			"VI6ARG30",
 			"XM31812"		
 		};
 

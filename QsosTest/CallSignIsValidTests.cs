@@ -141,6 +141,13 @@ namespace QsosTests
 		{
 			Assert.IsFalse(CallSign.IsValid("LM9L40L"));
 		}
+		
+		// test IsValid with non-standard callsign VI6ARG30
+		[Test]
+		public void TestIsValidTrueVI6ARG30()
+		{
+			Assert.IsTrue(CallSign.IsValid("VI6ARG30"));
+		}
 	}
 }
 
