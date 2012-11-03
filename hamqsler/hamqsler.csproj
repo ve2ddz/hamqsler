@@ -34,6 +34,9 @@
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -65,10 +68,12 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BackgroundImage.cs" />
     <Compile Include="BandComparer.cs" />
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardImageBase.cs" />
     <Compile Include="CardItem.cs" />
     <Compile Include="CardTabItem.xaml.cs">
       <DependentUpon>CardTabItem.xaml</DependentUpon>

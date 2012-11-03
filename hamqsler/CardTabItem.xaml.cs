@@ -53,6 +53,7 @@ namespace hamqsler
 			this.CardCanvas.Children.Add(QslCard);
 			this.DataContext = QslCard;
 			cardProperties.Visibility = Visibility.Visible;
+			this.MouseMove += OnMouseMove;
 		}
 		
 		/// <summary>
@@ -63,6 +64,32 @@ namespace hamqsler
 		private void PrintCardOutlines_Clicked(object sender, RoutedEventArgs e)
 		{
 			// force redisplay of the card
+			QslCard.InvalidateVisual();
+		}
+		
+		/// <summary>
+		/// Handler for MouseMove events. Simply calls MoveMouse method for the CardItem that the
+		/// mouse is over.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">MouseEventArgs object</param>
+		public void OnMouseMove(object sender, MouseEventArgs e)
+		{
+			// Is the cursor over a CardItem?
+			Point location = e.GetPosition(QslCard);
+			CardItem ci = QslCard.CursorOver(location.X, location.Y);
+			QslCard.ClearHighlighted();
+			if(ci != null)
+			{
+				// for now we need to highlight the CardItem
+				if(!ci.IsHighlighted)
+				{
+					QslCard.ClearHighlighted();
+					ci.IsHighlighted = true;
+				}
+				// delegate MouseMove event to the CardItem
+				ci.MoveMouse(e);
+			}
 			QslCard.InvalidateVisual();
 		}
 		

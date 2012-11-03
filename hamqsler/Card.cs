@@ -19,6 +19,7 @@
  */
 using System;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace hamqsler
@@ -26,10 +27,9 @@ namespace hamqsler
 	/// <summary>
 	/// QSL card
 	/// </summary>
+	[Serializable]
 	public class Card : CardItem
 	{
-		private UserPreferences userPreferences;
-		
 		private static readonly DependencyProperty PrintCardOutlinesProperty =
 			DependencyProperty.Register("PrintCardOutlines", typeof(bool), typeof(Card),
 			                            new PropertyMetadata(true));
@@ -56,10 +56,21 @@ namespace hamqsler
 			get {return (bool)GetValue(SetCardMarginsToPrinterPageMarginsProperty);}
 			set {SetValue(SetCardMarginsToPrinterPageMarginsProperty, value);}
 		}
-			                     
+		
+		private static readonly DependencyProperty BackgroundImageProperty = 
+			DependencyProperty.Register("BackImage", typeof(BackgroundImage), typeof(Card),
+			                            new PropertyMetadata(null));
+		public BackgroundImage BackImage
+		{
+			get {return (BackgroundImage)GetValue(BackgroundImageProperty);}
+			set {SetValue(BackgroundImageProperty, value);}
+		}
+			
+		[NonSerialized]
+		private UserPreferences userPreferences;
 		
 		/// <summary>
-		/// default constructor
+		/// default constructor (called when loading Card from XML)
 		/// </summary>
 		public Card()
 		{
@@ -80,6 +91,8 @@ namespace hamqsler
 			FillLastPageWithBlankCards = userPreferences.PrintCardOutlines;
 			SetCardMarginsToPrinterPageMargins = userPreferences.SetCardMarginsToPrinterPageMargins;
 			DisplayRectangle = new Rect(0, 0, width, height);
+			BackImage = new BackgroundImage();
+			BackImage.QslCard = this;
 			QslCard = this;
 		}
 		
@@ -97,6 +110,65 @@ namespace hamqsler
 				pen = new Pen(Brushes.Black, 1);
 			}
 			dc.DrawRectangle(brush, pen, DisplayRectangle);
+			if(BackImage != null)
+			{
+				BackImage.Render(dc);
+			}
+		}
+		
+		/// <summary>
+		/// Sets the CardItem that the cursor is over as highlighted
+		/// </summary>
+		/// <param name="x">X position of the cursor relative to the upper left corner of this Card</param>
+		/// <param name="y">Y position of the cursor relative to the upper left corner of this card</param>
+		/// <returns></returns>
+		public CardItem SetHighlighted(double x, double y)
+		{
+			CardItem ci;
+			ClearHighlighted();
+			ci = CursorOver(x, y);
+			if(ci != null)
+			{
+				ci.IsHighlighted = true;
+			}
+			return ci;
+		}
+		
+		/// <summary>
+		/// Gets the CardItem that is highlighted
+		/// </summary>
+		/// <returns>Highlighted card item or null if no card item is highlighted</returns>
+		public CardItem GetHighlighted()
+		{
+			if(BackImage.IsHighlighted)
+			{
+				return BackImage;
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Clears the IsHighlighted property of every CardItem child of this Card
+		/// </summary>
+		public void ClearHighlighted()
+		{
+			BackImage.IsHighlighted = false;
+		}
+		
+		/// <summary>
+		/// Get the CardItem that the cursor is over
+		/// </summary>
+		/// <param name="x">X position of the cursor relative to the top left corner of this Card</param>
+		/// <param name="y">Y poistion of the cursor relative to the top left corner of this Card</param>
+		/// <returns>CardItem the cursor is over, or null if not over a child CardItem</returns>
+		public CardItem CursorOver(double x, double y)
+		{
+			if(BackImage != null && CardItem.WithinRectangle(BackImage.DisplayRectangle,
+			                                                 x, y))
+			{
+				return BackImage;
+			}
+			return null;
 		}
 		
 	}
