@@ -140,11 +140,12 @@ namespace hamqsler
 		/// <returns>Highlighted card item or null if no card item is highlighted</returns>
 		public CardItem GetHighlighted()
 		{
+			CardItem ci = null;
 			if(BackImage.IsHighlighted)
 			{
-				return BackImage;
+				ci = BackImage;
 			}
-			return null;
+			return ci;
 		}
 		
 		/// <summary>
