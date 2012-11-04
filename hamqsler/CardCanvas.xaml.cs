@@ -34,10 +34,13 @@ namespace hamqsler
 	/// </summary>
 	public partial class CardCanvas : Canvas
 	{
+		public static RoutedCommand SelectCardItemCommand = new RoutedCommand();
+		
 		private Card qslCard = null;
 		public Card QslCard
 		{
 			get {return qslCard;}
+			set {qslCard = value;}
 		}
 		
 		/// <summary>
@@ -48,15 +51,31 @@ namespace hamqsler
 			InitializeComponent();
 		}
 		
+		/// <summary>
+		/// Create a QSL card and place it in the middle of the card canvas
+		/// </summary>
+		/// <param name="cardWidth">Width of card in device independent units</param>
+		/// <param name="cardHeight">Height of card in device independent units</param>
 		public void CreateCard(double cardWidth, double cardHeight)
 		{
-			qslCard = new Card(cardWidth, cardHeight);
+			QslCard = new Card(cardWidth, cardHeight);
 			double left = (this.Width - cardWidth) / 2;
 			double top = (this.Height - cardHeight) / 2;
 			Canvas.SetLeft(QslCard, left);
 			Canvas.SetTop(QslCard, top);
 			this.Children.Add(QslCard);
 			this.MouseMove += OnMouseMove;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for SelectCardItem menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void SelectCardItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardItem ci = QslCard.GetHighlighted();
+			e.CanExecute = ci != null;
 		}
 
 		/// <summary>
@@ -70,19 +89,38 @@ namespace hamqsler
 			// Is the cursor over a CardItem?
 			Point location = e.GetPosition(QslCard);
 			CardItem ci = QslCard.CursorOver(location.X, location.Y);
-			QslCard.ClearHighlighted();
+			if(ci != null && !ci.IsSelected)
+			{
+				QslCard.ClearHighlighted();
+					// for now we need to highlight the CardItem
+					if(!ci.IsHighlighted)
+					{
+						QslCard.ClearHighlighted();
+						ci.IsHighlighted = true;
+					}
+			}
 			if(ci != null)
 			{
-				// for now we need to highlight the CardItem
-				if(!ci.IsHighlighted)
-				{
-					QslCard.ClearHighlighted();
-					ci.IsHighlighted = true;
-				}
 				// delegate MouseMove event to the CardItem
 				ci.MoveMouse(e);
+				QslCard.InvalidateVisual();
 			}
-			QslCard.InvalidateVisual();
+		}
+		
+		/// <summary>
+		/// Handler for SelectCardItem menu item Executed (Clicked) event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void SelectCardItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardItem ci = QslCard.GetHighlighted();
+			if(ci != null)
+			{
+				QslCard.ClearHighlighted();
+				ci.IsSelected = true;
+				QslCard.InvalidateVisual();
+			}
 		}
 		
 	}

@@ -81,13 +81,16 @@ namespace hamqsler
 		{
 			Rect rect = QslCard.DisplayRectangle;
 			Brush brush = Brushes.Transparent;
-			Pen pen;
 			if(ImageFileName == string.Empty || ImageFileName == null)
 			{
 				DisplayRectangle = QslCard.DisplayRectangle;
 				dc.DrawRectangle(brush, new Pen(brush, 0), DisplayRectangle);
 			}
-			if(IsHighlighted)
+			if(IsSelected)
+			{
+				dc.DrawRectangle(brush, selectPen, DisplayRectangle);
+			}
+			else if(IsHighlighted)
 			{
 				dc.DrawRectangle(brush, hightlightPen, DisplayRectangle);
 			}

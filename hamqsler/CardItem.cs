@@ -54,7 +54,15 @@ namespace hamqsler
 			set {isHighlighted = value;}
 		}
 		
+		private bool isSelected = false;
+		public bool IsSelected
+		{
+			get {return isSelected;}
+			set {isSelected = value;}
+		}
+		
 		protected static Pen hightlightPen = CreateHighlightPen();
+		protected static Pen selectPen = CreateSelectPen();
 		
 		public enum CursorLocation
 		{
@@ -165,13 +173,25 @@ namespace hamqsler
 		/// <summary>
 		/// Static method that creates the highlight pen
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>the highlight pen</returns>
 		private static Pen CreateHighlightPen()
 		{
 			Pen hPen = new Pen(Brushes.OrangeRed, 3);
 			double[] dashes = {8, 5, 5, 4};
 			hPen.DashStyle = new DashStyle(dashes, 0);
 			return hPen;
+		}
+		
+		/// <summary>
+		/// Static method that creates the select pen
+		/// </summary>
+		/// <returns>the select pen</returns>
+		private static Pen CreateSelectPen()
+		{
+			Pen sPen = new Pen(Brushes.Blue, 3);
+			double[] dashes = {8, 5, 5, 4};
+			sPen.DashStyle = new DashStyle(dashes, 5);
+			return sPen;
 		}
 		
 		/// <summary>

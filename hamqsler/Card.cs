@@ -172,6 +172,20 @@ namespace hamqsler
 			return null;
 		}
 		
+		/// <summary>
+		/// Get the CardItem that is selected
+		/// </summary>
+		/// <returns>Selected card item, or null if none selected</returns>
+		public CardItem GetSelected()
+		{
+			CardItem ci = null;
+			if(BackImage.IsSelected)
+			{
+				ci = BackImage;
+			}
+			return ci;
+		}
+		
 	}
 	
 }
