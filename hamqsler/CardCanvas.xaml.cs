@@ -79,6 +79,11 @@ namespace hamqsler
 			e.CanExecute = ci != null;
 		}
 		
+		/// <summary>
+		/// CanExecute handler for DeselectCardItem menu item
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DeselectCardItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardItem ci = QslCard.GetSelected();
@@ -96,22 +101,26 @@ namespace hamqsler
 			// Is the cursor over a CardItem?
 			Point location = e.GetPosition(QslCard);
 			CardItem ci = QslCard.CursorOver(location.X, location.Y);
-			if(ci != null && !ci.IsSelected)
+			if(ci != null)
 			{
-				QslCard.ClearHighlighted();
+				if(!ci.IsSelected)
+				{
+					QslCard.ClearHighlighted();
 					// for now we need to highlight the CardItem
 					if(!ci.IsHighlighted)
 					{
 						QslCard.ClearHighlighted();
 						ci.IsHighlighted = true;
 					}
-			}
-			if(ci != null)
-			{
+				}
 				// delegate MouseMove event to the CardItem
 				ci.MoveMouse(e);
-				QslCard.InvalidateVisual();
 			}
+			else
+			{
+				QslCard.ClearHighlighted();
+			}
+			QslCard.InvalidateVisual();
 		}
 		
 		/// <summary>
@@ -127,9 +136,15 @@ namespace hamqsler
 				QslCard.ClearHighlighted();
 				ci.IsSelected = true;
 				QslCard.InvalidateVisual();
+				SetPropertiesPanelVisibility();
 			}
 		}
 		
+		/// <summary>
+		/// Handler for DeselectCardItem menu item Executed (Clicked) event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void DeselectCardItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			CardItem ci = QslCard.GetSelected();
@@ -137,8 +152,20 @@ namespace hamqsler
 			{
 				ci.IsSelected = false;
 				QslCard.InvalidateVisual();
+				SetPropertiesPanelVisibility();
 			}
 		}
 		
+		/// <summary>
+		/// Helper method that calls SetPropertiesVisibility in CardTabItem to set visibility
+		/// of a properties panel based on selected carditem
+		/// </summary>
+		private void SetPropertiesPanelVisibility()
+		{
+			FrameworkElement ctrl = (FrameworkElement)this.Parent;
+			while(ctrl.GetType() != typeof(CardTabItem))
+				ctrl = (FrameworkElement)ctrl.Parent;
+			((CardTabItem)ctrl).SetPropertiesVisibility(QslCard);
+		}
 	}
 }

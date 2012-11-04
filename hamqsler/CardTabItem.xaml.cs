@@ -59,5 +59,21 @@ namespace hamqsler
 			cardCanvas.QslCard.InvalidateVisual();
 		}
 		
+		/// <summary>
+		/// Set visibility of properties groupboxes based on the CardItem selected in the card
+		/// </summary>
+		/// <param name="card">Card that contains the CardItems</param>
+		public void SetPropertiesVisibility(Card card)
+		{
+			bool displayCardProps = true;
+			if(card.BackImage.IsSelected)
+			{
+				displayCardProps = false;
+			}
+			backgroundImageProperties.Visibility = (card.BackImage.IsSelected) ?
+				Visibility.Visible : Visibility.Collapsed;
+			cardProperties.Visibility = displayCardProps ? Visibility.Visible :
+				Visibility.Collapsed;
+		}
 	}
 }
