@@ -69,6 +69,13 @@ namespace hamqsler
 		[NonSerialized]
 		private UserPreferences userPreferences;
 		
+		private bool isDirty = false;
+		public bool IsDirty
+		{
+			get {return isDirty;}
+			set {isDirty = value;}
+		}
+		
 		/// <summary>
 		/// default constructor (called when loading Card from XML)
 		/// </summary>
@@ -185,7 +192,7 @@ namespace hamqsler
 			}
 			return ci;
 		}
-		
+				
 	}
 	
 }

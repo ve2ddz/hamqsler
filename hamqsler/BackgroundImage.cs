@@ -45,6 +45,31 @@ namespace hamqsler
 			{
 				r = QslCard.DisplayRectangle;
 			}
+			else
+			{
+            double upperLeftX = 0;
+            double upperLeftY = 0;
+            double dWidth = bImage.Width;
+            double dHeight = bImage.Height;
+            
+            double width = QslCard.DisplayRectangle.Width;
+            double height = QslCard.DisplayRectangle.Height;
+            double scaleX = width / dWidth;
+            double scaleY = height / dHeight;
+            double scale = scaleX > scaleY ? scaleX : scaleY;
+            dWidth *= scale;
+            dHeight *= scale;
+            if (dWidth > width)
+            {
+                upperLeftX = (width - dWidth) / 2;
+            }
+            if (dHeight > height)
+            {
+                upperLeftY = (height - dHeight) / 2;
+            }
+           r = new Rect(upperLeftX, upperLeftY, dWidth, dHeight);
+				
+			}
 			return r;
 		}
 		

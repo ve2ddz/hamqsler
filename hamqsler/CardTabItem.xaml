@@ -36,6 +36,15 @@
 					</GroupBox>
 					<GroupBox Name="backgroundImageProperties" Header="Background Image Properties"
 							 Visibility="Collapsed">
+						<StackPanel>
+							<Button Name="loadBackgroundImage" Content="..." Width="75"
+									Click="LoadBackgroundImage_Click" Margin="5"
+									HorizontalAlignment="Center"
+									ToolTip="Load Background Image"/>
+							<TextBox Name="backgroundImageFileNameTextBox" IsReadOnly="True"
+									TextWrapping="Wrap" Margin="5"
+									ToolTip="Path to background image file (not editable)"/>
+						</StackPanel>
 					</GroupBox>
 					<GroupBox Name="secondaryImageProperties" Header="Secondary Image Properties"
 							 Visibility="Collapsed">

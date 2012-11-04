@@ -83,18 +83,73 @@ namespace hamqsler
 			Brush brush = Brushes.Transparent;
 			if(ImageFileName == string.Empty || ImageFileName == null)
 			{
-				DisplayRectangle = QslCard.DisplayRectangle;
-				dc.DrawRectangle(brush, new Pen(brush, 0), DisplayRectangle);
+				dc.DrawRectangle(brush, new Pen(brush, 0), rect);
+			}
+			else
+			{
+				rect = DisplayRectangle;
+				dc.PushClip(new RectangleGeometry(QslCard.DisplayRectangle));
+				dc.DrawImage(bImage, rect);
+				dc.Pop();
 			}
 			if(IsSelected)
 			{
-				dc.DrawRectangle(brush, selectPen, DisplayRectangle);
+				if(bImage != null)
+				{
+					dc.PushOpacity(0.4);
+					dc.DrawImage(bImage, DisplayRectangle);
+					dc.Pop();
+				}
+				dc.DrawRectangle(brush, selectPen, rect);
 			}
 			else if(IsHighlighted)
 			{
-				dc.DrawRectangle(brush, hightlightPen, DisplayRectangle);
+				if(bImage != null)
+				{
+					dc.PushOpacity(0.4);
+					dc.DrawImage(bImage, DisplayRectangle);
+					dc.Pop();					
+				}
+				dc.DrawRectangle(brush, hightlightPen, rect);
 			}
 		}
 
+		/// <summary>
+		/// Handles PropertyChanged event
+		/// </summary>
+		/// <param name="e">DependencyProperChangedEventArgs object</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == ImageFileNameProperty)
+			{
+				// get the image file name
+				string fName = (string)e.NewValue;
+				if(fName != null && fName != string.Empty)
+				{
+					string hamqslerFolder = ((App)Application.Current).HamqslerFolder;
+					// expand file name if using relative path
+					if(fName.StartsWith("$hamqslerFolder$\\"))
+					{
+						fName = hamqslerFolder + fName.Substring("$hamqslerFolder$\\".Length);
+					}
+					// load and create the image
+					bImage = new BitmapImage();
+					bImage.BeginInit();
+					bImage.UriSource = new Uri(fName, UriKind.RelativeOrAbsolute);
+					bImage.EndInit();
+					CalculateRectangle();
+				}
+				else
+				{
+					// reset bImage
+					bImage = null;
+				}
+				// Image has changed, so let QslCard know it has changed
+				// and redisplay card
+				QslCard.IsDirty = true;
+				QslCard.InvalidateVisual();
+			}
+		}
 	}
 }
