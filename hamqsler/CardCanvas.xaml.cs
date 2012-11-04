@@ -35,6 +35,7 @@ namespace hamqsler
 	public partial class CardCanvas : Canvas
 	{
 		public static RoutedCommand SelectCardItemCommand = new RoutedCommand();
+		public static RoutedCommand DeselectCardItemCommand = new RoutedCommand();
 		
 		private Card qslCard = null;
 		public Card QslCard
@@ -75,6 +76,12 @@ namespace hamqsler
 		private void SelectCardItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardItem ci = QslCard.GetHighlighted();
+			e.CanExecute = ci != null;
+		}
+		
+		private void DeselectCardItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardItem ci = QslCard.GetSelected();
 			e.CanExecute = ci != null;
 		}
 
@@ -119,6 +126,16 @@ namespace hamqsler
 			{
 				QslCard.ClearHighlighted();
 				ci.IsSelected = true;
+				QslCard.InvalidateVisual();
+			}
+		}
+		
+		private void DeselectCardItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardItem ci = QslCard.GetSelected();
+			if(ci != null)
+			{
+				ci.IsSelected = false;
 				QslCard.InvalidateVisual();
 			}
 		}

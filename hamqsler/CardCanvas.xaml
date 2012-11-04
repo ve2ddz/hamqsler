@@ -13,11 +13,16 @@
 		<CommandBinding Command="{x:Static local:CardCanvas.SelectCardItemCommand}"
 		                CanExecute="SelectCardItemCommand_CanExecute"
 						Executed="SelectCardItemCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"
+		                CanExecute="DeselectCardItemCommand_CanExecute"
+						Executed="DeselectCardItemCommand_Executed"/>
 	</Canvas.CommandBindings>
 	<Canvas.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Select CardItem"
 			          Command="{x:Static local:CardCanvas.SelectCardItemCommand}"/>
+			<MenuItem Header="Deselect CardItem"
+			          Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"/>
 		</ContextMenu>
 	</Canvas.ContextMenu>
 	<StackPanel>
