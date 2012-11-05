@@ -301,7 +301,7 @@ namespace hamqsler
 					bImage.BeginInit();
 					bImage.UriSource = new Uri(fName, UriKind.RelativeOrAbsolute);
 					bImage.EndInit();
-					CalculateRectangle();
+					DisplayRectangle = CalculateRectangle();
 				}
 				else
 				{

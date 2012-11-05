@@ -104,6 +104,9 @@ namespace hamqsler
 				{
 					fileName = "$hamqslerFolder$\\" + fileName.Substring(hamQSLerFolder.Length);
 				}
+				// if previous image, this will force new image to be centred on
+				// the card, even if reloading the same image.
+				cardCanvas.QslCard.BackImage.ImageFileName = string.Empty;
 				// set the file name and show in backgroundImageFileNameTextBox
 				cardCanvas.QslCard.BackImage.ImageFileName = fileName;
 				backgroundImageFileNameTextBox.Text = fileName;
