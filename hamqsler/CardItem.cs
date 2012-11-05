@@ -61,6 +61,16 @@ namespace hamqsler
 			set {isSelected = value;}
 		}
 		
+		private bool isLeftMouseButtonDown = false;
+		protected bool IsLeftMouseButtonDown
+		{
+			get {return isLeftMouseButtonDown;}
+			set {isLeftMouseButtonDown = value;}
+		}
+		
+		protected Point leftMouseDownPoint = new Point(0, 0);
+		protected Rect originalDisplayRectangle;
+		
 		protected static Pen hightlightPen = CreateHighlightPen();
 		protected static Pen selectPen = CreateSelectPen();
 		
@@ -75,11 +85,15 @@ namespace hamqsler
 			SE
 		};
 		
+		protected CursorLocation cursorLoc = CursorLocation.Outside;
+		
+		protected const int cornerSize = 5;
+		
 				
         // default constructor
 		public CardItem() : base()
 		{
-			this.SnapsToDevicePixels = true;
+			InitializeCardItem();
 		}
 		
 		/// <summary>
@@ -88,10 +102,57 @@ namespace hamqsler
 		/// <param name="r">Rect object that describes the location and size of the card item</param>
 		public CardItem(Rect r)
 		{
-			this.SnapsToDevicePixels = true;
+			InitializeCardItem();
 			DisplayRectangle = r;
 		}
 		
+		/// <summary>
+		/// Perform actions common to all constructors
+		/// </summary>
+        private void InitializeCardItem()
+        {
+            this.SnapsToDevicePixels = true;
+        }
+		
+		/// <summary>
+		/// Handle MouseLeftButtonDown event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">MosueButtonEventArgs object</param>
+        // Must be public because called from CardCanvas
+        public virtual void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (this.IsSelected)
+            {
+                Point pt = e.GetPosition(QslCard);
+                if(GetCursorLocation(pt.X, pt.Y) != CursorLocation.Outside)
+                {
+               		// only want to capture mouse if cursor within this card item
+	                IsLeftMouseButtonDown = true;
+	                originalDisplayRectangle = DisplayRectangle;
+	                leftMouseDownPoint = pt;
+	                this.CaptureMouse();
+                }
+            }
+            e.Handled = true;
+        }
+
+		/// <summary>
+		/// Handle LeftMouseButtonUp event 
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+        // Must be public because called from CardCanvas
+        public virtual void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.IsSelected && IsLeftMouseButtonDown)
+            {
+                IsLeftMouseButtonDown = false;
+                this.ReleaseMouseCapture();
+            }
+//            e.Handled = true;
+        }
+
 		/// <summary>
 		/// Handles MouseMove events when mouse is over this CardItem
 		/// </summary>
@@ -100,8 +161,6 @@ namespace hamqsler
 		{
 			if(!this.IsSelected)
 			{
-//				QslCard.ClearHighlighted();
-				// for now we need to highlight the CardItem
 				if(!this.IsHighlighted)
 				{
 					QslCard.ClearHighlighted();
@@ -124,7 +183,6 @@ namespace hamqsler
 		/// </returns>
 		public CursorLocation GetCursorLocation(double x, double y)
 		{
-			const int cornerSize = 3;
 			Rect nw = new Rect(DisplayRectangle.Left - cornerSize,
 			                   DisplayRectangle.Top - cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);

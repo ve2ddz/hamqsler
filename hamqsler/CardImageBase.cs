@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -44,13 +45,18 @@ namespace hamqsler
 		// where there is no image loaded
         public override Rect DisplayRectangle
         {
-        	get { return CalculateRectangle(); }
+        	get 
+        	{
+        		Rect r = (Rect)GetValue(DisplayRectangleProperty);
+        		if(r.Width == 0 && r.Height == 0)
+        			r = CalculateRectangle();
+        		return r; 
+        	}
             set { SetValue(DisplayRectangleProperty, value); }
         }
         
         /// <summary>
-        /// CalculateRectangle determines the DisplayRectangle size for the image when no image
-        /// is loaded
+        /// CalculateRectangle determines the DisplayRectangle size for the image
         /// </summary>
         /// <returns>DisplayRectangle for this image.</returns>
         protected abstract Rect CalculateRectangle();
@@ -72,7 +78,163 @@ namespace hamqsler
 		public override void MoveMouse(System.Windows.Input.MouseEventArgs e)
 		{
 			base.MoveMouse(e);
-		}
+			if(this.IsSelected && bImage != null)
+			{
+				if(this.IsLeftMouseButtonDown)	
+				{
+					// handle drag actions
+                    double x = 0;
+                    double y= 0;
+                    double width= 0;
+                    double height = 0;
+                    double imageAspectRatio = (bImage != null) ? bImage.Width / bImage.Height : 1.0;
+                    double minWidth = imageAspectRatio < 1.0 ? 9.6 : 9.6 / imageAspectRatio;
+                    double minHeight = imageAspectRatio >= 1.0 ? 9.6 : 9.6 / imageAspectRatio;
+                    Point pt = e.GetPosition(QslCard);
+                    switch (cursorLoc)
+                    {
+                        case CursorLocation.Inside:
+                            x = originalDisplayRectangle.X + pt.X - leftMouseDownPoint.X;
+                            y = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
+                            width = originalDisplayRectangle.Width;
+                            height = originalDisplayRectangle.Height; 
+                            break;
+                        case CursorLocation.NW:
+                            width = originalDisplayRectangle.Width -
+                                (pt.X - leftMouseDownPoint.X);
+                            width = width < minWidth ? minWidth : width;
+                            height = originalDisplayRectangle.Height - 
+                                (pt.Y - leftMouseDownPoint.Y);
+                            height = height < minHeight ? minHeight : height;
+                            if (imageAspectRatio < width / height)
+                            {
+                                width = height * imageAspectRatio;
+                            }
+                            else if (imageAspectRatio > width / height)
+                            {
+                                height = width / imageAspectRatio;
+                            }
+                            x = originalDisplayRectangle.X + originalDisplayRectangle.Width
+                                - width;
+                            y = originalDisplayRectangle.Y + originalDisplayRectangle.Height
+                                - height;
+                            break;
+                        case CursorLocation.NE:
+                            width = originalDisplayRectangle.Width + 
+                                (pt.X - leftMouseDownPoint.X);
+                            width = width < minWidth ? minWidth : width;
+                            height = originalDisplayRectangle.Height - 
+                                (pt.Y - leftMouseDownPoint.Y);
+                            height = height < minHeight ? minHeight : height;
+                            if (imageAspectRatio < width / height)
+                            {
+                                width = height * imageAspectRatio;
+                            }
+                            else if (imageAspectRatio > width / height)
+                            {
+                                height = width / imageAspectRatio;
+                            }
+
+                            x = originalDisplayRectangle.X;
+                            y = originalDisplayRectangle.Y + originalDisplayRectangle.Height
+                                - height;
+                            break;
+                        case CursorLocation.SE:
+                            width = originalDisplayRectangle.Width +
+                                (pt.X - leftMouseDownPoint.X);
+                            width = width < minWidth ? minWidth : width;
+                            height = originalDisplayRectangle.Height +
+                                (pt.Y - leftMouseDownPoint.Y);
+                            height = height < minHeight ? minHeight : height;
+                            if (imageAspectRatio < width / height)
+                            {
+                                width = height * imageAspectRatio;
+                            }
+                            else if (imageAspectRatio > width / height)
+                            {
+                                height = width / imageAspectRatio;
+                            }
+                            x = originalDisplayRectangle.X;
+                            y = originalDisplayRectangle.Y;
+                            break;
+                        case CursorLocation.SW:
+                            width = originalDisplayRectangle.Width -
+                                (pt.X - leftMouseDownPoint.X);
+                            width = width < minWidth ? minWidth : width;
+                            height = originalDisplayRectangle.Height +
+                                (pt.Y - leftMouseDownPoint.Y);
+                            height = height < minHeight ? minHeight : height;
+                            if (imageAspectRatio < width / height)
+                            {
+                                width = height * imageAspectRatio;
+                            }
+                            else if (imageAspectRatio > width / height)
+                            {
+                                height = width / imageAspectRatio;
+                            }
+
+                            x = originalDisplayRectangle.X + originalDisplayRectangle.Width
+                                - width; ;
+                            y = originalDisplayRectangle.Y;
+                            break;
+                    }
+                    if (cursorLoc != CursorLocation.Outside)
+                    {
+                        DisplayRectangle = new Rect(x, y, width, height);
+                        InvalidateVisual();
+                    }
+					
+				}
+				else
+				{
+					// not dragging so set the mouse cursor based on where cursor is relative
+					// to this image
+                    cursorLoc = CursorLocation.Outside;
+                    Point pt = e.GetPosition(QslCard);
+                    Rect nw = new Rect(DisplayRectangle.X - cornerSize,
+                            DisplayRectangle.Y - cornerSize,
+                            2 * cornerSize, 2 * cornerSize);
+                    double x = DisplayRectangle.X + DisplayRectangle.Width;
+                    double y = DisplayRectangle.Y;
+                    Rect ne = new Rect(x - cornerSize, y - cornerSize,
+                            2 * cornerSize, 2 * cornerSize);
+                    y += DisplayRectangle.Height;
+                    Rect se = new Rect(x - cornerSize, y - cornerSize,
+                            2 * cornerSize, 2 * cornerSize);
+                    x -= DisplayRectangle.Width;
+                    Rect sw = new Rect(x - cornerSize, y - cornerSize,
+                            2 * cornerSize, 2 * cornerSize);
+                    Cursor cursor = Cursors.Arrow;
+                    if (nw.Contains(pt))
+                    {
+                        cursorLoc = CursorLocation.NW;
+                        cursor = Cursors.SizeNWSE;
+                    }
+                    else if (ne.Contains(pt))
+                    {
+                        cursorLoc = CursorLocation.NE;
+                        cursor = Cursors.SizeNESW;
+                    }
+                    else if (se.Contains(pt))
+                    {
+                        cursorLoc = CursorLocation.SE;
+                        cursor = Cursors.SizeNWSE;
+                    }
+                    else if (sw.Contains(pt))
+                    {
+                        cursorLoc = CursorLocation.SW;
+                        cursor = Cursors.SizeNESW;
+                    }
+                    else if (DisplayRectangle.Contains(pt))
+                    {
+                        cursorLoc = CursorLocation.Inside;
+                        cursor = Cursors.SizeAll;
+                    }
+
+                    Mouse.OverrideCursor = cursor;
+				}
+			}
+ 		}
 		
 		/// <summary>
 		/// OnRender event handler - draws the image
