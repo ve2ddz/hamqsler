@@ -103,24 +103,14 @@ namespace hamqsler
 			CardItem ci = QslCard.CursorOver(location.X, location.Y);
 			if(ci != null)
 			{
-				if(!ci.IsSelected)
-				{
-					QslCard.ClearHighlighted();
-					// for now we need to highlight the CardItem
-					if(!ci.IsHighlighted)
-					{
-						QslCard.ClearHighlighted();
-						ci.IsHighlighted = true;
-					}
-				}
 				// delegate MouseMove event to the CardItem
 				ci.MoveMouse(e);
 			}
 			else
 			{
 				QslCard.ClearHighlighted();
+				QslCard.InvalidateVisual();
 			}
-			QslCard.InvalidateVisual();
 		}
 		
 		/// <summary>

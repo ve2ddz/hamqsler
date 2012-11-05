@@ -96,7 +96,19 @@ namespace hamqsler
 		/// Handles MouseMove events when mouse is over this CardItem
 		/// </summary>
 		/// <param name="e">MouseEventArgs object</param>
-		public virtual void MoveMouse(MouseEventArgs e) {}
+		public virtual void MoveMouse(MouseEventArgs e) 
+		{
+			if(!this.IsSelected)
+			{
+//				QslCard.ClearHighlighted();
+				// for now we need to highlight the CardItem
+				if(!this.IsHighlighted)
+				{
+					QslCard.ClearHighlighted();
+					this.IsHighlighted = true;
+				}
+			}		
+		}
 
 		/// <summary>
 		/// Gets the location within this CardItem

@@ -71,6 +71,7 @@ namespace hamqsler
 		/// <param name="e">MouseEventArgs object</param>
 		public override void MoveMouse(System.Windows.Input.MouseEventArgs e)
 		{
+			base.MoveMouse(e);
 		}
 		
 		/// <summary>
