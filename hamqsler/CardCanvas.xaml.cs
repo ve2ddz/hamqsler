@@ -36,6 +36,7 @@ namespace hamqsler
 	{
 		public static RoutedCommand SelectCardItemCommand = new RoutedCommand();
 		public static RoutedCommand DeselectCardItemCommand = new RoutedCommand();
+		public static RoutedCommand ClearBackgroundCommand = new RoutedCommand();
 		
 		private Card qslCard = null;
 		public Card QslCard
@@ -85,12 +86,23 @@ namespace hamqsler
 		/// <summary>
 		/// CanExecute handler for DeselectCardItem menu item
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void DeselectCardItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardItem ci = QslCard.GetSelected();
 			e.CanExecute = ci != null;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for ClearBackground menu item
+		/// </summary>
+		/// <param name="sender">not ued</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void ClearBackgroundCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = QslCard.BackImage.ImageFileName != null &
+				QslCard.BackImage.ImageFileName != string.Empty;
 		}
 
 		/// <summary>
@@ -194,10 +206,7 @@ namespace hamqsler
 		/// </summary>
 		private void SetPropertiesPanelVisibility()
 		{
-			FrameworkElement ctrl = (FrameworkElement)this.Parent;
-			while(ctrl.GetType() != typeof(CardTabItem))
-				ctrl = (FrameworkElement)ctrl.Parent;
-			((CardTabItem)ctrl).SetPropertiesVisibility(QslCard);
+			GetCardTabItem().SetPropertiesVisibility(QslCard);
 		}
 		
 		/// <summary>
@@ -217,5 +226,29 @@ namespace hamqsler
 			}
 			Mouse.OverrideCursor = Cursors.Arrow;
 		}
+		
+		/// <summary>
+		/// Handler for ClearBackground menu item Executed (Clicked) event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void ClearBackgroundCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			QslCard.BackImage.ImageFileName = string.Empty;
+			GetCardTabItem().backgroundImageFileNameTextBox.Text = string.Empty;
+		}
+		
+		/// <summary>
+		/// Helper method that gets the CardTabItem parent for this CardCanvas
+		/// </summary>
+		/// <returns>The parent CardTabItem</returns>
+		private CardTabItem GetCardTabItem()
+		{			
+			FrameworkElement ctrl = (FrameworkElement)this.Parent;
+			while(ctrl.GetType() != typeof(CardTabItem))
+				ctrl = (FrameworkElement)ctrl.Parent;
+			return (CardTabItem)ctrl;
+		}
+
 	}
 }

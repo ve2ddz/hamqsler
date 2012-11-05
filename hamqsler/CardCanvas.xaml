@@ -16,6 +16,9 @@
 		<CommandBinding Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"
 		                CanExecute="DeselectCardItemCommand_CanExecute"
 						Executed="DeselectCardItemCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"
+						CanExecute="ClearBackgroundCommand_CanExecute"
+						Executed="ClearBackgroundCommand_Executed"/>
 	</Canvas.CommandBindings>
 	<Canvas.ContextMenu>
 		<ContextMenu>
@@ -23,6 +26,9 @@
 			          Command="{x:Static local:CardCanvas.SelectCardItemCommand}"/>
 			<MenuItem Header="Deselect CardItem"
 			          Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"/>
+			<Separator/>
+			<MenuItem Header="Clear Background"
+					  Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"/>
 		</ContextMenu>
 	</Canvas.ContextMenu>
 	<StackPanel>
