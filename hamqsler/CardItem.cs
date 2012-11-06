@@ -150,7 +150,6 @@ namespace hamqsler
                 IsLeftMouseButtonDown = false;
                 this.ReleaseMouseCapture();
             }
-//            e.Handled = true;
         }
 
 		/// <summary>

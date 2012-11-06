@@ -192,7 +192,7 @@ namespace hamqsler
 				QslCard.ClearHighlighted();
 				ci.IsSelected = true;
 				QslCard.InvalidateVisual();
-				SetPropertiesPanelVisibility();
+				SetPropertiesPanelVisibility(ci);
 			}
 		}
 		
@@ -208,7 +208,7 @@ namespace hamqsler
 			{
 				ci.IsSelected = false;
 				QslCard.InvalidateVisual();
-				SetPropertiesPanelVisibility();
+				SetPropertiesPanelVisibility(null);
 			}
 		}
 		
@@ -216,9 +216,9 @@ namespace hamqsler
 		/// Helper method that calls SetPropertiesVisibility in CardTabItem to set visibility
 		/// of a properties panel based on selected carditem
 		/// </summary>
-		private void SetPropertiesPanelVisibility()
+		private void SetPropertiesPanelVisibility(CardItem ci)
 		{
-			GetCardTabItem().SetPropertiesVisibility(QslCard);
+			GetCardTabItem().SetPropertiesVisibility(ci);
 		}
 		
 		/// <summary>
@@ -247,7 +247,10 @@ namespace hamqsler
 		private void ClearBackgroundCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.BackImage.ImageFileName = string.Empty;
-			GetCardTabItem().backgroundImageFileNameTextBox.Text = string.Empty;
+			// the following line ensures that if the background image was selected before
+			// Clear Background was called, it remains selected.
+			CardItem ci = QslCard.GetSelected();
+			GetCardTabItem().SetPropertiesVisibility(ci);
 		}
 		
 		/// <summary>
@@ -270,8 +273,7 @@ namespace hamqsler
 		void AddImageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.AddImage();
-			CardTabItem cti = GetCardTabItem();
-			cti.SetPropertiesVisibility(QslCard);
+			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
 			QslCard.InvalidateVisual();
 		}
 

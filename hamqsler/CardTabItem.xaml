@@ -43,11 +43,22 @@
 									ToolTip="Load Background Image"/>
 							<TextBox Name="backgroundImageFileNameTextBox" IsReadOnly="True"
 									TextWrapping="Wrap" Margin="5"
-									ToolTip="Path to background image file (not editable)"/>
+									ToolTip="Path to background image file (not editable)"
+									Text="{Binding ImageFileName}"/>
 						</StackPanel>
 					</GroupBox>
 					<GroupBox Name="secondaryImageProperties" Header="Secondary Image Properties"
 							 Visibility="Collapsed">
+					<StackPanel>
+							<Button Name="loadSecondaryImage" Content="..." Width="75"
+									Click="LoadSecondaryImage_Click" Margin="5"
+									HorizontalAlignment="Center"
+									ToolTip="Load a Secondary Image"/>
+							<TextBox Name="secondaryImageFileNameTextBox" IsReadOnly="True"
+									TextWrapping="Wrap" Margin="5"
+									ToolTip="Path to secondary image file (not editable)"
+									Text="{Binding ImageFileName}"/>
+						</StackPanel>
 					</GroupBox>
 					<GroupBox Name="textItemProperties" Header="Text Item Properties"
 							 Visibility="Collapsed">

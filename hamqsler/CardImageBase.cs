@@ -243,6 +243,11 @@ namespace hamqsler
 		protected override void OnRender(DrawingContext dc)
 		{
 			Rect rect = DisplayRectangle;
+			if(this.GetType() == typeof(SecondaryImage))
+		    {
+				System.Diagnostics.Debug.WriteLine("{0}, {1} : {2}, {3}", 
+				                                   rect.X, rect.Y, rect.Width, rect.Height);
+		    }
 			Brush brush = Brushes.Transparent;
 			if(ImageFileName == string.Empty || ImageFileName == null)
 			{
@@ -307,6 +312,7 @@ namespace hamqsler
 				{
 					// reset bImage
 					bImage = null;
+					this.DisplayRectangle = new Rect(0, 0, 0, 0);
 				}
 				// Image has changed, so let QslCard know it has changed
 				// and redisplay card
