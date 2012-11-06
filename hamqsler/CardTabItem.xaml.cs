@@ -66,15 +66,36 @@ namespace hamqsler
 		/// <param name="card">Card that contains the CardItems</param>
 		public void SetPropertiesVisibility(Card card)
 		{
-			bool displayCardProps = true;
-			if(card.BackImage.IsSelected)
+			HideAllPropertiesPanels();
+			CardItem ci = card.GetSelected();
+			if(ci != null)
 			{
-				displayCardProps = false;
+				if(ci.GetType() == typeof(BackgroundImage))
+				{
+					backgroundImageProperties.Visibility = Visibility.Visible;
+				}
+				else if(ci.GetType() == typeof(SecondaryImage))
+				{
+					secondaryImageProperties.Visibility = Visibility.Visible;
+				}
 			}
-			backgroundImageProperties.Visibility = (card.BackImage.IsSelected) ?
-				Visibility.Visible : Visibility.Collapsed;
-			cardProperties.Visibility = displayCardProps ? Visibility.Visible :
-				Visibility.Collapsed;
+			else
+			{
+				cardProperties.Visibility = Visibility.Visible;
+			}
+		}
+		
+		/// <summary>
+		/// Helper method that hides all properties panels. Normally called before a single
+		/// proeprty panel is set visible
+		/// </summary>
+		private void HideAllPropertiesPanels()
+		{
+			cardProperties.Visibility = Visibility.Collapsed;
+			backgroundImageProperties.Visibility = Visibility.Collapsed;
+			secondaryImageProperties.Visibility = Visibility.Collapsed;
+			textItemProperties.Visibility = Visibility.Collapsed;
+			qsosBoxProperties.Visibility = Visibility.Collapsed;
 		}
 		
 		/// <summary>

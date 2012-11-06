@@ -242,7 +242,7 @@ namespace hamqsler
 		/// <param name="dc">Context to draw the card on</param>
 		protected override void OnRender(DrawingContext dc)
 		{
-			Rect rect = QslCard.DisplayRectangle;
+			Rect rect = DisplayRectangle;
 			Brush brush = Brushes.Transparent;
 			if(ImageFileName == string.Empty || ImageFileName == null)
 			{

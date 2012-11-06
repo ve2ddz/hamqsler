@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -64,6 +65,14 @@ namespace hamqsler
 		{
 			get {return (BackgroundImage)GetValue(BackgroundImageProperty);}
 			set {SetValue(BackgroundImageProperty, value);}
+		}
+		
+		private static readonly DependencyProperty SecondaryImagesProperty =
+			DependencyProperty.Register("SecondaryImages", typeof(List<SecondaryImage>),
+			                            typeof(Card), new PropertyMetadata(new List<SecondaryImage>()));
+		public List<SecondaryImage> SecondaryImages
+		{
+			get {return (List<SecondaryImage>)GetValue(SecondaryImagesProperty);}
 		}
 			
 		[NonSerialized]
@@ -121,6 +130,10 @@ namespace hamqsler
 			{
 				BackImage.Render(dc);
 			}
+			foreach(SecondaryImage si in SecondaryImages)
+			{
+				si.Render(dc);
+			}
 		}
 		
 		/// <summary>
@@ -147,12 +160,18 @@ namespace hamqsler
 		/// <returns>Highlighted card item or null if no card item is highlighted</returns>
 		public CardItem GetHighlighted()
 		{
-			CardItem ci = null;
+			foreach(SecondaryImage si in SecondaryImages)
+			{
+				if(si.IsHighlighted)
+				{
+					return si;
+				}
+			}
 			if(BackImage.IsHighlighted)
 			{
-				ci = BackImage;
+				return BackImage;
 			}
-			return ci;
+			return null;
 		}
 		
 		/// <summary>
@@ -160,6 +179,10 @@ namespace hamqsler
 		/// </summary>
 		public void ClearHighlighted()
 		{
+			foreach(SecondaryImage si in SecondaryImages)
+			{
+				si.IsHighlighted = false;
+			}
 			BackImage.IsHighlighted = false;
 		}
 		
@@ -171,6 +194,13 @@ namespace hamqsler
 		/// <returns>CardItem the cursor is over, or null if not over a child CardItem</returns>
 		public CardItem CursorOver(double x, double y)
 		{
+			foreach(SecondaryImage si in SecondaryImages)
+			{
+				if(CardItem.WithinRectangle(si.DisplayRectangle, x, y))
+				{
+					return si;
+				}
+			}
 			if(BackImage != null && CardItem.WithinRectangle(BackImage.DisplayRectangle,
 			                                                 x, y))
 			{
@@ -185,12 +215,34 @@ namespace hamqsler
 		/// <returns>Selected card item, or null if none selected</returns>
 		public CardItem GetSelected()
 		{
-			CardItem ci = null;
+			foreach(SecondaryImage si in SecondaryImages)
+			{
+				if(si.IsSelected)
+					return si;
+			}
 			if(BackImage.IsSelected)
 			{
-				ci = BackImage;
+				return BackImage;
 			}
-			return ci;
+			return null;
+		}
+		
+		/// <summary>
+		/// Adds a SecondaryImage to the card. No image is actually loaded; this must be done
+		/// from the SecondaryImageProperties panel.
+		/// </summary>
+		public void AddImage()
+		{
+			SecondaryImage si = new SecondaryImage();
+			SecondaryImages.Add(si);
+			si.QslCard = this;
+			CardItem ci = GetHighlighted();
+			if(ci != null)
+			{
+				ci.IsHighlighted = false;
+			}
+			si.IsSelected = true;
+			InvalidateVisual();
 		}
 				
 	}

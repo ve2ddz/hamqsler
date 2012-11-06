@@ -36,6 +36,7 @@ namespace hamqsler
 	{
 		public static RoutedCommand SelectCardItemCommand = new RoutedCommand();
 		public static RoutedCommand DeselectCardItemCommand = new RoutedCommand();
+		public static RoutedCommand AddImageCommand = new RoutedCommand();
 		public static RoutedCommand ClearBackgroundCommand = new RoutedCommand();
 		
 		private Card qslCard = null;
@@ -92,6 +93,17 @@ namespace hamqsler
 		{
 			CardItem ci = QslCard.GetSelected();
 			e.CanExecute = ci != null;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for AddImage menu item
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AddImageCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardItem ci = QslCard.GetSelected();
+			e.CanExecute = ci == null;
 		}
 		
 		/// <summary>
@@ -248,6 +260,19 @@ namespace hamqsler
 			while(ctrl.GetType() != typeof(CardTabItem))
 				ctrl = (FrameworkElement)ctrl.Parent;
 			return (CardTabItem)ctrl;
+		}
+		
+		/// <summary>
+		/// Handler for Add Image menu item Executed (Clicked) event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void AddImageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			QslCard.AddImage();
+			CardTabItem cti = GetCardTabItem();
+			cti.SetPropertiesVisibility(QslCard);
+			QslCard.InvalidateVisual();
 		}
 
 	}

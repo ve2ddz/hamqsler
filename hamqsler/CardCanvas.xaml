@@ -16,6 +16,9 @@
 		<CommandBinding Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"
 		                CanExecute="DeselectCardItemCommand_CanExecute"
 						Executed="DeselectCardItemCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:CardCanvas.AddImageCommand}"
+		                CanExecute="AddImageCommand_CanExecute"
+						Executed="AddImageCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"
 						CanExecute="ClearBackgroundCommand_CanExecute"
 						Executed="ClearBackgroundCommand_Executed"/>
@@ -26,6 +29,9 @@
 			          Command="{x:Static local:CardCanvas.SelectCardItemCommand}"/>
 			<MenuItem Header="Deselect CardItem"
 			          Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"/>
+			<Separator/>
+			<MenuItem Header="Add Image"
+					  Command="{x:Static local:CardCanvas.AddImageCommand}"/>
 			<Separator/>
 			<MenuItem Header="Clear Background"
 					  Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"/>
