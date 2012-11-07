@@ -67,12 +67,16 @@ namespace hamqsler
 			set {SetValue(BackgroundImageProperty, value);}
 		}
 		
-		private static readonly DependencyProperty SecondaryImagesProperty =
-			DependencyProperty.Register("SecondaryImages", typeof(List<SecondaryImage>),
-			                            typeof(Card), new PropertyMetadata(new List<SecondaryImage>()));
+		private List<SecondaryImage> secondaryImages = new List<SecondaryImage>();
 		public List<SecondaryImage> SecondaryImages
 		{
-			get {return (List<SecondaryImage>)GetValue(SecondaryImagesProperty);}
+			get {return secondaryImages;}
+		}
+
+		private List<TextItem> textItems = new List<TextItem>();
+		public List<TextItem> TextItems
+		{
+			get {return textItems;}
 		}
 			
 		[NonSerialized]
@@ -103,13 +107,40 @@ namespace hamqsler
 		public Card(double width, double height)
 		{
 			userPreferences = ((App)Application.Current).UserPreferences;
+			// card properties
 			PrintCardOutlines = userPreferences.PrintCardOutlines;
 			FillLastPageWithBlankCards = userPreferences.PrintCardOutlines;
 			SetCardMarginsToPrinterPageMargins = userPreferences.SetCardMarginsToPrinterPageMargins;
 			DisplayRectangle = new Rect(0, 0, width, height);
+			// background image
 			BackImage = new BackgroundImage();
 			BackImage.QslCard = this;
+			// call text item
+			TextItem call = new TextItem();
+			call.QslCard = this;
+			call.Text = userPreferences.Callsign;
+			call.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
+			call.TextFontWeight = FontWeights.Black;
+			call.FontSize = 72.0;
+			call.CheckboxBefore = true;
+			call.CheckboxAfter = true;
+			call.DisplayRectangle = new Rect(DisplayRectangle.Width / 20 - 60, 
+			                                 DisplayRectangle.Height / 20, 0, 0);
+			TextItems.Add(call);
+			TextItem nameQth = new TextItem();
+			// name Qth text item
+			nameQth.QslCard = this;
+			nameQth.Text = userPreferences.NameQth;
+			nameQth.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
+			nameQth.TextFontWeight = FontWeights.Normal;
+			nameQth.FontSize = 10.0;
+			nameQth.DisplayRectangle = new Rect(DisplayRectangle.Width / 2,
+			                                    DisplayRectangle.Height / 20, 0, 0);
+			TextItems.Add(nameQth);
+			
+			// more card properties
 			QslCard = this;
+			isDirty = false;
 		}
 		
 		/// <summary>
@@ -133,6 +164,10 @@ namespace hamqsler
 			foreach(SecondaryImage si in SecondaryImages)
 			{
 				si.Render(dc);
+			}
+			foreach(TextItem ti in TextItems)
+			{
+				ti.Render(dc);
 			}
 		}
 		
@@ -160,6 +195,13 @@ namespace hamqsler
 		/// <returns>Highlighted card item or null if no card item is highlighted</returns>
 		public CardItem GetHighlighted()
 		{
+			foreach(TextItem ti in TextItems)
+			{
+				if(ti.IsHighlighted)
+				{
+					return ti;
+				}
+			}
 			foreach(SecondaryImage si in SecondaryImages)
 			{
 				if(si.IsHighlighted)
@@ -179,6 +221,10 @@ namespace hamqsler
 		/// </summary>
 		public void ClearHighlighted()
 		{
+			foreach(TextItem ti in TextItems)
+			{
+				ti.IsHighlighted = false;
+			}
 			foreach(SecondaryImage si in SecondaryImages)
 			{
 				si.IsHighlighted = false;
@@ -194,6 +240,13 @@ namespace hamqsler
 		/// <returns>CardItem the cursor is over, or null if not over a child CardItem</returns>
 		public CardItem CursorOver(double x, double y)
 		{
+			foreach(TextItem ti in TextItems) 
+			{
+				if(CardItem.WithinRectangle(ti.DisplayRectangle, x, y))
+				{
+					return ti;
+				}
+			}
 			foreach(SecondaryImage si in SecondaryImages)
 			{
 				if(CardItem.WithinRectangle(si.DisplayRectangle, x, y))
@@ -215,6 +268,11 @@ namespace hamqsler
 		/// <returns>Selected card item, or null if none selected</returns>
 		public CardItem GetSelected()
 		{
+			foreach(TextItem ti in TextItems)
+			{
+				if(ti.IsSelected)
+					return ti;
+			}
 			foreach(SecondaryImage si in SecondaryImages)
 			{
 				if(si.IsSelected)
