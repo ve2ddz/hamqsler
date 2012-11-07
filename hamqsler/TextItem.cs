@@ -27,6 +27,7 @@ namespace hamqsler
 	/// <summary>
 	/// TextItem class - displays text on a QSL card
 	/// </summary>
+	[Serializable]
 	public class TextItem : CardItem
 	{
 		private static readonly DependencyProperty TextFontFaceProperty =
@@ -99,6 +100,24 @@ namespace hamqsler
 		{
 			get {return (bool)GetValue(CheckboxAfterProperty);}
 			set {SetValue(CheckboxAfterProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CheckboxLineThicknessProperty =
+			DependencyProperty.Register("CheckboxLineThickness", typeof(double),
+			                            typeof(TextItem), new PropertyMetadata(2.0));
+		public double CheckboxLineThickness
+		{
+			get {return (double)GetValue(CheckboxLineThicknessProperty);}
+			set {SetValue(CheckboxLineThicknessProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CheckboxRelativeSizeProperty =
+			DependencyProperty.Register("CheckboxRelativeSize", typeof(double),
+			                            typeof(TextItem), new PropertyMetadata(0.6));
+		public double CheckboxRelativeSize
+		{
+			get {return (double)GetValue(CheckboxRelativeSizeProperty);}
+			set {SetValue(CheckboxRelativeSizeProperty, value);}
 		}
 		
 		public FormattedText FormattedTextItem
@@ -175,20 +194,24 @@ namespace hamqsler
 		{
 			if(CheckboxBefore == true)
 			{
-				dc.DrawRectangle(Brushes.Transparent, new Pen(TextBrush, 1.5),
-				                 new Rect(DisplayRectangle.X + FormattedTextItem.Height * 0.2, 
-				                          DisplayRectangle.Y + FormattedTextItem.Height * 0.2,
-				                          FormattedTextItem.Height * 0.6, 
-				                          FormattedTextItem.Height * 0.6));
+				dc.DrawRectangle(Brushes.Transparent, new Pen(TextBrush, CheckboxLineThickness),
+				                 new Rect(DisplayRectangle.X + FormattedTextItem.Height * 
+				                          (1 - CheckboxRelativeSize) / 2,
+				                          DisplayRectangle.Y + FormattedTextItem.Height *  
+				                          (1 - CheckboxRelativeSize) / 2,
+				                          FormattedTextItem.Height * CheckboxRelativeSize, 
+				                          FormattedTextItem.Height * CheckboxRelativeSize));
 			}
 			if(CheckboxAfter == true)
 			{
-				dc.DrawRectangle(Brushes.Transparent, new Pen(TextBrush, 1.5),
+				dc.DrawRectangle(Brushes.Transparent, new Pen(TextBrush, CheckboxLineThickness),
 				                 new Rect(DisplayRectangle.X + DisplayRectangle.Width -
-				                          FormattedTextItem.Height * 0.8,
-				                          DisplayRectangle.Y + FormattedTextItem.Height * 0.2,
-				                          FormattedTextItem.Height * 0.6, 
-				                          FormattedTextItem.Height * 0.6));
+				                          FormattedTextItem.Height * 
+				                         ( 1 - (1 - CheckboxRelativeSize) / 2),
+				                          DisplayRectangle.Y + FormattedTextItem.Height * 
+				                          (1 - CheckboxRelativeSize) / 2,
+				                          FormattedTextItem.Height * CheckboxRelativeSize, 
+				                          FormattedTextItem.Height * CheckboxRelativeSize));
 			}
 			dc.DrawText(FormattedTextItem, new Point(DisplayRectangle.X + FormattedTextItem.Height + 3,
 			                                         DisplayRectangle.Y));
