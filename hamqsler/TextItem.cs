@@ -20,6 +20,7 @@
 using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace hamqsler
@@ -240,5 +241,48 @@ namespace hamqsler
 				}
 			}
 		}
+
+		/// <summary>
+		/// Handles mouse move events for TextItems
+		/// </summary>
+		/// <param name="e">MouseEventArgs object</param>
+		public override void MoveMouse(MouseEventArgs e)
+		{
+			base.MoveMouse(e);
+			Point pt = e.GetPosition(QslCard);
+			if (this.IsSelected)
+			{
+				if (this.IsLeftMouseButtonDown)
+				{
+					// with left mouse button down, cursor shows where to move the text item
+					double x = 0;
+					double y = 0;
+					double width = 0;
+					double height = 0;
+					if (cursorLoc == CursorLocation.Inside)
+					{
+						x = originalDisplayRectangle.X + pt.X - leftMouseDownPoint.X;
+						y = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
+						width = originalDisplayRectangle.Width;
+						height = originalDisplayRectangle.Height;
+						DisplayRectangle = new Rect(x, y, width, height);
+						InvalidateVisual();
+					}
+				}
+				else	// left mouse button not down, so set the cursor
+				{
+					Cursor cursor = Cursors.Arrow;
+					cursorLoc = CursorLocation.Outside;
+					if (CardItem.WithinRectangle(DisplayRectangle, pt.X, pt.Y))
+					{
+						cursorLoc = CursorLocation.Inside;
+						cursor = Cursors.SizeAll;
+					}
+					Mouse.OverrideCursor = cursor;
+					this.CaptureMouse();
+				}
+			}
+		}
+
 	}
 }
