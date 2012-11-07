@@ -52,6 +52,10 @@ namespace hamqsler
 		public CardCanvas()
 		{
 			InitializeComponent();
+			this.MouseMove += OnMouseMove;
+			this.MouseLeftButtonDown += OnMouseLeftButtonDown;
+			this.MouseLeftButtonUp += OnMouseLeftButtonUp;
+			this.MouseLeave += OnMouseLeave;
 		}
 		
 		/// <summary>
@@ -67,10 +71,6 @@ namespace hamqsler
 			Canvas.SetLeft(QslCard, left);
 			Canvas.SetTop(QslCard, top);
 			this.Children.Add(QslCard);
-			this.MouseMove += OnMouseMove;
-			this.MouseLeftButtonDown += OnMouseLeftButtonDown;
-			this.MouseLeftButtonUp += OnMouseLeftButtonUp;
-			this.MouseLeave += OnMouseLeave;
 		}
 		
 		/// <summary>
