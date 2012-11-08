@@ -240,20 +240,36 @@ namespace hamqsler
 		/// <returns>CardItem the cursor is over, or null if not over a child CardItem</returns>
 		public CardItem CursorOver(double x, double y)
 		{
-			foreach(TextItem ti in TextItems) 
+			// reverse items in list so that latest items checked first
+			List<TextItem> revTextList = new List<TextItem>();
+			foreach(TextItem ti in TextItems)
+			{
+				revTextList.Add(ti);
+			}
+			revTextList.Reverse();
+			foreach(TextItem ti in revTextList)
 			{
 				if(CardItem.WithinRectangle(ti.DisplayRectangle, x, y))
 				{
 					return ti;
 				}
 			}
+			
+			// reverse items in list so that latest items checked first
+			List<SecondaryImage> revImageList = new List<SecondaryImage>();
 			foreach(SecondaryImage si in SecondaryImages)
+			{
+				revImageList.Add(si);
+			}
+			revImageList.Reverse();
+			foreach(SecondaryImage si in revImageList)
 			{
 				if(CardItem.WithinRectangle(si.DisplayRectangle, x, y))
 				{
 					return si;
 				}
 			}
+			
 			if(BackImage != null && CardItem.WithinRectangle(BackImage.DisplayRectangle,
 			                                                 x, y))
 			{
