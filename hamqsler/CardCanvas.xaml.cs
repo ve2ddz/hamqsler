@@ -46,16 +46,14 @@ namespace hamqsler
 			set {qslCard = value;}
 		}
 		
+		private Point highlightPoint;
+		
 		/// <summary>
 		/// Default constructor
 		/// </summary>
 		public CardCanvas()
 		{
 			InitializeComponent();
-			this.MouseMove += OnMouseMove;
-			this.MouseLeftButtonDown += OnMouseLeftButtonDown;
-			this.MouseLeftButtonUp += OnMouseLeftButtonUp;
-			this.MouseLeave += OnMouseLeave;
 		}
 		
 		/// <summary>
@@ -186,7 +184,8 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void SelectCardItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardItem ci = QslCard.GetHighlighted();
+			// see comment in OnMouseRightButtonDown
+			CardItem ci = QslCard.CursorOver(highlightPoint.X, highlightPoint.Y);
 			if(ci != null)
 			{
 				QslCard.ClearHighlighted();
@@ -275,6 +274,24 @@ namespace hamqsler
 			QslCard.AddImage();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
 			QslCard.InvalidateVisual();
+		}
+		
+		/// <summary>
+		/// Handler for MouseRightButtonDown event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">MouseButtonEventArgs object</param>
+		void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			// A right mouse button click will display the context menu from which a menu item
+			// may be selected. The location information passed to the menu item handlers is the 
+			// location of the cursor when the menu item is clicked, not the location of the 
+			// cursor when the right mouse button was pressed. We must save and use the location 
+			// of the cursor here so that the correct CardItem will be selected.
+			//
+			highlightPoint = e.GetPosition(QslCard);
+			// now display the context menu
+			base.OnMouseRightButtonDown(e);
 		}
 
 	}
