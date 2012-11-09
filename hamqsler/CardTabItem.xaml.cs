@@ -180,10 +180,15 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handler for TextColorButton clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void TextColorButton_Clicked(object sender, RoutedEventArgs e)
 		{
+			// create and display a ColorDialog
 			System.Windows.Forms.ColorDialog cDialog = new System.Windows.Forms.ColorDialog();
-			SolidColorBrush b = new SolidColorBrush();
 			SolidColorBrush backBrush = TextColorButton.Background as SolidColorBrush;
 			if(backBrush == null)
 			{
@@ -192,6 +197,7 @@ namespace hamqsler
 			}
 			if(cDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
+				// a color was selected, so convert to WPF color and set button background to that color
 				System.Drawing.Color color = cDialog.Color;
 				Color c = new Color();
 				c.A = color.A;

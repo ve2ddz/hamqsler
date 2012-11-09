@@ -24,11 +24,19 @@ using System.Windows.Data;
 namespace hamqsler
 {
 	/// <summary>
-	/// Description of DoubleToPercentConverter.
+	/// Converter for converting a double to a percent value (also a double)
 	/// </summary>
 	[ValueConversion(typeof(double), typeof(double))]
 	public class DoubleToPercentConverter : IValueConverter
 	{
+		/// <summary>
+		/// Convert from a double to a percent value
+		/// </summary>
+		/// <param name="value">value to convert</param>
+		/// <param name="targetType"></param>
+		/// <param name="parameter"></param>
+		/// <param name="culture"></param>
+		/// <returns></returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return ((double)value) * 100;

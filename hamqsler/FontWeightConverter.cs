@@ -25,11 +25,19 @@ using System.Windows.Data;
 namespace hamqsler
 {
 	/// <summary>
-	/// Description of FontWeightConverter.
+	/// Converter for FontWeight to a string representation of same
 	/// </summary>
 	[ValueConversion(typeof(FontWeight), typeof(string))]
 	public class FontWeightConverter : IValueConverter
 	{
+		/// <summary>
+		/// Convert a FontWeight to string representation. Only Bold, Black, and Normal are supported
+		/// </summary>
+		/// <param name="value">FontWeight to convert</param>
+		/// <param name="targetType">not used</param>
+		/// <param name="parameter">not used</param>
+		/// <param name="culture">not used</param>
+		/// <returns>string representation of the input FontWeight</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			FontWeight fw = (FontWeight)value;
@@ -41,6 +49,15 @@ namespace hamqsler
 				return "Normal";
 		}
 		
+		/// <summary>
+		/// Convert s string representation of FontWeight back into a FontWeight. Only Bold,
+		/// Black and Normal are supported.
+		/// </summary>
+		/// <param name="value">string to convert</param>
+		/// <param name="targetType">not used</param>
+		/// <param name="parameter">not used</param>
+		/// <param name="culture">not used</param>
+		/// <returns>FontWeight that corresponds to the input string</returns>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			string weight = (string)value;
