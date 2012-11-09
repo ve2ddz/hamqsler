@@ -316,7 +316,23 @@ namespace hamqsler
 				ci.IsHighlighted = false;
 			}
 			si.IsSelected = true;
-			InvalidateVisual();
+		}
+				
+		/// <summary>
+		/// Adds a TextItem to the card. 
+		/// </summary>
+		public void AddText()
+		{
+			TextItem ti = new TextItem();
+			ti.QslCard = this;
+			TextItems.Add(ti);
+			ti.Text = "Text Item";
+			CardItem ci = GetHighlighted();
+			if(ci != null)
+			{
+				ci.IsHighlighted = false;
+			}
+			ti.IsSelected = true;
 		}
 				
 	}

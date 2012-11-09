@@ -149,9 +149,18 @@ namespace hamqsler
 			{
 				isModified = QslCard.IsDirty;
 			}
-			DisplayRectangle = new Rect(DisplayRectangle.X, DisplayRectangle.Y,
-			                            forText.Width + 2 * forText.Height + 6,
-			                            forText.Height);
+			Rect rect = new Rect();
+			rect.X = DisplayRectangle.X;
+			rect.Y = DisplayRectangle.Y;
+			if(DisplayRectangle == new Rect(0, 0, 0, 0))
+			{
+				rect.X = (QslCard.DisplayRectangle.Width - forText.Width) / 2;
+				rect.Y = (QslCard.DisplayRectangle.Height - forText.Height) / 2;
+			}
+			rect.Width = forText.Width + 2 * forText.Height + 6;
+			rect.Height = forText.Height;
+			DisplayRectangle = rect;
+			
 			if(QslCard != null)		// various properties that result in CalculateRectangle being
 									// called may be set before QslCard is set
 

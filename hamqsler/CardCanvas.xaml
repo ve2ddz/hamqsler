@@ -22,6 +22,9 @@
 		<CommandBinding Command="{x:Static local:CardCanvas.AddImageCommand}"
 		                CanExecute="AddImageCommand_CanExecute"
 						Executed="AddImageCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:CardCanvas.AddTextCommand}"
+						CanExecute="AddTextCommand_CanExecute"
+						Executed="AddTextCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"
 						CanExecute="ClearBackgroundCommand_CanExecute"
 						Executed="ClearBackgroundCommand_Executed"/>
@@ -35,6 +38,8 @@
 			<Separator/>
 			<MenuItem Header="Add Image"
 					  Command="{x:Static local:CardCanvas.AddImageCommand}"/>
+			<MenuItem Header="Add Text"
+					  Command="{x:Static local:CardCanvas.AddTextCommand}"/>
 			<Separator/>
 			<MenuItem Header="Clear Background"
 					  Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"/>
