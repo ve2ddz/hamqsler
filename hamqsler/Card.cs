@@ -122,10 +122,7 @@ namespace hamqsler
 			call.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			call.TextFontWeight = FontWeights.Black;
 			call.FontSize = 72.0;
-			call.CheckboxBefore = true;
-			call.CheckboxAfter = true;
-			call.DisplayRectangle = new Rect(DisplayRectangle.Width / 20 - 60, 
-			                                 DisplayRectangle.Height / 20, 0, 0);
+			call.DisplayRectangle = new Rect(- 70, 0, 0, 0);
 			TextItems.Add(call);
 			TextItem nameQth = new TextItem();
 			// name Qth text item
@@ -134,10 +131,15 @@ namespace hamqsler
 			nameQth.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			nameQth.TextFontWeight = FontWeights.Normal;
 			nameQth.FontSize = 10.0;
-			nameQth.DisplayRectangle = new Rect(DisplayRectangle.Width / 2,
-			                                    DisplayRectangle.Height / 20, 0, 0);
+			nameQth.DisplayRectangle = new Rect(DisplayRectangle.Width / 2, 15, 0, 0);
 			TextItems.Add(nameQth);
-			
+			// salutation
+			TextItem salutation = new TextItem();
+			salutation.QslCard = this;
+			salutation.Text = userPreferences.Salutation;
+			salutation.FontSize = 10.0;
+			salutation.DisplayRectangle = new Rect(5, DisplayRectangle.Height - 25, 0, 0);
+			TextItems.Add(salutation);
 			// more card properties
 			QslCard = this;
 			isDirty = false;
