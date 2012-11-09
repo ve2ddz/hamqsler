@@ -21,6 +21,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,6 +36,9 @@ namespace hamqsler
 	/// </summary>
 	public partial class CardTabItem : TabItem
 	{
+		private static int BEEPFREQUENCY = 800;		// Hz
+		private static int BEEPDURATION = 200;		// ms
+		
 		/// <summary>
 		/// CardTabItem constructor
 		/// </summary>
@@ -206,6 +210,23 @@ namespace hamqsler
 				c.B = color.B;
 				TextColorButton.Background = new SolidColorBrush(c);
 			}
+		}
+		
+		/// <summary>
+		/// PreviewTextInput handler for FontSizeComboBox - allows only 0-9 and '.' characters
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FontSizeComboBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex sizeReg = new Regex("[0-9\\.]");
+			if(!sizeReg.IsMatch(e.Text))
+			{
+				// not valid
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
+			
 		}
 	}
 }

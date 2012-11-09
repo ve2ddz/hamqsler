@@ -11,6 +11,7 @@
 	</CollectionViewSource>
 	<local:FontWeightConverter x:Key="FontWeightConverter"/>
 	<local:DoubleToPercentConverter x:Key="DoubleToPercentConverter"/>
+	<local:FontSizeConverter x:Key="=FontSizeConverter"/>
 </TabItem.Resources>
 <TabItem.Header>
 	<Grid>
@@ -113,29 +114,37 @@
 											>Font Size:</TextBlock>
 									<ComboBox Grid.Row="2" Grid.Column="1" Width="50" Name="FontSizeComboBox"
 											HorizontalAlignment="Left" Margin="5" IsEditable="True"
-											Text="{Binding TextFontSize, Mode=TwoWay}"
-											ToolTip="Size of the font in points">
-										<ComboBoxItem Content="6"/>
+											ToolTip="Size of the font in points" 
+									        PreviewTextInput="FontSizeComboBox_PreviewTextInput">
+										<ComboBox.Text>
+											<Binding Path="FontSize" Mode="TwoWay" 
+											         UpdateSourceTrigger="PropertyChanged">
+												<Binding.Converter>
+													<local:FontSizeConverter/>
+												</Binding.Converter>
+											</Binding>
+										</ComboBox.Text>
+										<ComboBoxItem Content="6.0"/>
 										<ComboBoxItem Content="6.5"/>
-										<ComboBoxItem Content="7"/>
+										<ComboBoxItem Content="7.0"/>
 										<ComboBoxItem Content="7.5"/>
-										<ComboBoxItem Content="8"/>
+										<ComboBoxItem Content="8.0"/>
 										<ComboBoxItem Content="8.5"/>
-										<ComboBoxItem Content="9"/>
+										<ComboBoxItem Content="9.0"/>
 										<ComboBoxItem Content="9.5"/>
-										<ComboBoxItem Content="10"/>
-										<ComboBoxItem Content="11"/>
-										<ComboBoxItem Content="12"/>
-										<ComboBoxItem Content="14"/>
-										<ComboBoxItem Content="16"/>
-										<ComboBoxItem Content="18"/>
-										<ComboBoxItem Content="20"/>
-										<ComboBoxItem Content="24"/>
-										<ComboBoxItem Content="30"/>
-										<ComboBoxItem Content="36"/>
-										<ComboBoxItem Content="48"/>
-										<ComboBoxItem Content="60"/>
-										<ComboBoxItem Content="72"/>
+										<ComboBoxItem Content="10.0"/>
+										<ComboBoxItem Content="11.0"/>
+										<ComboBoxItem Content="12.0"/>
+										<ComboBoxItem Content="14.0"/>
+										<ComboBoxItem Content="16.0"/>
+										<ComboBoxItem Content="18.0"/>
+										<ComboBoxItem Content="20.0"/>
+										<ComboBoxItem Content="24.0"/>
+										<ComboBoxItem Content="30.0"/>
+										<ComboBoxItem Content="36.0"/>
+										<ComboBoxItem Content="48.0"/>
+										<ComboBoxItem Content="60.0"/>
+										<ComboBoxItem Content="72.0"/>
 									</ComboBox>
 									<TextBlock Grid.Row="3" Grid.Column="0" Margin="5"
 											VerticalAlignment="Center" HorizontalAlignment="Right"

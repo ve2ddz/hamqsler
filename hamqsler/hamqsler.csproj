@@ -87,6 +87,7 @@
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="DoubleToPercentConverter.cs" />
+    <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
