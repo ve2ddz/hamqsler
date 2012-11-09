@@ -226,20 +226,26 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property == TextProperty ||
-			   e.Property == TextFontFaceProperty ||
-			   e.Property == FontSizeProperty ||
-			   e.Property == IsItalicProperty ||
+			if(e.Property == TextFontFaceProperty ||
 			   e.Property == TextFontWeightProperty ||
+			   e.Property == IsItalicProperty ||
+			   e.Property == FontSizeProperty ||
+			   e.Property == TextBrushProperty ||
+			   e.Property == TextProperty ||
 			   e.Property == CheckboxBeforeProperty ||
-			   e.Property == CheckboxAfterProperty)
+			   e.Property == CheckboxAfterProperty ||
+			   e.Property == CheckboxLineThicknessProperty ||
+			   e.Property == CheckboxRelativeSizeProperty)
 			{
 				CalculateRectangle();
 				if(QslCard != null)		// properties may be set before QslCard is set
 				{
 					QslCard.IsDirty = true;
 				}
+				QslCard.InvalidateVisual();
 			}
+			if(e.Property == CheckboxRelativeSizeProperty)
+				System.Diagnostics.Debug.WriteLine("{0}", CheckboxRelativeSize);
 		}
 
 		/// <summary>
@@ -283,6 +289,6 @@ namespace hamqsler
 				}
 			}
 		}
-
+		
 	}
 }

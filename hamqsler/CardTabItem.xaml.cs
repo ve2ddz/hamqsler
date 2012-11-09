@@ -79,6 +79,11 @@ namespace hamqsler
 					secondaryImageProperties.Visibility = Visibility.Visible;
 					secondaryImageProperties.DataContext = ci;
 				}
+				else if(ci.GetType() == typeof(TextItem))
+				{
+					textItemProperties.Visibility = Visibility.Visible;
+					textItemProperties.DataContext = ci;
+				}
 			}
 			else
 			{
@@ -172,6 +177,28 @@ namespace hamqsler
 					si.ImageFileName = fileName;
 					secondaryImageFileNameTextBox.Text = fileName;
 				}
+			}
+		}
+		
+		private void TextColorButton_Clicked(object sender, RoutedEventArgs e)
+		{
+			System.Windows.Forms.ColorDialog cDialog = new System.Windows.Forms.ColorDialog();
+			SolidColorBrush b = new SolidColorBrush();
+			SolidColorBrush backBrush = TextColorButton.Background as SolidColorBrush;
+			if(backBrush == null)
+			{
+				cDialog.Color = System.Drawing.Color.FromArgb(backBrush.Color.A, backBrush.Color.R,
+				                                              backBrush.Color.G, backBrush.Color.B);
+			}
+			if(cDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+				System.Drawing.Color color = cDialog.Color;
+				Color c = new Color();
+				c.A = color.A;
+				c.R = color.R;
+				c.G = color.G;
+				c.B = color.B;
+				TextColorButton.Background = new SolidColorBrush(c);
 			}
 		}
 	}
