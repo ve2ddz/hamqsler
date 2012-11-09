@@ -114,7 +114,7 @@
 											>Font Size:</TextBlock>
 									<ComboBox Grid.Row="2" Grid.Column="1" Width="50" Name="FontSizeComboBox"
 											HorizontalAlignment="Left" Margin="5" IsEditable="True"
-											ToolTip="Size of the font in points" 
+											ToolTip="Size of the font in device independent units" 
 									        PreviewTextInput="FontSizeComboBox_PreviewTextInput">
 										<ComboBox.Text>
 											<Binding Path="FontSize" Mode="TwoWay" 
