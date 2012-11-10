@@ -83,7 +83,7 @@ namespace hamqsler
 		// Line and text brush for QSO box
 		private static readonly DependencyProperty LineTextBrushProperty =
 			DependencyProperty.Register("LineTextBrush", typeof(Brush),
-			                            typeof(QsosBox), new PropertyMetadata(new SolidColorBrush(Colors.Black)));
+			                            typeof(QsosBox), new PropertyMetadata(Brushes.Black));
 		public Brush LineTextBrush
 		{
 			get { return (Brush)GetValue(LineTextBrushProperty); }
@@ -93,7 +93,7 @@ namespace hamqsler
 		// Callsign brush for QSO box
 		private static readonly DependencyProperty CallsignBrushProperty =
 			DependencyProperty.Register("CallsignBrush", typeof(Brush),
-			                            typeof(QsosBox), new PropertyMetadata(new SolidColorBrush(Colors.Red)));
+			                            typeof(QsosBox), new PropertyMetadata(Brushes.Red));
 		public Brush CallsignBrush
 		{
 			get { return (Brush)GetValue(CallsignBrushProperty); }
@@ -103,7 +103,7 @@ namespace hamqsler
 		// Manager brush for QSO box
 		private static readonly DependencyProperty ManagerBrushProperty =
 			DependencyProperty.Register("ManagerBrush", typeof(Brush),
-			                            typeof(QsosBox), new PropertyMetadata(new SolidColorBrush(Colors.Gray)));
+			                            typeof(QsosBox), new PropertyMetadata(Brushes.Gray));
 		public Brush ManagerBrush
 		{
 			get { return (Brush)GetValue(ManagerBrushProperty); }
@@ -124,7 +124,7 @@ namespace hamqsler
 		// Background brush for QSO box
 		private static readonly DependencyProperty BackgroundBrushProperty =
 			DependencyProperty.Register("BackgroundBrush", typeof(Brush),
-			                            typeof(QsosBox), new PropertyMetadata(new SolidColorBrush(Colors.Black)));
+			                            typeof(QsosBox), new PropertyMetadata(Brushes.Transparent));
 		public Brush BackgroundBrush
 		{
 			get { return (Brush)GetValue(BackgroundBrushProperty); }
@@ -302,6 +302,20 @@ namespace hamqsler
 		internal List<QsoWithInclude> qsos = new List<QsoWithInclude>();
 
 		/// <summary>
+		/// Indexer for the QSOs
+		/// </summary>
+		/// <param name="key">Key to the QSO</param>
+		/// <returns>QSO specified by the key</returns>
+		internal QsoWithInclude this[int key]
+		{
+			get
+			{
+				QsoWithInclude qso = qsos[key];
+				return qso;
+			}
+		}
+
+		/// <summary>
 		/// <summary>
 		/// Retrieves the number of QSOs that will be printed
 		/// </summary>
@@ -310,9 +324,32 @@ namespace hamqsler
 			get { return qsos.Count; }
 		}
 		
-		private static int cornerRounding = 3;
+		private enum Columns
+		{
+			Date = 0,
+			Time,
+			BandFreq,
+			Mode,
+			RST,
+			QSL
+		};
+		
+		// attributes used for table headers
+		private double[] colWidths = { 0, 0, 0, 0, 0, 0 };
+		private FormattedText[] colHeadersText = {null, null, null, null, null, null};
+		private double[] colHeaderX = { 0, 0, 0, 0, 0, 0 };
+		private double[] colHeadersTextWidth = { 0, 0, 0, 0, 0, 0 };
 
 		
+		private const int cornerRounding = 3;
+		private const double confirmingXOffset = 5;
+		private const double confirmingYOffset = 2;
+		private const double confirmingCallXOffset = 3;
+		private const double viaXOffset = 15;
+		private const double firstLineYOffset = 2;
+		private const double lineYOffset = firstLineYOffset * 2;
+		private const double headerYOffset = 2;
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -344,15 +381,11 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Helper method that initializes header texts and calculates the size of the box
+		/// Helper method that initializes header texts
 		/// </summary>
 		/// <param name="userPrefs">UserPreferences object used to initialize QsosBox properties</param>
 		private void InitializeDisplayProperties(UserPreferences userPrefs)
 		{
-			double x = QslCard.DisplayRectangle.Width / 20;
-			double y = QslCard.DisplayRectangle.Height / 2;
-			CalculateRectangle();
-			
 			this.FontName = userPrefs.DefaultQsosBoxFontFace;
 			this.ConfirmingText = userPrefs.ConfirmingText;
 			this.ViaText = userPrefs.ViaText;
@@ -401,7 +434,97 @@ namespace hamqsler
 			                                        FlowDirection.LeftToRight, typeface, 12.0, brush);
 			return fText;
 		}
+		
+		
+       /// <summary>
+        /// Calculates the width of QSOsBox columns base on column and column header text
+        /// // as well as typeface, style, and weight
+        /// </summary>
+        private void CalculateColumns()
+        {
+            Typeface typeface = new Typeface(new FontFamily(FontName), FontStyles.Normal,
+                FontWeights.Normal, FontStretches.Normal);
+            FormattedText fT = new FormattedText(DateFormat, System.Globalization.CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+        	colWidths[(int)Columns.Date] = fT.Width;
+            colHeadersText[(int)Columns.Date] = fT;
+            colHeadersTextWidth[(int)Columns.Date] = fT.Width;
 
+            fT = new FormattedText("8888", System.Globalization.CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+            FormattedText fTH = new FormattedText(TimeText, System.Globalization.CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+            colWidths[(int)Columns.Time] = (fT.Width > fTH.Width) ? fT.Width : fTH.Width;
+            colHeadersText[(int)Columns.Time] = fTH;
+            colHeadersTextWidth[(int)Columns.Time] = fTH.Width;
+
+            string band = ShowFrequency ? "888.888" : "WWWWW";
+            fT = new FormattedText(band, System.Globalization.CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+            fTH = new FormattedText((ShowFrequency ? FreqText : BandText),
+                System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
+                typeface, 12.0, LineTextBrush);
+            colWidths[(int)Columns.BandFreq] = (fT.Width > fTH.Width) ? fT.Width : fTH.Width;
+            colHeadersText[(int)Columns.BandFreq] = fTH;
+            colHeadersTextWidth[(int)Columns.BandFreq] = fTH.Width;
+
+            fT = new FormattedText("WWWWWW", System.Globalization.CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+            fTH = new FormattedText(ModeText, System.Globalization.CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+            colWidths[(int)Columns.Mode] = (fT.Width > fTH.Width) ? fT.Width : fTH.Width;
+            colHeadersText[(int)Columns.Mode] = fTH;
+            colHeadersTextWidth[(int)Columns.Mode] = fTH.Width;
+
+            fT = new FormattedText("888", System.Globalization.CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+            fTH = new FormattedText(RSTText, System.Globalization.CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+            colWidths[(int)Columns.RST] = (fT.Width > fTH.Width) ? fT.Width : fTH.Width;
+            colHeadersText[(int)Columns.RST] = fTH;
+            colHeadersTextWidth[(int)Columns.RST] = fTH.Width;
+
+            if(ShowPseTnx == true)
+            {
+                fT = new FormattedText(PseText, System.Globalization.CultureInfo.CurrentUICulture,
+                    FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+                FormattedText fT2 = new FormattedText(TnxText, System.Globalization.CultureInfo.CurrentUICulture,
+                    FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+                fTH = new FormattedText(QSLText, System.Globalization.CultureInfo.CurrentUICulture,
+                    FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
+                double max = Math.Max(fT.Width, fT2.Width);
+                max = Math.Max(max, fTH.Width);
+                colWidths[(int)Columns.QSL] = max;
+                colHeadersText[(int)Columns.QSL] = fTH;
+                colHeadersTextWidth[(int)Columns.QSL] = fTH.Width;
+            }
+            else
+            {
+                colWidths[(int)Columns.QSL] = 0;
+                colHeadersText[(int)Columns.QSL] = null;
+                colHeadersTextWidth[(int)Columns.QSL] = 0;
+            }
+            double totalColWidths = 0;
+            for (int i = 0; i < colWidths.Length; i++)
+            {
+                totalColWidths += colWidths[i];
+            }
+            int totalCols = (ShowPseTnx) ? colHeadersText.Length : colHeadersText.Length - 1;
+            double columnExpansion = (DisplayRectangle.Width - totalColWidths) / totalCols;
+            for (int i = 0; i < colWidths.Length - 1; i++)
+            {
+                colWidths[i] += columnExpansion;
+                colHeaderX[i] = (colWidths[i] - colHeadersTextWidth[i]) / 2;
+            }
+            if (ShowPseTnx)
+            {
+            	colWidths[(int)Columns.QSL] += columnExpansion;
+            	colHeaderX[(int)Columns.QSL] = (colWidths[(int)Columns.QSL] - 
+            	                                colHeadersTextWidth[(int)Columns.QSL]) / 2;
+            }
+        }
+        
+ 
         /// <summary>
         /// Handles rendering of the QSOsBox on the card
         /// </summary>
@@ -410,14 +533,80 @@ namespace hamqsler
         {
             bool isMod = QslCard.IsDirty;
             CalculateRectangle();
+            // headers cannot be set up until after QslCard is set, but we only need
+            // to do this once (until ShowPseTnx is changed)
+            if(colHeadersText[0] == null)
+            {
+            	CalculateColumns();
+            }
             QslCard.IsDirty = isMod;
             Brush brush = Brushes.Transparent;
             Pen pen = new Pen(LineTextBrush, 1);
+            Pen transparentPen = new Pen(Brushes.Transparent, 1);
             // draw the box background
             dc.PushOpacity(BackgroundOpacity);
-            dc.DrawRoundedRectangle(brush, pen, DisplayRectangle,
+            dc.DrawRoundedRectangle(BackgroundBrush, transparentPen, DisplayRectangle,
                                    	cornerRounding, cornerRounding);
+            
             dc.Pop();
+            dc.DrawRoundedRectangle(Brushes.Transparent, pen, DisplayRectangle,
+                                   	cornerRounding, cornerRounding);
+            int qsoCount = (QsosCount > 0) ? QsosCount : MaximumQsos;
+            FormattedText formattedText = GenerateFormattedText(ConfirmingText, LineTextBrush,
+                                                                FontWeights.Normal);
+            double textHeight = formattedText.Height;
+            double x = DisplayRectangle.X + confirmingXOffset;
+            double y = DisplayRectangle.Y + confirmingYOffset;
+            dc.DrawText(formattedText, new Point(x, y));
+            x += formattedText.Width + confirmingCallXOffset;
+            string text = "        ";
+            if(QsosCount > 0)
+            {
+            	text = ((QsoWithInclude)this[0]).Callsign;
+            }
+            else if(QsosCount == 0)
+            {
+            	text = "XXXXXX";
+	            formattedText = GenerateFormattedText(text, CallsignBrush, FontWeights.Black);
+	            dc.DrawText(formattedText, new Point(x, y));
+	            x += formattedText.Width + viaXOffset;
+            }
+            if(ShowManager)
+            {
+            	string manager = (QsosCount > 0) ? ((QsoWithInclude)this[0]).Manager : string.Empty;
+            	text = string.Empty;
+            	if(QsosCount > 0 && manager != string.Empty)
+            	{
+            		text = ViaText + " " + manager;
+            	}
+            	else if(QsosCount == 0)
+            	{
+            		text = ViaText + " ZZZZZZ";
+            	}
+            	formattedText = GenerateFormattedText(text, ManagerBrush, FontWeights.Bold);
+            	dc.DrawText(formattedText, new Point(x, y));
+            }
+            y += textHeight + firstLineYOffset;
+            dc.DrawLine(pen, new Point(DisplayRectangle.X, y),
+                        new Point(DisplayRectangle.X  + DisplayRectangle.Width, y));
+            x = DisplayRectangle.X;
+            for(int i = 0; i < qsoCount; i++)
+            {
+            	y += textHeight + lineYOffset;
+            	dc.DrawLine(pen, new Point(x, y), new Point(x + DisplayRectangle.Width, y));
+            }
+            x = DisplayRectangle.X;
+            y = DisplayRectangle.Y + textHeight + lineYOffset;
+            int lastColumn = 0;
+            for(int i=0; i < ((ShowPseTnx) ? colWidths.Length - 1 : colWidths.Length - 2); i++)
+            {
+            	dc.DrawText(colHeadersText[i], new Point(x + colHeaderX[i], y + headerYOffset));
+            	x += colWidths[i];
+            	dc.DrawLine(pen, new Point(x, y), new Point(x, DisplayRectangle.Y + DisplayRectangle.Height));
+            	lastColumn++;
+            }
+            dc.DrawText(colHeadersText[lastColumn], new Point(x + colHeaderX[lastColumn],
+                                                              y + headerYOffset));
             if (IsSelected)
             {
                 dc.DrawRoundedRectangle(brush, selectPen, DisplayRectangle,
