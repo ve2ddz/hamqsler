@@ -94,6 +94,7 @@
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="QsosBox.cs" />
     <Compile Include="QSOsView.xaml.cs">
       <DependentUpon>QSOsView.xaml</DependentUpon>
       <SubType>Code</SubType>

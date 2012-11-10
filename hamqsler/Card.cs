@@ -78,6 +78,12 @@ namespace hamqsler
 		{
 			get {return textItems;}
 		}
+		
+		private QsosBox qsosBox = null;
+		public QsosBox QsosBox
+		{
+			get {return qsosBox;}
+		}
 			
 		[NonSerialized]
 		private UserPreferences userPreferences;
@@ -140,6 +146,10 @@ namespace hamqsler
 			salutation.FontSize = 10.0;
 			salutation.DisplayRectangle = new Rect(5, DisplayRectangle.Height - 25, 0, 0);
 			TextItems.Add(salutation);
+			
+			// QsosBox
+			qsosBox = new QsosBox();
+			qsosBox.QslCard = this;
 			// more card properties
 			QslCard = this;
 			isDirty = false;
@@ -171,6 +181,10 @@ namespace hamqsler
 			{
 				ti.Render(dc);
 			}
+			if(qsosBox != null)
+			{
+				qsosBox.Render(dc);
+			}
 		}
 		
 		/// <summary>
@@ -197,6 +211,10 @@ namespace hamqsler
 		/// <returns>Highlighted card item or null if no card item is highlighted</returns>
 		public CardItem GetHighlighted()
 		{
+			if(qsosBox != null && qsosBox.IsHighlighted)
+			{
+				return qsosBox;
+			}
 			foreach(TextItem ti in TextItems)
 			{
 				if(ti.IsHighlighted)
@@ -223,6 +241,10 @@ namespace hamqsler
 		/// </summary>
 		public void ClearHighlighted()
 		{
+			if(qsosBox != null)
+			{
+				qsosBox.IsHighlighted = false;
+			}
 			foreach(TextItem ti in TextItems)
 			{
 				ti.IsHighlighted = false;
@@ -242,6 +264,11 @@ namespace hamqsler
 		/// <returns>CardItem the cursor is over, or null if not over a child CardItem</returns>
 		public CardItem CursorOver(double x, double y)
 		{
+			if(qsosBox != null && CardItem.WithinRectangle(qsosBox.DisplayRectangle, x, y))
+			{
+				return qsosBox;
+			}
+				
 			// reverse items in list so that latest items checked first
 			List<TextItem> revTextList = new List<TextItem>();
 			foreach(TextItem ti in TextItems)
@@ -286,6 +313,10 @@ namespace hamqsler
 		/// <returns>Selected card item, or null if none selected</returns>
 		public CardItem GetSelected()
 		{
+			if(qsosBox != null && qsosBox.IsSelected)
+			{
+				return qsosBox;
+			}
 			foreach(TextItem ti in TextItems)
 			{
 				if(ti.IsSelected)
