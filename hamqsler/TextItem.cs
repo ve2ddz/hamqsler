@@ -297,6 +297,10 @@ namespace hamqsler
 					this.CaptureMouse();
 				}
 			}
+			else
+			{
+				Mouse.OverrideCursor = Cursors.Arrow;
+			}
 		}
 		
 	}

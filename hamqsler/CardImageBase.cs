@@ -234,6 +234,10 @@ namespace hamqsler
                     Mouse.OverrideCursor = cursor;
 				}
 			}
+			else
+			{
+				Mouse.OverrideCursor = Cursors.Arrow;
+			}
  		}
 		
 		/// <summary>

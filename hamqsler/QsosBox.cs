@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace hamqsler
@@ -386,6 +387,7 @@ namespace hamqsler
 		/// <param name="userPrefs">UserPreferences object used to initialize QsosBox properties</param>
 		private void InitializeDisplayProperties(UserPreferences userPrefs)
 		{
+			this.DisplayRectangle = new Rect(0, 0, 0, 0);
 			this.FontName = userPrefs.DefaultQsosBoxFontFace;
 			this.ConfirmingText = userPrefs.ConfirmingText;
 			this.ViaText = userPrefs.ViaText;
@@ -532,7 +534,10 @@ namespace hamqsler
         protected override void OnRender(DrawingContext dc)
         {
             bool isMod = QslCard.IsDirty;
-            CalculateRectangle();
+            if(DisplayRectangle == new Rect(0, 0, 0, 0))
+            {
+            	CalculateRectangle();
+            }
             // headers cannot be set up until after QslCard is set, but we only need
             // to do this once (until ShowPseTnx is changed)
             if(colHeadersText[0] == null)
@@ -618,6 +623,52 @@ namespace hamqsler
             	                       cornerRounding, cornerRounding);
             }
         }
+
+		/// <summary>
+		/// Handles MouseMove events
+		/// </summary>
+		/// <param name="e">MouseEventArgs object</param>
+		public override void MoveMouse(MouseEventArgs e)
+		{
+			base.MoveMouse(e);
+			if (this.IsSelected)
+			{
+				if (this.IsLeftMouseButtonDown)
+				{
+					double x = 0;
+					double y = 0;
+					double width = 0;
+					double height = 0;
+					System.Windows.Point pt = e.GetPosition(QslCard);
+					if (cursorLoc == CursorLocation.Inside)
+					{
+						x = originalDisplayRectangle.X;
+						y = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
+						width = originalDisplayRectangle.Width;
+						height = originalDisplayRectangle.Height;
+						DisplayRectangle = new Rect(x, y, width, height);
+					}
+				}
+				else
+				{
+					Cursor cursor = Cursors.Arrow;
+					cursorLoc = CursorLocation.Outside;
+					System.Windows.Point pt = e.GetPosition(QslCard);
+					if (DisplayRectangle.Contains(pt))
+					{
+						cursorLoc = CursorLocation.Inside;
+						cursor = Cursors.SizeNS;
+					}
+					Mouse.OverrideCursor = cursor;
+					this.CaptureMouse();
+				}
+			}
+			else
+			{
+				Mouse.OverrideCursor = Cursors.Arrow;
+			}
+
+		}
 
 	}
 	
