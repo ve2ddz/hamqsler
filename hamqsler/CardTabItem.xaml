@@ -273,7 +273,7 @@ rather than the Band column on the card" IsChecked="{Binding ShowFrequency, Mode
 						<TextBlock Margin="5" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"
 								VerticalAlignment="Center">Date Format:</TextBlock>
 						<ComboBox Margin="5" Grid.Row="4" Grid.Column="1"
-								HorizontalAlignment="Left"
+								HorizontalAlignment="Left"  FontSize="10.5"
 								ToolTip="Set the format that dates will be printed in">
 							<ComboBox.Text>
 								<Binding Path="DateFormat" Mode="TwoWay"/>
