@@ -88,6 +88,11 @@ namespace hamqsler
 					textItemProperties.Visibility = Visibility.Visible;
 					textItemProperties.DataContext = ci;
 				}
+				else if(ci.GetType() == typeof(QsosBox))
+				{
+					qsosBoxProperties.Visibility = Visibility.Visible;
+					qsosBoxProperties.DataContext = ci;
+				}
 			}
 			else
 			{
@@ -191,25 +196,32 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void TextColorButton_Clicked(object sender, RoutedEventArgs e)
 		{
+			Color col = GetColorFromColorDialog((SolidColorBrush)TextColorButton.Background);
+			TextColorButton.Background = new SolidColorBrush(col);
+		}
+		
+		/// <summary>
+		/// Helper method that displays a ColorDialog and returns the selected color
+		/// </summary>
+		/// <param name="brush">SolidColorBrush object containing the color to initialize the dialog with</param>
+		/// <returns>Selected color, or the color from the brush if no color selected</returns>
+		private Color GetColorFromColorDialog(SolidColorBrush brush)
+		{
 			// create and display a ColorDialog
 			System.Windows.Forms.ColorDialog cDialog = new System.Windows.Forms.ColorDialog();
-			SolidColorBrush backBrush = TextColorButton.Background as SolidColorBrush;
-			if(backBrush == null)
-			{
-				cDialog.Color = System.Drawing.Color.FromArgb(backBrush.Color.A, backBrush.Color.R,
-				                                              backBrush.Color.G, backBrush.Color.B);
-			}
+			cDialog.Color = System.Drawing.Color.FromArgb(brush.Color.A, brush.Color.R,
+			                                              brush.Color.G, brush.Color.B);
+			Color c = brush.Color;
 			if(cDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				// a color was selected, so convert to WPF color and set button background to that color
 				System.Drawing.Color color = cDialog.Color;
-				Color c = new Color();
 				c.A = color.A;
 				c.R = color.R;
 				c.G = color.G;
 				c.B = color.B;
-				TextColorButton.Background = new SolidColorBrush(c);
 			}
+			return c;
 		}
 		
 		/// <summary>
@@ -227,6 +239,50 @@ namespace hamqsler
 				e.Handled = true;			// consume the event so that the character is not processed
 			}
 			
+		}
+		
+		/// <summary>
+		/// Handler for the LineTextColorButton click event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void LineTextColorButton_Clicked(object sender, RoutedEventArgs e)
+		{
+			Color col = GetColorFromColorDialog((SolidColorBrush)LineTextColorButton.Background);
+			LineTextColorButton.Background = new SolidColorBrush(col);
+		}
+		
+		/// <summary>
+		/// Handler for the CallsignColorButton click event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void CallsignColorButton_Clicked(object sender, RoutedEventArgs e)
+		{
+			Color col = GetColorFromColorDialog((SolidColorBrush)CallsignColorButton.Background);
+			CallsignColorButton.Background = new SolidColorBrush(col);
+		}
+		
+		/// <summary>
+		/// Handler for the ManagerColorButton click event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ManagerColorButton_Clicked(object sender, RoutedEventArgs e)
+		{
+			Color col = GetColorFromColorDialog((SolidColorBrush)ManagerColorButton.Background);
+			ManagerColorButton.Background = new SolidColorBrush(col);
+		}
+
+		/// <summary>
+		/// Handler for the BackgroundButton click event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void BackgroundColorButton_Clicked(object sender, RoutedEventArgs e)
+		{
+			Color col = GetColorFromColorDialog((SolidColorBrush)BackgroundColorButton.Background);
+			BackgroundColorButton.Background = new SolidColorBrush(col);
 		}
 	}
 }

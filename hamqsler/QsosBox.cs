@@ -110,6 +110,16 @@ namespace hamqsler
 			get { return (Brush)GetValue(ManagerBrushProperty); }
 			set { SetValue(ManagerBrushProperty, (Brush)value); }
 		}
+		
+		// QsosBox text font size
+		private static readonly DependencyProperty FontSizeProperty =
+			DependencyProperty.Register("FontSize", typeof(double), typeof(QsosBox),
+			                            new PropertyMetadata(12.0));
+		public double FontSize
+		{
+			get {return (double)GetValue(FontSizeProperty);}
+			set {SetValue(FontSizeProperty, value);}
+		}
 
 		// Font name for text in QSO box
 		private static readonly DependencyProperty FontNameProperty =
@@ -347,9 +357,8 @@ namespace hamqsler
 		private const double confirmingYOffset = 2;
 		private const double confirmingCallXOffset = 3;
 		private const double viaXOffset = 15;
-		private const double firstLineYOffset = 2;
-		private const double lineYOffset = firstLineYOffset * 2;
-		private const double headerYOffset = 2;
+        private const double firstLineYOffset = 2;
+        private const double lineYOffset = firstLineYOffset + 2;
 
 		/// <summary>
 		/// Constructor
@@ -391,6 +400,7 @@ namespace hamqsler
 			this.FontName = userPrefs.DefaultQsosBoxFontFace;
 			this.ConfirmingText = userPrefs.ConfirmingText;
 			this.ViaText = userPrefs.ViaText;
+			this.DateFormat = userPrefs.DefaultDateFormat;
 			this.YYYYMMDDText = userPrefs.YYYYMMDDText;
 			this.DDMMMYYText = userPrefs.DDMMMYYText;
 			this.DDMMYYText = userPrefs.DDMMYYText;
@@ -413,10 +423,21 @@ namespace hamqsler
 			FormattedText fText = GenerateFormattedText("Sample Text", LineTextBrush,
 			                                            FontWeights.Normal);
 			double height = (fText.Height + 4) * (2 + ((QsosCount > 0) ? QsosCount : MaximumQsos));
-			DisplayRectangle = new Rect(QslCard.DisplayRectangle.Width / 20, 
-			                            QslCard.DisplayRectangle.Height / 2,
-			                            QslCard.DisplayRectangle.Width * 18 / 20,
-			                            height);
+			if(DisplayRectangle == new Rect(0, 0, 0, 0))
+			{
+				DisplayRectangle = new Rect(QslCard.DisplayRectangle.Width / 20, 
+				                            QslCard.DisplayRectangle.Height / 2,
+				                            QslCard.DisplayRectangle.Width * 18 / 20,
+				                            height);
+			}
+			else
+			{
+				DisplayRectangle = new Rect(DisplayRectangle.X, 
+				                            DisplayRectangle.Y,
+				                            QslCard.DisplayRectangle.Width * 18 / 20,
+				                            height);
+				
+			}
 		}
 		
 		/// <summary>
@@ -433,7 +454,7 @@ namespace hamqsler
 			                                 weight, FontStretches.Normal);
 			FormattedText fText = new FormattedText(text,
 			                                        System.Globalization.CultureInfo.CurrentUICulture,
-			                                        FlowDirection.LeftToRight, typeface, 12.0, brush);
+			                                        FlowDirection.LeftToRight, typeface, FontSize, brush);
 			return fText;
 		}
 		
@@ -446,7 +467,12 @@ namespace hamqsler
         {
             Typeface typeface = new Typeface(new FontFamily(FontName), FontStyles.Normal,
                 FontWeights.Normal, FontStretches.Normal);
-            FormattedText fT = new FormattedText(DateFormat, System.Globalization.CultureInfo.CurrentUICulture,
+        	string dateFmt = YYYYMMDDText;
+        	if(DateFormat == "DD-MMM-YY")
+        		dateFmt = DDMMMYYText;
+        	else if(DateFormat == "DD-MM-YY")
+        		dateFmt = DDMMYYText;
+            FormattedText fT = new FormattedText(dateFmt, System.Globalization.CultureInfo.CurrentUICulture,
                 FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
         	colWidths[(int)Columns.Date] = fT.Width;
             colHeadersText[(int)Columns.Date] = fT;
@@ -534,13 +560,9 @@ namespace hamqsler
         protected override void OnRender(DrawingContext dc)
         {
             bool isMod = QslCard.IsDirty;
-            if(DisplayRectangle == new Rect(0, 0, 0, 0))
-            {
-            	CalculateRectangle();
-            }
-            // headers cannot be set up until after QslCard is set, but we only need
-            // to do this once (until ShowPseTnx is changed)
-            if(colHeadersText[0] == null)
+            CalculateRectangle();
+            // headers cannot be set up until after QslCard is set
+            if(QslCard != null)
             {
             	CalculateColumns();
             }
@@ -591,6 +613,9 @@ namespace hamqsler
             	formattedText = GenerateFormattedText(text, ManagerBrush, FontWeights.Bold);
             	dc.DrawText(formattedText, new Point(x, y));
             }
+            // font sizes used in headerYOffset calculation below were determined empirically for
+            // best text fit
+            double headerYOffset = FontSize < 9.5 ? 0 : (FontSize < 11.0 ? 1 : 2);
             y += textHeight + firstLineYOffset;
             dc.DrawLine(pen, new Point(DisplayRectangle.X, y),
                         new Point(DisplayRectangle.X  + DisplayRectangle.Width, y));
@@ -670,6 +695,35 @@ namespace hamqsler
 
 		}
 
+		/// <summary>
+		/// Handler for PropertyChanged event
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object. Used to determine
+		/// which property changed</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == ShowManagerProperty ||
+			   e.Property == ShowFrequencyProperty ||
+			   e.Property == ShowPseTnxProperty ||
+			   e.Property == MaximumQsosProperty ||
+			   e.Property == DateFormatProperty ||
+			   e.Property == LineTextBrushProperty ||
+			   e.Property == CallsignBrushProperty ||
+			   e.Property == ManagerBrushProperty ||
+			   e.Property == FontSizeProperty ||
+			   e.Property == FontNameProperty ||
+			   e.Property == BackgroundBrushProperty ||
+			   e.Property == BackgroundOpacityProperty)
+			{
+				CalculateRectangle();
+				if(QslCard != null)		// properties may be set before QslCard is set
+				{
+					QslCard.IsDirty = true;
+				}
+				QslCard.InvalidateVisual();
+			}
+		}
 	}
 	
 	
