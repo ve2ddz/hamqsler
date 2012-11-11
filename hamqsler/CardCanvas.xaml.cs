@@ -38,6 +38,7 @@ namespace hamqsler
 		public static RoutedCommand DeselectCardItemCommand = new RoutedCommand();
 		public static RoutedCommand AddImageCommand = new RoutedCommand();
 		public static RoutedCommand AddTextCommand = new RoutedCommand();
+		public static RoutedCommand AddQsosBoxCommand = new RoutedCommand();
 		public static RoutedCommand DeleteItemCommand = new RoutedCommand();
 		public static RoutedCommand ClearBackgroundCommand = new RoutedCommand();
 		
@@ -117,6 +118,21 @@ namespace hamqsler
 			e.CanExecute = ci == null;
 		}
 		
+		/// <summary>
+		/// CanExecute handler for Add Qsos Box menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void AddQsosBoxCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = QslCard.QsosBox == null;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for Delete Item menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void DeleteItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardItem ci = QslCard.GetSelected();
@@ -257,6 +273,11 @@ namespace hamqsler
 			Mouse.OverrideCursor = Cursors.Arrow;
 		}
 		
+		/// <summary>
+		/// Handler for Delete Item menu item Executed (Clicked) event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.DeleteItem();
@@ -310,7 +331,20 @@ namespace hamqsler
 			QslCard.AddText();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
 			QslCard.InvalidateVisual();
-		}		
+		}	
+		
+		/// <summary>
+		/// Handler for Add QsosBox menu item Executed (Clicked) event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void AddQsosBoxCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			QslCard.AddQsosBox();
+			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
+			QslCard.InvalidateVisual();
+			
+		}
 		
 		/// <summary>
 		/// Handler for MouseRightButtonDown event

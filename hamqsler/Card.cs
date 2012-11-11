@@ -369,6 +369,23 @@ namespace hamqsler
 			ti.IsSelected = true;
 		}
 		
+		/// <summary>
+		/// Adds a QsosBox to the card
+		/// </summary>
+		public void AddQsosBox()
+		{
+			if(QsosBox == null)
+			{
+				QsosBox qBox = new QsosBox();
+				qBox.QslCard = this;
+				this.QsosBox = qBox;
+				qBox.IsSelected = true;
+			}
+		}
+		
+		/// <summary>
+		/// Deletes selected CardItem
+		/// </summary>
 		public void DeleteItem()
 		{
 			CardItem ci = QslCard.GetSelected();

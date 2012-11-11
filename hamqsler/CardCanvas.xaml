@@ -25,6 +25,9 @@
 		<CommandBinding Command="{x:Static local:CardCanvas.AddTextCommand}"
 						CanExecute="AddTextCommand_CanExecute"
 						Executed="AddTextCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:CardCanvas.AddQsosBoxCommand}"
+						CanExecute="AddQsosBoxCommand_CanExecute"
+						Executed="AddQsosBoxCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:CardCanvas.DeleteItemCommand}"
 						CanExecute="DeleteItemCommand_CanExecute"
 						Executed="DeleteItemCommand_Executed"/>
@@ -43,6 +46,8 @@
 					  Command="{x:Static local:CardCanvas.AddImageCommand}"/>
 			<MenuItem Header="Add Text"
 					  Command="{x:Static local:CardCanvas.AddTextCommand}"/>
+			<MenuItem Header="Add QsosBox"
+					  Command="{x:Static local:CardCanvas.AddQsosBoxCommand}"/>
 			<Separator/>
 			<MenuItem Header="Delete Selected Item"
 					  Command="{x:Static local:CardCanvas.DeleteItemCommand}"/>
