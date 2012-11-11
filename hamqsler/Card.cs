@@ -403,7 +403,6 @@ namespace hamqsler
 				{
 					QsosBox = null;
 				}
-				this.InvalidateVisual();
 			}
 		}
 				

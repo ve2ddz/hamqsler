@@ -281,6 +281,8 @@ namespace hamqsler
 		private void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.DeleteItem();
+			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
+			QslCard.InvalidateVisual();
 		}
 		
 		/// <summary>
