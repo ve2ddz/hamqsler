@@ -25,6 +25,9 @@
 		<CommandBinding Command="{x:Static local:CardCanvas.AddTextCommand}"
 						CanExecute="AddTextCommand_CanExecute"
 						Executed="AddTextCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:CardCanvas.DeleteItemCommand}"
+						CanExecute="DeleteItemCommand_CanExecute"
+						Executed="DeleteItemCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"
 						CanExecute="ClearBackgroundCommand_CanExecute"
 						Executed="ClearBackgroundCommand_Executed"/>
@@ -41,6 +44,8 @@
 			<MenuItem Header="Add Text"
 					  Command="{x:Static local:CardCanvas.AddTextCommand}"/>
 			<Separator/>
+			<MenuItem Header="Delete Selected Item"
+					  Command="{x:Static local:CardCanvas.DeleteItemCommand}"/>
 			<MenuItem Header="Clear Background"
 					  Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"/>
 		</ContextMenu>

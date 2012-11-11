@@ -83,6 +83,7 @@ namespace hamqsler
 		public QsosBox QsosBox
 		{
 			get {return qsosBox;}
+			set {qsosBox = value;}
 		}
 			
 		[NonSerialized]
@@ -366,6 +367,27 @@ namespace hamqsler
 				ci.IsHighlighted = false;
 			}
 			ti.IsSelected = true;
+		}
+		
+		public void DeleteItem()
+		{
+			CardItem ci = QslCard.GetSelected();
+			if(ci != null)
+			{
+				if(ci.GetType() == typeof(SecondaryImage))
+				{
+					SecondaryImages.Remove((SecondaryImage)ci);
+				}
+				else if(ci.GetType() == typeof(TextItem))
+				{
+					TextItems.Remove((TextItem)ci);
+				}
+				else if(ci.GetType() == typeof(QsosBox))
+				{
+					QsosBox = null;
+				}
+				this.InvalidateVisual();
+			}
 		}
 				
 	}

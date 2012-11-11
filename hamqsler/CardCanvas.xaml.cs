@@ -38,6 +38,7 @@ namespace hamqsler
 		public static RoutedCommand DeselectCardItemCommand = new RoutedCommand();
 		public static RoutedCommand AddImageCommand = new RoutedCommand();
 		public static RoutedCommand AddTextCommand = new RoutedCommand();
+		public static RoutedCommand DeleteItemCommand = new RoutedCommand();
 		public static RoutedCommand ClearBackgroundCommand = new RoutedCommand();
 		
 		private Card qslCard = null;
@@ -114,6 +115,12 @@ namespace hamqsler
 		{
 			CardItem ci = QslCard.GetSelected();
 			e.CanExecute = ci == null;
+		}
+		
+		private void DeleteItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardItem ci = QslCard.GetSelected();
+			e.CanExecute = ci != null && ci.GetType() != typeof(BackgroundImage);
 		}
 		
 		/// <summary>
@@ -248,6 +255,11 @@ namespace hamqsler
 				                                                        0, MouseButton.Left));
 			}
 			Mouse.OverrideCursor = Cursors.Arrow;
+		}
+		
+		private void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			QslCard.DeleteItem();
 		}
 		
 		/// <summary>
