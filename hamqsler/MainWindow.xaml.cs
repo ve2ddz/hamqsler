@@ -58,7 +58,9 @@ namespace hamqsler
 		public static RoutedCommand ClearBackgroundCommand = new RoutedCommand();
 		public static RoutedCommand UserPreferencesCommand = new RoutedCommand();
 		
-		
+		public static RoutedCommand SelectCommand = new RoutedCommand();
+		public static RoutedCommand SelectItemCommand = new RoutedCommand();
+		public static RoutedCommand NoneCommand = new RoutedCommand();
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -215,6 +217,46 @@ namespace hamqsler
 			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
 			e.CanExecute = (ci == null || ci.GetType() == typeof(BackgroundImage)) &&
 			                ti.cardCanvas.QslCard.BackImage != null;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for Select dropdown menu
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void SelectCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			if(this.mainTabControl != null)
+			{
+				CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+				e.CanExecute = ti != null;
+			}
+			else
+			{
+				e.CanExecute = false;
+			}
+		}
+		
+		/// <summary>
+		/// CanExecute handler for SelectItem menu items
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void SelectItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = ti != null && ti.cardCanvas.QslCard.GetSelected() == null;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for None menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void NoneCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = ti != null && ti.cardCanvas.QslCard.GetSelected() != null;
 		}
 		
 		/// <summary>
@@ -469,5 +511,166 @@ namespace hamqsler
 			cardTab.IsSelected = true;		// select the new tab
 		}
 		
+		/// <summary>
+		/// Creates the Select menu MenuItems based on the CardItems in QslCard
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void SelectMenu_SubmenuOpened(object sender, RoutedEventArgs e)
+		{
+			SelectMenu.Items.Clear();
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				Card card = cti.cardCanvas.QslCard;
+				BuildBackgroundMenuItem();
+				BuildSecondaryImagesMenuItems();
+				BuildTextItemsMenuItems();
+				BuildQsosBoxMenuItem();
+				SelectMenu.Items.Add(new Separator());
+				BuildNoneMenuItem();
+			}
+		}
+		
+		/// <summary>
+		/// Helper method that builds the Background menu item
+		/// </summary>
+		private void BuildBackgroundMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			string fName = cti.cardCanvas.QslCard.BackImage.ImageFileName;
+			if(fName != string.Empty)
+			{
+				fName = System.IO.Path.GetFileName(fName);
+			}
+			else
+			{
+				fName = "Background";
+			}
+			mi.Header = fName;
+			mi.Click += OnSelectItem_Clicked;
+			mi.Command = SelectItemCommand;
+			mi.Tag = cti.cardCanvas.QslCard.BackImage;
+			SelectMenu.Items.Add(mi);
+		}
+		
+		/// <summary>
+		/// Helper method that builds a MenuItem for each SecondaryImage on the card
+		/// </summary>
+		private void BuildSecondaryImagesMenuItems()
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			foreach(SecondaryImage si in cti.cardCanvas.QslCard.SecondaryImages)
+			{
+				MenuItem mi = new MenuItem();
+				string fName = si.ImageFileName;
+				if(fName != string.Empty)
+				{
+					fName = System.IO.Path.GetFileName(fName);
+				}
+				else
+				{
+					fName = "Image";
+				}
+				mi.Header = fName;
+				mi.Click += OnSelectItem_Clicked;
+				mi.Command = SelectItemCommand;
+				mi.Tag = si;
+				SelectMenu.Items.Add(mi);
+			}
+		}
+		
+		/// <summary>
+		/// Helper method that builds a MenuItem for every TextItem on the card
+		/// </summary>
+		private void BuildTextItemsMenuItems()
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			foreach(TextItem ti in cti.cardCanvas.QslCard.TextItems)
+			{
+				MenuItem mi = new MenuItem();
+				string text = ti.Text;
+				text = (text.Length > 10) ? text.Substring(0, 10) : text;
+				mi.Header = text;
+				mi.Click += OnSelectItem_Clicked;
+				mi.Command = SelectItemCommand;
+				mi.Tag = ti;
+				SelectMenu.Items.Add(mi);
+			}
+		}
+		
+		/// <summary>
+		/// Helper method that builds a MenuItem for the QsosBox
+		/// </summary>
+		private void BuildQsosBoxMenuItem()
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti.cardCanvas.QslCard.QsosBox != null)
+			{
+				MenuItem mi = new MenuItem();
+				mi.Header = "Qsos Box";
+				mi.Click += OnSelectItem_Clicked;
+				mi.Command = SelectItemCommand;
+				mi.Tag = cti.cardCanvas.QslCard.QsosBox;
+				SelectMenu.Items.Add(mi);
+			}
+		}
+		
+		/// <summary>
+		/// Helper method that builds the None menu item
+		/// </summary>
+		private void BuildNoneMenuItem()
+		{
+			MenuItem none = new MenuItem();
+			none.Header = "None";
+			none.Click += OnNone_Clicked;
+			none.Command = NoneCommand;
+			SelectMenu.Items.Add(none);
+		}
+		
+		/// <summary>
+		/// Handler for SelectItems clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked</param>
+		/// <param name="e">Not used</param>
+		private void OnSelectItem_Clicked(object sender, RoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				MenuItem mi = (MenuItem) sender;
+				if(mi != null)
+				{
+					CardItem ci = ((MenuItem)sender).Tag as CardItem;
+					if(ci != null)
+					{
+						ci.IsSelected = true;
+						cti.SetPropertiesVisibility(ci);
+						cti.cardCanvas.QslCard.InvalidateVisual();
+					}
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Handler for the None menu item clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnNone_Clicked(object sender, RoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				CardItem ci = cti.cardCanvas.QslCard.GetSelected();
+				if(ci != null)
+				{
+					ci.IsSelected = false;
+					cti.SetPropertiesVisibility(null);
+					cti.cardCanvas.QslCard.InvalidateVisual();
+				}
+			}
+		}
 	}
 }

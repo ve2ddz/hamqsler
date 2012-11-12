@@ -44,7 +44,14 @@
 						Executed="ClearBackgroundCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.UserPreferencesCommand}"
 						Executed="UserPreferencesCommand_Executed"/>
-			</Window.CommandBindings>
+	
+		<CommandBinding Command="{x:Static local:MainWindow.SelectCommand}"
+		                CanExecute="SelectCommand_CanExecute"/>
+		<CommandBinding Command="{x:Static local:MainWindow.SelectItemCommand}"
+						CanExecute="SelectItemCommand_CanExecute"/>
+		<CommandBinding Command="{x:Static local:MainWindow.NoneCommand}"
+						CanExecute="NoneCommand_CanExecute"/>
+	</Window.CommandBindings>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="Cards">
@@ -100,7 +107,11 @@
 				<MenuItem Header="User Preferences..." 
 				          Command="{x:Static local:MainWindow.UserPreferencesCommand}"/>
 			</MenuItem>
-			<MenuItem Header="Select"/>
+			<MenuItem Header="Select" Name="SelectMenu"
+					  SubmenuOpened="SelectMenu_SubmenuOpened"
+					  Command="{x:Static local:MainWindow.SelectCommand}">
+				<Separator/>
+			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="HamQSLer Help..."/>
 				<MenuItem Header="About..."/>
