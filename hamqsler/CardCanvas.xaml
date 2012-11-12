@@ -37,9 +37,9 @@
 	</Canvas.CommandBindings>
 	<Canvas.ContextMenu>
 		<ContextMenu>
-			<MenuItem Header="Select CardItem"
+			<MenuItem Header="Select Highlighted Item"
 			          Command="{x:Static local:CardCanvas.SelectCardItemCommand}"/>
-			<MenuItem Header="Deselect CardItem"
+			<MenuItem Header="Deselect Item"
 			          Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"/>
 			<Separator/>
 			<MenuItem Header="Add Image"
