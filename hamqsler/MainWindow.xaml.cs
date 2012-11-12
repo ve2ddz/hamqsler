@@ -50,7 +50,14 @@ namespace hamqsler
 		public static RoutedCommand ExportQsosCommand = new RoutedCommand();
 		public static RoutedCommand IncludeAllQsosCommand = new RoutedCommand();
 		public static RoutedCommand ExcludeAllQsosCommand = new RoutedCommand();
+		
+		public static RoutedCommand AddImageCommand = new RoutedCommand();
+		public static RoutedCommand AddTextCommand = new RoutedCommand();
+		public static RoutedCommand AddQsosBoxCommand = new RoutedCommand();
+		public static RoutedCommand DeleteItemCommand = new RoutedCommand();
+		public static RoutedCommand ClearBackgroundCommand = new RoutedCommand();
 		public static RoutedCommand UserPreferencesCommand = new RoutedCommand();
+		
 		
 		public MainWindow()
 		{
@@ -125,6 +132,92 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// CanExecute routine for Add Image menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void AddImageCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			if(ti == null)
+			{
+				e.CanExecute = false;
+			}
+			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
+			e.CanExecute = ti != null && ci == null;
+		}
+		
+		/// <summary>
+		/// CanExecute routine for Add Text Item menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void AddTextCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			if(ti == null)
+			{
+				e.CanExecute = false;
+				return;
+			}
+			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
+			e.CanExecute = ci == null;
+		}
+		
+		/// <summary>
+		/// CanExecute routine for Add QsosBox menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void AddQsosBoxCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			if(ti == null)
+			{
+				e.CanExecute = false;
+				return;
+			}
+			Card card = ti.cardCanvas.QslCard;
+			CardItem ci = card.GetSelected();
+			e.CanExecute = ci == null && card.QsosBox == null;
+		}
+		
+		/// <summary>
+		/// CanExecute routine for Delete Item menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void DeleteItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			if(ti == null)
+			{
+				e.CanExecute = false;
+				return;
+			}
+			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
+			e.CanExecute = ci != null && ci.GetType() != typeof(BackgroundImage);
+		}
+		
+		/// <summary>
+		/// CanExecute routine for Clear Background menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void ClearBackgroundCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			if(ti == null)
+			{
+				e.CanExecute = false;
+				return;
+			}
+			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
+			e.CanExecute = (ci == null || ci.GetType() == typeof(BackgroundImage)) &&
+			                ti.cardCanvas.QslCard.BackImage != null;
+		}
+		
+		/// <summary>
 		/// Shutdown the program when MainWindow closes
 		/// </summary>
 		/// <param name="sender">not used</param>
@@ -135,6 +228,11 @@ namespace hamqsler
 			Application.Current.Shutdown();
 		}
 		
+		/// <summary>
+		/// Handler for User Preferences menu item Executed (Clicked) command
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void UserPreferencesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			UserPreferencesDialog userPrefsDialog = new UserPreferencesDialog();
@@ -284,6 +382,78 @@ namespace hamqsler
 			Comparer<QsoWithInclude> comparer = qsosView.GetComparer();
 			qsosView.DisplayQsos.SortQSOs(comparer);
 			qsosView.ShowIncludeSelectors();
+		}
+		
+		/// <summary>
+		/// Handler for Add Image menu item Executed (Clicked) command
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void AddImageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				cti.cardCanvas.AddImageCommand_Executed(sender, e);
+			}
+		}
+		
+		/// <summary>
+		/// Handler for Add Text Item menu item Executed (Clicked) command
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void AddTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				cti.cardCanvas.AddTextCommand_Executed(sender, e);
+			}
+			
+		}
+		
+		/// <summary>
+		/// Handler for Add QsosBox menu item Executed (Clicked) command
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void AddQsosBoxCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				cti.cardCanvas.AddQsosBoxCommand_Executed(sender, e);
+			}			
+		}
+		
+		/// <summary>
+		/// Handler for Delete Card Item menu item Executed (Clicked) command
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				cti.cardCanvas.DeleteItemCommand_Executed(sender, e);
+			}
+		}
+		
+		/// <summary>
+		/// Handler for Clear Background menu item Executed (Clicked) command
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void ClearBackgroundCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				cti.cardCanvas.ClearBackgroundCommand_Executed(sender, e);
+			}
+			cti.cardCanvas.QslCard.BackImage.IsSelected = false;
 		}
 		
 		/// <summary>

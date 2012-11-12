@@ -26,9 +26,25 @@
 		<CommandBinding Command="{x:Static local:MainWindow.ExcludeAllQsosCommand}"
 						Executed="ExcludeAllQsosCommand_Executed"
 						CanExecute="ExcludeAllQsosCommand_CanExecute"/>
+		
+		<CommandBinding Command="{x:Static local:MainWindow.AddImageCommand}"
+		                CanExecute="AddImageCommand_CanExecute"
+						Executed="AddImageCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.AddTextCommand}"
+						CanExecute="AddTextCommand_CanExecute"
+						Executed="AddTextCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.AddQsosBoxCommand}"
+						CanExecute="AddQsosBoxCommand_CanExecute"
+						Executed="AddQsosBoxCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.DeleteItemCommand}"
+						CanExecute="DeleteItemCommand_CanExecute"
+						Executed="DeleteItemCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.ClearBackgroundCommand}"
+						CanExecute="ClearBackgroundCommand_CanExecute"
+						Executed="ClearBackgroundCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.UserPreferencesCommand}"
 						Executed="UserPreferencesCommand_Executed"/>
-	</Window.CommandBindings>
+			</Window.CommandBindings>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="Cards">
@@ -70,11 +86,16 @@
 						Command="{x:Static local:MainWindow.ExcludeAllQsosCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Edit">
-				<MenuItem Header="Add Image Item"/>
-				<MenuItem Header="Add Text Item"/>
-				<MenuItem Header="Add QSOs Box"/>
-				<MenuItem Header="Delete Item"/>
-				<MenuItem Header="Clear Background Image"/>
+				<MenuItem Header="Add Image"
+						Command="{x:Static local:MainWindow.AddImageCommand}"/>
+				<MenuItem Header="Add Text Item"
+						Command="{x:Static local:MainWindow.AddTextCommand}"/>
+				<MenuItem Header="Add QsosBox"
+						Command="{x:Static local:MainWindow.AddQsosBoxCommand}"/>
+				<MenuItem Header="Delete Selected Item"
+						Command="{x:Static local:MainWindow.DeleteItemCommand}"/>
+				<MenuItem Header="Clear Background Image"
+						Command="{x:Static local:MainWindow.ClearBackgroundCommand}"/>
 				<Separator/>
 				<MenuItem Header="User Preferences..." 
 				          Command="{x:Static local:MainWindow.UserPreferencesCommand}"/>

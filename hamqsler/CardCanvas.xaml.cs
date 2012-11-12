@@ -146,7 +146,9 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void ClearBackgroundCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = QslCard.BackImage.ImageFileName != null &
+			CardItem ci = QslCard.GetSelected();
+			e.CanExecute = (ci == null || ci.GetType() == typeof(BackgroundImage)) &&
+				QslCard.BackImage.ImageFileName != null &&
 				QslCard.BackImage.ImageFileName != string.Empty;
 		}
 
@@ -278,7 +280,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		public void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.DeleteItem();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
@@ -290,13 +292,14 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void ClearBackgroundCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		public void ClearBackgroundCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.BackImage.ImageFileName = string.Empty;
 			// the following line ensures that if the background image was selected before
 			// Clear Background was called, it remains selected.
-			CardItem ci = QslCard.GetSelected();
-			GetCardTabItem().SetPropertiesVisibility(ci);
+			QslCard.BackImage.IsSelected = false;
+			GetCardTabItem().SetPropertiesVisibility(null);
+			QslCard.InvalidateVisual();
 		}
 		
 		/// <summary>
@@ -316,7 +319,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		void AddImageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		public void AddImageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.AddImage();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
@@ -328,7 +331,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		void AddTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		public void AddTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.AddText();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
@@ -340,7 +343,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void AddQsosBoxCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		public void AddQsosBoxCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			QslCard.AddQsosBox();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
