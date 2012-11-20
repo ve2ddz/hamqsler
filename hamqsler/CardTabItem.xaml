@@ -162,9 +162,14 @@
 							</StackPanel>
 						</GroupBox>
 						<GroupBox Header="Text">
-							<TextBox MinHeight="50" AcceptsReturn="True" Margin="3"
-									Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-									ToolTip="Text that is displayed"/>
+							<StackPanel>
+								<TextBox MinHeight="50" AcceptsReturn="True" Margin="3"
+								         Name="Text" TextChanged="Text_TextChanged"
+										ToolTip="Text that is displayed"/>
+								<Button Margin="3" Content="Macros" Width="75" 
+								        HorizontalAlignment="Center"
+										Click="OnMacrosButtonClicked"/>
+							</StackPanel>
 						</GroupBox>
 						<GroupBox Header="Check Boxes">
 							<Grid>

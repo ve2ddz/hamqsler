@@ -76,13 +76,15 @@ namespace hamqsler
 			set {SetValue(TextBrushProperty, value);}
 		}
 		
-		private static readonly DependencyProperty TextProperty =
-			DependencyProperty.Register("Text", typeof(string), typeof(TextItem),
-			                            new PropertyMetadata("Text Item"));
-		public string Text
+		private TextParts text = new TextParts();
+		public TextParts Text
 		{
-			get {return (string)GetValue(TextProperty);}
-			set {SetValue(TextProperty, value);}
+			get {return text;}
+			set 
+			{
+				text = value;
+				QslCard.InvalidateVisual();
+			}
 		}
 		
 		private static readonly DependencyProperty CheckboxBeforeProperty =
@@ -128,12 +130,14 @@ namespace hamqsler
 				FontStyle style = (IsItalic==true) ? FontStyles.Italic : FontStyles.Normal;
 				Typeface typeface = new Typeface(TextFontFace, style, TextFontWeight,
 				                                 FontStretches.Normal);
-				return new FormattedText(Text, CultureInfo.CurrentUICulture,
+				return new FormattedText(this.Text.GetText(true), CultureInfo.CurrentUICulture,
 				                         FlowDirection.LeftToRight, typeface, FontSize, TextBrush);
 			}
 		}
 		
-			                                                 
+		/// <summary>
+		/// TextItem constructor
+		/// </summary>
 		public TextItem() {}
 		
 		/// <summary>
@@ -142,30 +146,33 @@ namespace hamqsler
 		/// </summary>
 		protected void CalculateRectangle()
 		{
-			FormattedText forText = FormattedTextItem;
-			bool isModified = false;
-			if(QslCard != null)		// various properties that result in CalculateRectangle being
-									// called may be set before QslCard is set
+			if(Text.Count > 0)
 			{
-				isModified = QslCard.IsDirty;
-			}
-			Rect rect = new Rect();
-			rect.X = DisplayRectangle.X;
-			rect.Y = DisplayRectangle.Y;
-			if(DisplayRectangle == new Rect(0, 0, 0, 0))
-			{
-				rect.X = (QslCard.DisplayRectangle.Width - forText.Width) / 2;
-				rect.Y = (QslCard.DisplayRectangle.Height - forText.Height) / 2;
-			}
-			rect.Width = forText.Width + 2 * forText.Height + 6;
-			rect.Height = forText.Height;
-			DisplayRectangle = rect;
-			
-			if(QslCard != null)		// various properties that result in CalculateRectangle being
-									// called may be set before QslCard is set
-
-			{
-				QslCard.IsDirty = isModified;
+				FormattedText forText = FormattedTextItem;
+				bool isModified = false;
+				if(QslCard != null)		// various properties that result in CalculateRectangle being
+										// called may be set before QslCard is set
+				{
+					isModified = QslCard.IsDirty;
+				}
+				Rect rect = new Rect();
+				rect.X = DisplayRectangle.X;
+				rect.Y = DisplayRectangle.Y;
+				if(DisplayRectangle == new Rect(0, 0, 0, 0))
+				{
+					rect.X = (QslCard.DisplayRectangle.Width - forText.Width) / 2;
+					rect.Y = (QslCard.DisplayRectangle.Height - forText.Height) / 2;
+				}
+				rect.Width = forText.Width + 2 * forText.Height + 6;
+				rect.Height = forText.Height;
+				DisplayRectangle = rect;
+				
+				if(QslCard != null)		// various properties that result in CalculateRectangle being
+										// called may be set before QslCard is set
+	
+				{
+					QslCard.IsDirty = isModified;
+				}
 			}
 		}
 		
@@ -240,7 +247,7 @@ namespace hamqsler
 			   e.Property == IsItalicProperty ||
 			   e.Property == FontSizeProperty ||
 			   e.Property == TextBrushProperty ||
-			   e.Property == TextProperty ||
+//			   e.Property == TextProperty ||
 			   e.Property == CheckboxBeforeProperty ||
 			   e.Property == CheckboxAfterProperty ||
 			   e.Property == CheckboxLineThicknessProperty ||
@@ -250,11 +257,9 @@ namespace hamqsler
 				if(QslCard != null)		// properties may be set before QslCard is set
 				{
 					QslCard.IsDirty = true;
+					QslCard.InvalidateVisual();
 				}
-				QslCard.InvalidateVisual();
 			}
-			if(e.Property == CheckboxRelativeSizeProperty)
-				System.Diagnostics.Debug.WriteLine("{0}", CheckboxRelativeSize);
 		}
 
 		/// <summary>

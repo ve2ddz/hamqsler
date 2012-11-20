@@ -1,0 +1,25 @@
+﻿<Expander x:Class="hamqsler.MacroExpander"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Header="Empty String">
+	<Expander.ContextMenu>
+		<ContextMenu>
+			<MenuItem Header="Delete" IsEnabled="False"/>
+			<Separator/>
+			<MenuItem Header="Insert Static Text Before" IsEnabled="False"/>
+			<MenuItem Header="Insert Static Text After" IsEnabled="False"/>
+			<MenuItem Header="Insert ADIF Macro Before" IsEnabled="False"/>
+			<MenuItem Header="Insert ADIF Macro After" IsEnabled="False"/>
+			<MenuItem Header="Insert ADIF Exists Macro Before" IsEnabled="False"/>
+			<MenuItem Header="Insert ADIF Exists Macro After" IsEnabled="False"/>
+			<MenuItem Header="Insert Count Macro Before" IsEnabled="False"/>
+			<MenuItem Header="Insert Count Macro After" IsEnabled="False"/>
+			<MenuItem Header="Insert Manager Macro Before" IsEnabled="False"/>
+			<MenuItem Header="Insert Manager Macro After" IsEnabled="False"/>
+			<MenuItem Header="Insert Manager Exists Macro Before" IsEnabled="False"/>
+			<MenuItem Header="Insert Manager Exists Macro After" IsEnabled="False"/>
+		</ContextMenu>
+	</Expander.ContextMenu>
+	<StackPanel Name="ContentPanel">
+	</StackPanel>
+</Expander>

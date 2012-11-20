@@ -590,7 +590,8 @@ namespace hamqsler
 			foreach(TextItem ti in cti.cardCanvas.QslCard.TextItems)
 			{
 				MenuItem mi = new MenuItem();
-				string text = ti.Text;
+				TextParts parts = ti.Text;
+				string text = parts.GetText(true);
 				text = (text.Length > 10) ? text.Substring(0, 10) : text;
 				mi.Header = text;
 				mi.Click += OnSelectItem_Clicked;

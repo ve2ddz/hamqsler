@@ -125,7 +125,9 @@ namespace hamqsler
 			// call text item
 			TextItem call = new TextItem();
 			call.QslCard = this;
-			call.Text = userPreferences.Callsign;
+			StaticText sText = new StaticText();
+			sText.Text = userPreferences.Callsign;
+			call.Text.Add(sText);
 			call.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			call.TextFontWeight = FontWeights.Black;
 			call.FontSize = 72.0;
@@ -134,7 +136,9 @@ namespace hamqsler
 			TextItem nameQth = new TextItem();
 			// name Qth text item
 			nameQth.QslCard = this;
-			nameQth.Text = userPreferences.NameQth;
+			StaticText nText = new StaticText();
+			nText.Text = userPreferences.NameQth;
+			nameQth.Text.Add(nText);
 			nameQth.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			nameQth.TextFontWeight = FontWeights.Normal;
 			nameQth.FontSize = 10.0;
@@ -143,7 +147,9 @@ namespace hamqsler
 			// salutation
 			TextItem salutation = new TextItem();
 			salutation.QslCard = this;
-			salutation.Text = userPreferences.Salutation;
+			StaticText salText = new StaticText();
+			salText.Text = userPreferences.Salutation;
+			salutation.Text.Add(salText);
 			salutation.FontSize = 10.0;
 			salutation.DisplayRectangle = new Rect(5, DisplayRectangle.Height - 25, 0, 0);
 			TextItems.Add(salutation);
@@ -360,7 +366,9 @@ namespace hamqsler
 			TextItem ti = new TextItem();
 			ti.QslCard = this;
 			TextItems.Add(ti);
-			ti.Text = "Text Item";
+			StaticText sText = new StaticText();
+			sText.Text = "Text Item";
+			ti.Text.Add(sText);
 			CardItem ci = GetHighlighted();
 			if(ci != null)
 			{

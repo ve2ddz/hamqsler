@@ -89,6 +89,15 @@
     <Compile Include="DoubleToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
+    <Compile Include="MacroExpander.xaml.cs">
+      <DependentUpon>MacroExpander.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MacroExpanderBox.xaml.cs">
+      <DependentUpon>MacroExpanderBox.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MacroViewer.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
@@ -103,7 +112,18 @@
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
     <Compile Include="SecondaryImage.cs" />
     <Compile Include="StartEndDateTime.cs" />
+    <Compile Include="StaticText.cs" />
+    <Compile Include="StaticTextViewer.xaml.cs">
+      <DependentUpon>StaticTextViewer.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TextItem.cs" />
+    <Compile Include="TextMacrosDialog.xaml.cs">
+      <DependentUpon>TextMacrosDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TextPart.cs" />
+    <Compile Include="TextParts.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -122,10 +142,14 @@
   <ItemGroup>
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
+    <Page Include="MacroExpander.xaml" />
+    <Page Include="MacroExpanderBox.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />
     <Page Include="SplashPage.xaml" />
+    <Page Include="StaticTextViewer.xaml" />
+    <Page Include="TextMacrosDialog.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />
   </ItemGroup>
   <ItemGroup>

@@ -50,7 +50,6 @@ namespace hamqsler
 			// create a card and position it in the middle of the CardCanvas
 			cardCanvas.CreateCard(cardWidth, cardHeight);
 			this.DataContext = cardCanvas.QslCard;
-			
 		}
 		
 		/// <summary>
@@ -85,8 +84,16 @@ namespace hamqsler
 				}
 				else if(ci.GetType() == typeof(TextItem))
 				{
+					TextItem ti = (TextItem)ci;
 					textItemProperties.Visibility = Visibility.Visible;
-					textItemProperties.DataContext = ci;
+					textItemProperties.DataContext = ti;
+					Text.Visibility = ti.Text.Count == 1 ? Visibility.Visible :
+							Visibility.Collapsed;
+					if(ti.Text.Count == 1 && ti.Text[0].GetType() == typeof(StaticText))
+					{
+						StaticText sText = (StaticText)ti.Text[0];
+						Text.Text = sText.Text;
+					}
 				}
 				else if(ci.GetType() == typeof(QsosBox))
 				{
@@ -283,6 +290,36 @@ namespace hamqsler
 		{
 			Color col = GetColorFromColorDialog((SolidColorBrush)BackgroundColorButton.Background);
 			BackgroundColorButton.Background = new SolidColorBrush(col);
+		}
+		
+		private void OnMacrosButtonClicked(object sender, RoutedEventArgs e)
+		{
+			CardItem ci = cardCanvas.QslCard.GetSelected();
+			TextMacrosDialog dialog = new TextMacrosDialog(((TextItem)ci).Text);
+			dialog.ShowDialog();
+			if(((TextItem)ci).Text.Count == 1)
+			{
+				Text.Visibility = Visibility.Visible;
+				Text.Text = ((TextItem)ci).Text.GetText(true);
+			}
+			else
+			{
+				Text.Visibility = Visibility.Collapsed;
+			}
+		}
+		
+		void Text_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			TextItem ti = textItemProperties.DataContext as TextItem;
+			if(ti != null)
+			{
+				StaticText sText = ti.Text[0] as StaticText;
+				if(sText != null)
+				{
+					sText.Text = Text.Text;
+					cardCanvas.QslCard.InvalidateVisual();
+				}
+			}
 		}
 	}
 }
