@@ -52,6 +52,9 @@ namespace hamqsler
 			set {SetValue(PartItemProperty, value);}
 		}
 		
+		public const bool INCLUDECONTENTMENU = true;
+		public const bool DONOTINCLUDECONTENTMENU = false;
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -61,22 +64,5 @@ namespace hamqsler
 			
 		}
 
-		/// <summary>
-		/// Create a StaticTextViewExpander
-		/// </summary>
-		/// <param name="d">TextMacrosDialog object that the created expander will be added to</param>
-		/// <param name="box">MacroExpanderBox object that will contain this expander</param>
-		/// <param name="label">Text to display in the expander's header</param>
-		/// <param name="text"StaticText object whose text will be displayed in this expander></param>
-		/// <returns></returns>
-		public static Expander CreateStaticTextViewExpander(TextMacrosDialog d, MacroExpanderBox box,
-                                                   			string label, StaticText text)
-		{
-			MacroExpander expander = new MacroExpander();
-			expander.Header = label;
-			StaticTextViewer viewer = new StaticTextViewer(d, box, text);
-			expander.ContentPanel.Children.Add(viewer);
-			return expander;
-		}
 	}
 }

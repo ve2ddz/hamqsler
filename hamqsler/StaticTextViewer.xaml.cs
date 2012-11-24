@@ -32,14 +32,8 @@ namespace hamqsler
 	/// <summary>
 	/// StaticTextViewer class - displays and interacts with a StaticText object
 	/// </summary>
-	public partial class StaticTextViewer : MacroViewer
+	public partial class StaticTextViewer : UserControl
 	{
-		private StaticText sText;
-		public StaticText StatText
-		{
-			get {return sText;}
-		}
-		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -47,12 +41,9 @@ namespace hamqsler
 		/// this viewer</param>
 		/// <param name="box">MacroExpanderBox that will contain this viewer</param>
 		/// <param name="text">StaticText object that this viewer will display and interact with</param>
-		public StaticTextViewer(TextMacrosDialog d, MacroExpanderBox box, StaticText text)
-			: base(d, box)
+		public StaticTextViewer()
 		{
-			sText = text;
 			InitializeComponent();
-			this.DataContext = sText;
 		}
 	}
 }

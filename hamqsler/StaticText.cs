@@ -74,5 +74,17 @@ namespace hamqsler
 		{
 			// don't do anything
 		}
+		
+		public override MacroExpander BuildExpander(bool includeContentMenu)
+		{
+			MacroExpander expander = new MacroExpander();
+			expander.Header = "Static Text";
+			StaticTextViewer viewer = new StaticTextViewer();
+			viewer.DataContext = this;
+			expander.ContentPanel.Children.Add(viewer);
+			expander.IsExpanded = true;
+			
+			return expander;
+		}
 	}
 }

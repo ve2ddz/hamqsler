@@ -47,5 +47,6 @@ namespace hamqsler
 		public abstract void GetAdifFieldsForSorting(ref HashSet<string>fields, 
 											 ref HashSet<string> existFields);
 
+		public abstract MacroExpander BuildExpander(bool includeContentMenu);
 	}
 }

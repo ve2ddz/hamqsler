@@ -44,8 +44,6 @@ namespace hamqsler
 		{
 			InitializeComponent();
 			partItems = parts;
-			MacroExpanderBox expander = new MacroExpanderBox(this, partItems);
-			scroller.Content = expander;
 		}
 		/// <summary>
 		/// Handler for the CloseButton Clicked event 
@@ -56,6 +54,17 @@ namespace hamqsler
 		{
 			// all we do is close this dialog
 			this.Close();
+		}
+		
+		protected override void OnRender(DrawingContext drawingContext)
+		{
+			ContentPanel.Children.RemoveRange(0, ContentPanel.Children.Count);
+			foreach(TextPart part in partItems)
+			{
+				MacroExpander expander = part.BuildExpander(MacroExpander.INCLUDECONTENTMENU);
+				ContentPanel.Children.Add(expander);
+			}
+			base.OnRender(drawingContext);
 		}
 	}
 }

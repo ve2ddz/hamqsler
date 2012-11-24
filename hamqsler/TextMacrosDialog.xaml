@@ -10,7 +10,8 @@
 					Click="CloseButton_Clicked" IsDefault="True"/>
 		</StackPanel>
 		<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-				VerticalAlignment="Stretch" Name="scroller">
+				VerticalAlignment="Stretch">
+			<StackPanel Name="ContentPanel"/>
 		</ScrollViewer>
 	</DockPanel>
 </Window>
