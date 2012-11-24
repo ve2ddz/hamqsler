@@ -56,14 +56,21 @@ namespace hamqsler
 			this.Close();
 		}
 		
+		/// <summary>
+		/// Handler for Render event.
+		/// </summary>
+		/// <param name="drawingContext">DrawingContext (just passed to base OnRender method</param>
 		protected override void OnRender(DrawingContext drawingContext)
 		{
+			// Rebuild all of the Macro displays. This simplifies processing as there is no need to
+			// attempt to add expanders in the correct locations in the dialog.
 			ContentPanel.Children.RemoveRange(0, ContentPanel.Children.Count);
 			foreach(TextPart part in partItems)
 			{
 				MacroExpander expander = part.BuildExpander(MacroExpander.INCLUDECONTENTMENU);
 				ContentPanel.Children.Add(expander);
 			}
+			// have the base class perform any other rendering needed.
 			base.OnRender(drawingContext);
 		}
 	}

@@ -37,10 +37,6 @@ namespace hamqsler
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="d">TextMacrosDialog that will contain the MacroExpanderBox that will contain
-		/// this viewer</param>
-		/// <param name="box">MacroExpanderBox that will contain this viewer</param>
-		/// <param name="text">StaticText object that this viewer will display and interact with</param>
 		public StaticTextViewer()
 		{
 			InitializeComponent();

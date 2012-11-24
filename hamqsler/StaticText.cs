@@ -30,13 +30,11 @@ namespace hamqsler
 	[Serializable]
 	public class StaticText : TextPart
 	{
-		private static readonly DependencyProperty TextProperty = 
-			DependencyProperty.Register("Text", typeof(string), typeof(StaticText),
-			                            new PropertyMetadata(string.Empty));
+		private string statText = string.Empty;
 		public string Text
 		{
-			get {return (string)GetValue(TextProperty);}
-			set {SetValue(TextProperty, value);}
+			get {return statText;}
+			set {statText = value;}
 		}
 		
 		/// <summary>
@@ -75,7 +73,13 @@ namespace hamqsler
 			// don't do anything
 		}
 		
-		public override MacroExpander BuildExpander(bool includeContentMenu)
+		/// <summary>
+		/// Builds an expander to display the StaticTextViewer for this StaticText object
+		/// </summary>
+		/// <param name="includeContentMenu">Boolean to indicate whether the ContextMenu should be
+		/// displayable or not.</param>
+		/// <returns>MacroExpander object containing the StaticTextViewer for this StaticText object</returns>
+		public override MacroExpander BuildExpander(bool includeContextMenu)
 		{
 			MacroExpander expander = new MacroExpander();
 			expander.Header = "Static Text";
