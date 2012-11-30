@@ -31,6 +31,7 @@ namespace hamqsler
 	public class MacroGroupBox : GroupBox
 	{
 		public static RoutedCommand InsertAdifMacroBeforeCommand = new RoutedCommand();
+		public static RoutedCommand InsertAdifMacroAfterCommand = new RoutedCommand();
 		
 		private static readonly DependencyProperty HeaderTextProperty =
 			DependencyProperty.Register("HeaderText", typeof(string), typeof(MacroGroupBox),
@@ -115,6 +116,7 @@ namespace hamqsler
 		{
 			ContextMenu cm = new ContextMenu();
 			cm.Items.Add(CreateInsertAdifMacroBeforeMenuItem());
+			cm.Items.Add(CreateInsertAdifMacroAfterMenuItem());
 			return cm;
 		}
 		
@@ -131,6 +133,23 @@ namespace hamqsler
 			                                       OnInsertAdifMacroBeforeCommand_CanExecute);
 			this.CommandBindings.Add(cb);
 			mi.Command = InsertAdifMacroBeforeCommand;
+			mi.CommandTarget = this;
+			return mi;			
+		}
+		
+		/// <summary>
+		/// Create the InsertAdifMacroAfter menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertAdifMacroAfterMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Adif Macro After";
+			CommandBinding cb = new CommandBinding(InsertAdifMacroAfterCommand,
+			                                       OnInsertAdifMacroAfterCommand_Executed,
+			                                       OnInsertAdifMacroAfterCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertAdifMacroAfterCommand;
 			mi.CommandTarget = this;
 			return mi;			
 		}
@@ -166,6 +185,17 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// CanExecute event handler for the InsertAdifMacroAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertAdifMacroAfterCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			e.Handled = true;
+		}
+		
+		/// <summary>
 		/// Executed event handler for the InserAdifMacroBefore menu item
 		/// </summary>
 		/// <param name="sender">not used</param>
@@ -178,6 +208,24 @@ namespace hamqsler
 			if(position != -1)
 			{
 				PartItems.Insert(position, aMacro);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
+		
+		/// <summary>
+		/// Executed event handler for the InserAdifMacroAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertAdifMacroAfterCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifMacro object and add it to the TextItems.
+			AdifMacro aMacro = new AdifMacro();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position + 1, aMacro);
 				UpdateDialog();		// redraw the Dialog contents
 			}
 			
