@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace hamqsler
 {
@@ -77,15 +78,14 @@ namespace hamqsler
 		/// Builds an expander to display the StaticTextViewer for this StaticText object
 		/// </summary>
 		/// <param name="includeContentMenu">Boolean to indicate whether the ContextMenu should be
-		/// displayable or not.</param>
+		/// displayable or not. Use the values defined in MacroExpander.cs rather than true/false.</param>
 		/// <returns>MacroExpander object containing the StaticTextViewer for this StaticText object</returns>
 		public override MacroExpander BuildExpander(bool includeContextMenu)
 		{
-			MacroExpander expander = new MacroExpander();
-			expander.Header = "Static Text";
+			MacroExpander expander = new MacroExpander("Static Text", includeContextMenu);
 			StaticTextViewer viewer = new StaticTextViewer();
 			viewer.DataContext = this;
-			expander.ContentPanel.Children.Add(viewer);
+			((StackPanel)expander.Content).Children.Add(viewer);
 			expander.IsExpanded = true;
 			
 			return expander;
