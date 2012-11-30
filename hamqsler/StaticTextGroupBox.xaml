@@ -4,6 +4,6 @@
 	xmlns:local="clr-namespace:hamqsler"
 	HeaderText="Static Text">
 	<StackPanel x:Name="ContentPanel">
-		<local:StaticTextViewer Margin="20,1,1,1"/>
+		<local:StaticTextViewer Margin="1"/>
 	</StackPanel>
 </local:MacroGroupBox>
