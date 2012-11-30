@@ -30,14 +30,14 @@ using System.Windows.Media;
 namespace hamqsler
 {
 	/// <summary>
-	/// Interaction logic for AdifMacroExpander.xaml
+	/// Interaction logic for StaticTextGroupBox.xaml
 	/// </summary>
-	public partial class AdifMacroExpander : MacroExpander
+	public partial class StaticTextGroupBox : MacroGroupBox
 	{
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public AdifMacroExpander() : base()
+		public StaticTextGroupBox() : base()
 		{
 			InitializeComponent();
 		}
@@ -45,29 +45,14 @@ namespace hamqsler
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="parts">TextParts that the AdifMacro is contained in</param>
-		/// <param name="part">AdifMacro object displayed in this expander</param>
+		/// <param name="parts">TextParts object that contains the specified StaticText object</param>
+		/// <param name="part">StaticText object to be displayed</param>
 		/// <param name="includeContextMenu">Indicator for whether to include the
 		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
-		public AdifMacroExpander(TextParts parts, TextPart part, bool includeContextMenu)
+		public StaticTextGroupBox(TextParts parts, TextPart part, bool includeContextMenu)
 			: base(parts, part, includeContextMenu)
 		{
 			InitializeComponent();
-			AdifMacro macro = part as AdifMacro;
-			SeparateCheckBox.DataContext = macro;
-			AdifField.DataContext = macro.AdifField;
-			foreach(TextPart p  in macro.DesignText)
-			{
-				MacroExpander expander = p.BuildExpander(macro.DesignText, INCLUDECONTENTMENU);
-				expander.Margin = INSETMARGIN;
-				DesignTextPanel.Children.Add(expander);
-			}
-			foreach(TextPart p in macro.NoFieldText)
-			{
-				MacroExpander expander = p.BuildExpander(macro.NoFieldText, INCLUDECONTENTMENU);
-				expander.Margin = INSETMARGIN;
-				NoFieldTextPanel.Children.Add(expander);
-			}
 		}
 	}
 }

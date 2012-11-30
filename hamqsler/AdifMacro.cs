@@ -80,16 +80,15 @@ namespace hamqsler
 		}
 	
 		/// <summary>
-		/// Creates an AdifMacroExpander object based on this AdifMacro
+		/// Creates an AdifMacroGroupBox object based on this AdifMacro
 		/// </summary>
 		/// <param name="parts">TextParts object that this AdifMacro is included in</param>
 		/// <param name="includeContextMenu"></param>
 		/// <returns></returns>
-		public override MacroExpander BuildExpander(TextParts parts, bool includeContextMenu)
+		public override MacroGroupBox BuildGroupBox(TextParts parts, bool includeContextMenu)
 		{
-			AdifMacroExpander expander = new AdifMacroExpander(parts, this, includeContextMenu);
-			expander.IsExpanded = true;
-			return expander;
+			AdifMacroGroupBox box = new AdifMacroGroupBox(parts, this, includeContextMenu);
+			return box;
 		}
 		
 		/// <summary>

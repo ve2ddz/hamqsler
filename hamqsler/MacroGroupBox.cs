@@ -21,19 +21,19 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using System.Windows.Media;
 namespace hamqsler
 {
 	/// <summary>
-	/// MacroExpander is the base class for all other MacroExpanders (e.g. AdifMacroExpander,
-	/// CountMacroExpander, etc.)
+	/// MacroGroupBox class = base class for other MacroGroupBoxes (e.g. StaticTextGroupBox and
+	/// AdifMacroGroupBox)
 	/// </summary>
-	public class MacroExpander : Expander
+	public class MacroGroupBox : GroupBox
 	{
 		public static RoutedCommand InsertAdifMacroBeforeCommand = new RoutedCommand();
 		
 		private static readonly DependencyProperty HeaderTextProperty =
-			DependencyProperty.Register("HeaderText", typeof(string), typeof(MacroExpander),
+			DependencyProperty.Register("HeaderText", typeof(string), typeof(MacroGroupBox),
 			                            new PropertyMetadata(string.Empty));
 		public string HeaderText
 		{
@@ -42,7 +42,7 @@ namespace hamqsler
 		}
 		
 		private static readonly DependencyPropertyKey PartItemsPropertyKey =
-			DependencyProperty.RegisterReadOnly("PartItems", typeof(TextParts), typeof(MacroExpander),
+			DependencyProperty.RegisterReadOnly("PartItems", typeof(TextParts), typeof(MacroGroupBox),
 			                                    new PropertyMetadata(null));
 		private static readonly DependencyProperty PartItemsProperty =
 			PartItemsPropertyKey.DependencyProperty;
@@ -52,7 +52,7 @@ namespace hamqsler
 		}
 		
 		private static readonly DependencyProperty PartItemProperty =
-			DependencyProperty.Register("PartItem", typeof(TextPart), typeof(MacroExpander),
+			DependencyProperty.Register("PartItem", typeof(TextPart), typeof(MacroGroupBox),
 			                            new PropertyMetadata(null));
 		public TextPart PartItem
 		{
@@ -64,16 +64,13 @@ namespace hamqsler
 		public static bool INCLUDECONTENTMENU = true;
 		public static bool DONOTINCLUDECONTENTMENU = false;
 		
-		public static Thickness INSETMARGIN = new Thickness(20, 3, 3, 3);
+		public static Thickness INSETMARGIN = new Thickness(20, 1, 1, 1);
 		
-		/// <summary>
-		/// Default constructor
-		/// </summary>
-		public MacroExpander()
+		public MacroGroupBox()
 		{
-			InitializeExpander(DONOTINCLUDECONTENTMENU);
+			InitializeGroupBox(DONOTINCLUDECONTENTMENU);
 		}
-		
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -81,35 +78,37 @@ namespace hamqsler
 		/// <param name="part">TextPart object to display</param>
 		/// <param name="includeContextMenu">Indicator for whether to include the
 		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
-		public MacroExpander(TextParts parts, TextPart part, bool includeContextMenu)
+		public MacroGroupBox(TextParts parts, TextPart part, bool includeContextMenu)
 		{
 			SetValue(PartItemsPropertyKey, parts);
 			PartItem = part;
-			InitializeExpander(includeContextMenu);
+			InitializeGroupBox(includeContextMenu);
 		}
 		
 		/// <summary>
-		/// Initialize the contents of the expander
+		/// Initialize the contents of the group box
 		/// </summary>
 		/// <param name="includeContextMenu">Indicator for whether to include the
 		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
-		private void InitializeExpander(bool includeContextMenu)
+		private void InitializeGroupBox(bool includeContextMenu)
 		{
 			// create a Label object to use as the expander Header
 			Label header = new Label();
+			header.Height = 30;
 			header.Content = HeaderText;
 			// If ContentMenu wanted, create it and set on Header only!
-			// Otherwise, the context menu will be active for all of the expander, not just the
-			// header, overriding context menus used for any expanders inside this expander.
+			// Otherwise, the context menu will be active for all of the group box, not just the
+			// header, overriding context menus used for any groupboxes inside this group box.
 			if(includeContextMenu == INCLUDECONTENTMENU)
 			{
 				header.ContextMenu = CreateContextMenu();
+				header.Foreground = Brushes.Green;
 			}
 			this.Header = header;
 		}
 		
 		/// <summary>
-		/// Create the context menu for the expander
+		/// Create the context menu for the group box
 		/// </summary>
 		/// <returns>created context menu object</returns>
 		private ContextMenu CreateContextMenu()

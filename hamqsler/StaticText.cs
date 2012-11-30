@@ -77,18 +77,17 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Builds an expander to display the StaticTextViewer for this StaticText object
+		/// Builds a group box to display the StaticTextViewer for this StaticText object
 		/// </summary>
 		/// <param name="parts">TextParts object that this StaticText object is contained in</param>
 		/// <param name="includeContentMenu">Boolean to indicate whether the ContextMenu should be
 		/// displayable or not. Use the values defined in MacroExpander.cs rather than true/false.</param>
 		/// <returns>MacroExpander object containing the StaticTextViewer for this StaticText object</returns>
-		public override MacroExpander BuildExpander(TextParts parts, bool includeContextMenu)
+		public override MacroGroupBox BuildGroupBox(TextParts parts, bool includeContextMenu)
 		{
-			StaticTextExpander expander = new StaticTextExpander(parts, this, includeContextMenu);
-			expander.DataContext = this;
-			expander.IsExpanded = true;
-			return expander;
+			StaticTextGroupBox box = new StaticTextGroupBox(parts, this, includeContextMenu);
+			box.DataContext = this;
+			return box;
 		}
 	}
 }

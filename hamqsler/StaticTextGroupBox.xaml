@@ -1,9 +1,9 @@
-﻿<local:MacroExpander x:Class="hamqsler.StaticTextExpander"
+﻿<local:MacroGroupBox x:Class="hamqsler.StaticTextGroupBox"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:local="clr-namespace:hamqsler"
 	HeaderText="Static Text">
 	<StackPanel x:Name="ContentPanel">
-		<local:StaticTextViewer Margin="20,3,3,3"/>
+		<local:StaticTextViewer Margin="20,1,1,1"/>
 	</StackPanel>
-</local:MacroExpander>
+</local:MacroGroupBox>

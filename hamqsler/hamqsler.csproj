@@ -66,8 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdifMacro.cs" />
-    <Compile Include="AdifMacroExpander.xaml.cs">
-      <DependentUpon>AdifMacroExpander.xaml</DependentUpon>
+    <Compile Include="AdifMacroGroupBox.xaml.cs">
+      <DependentUpon>AdifMacroGroupBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>
@@ -93,7 +93,7 @@
     <Compile Include="DoubleToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
-    <Compile Include="MacroExpander.cs" />
+    <Compile Include="MacroGroupBox.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
@@ -109,8 +109,8 @@
     <Compile Include="SecondaryImage.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="StaticText.cs" />
-    <Compile Include="StaticTextExpander.xaml.cs">
-      <DependentUpon>StaticTextExpander.xaml</DependentUpon>
+    <Compile Include="StaticTextGroupBox.xaml.cs">
+      <DependentUpon>StaticTextGroupBox.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="StaticTextViewer.xaml.cs">
@@ -140,14 +140,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="AdifMacroExpander.xaml" />
+    <Page Include="AdifMacroGroupBox.xaml" />
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />
     <Page Include="SplashPage.xaml" />
-    <Page Include="StaticTextExpander.xaml" />
+    <Page Include="StaticTextGroupBox.xaml" />
     <Page Include="StaticTextViewer.xaml" />
     <Page Include="TextMacrosDialog.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />

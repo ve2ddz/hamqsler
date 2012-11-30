@@ -48,12 +48,12 @@ namespace hamqsler
 											 ref HashSet<string> existFields);
 
 		/// <summary>
-		/// Create the expander that will display this TextPart
+		/// Create the group box that will display this TextPart
 		/// </summary>
 		/// <param name="parts">TextParts object containing this TextPart</param>
 		/// <param name="includeContentMenu">Indicator for whether to include the
 		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
 		/// <returns></returns>
-		public abstract MacroExpander BuildExpander(TextParts parts, bool includeContentMenu);
+		public abstract MacroGroupBox BuildGroupBox(TextParts parts, bool includeContentMenu);
 	}
 }
