@@ -30,6 +30,7 @@ namespace hamqsler
 	/// </summary>
 	public class MacroGroupBox : GroupBox
 	{
+		public static RoutedCommand DeleteCommand = new RoutedCommand();
 		public static RoutedCommand InsertAdifMacroBeforeCommand = new RoutedCommand();
 		public static RoutedCommand InsertAdifMacroAfterCommand = new RoutedCommand();
 		
@@ -115,9 +116,28 @@ namespace hamqsler
 		private ContextMenu CreateContextMenu()
 		{
 			ContextMenu cm = new ContextMenu();
+			cm.Items.Add(CreateDeleteMenuItem());
+			cm.Items.Add(new Separator());
 			cm.Items.Add(CreateInsertAdifMacroBeforeMenuItem());
 			cm.Items.Add(CreateInsertAdifMacroAfterMenuItem());
 			return cm;
+		}
+		
+		/// <summary>
+		/// Create the Delete menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateDeleteMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Delete";
+			CommandBinding cb = new CommandBinding(DeleteCommand,
+			                                       OnDeleteCommand_Executed,
+			                                       OnDeleteCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = DeleteCommand;
+			mi.CommandTarget = this;
+			return mi;			
 		}
 		
 		/// <summary>
@@ -174,6 +194,17 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// CanExecute event handler for the Delete menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnDeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = PartItems.Count > 1;
+			e.Handled = true;
+		}
+		
+		/// <summary>
 		/// CanExecute event handler for the InsertAdifMacroBefore menu item
 		/// </summary>
 		/// <param name="sender">not used</param>
@@ -193,6 +224,19 @@ namespace hamqsler
 		{
 			e.CanExecute = true;
 			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// Executed event handler for the Delete menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnDeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifMacro object and add it to the TextItems.
+			AdifMacro aMacro = new AdifMacro();
+			PartItems.Remove(PartItem);
+			UpdateDialog();		// redraw the Dialog contents
 		}
 		
 		/// <summary>
