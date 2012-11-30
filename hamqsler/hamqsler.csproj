@@ -65,6 +65,10 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdifMacro.cs" />
+    <Compile Include="AdifMacroExpander.xaml.cs">
+      <DependentUpon>AdifMacroExpander.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
@@ -105,6 +109,10 @@
     <Compile Include="SecondaryImage.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="StaticText.cs" />
+    <Compile Include="StaticTextExpander.xaml.cs">
+      <DependentUpon>StaticTextExpander.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="StaticTextViewer.xaml.cs">
       <DependentUpon>StaticTextViewer.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -132,12 +140,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AdifMacroExpander.xaml" />
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />
     <Page Include="SplashPage.xaml" />
+    <Page Include="StaticTextExpander.xaml" />
     <Page Include="StaticTextViewer.xaml" />
     <Page Include="TextMacrosDialog.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />

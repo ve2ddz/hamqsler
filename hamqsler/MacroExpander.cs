@@ -20,6 +20,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace hamqsler
 {
@@ -29,6 +30,8 @@ namespace hamqsler
 	/// </summary>
 	public class MacroExpander : Expander
 	{
+		public static RoutedCommand InsertAdifMacroBeforeCommand = new RoutedCommand();
+		
 		private static readonly DependencyProperty HeaderTextProperty =
 			DependencyProperty.Register("HeaderText", typeof(string), typeof(MacroExpander),
 			                            new PropertyMetadata(string.Empty));
@@ -38,9 +41,30 @@ namespace hamqsler
 			set {SetValue(HeaderTextProperty, value);}
 		}
 		
+		private static readonly DependencyPropertyKey PartItemsPropertyKey =
+			DependencyProperty.RegisterReadOnly("PartItems", typeof(TextParts), typeof(MacroExpander),
+			                                    new PropertyMetadata(null));
+		private static readonly DependencyProperty PartItemsProperty =
+			PartItemsPropertyKey.DependencyProperty;
+		public TextParts PartItems
+		{
+			get {return (TextParts)GetValue(PartItemsProperty);}
+		}
+		
+		private static readonly DependencyProperty PartItemProperty =
+			DependencyProperty.Register("PartItem", typeof(TextPart), typeof(MacroExpander),
+			                            new PropertyMetadata(null));
+		public TextPart PartItem
+		{
+			get {return (TextPart)GetValue(PartItemProperty);}
+			set {SetValue(PartItemProperty, value);}
+		}
+		
 		// use these values rather than true or false when you want to include the context menu
 		public static bool INCLUDECONTENTMENU = true;
 		public static bool DONOTINCLUDECONTENTMENU = false;
+		
+		public static Thickness INSETMARGIN = new Thickness(20, 3, 3, 3);
 		
 		/// <summary>
 		/// Default constructor
@@ -53,12 +77,14 @@ namespace hamqsler
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="headerText">Text to place in the expander's header</param>
-		/// <param name="includeContentMenu">Indicator for whether to include the
+		/// <param name="parts">TextParts object that the specified TextPart is part of</param>
+		/// <param name="part">TextPart object to display</param>
+		/// <param name="includeContextMenu">Indicator for whether to include the
 		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
-		public MacroExpander(string headerText, bool includeContextMenu)
+		public MacroExpander(TextParts parts, TextPart part, bool includeContextMenu)
 		{
-			HeaderText = headerText;
+			SetValue(PartItemsPropertyKey, parts);
+			PartItem = part;
 			InitializeExpander(includeContextMenu);
 		}
 		
@@ -69,10 +95,6 @@ namespace hamqsler
 		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
 		private void InitializeExpander(bool includeContextMenu)
 		{
-			// add StackPanel to the contents of the expander so that various controls may
-			// be added to the expander
-			StackPanel panel = new StackPanel();
-			this.Content = panel;
 			// create a Label object to use as the expander Header
 			Label header = new Label();
 			header.Content = HeaderText;
@@ -93,10 +115,25 @@ namespace hamqsler
 		private ContextMenu CreateContextMenu()
 		{
 			ContextMenu cm = new ContextMenu();
-			MenuItem mi = new MenuItem();
-			mi.Header = "Dummy Menu Item";
-			cm.Items.Add(mi);
+			cm.Items.Add(CreateInsertAdifMacroBeforeMenuItem());
 			return cm;
+		}
+		
+		/// <summary>
+		/// Create the InsertAdifMacroBefore menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertAdifMacroBeforeMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Adif Macro Before";
+			CommandBinding cb = new CommandBinding(InsertAdifMacroBeforeCommand,
+			                                       OnInsertAdifMacroBeforeCommand_Executed,
+			                                       OnInsertAdifMacroBeforeCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertAdifMacroBeforeCommand;
+			mi.CommandTarget = this;
+			return mi;			
 		}
 		
 		/// <summary>
@@ -116,6 +153,57 @@ namespace hamqsler
 					header.InvalidateVisual();
 				}
 			}
+		}
+		
+		/// <summary>
+		/// CanExecute event handler for the InsertAdifMacroBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertAdifMacroBeforeCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// Executed event handler for the InserAdifMacroBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertAdifMacroBeforeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifMacro object and add it to the TextItems.
+			AdifMacro aMacro = new AdifMacro();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position, aMacro);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
+		
+		/// <summary>
+		/// Get the position of the PartItem displayed in this expander, within the PartItems
+		/// </summary>
+		/// <returns>Index representing the position, or -1 if not found (should always be found)</returns>
+		private int GetPosition()
+		{
+			return PartItems.IndexOf(PartItem);
+		}
+		
+		/// <summary>
+		/// Force a redraw of the TextMacrosDialog containing this expander
+		/// </summary>
+		private void UpdateDialog()
+		{
+			FrameworkElement elt = (FrameworkElement)this.Parent;
+			while (elt.GetType() != typeof(TextMacrosDialog))
+			{
+				elt = (FrameworkElement)elt.Parent;
+			}
+			((TextMacrosDialog) elt).InvalidateVisual();
 		}
 	}
 }

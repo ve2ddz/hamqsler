@@ -31,11 +31,13 @@ namespace hamqsler
 	[Serializable]
 	public class StaticText : TextPart
 	{
-		private string statText = string.Empty;
+		private static readonly DependencyProperty TextProperty =
+			DependencyProperty.Register("Text", typeof(string), typeof(StaticText),
+			                            new PropertyMetadata(string.Empty));
 		public string Text
 		{
-			get {return statText;}
-			set {statText = value;}
+			get {return (string)GetValue(TextProperty);}
+			set {SetValue(TextProperty, value);}
 		}
 		
 		/// <summary>
@@ -77,17 +79,15 @@ namespace hamqsler
 		/// <summary>
 		/// Builds an expander to display the StaticTextViewer for this StaticText object
 		/// </summary>
+		/// <param name="parts">TextParts object that this StaticText object is contained in</param>
 		/// <param name="includeContentMenu">Boolean to indicate whether the ContextMenu should be
 		/// displayable or not. Use the values defined in MacroExpander.cs rather than true/false.</param>
 		/// <returns>MacroExpander object containing the StaticTextViewer for this StaticText object</returns>
-		public override MacroExpander BuildExpander(bool includeContextMenu)
+		public override MacroExpander BuildExpander(TextParts parts, bool includeContextMenu)
 		{
-			MacroExpander expander = new MacroExpander("Static Text", includeContextMenu);
-			StaticTextViewer viewer = new StaticTextViewer();
-			viewer.DataContext = this;
-			((StackPanel)expander.Content).Children.Add(viewer);
+			StaticTextExpander expander = new StaticTextExpander(parts, this, includeContextMenu);
+			expander.DataContext = this;
 			expander.IsExpanded = true;
-			
 			return expander;
 		}
 	}

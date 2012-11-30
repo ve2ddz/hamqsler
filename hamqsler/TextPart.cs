@@ -47,6 +47,13 @@ namespace hamqsler
 		public abstract void GetAdifFieldsForSorting(ref HashSet<string>fields, 
 											 ref HashSet<string> existFields);
 
-		public abstract MacroExpander BuildExpander(bool includeContentMenu);
+		/// <summary>
+		/// Create the expander that will display this TextPart
+		/// </summary>
+		/// <param name="parts">TextParts object containing this TextPart</param>
+		/// <param name="includeContentMenu">Indicator for whether to include the
+		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
+		/// <returns></returns>
+		public abstract MacroExpander BuildExpander(TextParts parts, bool includeContentMenu);
 	}
 }

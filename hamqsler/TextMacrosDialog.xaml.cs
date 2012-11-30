@@ -67,7 +67,7 @@ namespace hamqsler
 			ContentPanel.Children.RemoveRange(0, ContentPanel.Children.Count);
 			foreach(TextPart part in partItems)
 			{
-				MacroExpander expander = part.BuildExpander(MacroExpander.INCLUDECONTENTMENU);
+				MacroExpander expander = part.BuildExpander(partItems, MacroExpander.INCLUDECONTENTMENU);
 				ContentPanel.Children.Add(expander);
 			}
 			// have the base class perform any other rendering needed.
