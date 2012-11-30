@@ -31,6 +31,8 @@ namespace hamqsler
 	public class MacroGroupBox : GroupBox
 	{
 		public static RoutedCommand DeleteCommand = new RoutedCommand();
+		public static RoutedCommand InsertStaticTextBeforeCommand = new RoutedCommand();
+		public static RoutedCommand InsertStaticTextAfterCommand = new RoutedCommand();
 		public static RoutedCommand InsertAdifMacroBeforeCommand = new RoutedCommand();
 		public static RoutedCommand InsertAdifMacroAfterCommand = new RoutedCommand();
 		
@@ -118,9 +120,45 @@ namespace hamqsler
 			ContextMenu cm = new ContextMenu();
 			cm.Items.Add(CreateDeleteMenuItem());
 			cm.Items.Add(new Separator());
+			cm.Items.Add(CreateInsertStaticTextBeforeMenuItem());
+			cm.Items.Add(CreateInsertStaticTextAfterMenuItem());
 			cm.Items.Add(CreateInsertAdifMacroBeforeMenuItem());
 			cm.Items.Add(CreateInsertAdifMacroAfterMenuItem());
 			return cm;
+		}
+		
+		/// <summary>
+		/// Create the InsertStaticTextBefore menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertStaticTextBeforeMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Static Text Before";
+			CommandBinding cb = new CommandBinding(InsertStaticTextBeforeCommand,
+			                                       OnInsertStaticTextBeforeCommand_Executed,
+			                                       OnInsertStaticTextBeforeCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertStaticTextBeforeCommand;
+			mi.CommandTarget = this;
+			return mi;			
+		}
+		
+		/// <summary>
+		/// Create the InsertStaticTextAfter menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertStaticTextAfterMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Static Text After";
+			CommandBinding cb = new CommandBinding(InsertStaticTextAfterCommand,
+			                                       OnInsertStaticTextAfterCommand_Executed,
+			                                       OnInsertStaticTextAfterCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertStaticTextAfterCommand;
+			mi.CommandTarget = this;
+			return mi;			
 		}
 		
 		/// <summary>
@@ -194,6 +232,35 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// CanExecute event handler for the InsertStaticTextBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertStaticTextBeforeCommand_CanExecute(object sender, 
+		                                                        CanExecuteRoutedEventArgs e)
+		{
+			int position = GetPosition();
+			e.CanExecute = position != -1 &&
+				PartItem.GetType() != typeof(StaticText) &&
+				(position == 0 || PartItems[position - 1].GetType() != typeof(StaticText));
+			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// CanExecute event handler for the InsertStaticTextAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertStaticTextAfterCommand_CanExecute(object sender, 
+		                                                        CanExecuteRoutedEventArgs e)
+		{
+			int position = GetPosition();
+			e.CanExecute = PartItem.GetType() != typeof(StaticText) && 
+				(PartItems.Count - 1 == position || PartItems[position + 1].GetType() != typeof(StaticText));
+			e.Handled = true;
+		}
+		
+		/// <summary>
 		/// CanExecute event handler for the Delete menu item
 		/// </summary>
 		/// <param name="sender">not used</param>
@@ -234,9 +301,44 @@ namespace hamqsler
 		private void OnDeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			// create a new AdifMacro object and add it to the TextItems.
-			AdifMacro aMacro = new AdifMacro();
 			PartItems.Remove(PartItem);
 			UpdateDialog();		// redraw the Dialog contents
+		}
+		
+		/// <summary>
+		/// Executed event handler for the InsertStaticTextBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertStaticTextBeforeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// create a new StaticText object and add it to the TextItems.
+			StaticText sText = new StaticText();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position, sText);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
+		
+		/// <summary>
+		/// Executed event handler for the InsertStaticTextAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertStaticTextAfterCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// create a new StaticText object and add it to the TextItems.
+			StaticText sText = new StaticText();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position + 1, sText);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
 		}
 		
 		/// <summary>
