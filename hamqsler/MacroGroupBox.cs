@@ -608,7 +608,7 @@ namespace hamqsler
 		private void OnInsertCountMacroBeforeCommand_Executed(object sender, 
 		                                                           ExecutedRoutedEventArgs e)
 		{
-			// create a new AdifExistsMacro object and add it to the TextItems.
+			// create a new CountMacro object and add it to the TextItems.
 			CountMacro cMacro = new CountMacro();
 			int position = GetPosition();
 			if(position != -1)
@@ -627,7 +627,7 @@ namespace hamqsler
 		private void OnInsertCountMacroAfterCommand_Executed(object sender, 
 		                                                          ExecutedRoutedEventArgs e)
 		{
-			// create a new AdifExistsMacro object and add it to the TextItems.
+			// create a new CountMacro object and add it to the TextItems.
 			CountMacro cMacro = new CountMacro();
 			int position = GetPosition();
 			if(position != -1)
@@ -646,7 +646,7 @@ namespace hamqsler
 		private void OnInsertManagerMacroBeforeCommand_Executed(object sender, 
 		                                                           ExecutedRoutedEventArgs e)
 		{
-			// create a new AdifExistsMacro object and add it to the TextItems.
+			// create a new ManagersMacro object and add it to the TextItems.
 			ManagerMacro mMacro = new ManagerMacro();
 			int position = GetPosition();
 			if(position != -1)
@@ -665,7 +665,7 @@ namespace hamqsler
 		private void OnInsertManagerMacroAfterCommand_Executed(object sender, 
 		                                                          ExecutedRoutedEventArgs e)
 		{
-			// create a new AdifExistsMacro object and add it to the TextItems.
+			// create a new ManagerMacro object and add it to the TextItems.
 			ManagerMacro mMacro = new ManagerMacro();
 			int position = GetPosition();
 			if(position != -1)
