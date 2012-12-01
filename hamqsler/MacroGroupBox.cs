@@ -39,6 +39,8 @@ namespace hamqsler
 			new RoutedCommand();
 		public static RoutedCommand InsertAdifExistsMacroAfterCommand =
 			new RoutedCommand();
+		public static RoutedCommand InsertCountMacroBeforeCommand = new RoutedCommand();
+		public static RoutedCommand InsertCountMacroAfterCommand = new RoutedCommand();
 		
 		private static readonly DependencyProperty HeaderTextProperty =
 			DependencyProperty.Register("HeaderText", typeof(string), typeof(MacroGroupBox),
@@ -130,6 +132,8 @@ namespace hamqsler
 			cm.Items.Add(CreateInsertAdifMacroAfterMenuItem());
 			cm.Items.Add(CreateInsertAdifExistsMacroBeforeMenuItem());
 			cm.Items.Add(CreateInsertAdifExistsMacroAfterMenuItem());
+			cm.Items.Add(CreateInsertCountMacroBeforeMenuItem());
+			cm.Items.Add(CreateInsertCountMacroAfterMenuItem());
 			return cm;
 		}
 		
@@ -253,6 +257,40 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Create the InsertCountMacroBefore menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertCountMacroBeforeMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Count Macro Before";
+			CommandBinding cb = new CommandBinding(InsertCountMacroBeforeCommand,
+			                                       OnInsertCountMacroBeforeCommand_Executed,
+			                                       OnInsertCountMacroBeforeCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertCountMacroBeforeCommand;
+			mi.CommandTarget = this;
+			return mi;			
+		}
+		
+		/// <summary>
+		/// Create the InsertCountMacroAfter menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertCountMacroAfterMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Count Macro After";
+			CommandBinding cb = new CommandBinding(InsertCountMacroAfterCommand,
+			                                       OnInsertCountMacroAfterCommand_Executed,
+			                                       OnInsertCountMacroAfterCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertCountMacroAfterCommand;
+			mi.CommandTarget = this;
+			return mi;			
+		}
+		
+		/// <summary>
 		/// DependencyPropertyChanged event handler
 		/// </summary>
 		/// <param name="e">DependencyPropertyChangedEventArgs objecgt for this event</param>
@@ -338,8 +376,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
-		private void OnInsertAdifExistsMacroBeforeCommand_CanExecute(object sender, 
-		                                                            CanExecuteRoutedEventArgs e)
+		private void OnInsertAdifExistsMacroBeforeCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = true;
 			e.Handled = true;
@@ -350,7 +387,30 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
-		private void OnInsertAdifExistsMacroAfterCommand_CanExecute(object sender, 
+		private void OnInsertAdifExistsMacroAfterCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// CanExecute event handler for the InsertCountMacroBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertCountMacroBeforeCommand_CanExecute(object sender, 
+		                                                            CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// CanExecute event handler for the InsertCountMacroAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertCountMacroAfterCommand_CanExecute(object sender, 
 		                                                            CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = true;
@@ -441,7 +501,7 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Executed event handler for the InserAdifExistsMacroBefore menu item
+		/// Executed event handler for the InsertAdifExistsMacroBefore menu item
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
@@ -460,7 +520,7 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Executed event handler for the InserAdifMacroAfter menu item
+		/// Executed event handler for the InsertAdifExistsMacroAfter menu item
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
@@ -478,6 +538,44 @@ namespace hamqsler
 			
 		}
 		
+		/// <summary>
+		/// Executed event handler for the InsertCountMacroBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertCountMacroBeforeCommand_Executed(object sender, 
+		                                                           ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifExistsMacro object and add it to the TextItems.
+			CountMacro cMacro = new CountMacro();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position, cMacro);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
+		
+		/// <summary>
+		/// Executed event handler for the InsertCountMacroAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertCountMacroAfterCommand_Executed(object sender, 
+		                                                          ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifExistsMacro object and add it to the TextItems.
+			CountMacro cMacro = new CountMacro();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position + 1, cMacro);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
+
 		/// <summary>
 		/// Get the position of the PartItem displayed in this expander, within the PartItems
 		/// </summary>

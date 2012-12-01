@@ -93,6 +93,11 @@
       <DependentUpon>CardTabItem.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CountMacro.cs" />
+    <Compile Include="CountMacroGroupBox.xaml.cs">
+      <DependentUpon>CountMacroGroupBox.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="DoubleToPercentConverter.cs" />
@@ -149,6 +154,7 @@
     <Page Include="AdifMacroGroupBox.xaml" />
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
+    <Page Include="CountMacroGroupBox.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />
