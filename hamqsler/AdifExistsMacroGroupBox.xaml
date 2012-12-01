@@ -1,0 +1,22 @@
+﻿<local:MacroGroupBox x:Class="hamqsler.AdifExistsMacroGroupBox"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:hamqsler"
+	HeaderText="Adif Exists Macro">
+	<StackPanel>
+		<CheckBox Content="Separate Cards by ADIF Field" Margin="20,1,1,1" IsChecked=
+					"{Binding Path=SeparateCardsByField, Mode=TwoWay}" x:Name="SeparateCheckBox"/>
+		<local:MacroGroupBox Header="Adif Field" Margin="20,1,1,1">
+			<local:StaticTextViewer x:Name="AdifField"/>
+		</local:MacroGroupBox>
+		<local:MacroGroupBox x:Name="DesignTextGroupBox" Header="Design Text" Margin="20,1,1,1">
+			<StackPanel x:Name="DesignTextPanel"/>
+		</local:MacroGroupBox>
+		<local:MacroGroupBox x:Name="ExistsTextGroupBox" Header="Exists Text" Margin="20,1,1,1">
+			<StackPanel x:Name="ExistsTextPanel"/>
+		</local:MacroGroupBox>
+		<local:MacroGroupBox x:Name="DoesntExistTextGroupBox" Header="Doesn't Exist Text" Margin="20,1,1,1">
+			<StackPanel x:Name="DoesntExistTextPanel"/>
+		</local:MacroGroupBox>
+	</StackPanel>
+</local:MacroGroupBox>

@@ -35,6 +35,10 @@ namespace hamqsler
 		public static RoutedCommand InsertStaticTextAfterCommand = new RoutedCommand();
 		public static RoutedCommand InsertAdifMacroBeforeCommand = new RoutedCommand();
 		public static RoutedCommand InsertAdifMacroAfterCommand = new RoutedCommand();
+		public static RoutedCommand InsertAdifExistsMacroBeforeCommand =
+			new RoutedCommand();
+		public static RoutedCommand InsertAdifExistsMacroAfterCommand =
+			new RoutedCommand();
 		
 		private static readonly DependencyProperty HeaderTextProperty =
 			DependencyProperty.Register("HeaderText", typeof(string), typeof(MacroGroupBox),
@@ -124,6 +128,8 @@ namespace hamqsler
 			cm.Items.Add(CreateInsertStaticTextAfterMenuItem());
 			cm.Items.Add(CreateInsertAdifMacroBeforeMenuItem());
 			cm.Items.Add(CreateInsertAdifMacroAfterMenuItem());
+			cm.Items.Add(CreateInsertAdifExistsMacroBeforeMenuItem());
+			cm.Items.Add(CreateInsertAdifExistsMacroAfterMenuItem());
 			return cm;
 		}
 		
@@ -213,6 +219,40 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Create the InsertAdifExistsMacroBefore menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertAdifExistsMacroBeforeMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Adif Exists Macro Before";
+			CommandBinding cb = new CommandBinding(InsertAdifExistsMacroBeforeCommand,
+			                                       OnInsertAdifExistsMacroBeforeCommand_Executed,
+			                                       OnInsertAdifExistsMacroBeforeCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertAdifExistsMacroBeforeCommand;
+			mi.CommandTarget = this;
+			return mi;			
+		}
+		
+		/// <summary>
+		/// Create the InsertAdifExistsMacroAfter menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertAdifExistsMacroAfterMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Adif Exists Macro After";
+			CommandBinding cb = new CommandBinding(InsertAdifExistsMacroAfterCommand,
+			                                       OnInsertAdifExistsMacroAfterCommand_Executed,
+			                                       OnInsertAdifExistsMacroAfterCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertAdifExistsMacroAfterCommand;
+			mi.CommandTarget = this;
+			return mi;			
+		}
+		
+		/// <summary>
 		/// DependencyPropertyChanged event handler
 		/// </summary>
 		/// <param name="e">DependencyPropertyChangedEventArgs objecgt for this event</param>
@@ -294,13 +334,36 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// CanExecute event handler for the InsertAdifExistsMacroBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertAdifExistsMacroBeforeCommand_CanExecute(object sender, 
+		                                                            CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// CanExecute event handler for the InsertAdifExistsMacroAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertAdifExistsMacroAfterCommand_CanExecute(object sender, 
+		                                                            CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			e.Handled = true;
+		}
+		
+		/// <summary>
 		/// Executed event handler for the Delete menu item
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
 		private void OnDeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			// create a new AdifMacro object and add it to the TextItems.
 			PartItems.Remove(PartItem);
 			UpdateDialog();		// redraw the Dialog contents
 		}
@@ -378,6 +441,44 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Executed event handler for the InserAdifExistsMacroBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertAdifExistsMacroBeforeCommand_Executed(object sender, 
+		                                                           ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifExistsMacro object and add it to the TextItems.
+			AdifExistsMacro aMacro = new AdifExistsMacro();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position, aMacro);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
+		
+		/// <summary>
+		/// Executed event handler for the InserAdifMacroAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertAdifExistsMacroAfterCommand_Executed(object sender, 
+		                                                          ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifExistsMacro object and add it to the TextItems.
+			AdifExistsMacro aMacro = new AdifExistsMacro();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position + 1, aMacro);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
+		
+		/// <summary>
 		/// Get the position of the PartItem displayed in this expander, within the PartItems
 		/// </summary>
 		/// <returns>Index representing the position, or -1 if not found (should always be found)</returns>
@@ -387,7 +488,7 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Force a redraw of the TextMacrosDialog containing this expander
+		/// Force a redraw of the TextMacrosDialog containing this group box
 		/// </summary>
 		private void UpdateDialog()
 		{

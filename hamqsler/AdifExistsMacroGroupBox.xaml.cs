@@ -30,30 +30,27 @@ using System.Windows.Media;
 namespace hamqsler
 {
 	/// <summary>
-	/// Interaction logic for AdifMacroGroupBox.xaml
+	/// Interaction logic for AdifExistsMacroGroupBox.xaml
 	/// </summary>
-	public partial class AdifMacroGroupBox : MacroGroupBox
+	public partial class AdifExistsMacroGroupBox : MacroGroupBox
 	{
-		/// <summary>
-		/// Default constructor
-		/// </summary>
-		public AdifMacroGroupBox() : base()
+		public AdifExistsMacroGroupBox() : base()
 		{
 			InitializeComponent();
 		}
-		
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="parts">TextParts that the AdifMacro is contained in</param>
-		/// <param name="part">AdifMacro object displayed in this group box</param>
+		/// <param name="parts">TextParts that the AdifExistsMacro is contained in</param>
+		/// <param name="part">AdifExistsMacro object displayed in this group box</param>
 		/// <param name="includeContextMenu">Indicator for whether to include the
 		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
-		public AdifMacroGroupBox(TextParts parts, TextPart part, bool includeContextMenu)
+		public AdifExistsMacroGroupBox(TextParts parts, TextPart part, bool includeContextMenu)
 			: base(parts, part, includeContextMenu)
 		{
 			InitializeComponent();
-			AdifMacro macro = part as AdifMacro;
+			AdifExistsMacro macro = part as AdifExistsMacro;
 			SeparateCheckBox.DataContext = macro;
 			AdifField.DataContext = macro.AdifField;
 			foreach(TextPart p  in macro.DesignText)
@@ -62,11 +59,17 @@ namespace hamqsler
 				box.Margin = INSETMARGIN;
 				DesignTextPanel.Children.Add(box);
 			}
-			foreach(TextPart p in macro.NoFieldText)
+			foreach(TextPart p in macro.ExistsText)
 			{
-				MacroGroupBox box = p.BuildGroupBox(macro.NoFieldText, INCLUDECONTENTMENU);
+				MacroGroupBox box = p.BuildGroupBox(macro.ExistsText, INCLUDECONTENTMENU);
 				box.Margin = INSETMARGIN;
-				NoFieldTextPanel.Children.Add(box);
+				ExistsTextPanel.Children.Add(box);
+			}
+			foreach(TextPart p in macro.DoesntExistText)
+			{
+				MacroGroupBox box = p.BuildGroupBox(macro.DoesntExistText, INCLUDECONTENTMENU);
+				box.Margin = INSETMARGIN;
+				DoesntExistTextPanel.Children.Add(box);
 			}
 		}
 	}
