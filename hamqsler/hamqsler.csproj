@@ -104,6 +104,11 @@
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
     <Compile Include="MacroGroupBox.cs" />
+    <Compile Include="ManagerMacro.cs" />
+    <Compile Include="ManagerMacroGroupBox.xaml.cs">
+      <DependentUpon>ManagerMacroGroupBox.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
@@ -156,6 +161,7 @@
     <Page Include="CardTabItem.xaml" />
     <Page Include="CountMacroGroupBox.xaml" />
     <Page Include="MainWindow.xaml" />
+    <Page Include="ManagerMacroGroupBox.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />
     <Page Include="SplashPage.xaml" />

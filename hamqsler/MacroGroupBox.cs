@@ -41,6 +41,8 @@ namespace hamqsler
 			new RoutedCommand();
 		public static RoutedCommand InsertCountMacroBeforeCommand = new RoutedCommand();
 		public static RoutedCommand InsertCountMacroAfterCommand = new RoutedCommand();
+		public static RoutedCommand InsertManagerMacroBeforeCommand = new RoutedCommand();
+		public static RoutedCommand InsertManagerMacroAfterCommand = new RoutedCommand();
 		
 		private static readonly DependencyProperty HeaderTextProperty =
 			DependencyProperty.Register("HeaderText", typeof(string), typeof(MacroGroupBox),
@@ -134,6 +136,8 @@ namespace hamqsler
 			cm.Items.Add(CreateInsertAdifExistsMacroAfterMenuItem());
 			cm.Items.Add(CreateInsertCountMacroBeforeMenuItem());
 			cm.Items.Add(CreateInsertCountMacroAfterMenuItem());
+			cm.Items.Add(CreateInsertManagerMacroBeforeMenuItem());
+			cm.Items.Add(CreateInsertManagerMacroAfterMenuItem());
 			return cm;
 		}
 		
@@ -291,6 +295,40 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Create the InsertMangerMacroBefore menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertManagerMacroBeforeMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Manager Macro Before";
+			CommandBinding cb = new CommandBinding(InsertManagerMacroBeforeCommand,
+			                                       OnInsertManagerMacroBeforeCommand_Executed,
+			                                       OnInsertManagerMacroBeforeCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertManagerMacroBeforeCommand;
+			mi.CommandTarget = this;
+			return mi;			
+		}
+		
+		/// <summary>
+		/// Create the InsertManagerMacroAfter menu item
+		/// </summary>
+		/// <returns>The menu item</returns>
+		private MenuItem CreateInsertManagerMacroAfterMenuItem()
+		{
+			MenuItem mi = new MenuItem();
+			mi.Header = "Insert Manager Macro After";
+			CommandBinding cb = new CommandBinding(InsertManagerMacroAfterCommand,
+			                                       OnInsertManagerMacroAfterCommand_Executed,
+			                                       OnInsertManagerMacroAfterCommand_CanExecute);
+			this.CommandBindings.Add(cb);
+			mi.Command = InsertManagerMacroAfterCommand;
+			mi.CommandTarget = this;
+			return mi;			
+		}
+		
+		/// <summary>
 		/// DependencyPropertyChanged event handler
 		/// </summary>
 		/// <param name="e">DependencyPropertyChangedEventArgs objecgt for this event</param>
@@ -411,6 +449,30 @@ namespace hamqsler
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
 		private void OnInsertCountMacroAfterCommand_CanExecute(object sender, 
+		                                                            CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// CanExecute event handler for the InsertManagerMacroBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertManagerMacroBeforeCommand_CanExecute(object sender, 
+		                                                            CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = true;
+			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// CanExecute event handler for the InsertManagerMacroAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void OnInsertManagerMacroAfterCommand_CanExecute(object sender, 
 		                                                            CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = true;
@@ -576,6 +638,43 @@ namespace hamqsler
 			
 		}
 
+		/// <summary>
+		/// Executed event handler for the InsertManagerMacroBefore menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertManagerMacroBeforeCommand_Executed(object sender, 
+		                                                           ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifExistsMacro object and add it to the TextItems.
+			ManagerMacro mMacro = new ManagerMacro();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position, mMacro);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
+		
+		/// <summary>
+		/// Executed event handler for the InsertManagerMacroAfter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnInsertManagerMacroAfterCommand_Executed(object sender, 
+		                                                          ExecutedRoutedEventArgs e)
+		{
+			// create a new AdifExistsMacro object and add it to the TextItems.
+			ManagerMacro mMacro = new ManagerMacro();
+			int position = GetPosition();
+			if(position != -1)
+			{
+				PartItems.Insert(position + 1, mMacro);
+				UpdateDialog();		// redraw the Dialog contents
+			}
+			
+		}
 		/// <summary>
 		/// Get the position of the PartItem displayed in this expander, within the PartItems
 		/// </summary>
