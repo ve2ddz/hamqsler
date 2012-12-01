@@ -95,7 +95,8 @@ namespace hamqsler
 		/// Creates an AdifExistsMacroGroupBox object based on this AdifExistsMacro
 		/// </summary>
 		/// <param name="parts">TextParts object that this AdifExistsMacro is included in</param>
-		/// <param name="includeContextMenu"></param>
+		/// <param name="includeContextMenu">Boolean to indicate whether the ContextMenu should be
+		/// displayable or not. Use the values defined in MacroExpander.cs rather than true/false.</param>
 		/// <returns></returns>
 		public override MacroGroupBox BuildGroupBox(TextParts parts, bool includeContextMenu)
 		{
