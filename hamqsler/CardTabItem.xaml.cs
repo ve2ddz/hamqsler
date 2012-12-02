@@ -302,7 +302,7 @@ namespace hamqsler
 			CardItem ci = cardCanvas.QslCard.GetSelected();
 			TextMacrosDialog dialog = new TextMacrosDialog(((TextItem)ci).Text);
 			dialog.ShowDialog();
-			if(((TextItem)ci).Text.Count == 1 && ((TextItem)ci).Text.GetType() == typeof(StaticText))
+			if(((TextItem)ci).Text.Count == 1 && ((TextItem)ci).Text[0].GetType() == typeof(StaticText))
 			{
 				Text.Visibility = Visibility.Visible;
 				Text.Text = ((TextItem)ci).Text.GetText(true);
