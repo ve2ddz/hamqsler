@@ -292,12 +292,17 @@ namespace hamqsler
 			BackgroundColorButton.Background = new SolidColorBrush(col);
 		}
 		
+		/// <summary>
+		/// Handler for MacrosButton clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void OnMacrosButtonClicked(object sender, RoutedEventArgs e)
 		{
 			CardItem ci = cardCanvas.QslCard.GetSelected();
 			TextMacrosDialog dialog = new TextMacrosDialog(((TextItem)ci).Text);
 			dialog.ShowDialog();
-			if(((TextItem)ci).Text.Count == 1)
+			if(((TextItem)ci).Text.Count == 1 && ((TextItem)ci).Text.GetType() == typeof(StaticText))
 			{
 				Text.Visibility = Visibility.Visible;
 				Text.Text = ((TextItem)ci).Text.GetText(true);
@@ -308,6 +313,11 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handler for Text box TextChanged event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		void Text_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			TextItem ti = textItemProperties.DataContext as TextItem;
