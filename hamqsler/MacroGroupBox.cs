@@ -117,6 +117,7 @@ namespace hamqsler
 			{
 				header.ContextMenu = CreateContextMenu();
 				header.Foreground = Brushes.Green;
+				header.Background = Brushes.PaleGoldenrod;
 			}
 			this.Header = header;
 		}
