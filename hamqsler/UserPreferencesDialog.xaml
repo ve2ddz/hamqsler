@@ -221,21 +221,25 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="375"/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Default Callsign:</TextBlock>
-				<TextBox Grid.Column="1" Margin="5" MaxLength="15"  FontSize="36"
-				         CharacterCasing="Upper"
-						FontFamily="{Binding DefaultTextItemsFontFace}"
-						FontWeight="Bold" PreviewTextInput="CallsignBox_PreviewTextInput" >
-					<TextBox.Text>
-						<Binding Path="Callsign"
-								UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
+				<GroupBox Grid.Column="0" Margin="5" Header="Default Callsign">
+					<StackPanel>
+						<TextBox  MaxLength="15" Margin="3" x:Name="CallsignTextBox"
+						         CharacterCasing="Upper" FontSize="36"
+								FontFamily="{Binding DefaultTextItemsFontFace}"
+								FontWeight="Bold" PreviewTextInput="CallsignBox_PreviewTextInput" >
+							<TextBox.Text>
+								<Binding Path="Text"
+										UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+									<Binding.ValidationRules>
+										<DataErrorValidationRule/>
+									</Binding.ValidationRules>
+								</Binding>
+							</TextBox.Text>
+						</TextBox>
+						<Button x:Name="CallsignMacroButton" Margin="3" HorizontalAlignment="Center"
+								Width="75" Content="Macros" Click="CallsignMacroButton_Click"/>
+					</StackPanel>						
+				</GroupBox>
 			</Grid>
 			<Grid>
 				<Grid.Visibility>

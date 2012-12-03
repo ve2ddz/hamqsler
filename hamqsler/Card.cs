@@ -125,9 +125,13 @@ namespace hamqsler
 			// call text item
 			TextItem call = new TextItem();
 			call.QslCard = this;
-			StaticText sText = new StaticText();
-			sText.Text = userPreferences.Callsign;
-			call.Text.Add(sText);
+//			StaticText sText = new StaticText();
+//			sText.Text = userPreferences.Callsign.GetText();
+			foreach(TextPart part in userPreferences.Callsign)
+			{
+				call.Text.Add(part);
+			}
+//			call.Text = userPreferences.Callsign;
 			call.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			call.TextFontWeight = FontWeights.Black;
 			call.FontSize = 72.0;

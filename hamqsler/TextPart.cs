@@ -26,7 +26,7 @@ namespace hamqsler
 	/// <summary>
 	/// Interface for all TextPart objects
 	/// </summary>
-	public abstract class TextPart : UIElement
+	public abstract class TextPart : DependencyObject
 	{
 		/// <summary>
 		/// Retrieve the text associated with this TextPart

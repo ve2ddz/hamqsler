@@ -53,6 +53,14 @@ namespace hamqsler
 			// create a clone of the UserPreferences object
 			userPrefs = new UserPreferences(((App)Application.Current).UserPreferences);
 			propertiesDisplay.DataContext = userPrefs;
+			if(userPrefs.Callsign.Count == 1 && userPrefs.Callsign[0].GetType() == typeof(StaticText))
+			{
+				CallsignTextBox.DataContext = (StaticText)userPrefs.Callsign[0];
+			}
+			else
+			{
+				CallsignTextBox.Visibility = Visibility.Collapsed;
+			}
 		}
 		
 		/// <summary>
@@ -227,6 +235,22 @@ namespace hamqsler
 				// not valid
 				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
 				e.Handled = true;			// consume the event so that the character is not processed
+			}
+		}
+		
+		void CallsignMacroButton_Click(object sender, RoutedEventArgs e)
+		{
+			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.Callsign);
+			dialog.ShowDialog();
+			if(userPrefs.Callsign.Count == 1 && 
+			   (userPrefs.Callsign[0].GetType() == typeof(StaticText)))
+			{
+				CallsignTextBox.Visibility = Visibility.Visible;
+				CallsignTextBox.Text = ((StaticText)userPrefs.Callsign[0]).Text;
+			}
+			else
+			{
+				CallsignTextBox.Visibility = Visibility.Collapsed;
 			}
 		}
 		

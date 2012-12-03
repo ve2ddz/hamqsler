@@ -36,6 +36,14 @@ namespace hamqsler
     /// It is serialized to file .hamqsler in the hamqsler folder
 	/// </summary>
 	[Serializable]
+	[XmlInclude(typeof(TextParts))]
+	[XmlInclude(typeof(TextPart))]
+	[XmlInclude(typeof(StaticText))]
+	[XmlInclude(typeof(AdifMacro))]
+	[XmlInclude(typeof(AdifExistsMacro))]
+	[XmlInclude(typeof(CountMacro))]
+	[XmlInclude(typeof(ManagerMacro))]
+	[XmlInclude(typeof(ManagerExistsMacro))]
 	public class UserPreferences : DependencyObject, IDataErrorInfo
 	{
 		// check for new versions on startup?
@@ -153,22 +161,17 @@ namespace hamqsler
         /// <summary>
         /// Default callsign for the card
         /// </summary>
+        private static readonly DependencyPropertyKey CallsignPropertyKey =
+            DependencyProperty.RegisterReadOnly("Callsign", typeof(TextParts), 
+        	                                    typeof(UserPreferences),
+        	                                    new PropertyMetadata(null));
         private static readonly DependencyProperty CallsignProperty =
-            DependencyProperty.Register("Callsign", typeof(string), typeof(UserPreferences),
-            new PropertyMetadata("MyCall"));
-        public string Callsign
+        	CallsignPropertyKey.DependencyProperty;
+        public TextParts Callsign
         {
-            get { return (string)GetValue(CallsignProperty); }
-            set { SetValue(CallsignProperty, value); }
+            get { return (TextParts)GetValue(CallsignProperty); }
         }
         
-/*		private TextParts callsign;
-		public TextParts Callsign
-		{
-			get {return callsign;}
-			set {callsign = value;}
-		}*/
-		
         /// <summary>
         /// Default Name and QTH text for the card
         /// </summary>
@@ -829,7 +832,10 @@ namespace hamqsler
         /// </summary>
 		public UserPreferences()
 		{
-
+			SetValue(CallsignPropertyKey, new TextParts());
+			StaticText sText = new StaticText();
+			sText.Text = "MyCall";
+			Callsign.Add(sText);
 		}
 		
 				
@@ -843,9 +849,9 @@ namespace hamqsler
 				string result = null;
 				if(propertyName == "Callsign")
 				{
-					result = ValidateCallsign();
+					result = null;
 				}
-				else		// a frequency
+				else		// a frequency*/
 				{
 					Regex regexData = new Regex("^[0-9\\.]*$");
 					Regex regexDecimalSep = new Regex("[\\.][0-9]*[\\.]");
@@ -881,17 +887,20 @@ namespace hamqsler
 		private string ValidateCallsign()
 		{
 			CallSign call;
-			try
+			if(Callsign.Count == 1 && Callsign[0].GetType() == typeof(StaticText))
 			{
-				call = new CallSign(Callsign);
-			}
-			catch(QsoException)
-			{
-				return "Not a valid callsign";
-			}
-			if(!CallSign.IsValid(call.Call))
-			{
-				return "Not a valid callsign";
+				try
+				{
+					call = new CallSign(((StaticText)Callsign[0]).Text);
+				}
+				catch(QsoException)
+				{
+					return "Not a valid callsign";
+				}
+				if(!CallSign.IsValid(call.Call))
+				{
+					return "Not a valid callsign";
+				}
 			}
 			return null;
 		}
@@ -913,7 +922,11 @@ namespace hamqsler
 			CardFiles = prefs.CardFiles;
 			DefaultCardFilesFolder = prefs.DefaultCardFilesFolder;
 			DefaultTextItemsFontFace = prefs.DefaultTextItemsFontFace;
-			Callsign = prefs.Callsign;
+			SetValue(CallsignPropertyKey, new TextParts());
+			foreach(TextPart part in prefs.Callsign)
+			{
+				Callsign.Add(part);
+			}
 			NameQth = prefs.NameQth;
 			Salutation = prefs.Salutation;
 			DefaultQsosBoxFontFace = prefs.DefaultQsosBoxFontFace;
