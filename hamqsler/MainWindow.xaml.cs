@@ -144,9 +144,15 @@ namespace hamqsler
 			if(ti == null)
 			{
 				e.CanExecute = false;
+				return;
 			}
-			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
-			e.CanExecute = ti != null && ci == null;
+			CardItem ci = null;
+			if(ti.cardCanvas != null && ti.cardCanvas.QslCard != null)
+			{
+				e.CanExecute = ti.cardCanvas.QslCard.GetSelected() == null;
+				return;
+			}
+			e.CanExecute = ci == null;
 		}
 		
 		/// <summary>
