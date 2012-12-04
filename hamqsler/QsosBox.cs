@@ -153,12 +153,14 @@ namespace hamqsler
 		}
 
 		// Text for confirming QSO string for single QSO
+		private static readonly DependencyPropertyKey ConfirmingTextPropertyKey =
+			DependencyProperty.RegisterReadOnly("ConfirmingText", typeof(TextParts),
+			                            typeof(QsosBox), new PropertyMetadata(null));
 		private static readonly DependencyProperty ConfirmingTextProperty =
-			DependencyProperty.Register("ConfirmingText", typeof(string),
-			                            typeof(QsosBox), new PropertyMetadata("Confirming 2-Way QSO with"));
-		public string ConfirmingText
+			ConfirmingTextPropertyKey.DependencyProperty;
+		public TextParts ConfirmingText
 		{
-			get { return (string)GetValue(ConfirmingTextProperty); }
+			get { return (TextParts)GetValue(ConfirmingTextProperty); }
 			set { SetValue(ConfirmingTextProperty, value); }
 		}
 
@@ -398,7 +400,11 @@ namespace hamqsler
 		{
 			this.DisplayRectangle = new Rect(0, 0, 0, 0);
 			this.FontName = userPrefs.DefaultQsosBoxFontFace;
-			this.ConfirmingText = userPrefs.ConfirmingText;
+			SetValue(ConfirmingTextPropertyKey, new TextParts());
+			foreach(TextPart part in userPrefs.ConfirmingText)
+			{
+				this.ConfirmingText.Add(part);
+			}
 			this.ViaText = userPrefs.ViaText;
 			this.DateFormat = userPrefs.DefaultDateFormat;
 			this.YYYYMMDDText = userPrefs.YYYYMMDDText;
@@ -579,7 +585,8 @@ namespace hamqsler
             dc.DrawRoundedRectangle(Brushes.Transparent, pen, DisplayRectangle,
                                    	cornerRounding, cornerRounding);
             int qsoCount = (QsosCount > 0) ? QsosCount : MaximumQsos;
-            FormattedText formattedText = GenerateFormattedText(ConfirmingText, LineTextBrush,
+            FormattedText formattedText = GenerateFormattedText(ConfirmingText.GetText(true),
+                                                                LineTextBrush,
                                                                 FontWeights.Normal);
             double textHeight = formattedText.Height;
             double x = DisplayRectangle.X + confirmingXOffset;

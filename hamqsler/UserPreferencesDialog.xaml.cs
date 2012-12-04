@@ -77,6 +77,15 @@ namespace hamqsler
 			{
 				SalutationTextBox.Visibility = Visibility.Collapsed;
 			}
+			if(userPrefs.ConfirmingText.Count == 1 && 
+			   userPrefs.ConfirmingText[0].GetType() == typeof(StaticText))
+			{
+				ConfirmingTextBox.DataContext = (StaticText)userPrefs.ConfirmingText[0];
+			}
+			else
+			{
+				ConfirmingTextBox.Visibility = Visibility.Collapsed;
+			}
 		}
 		
 		/// <summary>
@@ -314,6 +323,27 @@ namespace hamqsler
 			else
 			{
 				SalutationTextBox.Visibility = Visibility.Collapsed;
+			}
+		}
+		
+		/// <summary>
+		/// Hander for ConfirmingTextMacroButton Clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void ConfirmingTextMacroButton_Click(object sender, RoutedEventArgs e)
+		{
+			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.ConfirmingText);
+			dialog.ShowDialog();
+			if(userPrefs.ConfirmingText.Count == 1 &&
+			   userPrefs.ConfirmingText[0].GetType() == typeof(StaticText))
+			{
+				ConfirmingTextBox.Visibility = Visibility.Visible;
+				ConfirmingTextBox.Text = ((StaticText)userPrefs.ConfirmingText[0]).Text;
+			}
+			else
+			{
+				ConfirmingTextBox.Visibility = Visibility.Collapsed;
 			}
 		}
 	}

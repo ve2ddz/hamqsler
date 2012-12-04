@@ -316,13 +316,18 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Confirming Text:</TextBlock>
-				<TextBox Grid.Column="1" Margin="5"
-						FontFamily="{Binding DefaultQsosBoxFontFace}"
-						Text="{Binding Path=ConfirmingText, Mode=TwoWay}"
-						ToolTip="Confirming text printed in the QSOs Box (e.g. 'Confirming 2-Way QSO With ')"
-						/>
+				<GroupBox Grid.Column="1" Margin="5" Header="Confirming Text">
+					<StackPanel>
+						<TextBox Margin="3" x:Name="ConfirmingTextBox"
+								FontFamily="{Binding DefaultQsosBoxFontFace}"
+								Text="{Binding Path=Text, Mode=TwoWay}"
+								ToolTip="Confirming text printed in the QSOs Box (e.g. 'Confirming 2-Way QSO With ')"
+								/>
+						<Button x:Name="ConfirmingTextMacroButton" Margin="3" 
+						        HorizontalAlignment="Center"
+								Width="75" Content="Macros" Click="ConfirmingTextMacroButton_Click"/>
+					</StackPanel>
+				</GroupBox>
 			</Grid>
 			<Grid>
 				<Grid.ColumnDefinitions>

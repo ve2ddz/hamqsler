@@ -183,8 +183,7 @@ namespace hamqsler
         public TextParts NameQth
         {
             get { return (TextParts)GetValue(NameQthProperty); }
-            set { SetValue(NameQthProperty, value); }
-        }
+         }
         
 		// Default salutation for the card
 		private static readonly DependencyPropertyKey SalutationPropertyKey =
@@ -195,7 +194,6 @@ namespace hamqsler
 		public TextParts Salutation
 		{
 			get {return (TextParts)GetValue(SalutationProperty);}
-			set {SetValue(SalutationProperty, value);}
 		}
 		
 		// Default font face to display QSOs box text in
@@ -210,22 +208,16 @@ namespace hamqsler
 		}
 		
 		// Default confirming text displayed in the QSOs Box
+		private static readonly DependencyPropertyKey ConfirmingTextPropertyKey =
+			DependencyProperty.RegisterReadOnly("ConfirmingText", typeof(TextParts), 
+			                                    typeof(UserPreferences),
+			                            		new PropertyMetadata(null));
 		private static readonly DependencyProperty ConfirmingTextProperty =
-			DependencyProperty.Register("ConfirmingText", typeof(string), typeof(UserPreferences),
-			                            new PropertyMetadata("Confirming 2-Way QSOs With "));
-		public string ConfirmingText
-		{
-			get {return (string)GetValue(ConfirmingTextProperty);}
-			set {SetValue(ConfirmingTextProperty, value);}
-		}
-		
-		// Default confirming text
-/*		private TextParts confirmingText;
+			ConfirmingTextPropertyKey.DependencyProperty;
 		public TextParts ConfirmingText
 		{
-			get {return confirmingText;}
-			set {confirmingText = value;}
-		}*/
+			get {return (TextParts)GetValue(ConfirmingTextProperty);}
+		}
 		
 		// Default confirming via text
 		private static readonly DependencyProperty ViaTextProperty =
@@ -825,6 +817,7 @@ namespace hamqsler
 			SetValue(CallsignPropertyKey, new TextParts());
 			SetValue(NameQthPropertyKey, new TextParts());
 			SetValue(SalutationPropertyKey, new TextParts());
+			SetValue(ConfirmingTextPropertyKey, new TextParts());
 		}
 		
 				
@@ -927,7 +920,16 @@ namespace hamqsler
 				Salutation.Add(part);
 			}
 			DefaultQsosBoxFontFace = prefs.DefaultQsosBoxFontFace;
-			ConfirmingText = prefs.ConfirmingText;
+			SetValue(ConfirmingTextPropertyKey, new TextParts());
+			foreach(TextPart part in prefs.ConfirmingText)
+			{
+				ConfirmingText.Add(part);
+			}
+			SetValue(ConfirmingTextPropertyKey, new TextParts());
+			foreach(TextPart part in prefs.ConfirmingText)
+			{
+				ConfirmingText.Add(part);
+			}
 			ViaText = prefs.ViaText;
 			YYYYMMDDText = prefs.YYYYMMDDText;
 			DDMMMYYText = prefs.DDMMMYYText;
@@ -1212,6 +1214,29 @@ namespace hamqsler
             else
             {
             	foreach(TextPart part in prefs.Salutation)
+            	{
+            		part.RemoveExtraneousStaticTextMacros();
+            	}
+            }
+            if(prefs.ConfirmingText.Count == 0)
+            {
+            	StaticText cText = new StaticText();
+            	cText.Text = "Confirming 2-Way QSO";
+            	prefs.ConfirmingText.Add(cText);
+            	CountMacro macro = new CountMacro();
+            	macro.CountEquals = true;
+            	macro.Count = 1;
+            	((StaticText)macro.DesignText[0]).Text = "<S>";
+            	((StaticText)macro.TrueText[0]).Text = string.Empty;
+            	((StaticText)macro.FalseText[0]).Text = "s";
+            	prefs.ConfirmingText.Add(macro);
+            	StaticText withText = new StaticText();
+            	withText.Text = " with ";
+            	prefs.ConfirmingText.Add(withText);
+            }
+            else
+            {
+            	foreach(TextPart part in prefs.ConfirmingText)
             	{
             		part.RemoveExtraneousStaticTextMacros();
             	}
