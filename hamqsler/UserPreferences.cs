@@ -187,22 +187,17 @@ namespace hamqsler
         }
         
 		// Default salutation for the card
+		private static readonly DependencyPropertyKey SalutationPropertyKey =
+			DependencyProperty.RegisterReadOnly("Salutation", typeof(TextParts), typeof(UserPreferences),
+			                            new PropertyMetadata(null));
 		private static readonly DependencyProperty SalutationProperty =
-			DependencyProperty.Register("Salutation", typeof(string), typeof(UserPreferences),
-			                            new PropertyMetadata("Thanks for the QSO(s). 73, "));
-		public string Salutation
+			SalutationPropertyKey.DependencyProperty;
+		public TextParts Salutation
 		{
-			get {return (string)GetValue(SalutationProperty);}
+			get {return (TextParts)GetValue(SalutationProperty);}
 			set {SetValue(SalutationProperty, value);}
 		}
 		
-/*		private TextParts salutation;
-		public TextParts Salutation
-		{
-			get {return salutation;}
-			set {salutation = value;}
-		}*/
-
 		// Default font face to display QSOs box text in
 		private static readonly DependencyProperty DefaultQsosBoxFontFaceProperty =
 			DependencyProperty.Register("DefaultQsosBoxFontFace", typeof(string),
@@ -828,13 +823,8 @@ namespace hamqsler
 		public UserPreferences()
 		{
 			SetValue(CallsignPropertyKey, new TextParts());
-/*			StaticText sText = new StaticText();
-			sText.Text = "MyCall";
-			Callsign.Add(sText);*/
 			SetValue(NameQthPropertyKey, new TextParts());
-/*			StaticText nText = new StaticText();
-			nText.Text = "MyQth";
-			NameQth.Add(nText);*/
+			SetValue(SalutationPropertyKey, new TextParts());
 		}
 		
 				
@@ -931,7 +921,11 @@ namespace hamqsler
 			{
 				NameQth.Add(part);
 			}
-			Salutation = prefs.Salutation;
+			SetValue(SalutationPropertyKey, new TextParts());
+			foreach(TextPart part in prefs.Salutation)
+			{
+				Salutation.Add(part);
+			}
 			DefaultQsosBoxFontFace = prefs.DefaultQsosBoxFontFace;
 			ConfirmingText = prefs.ConfirmingText;
 			ViaText = prefs.ViaText;
@@ -1175,15 +1169,53 @@ namespace hamqsler
             	sText.Text = "MyCall";
             	prefs.Callsign.Add(sText);
             }
+            else
+            {
+            	foreach(TextPart part in prefs.Callsign)
+            	{
+            		part.RemoveExtraneousStaticTextMacros();
+            	}
+            }
             // check if there is a Name and QTH from the file
             // and create default if not
-             if(prefs.NameQth.Count == 0)
+            if(prefs.NameQth.Count == 0)
             {
             	StaticText nText = new StaticText();
             	nText.Text = "MyQth";
             	prefs.NameQth.Add(nText);
             }
-
+            else
+            {
+            	foreach(TextPart part in prefs.NameQth)
+            	{
+            		part.RemoveExtraneousStaticTextMacros();
+            	}
+            }
+            // check if there is a salutation from the file
+            // and create default if not
+            if(prefs.Salutation.Count == 0)
+            {
+            	StaticText salText = new StaticText();
+            	salText.Text = "Thanks for the QSO";
+            	prefs.Salutation.Add(salText);
+            	CountMacro macro = new CountMacro();
+            	macro.CountEquals = true;
+            	macro.Count = 1;
+				((StaticText)macro.DesignText[0]).Text = "<S>";
+				((StaticText)macro.TrueText[0]).Text = string.Empty;
+				((StaticText)macro.FalseText[0]).Text = "s";
+            	prefs.Salutation.Add(macro);
+            	StaticText text73 = new StaticText();
+            	text73.Text = ". 73,";
+            	prefs.Salutation.Add(text73);
+            }
+            else
+            {
+            	foreach(TextPart part in prefs.Salutation)
+            	{
+            		part.RemoveExtraneousStaticTextMacros();
+            	}
+            }
             // if prefs have been initialized, it is necessary to save the file
             // return the UserPrefs object
             if(prefsInitialized)

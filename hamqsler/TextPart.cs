@@ -55,5 +55,11 @@ namespace hamqsler
 		/// context menu. Values are INCLUDECONTEXTMENU and DONOTINCLUDECONTEXTMENU</param>
 		/// <returns></returns>
 		public abstract MacroGroupBox BuildGroupBox(TextParts parts, bool includeContentMenu);
+		
+		/// <summary>
+		/// If the first TextPart is an empty StaticText object, remove it.
+		/// </summary>
+		public abstract void RemoveExtraneousStaticTextMacros();
+		
 	}
 }

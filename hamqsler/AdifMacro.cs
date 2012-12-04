@@ -123,5 +123,15 @@ namespace hamqsler
 				throw new NotImplementedException();
 			}
 		}
+		
+		/// <summary>
+		/// If there is more than one TextPart in DesignText or NoFieldText
+		/// and the first TextPart is an empty StaticText, remove it.
+		/// </summary>
+		public override void RemoveExtraneousStaticTextMacros()
+		{
+			DesignText.RemoveExtraneousStaticText();
+			NoFieldText.RemoveExtraneousStaticText();
+		}
 	}
 }

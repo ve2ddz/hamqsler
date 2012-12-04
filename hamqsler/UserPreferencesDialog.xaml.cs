@@ -69,6 +69,14 @@ namespace hamqsler
 			{
 				NameQthTextBox.Visibility = Visibility.Collapsed;
 			}
+			if(userPrefs.Salutation.Count == 1 && userPrefs.Salutation[0].GetType() == typeof(StaticText))
+			{
+				SalutationTextBox.DataContext = (StaticText)userPrefs.Salutation[0];
+			}
+			else
+			{
+				SalutationTextBox.Visibility = Visibility.Collapsed;
+			}
 		}
 		
 		/// <summary>
@@ -285,6 +293,27 @@ namespace hamqsler
 			else
 			{
 				NameQthTextBox.Visibility = Visibility.Collapsed;
+			}
+		}
+		
+		/// <summary>
+		/// Handler for SalutationMacroButton Clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void SalutationMacroButton_Click(object sender, RoutedEventArgs e)
+		{
+			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.Salutation);
+			dialog.ShowDialog();
+			if(userPrefs.Salutation.Count == 1 &&
+			   (userPrefs.Salutation[0].GetType() == typeof(StaticText)))
+ 		    {
+		   		SalutationTextBox.Visibility = Visibility.Visible;
+		   		SalutationTextBox.Text = ((StaticText)userPrefs.Salutation[0]).Text;
+		    }
+			else
+			{
+				SalutationTextBox.Visibility = Visibility.Collapsed;
 			}
 		}
 	}

@@ -141,7 +141,6 @@ namespace hamqsler
 			{
 				nameQth.Text.Add(part);
 			}
-//			nameQth.Text.Add(nameQth);
 			nameQth.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			nameQth.TextFontWeight = FontWeights.Normal;
 			nameQth.FontSize = 10.0;
@@ -150,9 +149,11 @@ namespace hamqsler
 			// salutation
 			TextItem salutation = new TextItem();
 			salutation.QslCard = this;
-			StaticText salText = new StaticText();
-			salText.Text = userPreferences.Salutation;
-			salutation.Text.Add(salText);
+			foreach(TextPart part in userPreferences.Salutation)
+			{
+				salutation.Text.Add(part);
+			}
+			salutation.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			salutation.FontSize = 10.0;
 			salutation.DisplayRectangle = new Rect(5, DisplayRectangle.Height - 25, 0, 0);
 			TextItems.Add(salutation);

@@ -225,6 +225,7 @@
 					<StackPanel>
 						<TextBox  MaxLength="15" Margin="3" x:Name="CallsignTextBox"
 						         CharacterCasing="Upper" FontSize="36"
+						         VerticalAlignment="Stretch"
 								FontFamily="{Binding DefaultTextItemsFontFace}"
 								FontWeight="Bold" PreviewTextInput="CallsignBox_PreviewTextInput" >
 							<TextBox.Text>
@@ -255,7 +256,7 @@
 						<TextBox Margin="3" MinHeight="50" x:Name="NameQthTextBox"
 								FontFamily="{Binding DefaultTextItemsFontFace}"
 								Text="{Binding Path=Text, Mode=TwoWay}"
-								AcceptsReturn="True"
+								AcceptsReturn="True" VerticalAlignment="Stretch"
 								ToolTip="Your name and address"/>
 						<Button x:Name="NameQTHMacroButton" Margin="3" HorizontalAlignment="Center"
 								Width="75" Content="Macros" Click="NameQTHMacroButton_Click"/>
@@ -271,12 +272,16 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center"
-					>Default Salutation Text:</TextBlock>
-				<TextBox Grid.Column="1" Margin="5"
+				<GroupBox Grid.Column="1" Margin="5" Header="Default Salutation">
+					<StackPanel>
+				<TextBox Grid.Column="1" Margin="5" x:Name="SalutationTextBox"
 						FontFamily="{Binding DefaultTextItemsFontFace}"
 						ToolTip="Salutation to be printed on the card (e.g. 'Thanks for the QSO. 73, ')"
-						Text="{Binding Path=Salutation, Mode=TwoWay}"/>
+						Text="{Binding Path=Text, Mode=TwoWay}"/>
+						<Button x:Name="SalutationMacroButton" Margin="3" HorizontalAlignment="Center"
+								Width="75" Content="Macros" Click="SalutationMacroButton_Click"/>					
+					</StackPanel>
+				</GroupBox>
 			</Grid>
 			<Grid>
 				<Grid.ColumnDefinitions>

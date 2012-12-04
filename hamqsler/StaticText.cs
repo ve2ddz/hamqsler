@@ -89,5 +89,14 @@ namespace hamqsler
 			box.DataContext = this;
 			return box;
 		}
+		
+		/// <summary>
+		/// Do nothing. This method is needed because TextPart.RemoveExtraneousStaticTextMacros
+		/// is abstract.
+		/// </summary>
+		public override void RemoveExtraneousStaticTextMacros()
+		{
+			// do nothing for StaticText objects
+		}
 	}
 }
