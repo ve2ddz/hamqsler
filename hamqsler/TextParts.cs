@@ -57,6 +57,10 @@ namespace hamqsler
 			return text;
 		}
 		
+		/// <summary>
+		/// Remove the first TextPart if there is more than 1 TextPart and the first TextPart
+		/// is an empty StaticText object.
+		/// </summary>
 		public void RemoveExtraneousStaticText()
 		{
 			if(this.Count > 1 && this[0].GetType() == typeof(StaticText)

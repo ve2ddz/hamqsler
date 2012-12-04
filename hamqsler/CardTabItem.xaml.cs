@@ -311,6 +311,14 @@ namespace hamqsler
 			{
 				Text.Visibility = Visibility.Collapsed;
 			}
+			// remove the first TextPart if it is an empty StaticText object
+			((TextItem)ci).Text.RemoveExtraneousStaticText();
+			foreach(TextPart part in ((TextItem)ci).Text)
+			{
+				part.RemoveExtraneousStaticTextMacros();
+			}
+			((TextItem)ci).Text.RemoveExtraneousStaticText();
+			
 		}
 		
 		/// <summary>
