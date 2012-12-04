@@ -175,22 +175,17 @@ namespace hamqsler
         /// <summary>
         /// Default Name and QTH text for the card
         /// </summary>
-        private static readonly DependencyProperty NameQthProperty =
-            DependencyProperty.Register("NameQth", typeof(string), typeof(UserPreferences),
-            new PropertyMetadata("MyQTH"));
-        public string NameQth
+        private static readonly DependencyPropertyKey NameQthPropertyKey =
+            DependencyProperty.RegisterReadOnly("NameQth", typeof(TextParts), typeof(UserPreferences),
+            new PropertyMetadata(null));
+        public static readonly DependencyProperty NameQthProperty =
+        	NameQthPropertyKey.DependencyProperty;
+        public TextParts NameQth
         {
-            get { return (string)GetValue(NameQthProperty); }
+            get { return (TextParts)GetValue(NameQthProperty); }
             set { SetValue(NameQthProperty, value); }
         }
         
-/*		private TextParts nameQth;
-		public TextParts NameQth
-		{
-			get {return nameQth;}
-			set {nameQth = value;}
-		}*/
-		
 		// Default salutation for the card
 		private static readonly DependencyProperty SalutationProperty =
 			DependencyProperty.Register("Salutation", typeof(string), typeof(UserPreferences),
@@ -833,9 +828,13 @@ namespace hamqsler
 		public UserPreferences()
 		{
 			SetValue(CallsignPropertyKey, new TextParts());
-			StaticText sText = new StaticText();
+/*			StaticText sText = new StaticText();
 			sText.Text = "MyCall";
-			Callsign.Add(sText);
+			Callsign.Add(sText);*/
+			SetValue(NameQthPropertyKey, new TextParts());
+/*			StaticText nText = new StaticText();
+			nText.Text = "MyQth";
+			NameQth.Add(nText);*/
 		}
 		
 				
@@ -927,7 +926,11 @@ namespace hamqsler
 			{
 				Callsign.Add(part);
 			}
-			NameQth = prefs.NameQth;
+			SetValue(NameQthPropertyKey, new TextParts());
+			foreach(TextPart part in prefs.NameQth)
+			{
+				NameQth.Add(part);
+			}
 			Salutation = prefs.Salutation;
 			DefaultQsosBoxFontFace = prefs.DefaultQsosBoxFontFace;
 			ConfirmingText = prefs.ConfirmingText;
@@ -1164,6 +1167,23 @@ namespace hamqsler
                 if(fStream != null)
                     fStream.Close();
             }
+            // check if there is a callsign from the file
+            // and create default if not
+            if(prefs.Callsign.Count == 0)
+            {
+            	StaticText sText = new StaticText();
+            	sText.Text = "MyCall";
+            	prefs.Callsign.Add(sText);
+            }
+            // check if there is a Name and QTH from the file
+            // and create default if not
+             if(prefs.NameQth.Count == 0)
+            {
+            	StaticText nText = new StaticText();
+            	nText.Text = "MyQth";
+            	prefs.NameQth.Add(nText);
+            }
+
             // if prefs have been initialized, it is necessary to save the file
             // return the UserPrefs object
             if(prefsInitialized)

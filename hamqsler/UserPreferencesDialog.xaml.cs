@@ -61,6 +61,14 @@ namespace hamqsler
 			{
 				CallsignTextBox.Visibility = Visibility.Collapsed;
 			}
+			if(userPrefs.NameQth.Count == 1 && userPrefs.NameQth[0].GetType() == typeof(StaticText))
+			{
+				NameQthTextBox.DataContext = (StaticText)userPrefs.NameQth[0];
+			}
+			else
+			{
+				NameQthTextBox.Visibility = Visibility.Collapsed;
+			}
 		}
 		
 		/// <summary>
@@ -238,6 +246,11 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handler for CallsignMacroButton Clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		void CallsignMacroButton_Click(object sender, RoutedEventArgs e)
 		{
 			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.Callsign);
@@ -254,5 +267,25 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handler for NameQTHMacroButton Clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void NameQTHMacroButton_Click(object sender, RoutedEventArgs e)
+		{
+			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.NameQth);
+			dialog.ShowDialog();
+			if(userPrefs.NameQth.Count == 1 &&
+			   (userPrefs.NameQth[0].GetType() == typeof(StaticText)))
+			{
+				NameQthTextBox.Visibility = Visibility.Visible;
+				NameQthTextBox.Text = ((StaticText)userPrefs.NameQth[0]).Text;
+			}
+			else
+			{
+				NameQthTextBox.Visibility = Visibility.Collapsed;
+			}
+		}
 	}
 }

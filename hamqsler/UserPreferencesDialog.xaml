@@ -221,7 +221,7 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="375"/>
 				</Grid.ColumnDefinitions>
-				<GroupBox Grid.Column="0" Margin="5" Header="Default Callsign">
+				<GroupBox Grid.Column="1" Margin="5" Header="Default Callsign">
 					<StackPanel>
 						<TextBox  MaxLength="15" Margin="3" x:Name="CallsignTextBox"
 						         CharacterCasing="Upper" FontSize="36"
@@ -250,14 +250,17 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Default Name and QTH:</TextBlock>
-				<TextBox Grid.Column="1" Margin="5" MinHeight="50"
-						FontFamily="{Binding DefaultTextItemsFontFace}"
-						Text="{Binding Path=NameQth, Mode=TwoWay}"
-						AcceptsReturn="True"
-						ToolTip="Your name and address">
-				</TextBox>
+				<GroupBox Grid.Column="1" Margin="5" Header="Default Name and QTH">
+					<StackPanel>
+						<TextBox Margin="3" MinHeight="50" x:Name="NameQthTextBox"
+								FontFamily="{Binding DefaultTextItemsFontFace}"
+								Text="{Binding Path=Text, Mode=TwoWay}"
+								AcceptsReturn="True"
+								ToolTip="Your name and address"/>
+						<Button x:Name="NameQTHMacroButton" Margin="3" HorizontalAlignment="Center"
+								Width="75" Content="Macros" Click="NameQTHMacroButton_Click"/>
+					</StackPanel>
+				</GroupBox>
 			</Grid>
 			<Grid>
 				<Grid.Visibility>
