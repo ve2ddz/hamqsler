@@ -398,7 +398,10 @@ namespace hamqsler
 		/// <param name="userPrefs">UserPreferences object used to initialize QsosBox properties</param>
 		private void InitializeDisplayProperties(UserPreferences userPrefs)
 		{
-			this.DisplayRectangle = new Rect(0, 0, 0, 0);
+			DisplayX = 0;
+			DisplayY = 0;
+			DisplayWidth = 0;
+			DisplayHeight = 0;
 			this.FontName = userPrefs.DefaultQsosBoxFontFace;
 			SetValue(ConfirmingTextPropertyKey, new TextParts());
 			foreach(TextPart part in userPrefs.ConfirmingText)
@@ -429,20 +432,17 @@ namespace hamqsler
 			FormattedText fText = GenerateFormattedText("Sample Text", LineTextBrush,
 			                                            FontWeights.Normal);
 			double height = (fText.Height + 4) * (2 + ((QsosCount > 0) ? QsosCount : MaximumQsos));
-			if(DisplayRectangle == new Rect(0, 0, 0, 0))
+			if(DisplayX == 0 && DisplayY == 0 && DisplayWidth == 0 && DisplayHeight == 0)
 			{
-				DisplayRectangle = new Rect(QslCard.DisplayRectangle.Width / 20, 
-				                            QslCard.DisplayRectangle.Height / 2,
-				                            QslCard.DisplayRectangle.Width * 18 / 20,
-				                            height);
+				DisplayX = QslCard.DisplayWidth / 20;
+				DisplayY = QslCard.DisplayHeight / 2;
+				DisplayWidth = QslCard.DisplayWidth * 18 / 20;
+				DisplayHeight = height;
 			}
 			else
 			{
-				DisplayRectangle = new Rect(DisplayRectangle.X, 
-				                            DisplayRectangle.Y,
-				                            QslCard.DisplayRectangle.Width * 18 / 20,
-				                            height);
-				
+				DisplayWidth = QslCard.DisplayWidth * 18 / 20;
+				DisplayHeight = height;
 			}
 		}
 		
@@ -544,7 +544,7 @@ namespace hamqsler
                 totalColWidths += colWidths[i];
             }
             int totalCols = (ShowPseTnx) ? colHeadersText.Length : colHeadersText.Length - 1;
-            double columnExpansion = (DisplayRectangle.Width - totalColWidths) / totalCols;
+            double columnExpansion = (DisplayWidth - totalColWidths) / totalCols;
             for (int i = 0; i < colWidths.Length - 1; i++)
             {
                 colWidths[i] += columnExpansion;
@@ -578,19 +578,21 @@ namespace hamqsler
             Pen transparentPen = new Pen(Brushes.Transparent, 1);
             // draw the box background
             dc.PushOpacity(BackgroundOpacity);
-            dc.DrawRoundedRectangle(BackgroundBrush, transparentPen, DisplayRectangle,
+            dc.DrawRoundedRectangle(BackgroundBrush, transparentPen,
+                                    new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
                                    	cornerRounding, cornerRounding);
             
             dc.Pop();
-            dc.DrawRoundedRectangle(Brushes.Transparent, pen, DisplayRectangle,
+            dc.DrawRoundedRectangle(Brushes.Transparent, pen, 
+                                    new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
                                    	cornerRounding, cornerRounding);
             int qsoCount = (QsosCount > 0) ? QsosCount : MaximumQsos;
             FormattedText formattedText = GenerateFormattedText(ConfirmingText.GetText(true),
                                                                 LineTextBrush,
                                                                 FontWeights.Normal);
             double textHeight = formattedText.Height;
-            double x = DisplayRectangle.X + confirmingXOffset;
-            double y = DisplayRectangle.Y + confirmingYOffset;
+            double x = DisplayX + confirmingXOffset;
+            double y = DisplayY + confirmingYOffset;
             dc.DrawText(formattedText, new Point(x, y));
             x += formattedText.Width + confirmingCallXOffset;
             string text = "        ";
@@ -624,34 +626,36 @@ namespace hamqsler
             // best text fit
             double headerYOffset = FontSize < 9.5 ? 0 : (FontSize < 11.0 ? 1 : 2);
             y += textHeight + firstLineYOffset;
-            dc.DrawLine(pen, new Point(DisplayRectangle.X, y),
-                        new Point(DisplayRectangle.X  + DisplayRectangle.Width, y));
-            x = DisplayRectangle.X;
+            dc.DrawLine(pen, new Point(DisplayX, y),
+                        new Point(DisplayX  + DisplayWidth, y));
+            x = DisplayX;
             for(int i = 0; i < qsoCount; i++)
             {
             	y += textHeight + lineYOffset;
-            	dc.DrawLine(pen, new Point(x, y), new Point(x + DisplayRectangle.Width, y));
+            	dc.DrawLine(pen, new Point(x, y), new Point(x + DisplayWidth, y));
             }
-            x = DisplayRectangle.X;
-            y = DisplayRectangle.Y + textHeight + lineYOffset;
+            x = DisplayX;
+            y = DisplayY + textHeight + lineYOffset;
             int lastColumn = 0;
             for(int i=0; i < ((ShowPseTnx) ? colWidths.Length - 1 : colWidths.Length - 2); i++)
             {
             	dc.DrawText(colHeadersText[i], new Point(x + colHeaderX[i], y + headerYOffset));
             	x += colWidths[i];
-            	dc.DrawLine(pen, new Point(x, y), new Point(x, DisplayRectangle.Y + DisplayRectangle.Height));
+            	dc.DrawLine(pen, new Point(x, y), new Point(x, DisplayY + DisplayHeight));
             	lastColumn++;
             }
             dc.DrawText(colHeadersText[lastColumn], new Point(x + colHeaderX[lastColumn],
                                                               y + headerYOffset));
             if (IsSelected)
             {
-                dc.DrawRoundedRectangle(brush, selectPen, DisplayRectangle,
+                dc.DrawRoundedRectangle(brush, selectPen, 
+            	                        new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
             	                       cornerRounding, cornerRounding);
             }
             else if(IsHighlighted)
             {
-            	dc.DrawRoundedRectangle(brush, hightlightPen, DisplayRectangle,
+            	dc.DrawRoundedRectangle(brush, hightlightPen, 
+            	                        new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
             	                       cornerRounding, cornerRounding);
             }
         }
@@ -667,18 +671,13 @@ namespace hamqsler
 			{
 				if (this.IsLeftMouseButtonDown)
 				{
-					double x = 0;
-					double y = 0;
-					double width = 0;
-					double height = 0;
 					System.Windows.Point pt = e.GetPosition(QslCard);
 					if (cursorLoc == CursorLocation.Inside)
 					{
-						x = originalDisplayRectangle.X;
-						y = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
-						width = originalDisplayRectangle.Width;
-						height = originalDisplayRectangle.Height;
-						DisplayRectangle = new Rect(x, y, width, height);
+						DisplayX = originalDisplayRectangle.X;
+						DisplayY = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
+						DisplayWidth = originalDisplayRectangle.Width;
+						DisplayHeight = originalDisplayRectangle.Height;
 					}
 				}
 				else
@@ -686,7 +685,7 @@ namespace hamqsler
 					Cursor cursor = Cursors.Arrow;
 					cursorLoc = CursorLocation.Outside;
 					System.Windows.Point pt = e.GetPosition(QslCard);
-					if (DisplayRectangle.Contains(pt))
+					if ((new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight)).Contains(pt))
 					{
 						cursorLoc = CursorLocation.Inside;
 						cursor = Cursors.SizeNS;

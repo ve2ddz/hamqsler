@@ -41,25 +41,44 @@ namespace hamqsler
 			set {SetValue(ImageFileNameProperty, value);}
 		}
 		
-		// overrides standard CardItem.DisplayRectangle accessor to account for the case
+		// overrides standard CardItem.Display accessors to account for the case
 		// where there is no image loaded
-        public override Rect DisplayRectangle
+        public override double DisplayWidth
         {
         	get 
         	{
-        		Rect r = (Rect)GetValue(DisplayRectangleProperty);
-        		if(r.Width == 0 && r.Height == 0)
-        			r = CalculateRectangle();
-        		return r; 
+        		double w = (double)GetValue(DisplayWidthProperty);
+        		if(w == 0 && DisplayHeight == 0)
+        		{
+        			double x, y, h;
+        			CalculateRectangle(out x, out y, out w, out h);
+        		}
+        		return w; 
         	}
-            set { SetValue(DisplayRectangleProperty, value); }
+            set {SetValue(DisplayWidthProperty, value); }
         }
+        
+		public override double DisplayHeight 
+		{
+			get 
+			{
+				double h = (double)GetValue(DisplayHeightProperty);
+				if(h == 0 && DisplayWidth == 0)
+				{
+					double x, y, w;
+					CalculateRectangle(out x, out y, out w, out h);
+				}
+				return h; 
+			}
+			set {SetValue(DisplayHeightProperty, value); }
+		}
         
         /// <summary>
         /// CalculateRectangle determines the DisplayRectangle size for the image
         /// </summary>
         /// <returns>DisplayRectangle for this image.</returns>
-        protected abstract Rect CalculateRectangle();
+        protected abstract void CalculateRectangle(out double x, out double y, out double w,
+                                                  out double h);
 
 		[NonSerialized]
 		protected BitmapImage bImage = null;
@@ -180,7 +199,10 @@ namespace hamqsler
                     }
                     if (cursorLoc != CursorLocation.Outside)
                     {
-                        DisplayRectangle = new Rect(x, y, width, height);
+                    	DisplayX = x;
+                    	DisplayY = y;
+                    	DisplayWidth = width;
+                    	DisplayHeight = height;
                         InvalidateVisual();
                     }
 					
@@ -191,17 +213,17 @@ namespace hamqsler
 					// to this image
                     cursorLoc = CursorLocation.Outside;
                     Point pt = e.GetPosition(QslCard);
-                    Rect nw = new Rect(DisplayRectangle.X - cornerSize,
-                            DisplayRectangle.Y - cornerSize,
+                    Rect nw = new Rect(DisplayX - cornerSize,
+                            DisplayY - cornerSize,
                             2 * cornerSize, 2 * cornerSize);
-                    double x = DisplayRectangle.X + DisplayRectangle.Width;
-                    double y = DisplayRectangle.Y;
+                    double x = DisplayX + DisplayWidth;
+                    double y = DisplayY;
                     Rect ne = new Rect(x - cornerSize, y - cornerSize,
                             2 * cornerSize, 2 * cornerSize);
-                    y += DisplayRectangle.Height;
+                    y += DisplayHeight;
                     Rect se = new Rect(x - cornerSize, y - cornerSize,
                             2 * cornerSize, 2 * cornerSize);
-                    x -= DisplayRectangle.Width;
+                    x -= DisplayWidth;
                     Rect sw = new Rect(x - cornerSize, y - cornerSize,
                             2 * cornerSize, 2 * cornerSize);
                     Cursor cursor = Cursors.Arrow;
@@ -225,7 +247,7 @@ namespace hamqsler
                         cursorLoc = CursorLocation.SW;
                         cursor = Cursors.SizeNESW;
                     }
-                    else if (DisplayRectangle.Contains(pt))
+                    else if ((new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight)).Contains(pt))
                     {
                         cursorLoc = CursorLocation.Inside;
                         cursor = Cursors.SizeAll;
@@ -246,17 +268,17 @@ namespace hamqsler
 		/// <param name="dc">Context to draw the card on</param>
 		protected override void OnRender(DrawingContext dc)
 		{
-			Rect rect = DisplayRectangle;
 			Brush brush = Brushes.Transparent;
 			if(ImageFileName == string.Empty || ImageFileName == null)
 			{
-				dc.DrawRectangle(brush, new Pen(brush, 0), rect);
+				dc.DrawRectangle(brush, new Pen(brush, 0), new Rect(DisplayX, DisplayY, DisplayWidth,
+				                                                    DisplayHeight));
 			}
 			else
 			{
-				rect = DisplayRectangle;
-				dc.PushClip(new RectangleGeometry(QslCard.DisplayRectangle));
-				dc.DrawImage(bImage, rect);
+				dc.PushClip(new RectangleGeometry(new Rect(QslCard.DisplayX, QslCard.DisplayY,
+				                                           QslCard.DisplayWidth, QslCard.DisplayHeight)));
+				dc.DrawImage(bImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
 				dc.Pop();
 			}
 			if(IsSelected)
@@ -264,20 +286,22 @@ namespace hamqsler
 				if(bImage != null)
 				{
 					dc.PushOpacity(0.4);
-					dc.DrawImage(bImage, DisplayRectangle);
+					dc.DrawImage(bImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
 					dc.Pop();
 				}
-				dc.DrawRectangle(brush, selectPen, rect);
+				dc.DrawRectangle(brush, selectPen, 
+				                 new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
 			}
 			else if(IsHighlighted)
 			{
 				if(bImage != null)
 				{
 					dc.PushOpacity(0.4);
-					dc.DrawImage(bImage, DisplayRectangle);
+					dc.DrawImage(bImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
 					dc.Pop();					
 				}
-				dc.DrawRectangle(brush, hightlightPen, rect);
+				dc.DrawRectangle(brush, hightlightPen, 
+				                 new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
 			}
 		}
 
@@ -305,13 +329,21 @@ namespace hamqsler
 					bImage.BeginInit();
 					bImage.UriSource = new Uri(fName, UriKind.RelativeOrAbsolute);
 					bImage.EndInit();
-					DisplayRectangle = CalculateRectangle();
+					double x, y, w, h;
+					CalculateRectangle(out x, out y, out w, out h);
+					DisplayX = x;
+					DisplayY = y;
+					DisplayWidth = w;
+					DisplayHeight = h;
 				}
 				else
 				{
 					// reset bImage
 					bImage = null;
-					this.DisplayRectangle = new Rect(0, 0, 0, 0);
+					DisplayX = 0;
+					DisplayY = 0;
+					DisplayWidth = 0;
+					DisplayHeight = 0;
 				}
 				// Image has changed, so let QslCard know it has changed
 				// and redisplay card

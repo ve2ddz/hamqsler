@@ -102,7 +102,10 @@ namespace hamqsler
 		public Card()
 		{
 			userPreferences = ((App)Application.Current).UserPreferences;
-			DisplayRectangle = new Rect(0, 0, 0, 0);
+			DisplayX = 0;
+			DisplayY = 0;
+			DisplayWidth = 0;
+			DisplayHeight = 0;
 			QslCard = this;
 		}
 		
@@ -118,7 +121,10 @@ namespace hamqsler
 			PrintCardOutlines = userPreferences.PrintCardOutlines;
 			FillLastPageWithBlankCards = userPreferences.PrintCardOutlines;
 			SetCardMarginsToPrinterPageMargins = userPreferences.SetCardMarginsToPrinterPageMargins;
-			DisplayRectangle = new Rect(0, 0, width, height);
+			DisplayX = 0;
+			DisplayY = 0;
+			DisplayWidth = width;
+			DisplayHeight = height;
 			// background image
 			BackImage = new BackgroundImage();
 			BackImage.QslCard = this;
@@ -129,10 +135,15 @@ namespace hamqsler
 			{
 				call.Text.Add(part);
 			}
+			call.SetDisplayText();
 			call.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			call.TextFontWeight = FontWeights.Black;
 			call.FontSize = 72.0;
-			call.DisplayRectangle = new Rect(- 70, 0, 0, 0);
+			call.DisplayX = -70;
+			call.DisplayY = 0;
+			call.DisplayWidth = 0;
+			call.DisplayHeight = 0;
+			call.SetDisplayText();
 			TextItems.Add(call);
 			// name Qth text item
 			TextItem nameQth = new TextItem();
@@ -141,10 +152,15 @@ namespace hamqsler
 			{
 				nameQth.Text.Add(part);
 			}
+			nameQth.SetDisplayText();
 			nameQth.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			nameQth.TextFontWeight = FontWeights.Normal;
 			nameQth.FontSize = 10.0;
-			nameQth.DisplayRectangle = new Rect(DisplayRectangle.Width / 2, 15, 0, 0);
+			nameQth.DisplayX = DisplayWidth / 2;
+			nameQth.DisplayY = 15;
+			nameQth.DisplayWidth = 0;
+			nameQth.DisplayHeight = 0;
+			nameQth.SetDisplayText();
 			TextItems.Add(nameQth);
 			// salutation
 			TextItem salutation = new TextItem();
@@ -153,9 +169,14 @@ namespace hamqsler
 			{
 				salutation.Text.Add(part);
 			}
+			salutation.SetDisplayText();
 			salutation.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
 			salutation.FontSize = 10.0;
-			salutation.DisplayRectangle = new Rect(5, DisplayRectangle.Height - 25, 0, 0);
+			salutation.DisplayX = 5;
+			salutation.DisplayY = DisplayHeight - 25;
+			salutation.DisplayWidth = 0;
+			salutation.DisplayHeight = 0;
+			salutation.SetDisplayText();
 			TextItems.Add(salutation);
 			
 			// QsosBox
@@ -172,30 +193,6 @@ namespace hamqsler
 		/// <param name="dc">Context to draw the card on</param>
 		protected override void OnRender(DrawingContext dc)
 		{
-			base.OnRender(dc);
-			Brush brush = Brushes.White;
-			Pen pen = new Pen(Brushes.Transparent, 1);
-			if(PrintCardOutlines)
-			{
-				pen = new Pen(Brushes.Black, 1);
-			}
-			dc.DrawRectangle(brush, pen, DisplayRectangle);
-			if(BackImage != null)
-			{
-				BackImage.Render(dc);
-			}
-			foreach(SecondaryImage si in SecondaryImages)
-			{
-				si.Render(dc);
-			}
-			foreach(TextItem ti in TextItems)
-			{
-				ti.Render(dc);
-			}
-			if(qsosBox != null)
-			{
-				qsosBox.Render(dc);
-			}
 		}
 		
 		/// <summary>
@@ -275,7 +272,10 @@ namespace hamqsler
 		/// <returns>CardItem the cursor is over, or null if not over a child CardItem</returns>
 		public CardItem CursorOver(double x, double y)
 		{
-			if(qsosBox != null && CardItem.WithinRectangle(qsosBox.DisplayRectangle, x, y))
+			if(qsosBox != null && CardItem.WithinRectangle(new Rect(qsosBox.DisplayX, qsosBox.DisplayY,
+			                                                        qsosBox.DisplayWidth, 
+			                                                        qsosBox.DisplayHeight),
+			                                                        x, y))
 			{
 				return qsosBox;
 			}
@@ -289,7 +289,8 @@ namespace hamqsler
 			revTextList.Reverse();
 			foreach(TextItem ti in revTextList)
 			{
-				if(CardItem.WithinRectangle(ti.DisplayRectangle, x, y))
+				if(CardItem.WithinRectangle(new Rect(ti.DisplayX, ti.DisplayY, ti.DisplayWidth,
+				                                     ti.DisplayHeight), x, y))
 				{
 					return ti;
 				}
@@ -304,13 +305,17 @@ namespace hamqsler
 			revImageList.Reverse();
 			foreach(SecondaryImage si in revImageList)
 			{
-				if(CardItem.WithinRectangle(si.DisplayRectangle, x, y))
+				if(CardItem.WithinRectangle(new Rect(si.DisplayX, si.DisplayY, si.DisplayWidth,
+				                                     si.DisplayHeight), x, y))
 				{
 					return si;
 				}
 			}
 			
-			if(BackImage != null && CardItem.WithinRectangle(BackImage.DisplayRectangle,
+			if(BackImage != null && CardItem.WithinRectangle(new Rect(BackImage.DisplayX,
+			                                                          BackImage.DisplayY,
+			                                                          BackImage.DisplayWidth,
+			                                                          BackImage.DisplayHeight),
 			                                                 x, y))
 			{
 				return BackImage;

@@ -76,17 +76,16 @@ namespace hamqsler
 			set {SetValue(TextBrushProperty, value);}
 		}
 		
-		private TextParts text = new TextParts();
+		private static readonly DependencyPropertyKey TextPropertyKey =
+			DependencyProperty.RegisterReadOnly("Text", typeof(TextParts), typeof(TextItem),
+			                                    new PropertyMetadata(null));
+		private static readonly DependencyProperty TextProperty =
+			TextPropertyKey.DependencyProperty;
 		public TextParts Text
 		{
-			get {return text;}
-			set 
-			{
-				text = value;
-				QslCard.InvalidateVisual();
-			}
+			get {return (TextParts)GetValue(TextProperty);}
 		}
-		
+				
 		private static readonly DependencyProperty CheckboxBeforeProperty =
 			DependencyProperty.Register("CheckboxBefore", typeof(bool), typeof(TextItem),
 			                            new PropertyMetadata(false));
@@ -114,14 +113,70 @@ namespace hamqsler
 			set {SetValue(CheckboxLineThicknessProperty, value);}
 		}
 		
-		private static readonly DependencyProperty CheckboxRelativeSizeProperty =
-			DependencyProperty.Register("CheckboxRelativeSize", typeof(double),
+		private static readonly DependencyProperty CheckBoxRelativeSizeProperty =
+			DependencyProperty.Register("CheckBoxRelativeSize", typeof(double),
 			                            typeof(TextItem), new PropertyMetadata(0.6));
-		public double CheckboxRelativeSize
+		public double CheckBoxRelativeSize
 		{
-			get {return (double)GetValue(CheckboxRelativeSizeProperty);}
-			set {SetValue(CheckboxRelativeSizeProperty, value);}
+			get {return (double)GetValue(CheckBoxRelativeSizeProperty);}
+			set {SetValue(CheckBoxRelativeSizeProperty, value);}
 		}
+		
+		[NonSerialized]
+		private static readonly DependencyProperty IsInDesignModeProperty =
+			DependencyProperty.Register("IsInDesignMode", typeof(bool), typeof(CardView),
+			                            new PropertyMetadata(true));
+		public bool IsInDesignMode
+		{
+			get {return (bool)GetValue(IsInDesignModeProperty);}
+			set {SetValue(IsInDesignModeProperty, value);}
+		}
+		
+		private static readonly DependencyProperty DisplayTextProperty =
+			DependencyProperty.Register("DisplayText", typeof(string), typeof(TextItem),
+			                            new PropertyMetadata(string.Empty));
+		public string DisplayText
+		{
+			get {return (string)GetValue(DisplayTextProperty);}
+			set {SetValue(DisplayTextProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CheckBoxSizeProperty =
+			DependencyProperty.Register("CheckBoxSize", typeof(double), typeof(TextItem),
+			                            new PropertyMetadata(0.0));
+		public double CheckBoxSize
+		{
+			get {return (double)GetValue(CheckBoxSizeProperty);}
+			set {SetValue(CheckBoxSizeProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CheckBoxBeforeLeftOffsetProperty = 
+			DependencyProperty.Register("CheckBoxBeforeLeftOffset", typeof(double), typeof(TextItem),
+			                            new PropertyMetadata(0.0));
+		public double CheckBoxBeforeLeftOffset
+		{
+			get {return (double)GetValue(CheckBoxBeforeLeftOffsetProperty);}
+			set {SetValue(CheckBoxBeforeLeftOffsetProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CheckBoxAfterRightOffsetProperty =
+			DependencyProperty.Register("CheckBoxAfterRightOffset", typeof(double), typeof(TextItem),
+			                            new PropertyMetadata(0.0));
+		public double CheckBoxAfterRightOffset
+		{
+			get {return (double)GetValue(CheckBoxAfterRightOffsetProperty);}
+			set {SetValue(CheckBoxAfterRightOffsetProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CheckBoxMarginProperty =
+			DependencyProperty.Register("CheckBoxMargin", typeof(Thickness), typeof(TextItem),
+			                            new PropertyMetadata(new Thickness(0)));
+		public Thickness CheckBoxMargin
+		{
+			get {return (Thickness)GetValue(CheckBoxMarginProperty);}
+			set {SetValue(CheckBoxMarginProperty, value);}
+		}
+		
 		
 		public FormattedText FormattedTextItem
 		{
@@ -130,7 +185,7 @@ namespace hamqsler
 				FontStyle style = (IsItalic==true) ? FontStyles.Italic : FontStyles.Normal;
 				Typeface typeface = new Typeface(TextFontFace, style, TextFontWeight,
 				                                 FontStretches.Normal);
-				return new FormattedText(this.Text.GetText(true), CultureInfo.CurrentUICulture,
+				return new FormattedText(DisplayText, CultureInfo.CurrentUICulture,
 				                         FlowDirection.LeftToRight, typeface, FontSize, TextBrush);
 			}
 		}
@@ -138,7 +193,10 @@ namespace hamqsler
 		/// <summary>
 		/// TextItem constructor
 		/// </summary>
-		public TextItem() {}
+		public TextItem() 
+		{
+			SetValue(TextPropertyKey, new TextParts());
+		}
 		
 		/// <summary>
 		/// Sets DisplayRectangle to a size that contains all of the text plus space for checkboxes
@@ -155,17 +213,19 @@ namespace hamqsler
 				{
 					isModified = QslCard.IsDirty;
 				}
-				Rect rect = new Rect();
-				rect.X = DisplayRectangle.X;
-				rect.Y = DisplayRectangle.Y;
-				if(DisplayRectangle == new Rect(0, 0, 0, 0))
+				if(DisplayX == 0 && DisplayY == 0 && DisplayWidth == 0 && DisplayHeight == 0)
 				{
-					rect.X = (QslCard.DisplayRectangle.Width - forText.Width) / 2;
-					rect.Y = (QslCard.DisplayRectangle.Height - forText.Height) / 2;
+					DisplayX = (QslCard.DisplayWidth - forText.Width) / 2;
+					DisplayY = (QslCard.DisplayHeight - forText.Height) / 2;
 				}
-				rect.Width = forText.Width + 2 * forText.Height + 6;
-				rect.Height = forText.Height;
-				DisplayRectangle = rect;
+				DisplayWidth = forText.Width + 2 * forText.Height + 6;
+				DisplayHeight = forText.Height;
+				CheckBoxBeforeLeftOffset = DisplayX + FormattedTextItem.Height * 
+				                          (1 - CheckBoxRelativeSize) / 2;
+				CheckBoxAfterRightOffset = DisplayX + DisplayWidth -
+										   (1 - CheckBoxRelativeSize) / 2;
+				double margin = (DisplayHeight - CheckBoxSize) / 2 + 2;
+				CheckBoxMargin = new Thickness(margin, 0, margin, 0);
 				
 				if(QslCard != null)		// various properties that result in CalculateRectangle being
 										// called may be set before QslCard is set
@@ -182,58 +242,8 @@ namespace hamqsler
 		/// <param name="dc">Context to draw the card on</param>
 		protected override void OnRender(DrawingContext dc)
 		{
-			base.OnRender(dc);
-			CalculateRectangle();
-			if(IsSelected)
-			{
-				dc.DrawRectangle(Brushes.Transparent, selectPen, DisplayRectangle);
-				DrawCheckboxesAndText(dc);
-			}
-			else if(IsHighlighted)
-			{
-				dc.DrawRectangle(Brushes.Transparent, hightlightPen, DisplayRectangle);
-				DrawCheckboxesAndText(dc);
-			}
-			else
-			{
-				// if not selected or highlighted, clip the textitem to fit on the card.
-				dc.PushClip(new RectangleGeometry(QslCard.DisplayRectangle));
-				DrawCheckboxesAndText(dc);
-				dc.Pop();
-			}
 		}
 			
-		/// <summary>
-		/// Helper method that draws the before and after checkboxes and the text
-		/// </summary>
-		/// <param name="dc">DrawingContext to draw on</param>
-		private void DrawCheckboxesAndText(DrawingContext dc)
-		{
-			if(CheckboxBefore == true)
-			{
-				dc.DrawRectangle(Brushes.Transparent, new Pen(TextBrush, CheckboxLineThickness),
-				                 new Rect(DisplayRectangle.X + FormattedTextItem.Height * 
-				                          (1 - CheckboxRelativeSize) / 2,
-				                          DisplayRectangle.Y + FormattedTextItem.Height *  
-				                          (1 - CheckboxRelativeSize) / 2,
-				                          FormattedTextItem.Height * CheckboxRelativeSize, 
-				                          FormattedTextItem.Height * CheckboxRelativeSize));
-			}
-			if(CheckboxAfter == true)
-			{
-				dc.DrawRectangle(Brushes.Transparent, new Pen(TextBrush, CheckboxLineThickness),
-				                 new Rect(DisplayRectangle.X + DisplayRectangle.Width -
-				                          FormattedTextItem.Height * 
-				                         ( 1 - (1 - CheckboxRelativeSize) / 2),
-				                          DisplayRectangle.Y + FormattedTextItem.Height * 
-				                          (1 - CheckboxRelativeSize) / 2,
-				                          FormattedTextItem.Height * CheckboxRelativeSize, 
-				                          FormattedTextItem.Height * CheckboxRelativeSize));
-			}
-			dc.DrawText(FormattedTextItem, new Point(DisplayRectangle.X + FormattedTextItem.Height + 3,
-			                                         DisplayRectangle.Y));
-		}
-		
 		/// <summary>
 		/// Handler for PropertyChanged event
 		/// </summary>
@@ -247,11 +257,10 @@ namespace hamqsler
 			   e.Property == IsItalicProperty ||
 			   e.Property == FontSizeProperty ||
 			   e.Property == TextBrushProperty ||
-//			   e.Property == TextProperty ||
 			   e.Property == CheckboxBeforeProperty ||
 			   e.Property == CheckboxAfterProperty ||
 			   e.Property == CheckboxLineThicknessProperty ||
-			   e.Property == CheckboxRelativeSizeProperty)
+			   e.Property == CheckBoxRelativeSizeProperty)
 			{
 				CalculateRectangle();
 				if(QslCard != null)		// properties may be set before QslCard is set
@@ -260,6 +269,42 @@ namespace hamqsler
 					QslCard.InvalidateVisual();
 				}
 			}
+			else if(e.Property == IsInDesignModeProperty)
+			{
+				if(Text != null)
+				{
+					SetDisplayText();
+//					CalculateRectangle();
+				}
+			}
+			else if(e.Property == TextProperty)
+			{
+				SetDisplayText();
+				if(QslCard != null)
+				{
+					QslCard.IsDirty = true;
+				}
+			}
+			if(e.Property == FontSizeProperty)
+			{
+				CheckBoxSize = FormattedTextItem.Height * CheckBoxRelativeSize;
+				// no need to set QslCard.IsDirty because this is done above for these properties
+			}
+			else if(e.Property == CheckBoxRelativeSizeProperty)
+			{
+				CheckBoxSize = FormattedTextItem.Height * CheckBoxRelativeSize;
+				// no need to set QslCard.IsDirty because this is done above for these properties
+			}
+		}
+		
+		/// <summary>
+		/// Determine the text to display based on setting of IsInDesignMode property
+		/// </summary>
+		public void SetDisplayText()
+		{
+			DisplayText = Text.GetText(IsInDesignMode);
+			CheckBoxSize = FormattedTextItem.Height * CheckBoxRelativeSize;
+			CalculateRectangle();
 		}
 
 		/// <summary>
@@ -285,7 +330,10 @@ namespace hamqsler
 						y = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
 						width = originalDisplayRectangle.Width;
 						height = originalDisplayRectangle.Height;
-						DisplayRectangle = new Rect(x, y, width, height);
+						DisplayX = x;
+						DisplayY = y;
+						DisplayWidth = width;
+						DisplayHeight = height;
 						InvalidateVisual();
 					}
 				}
@@ -293,7 +341,8 @@ namespace hamqsler
 				{
 					Cursor cursor = Cursors.Arrow;
 					cursorLoc = CursorLocation.Outside;
-					if (CardItem.WithinRectangle(DisplayRectangle, pt.X, pt.Y))
+					if (CardItem.WithinRectangle(new Rect(DisplayX, DisplayY, DisplayWidth,
+					                                      DisplayHeight), pt.X, pt.Y))
 					{
 						cursorLoc = CursorLocation.Inside;
 						cursor = Cursors.SizeAll;

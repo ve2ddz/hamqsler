@@ -93,6 +93,10 @@
       <DependentUpon>CardTabItem.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CardView.xaml.cs">
+      <DependentUpon>CardView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CountMacro.cs" />
     <Compile Include="CountMacroGroupBox.xaml.cs">
       <DependentUpon>CountMacroGroupBox.xaml</DependentUpon>
@@ -138,6 +142,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TextItem.cs" />
+    <Compile Include="TextItemView.xaml.cs">
+      <DependentUpon>TextItemView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TextMacrosDialog.xaml.cs">
       <DependentUpon>TextMacrosDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -164,6 +172,7 @@
     <Page Include="AdifMacroGroupBox.xaml" />
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
+    <Page Include="CardView.xaml" />
     <Page Include="CountMacroGroupBox.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
@@ -173,6 +182,7 @@
     <Page Include="SplashPage.xaml" />
     <Page Include="StaticTextGroupBox.xaml" />
     <Page Include="StaticTextViewer.xaml" />
+    <Page Include="TextItemView.xaml" />
     <Page Include="TextMacrosDialog.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />
   </ItemGroup>

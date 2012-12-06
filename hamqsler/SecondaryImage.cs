@@ -37,34 +37,38 @@ namespace hamqsler
 		/// Calculate the DisplayRectangle for this SecondaryImage
 		/// </summary>
 		/// <returns>DisplayRectangle for the image, or 1 inch by 1 inch square if no image</returns>
-		protected override Rect CalculateRectangle()
+		protected override void CalculateRectangle(out double x, out double y, out double w,
+		                                          out double h)
 		{
 			// must get DisplayRectangle directly from DisplayRectangleProperty to prevent
 			// circular reference
-			Rect r = (Rect)GetValue(DisplayRectangleProperty);
+			x = DisplayX;
+			y = DisplayY;
+			w = DisplayWidth;
+			h = DisplayHeight;
 			if(bImage == null)
 			{
-				Rect cardRect = QslCard.DisplayRectangle;
-				r = new Rect((cardRect.Width - imageStartDimension) / 2,
-				             (cardRect.Height - imageStartDimension) / 2,
-				             imageStartDimension, imageStartDimension);
+				x = (QslCard.DisplayWidth - imageStartDimension) / 2;
+				y = (QslCard.DisplayHeight - imageStartDimension) / 2;
+				w = imageStartDimension;
+				h = imageStartDimension;
 			}
 			else
 			{
-				if(r == new Rect(0, 0, 0, 0))
+				if(x == 0 && y == 0 && h == 0 && w == 0)
 				{
-					Rect cardRect = QslCard.DisplayRectangle;
-					r = new Rect((cardRect.Width - imageStartDimension) / 2,
-					             (cardRect.Height - imageStartDimension) / 2,
-					             imageStartDimension, imageStartDimension);					
+					x = (QslCard.DisplayWidth - imageStartDimension) / 2;
+					y = (QslCard.DisplayHeight - imageStartDimension) / 2;
+					w = imageStartDimension;
+					h = imageStartDimension;
 				}
-	            double upperLeftX = r.X;
-	            double upperLeftY = r.Y;
+	            double upperLeftX = QslCard.DisplayX;
+	            double upperLeftY = QslCard.DisplayY;
 	            double dWidth = bImage.Width;
 	            double dHeight = bImage.Height;
 	            
-	            double width = r.Width;
-	            double height = r.Height;
+	            double width = QslCard.DisplayWidth;
+	            double height = QslCard.DisplayHeight;
 	            double scaleX = width / dWidth;
 	            double scaleY = height / dHeight;
 	            double scale = scaleX > scaleY ? scaleX : scaleY;
@@ -78,10 +82,11 @@ namespace hamqsler
 	            {
 	                upperLeftY += (height - dHeight) / 2;
 	            }
-	           r = new Rect(upperLeftX, upperLeftY, dWidth, dHeight);
-					
+	            x = upperLeftX;
+	            y = upperLeftY;
+	            w = dWidth;
+	            h = dHeight;
 			}
-			return r;
 		}
 	}
 }

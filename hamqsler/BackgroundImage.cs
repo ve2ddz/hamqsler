@@ -38,39 +38,43 @@ namespace hamqsler
 		/// Calculate the DisplayRectangle for this BackgroundImage
 		/// </summary>
 		/// <returns>DisplayRectangle for the image, or QslCard.DisplayRectangle if no image</returns>
-		protected override Rect CalculateRectangle()
+		protected override void CalculateRectangle(out double x, out double y, out double w,
+		                                          out double h)
 		{
-			Rect r = (Rect)GetValue(DisplayRectangleProperty);
+			x = DisplayX;
+			y = DisplayY;
+			w = DisplayWidth;
+			h = DisplayHeight;
 			if(bImage == null)
 			{
-				r = QslCard.DisplayRectangle;
+				x = QslCard.DisplayX;
+				y = QslCard.DisplayY;
+				w = QslCard.DisplayWidth;
+				h = QslCard.DisplayHeight;
 			}
 			else
 			{
-	            double upperLeftX = 0;
-	            double upperLeftY = 0;
+	            x = 0;
+	            y = 0;
 	            double dWidth = bImage.Width;
 	            double dHeight = bImage.Height;
 	            
-	            double width = QslCard.DisplayRectangle.Width;
-	            double height = QslCard.DisplayRectangle.Height;
-	            double scaleX = width / dWidth;
-	            double scaleY = height / dHeight;
+	            w = QslCard.DisplayWidth;
+	            h = QslCard.DisplayHeight;
+	            double scaleX = w / dWidth;
+	            double scaleY = h / dHeight;
 	            double scale = scaleX > scaleY ? scaleX : scaleY;
-	            dWidth *= scale;
-	            dHeight *= scale;
-	            if (dWidth > width)
+	            w *= scale;
+	            h *= scale;
+	            if (dWidth > w)
 	            {
-	                upperLeftX = (width - dWidth) / 2;
+	                x = (w - dWidth) / 2;
 	            }
-	            if (dHeight > height)
+	            if (dHeight > h)
 	            {
-	                upperLeftY = (height - dHeight) / 2;
+	                y = (h - dHeight) / 2;
 	            }
-	           r = new Rect(upperLeftX, upperLeftY, dWidth, dHeight);
-					
 			}
-			return r;
 		}
 		
 	}

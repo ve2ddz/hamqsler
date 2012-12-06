@@ -1,0 +1,7 @@
+﻿<Canvas x:Class="hamqsler.CardView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Rectangle Width="{Binding Path=DisplayWidth, Mode=OneWay}"
+				Height="{Binding Path=DisplayHeight, Mode=OneWay}"
+				Fill="White" Stroke="Black"/>
+</Canvas>

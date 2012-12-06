@@ -29,7 +29,7 @@ namespace hamqsler
 	/// </summary>
 	abstract public class CardItem : UIElement
 	{
-		protected static readonly DependencyProperty DisplayRectangleProperty =
+/*		protected static readonly DependencyProperty DisplayRectangleProperty =
 		            DependencyProperty.Register("DisplayRectangle", typeof(Rect),
 		        typeof(CardItem), new PropertyMetadata(new Rect(0, 0, 0, 0)));
 
@@ -37,8 +37,44 @@ namespace hamqsler
         {
             get { return (Rect)GetValue(DisplayRectangleProperty); }
             set { SetValue(DisplayRectangleProperty, value); }
+        }*/
+        
+        protected static readonly DependencyProperty DisplayXProperty =
+        	DependencyProperty.Register("DisplayX", typeof(double), typeof(CardItem),
+        	                            new PropertyMetadata(0.0));
+        public virtual double DisplayX
+        {
+        	get {return (double)GetValue(DisplayXProperty);}
+        	set {SetValue(DisplayXProperty, value);}
         }
-
+        
+        protected static readonly DependencyProperty DisplayYProperty =
+        	DependencyProperty.Register("DisplayY", typeof(double), typeof(CardItem),
+        	                            new PropertyMetadata(0.0));
+        public virtual double DisplayY
+        {
+        	get {return (double)GetValue(DisplayYProperty);}
+        	set {SetValue(DisplayYProperty, value);}
+        }
+        
+        protected static readonly DependencyProperty DisplayWidthProperty =
+        	DependencyProperty.Register("DisplayWidth", typeof(double), typeof(CardItem),
+        	                            new PropertyMetadata(0.0));
+        public virtual double DisplayWidth
+        {
+        	get {return (double)GetValue(DisplayWidthProperty);}
+        	set {SetValue(DisplayWidthProperty, value);}
+        }
+        
+        protected static readonly DependencyProperty DisplayHeightProperty =
+        	DependencyProperty.Register("DisplayHeight", typeof(double), typeof(CardItem),
+        	                            new PropertyMetadata(0.0));
+        public virtual double DisplayHeight
+        {
+        	get {return (double)GetValue(DisplayHeightProperty);}
+        	set {SetValue(DisplayHeightProperty, value);}
+        }
+        
         [NonSerialized]
 		private Card qslCard;
 		public Card QslCard
@@ -71,8 +107,8 @@ namespace hamqsler
 		protected Point leftMouseDownPoint = new Point(0, 0);
 		protected Rect originalDisplayRectangle;
 		
-		protected static Pen hightlightPen = CreateHighlightPen();
-		protected static Pen selectPen = CreateSelectPen();
+		public static Pen hightlightPen = CreateHighlightPen();
+		public static Pen selectPen = CreateSelectPen();
 		
 		public enum CursorLocation
 		{
@@ -103,7 +139,10 @@ namespace hamqsler
 		public CardItem(Rect r)
 		{
 			InitializeCardItem();
-			DisplayRectangle = r;
+			DisplayX = r.X;
+			DisplayY = r.Y;
+			DisplayWidth = r.Width;
+			DisplayHeight = r.Height;
 		}
 		
 		/// <summary>
@@ -129,7 +168,8 @@ namespace hamqsler
                 {
                		// only want to capture mouse if cursor within this card item
 	                IsLeftMouseButtonDown = true;
-	                originalDisplayRectangle = DisplayRectangle;
+	                originalDisplayRectangle = new Rect(DisplayX, DisplayY, DisplayWidth,
+	                                                    DisplayHeight);
 	                leftMouseDownPoint = pt;
 	                this.CaptureMouse();
                 }
@@ -182,17 +222,17 @@ namespace hamqsler
 		/// </returns>
 		public CursorLocation GetCursorLocation(double x, double y)
 		{
-			Rect nw = new Rect(DisplayRectangle.Left - cornerSize,
-			                   DisplayRectangle.Top - cornerSize,
+			Rect nw = new Rect(DisplayX - cornerSize,
+			                   DisplayY - cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);
-			Rect ne = new Rect(DisplayRectangle.Left + DisplayRectangle.Width - cornerSize,
-			                   DisplayRectangle.Top - cornerSize,
+			Rect ne = new Rect(DisplayX + DisplayWidth - cornerSize,
+			                   DisplayY - cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);
-			Rect se = new Rect(DisplayRectangle.Left + DisplayRectangle.Width - cornerSize,
-			                   DisplayRectangle.Top + DisplayRectangle.Height - cornerSize,
+			Rect se = new Rect(DisplayX + DisplayWidth - cornerSize,
+			                   DisplayY + DisplayHeight - cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);
-			Rect sw = new Rect(DisplayRectangle.Left - cornerSize,
-			                   DisplayRectangle.Top + DisplayRectangle.Height - cornerSize,
+			Rect sw = new Rect(DisplayX - cornerSize,
+			                   DisplayY + DisplayHeight - cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);
 			if(WithinRectangle(nw, x, y))
  		    {
@@ -210,7 +250,7 @@ namespace hamqsler
 			{
 				return CursorLocation.SW;
 			}
-			else if(WithinRectangle(DisplayRectangle, x, y))
+			else if(WithinRectangle(new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight), x, y))
 			{
 				return CursorLocation.Inside;
 			}

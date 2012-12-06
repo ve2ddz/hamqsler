@@ -49,6 +49,13 @@ namespace hamqsler
 			set {qslCard = value;}
 		}
 		
+		private CardView cardView = null;
+		public CardView CardView
+		{
+			get {return cardView;}
+			set {cardView = value;}
+		}
+		
 		private Point highlightPoint;
 		
 		/// <summary>
@@ -69,9 +76,11 @@ namespace hamqsler
 			QslCard = new Card(cardWidth, cardHeight);
 			double left = (this.Width - cardWidth) / 2;
 			double top = (this.Height - cardHeight) / 2;
-			Canvas.SetLeft(QslCard, left);
-			Canvas.SetTop(QslCard, top);
-			this.Children.Add(QslCard);
+			cardView = new CardView(true);
+			cardView.QslCard = QslCard;
+			Canvas.SetLeft(cardView, left);
+			Canvas.SetTop(cardView, top);
+			this.Children.Add(cardView);
 		}
 		
 		/// <summary>
