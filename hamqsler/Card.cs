@@ -114,17 +114,16 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="width">Width of the card in device independent units</param>
 		/// <param name="height">Height of the card in device independent units</param>
-		public Card(double width, double height)
+        /// <param name="isInDesignMode">Boolean to indicate if this image is to be displayed
+        /// in design mode</param>
+		public Card(double width, double height, bool isInDesignMode)
+			: base(new Rect(0, 0, width, height), isInDesignMode)
 		{
 			userPreferences = ((App)Application.Current).UserPreferences;
 			// card properties
 			PrintCardOutlines = userPreferences.PrintCardOutlines;
 			FillLastPageWithBlankCards = userPreferences.PrintCardOutlines;
 			SetCardMarginsToPrinterPageMargins = userPreferences.SetCardMarginsToPrinterPageMargins;
-			DisplayX = 0;
-			DisplayY = 0;
-			DisplayWidth = width;
-			DisplayHeight = height;
 			// background image
 			BackImage = new BackgroundImage();
 			BackImage.QslCard = this;

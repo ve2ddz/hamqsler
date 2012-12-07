@@ -1,7 +1,8 @@
-﻿<UserControl x:Class="hamqsler.TextItemView"
+﻿<local:CardItemView x:Class="hamqsler.TextItemView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:hamqsler">
+    xmlns:local="clr-namespace:hamqsler"
+	Canvas.Left="{Binding Path=DisplayX}" Canvas.Top="{Binding Path=DisplayY}">
 	<Canvas>
 		<Rectangle Width="{Binding Path=DisplayWidth}"
 					Height="{Binding Path=DisplayHeight}"
@@ -25,6 +26,7 @@
 						Height="{Binding Path=CheckBoxSize}"
 						StrokeThickness="{Binding Path=CheckboxLineThickness}"
 						Canvas.Left="{Binding Path=CheckBoxBeforeLeftOffset}"
+			            Fill="Transparent"
 						VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
 				<Rectangle.Style>
 					<Style TargetType="{x:Type Rectangle}">
@@ -56,6 +58,7 @@
 						Height="{Binding Path=CheckBoxSize}"
 						StrokeThickness="{Binding Path=CheckboxLineThickness}"
 						Canvas.Right="{Binding Path=CheckBoxAfterRightOffset}"
+			            Fill="Transparent"
 						VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
 				<Rectangle.Style>
 					<Style TargetType="{x:Type Rectangle}">
@@ -72,4 +75,4 @@
 		</StackPanel>
 	</Canvas>
 
-</UserControl>
+</local:CardItemView>

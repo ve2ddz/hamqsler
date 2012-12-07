@@ -123,15 +123,6 @@ namespace hamqsler
 		}
 		
 		[NonSerialized]
-		private static readonly DependencyProperty IsInDesignModeProperty =
-			DependencyProperty.Register("IsInDesignMode", typeof(bool), typeof(CardView),
-			                            new PropertyMetadata(true));
-		public bool IsInDesignMode
-		{
-			get {return (bool)GetValue(IsInDesignModeProperty);}
-			set {SetValue(IsInDesignModeProperty, value);}
-		}
-		
 		private static readonly DependencyProperty DisplayTextProperty =
 			DependencyProperty.Register("DisplayText", typeof(string), typeof(TextItem),
 			                            new PropertyMetadata(string.Empty));
@@ -193,7 +184,9 @@ namespace hamqsler
 		/// <summary>
 		/// TextItem constructor
 		/// </summary>
-		public TextItem() 
+        /// <param name="isInDesignMode">Boolean to indicate if this image is to be displayed
+        /// in design mode</param>
+		public TextItem(bool isInDesignMode = true) : base(isInDesignMode)
 		{
 			SetValue(TextPropertyKey, new TextParts());
 		}

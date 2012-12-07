@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="CardImageBase.cs" />
     <Compile Include="CardItem.cs" />
+    <Compile Include="CardItemView.cs" />
     <Compile Include="CardTabItem.xaml.cs">
       <DependentUpon>CardTabItem.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -107,6 +108,10 @@
     <Compile Include="DoubleToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
+    <Compile Include="ImageView.xaml.cs">
+      <DependentUpon>ImageView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MacroGroupBox.cs" />
     <Compile Include="ManagerExistsMacro.cs" />
     <Compile Include="ManagerExistsMacroGroupBox.xaml.cs">
@@ -130,6 +135,7 @@
     </Compile>
     <Compile Include="QsoWithInclude.cs" />
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
+    <Compile Include="RectConverter.cs" />
     <Compile Include="SecondaryImage.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="StaticText.cs" />
@@ -174,6 +180,7 @@
     <Page Include="CardTabItem.xaml" />
     <Page Include="CardView.xaml" />
     <Page Include="CountMacroGroupBox.xaml" />
+    <Page Include="ImageView.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
     <Page Include="ManagerMacroGroupBox.xaml" />

@@ -28,16 +28,20 @@ namespace hamqsler
 	public class BackgroundImage : CardImageBase
 	{
 		/// <summary>
-		/// Default constructor
+		/// Constructor
 		/// </summary>
-		public BackgroundImage() : base()
-		{
-		}
+        /// <param name="isInDesignMode">Boolean to indicate if this image is to be displayed
+        /// in design mode</param>
+		public BackgroundImage(bool isInDesignMode = true) : base(isInDesignMode)
+		{}
 		
 		/// <summary>
 		/// Calculate the DisplayRectangle for this BackgroundImage
 		/// </summary>
-		/// <returns>DisplayRectangle for the image, or QslCard.DisplayRectangle if no image</returns>
+		/// <param name="x">X coordinate of upper left corner</param>
+		/// <param name="y">Y coordinate of upper left corner</param>
+		/// <param name="w">Width</param>
+		/// <param name="h">Height</param>
 		protected override void CalculateRectangle(out double x, out double y, out double w,
 		                                          out double h)
 		{
@@ -45,19 +49,10 @@ namespace hamqsler
 			y = DisplayY;
 			w = DisplayWidth;
 			h = DisplayHeight;
-			if(bImage == null)
+			if(BitMapImage != EmptyImage)
 			{
-				x = QslCard.DisplayX;
-				y = QslCard.DisplayY;
-				w = QslCard.DisplayWidth;
-				h = QslCard.DisplayHeight;
-			}
-			else
-			{
-	            x = 0;
-	            y = 0;
-	            double dWidth = bImage.Width;
-	            double dHeight = bImage.Height;
+	            double dWidth = BitMapImage.Width;
+	            double dHeight = BitMapImage.Height;
 	            
 	            w = QslCard.DisplayWidth;
 	            h = QslCard.DisplayHeight;
@@ -69,13 +64,25 @@ namespace hamqsler
 	            if (dWidth > w)
 	            {
 	                x = (w - dWidth) / 2;
+	                w = dWidth;
 	            }
 	            if (dHeight > h)
 	            {
 	                y = (h - dHeight) / 2;
+	                h = dHeight;
 	            }
 			}
 		}
 		
+		/// <summary>
+		/// Set display rectangle to default size (only used when there is no image file)
+		/// </summary>
+		protected override void ResetRectangle()
+		{
+			DisplayX = 0;
+			DisplayY = 0;
+			DisplayWidth = QslCard.DisplayWidth;
+			DisplayHeight = QslCard.DisplayHeight;
+		}
 	}
 }

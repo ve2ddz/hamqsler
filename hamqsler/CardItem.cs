@@ -29,16 +29,6 @@ namespace hamqsler
 	/// </summary>
 	abstract public class CardItem : UIElement
 	{
-/*		protected static readonly DependencyProperty DisplayRectangleProperty =
-		            DependencyProperty.Register("DisplayRectangle", typeof(Rect),
-		        typeof(CardItem), new PropertyMetadata(new Rect(0, 0, 0, 0)));
-
-        public virtual Rect DisplayRectangle
-        {
-            get { return (Rect)GetValue(DisplayRectangleProperty); }
-            set { SetValue(DisplayRectangleProperty, value); }
-        }*/
-        
         protected static readonly DependencyProperty DisplayXProperty =
         	DependencyProperty.Register("DisplayX", typeof(double), typeof(CardItem),
         	                            new PropertyMetadata(0.0));
@@ -76,18 +66,44 @@ namespace hamqsler
         }
         
         [NonSerialized]
-		private Card qslCard;
+        // Boolean to indicate if if in design or print mode
+        protected static readonly DependencyProperty IsInDesignModeProperty =
+        	DependencyProperty.Register("IsInDesignMode", typeof(bool), typeof(CardItem),
+        	                            new PropertyMetadata(true));
+        public bool IsInDesignMode
+        {
+        	get {return (bool)GetValue(IsInDesignModeProperty);}
+        	set {SetValue(IsInDesignModeProperty, value);}
+        }
+        
+        protected static readonly DependencyProperty QslCardProperty =
+        	DependencyProperty.Register("QslCard", typeof(Card), typeof(CardItem),
+        	                            new PropertyMetadata(null));
 		public Card QslCard
 		{
-			get {return qslCard;}
-			set {qslCard = value;}
+			get {return (Card)GetValue(QslCardProperty);}
+			set {SetValue(QslCardProperty, value);}
 		}
 		
-		private bool isHighlighted = false;
+		/// <summary>
+		/// RectangleGeometry 
+		/// </summary>
+		protected static readonly DependencyProperty ClipRectangleProperty =
+			DependencyProperty.Register("ClipRectangle", typeof(Rect), typeof(CardItem),
+			                            new PropertyMetadata(new Rect(0, 0, 0, 0)));
+		public Rect ClipRectangle
+		{
+			get {return (Rect)GetValue(ClipRectangleProperty);}
+			set {SetValue(ClipRectangleProperty, value);}
+		}
+		
+		private static readonly DependencyProperty IsHighlightedProperty =
+			DependencyProperty.Register("IsHighlighted", typeof(bool), typeof(CardItem),
+			                            new PropertyMetadata(false));
 		public bool IsHighlighted
 		{
-			get {return isHighlighted;}
-			set {isHighlighted = value;}
+			get {return (bool)GetValue(IsHighlightedProperty);}
+			set {SetValue(IsHighlightedProperty, value);}
 		}
 		
 		private bool isSelected = false;
@@ -126,9 +142,14 @@ namespace hamqsler
 		protected const int cornerSize = 5;
 		
 				
-        // default constructor
-		public CardItem() : base()
+		/// <summary>
+		/// default constructor
+		/// </summary>
+		/// <param name="isInDesignMode">Boolean to indicate whether this card item is being
+		/// created in design or print mode</param>
+		public CardItem(bool isInDesignMode = true)
 		{
+			IsInDesignMode = isInDesignMode;
 			InitializeCardItem();
 		}
 		
@@ -136,8 +157,11 @@ namespace hamqsler
 		/// constructor
 		/// </summary>
 		/// <param name="r">Rect object that describes the location and size of the card item</param>
-		public CardItem(Rect r)
+		/// <param name="isInDesignMode">Boolean to indicate whether this card item is being
+		/// created in design or print mode</param>
+		public CardItem(Rect r, bool isInDesignMode)
 		{
+			IsInDesignMode = isInDesignMode;
 			InitializeCardItem();
 			DisplayX = r.X;
 			DisplayY = r.Y;
@@ -152,6 +176,23 @@ namespace hamqsler
         {
             this.SnapsToDevicePixels = true;
         }
+        
+        /// <summary>
+        /// Handler for PropertyChanged event
+        /// </summary>
+        /// <param name="e">DependencyPropertyChangedEventArgs object</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == DisplayXProperty ||
+			   e.Property == DisplayYProperty ||
+			   e.Property == QslCardProperty)
+			{
+				// set the ClipRectangle property
+				ClipRectangle = new Rect(-DisplayX, -DisplayY, QslCard.DisplayWidth,
+				                         QslCard.DisplayHeight);
+			}
+		}
 		
 		/// <summary>
 		/// Handle MouseLeftButtonDown event

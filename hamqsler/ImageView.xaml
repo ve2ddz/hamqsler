@@ -1,0 +1,57 @@
+﻿<local:CardItemView x:Class="hamqsler.ImageView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:hamqsler"
+	Canvas.Left="{Binding Path=DisplayX}" Canvas.Top="{Binding Path=DisplayY}">
+	<local:CardItemView.Resources>
+		<local:RectConverter x:Key="RectConverter"/>
+	</local:CardItemView.Resources>
+	<Canvas x:Name="ImageCanvas" Width="{Binding Path=DisplayWidth}"	
+	        Height="{Binding Path=DisplayHeight}">
+		<Image Source="{Binding Path=BitMapImage}" HorizontalAlignment="Stretch"
+			   VerticalAlignment="Stretch">
+ 			<Image.Clip>
+				<RectangleGeometry>
+ 					<RectangleGeometry.Rect>
+						<MultiBinding Converter="{StaticResource RectConverter}">
+ 							<Binding Path="ClipRectangle.X"/>
+ 							<Binding Path="ClipRectangle.Y"/>
+ 							<Binding Path="QslCard.DisplayWidth"/>
+ 							<Binding Path="QslCard.DisplayHeight"/>
+ 						</MultiBinding>
+					</RectangleGeometry.Rect>
+ 				</RectangleGeometry>
+			</Image.Clip>
+		</Image>
+		<Image Source="{Binding Path=BitMapImage}"
+	       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+		       Opacity="0.4">
+			<Image.Style>
+				<Style TargetType="{x:Type Image}">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding Path=IsInDesignMode}" Value="True">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Image.Style>
+		</Image>
+		<Rectangle Width="{Binding Path=DisplayWidth}"
+					Height="{Binding Path=DisplayHeight}"
+					StrokeThickness="2.0" StrokeDashArray="5,3">
+			<Rectangle.Style>
+				<Style TargetType="{x:Type Rectangle}">
+					<Setter Property="Stroke" Value="Transparent"/>
+ 					<Style.Triggers>
+						<DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+							<Setter Property="Stroke" Value="Blue"/>
+						</DataTrigger>
+						<DataTrigger Binding="{Binding Path=IsHighlighted}" Value="True">
+							<Setter Property="Stroke" Value="OrangeRed"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Rectangle.Style>
+		</Rectangle>
+	</Canvas>
+</local:CardItemView>

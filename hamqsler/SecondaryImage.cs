@@ -46,7 +46,7 @@ namespace hamqsler
 			y = DisplayY;
 			w = DisplayWidth;
 			h = DisplayHeight;
-			if(bImage == null)
+			if(BitMapImage == EmptyImage)
 			{
 				x = (QslCard.DisplayWidth - imageStartDimension) / 2;
 				y = (QslCard.DisplayHeight - imageStartDimension) / 2;
@@ -64,8 +64,8 @@ namespace hamqsler
 				}
 	            double upperLeftX = QslCard.DisplayX;
 	            double upperLeftY = QslCard.DisplayY;
-	            double dWidth = bImage.Width;
-	            double dHeight = bImage.Height;
+	            double dWidth = BitMapImage.Width;
+	            double dHeight = BitMapImage.Height;
 	            
 	            double width = QslCard.DisplayWidth;
 	            double height = QslCard.DisplayHeight;
@@ -87,6 +87,11 @@ namespace hamqsler
 	            w = dWidth;
 	            h = dHeight;
 			}
+		}
+		
+		protected override void ResetRectangle()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

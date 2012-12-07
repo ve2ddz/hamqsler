@@ -73,11 +73,10 @@ namespace hamqsler
 		/// <param name="cardHeight">Height of card in device independent units</param>
 		public void CreateCard(double cardWidth, double cardHeight)
 		{
-			QslCard = new Card(cardWidth, cardHeight);
+			QslCard = new Card(cardWidth, cardHeight, true);
 			double left = (this.Width - cardWidth) / 2;
 			double top = (this.Height - cardHeight) / 2;
-			cardView = new CardView(true);
-			cardView.QslCard = QslCard;
+			cardView = new CardView(QslCard, true);
 			Canvas.SetLeft(cardView, left);
 			Canvas.SetTop(cardView, top);
 			this.Children.Add(cardView);
@@ -170,7 +169,6 @@ namespace hamqsler
 		private void OnMouseMove(object sender, MouseEventArgs e)
 		{
 			// Is the cursor over a CardItem?
-			Point location = e.GetPosition(QslCard);
 			CardItem ci = QslCard.GetSelected();
 			if(ci != null)
 			{
@@ -178,9 +176,11 @@ namespace hamqsler
 			}
 			else
 			{
-				ci = QslCard.CursorOver(location.X, location.Y);
-				if(ci != null)
+				Point location = e.GetPosition(cardView);
+				CardItemView civ = cardView.GetCardItemViewCursorIsOver(location.X, location.Y);
+				if(civ != null)
 				{
+					ci = civ.ItemData;
 					// delegate MouseMove event to the CardItem
 					ci.MoveMouse(e);
 				}
@@ -190,7 +190,6 @@ namespace hamqsler
 					Mouse.OverrideCursor = Cursors.Arrow;
 				}
 			}
-			QslCard.InvalidateVisual();
 		}
 		
 		/// <summary>

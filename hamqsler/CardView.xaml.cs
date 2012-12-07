@@ -26,58 +26,72 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace hamqsler
 {
 	/// <summary>
 	/// Interaction logic for CardView.xaml
 	/// </summary>
-	public partial class CardView : Canvas
+	public partial class CardView : CardItemView
 	{
-		private static readonly DependencyProperty QslCardProperty =
-			DependencyProperty.Register("QslCard", typeof(Card), typeof(CardView),
-			                            new PropertyMetadata(null));
+		private Card qslCard;
 		public Card QslCard
 		{
-			get {return (Card)GetValue(QslCardProperty);}
-			set {SetValue(QslCardProperty, value);}
+			get {return qslCard;}
 		}
 		
-		private static readonly DependencyProperty IsDesignModeProperty =
-			DependencyProperty.Register("IsDesignMode", typeof(bool), typeof(CardView),
-			                            new PropertyMetadata(true));
-		public bool IsDesignMode
-		{
-			get {return (bool)GetValue(IsDesignModeProperty);}
-			set {SetValue(IsDesignModeProperty, value);}
-		}
-		
-		public CardView(bool isDesignMode)
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="card">Qsl card that view will display</param>
+		/// <param name="isInDesignMode">bool indicating whether card is being created
+		/// in design mode or print mode</param>
+		public CardView(Card card, bool isInDesignMode) : base(card)
 		{
 			InitializeComponent();
-			IsDesignMode = isDesignMode;
+			qslCard = card;
+			BuildCard();
+			
 		}
 		
-		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-		{
-			base.OnPropertyChanged(e);
-			if(e.Property == QslCardProperty)
-			{
-				this.DataContext = QslCard;
-				BuildCard();
-			}
-		}
-		
+		/// <summary>
+		/// Create CardItemViews for each CardItem in the card and add to the CardView
+		/// </summary>
 		private void BuildCard()
 		{
+			ImageView iView = new ImageView(QslCard.BackImage);
+			CanvasForCard.Children.Add(iView);
 			foreach(TextItem ti in QslCard.TextItems)
 			{
-				TextItemView view = new TextItemView();
-				view.DataContext = ti;
-				Canvas.SetLeft(view, ti.DisplayX);
-				Canvas.SetTop(view, ti.DisplayY);
-				this.Children.Add(view);
+				TextItemView view = new TextItemView(ti);
+				CanvasForCard.Children.Add(view);
 			}
+		}
+		
+		/// <summary>
+		/// Determine the CardItemView that the mouse cursor is over
+		/// </summary>
+		/// <returns>The CardItemView the mouse cursor is over</returns>
+		public CardItemView GetCardItemViewCursorIsOver(double x, double y)
+		{
+			// create a List of the CardItemView objects and reverse it.
+			// We need to find the last CardItemView under the mouse cursor
+			List<FrameworkElement> revFEList = new List<FrameworkElement>();
+			foreach(FrameworkElement elt in CanvasForCard.Children)
+			{
+				revFEList.Add(elt);
+			}
+			revFEList.Reverse();
+			foreach(FrameworkElement fe in revFEList)
+			{
+				CardItemView civ = fe as CardItemView;
+				if(civ != null && civ.CursorIsOverThisView(x, y))
+				{
+					return civ;
+				}
+			}
+			return null;
 		}
 	}
 }

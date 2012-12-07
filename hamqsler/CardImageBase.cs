@@ -19,6 +19,7 @@
  */
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -34,7 +35,7 @@ namespace hamqsler
 	{
 		private static readonly DependencyProperty ImageFileNameProperty =
 			DependencyProperty.Register("ImageFileName", typeof(string), typeof(CardImageBase),
-			                            new PropertyMetadata(string.Empty));
+			                             new PropertyMetadata(null));
 		public string ImageFileName
 		{
 			get {return (string)GetValue(ImageFileNameProperty);}
@@ -45,48 +46,45 @@ namespace hamqsler
 		// where there is no image loaded
         public override double DisplayWidth
         {
-        	get 
-        	{
-        		double w = (double)GetValue(DisplayWidthProperty);
-        		if(w == 0 && DisplayHeight == 0)
-        		{
-        			double x, y, h;
-        			CalculateRectangle(out x, out y, out w, out h);
-        		}
-        		return w; 
-        	}
+        	get {return (double)GetValue(DisplayWidthProperty);}
             set {SetValue(DisplayWidthProperty, value); }
         }
         
 		public override double DisplayHeight 
 		{
-			get 
-			{
-				double h = (double)GetValue(DisplayHeightProperty);
-				if(h == 0 && DisplayWidth == 0)
-				{
-					double x, y, w;
-					CalculateRectangle(out x, out y, out w, out h);
-				}
-				return h; 
-			}
+			get {return (double)GetValue(DisplayHeightProperty);}
 			set {SetValue(DisplayHeightProperty, value); }
 		}
         
+		[NonSerialized]
+		protected static BitmapImage EmptyImage = new BitmapImage();
+		protected static readonly DependencyProperty BitMapImageProperty =
+			DependencyProperty.Register("BitMapImage", typeof(BitmapImage), typeof(CardImageBase),
+			                            new PropertyMetadata(EmptyImage));
+		protected BitmapImage BitMapImage
+		{
+			get {return (BitmapImage)GetValue(BitMapImageProperty);}
+			set {SetValue(BitMapImageProperty, value);}
+		}
+		
         /// <summary>
         /// CalculateRectangle determines the DisplayRectangle size for the image
         /// </summary>
         /// <returns>DisplayRectangle for this image.</returns>
         protected abstract void CalculateRectangle(out double x, out double y, out double w,
                                                   out double h);
+        
+        /// <summary>
+        /// Calculate default display rectangle size (when there is no image file specified)
+        /// </summary>
+        protected abstract void ResetRectangle();
 
-		[NonSerialized]
-		protected BitmapImage bImage = null;
-		
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public CardImageBase()
+        /// <param name="isInDesignMode">Boolean to indicate if this image is to be displayed
+        /// in design mode</param>
+		public CardImageBase(bool isInDesignMode = true) : base(isInDesignMode)
 		{
 		}
 		
@@ -97,7 +95,7 @@ namespace hamqsler
 		public override void MoveMouse(System.Windows.Input.MouseEventArgs e)
 		{
 			base.MoveMouse(e);
-			if(this.IsSelected && bImage != null)
+			if(this.IsSelected && BitMapImage != EmptyImage)
 			{
 				if(this.IsLeftMouseButtonDown)	
 				{
@@ -106,7 +104,8 @@ namespace hamqsler
                     double y= 0;
                     double width= 0;
                     double height = 0;
-                    double imageAspectRatio = (bImage != null) ? bImage.Width / bImage.Height : 1.0;
+                    double imageAspectRatio = (BitMapImage != EmptyImage) ? 
+                    	BitMapImage.Width / BitMapImage.Height : 1.0;
                     double minWidth = imageAspectRatio < 1.0 ? 9.6 : 9.6 / imageAspectRatio;
                     double minHeight = imageAspectRatio >= 1.0 ? 9.6 : 9.6 / imageAspectRatio;
                     Point pt = e.GetPosition(QslCard);
@@ -278,15 +277,15 @@ namespace hamqsler
 			{
 				dc.PushClip(new RectangleGeometry(new Rect(QslCard.DisplayX, QslCard.DisplayY,
 				                                           QslCard.DisplayWidth, QslCard.DisplayHeight)));
-				dc.DrawImage(bImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
+				dc.DrawImage(BitMapImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
 				dc.Pop();
 			}
 			if(IsSelected)
 			{
-				if(bImage != null)
+				if(BitMapImage != EmptyImage)
 				{
 					dc.PushOpacity(0.4);
-					dc.DrawImage(bImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
+					dc.DrawImage(BitMapImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
 					dc.Pop();
 				}
 				dc.DrawRectangle(brush, selectPen, 
@@ -294,10 +293,10 @@ namespace hamqsler
 			}
 			else if(IsHighlighted)
 			{
-				if(bImage != null)
+				if(BitMapImage != EmptyImage)
 				{
 					dc.PushOpacity(0.4);
-					dc.DrawImage(bImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
+					dc.DrawImage(BitMapImage, new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight));
 					dc.Pop();					
 				}
 				dc.DrawRectangle(brush, hightlightPen, 
@@ -324,11 +323,32 @@ namespace hamqsler
 					{
 						fName = hamqslerFolder + fName.Substring("$hamqslerFolder$\\".Length);
 					}
-					// load and create the image
-					bImage = new BitmapImage();
-					bImage.BeginInit();
-					bImage.UriSource = new Uri(fName, UriKind.RelativeOrAbsolute);
-					bImage.EndInit();
+					FileInfo fInfo = new FileInfo(fName);
+					if(fInfo.Exists)
+					{
+						// load and create the image
+						try
+						{
+							BitMapImage = new BitmapImage();
+							BitMapImage.BeginInit();
+							BitMapImage.UriSource = new Uri(fName, UriKind.RelativeOrAbsolute);
+							BitMapImage.EndInit();
+						}
+						catch(Exception fnfe)
+						{
+							App.Logger.Log(fnfe, true, true);
+							return;
+						}
+					}
+					else
+					{
+						string msg = string.Format("Image file '{0}' does not exist and cannot be loaded.",
+						                             fName);
+						App.Logger.Log(msg);
+						MessageBox.Show(msg, "Image File Error", MessageBoxButton.OK,
+						                MessageBoxImage.Warning);
+						BitMapImage = EmptyImage;
+					}
 					double x, y, w, h;
 					CalculateRectangle(out x, out y, out w, out h);
 					DisplayX = x;
@@ -339,17 +359,18 @@ namespace hamqsler
 				else
 				{
 					// reset bImage
-					bImage = null;
-					DisplayX = 0;
-					DisplayY = 0;
-					DisplayWidth = 0;
-					DisplayHeight = 0;
+					BitMapImage = new BitmapImage();
+					ResetRectangle();
 				}
 				// Image has changed, so let QslCard know it has changed
 				// and redisplay card
 				QslCard.IsDirty = true;
-				QslCard.InvalidateVisual();
+			}
+			else if(e.Property == QslCardProperty)
+			{
+				ResetRectangle();
 			}
 		}
+
 	}
 }

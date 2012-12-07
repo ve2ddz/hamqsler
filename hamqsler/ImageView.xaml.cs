@@ -30,15 +30,15 @@ using System.Windows.Media;
 namespace hamqsler
 {
 	/// <summary>
-	/// View for TextItems
+	/// Interaction logic for ImageView.xaml
 	/// </summary>
-	public partial class TextItemView : CardItemView
+	public partial class ImageView : CardItemView
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="ti">TextItem that this view displays</param>
-		public TextItemView(TextItem ti) : base(ti)
+		/// <param name="image">CardImageBase that is the base class for the image to be displayed</param>
+		public ImageView(CardImageBase image) : base(image)
 		{
 			InitializeComponent();
 		}
