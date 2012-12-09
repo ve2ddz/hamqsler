@@ -6,10 +6,10 @@
 	<local:CardItemView.Resources>
 		<local:RectConverter x:Key="RectConverter"/>
 	</local:CardItemView.Resources>
-	<Canvas x:Name="ImageCanvas" Width="{Binding Path=DisplayWidth}"	
-	        Height="{Binding Path=DisplayHeight}">
+	<Canvas>
 		<Image Source="{Binding Path=BitMapImage}" HorizontalAlignment="Stretch"
-			   VerticalAlignment="Stretch">
+			   VerticalAlignment="Stretch" Width="{Binding Path=DisplayWidth}"
+				Height="{Binding Path=DisplayHeight}">
  			<Image.Clip>
 				<RectangleGeometry>
  					<RectangleGeometry.Rect>
@@ -24,7 +24,8 @@
 			</Image.Clip>
 		</Image>
 		<Image Source="{Binding Path=BitMapImage}"
-	       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+	       		HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+		        Width="{Binding Path=DisplayWidth}" Height="{Binding Path=DisplayHeight}"
 		       Opacity="0.4">
 			<Image.Style>
 				<Style TargetType="{x:Type Image}">

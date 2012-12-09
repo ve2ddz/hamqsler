@@ -62,6 +62,11 @@ namespace hamqsler
 		{
 			ImageView iView = new ImageView(QslCard.BackImage);
 			CanvasForCard.Children.Add(iView);
+			foreach(SecondaryImage si in QslCard.SecondaryImages)
+			{
+				ImageView view = new ImageView(si);
+				CanvasForCard.Children.Add(view);
+			}
 			foreach(TextItem ti in QslCard.TextItems)
 			{
 				TextItemView view = new TextItemView(ti);

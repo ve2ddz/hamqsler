@@ -86,7 +86,7 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// RectangleGeometry 
+		/// Clip rectangle for this card item 
 		/// </summary>
 		protected static readonly DependencyProperty ClipRectangleProperty =
 			DependencyProperty.Register("ClipRectangle", typeof(Rect), typeof(CardItem),

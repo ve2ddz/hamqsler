@@ -29,6 +29,9 @@ namespace hamqsler
 	{
 		private static double imageStartDimension = 96;	// 1 inch
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public SecondaryImage() : base()
 		{
 		}
@@ -36,62 +39,38 @@ namespace hamqsler
 		/// <summary>
 		/// Calculate the DisplayRectangle for this SecondaryImage
 		/// </summary>
-		/// <returns>DisplayRectangle for the image, or 1 inch by 1 inch square if no image</returns>
+		/// <param name="x">X coordinate of upper left corner</param>
+		/// <param name="y">Y coordinate of upper left corner</param>
+		/// <param name="w">Width</param>
+		/// <param name="h">Height</param>
 		protected override void CalculateRectangle(out double x, out double y, out double w,
 		                                          out double h)
 		{
-			// must get DisplayRectangle directly from DisplayRectangleProperty to prevent
-			// circular reference
-			x = DisplayX;
-			y = DisplayY;
-			w = DisplayWidth;
-			h = DisplayHeight;
-			if(BitMapImage == EmptyImage)
+            w = imageStartDimension;
+            h = imageStartDimension;
+			if(BitMapImage != EmptyImage)
 			{
-				x = (QslCard.DisplayWidth - imageStartDimension) / 2;
-				y = (QslCard.DisplayHeight - imageStartDimension) / 2;
-				w = imageStartDimension;
-				h = imageStartDimension;
-			}
-			else
-			{
-				if(x == 0 && y == 0 && h == 0 && w == 0)
-				{
-					x = (QslCard.DisplayWidth - imageStartDimension) / 2;
-					y = (QslCard.DisplayHeight - imageStartDimension) / 2;
-					w = imageStartDimension;
-					h = imageStartDimension;
-				}
-	            double upperLeftX = QslCard.DisplayX;
-	            double upperLeftY = QslCard.DisplayY;
 	            double dWidth = BitMapImage.Width;
 	            double dHeight = BitMapImage.Height;
-	            
-	            double width = QslCard.DisplayWidth;
-	            double height = QslCard.DisplayHeight;
-	            double scaleX = width / dWidth;
-	            double scaleY = height / dHeight;
+	            double scaleX = w / dWidth;
+	            double scaleY = h / dHeight;
 	            double scale = scaleX > scaleY ? scaleX : scaleY;
-	            dWidth *= scale;
-	            dHeight *= scale;
-	            if (dWidth > width)
-	            {
-	                upperLeftX += (width - dWidth) / 2;
-	            }
-	            if (dHeight > height)
-	            {
-	                upperLeftY += (height - dHeight) / 2;
-	            }
-	            x = upperLeftX;
-	            y = upperLeftY;
-	            w = dWidth;
-	            h = dHeight;
+	            w = dWidth * scale;
+	            h = dHeight * scale;
 			}
+	        x = (QslCard.DisplayWidth - w) / 2;
+	        y = (QslCard.DisplayHeight - h) / 2;
 		}
 		
+		/// <summary>
+		/// Set display rectangle to default size (only used when there is no image file)
+		/// </summary>
 		protected override void ResetRectangle()
 		{
-			throw new NotImplementedException();
+			DisplayX = (QslCard.DisplayWidth - imageStartDimension) / 2;
+			DisplayY = (QslCard.DisplayHeight - imageStartDimension) / 2;
+			DisplayWidth = imageStartDimension;
+			DisplayHeight = imageStartDimension;
 		}
 	}
 }
