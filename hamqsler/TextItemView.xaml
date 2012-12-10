@@ -3,7 +3,137 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:hamqsler"
 	Canvas.Left="{Binding Path=DisplayX}" Canvas.Top="{Binding Path=DisplayY}">
+	<local:CardItemView.Resources>
+		<local:RectConverter x:Key="RectConverter"/>
+	</local:CardItemView.Resources>
 	<Canvas>
+		<Canvas>
+ 			<Canvas.Clip>
+				<RectangleGeometry>
+ 					<RectangleGeometry.Rect>
+						<MultiBinding Converter="{StaticResource RectConverter}">
+ 							<Binding Path="ClipRectangle.X"/>
+ 							<Binding Path="ClipRectangle.Y"/>
+ 							<Binding Path="QslCard.DisplayWidth"/>
+ 							<Binding Path="QslCard.DisplayHeight"/>
+ 						</MultiBinding>
+					</RectangleGeometry.Rect>
+ 				</RectangleGeometry>
+			</Canvas.Clip>
+			<StackPanel Orientation="Horizontal" >
+				<Rectangle Width="{Binding Path=CheckBoxSize}"
+							Height="{Binding Path=CheckBoxSize}"
+							StrokeThickness="{Binding Path=CheckboxLineThickness}"
+							Canvas.Left="{Binding Path=CheckBoxBeforeLeftOffset}"
+				            Fill="Transparent"
+							VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
+					<Rectangle.Style>
+						<Style TargetType="{x:Type Rectangle}">
+							<Setter Property="Stroke" Value="Transparent"/>
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding Path=CheckboxBefore}" Value="True">
+									<Setter Property="Stroke" Value="{Binding Path=TextBrush}"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Rectangle.Style>
+				</Rectangle>
+				<TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"
+							FontFamily="{Binding Path=TextFontFace, Mode=OneWay}"
+							FontSize="{Binding Path=FontSize, Mode=OneWay}"
+							FontWeight="{Binding Path=TextFontWeight, Mode=OneWay}"
+							Foreground="{Binding Path=TextBrush}">
+					<TextBlock.Style>
+						<Style TargetType="{x:Type TextBlock}">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding IsItalic}" Value="True">
+									<Setter Property="FontStyle" Value="Italic"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+				<Rectangle Width="{Binding Path=CheckBoxSize}"
+							Height="{Binding Path=CheckBoxSize}"
+							StrokeThickness="{Binding Path=CheckboxLineThickness}"
+							Canvas.Right="{Binding Path=CheckBoxAfterRightOffset}"
+				            Fill="Transparent"
+							VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
+					<Rectangle.Style>
+						<Style TargetType="{x:Type Rectangle}">
+							<Setter Property="Stroke" Value="Transparent"/>
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding Path=CheckboxAfter}" Value="True">
+									<Setter Property="Stroke" Value="{Binding Path=TextBrush}"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Rectangle.Style>
+				</Rectangle>
+		</StackPanel>
+		</Canvas>
+		<Canvas Opacity="0.4">
+			<Canvas.Style>
+				<Style TargetType="{x:Type Canvas}">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding Path=IsInDesignMode}" Value="True">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Canvas.Style>
+			<StackPanel Orientation="Horizontal" >
+				<Rectangle Width="{Binding Path=CheckBoxSize}"
+							Height="{Binding Path=CheckBoxSize}"
+							StrokeThickness="{Binding Path=CheckboxLineThickness}"
+							Canvas.Left="{Binding Path=CheckBoxBeforeLeftOffset}"
+				            Fill="Transparent"
+							VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
+					<Rectangle.Style>
+						<Style TargetType="{x:Type Rectangle}">
+							<Setter Property="Stroke" Value="Transparent"/>
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding Path=CheckboxBefore}" Value="True">
+									<Setter Property="Stroke" Value="{Binding Path=TextBrush}"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Rectangle.Style>
+				</Rectangle>
+				<TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"
+							FontFamily="{Binding Path=TextFontFace, Mode=OneWay}"
+							FontSize="{Binding Path=FontSize, Mode=OneWay}"
+							FontWeight="{Binding Path=TextFontWeight, Mode=OneWay}"
+							Foreground="{Binding Path=TextBrush}">
+					<TextBlock.Style>
+						<Style TargetType="{x:Type TextBlock}">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding IsItalic}" Value="True">
+									<Setter Property="FontStyle" Value="Italic"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+				<Rectangle Width="{Binding Path=CheckBoxSize}"
+							Height="{Binding Path=CheckBoxSize}"
+							StrokeThickness="{Binding Path=CheckboxLineThickness}"
+							Canvas.Right="{Binding Path=CheckBoxAfterRightOffset}"
+				            Fill="Transparent"
+							VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
+					<Rectangle.Style>
+						<Style TargetType="{x:Type Rectangle}">
+							<Setter Property="Stroke" Value="Transparent"/>
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding Path=CheckboxAfter}" Value="True">
+									<Setter Property="Stroke" Value="{Binding Path=TextBrush}"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Rectangle.Style>
+				</Rectangle>
+		</StackPanel>
+		</Canvas>
 		<Rectangle Width="{Binding Path=DisplayWidth}"
 					Height="{Binding Path=DisplayHeight}"
 					StrokeThickness="2.0" StrokeDashArray="5,3">
@@ -21,58 +151,6 @@
 				</Style>
 			</Rectangle.Style>
 		</Rectangle>
-		<StackPanel Orientation="Horizontal" >
-			<Rectangle Width="{Binding Path=CheckBoxSize}"
-						Height="{Binding Path=CheckBoxSize}"
-						StrokeThickness="{Binding Path=CheckboxLineThickness}"
-						Canvas.Left="{Binding Path=CheckBoxBeforeLeftOffset}"
-			            Fill="Transparent"
-						VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
-				<Rectangle.Style>
-					<Style TargetType="{x:Type Rectangle}">
-						<Setter Property="Stroke" Value="Transparent"/>
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding Path=CheckboxBefore}" Value="True">
-								<Setter Property="Stroke" Value="{Binding Path=TextBrush}"/>
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</Rectangle.Style>
-			</Rectangle>
-			<TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"
-						FontFamily="{Binding Path=TextFontFace, Mode=OneWay}"
-						FontSize="{Binding Path=FontSize, Mode=OneWay}"
-						FontWeight="{Binding Path=TextFontWeight, Mode=OneWay}"
-						Foreground="{Binding Path=TextBrush}">
-				<TextBlock.Style>
-					<Style TargetType="{x:Type TextBlock}">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding IsItalic}" Value="True">
-								<Setter Property="FontStyle" Value="Italic"/>
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</TextBlock.Style>
-			</TextBlock>
-			<Rectangle Width="{Binding Path=CheckBoxSize}"
-						Height="{Binding Path=CheckBoxSize}"
-						StrokeThickness="{Binding Path=CheckboxLineThickness}"
-						Canvas.Right="{Binding Path=CheckBoxAfterRightOffset}"
-			            Fill="Transparent"
-						VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
-				<Rectangle.Style>
-					<Style TargetType="{x:Type Rectangle}">
-						<Setter Property="Stroke" Value="Transparent"/>
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding Path=CheckboxAfter}" Value="True">
-								<Setter Property="Stroke" Value="{Binding Path=TextBrush}"/>
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</Rectangle.Style>
-
-			</Rectangle>
-		</StackPanel>
 	</Canvas>
 
 </local:CardItemView>

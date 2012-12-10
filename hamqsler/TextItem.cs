@@ -267,7 +267,6 @@ namespace hamqsler
 				if(Text != null)
 				{
 					SetDisplayText();
-//					CalculateRectangle();
 				}
 			}
 			else if(e.Property == TextProperty)
