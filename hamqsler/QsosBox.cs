@@ -307,6 +307,14 @@ namespace hamqsler
 		}
 		
 		[NonSerialized]
+		private static readonly DependencyProperty CornerRoundingProperty =
+			DependencyProperty.Register("CornerRounding", typeof(double), typeof(QsosBox),
+			                            new PropertyMetadata(3.0));
+		public double CornerRounding
+		{
+			get {return (double)GetValue(CornerRoundingProperty);}
+		}
+		
 		private Dictionary<string, string> months = new Dictionary<string, string>();
 		
 		/// <summary>
@@ -354,7 +362,6 @@ namespace hamqsler
 		private double[] colHeadersTextWidth = { 0, 0, 0, 0, 0, 0 };
 
 		
-		private const int cornerRounding = 3;
 		private const double confirmingXOffset = 5;
 		private const double confirmingYOffset = 2;
 		private const double confirmingCallXOffset = 3;
@@ -365,7 +372,7 @@ namespace hamqsler
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public QsosBox()
+		public QsosBox(bool isInDesignMode = true) : base(isInDesignMode)
 		{
 			UserPreferences userPrefs = ((App)Application.Current).UserPreferences;
 			InitializeDisplayProperties(userPrefs);
@@ -580,12 +587,12 @@ namespace hamqsler
             dc.PushOpacity(BackgroundOpacity);
             dc.DrawRoundedRectangle(BackgroundBrush, transparentPen,
                                     new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
-                                   	cornerRounding, cornerRounding);
+                                   	CornerRounding, CornerRounding);
             
             dc.Pop();
             dc.DrawRoundedRectangle(Brushes.Transparent, pen, 
                                     new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
-                                   	cornerRounding, cornerRounding);
+                                   	CornerRounding, CornerRounding);
             int qsoCount = (QsosCount > 0) ? QsosCount : MaximumQsos;
             FormattedText formattedText = GenerateFormattedText(ConfirmingText.GetText(true),
                                                                 LineTextBrush,
@@ -650,13 +657,13 @@ namespace hamqsler
             {
                 dc.DrawRoundedRectangle(brush, selectPen, 
             	                        new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
-            	                       cornerRounding, cornerRounding);
+            	                       CornerRounding, CornerRounding);
             }
             else if(IsHighlighted)
             {
             	dc.DrawRoundedRectangle(brush, hightlightPen, 
             	                        new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
-            	                       cornerRounding, cornerRounding);
+            	                       CornerRounding, CornerRounding);
             }
         }
 
@@ -727,7 +734,10 @@ namespace hamqsler
 				{
 					QslCard.IsDirty = true;
 				}
-				QslCard.InvalidateVisual();
+			}
+			else if(e.Property == QslCardProperty)
+			{
+				CalculateRectangle();
 			}
 		}
 	}

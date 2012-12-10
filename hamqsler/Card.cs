@@ -125,10 +125,10 @@ namespace hamqsler
 			FillLastPageWithBlankCards = userPreferences.PrintCardOutlines;
 			SetCardMarginsToPrinterPageMargins = userPreferences.SetCardMarginsToPrinterPageMargins;
 			// background image
-			BackImage = new BackgroundImage();
+			BackImage = new BackgroundImage(isInDesignMode);
 			BackImage.QslCard = this;
 			// call text item
-			TextItem call = new TextItem();
+			TextItem call = new TextItem(isInDesignMode);
 			call.QslCard = this;
 			foreach(TextPart part in userPreferences.Callsign)
 			{
@@ -145,7 +145,7 @@ namespace hamqsler
 			call.SetDisplayText();
 			TextItems.Add(call);
 			// name Qth text item
-			TextItem nameQth = new TextItem();
+			TextItem nameQth = new TextItem(isInDesignMode);
 			nameQth.QslCard = this;
 			foreach(TextPart part in userPreferences.NameQth)
 			{
@@ -162,7 +162,7 @@ namespace hamqsler
 			nameQth.SetDisplayText();
 			TextItems.Add(nameQth);
 			// salutation
-			TextItem salutation = new TextItem();
+			TextItem salutation = new TextItem(isInDesignMode);
 			salutation.QslCard = this;
 			foreach(TextPart part in userPreferences.Salutation)
 			{
@@ -179,7 +179,7 @@ namespace hamqsler
 			TextItems.Add(salutation);
 			
 			// QsosBox
-			qsosBox = new QsosBox();
+			qsosBox = new QsosBox(isInDesignMode);
 			qsosBox.QslCard = this;
 			// more card properties
 			QslCard = this;
@@ -392,7 +392,7 @@ namespace hamqsler
 		{
 			if(QsosBox == null)
 			{
-				QsosBox qBox = new QsosBox();
+				QsosBox qBox = new QsosBox(IsInDesignMode);
 				qBox.QslCard = this;
 				this.QsosBox = qBox;
 				qBox.IsSelected = true;

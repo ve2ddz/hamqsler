@@ -72,6 +72,8 @@ namespace hamqsler
 				TextItemView view = new TextItemView(ti);
 				CanvasForCard.Children.Add(view);
 			}
+			QsosBoxView qView = new QsosBoxView(QslCard.QsosBox);
+			CanvasForCard.Children.Add(qView);
 		}
 		
 		/// <summary>
