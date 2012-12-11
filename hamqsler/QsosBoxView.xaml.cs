@@ -36,6 +36,7 @@ namespace hamqsler
 	{
 		public QsosBoxView(QsosBox qsosBox) : base(qsosBox)
 		{
+			DataContext = this;
 			InitializeComponent();
 		}
 	}

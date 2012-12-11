@@ -40,6 +40,7 @@ namespace hamqsler
 		/// <param name="ti">TextItem that this view displays</param>
 		public TextItemView(TextItem ti) : base(ti)
 		{
+			DataContext = this;
 			InitializeComponent();
 		}
 	}

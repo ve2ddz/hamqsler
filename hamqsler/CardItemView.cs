@@ -29,9 +29,10 @@ namespace hamqsler
 	/// </summary>
 	public abstract class CardItemView : UserControl
 	{
+		private CardItem itemData = null;
 		public CardItem ItemData
 		{
-			get {return DataContext as CardItem;}
+			get {return itemData;}
 		}
 		
 		/// <summary>
@@ -40,7 +41,7 @@ namespace hamqsler
 		/// <param name="item">CardItem that this view displays</param>
 		public CardItemView(CardItem item)
 		{
-			DataContext = item;
+			itemData = item;
 		}
 		
 		/// <summary>

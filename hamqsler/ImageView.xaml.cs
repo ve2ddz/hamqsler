@@ -40,6 +40,7 @@ namespace hamqsler
 		/// <param name="image">CardImageBase that is the base class for the image to be displayed</param>
 		public ImageView(CardImageBase image) : base(image)
 		{
+			DataContext	= this;
 			InitializeComponent();
 		}
 	}
