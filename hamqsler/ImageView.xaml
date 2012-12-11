@@ -37,6 +37,26 @@
 					</Style.Triggers>
 				</Style>
 			</Image.Style>
+			<Image.Clip>
+				<CombinedGeometry GeometryCombineMode="Exclude">
+					<CombinedGeometry.Geometry1>
+					<RectangleGeometry Rect="-1000, -1000, 2600, 2600">
+	 				</RectangleGeometry> 							
+					</CombinedGeometry.Geometry1>
+					<CombinedGeometry.Geometry2>
+					<RectangleGeometry>
+	 					<RectangleGeometry.Rect>
+							<MultiBinding Converter="{StaticResource RectConverter}">
+	 							<Binding Path="ItemData.ClipRectangle.X"/>
+	 							<Binding Path="ItemData.ClipRectangle.Y"/>
+	 							<Binding Path="ItemData.QslCard.DisplayWidth"/>
+	 							<Binding Path="ItemData.QslCard.DisplayHeight"/>
+	 						</MultiBinding>
+						</RectangleGeometry.Rect>
+	 				</RectangleGeometry>
+				</CombinedGeometry.Geometry2>
+				</CombinedGeometry>
+ 			</Image.Clip>
 		</Image>
 		<Rectangle Width="{Binding Path=ItemData.DisplayWidth}"
 					Height="{Binding Path=ItemData.DisplayHeight}"

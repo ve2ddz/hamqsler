@@ -7,7 +7,7 @@
 		<local:RectConverter x:Key="RectConverter"/>
 	</local:CardItemView.Resources>
 	<Canvas>
- 		<Canvas>
+ 		<Canvas x:Name="DisplayCanvas">
   			<Canvas.Clip>
 				<RectangleGeometry>
  					<RectangleGeometry.Rect>
@@ -27,7 +27,7 @@
 			           RadiusY="{Binding Path=ItemData.CornerRounding}">
 			</Rectangle>
 		</Canvas>
-		<Canvas Opacity="0.4">
+		<Canvas x:Name="DesignCanvas" Opacity="0.4">
  			<Canvas.Style>
 				<Style TargetType="{x:Type Canvas}">
 					<Style.Triggers>
@@ -40,7 +40,7 @@
  			<Canvas.Clip>
 				<CombinedGeometry GeometryCombineMode="Exclude">
 					<CombinedGeometry.Geometry1>
-					<RectangleGeometry Rect="-300, -300, 1200, 1200">
+					<RectangleGeometry Rect="-1000, -1000, 2600, 2600">
 	 				</RectangleGeometry> 							
 					</CombinedGeometry.Geometry1>
 					<CombinedGeometry.Geometry2>
