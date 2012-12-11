@@ -22,9 +22,17 @@
 			</Canvas.Clip>
 			<Rectangle Width="{Binding Path=ItemData.DisplayWidth}"
 					   Height="{Binding Path=ItemData.DisplayHeight}"
-					   StrokeThickness="2.0" Stroke="Black"
-					   RadiusX="{Binding Path=ItemData.CornerRounding}" 
-			           RadiusY="{Binding Path=ItemData.CornerRounding}">
+					   StrokeThickness="2.0" Stroke="Transparent"
+			           Fill="{Binding Path=ItemData.BackgroundBrush}"
+			           Opacity="{Binding Path=ItemData.BackgroundOpacity}"
+					   RadiusX="{Binding Path=CornerRounding}" 
+			           RadiusY="{Binding Path=CornerRounding}">
+			</Rectangle>
+			<Rectangle Width="{Binding Path=ItemData.DisplayWidth}"
+					   Height="{Binding Path=ItemData.DisplayHeight}"
+					   StrokeThickness="2.0" Stroke="{Binding Path=ItemData.LineTextBrush}"
+					   RadiusX="{Binding Path=CornerRounding}" 
+			           RadiusY="{Binding Path=CornerRounding}">
 			</Rectangle>
 		</Canvas>
 		<Canvas x:Name="DesignCanvas" Opacity="0.4">
@@ -59,16 +67,23 @@
  			</Canvas.Clip>
 			<Rectangle Width="{Binding Path=ItemData.DisplayWidth}"
 					   Height="{Binding Path=ItemData.DisplayHeight}"
+					   StrokeThickness="2.0" Stroke="Transparent"
+			           Fill="{Binding Path=ItemData.BackgroundBrush}"
+			           Opacity="{Binding Path=ItemData.BackgroundOpacity}"
+					   RadiusX="{Binding Path=CornerRounding}" 
+			           RadiusY="{Binding Path=CornerRounding}"/>
+			<Rectangle Width="{Binding Path=ItemData.DisplayWidth}"
+					   Height="{Binding Path=ItemData.DisplayHeight}"
 					   StrokeThickness="2.0"
-					   RadiusX="{Binding Path=ItemData.CornerRounding}" 
-			           RadiusY="{Binding Path=ItemData.CornerRounding}" Stroke="{Binding Path=ItemData.LineTextBrush}">
-			</Rectangle>
+					   RadiusX="{Binding Path=CornerRounding}" 
+			           RadiusY="{Binding Path=CornerRounding}"
+			           Stroke="{Binding Path=ItemData.LineTextBrush}"/>
 		</Canvas>
 		<Rectangle Width="{Binding Path=ItemData.DisplayWidth}"
 				   Height="{Binding Path=ItemData.DisplayHeight}"
 				   StrokeThickness="2.0" StrokeDashArray="5,3"
-				   RadiusX="{Binding Path=ItemData.CornerRounding}" 
-		           RadiusY="{Binding Path=ItemData.CornerRounding}">
+				   RadiusX="{Binding Path=CornerRounding}" 
+		           RadiusY="{Binding Path=CornerRounding}">
 			<Rectangle.Style>
 				<Style TargetType="{x:Type Rectangle}">
 					<Setter Property="Stroke" Value="Transparent"/>

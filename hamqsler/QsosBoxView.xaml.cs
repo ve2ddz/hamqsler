@@ -34,6 +34,12 @@ namespace hamqsler
 	/// </summary>
 	public partial class QsosBoxView : CardItemView
 	{
+		private const double cornerRounding = 3.0;
+		public double CornerRounding
+		{
+			get {return cornerRounding;}
+		}
+		
 		public QsosBoxView(QsosBox qsosBox) : base(qsosBox)
 		{
 			DataContext = this;
