@@ -172,7 +172,14 @@ namespace hamqsler
 			CardItem ci = QslCard.GetSelected();
 			if(ci != null)
 			{
-				ci.MoveMouse(e);
+				foreach(FrameworkElement elt in cardView.CanvasForCard.Children)
+				{
+					CardItemView civ = elt as CardItemView;
+					if(civ != null && civ.ItemData == ci)
+					{
+						civ.MoveMouse(e);
+					}
+				}
 			}
 			else
 			{
@@ -228,14 +235,12 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void SelectCardItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			// see comment in OnMouseRightButtonDown
-			CardItem ci = QslCard.CursorOver(highlightPoint.X, highlightPoint.Y);
-			if(ci != null)
+			CardItemView civ = cardView.GetCardItemViewCursorIsOver(highlightPoint.X, highlightPoint.Y);
+			if(civ != null)
 			{
 				QslCard.ClearHighlighted();
-				ci.IsSelected = true;
-				QslCard.InvalidateVisual();
-				SetPropertiesPanelVisibility(ci);
+				civ.ItemData.IsSelected = true;
+				SetPropertiesPanelVisibility(civ.ItemData);
 			}
 		}
 		
@@ -250,7 +255,6 @@ namespace hamqsler
 			if(ci != null)
 			{
 				ci.IsSelected = false;
-				QslCard.InvalidateVisual();
 				SetPropertiesPanelVisibility(null);
 			}
 		}
@@ -291,7 +295,7 @@ namespace hamqsler
 		{
 			QslCard.DeleteItem();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
-			QslCard.InvalidateVisual();
+			cardView.RebuildCardView();
 		}
 		
 		/// <summary>
@@ -306,7 +310,6 @@ namespace hamqsler
 			// Clear Background was called, it remains selected.
 			QslCard.BackImage.IsSelected = false;
 			GetCardTabItem().SetPropertiesVisibility(null);
-			QslCard.InvalidateVisual();
 		}
 		
 		/// <summary>
@@ -330,7 +333,7 @@ namespace hamqsler
 		{
 			QslCard.AddImage();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
-			QslCard.InvalidateVisual();
+			cardView.RebuildCardView();
 		}
 		
 		/// <summary>
@@ -342,7 +345,7 @@ namespace hamqsler
 		{
 			QslCard.AddText();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
-			QslCard.InvalidateVisual();
+			cardView.RebuildCardView();
 		}	
 		
 		/// <summary>
@@ -354,7 +357,7 @@ namespace hamqsler
 		{
 			QslCard.AddQsosBox();
 			GetCardTabItem().SetPropertiesVisibility(QslCard.GetSelected());
-			QslCard.InvalidateVisual();
+			cardView.RebuildCardView();
 			
 		}
 		
@@ -371,7 +374,7 @@ namespace hamqsler
 			// cursor when the right mouse button was pressed. We must save and use the location 
 			// of the cursor here so that the correct CardItem will be selected.
 			//
-			highlightPoint = e.GetPosition(QslCard);
+			highlightPoint = e.GetPosition(cardView);
 			// now display the context menu
 			base.OnMouseRightButtonDown(e);
 		}

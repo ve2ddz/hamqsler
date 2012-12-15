@@ -72,8 +72,11 @@ namespace hamqsler
 				TextItemView view = new TextItemView(ti);
 				CanvasForCard.Children.Add(view);
 			}
-			QsosBoxView qView = new QsosBoxView(QslCard.QsosBox);
-			CanvasForCard.Children.Add(qView);
+			if(QslCard.QsosBox != null)
+			{
+				QsosBoxView qView = new QsosBoxView(QslCard.QsosBox);
+				CanvasForCard.Children.Add(qView);
+			}
 		}
 		
 		/// <summary>
@@ -100,7 +103,32 @@ namespace hamqsler
 			}
 			return null;
 		}
-
+		
+		/// <summary>
+		/// Remove all CardItemView objects from the CardView, then rebuild the CardView
+		/// based on the CardItems in the card.
+		/// </summary>
+		public void RebuildCardView()
+		{
+			// get a list of all CardItemViews in the CardView
+			List<FrameworkElement> children = new List<FrameworkElement>();
+			foreach(FrameworkElement elt in CanvasForCard.Children)
+			{
+				CardItemView view = elt as CardItemView;
+				if(view != null)
+				{
+					children.Add(view);
+				}
+			}
+			// now delete all of the CardItemViews
+			foreach(CardItemView view in children)
+			{
+				CanvasForCard.Children.Remove(view);
+			}
+			// now rebuild the view
+			BuildCard();
+		}
+		
 		protected override void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e)
 		{
 			throw new NotImplementedException();

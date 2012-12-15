@@ -62,7 +62,7 @@ namespace hamqsler
 		/// <param name="e">MouseEventArgs object</param>
 		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
 		{
-			throw new NotImplementedException();
+//			throw new NotImplementedException();
 		}
 		
 	}

@@ -106,11 +106,13 @@ namespace hamqsler
 			set {SetValue(IsHighlightedProperty, value);}
 		}
 		
-		private bool isSelected = false;
+		private static readonly DependencyProperty IsSelectedProperty =
+			DependencyProperty.Register("IsSelected", typeof(bool), typeof(CardItem),
+			                            new PropertyMetadata(false));
 		public bool IsSelected
 		{
-			get {return isSelected;}
-			set {isSelected = value;}
+			get {return (bool)GetValue(IsSelectedProperty);}
+			set {SetValue(IsSelectedProperty, value);}
 		}
 		
 		private bool isLeftMouseButtonDown = false;

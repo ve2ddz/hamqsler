@@ -377,6 +377,7 @@ namespace hamqsler
 			StaticText sText = new StaticText();
 			sText.Text = "Text Item";
 			ti.Text.Add(sText);
+			ti.SetDisplayText();
 			CardItem ci = GetHighlighted();
 			if(ci != null)
 			{
@@ -392,10 +393,10 @@ namespace hamqsler
 		{
 			if(QsosBox == null)
 			{
-/*				QsosBox qBox = new QsosBox(IsInDesignMode);
+				QsosBox qBox = new QsosBox(IsInDesignMode);
 				qBox.QslCard = this;
 				this.QsosBox = qBox;
-				qBox.IsSelected = true;*/
+				qBox.IsSelected = true;
 			}
 		}
 		
