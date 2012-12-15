@@ -54,7 +54,7 @@ namespace hamqsler
 		// determines whether to include QSL column
 		private static readonly DependencyProperty ShowPseTnxProperty =
 			DependencyProperty.Register("ShowPseTnx", typeof(bool),
-			                            typeof(QsosBox), new PropertyMetadata(false));
+			                            typeof(QsosBox), new PropertyMetadata(true));
 		public bool ShowPseTnx
 		{
 			get { return (bool)GetValue(ShowPseTnxProperty); }
@@ -307,15 +307,18 @@ namespace hamqsler
 		}
 		
 		[NonSerialized]
-		private static readonly DependencyProperty CornerRoundingProperty =
-			DependencyProperty.Register("CornerRounding", typeof(double), typeof(QsosBox),
-			                            new PropertyMetadata(3.0));
-		public double CornerRounding
+		/// <summary>
+		/// Confirming text to display on the card. This is calculated based on value
+		/// of IsInDesignMode.
+		/// </summary>
+		private static readonly DependencyProperty ConfirmingDisplayTextProperty =
+			DependencyProperty.Register("DisplayText", typeof(string), typeof(QsosBox),
+			                            new PropertyMetadata(string.Empty));
+		public string ConfirmingDisplayText
 		{
-			get {return (double)GetValue(CornerRoundingProperty);}
+			get {return (string)GetValue(ConfirmingDisplayTextProperty);}
+			set {SetValue(ConfirmingDisplayTextProperty, value);}
 		}
-		
-		private Dictionary<string, string> months = new Dictionary<string, string>();
 		
 		/// <summary>
 		/// Holds QSOs to print on the cards
@@ -340,10 +343,10 @@ namespace hamqsler
 		/// <summary>
 		/// Retrieves the number of QSOs that will be printed
 		/// </summary>
-		public int QsosCount
+/*		public int QsosCount
 		{
 			get { return qsos.Count; }
-		}
+		}*/
 		
 		private enum Columns
 		{
@@ -355,48 +358,22 @@ namespace hamqsler
 			QSL
 		};
 		
-		// attributes used for table headers
-		private double[] colWidths = { 0, 0, 0, 0, 0, 0 };
-		private FormattedText[] colHeadersText = {null, null, null, null, null, null};
-		private double[] colHeaderX = { 0, 0, 0, 0, 0, 0 };
-		private double[] colHeadersTextWidth = { 0, 0, 0, 0, 0, 0 };
-
-		
-		private const double confirmingXOffset = 5;
-		private const double confirmingYOffset = 2;
-		private const double confirmingCallXOffset = 3;
-		private const double viaXOffset = 15;
-        private const double firstLineYOffset = 2;
-        private const double lineYOffset = firstLineYOffset + 2;
+        private QsosBoxView qView = null;
+        public QsosBoxView QBoxView
+        {
+        	get {return qView;}
+        	set {qView = value;}
+        }
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public QsosBox(bool isInDesignMode = true) : base(isInDesignMode)
+		/// <param name="isInDesignMode">Boolean that indicates if the Card is being built
+		/// in display or print mode.</param>
+        public QsosBox(bool isInDesignMode = true) : base(isInDesignMode)
 		{
 			UserPreferences userPrefs = ((App)Application.Current).UserPreferences;
 			InitializeDisplayProperties(userPrefs);
-			InitializeMonthsDictionary(userPrefs);
-		}
-		
-		/// <summary>
-		/// Helper method that initializes the text for three letter month abreviations
-		/// </summary>
-		/// <param name="userPrefs">UserPreferences object used to initialize months text</param>
-		private void InitializeMonthsDictionary(UserPreferences userPrefs)
-		{
-			months["01"] = userPrefs.JanuaryText;
-			months["02"] = userPrefs.FebruaryText;
-			months["03"] = userPrefs.MarchText;
-			months["04"] = userPrefs.AprilText;
-			months["05"] = userPrefs.MayText;
-			months["06"] = userPrefs.JuneText;
-			months["07"] = userPrefs.JulyText;
-			months["08"] = userPrefs.AugustText;
-			months["09"] = userPrefs.SeptemberText;
-			months["10"] = userPrefs.OctoberText;
-			months["11"] = userPrefs.NovemberText;
-			months["12"] = userPrefs.DecemberText;
 		}
 		
 		/// <summary>
@@ -415,6 +392,7 @@ namespace hamqsler
 			{
 				this.ConfirmingText.Add(part);
 			}
+			ConfirmingDisplayText = ConfirmingText.GetText(IsInDesignMode);
 			this.ViaText = userPrefs.ViaText;
 			this.DateFormat = userPrefs.DefaultDateFormat;
 			this.YYYYMMDDText = userPrefs.YYYYMMDDText;
@@ -436,20 +414,19 @@ namespace hamqsler
 		/// </summary>
 		private void CalculateRectangle()
 		{
+			// Note: DisplayHeight is not calculated because it is determined automatically in
+			// XAML in QsosBoxView.
 			FormattedText fText = GenerateFormattedText("Sample Text", LineTextBrush,
 			                                            FontWeights.Normal);
-			double height = (fText.Height + 4) * (2 + ((QsosCount > 0) ? QsosCount : MaximumQsos));
 			if(DisplayX == 0 && DisplayY == 0 && DisplayWidth == 0 && DisplayHeight == 0)
 			{
 				DisplayX = QslCard.DisplayWidth / 20;
 				DisplayY = QslCard.DisplayHeight / 2;
 				DisplayWidth = QslCard.DisplayWidth * 18 / 20;
-				DisplayHeight = height;
 			}
 			else
 			{
 				DisplayWidth = QslCard.DisplayWidth * 18 / 20;
-				DisplayHeight = height;
 			}
 		}
 		
@@ -472,99 +449,6 @@ namespace hamqsler
 		}
 		
 		
-       /// <summary>
-        /// Calculates the width of QSOsBox columns base on column and column header text
-        /// // as well as typeface, style, and weight
-        /// </summary>
-        private void CalculateColumns()
-        {
-            Typeface typeface = new Typeface(new FontFamily(FontName), FontStyles.Normal,
-                FontWeights.Normal, FontStretches.Normal);
-        	string dateFmt = YYYYMMDDText;
-        	if(DateFormat == "DD-MMM-YY")
-        		dateFmt = DDMMMYYText;
-        	else if(DateFormat == "DD-MM-YY")
-        		dateFmt = DDMMYYText;
-            FormattedText fT = new FormattedText(dateFmt, System.Globalization.CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-        	colWidths[(int)Columns.Date] = fT.Width;
-            colHeadersText[(int)Columns.Date] = fT;
-            colHeadersTextWidth[(int)Columns.Date] = fT.Width;
-
-            fT = new FormattedText("8888", System.Globalization.CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-            FormattedText fTH = new FormattedText(TimeText, System.Globalization.CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-            colWidths[(int)Columns.Time] = (fT.Width > fTH.Width) ? fT.Width : fTH.Width;
-            colHeadersText[(int)Columns.Time] = fTH;
-            colHeadersTextWidth[(int)Columns.Time] = fTH.Width;
-
-            string band = ShowFrequency ? "888.888" : "WWWWW";
-            fT = new FormattedText(band, System.Globalization.CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-            fTH = new FormattedText((ShowFrequency ? FreqText : BandText),
-                System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
-                typeface, 12.0, LineTextBrush);
-            colWidths[(int)Columns.BandFreq] = (fT.Width > fTH.Width) ? fT.Width : fTH.Width;
-            colHeadersText[(int)Columns.BandFreq] = fTH;
-            colHeadersTextWidth[(int)Columns.BandFreq] = fTH.Width;
-
-            fT = new FormattedText("WWWWWW", System.Globalization.CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-            fTH = new FormattedText(ModeText, System.Globalization.CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-            colWidths[(int)Columns.Mode] = (fT.Width > fTH.Width) ? fT.Width : fTH.Width;
-            colHeadersText[(int)Columns.Mode] = fTH;
-            colHeadersTextWidth[(int)Columns.Mode] = fTH.Width;
-
-            fT = new FormattedText("888", System.Globalization.CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-            fTH = new FormattedText(RSTText, System.Globalization.CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-            colWidths[(int)Columns.RST] = (fT.Width > fTH.Width) ? fT.Width : fTH.Width;
-            colHeadersText[(int)Columns.RST] = fTH;
-            colHeadersTextWidth[(int)Columns.RST] = fTH.Width;
-
-            if(ShowPseTnx == true)
-            {
-                fT = new FormattedText(PseText, System.Globalization.CultureInfo.CurrentUICulture,
-                    FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-                FormattedText fT2 = new FormattedText(TnxText, System.Globalization.CultureInfo.CurrentUICulture,
-                    FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-                fTH = new FormattedText(QSLText, System.Globalization.CultureInfo.CurrentUICulture,
-                    FlowDirection.LeftToRight, typeface, 12.0, LineTextBrush);
-                double max = Math.Max(fT.Width, fT2.Width);
-                max = Math.Max(max, fTH.Width);
-                colWidths[(int)Columns.QSL] = max;
-                colHeadersText[(int)Columns.QSL] = fTH;
-                colHeadersTextWidth[(int)Columns.QSL] = fTH.Width;
-            }
-            else
-            {
-                colWidths[(int)Columns.QSL] = 0;
-                colHeadersText[(int)Columns.QSL] = null;
-                colHeadersTextWidth[(int)Columns.QSL] = 0;
-            }
-            double totalColWidths = 0;
-            for (int i = 0; i < colWidths.Length; i++)
-            {
-                totalColWidths += colWidths[i];
-            }
-            int totalCols = (ShowPseTnx) ? colHeadersText.Length : colHeadersText.Length - 1;
-            double columnExpansion = (DisplayWidth - totalColWidths) / totalCols;
-            for (int i = 0; i < colWidths.Length - 1; i++)
-            {
-                colWidths[i] += columnExpansion;
-                colHeaderX[i] = (colWidths[i] - colHeadersTextWidth[i]) / 2;
-            }
-            if (ShowPseTnx)
-            {
-            	colWidths[(int)Columns.QSL] += columnExpansion;
-            	colHeaderX[(int)Columns.QSL] = (colWidths[(int)Columns.QSL] - 
-            	                                colHeadersTextWidth[(int)Columns.QSL]) / 2;
-            }
-        }
-        
  
         /// <summary>
         /// Handles rendering of the QSOsBox on the card
@@ -572,99 +456,6 @@ namespace hamqsler
         /// <param name="drawingContext">drawing context to render to</param>
         protected override void OnRender(DrawingContext dc)
         {
-            bool isMod = QslCard.IsDirty;
-            CalculateRectangle();
-            // headers cannot be set up until after QslCard is set
-            if(QslCard != null)
-            {
-            	CalculateColumns();
-            }
-            QslCard.IsDirty = isMod;
-            Brush brush = Brushes.Transparent;
-            Pen pen = new Pen(LineTextBrush, 1);
-            Pen transparentPen = new Pen(Brushes.Transparent, 1);
-            // draw the box background
-            dc.PushOpacity(BackgroundOpacity);
-            dc.DrawRoundedRectangle(BackgroundBrush, transparentPen,
-                                    new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
-                                   	CornerRounding, CornerRounding);
-            
-            dc.Pop();
-            dc.DrawRoundedRectangle(Brushes.Transparent, pen, 
-                                    new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
-                                   	CornerRounding, CornerRounding);
-            int qsoCount = (QsosCount > 0) ? QsosCount : MaximumQsos;
-            FormattedText formattedText = GenerateFormattedText(ConfirmingText.GetText(true),
-                                                                LineTextBrush,
-                                                                FontWeights.Normal);
-            double textHeight = formattedText.Height;
-            double x = DisplayX + confirmingXOffset;
-            double y = DisplayY + confirmingYOffset;
-            dc.DrawText(formattedText, new Point(x, y));
-            x += formattedText.Width + confirmingCallXOffset;
-            string text = "        ";
-            if(QsosCount > 0)
-            {
-            	text = ((QsoWithInclude)this[0]).Callsign;
-            }
-            else if(QsosCount == 0)
-            {
-            	text = "XXXXXX";
-	            formattedText = GenerateFormattedText(text, CallsignBrush, FontWeights.Black);
-	            dc.DrawText(formattedText, new Point(x, y));
-	            x += formattedText.Width + viaXOffset;
-            }
-            if(ShowManager)
-            {
-            	string manager = (QsosCount > 0) ? ((QsoWithInclude)this[0]).Manager : string.Empty;
-            	text = string.Empty;
-            	if(QsosCount > 0 && manager != string.Empty)
-            	{
-            		text = ViaText + " " + manager;
-            	}
-            	else if(QsosCount == 0)
-            	{
-            		text = ViaText + " ZZZZZZ";
-            	}
-            	formattedText = GenerateFormattedText(text, ManagerBrush, FontWeights.Bold);
-            	dc.DrawText(formattedText, new Point(x, y));
-            }
-            // font sizes used in headerYOffset calculation below were determined empirically for
-            // best text fit
-            double headerYOffset = FontSize < 9.5 ? 0 : (FontSize < 11.0 ? 1 : 2);
-            y += textHeight + firstLineYOffset;
-            dc.DrawLine(pen, new Point(DisplayX, y),
-                        new Point(DisplayX  + DisplayWidth, y));
-            x = DisplayX;
-            for(int i = 0; i < qsoCount; i++)
-            {
-            	y += textHeight + lineYOffset;
-            	dc.DrawLine(pen, new Point(x, y), new Point(x + DisplayWidth, y));
-            }
-            x = DisplayX;
-            y = DisplayY + textHeight + lineYOffset;
-            int lastColumn = 0;
-            for(int i=0; i < ((ShowPseTnx) ? colWidths.Length - 1 : colWidths.Length - 2); i++)
-            {
-            	dc.DrawText(colHeadersText[i], new Point(x + colHeaderX[i], y + headerYOffset));
-            	x += colWidths[i];
-            	dc.DrawLine(pen, new Point(x, y), new Point(x, DisplayY + DisplayHeight));
-            	lastColumn++;
-            }
-            dc.DrawText(colHeadersText[lastColumn], new Point(x + colHeaderX[lastColumn],
-                                                              y + headerYOffset));
-            if (IsSelected)
-            {
-                dc.DrawRoundedRectangle(brush, selectPen, 
-            	                        new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
-            	                       CornerRounding, CornerRounding);
-            }
-            else if(IsHighlighted)
-            {
-            	dc.DrawRoundedRectangle(brush, hightlightPen, 
-            	                        new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight),
-            	                       CornerRounding, CornerRounding);
-            }
         }
 
 		/// <summary>
@@ -716,11 +507,17 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property == ShowManagerProperty ||
-			   e.Property == ShowFrequencyProperty ||
+			if(e.Property == ShowFrequencyProperty ||
 			   e.Property == ShowPseTnxProperty ||
+			   e.Property == DateFormatProperty)
+			{
+				if(QslCard != null && QBoxView != null)
+				{
+					QBoxView.CalculateColumnWidthsAndSetVisibilities();
+				}
+			}
+			if(e.Property == ShowManagerProperty ||
 			   e.Property == MaximumQsosProperty ||
-			   e.Property == DateFormatProperty ||
 			   e.Property == LineTextBrushProperty ||
 			   e.Property == CallsignBrushProperty ||
 			   e.Property == ManagerBrushProperty ||

@@ -35,6 +35,9 @@ namespace hamqsler
 			get {return itemData;}
 		}
 		
+		public CardItemView()
+		{}
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
