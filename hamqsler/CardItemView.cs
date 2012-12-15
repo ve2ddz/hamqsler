@@ -131,16 +131,24 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Helper method to handle MouseMove events when the related CardItem is selected
-		/// and the left mouse button is down
+		/// and the left mouse button is down. This method is overridden in ImageView,
+		/// TextItemView, and QsosBoxView classes.
 		/// </summary>
 		/// <param name="e">MouseEventArgs object</param>
-		protected abstract void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e);
+		protected virtual void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
 		
 		/// <summary>
 		/// Helper method to handle MouseMove events when the related CardItem is selected
-		/// but the left mouse button is not down.
+		/// but the left mouse button is not down. This method is overridden in ImageView,
+		/// TextItemView, and QsosBoxView classes.
 		/// </summary>
 		/// <param name="e">MouseEventArgs object</param>
-		protected abstract void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e);
+		protected virtual void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

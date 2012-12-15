@@ -128,16 +128,5 @@ namespace hamqsler
 			// now rebuild the view
 			BuildCard();
 		}
-		
-		protected override void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-		
-		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-		
 	}
 }
