@@ -20,6 +20,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Shapes;
 
 namespace hamqsler
@@ -29,12 +30,24 @@ namespace hamqsler
 	/// </summary>
 	public abstract class CardItemView : UserControl
 	{
+		// Reference to the CardItem that this view displays
 		private CardItem itemData = null;
 		public CardItem ItemData
 		{
 			get {return itemData;}
 		}
 		
+		private bool isLeftMouseButtonDown = false;
+		protected bool IsLeftMouseButtonDown
+		{
+			get {return isLeftMouseButtonDown;}
+			set {isLeftMouseButtonDown = value;}
+		}
+
+		protected Point leftMouseDownPoint = new Point(0, 0);
+		/// <summary>
+		/// Default constructor
+		/// </summary>
 		public CardItemView()
 		{}
 		
@@ -86,5 +99,48 @@ namespace hamqsler
 			return (x >= rect.X) && (x <= rect.X + rect.Width) && 
 				(y >= rect.Y) && (y <= rect.Y + rect.Height);
 		}
+		
+		/// <summary>
+		/// Handler for MouseMove events related to this CardItem.
+		/// Called from CardCanvas.
+		/// </summary>
+		/// <param name="e">Not used</param>
+		public void MoveMouse(MouseEventArgs e)
+		{
+			if(ItemData.IsSelected)
+			{
+				if(IsLeftMouseButtonDown)
+				{
+					HandleMouseMoveWithLeftMouseButtonDown(e);
+				}
+				else
+				{
+					HandleMouseMoveWithLeftMouseButtonUp(e);
+				}
+			}
+			else
+			{
+				// not selected so highlight the CardItem.
+				if(!ItemData.IsHighlighted)
+				{
+					ItemData.QslCard.ClearHighlighted();
+					ItemData.IsHighlighted = true;
+				}
+			}		
+		}
+		
+		/// <summary>
+		/// Helper method to handle MouseMove events when the related CardItem is selected
+		/// and the left mouse button is down
+		/// </summary>
+		/// <param name="e">MouseEventArgs object</param>
+		protected abstract void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e);
+		
+		/// <summary>
+		/// Helper method to handle MouseMove events when the related CardItem is selected
+		/// but the left mouse button is not down.
+		/// </summary>
+		/// <param name="e">MouseEventArgs object</param>
+		protected abstract void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e);
 	}
 }

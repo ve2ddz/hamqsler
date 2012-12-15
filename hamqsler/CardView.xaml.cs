@@ -100,5 +100,16 @@ namespace hamqsler
 			}
 			return null;
 		}
+
+		protected override void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+		
+		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+		
 	}
 }

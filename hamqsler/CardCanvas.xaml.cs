@@ -180,9 +180,8 @@ namespace hamqsler
 				CardItemView civ = cardView.GetCardItemViewCursorIsOver(location.X, location.Y);
 				if(civ != null)
 				{
-					ci = civ.ItemData;
-					// delegate MouseMove event to the CardItem
-					ci.MoveMouse(e);
+					// delegate MouseMove event to the CardItemView
+					civ.MoveMouse(e);
 				}
 				else
 				{

@@ -43,5 +43,27 @@ namespace hamqsler
 			DataContext	= this;
 			InitializeComponent();
 		}
+				
+		/// <summary>
+		/// Helper method to handle MouseMove events when the related Image is selected
+		/// and the left mouse button is down
+		/// </summary>
+		/// <param name="e">MouseEventArgs object</param>
+
+		protected override void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+		
+		/// <summary>
+		/// Helper method to handle MouseMove events when the related Image is selected
+		/// but the left mouse button is not down.
+		/// </summary>
+		/// <param name="e">MouseEventArgs object</param>
+		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+		
 	}
 }
