@@ -319,45 +319,7 @@ namespace hamqsler
 			get {return (string)GetValue(ConfirmingDisplayTextProperty);}
 			set {SetValue(ConfirmingDisplayTextProperty, value);}
 		}
-		
-		/// <summary>
-		/// Holds QSOs to print on the cards
-		/// </summary>
-		internal List<QsoWithInclude> qsos = new List<QsoWithInclude>();
 
-		/// <summary>
-		/// Indexer for the QSOs
-		/// </summary>
-		/// <param name="key">Key to the QSO</param>
-		/// <returns>QSO specified by the key</returns>
-		internal QsoWithInclude this[int key]
-		{
-			get
-			{
-				QsoWithInclude qso = qsos[key];
-				return qso;
-			}
-		}
-
-		/// <summary>
-		/// <summary>
-		/// Retrieves the number of QSOs that will be printed
-		/// </summary>
-/*		public int QsosCount
-		{
-			get { return qsos.Count; }
-		}*/
-		
-		private enum Columns
-		{
-			Date = 0,
-			Time,
-			BandFreq,
-			Mode,
-			RST,
-			QSL
-		};
-		
         private QsosBoxView qView = null;
         public QsosBoxView QBoxView
         {
@@ -416,8 +378,8 @@ namespace hamqsler
 		{
 			// Note: DisplayHeight is not calculated because it is determined automatically in
 			// XAML in QsosBoxView.
-			FormattedText fText = GenerateFormattedText("Sample Text", LineTextBrush,
-			                                            FontWeights.Normal);
+//			FormattedText fText = GenerateFormattedText("Sample Text", LineTextBrush,
+//			                                            FontWeights.Normal);
 			if(DisplayX == 0 && DisplayY == 0 && DisplayWidth == 0 && DisplayHeight == 0)
 			{
 				DisplayX = QslCard.DisplayWidth / 20;
@@ -430,75 +392,6 @@ namespace hamqsler
 			}
 		}
 		
-		/// <summary>
-		/// Generates formatted text based on the text, brush, and weight
-		/// </summary>
-		/// <param name="text">Text to be formatted</param>
-		/// <param name="brush">Brush to use for formatting</param>
-		/// <param name="weight">Text weight to use for formatting</param>
-		/// <returns>FormattedText object representing the text</returns>
-		protected FormattedText GenerateFormattedText(string text, Brush brush, FontWeight weight)
-		{
-			
-			Typeface typeface = new Typeface(new FontFamily(FontName), FontStyles.Normal,
-			                                 weight, FontStretches.Normal);
-			FormattedText fText = new FormattedText(text,
-			                                        System.Globalization.CultureInfo.CurrentUICulture,
-			                                        FlowDirection.LeftToRight, typeface, FontSize, brush);
-			return fText;
-		}
-		
-		
- 
-        /// <summary>
-        /// Handles rendering of the QSOsBox on the card
-        /// </summary>
-        /// <param name="drawingContext">drawing context to render to</param>
-        protected override void OnRender(DrawingContext dc)
-        {
-        }
-
-		/// <summary>
-		/// Handles MouseMove events
-		/// </summary>
-		/// <param name="e">MouseEventArgs object</param>
-		public override void MoveMouse(MouseEventArgs e)
-		{
-			base.MoveMouse(e);
-			if (this.IsSelected)
-			{
-				if (this.IsLeftMouseButtonDown)
-				{
-					System.Windows.Point pt = e.GetPosition(QslCard);
-					if (cursorLoc == CursorLocation.Inside)
-					{
-						DisplayX = originalDisplayRectangle.X;
-						DisplayY = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
-						DisplayWidth = originalDisplayRectangle.Width;
-						DisplayHeight = originalDisplayRectangle.Height;
-					}
-				}
-				else
-				{
-					Cursor cursor = Cursors.Arrow;
-					cursorLoc = CursorLocation.Outside;
-					System.Windows.Point pt = e.GetPosition(QslCard);
-					if ((new Rect(DisplayX, DisplayY, DisplayWidth, DisplayHeight)).Contains(pt))
-					{
-						cursorLoc = CursorLocation.Inside;
-						cursor = Cursors.SizeNS;
-					}
-					Mouse.OverrideCursor = cursor;
-					this.CaptureMouse();
-				}
-			}
-			else
-			{
-				Mouse.OverrideCursor = Cursors.Arrow;
-			}
-
-		}
-
 		/// <summary>
 		/// Handler for PropertyChanged event
 		/// </summary>

@@ -66,6 +66,7 @@ namespace hamqsler
 		/// </summary>
 		public CardItemView()
 		{
+			MouseLeave += OnMouseLeave;
 		}
 		
 		/// <summary>
@@ -177,8 +178,14 @@ namespace hamqsler
             this.ReleaseMouseCapture();
         }
         
+        /// <summary>
+        /// Handler for MouseLeave event. Needed to release
+        /// </summary>
+        /// <param name="sender">Source of the event</param>
+        /// <param name="e">MouseEventArgs object</param>
         public void OnMouseLeave(object sender, MouseEventArgs e)
         {
+        	// pass event on to OnMouseLeftButtonUp to release the mouse capture
         	this.OnMouseLeftButtonUp(sender, 
     		                         new MouseButtonEventArgs(e.MouseDevice,
 		                                                      e.Timestamp,

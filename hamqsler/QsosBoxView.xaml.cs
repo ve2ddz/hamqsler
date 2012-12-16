@@ -191,14 +191,6 @@ namespace hamqsler
 			get {return zeroOffset;}
 		}
 		
-		// Maximum number of characters for display in each column
-		private static double MaxTimeLength = 6;
-		private static double MaxBandLength = 6;
-		private static double MaxFrequencyLength = 8;
-		private static double MaxModeLength = 6;
-		private static double MaxRstLength = 3;
-		private static double MaxQslLength = 3;
-		
 		// Enumeration for the columns in the QsosBox
 		public enum Columns
 		{
@@ -222,7 +214,6 @@ namespace hamqsler
 			DataContext = this;
 			qsosBox.QBoxView = this;
 			InitializeComponent();
-			CalculateColumnWidthsAndSetVisibilities();
 			if(((QsosBox)ItemData).IsInDesignMode)
 			{
 				BuildQsos();
@@ -249,23 +240,26 @@ namespace hamqsler
 		/// </summary>
 		public void CalculateColumnWidthsAndSetVisibilities()
 		{
-			
 			double[] colWidths = new Double[(int)Columns.End];
 			QsosBox qBox = (QsosBox)ItemData;
-			colWidths[(int)Columns.DateColumn] = qBox.YYYYMMDDText.Length;
+			string dateHeader = qBox.YYYYMMDDText;
 			if(qBox.DateFormat == "DD-MMM-YY")
 			{
-				colWidths[(int)Columns.DateColumn] = qBox.DDMMMYYText.Length;
+				dateHeader = qBox.DDMMMYYText;
 			}
 			else if(qBox.DateFormat == "DD-MM-YY")
 			{
-				colWidths[(int)Columns.DateColumn] = qBox.DDMMYYText.Length;
+				dateHeader = qBox.DDMMYYText;
 			}
-			colWidths[(int)Columns.TimeColumn] = MaxTimeLength;
+			FormattedText date = GenerateFormattedText(dateHeader);
+			colWidths[(int)Columns.DateColumn] = date.Width;
+			FormattedText time = GenerateFormattedText("TTTTTT");
+			colWidths[(int)Columns.TimeColumn] = time.MinWidth;
 			if(qBox.ShowFrequency)
 			{
+				FormattedText freq = GenerateFormattedText("WWWWWWWW");
 				colWidths[(int)Columns.BandColumn] = 0;
-				colWidths[(int)Columns.FrequencyColumn] = MaxFrequencyLength;
+				colWidths[(int)Columns.FrequencyColumn] = freq.Width;
 				BandColumn.Visibility = Visibility.Collapsed;
 				FrequencyColumn.Visibility = Visibility.Visible;
 				DesignBandColumn.Visibility = Visibility.Collapsed;
@@ -273,18 +267,22 @@ namespace hamqsler
 			}
 			else
 			{
-				colWidths[(int)Columns.BandColumn] = MaxBandLength;
+				FormattedText band = GenerateFormattedText("XXXXXX");
+				colWidths[(int)Columns.BandColumn] = band.Width;
 				colWidths[(int)Columns.FrequencyColumn] = 0;
 				BandColumn.Visibility = Visibility.Visible;
 				FrequencyColumn.Visibility = Visibility.Collapsed;
 				DesignBandColumn.Visibility = Visibility.Visible;
 				DesignFrequencyColumn.Visibility = Visibility.Collapsed;
 			}
-			colWidths[(int)Columns.ModeColumn] = MaxModeLength;
-			colWidths[(int)Columns.RstColumn] = MaxRstLength;
+			FormattedText mode = GenerateFormattedText("WWWWWW");
+			colWidths[(int)Columns.ModeColumn] = mode.Width;
+			FormattedText rst = GenerateFormattedText("WWW");
+			colWidths[(int)Columns.RstColumn] =rst.Width;
 			if(qBox.ShowPseTnx)
 			{
-				colWidths[(int)Columns.QslColumn] = MaxQslLength;
+				FormattedText qsl = GenerateFormattedText("WWW");
+				colWidths[(int)Columns.QslColumn] = qsl.Width;
 				QslColumn.Visibility = Visibility.Visible;
 				DesignQslColumn.Visibility = Visibility.Visible;
 			}
@@ -296,18 +294,23 @@ namespace hamqsler
 			}
 			
 			double columnsWidth = 0.0;
+			int nonZeroColumns = 0;
 			for(int i = 0; i < (int)Columns.End; i++)
 			{
-				columnsWidth += colWidths[i];
+				if(colWidths[i] != 0)
+				{
+					columnsWidth += colWidths[i];
+					nonZeroColumns++;
+				}
 			}
-			double columnWidthAdjustment = qBox.DisplayWidth / columnsWidth;
-			DateColumnWidth = colWidths[(int)Columns.DateColumn] * columnWidthAdjustment;
-			TimeColumnWidth = colWidths[(int)Columns.TimeColumn] * columnWidthAdjustment;
-			BandColumnWidth = colWidths[(int)Columns.BandColumn] * columnWidthAdjustment;
-			FrequencyColumnWidth = colWidths[(int)Columns.FrequencyColumn] * columnWidthAdjustment;
-			ModeColumnWidth = colWidths[(int)Columns.ModeColumn] * columnWidthAdjustment;
-			RstColumnWidth = colWidths[(int)Columns.RstColumn] * columnWidthAdjustment;
-			QslColumnWidth = colWidths[(int)Columns.QslColumn] * columnWidthAdjustment;
+			double columnWidthAdjustment = (GetWidth() - columnsWidth) / nonZeroColumns;
+			DateColumnWidth = colWidths[(int)Columns.DateColumn] + columnWidthAdjustment;
+			TimeColumnWidth = colWidths[(int)Columns.TimeColumn] + columnWidthAdjustment;
+			BandColumnWidth = colWidths[(int)Columns.BandColumn] + columnWidthAdjustment;
+			FrequencyColumnWidth = colWidths[(int)Columns.FrequencyColumn] + columnWidthAdjustment;
+			ModeColumnWidth = colWidths[(int)Columns.ModeColumn] + columnWidthAdjustment;
+			RstColumnWidth = colWidths[(int)Columns.RstColumn] + columnWidthAdjustment;
+			QslColumnWidth = colWidths[(int)Columns.QslColumn] + columnWidthAdjustment;
 		}
 		
 		/// <summary>
@@ -360,5 +363,36 @@ namespace hamqsler
 		{
 			return SelectRectangle.ActualHeight;
 		}
+		
+		/// <summary>
+		/// Generates formatted text based on the text
+		/// </summary>
+		/// <param name="text">Text to be formatted</param>
+		/// <returns>FormattedText object representing the text</returns>
+		protected FormattedText GenerateFormattedText(string text)
+		{
+			
+			Typeface typeface = new Typeface(new FontFamily(((QsosBox)ItemData).FontName), 
+			                                 FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+			FormattedText fText = new FormattedText(text,
+			                                        System.Globalization.CultureInfo.CurrentUICulture,
+			                                        FlowDirection.LeftToRight, typeface, FontSize, 
+			                                        Brushes.Black);
+			return fText;
+		}
+		
+		/// <summary>
+		/// Handler for Loaded event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">nopt used</param>
+		private void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			// must wait until here to calculate column widths because the QsosBoxView must be
+			// shown before it has a width (used to calculate widths)
+			CalculateColumnWidthsAndSetVisibilities();
+		}
+		
+
 	}
 }
