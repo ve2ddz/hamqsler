@@ -576,7 +576,7 @@
 		</Canvas>
 		<Rectangle Width="{Binding Path=ItemData.DisplayWidth}"
 				   Height="{Binding Path=ActualHeight, ElementName=DisplayPanel}"
-				   StrokeThickness="2.0" StrokeDashArray="5,3"
+				   StrokeThickness="2.0" StrokeDashArray="5,3" x:Name="SelectRectangle"
 				   RadiusX="{Binding Path=CornerRounding}" 
 		           RadiusY="{Binding Path=CornerRounding}">
 			<Rectangle.Style>

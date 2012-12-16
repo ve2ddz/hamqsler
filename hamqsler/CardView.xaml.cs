@@ -105,6 +105,23 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Retrieve the CardItemView of the selected CardItem
+		/// </summary>
+		/// <returns>CardItemView corresponding to the selected CardItem, or null if no selection</returns>
+		public CardItemView GetCardItemViewForSelectedCardItem()
+		{
+			foreach(FrameworkElement elt in CanvasForCard.Children)
+			{
+				CardItemView civ = elt as CardItemView;
+				if(civ != null && civ.ItemData.IsSelected)
+				{
+					return civ;
+				}
+			}
+			return null;
+		}
+		
+		/// <summary>
 		/// Remove all CardItemView objects from the CardView, then rebuild the CardView
 		/// based on the CardItems in the card.
 		/// </summary>
@@ -128,5 +145,6 @@ namespace hamqsler
 			// now rebuild the view
 			BuildCard();
 		}
+		
 	}
 }

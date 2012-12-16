@@ -314,10 +314,15 @@ namespace hamqsler
 		/// Helper method to handle MouseMove events when the related QsosBox is selected
 		/// and the left mouse button is down
 		/// </summary>
+		/// <param name="view">CardView object that contains this QsosBoxView</param>
 		/// <param name="e">MouseEventArgs object</param>
-		protected override void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e)
+		protected override void HandleMouseMoveWithLeftMouseButtonDown(CardView view, MouseEventArgs e)
 		{
-			throw new NotImplementedException();
+			if (cursorLoc == CursorLocation.Inside)
+			{
+				Point pt = e.GetPosition(view);
+				ItemData.DisplayY = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
+			}
 		}
 		
 		/// <summary>
@@ -327,8 +332,33 @@ namespace hamqsler
 		/// <param name="e">MouseEventArgs object</param>
 		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
 		{
-//			throw new NotImplementedException();
+					Cursor cursor = Cursors.Arrow;
+					cursorLoc = CursorLocation.Outside;
+					System.Windows.Point pt = e.GetPosition(this);
+					if ((new Rect(0, 0, GetWidth(), GetHeight())).Contains(pt))
+					{
+						cursorLoc = CursorLocation.Inside;
+						cursor = Cursors.SizeNS;
+					}
+					Mouse.OverrideCursor = cursor;
 		}
 		
+		/// <summary>
+		/// Retrieve the actual width of this ImageView
+		/// </summary>
+		/// <returns>Width of this ImageView in device independent units</returns>
+		protected override double GetWidth()
+		{
+			return SelectRectangle.ActualWidth;
+		}
+		
+		/// <summary>
+		/// Retrieve the actual height of this ImageView
+		/// </summary>
+		/// <returns>Height of this ImageView in device independent units</returns>
+		protected override double GetHeight()
+		{
+			return SelectRectangle.ActualHeight;
+		}
 	}
 }

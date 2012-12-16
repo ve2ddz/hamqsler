@@ -48,10 +48,11 @@ namespace hamqsler
 		/// Helper method to handle MouseMove events when the related TextItem is selected
 		/// and the left mouse button is down
 		/// </summary>
+		/// <param name="view">CardView object that contains this TextItemView</param>
 		/// <param name="e">MouseEventArgs object</param>
-		protected override void HandleMouseMoveWithLeftMouseButtonDown(MouseEventArgs e)
+		protected override void HandleMouseMoveWithLeftMouseButtonDown(CardView view, MouseEventArgs e)
 		{
-			throw new NotImplementedException();
+//			throw new NotImplementedException();
 		}
 		
 		/// <summary>
@@ -64,5 +65,22 @@ namespace hamqsler
 //			throw new NotImplementedException();
 		}
 		
+		/// <summary>
+		/// Retrieve the actual width of this ImageView
+		/// </summary>
+		/// <returns>Width of this ImageView in device independent units</returns>
+		protected override double GetWidth()
+		{
+			return SelectRectangle.ActualWidth;
+		}
+		
+		/// <summary>
+		/// Retrieve the actual height of this ImageView
+		/// </summary>
+		/// <returns>Height of this ImageView in device independent units</returns>
+		protected override double GetHeight()
+		{
+			return SelectRectangle.ActualHeight;
+		}
 	}
 }

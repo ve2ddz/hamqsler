@@ -156,7 +156,7 @@
 		</Canvas>
 		<Rectangle Width="{Binding Path=ItemData.DisplayWidth}"
 					Height="{Binding Path=ItemData.DisplayHeight}"
-					StrokeThickness="2.0" StrokeDashArray="5,3">
+					StrokeThickness="2.0" StrokeDashArray="5,3" x:Name="SelectRectangle">
 			<Rectangle.Style>
 				<Style TargetType="{x:Type Rectangle}">
 					<Setter Property="Stroke" Value="Transparent"/>

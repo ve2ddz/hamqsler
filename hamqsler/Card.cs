@@ -187,14 +187,6 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// OnRender event handler - draws the card
-		/// </summary>
-		/// <param name="dc">Context to draw the card on</param>
-		protected override void OnRender(DrawingContext dc)
-		{
-		}
-		
-		/// <summary>
 		/// Sets the CardItem that the cursor is over as highlighted
 		/// </summary>
 		/// <param name="x">X position of the cursor relative to the upper left corner of this Card</param>

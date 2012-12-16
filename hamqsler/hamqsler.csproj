@@ -189,7 +189,9 @@
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
     <Page Include="CardView.xaml" />
-    <Page Include="CountMacroGroupBox.xaml" />
+    <Page Include="CountMacroGroupBox.xaml">
+      <DependentUpon>CountMacro.cs</DependentUpon>
+    </Page>
     <Page Include="ImageView.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />

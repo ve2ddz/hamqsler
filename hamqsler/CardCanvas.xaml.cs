@@ -169,26 +169,19 @@ namespace hamqsler
 		private void OnMouseMove(object sender, MouseEventArgs e)
 		{
 			// Is the cursor over a CardItem?
-			CardItem ci = QslCard.GetSelected();
-			if(ci != null)
+			CardItemView civ = cardView.GetCardItemViewForSelectedCardItem();
+			if(civ != null)
 			{
-				foreach(FrameworkElement elt in cardView.CanvasForCard.Children)
-				{
-					CardItemView civ = elt as CardItemView;
-					if(civ != null && civ.ItemData == ci)
-					{
-						civ.MoveMouse(e);
-					}
-				}
+				civ.MoveMouse(cardView, e);
 			}
 			else
 			{
 				Point location = e.GetPosition(cardView);
-				CardItemView civ = cardView.GetCardItemViewCursorIsOver(location.X, location.Y);
+				civ = cardView.GetCardItemViewCursorIsOver(location.X, location.Y);
 				if(civ != null)
 				{
 					// delegate MouseMove event to the CardItemView
-					civ.MoveMouse(e);
+					civ.MoveMouse(cardView, e);
 				}
 				else
 				{
@@ -205,11 +198,10 @@ namespace hamqsler
 		/// <param name="e">MouseButtonEventArgs object</param>
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-        	// if a CardItem is selected, pass the processing on to it.
-        	CardItem ci = QslCard.GetSelected();
-        	if(ci != null)
+        	CardItemView civ = cardView.GetCardItemViewForSelectedCardItem();
+        	if(civ != null)
         	{
-        		ci.OnMouseLeftButtonDown(sender, e);
+        		civ.OnMouseLeftButtonDown(cardView, e);
         	}
         }
         
@@ -220,14 +212,23 @@ namespace hamqsler
         /// <param name="e">MouseButtonEventArgs object</param>
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-        	// if a CardItem is selected, pass the processing on to it
-        	CardItem ci = QslCard.GetSelected();
-        	if(ci != null)
+			CardItemView civ = cardView.GetCardItemViewForSelectedCardItem();
+        	if(civ != null)
         	{
-        		ci.OnMouseLeftButtonUp(sender, e);
+        		civ.OnMouseLeftButtonUp(sender, e);
         	}
-        	
         }
+        
+        private void OnMouseEnter(object sender, MouseEventArgs e)
+        {
+        	this.CaptureMouse();
+        }
+        
+        private void OnMouseLeave(object sender, MouseEventArgs e)
+        {
+        	this.ReleaseMouseCapture();
+        }
+        
 		/// <summary>
 		/// Handler for SelectCardItem menu item Executed (Clicked) event
 		/// </summary>
@@ -266,24 +267,6 @@ namespace hamqsler
 		private void SetPropertiesPanelVisibility(CardItem ci)
 		{
 			GetCardTabItem().SetPropertiesVisibility(ci);
-		}
-		
-		/// <summary>
-		/// Handles MouseLeave event
-		/// </summary>
-		/// <param name="sender">Object sending the event (this canvas)</param>
-		/// <param name="e">MouseEventArgs object</param>
-		private void OnMouseLeave(object sender, MouseEventArgs e)
-		{
-			CardItem ci = QslCard.GetSelected();
-			// if a CardItem is Selected, call its OnMouseLeftButtonUp to release the
-			// mouse capture and perform other cleanup
-			if(ci != null)
-			{
-				ci.OnMouseLeftButtonUp(sender, new MouseButtonEventArgs((MouseDevice)e.Device, 
-				                                                        0, MouseButton.Left));
-			}
-			Mouse.OverrideCursor = Cursors.Arrow;
 		}
 		
 		/// <summary>
