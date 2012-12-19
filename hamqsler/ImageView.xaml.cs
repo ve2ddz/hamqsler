@@ -53,7 +53,111 @@ namespace hamqsler
 
 		protected override void HandleMouseMoveWithLeftMouseButtonDown(CardView view, MouseEventArgs e)
 		{
-//			throw new NotImplementedException();
+			// handle drag actions
+            double x = 0;
+            double y= 0;
+            double width= 0;
+            double height = 0;
+            CardImageBase cib = ItemData as CardImageBase;
+            double imageAspectRatio = (cib.BitMapImage != CardImageBase.EmptyImage) ? 
+            	cib.BitMapImage.Width / cib.BitMapImage.Height : 1.0;
+            double minWidth = imageAspectRatio < 1.0 ? 9.6 : 9.6 / imageAspectRatio;
+            double minHeight = imageAspectRatio >= 1.0 ? 9.6 : 9.6 / imageAspectRatio;
+            Point pt = e.GetPosition(view);
+            switch (cursorLoc)
+            {
+                case CursorLocation.Inside:
+                    x = originalDisplayRectangle.X + pt.X - leftMouseDownPoint.X;
+                    y = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
+                    width = originalDisplayRectangle.Width;
+                    height = originalDisplayRectangle.Height; 
+                    break;
+                case CursorLocation.NW:
+                    width = originalDisplayRectangle.Width -
+                        (pt.X - leftMouseDownPoint.X);
+                    width = width < minWidth ? minWidth : width;
+                    height = originalDisplayRectangle.Height - 
+                        (pt.Y - leftMouseDownPoint.Y);
+                    height = height < minHeight ? minHeight : height;
+                    if (imageAspectRatio < width / height)
+                    {
+                        width = height * imageAspectRatio;
+                    }
+                    else if (imageAspectRatio > width / height)
+                    {
+                        height = width / imageAspectRatio;
+                    }
+                    x = originalDisplayRectangle.X + originalDisplayRectangle.Width
+                        - width;
+                    y = originalDisplayRectangle.Y + originalDisplayRectangle.Height
+                        - height;
+                    break;
+                case CursorLocation.NE:
+                    width = originalDisplayRectangle.Width + 
+                        (pt.X - leftMouseDownPoint.X);
+                    width = width < minWidth ? minWidth : width;
+                    height = originalDisplayRectangle.Height - 
+                        (pt.Y - leftMouseDownPoint.Y);
+                    height = height < minHeight ? minHeight : height;
+                    if (imageAspectRatio < width / height)
+                    {
+                        width = height * imageAspectRatio;
+                    }
+                    else if (imageAspectRatio > width / height)
+                    {
+                        height = width / imageAspectRatio;
+                    }
+
+                    x = originalDisplayRectangle.X;
+                    y = originalDisplayRectangle.Y + originalDisplayRectangle.Height
+                        - height;
+                    break;
+                case CursorLocation.SE:
+                    width = originalDisplayRectangle.Width +
+                        (pt.X - leftMouseDownPoint.X);
+                    width = width < minWidth ? minWidth : width;
+                    height = originalDisplayRectangle.Height +
+                        (pt.Y - leftMouseDownPoint.Y);
+                    height = height < minHeight ? minHeight : height;
+                    if (imageAspectRatio < width / height)
+                    {
+                        width = height * imageAspectRatio;
+                    }
+                    else if (imageAspectRatio > width / height)
+                    {
+                        height = width / imageAspectRatio;
+                    }
+                    x = originalDisplayRectangle.X;
+                    y = originalDisplayRectangle.Y;
+                    break;
+                case CursorLocation.SW:
+                    width = originalDisplayRectangle.Width -
+                        (pt.X - leftMouseDownPoint.X);
+                    width = width < minWidth ? minWidth : width;
+                    height = originalDisplayRectangle.Height +
+                        (pt.Y - leftMouseDownPoint.Y);
+                    height = height < minHeight ? minHeight : height;
+                    if (imageAspectRatio < width / height)
+                    {
+                        width = height * imageAspectRatio;
+                    }
+                    else if (imageAspectRatio > width / height)
+                    {
+                        height = width / imageAspectRatio;
+                    }
+
+                    x = originalDisplayRectangle.X + originalDisplayRectangle.Width
+                        - width; ;
+                    y = originalDisplayRectangle.Y;
+                    break;
+            }
+            if (cursorLoc != CursorLocation.Outside)
+            {
+            	ItemData.DisplayX = x;
+            	ItemData.DisplayY = y;
+            	ItemData.DisplayWidth = width;
+            	ItemData.DisplayHeight = height;
+            }
 		}
 		
 		/// <summary>
@@ -63,9 +167,49 @@ namespace hamqsler
 		/// <param name="e">MouseEventArgs object</param>
 		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
 		{
-//			throw new NotImplementedException();
+			// not dragging so set the mouse cursor based on where cursor is relative
+			// to this image
+            cursorLoc = CursorLocation.Outside;
+            Point pt = e.GetPosition(this);
+            Rect nw = new Rect(-cornerSize,- cornerSize,
+                               2 * cornerSize, 2 * cornerSize);
+            Rect ne = new Rect(ItemData.DisplayWidth - cornerSize, -cornerSize,
+                               2 * cornerSize, 2 * cornerSize);
+            Rect se = new Rect(ItemData.DisplayWidth - cornerSize, 
+                               ItemData.DisplayHeight - cornerSize,
+                               2 * cornerSize, 2 * cornerSize);
+            Rect sw = new Rect(-cornerSize, ItemData.DisplayHeight - cornerSize,
+                               2 * cornerSize, 2 * cornerSize);
+            Cursor cursor = Cursors.Arrow;
+            if (nw.Contains(pt))
+            {
+                cursorLoc = CursorLocation.NW;
+                cursor = Cursors.SizeNWSE;
+            }
+            else if (ne.Contains(pt))
+            {
+                cursorLoc = CursorLocation.NE;
+                cursor = Cursors.SizeNESW;
+            }
+            else if (se.Contains(pt))
+            {
+                cursorLoc = CursorLocation.SE;
+                cursor = Cursors.SizeNWSE;
+            }
+            else if (sw.Contains(pt))
+            {
+                cursorLoc = CursorLocation.SW;
+                cursor = Cursors.SizeNESW;
+            }
+            else if (new Rect(0, 0, GetWidth(), GetHeight()).Contains(pt))
+            {
+                cursorLoc = CursorLocation.Inside;
+                cursor = Cursors.SizeAll;
+            }
+
+            Mouse.OverrideCursor = cursor;
 		}
-		
+
 		/// <summary>
 		/// Retrieve the actual width of this ImageView
 		/// </summary>
