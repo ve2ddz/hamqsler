@@ -52,7 +52,13 @@ namespace hamqsler
 		/// <param name="e">MouseEventArgs object</param>
 		protected override void HandleMouseMoveWithLeftMouseButtonDown(CardView view, MouseEventArgs e)
 		{
-//			throw new NotImplementedException();
+			// with left mouse button down, cursor shows where to move the text item
+			if (cursorLoc == CursorLocation.Inside)
+			{
+				Point pt = e.GetPosition(view);
+				ItemData.DisplayX = originalDisplayRectangle.X + pt.X - leftMouseDownPoint.X;
+				ItemData.DisplayY = originalDisplayRectangle.Y + pt.Y - leftMouseDownPoint.Y;
+			}
 		}
 		
 		/// <summary>
@@ -62,7 +68,15 @@ namespace hamqsler
 		/// <param name="e">MouseEventArgs object</param>
 		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
 		{
-//			throw new NotImplementedException();
+			Cursor cursor = Cursors.Arrow;
+			cursorLoc = CursorLocation.Outside;
+			Point pt = e.GetPosition(this);
+			if (new Rect(0, 0, GetWidth(), GetHeight()).Contains(pt))
+			{
+				cursorLoc = CursorLocation.Inside;
+				cursor = Cursors.SizeAll;
+			}
+			Mouse.OverrideCursor = cursor;
 		}
 		
 		/// <summary>
