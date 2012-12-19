@@ -57,9 +57,19 @@ namespace hamqsler
 			string size = (string)value;
 			if(value.Equals(string.Empty))
 			{
-				return 0;
+				return 1;
 			}
-			return Double.Parse(size, CultureInfo.InvariantCulture);
+			double val;
+			if(Double.TryParse(size, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,
+			                   out val))
+			{
+				return val;
+			}
+			else
+			{
+				return 1;
+			}
+			   
 		}
 	}
 }

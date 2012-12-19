@@ -353,5 +353,14 @@ namespace hamqsler
 			// now display the context menu
 			base.OnMouseRightButtonDown(e);
 		}
-			}
+		
+		public void UpdateTextForSelectedCardItem()
+		{
+			CardItemView civ = cardView.GetCardItemViewForSelectedCardItem();
+        	if(civ != null)
+        	{
+        		((TextItem)civ.ItemData).SetDisplayText();
+        	}
+		}
+	}
 }

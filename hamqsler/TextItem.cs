@@ -230,14 +230,6 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// OnRender event handler - draws the image
-		/// </summary>
-		/// <param name="dc">Context to draw the card on</param>
-		protected override void OnRender(DrawingContext dc)
-		{
-		}
-			
-		/// <summary>
 		/// Handler for PropertyChanged event
 		/// </summary>
 		/// <param name="e">DependencyPropertyChangedEventArgs object. Used to determine
@@ -277,14 +269,12 @@ namespace hamqsler
 					QslCard.IsDirty = true;
 				}
 			}
-			if(e.Property == FontSizeProperty)
+			if(e.Property == FontSizeProperty ||
+			   e.Property == CheckBoxRelativeSizeProperty)
 			{
 				CheckBoxSize = FormattedTextItem.Height * CheckBoxRelativeSize;
-				// no need to set QslCard.IsDirty because this is done above for these properties
-			}
-			else if(e.Property == CheckBoxRelativeSizeProperty)
-			{
-				CheckBoxSize = FormattedTextItem.Height * CheckBoxRelativeSize;
+				double margin = (DisplayHeight - CheckBoxSize) / 2 + 2;
+				CheckBoxMargin = new Thickness(margin, 0, margin, 0);
 				// no need to set QslCard.IsDirty because this is done above for these properties
 			}
 		}

@@ -221,7 +221,7 @@
 												TickPlacement="BottomRight"
 												ToolTip="Ratio of the width and height of the boxes to the total height of this text item">
 											<Slider.Value>
-												<Binding Path="CheckboxRelativeSize" Mode="TwoWay">
+												<Binding Path="CheckBoxRelativeSize" Mode="TwoWay">
 													<Binding.Converter>
 														<local:DoubleToPercentConverter/>
 													</Binding.Converter>
