@@ -4,8 +4,7 @@
     xmlns:local="clr-namespace:hamqsler"
 	MouseMove="OnMouseMove" MouseLeftButtonDown="OnMouseLeftButtonDown"
 	MouseLeftButtonUp="OnMouseLeftButtonUp"
-	MouseRightButtonDown="OnMouseRightButtonDown"
-	MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave">
+	MouseRightButtonDown="OnMouseRightButtonDown">
 	<Canvas.Resources>
 		<Style TargetType="MenuItem">
 			<Setter Property="CommandTarget" Value="{Binding PlacementTarget,

@@ -201,6 +201,7 @@ namespace hamqsler
         	CardItemView civ = cardView.GetCardItemViewForSelectedCardItem();
         	if(civ != null)
         	{
+        		this.CaptureMouse();
         		civ.OnMouseLeftButtonDown(cardView, e);
         	}
         }
@@ -212,34 +213,12 @@ namespace hamqsler
         /// <param name="e">MouseButtonEventArgs object</param>
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+        	this.ReleaseMouseCapture();
 			CardItemView civ = cardView.GetCardItemViewForSelectedCardItem();
         	if(civ != null)
         	{
         		civ.OnMouseLeftButtonUp(sender, e);
         	}
-        }
-        
-        /// <summary>
-        /// Handler for MouseEnter event.
-        /// </summary>
-        /// <param name="sender">not used</param>
-        /// <param name="e">not used</param>
-        private void OnMouseEnter(object sender, MouseEventArgs e)
-        {
-        	// just capture the mouse. Otherwise, events will not get passed on to the CardView
-        	// and its CardItemViews
-        	this.CaptureMouse();
-        }
-        
-        /// <summary>
-        /// Hander for the MouseLeave event.
-        /// </summary>
-        /// <param name="sender">not used</param>
-        /// <param name="e">not used</param>
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-        	// just release mouse capture so that card properties and the window can be interacted with
-        	this.ReleaseMouseCapture();
         }
         
 		/// <summary>
@@ -374,6 +353,5 @@ namespace hamqsler
 			// now display the context menu
 			base.OnMouseRightButtonDown(e);
 		}
-
-	}
+			}
 }

@@ -65,9 +65,7 @@ namespace hamqsler
 		/// Default constructor
 		/// </summary>
 		public CardItemView()
-		{
-			MouseLeave += OnMouseLeave;
-		}
+		{}
 		
 		/// <summary>
 		/// Constructor
@@ -76,7 +74,6 @@ namespace hamqsler
 		public CardItemView(CardItem item)
 		{
 			itemData = item;
-			MouseLeave += OnMouseLeave;
 		}
 		
 		/// <summary>
@@ -163,7 +160,6 @@ namespace hamqsler
 	                originalDisplayRectangle = new Rect(ItemData.DisplayX, ItemData.DisplayY,
 	                                                    GetWidth(), GetHeight());
 	                leftMouseDownPoint = e.GetPosition(view);
-	                this.CaptureMouse();
             }
             e.Handled = true;
         }
@@ -175,23 +171,13 @@ namespace hamqsler
         public void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             IsLeftMouseButtonDown = false;
-            this.ReleaseMouseCapture();
+            Point pt = e.GetPosition(this);
+            if(GetCursorLocation(pt.X, pt.Y) == CursorLocation.Outside)
+            {
+            	Mouse.OverrideCursor = Cursors.Arrow;
+            }
         }
         
-        /// <summary>
-        /// Handler for MouseLeave event. Needed to release
-        /// </summary>
-        /// <param name="sender">Source of the event</param>
-        /// <param name="e">MouseEventArgs object</param>
-        public void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-        	// pass event on to OnMouseLeftButtonUp to release the mouse capture
-        	this.OnMouseLeftButtonUp(sender, 
-    		                         new MouseButtonEventArgs(e.MouseDevice,
-		                                                      e.Timestamp,
-		                                                      MouseButton.Left));
-        }
-
 		/// <summary>
 		/// Helper method to handle MouseMove events when the related CardItem is selected
 		/// and the left mouse button is down. This method is overridden in ImageView,

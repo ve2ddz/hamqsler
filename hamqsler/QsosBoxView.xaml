@@ -134,7 +134,8 @@
  						  HorizontalScrollBarVisibility="Hidden"
 						  FontFamily="{Binding Path=ItemData.FontName}"
 						  FontSize="{Binding Path=ItemData.FontSize}"
- 						  Block.TextAlignment="Center">
+ 						  Block.TextAlignment="Center"
+		   				  IsHitTestVisible="False">
   					<DataGrid.CellStyle>
  						<Style TargetType="DataGridCell">
  							<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
@@ -404,7 +405,8 @@
  						  HorizontalScrollBarVisibility="Hidden"
 						  FontFamily="{Binding Path=ItemData.FontName}"
 						  FontSize="{Binding Path=ItemData.FontSize}"
- 						  Block.TextAlignment="Center">
+ 						  Block.TextAlignment="Center"
+		   				  IsHitTestVisible="False">
   					<DataGrid.CellStyle>
  						<Style TargetType="DataGridCell">
  							<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
