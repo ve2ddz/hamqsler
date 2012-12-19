@@ -378,8 +378,6 @@ namespace hamqsler
 		{
 			// Note: DisplayHeight is not calculated because it is determined automatically in
 			// XAML in QsosBoxView.
-//			FormattedText fText = GenerateFormattedText("Sample Text", LineTextBrush,
-//			                                            FontWeights.Normal);
 			if(DisplayX == 0 && DisplayY == 0 && DisplayWidth == 0 && DisplayHeight == 0)
 			{
 				DisplayX = QslCard.DisplayWidth / 20;
