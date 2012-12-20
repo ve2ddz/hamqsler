@@ -5,6 +5,20 @@
 	<Canvas x:Name="CanvasForCard">
 		<Rectangle Width="{Binding Path=DisplayWidth, Mode=OneWay}"
 					Height="{Binding Path=DisplayHeight, Mode=OneWay}"
-					Fill="White" Stroke="Black"/>
+					Fill="White" Stroke="Transparent"/>
+		<Rectangle Width="{Binding Path=DisplayWidth, Mode=OneWay}"
+					Height="{Binding Path=DisplayHeight, Mode=OneWay}"
+					Fill="Transparent" Stroke="Black">
+			<Rectangle.Style>
+				<Style  TargetType="{x:Type Rectangle}">
+					<Setter Property="Visibility" Value="Collapsed"/>
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding Path=PrintCardOutlines}" Value="True">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Rectangle.Style>
+		</Rectangle>
 	</Canvas>
 </local:CardItemView>
