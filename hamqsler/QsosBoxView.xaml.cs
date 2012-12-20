@@ -72,90 +72,6 @@ namespace hamqsler
 			set {SetValue(QsosProperty, value);}
 		}
 		
-		/// <summary>
-		/// Date column width property
-		/// </summary>
-		private static readonly DependencyProperty DateColumnWidthProperty =
-			DependencyProperty.Register("DateColumnWidth", typeof(double), typeof(QsosBoxView),
-			                            new PropertyMetadata(0.0));
-		public double DateColumnWidth
-		{
-			get {return (double)GetValue(DateColumnWidthProperty);}
-			set {SetValue(DateColumnWidthProperty, value);}
-		}
-		
-		/// <summary>
-		/// Time column width property
-		/// </summary>
-		private static readonly DependencyProperty TimeColumnWidthProperty =
-			DependencyProperty.Register("TimeColumnWidth", typeof(double), typeof(QsosBoxView),
-			                            new PropertyMetadata(0.0));
-		public double TimeColumnWidth
-		{
-			get {return (double)GetValue(TimeColumnWidthProperty);}
-			set {SetValue(TimeColumnWidthProperty, value);}
-		}
-		
-		/// <summary>
-		/// Band column width property
-		/// </summary>
-		private static readonly DependencyProperty BandColumnWidthProperty =
-			DependencyProperty.Register("BandColumnWidth", typeof(double), typeof(QsosBoxView),
-			                            new PropertyMetadata(0.0));
-		public double BandColumnWidth
-		{
-			get {return (double)GetValue(BandColumnWidthProperty);}
-			set {SetValue(BandColumnWidthProperty, value);}
-		}
-		
-		/// <summary>
-		/// Frequency column width property
-		/// </summary>
-		private static readonly DependencyProperty FrequencyColumnWidthProperty =
-			DependencyProperty.Register("FrequencyColumnWidth", typeof(double), typeof(QsosBoxView),
-			                            new PropertyMetadata(0.0));
-		public double FrequencyColumnWidth
-		{
-			get {return (double)GetValue(FrequencyColumnWidthProperty);}
-			set {SetValue(FrequencyColumnWidthProperty, value);}
-		}
-		
-		/// <summary>
-		/// Mode column width property
-		/// </summary>
-		private static readonly DependencyProperty ModeColumnWidthProperty =
-			DependencyProperty.Register("ModeColumnWidth", typeof(double), typeof(QsosBoxView),
-			                            new PropertyMetadata(0.0));
-		public double ModeColumnWidth
-		{
-			get {return (double)GetValue(ModeColumnWidthProperty);}
-			set {SetValue(ModeColumnWidthProperty, value);}
-		}
-		
-		/// <summary>
-		/// RST column width property
-		/// </summary>
-		private static readonly DependencyProperty RstColumnWidthProperty =
-			DependencyProperty.Register("RstColumnWidth", typeof(double), typeof(QsosBoxView),
-			                            new PropertyMetadata(0.0));
-		public double RstColumnWidth
-		{
-			get {return (double)GetValue(RstColumnWidthProperty);}
-			set {SetValue(RstColumnWidthProperty, value);}
-		}
-		
-		/// <summary>
-		/// Qsl column width property
-		/// </summary>
-		private static readonly DependencyProperty QslColumnWidthProperty =
-			DependencyProperty.Register("QslColumnWidth", typeof(double), typeof(QsosBoxView),
-			                            new PropertyMetadata(0.0));
-		public double QslColumnWidth
-		{
-			get {return (double)GetValue(QslColumnWidthProperty);}
-			set {SetValue(QslColumnWidthProperty, value);}
-		}
-		
 		// Amount of rounding for the rectangle that surrounds the QsosBox on the card
 		private const double cornerRounding = 3.0;
 		public double CornerRounding
@@ -224,13 +140,17 @@ namespace hamqsler
 		/// Helper method that builds DispQso objects for use when in design mode.
 		/// Adds QsosBox.MaximumQsos Qsos for display 
 		/// </summary>
-		private void BuildQsos()
+		public void BuildQsos()
 		{
 			Qsos.Clear();
 			for(int i = 0; i < ((QsosBox)ItemData).MaximumQsos; i++)
 			{
 				Qsos.Add(new DispQso());
 			}
+			DisplayDataGrid.ItemsSource = null;
+			DisplayDataGrid.ItemsSource = Qsos;
+			DesignDataGrid.ItemsSource = null;
+			DesignDataGrid.ItemsSource = Qsos;
 		}
 		
 		/// <summary>
@@ -304,13 +224,20 @@ namespace hamqsler
 				}
 			}
 			double columnWidthAdjustment = (GetWidth() - columnsWidth) / nonZeroColumns;
-			DateColumnWidth = colWidths[(int)Columns.DateColumn] + columnWidthAdjustment;
-			TimeColumnWidth = colWidths[(int)Columns.TimeColumn] + columnWidthAdjustment;
-			BandColumnWidth = colWidths[(int)Columns.BandColumn] + columnWidthAdjustment;
-			FrequencyColumnWidth = colWidths[(int)Columns.FrequencyColumn] + columnWidthAdjustment;
-			ModeColumnWidth = colWidths[(int)Columns.ModeColumn] + columnWidthAdjustment;
-			RstColumnWidth = colWidths[(int)Columns.RstColumn] + columnWidthAdjustment;
-			QslColumnWidth = colWidths[(int)Columns.QslColumn] + columnWidthAdjustment;
+			DisplayDataGrid.Columns[0].Width = colWidths[(int)Columns.DateColumn] + columnWidthAdjustment;
+			DisplayDataGrid.Columns[1].Width = colWidths[(int)Columns.TimeColumn] + columnWidthAdjustment;
+			DisplayDataGrid.Columns[2].Width = colWidths[(int)Columns.BandColumn] + columnWidthAdjustment;
+			DisplayDataGrid.Columns[3].Width = colWidths[(int)Columns.FrequencyColumn] + columnWidthAdjustment;
+			DisplayDataGrid.Columns[4].Width = colWidths[(int)Columns.ModeColumn] + columnWidthAdjustment;
+			DisplayDataGrid.Columns[5].Width = colWidths[(int)Columns.RstColumn] + columnWidthAdjustment;
+			DisplayDataGrid.Columns[6].Width = colWidths[(int)Columns.QslColumn] + columnWidthAdjustment;
+			DesignDataGrid.Columns[0].Width = DisplayDataGrid.Columns[0].Width;
+			DesignDataGrid.Columns[1].Width = DisplayDataGrid.Columns[1].Width;
+			DesignDataGrid.Columns[2].Width = DisplayDataGrid.Columns[2].Width;
+			DesignDataGrid.Columns[3].Width = DisplayDataGrid.Columns[3].Width;
+			DesignDataGrid.Columns[4].Width = DisplayDataGrid.Columns[4].Width;
+			DesignDataGrid.Columns[5].Width = DisplayDataGrid.Columns[5].Width;
+			DesignDataGrid.Columns[6].Width = DisplayDataGrid.Columns[6].Width;
 		}
 		
 		/// <summary>
@@ -393,6 +320,5 @@ namespace hamqsler
 			CalculateColumnWidthsAndSetVisibilities();
 		}
 		
-
 	}
 }

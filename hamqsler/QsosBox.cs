@@ -427,6 +427,10 @@ namespace hamqsler
 			{
 				CalculateRectangle();
 			}
+			if(e.Property == MaximumQsosProperty)
+			{
+				QBoxView.BuildQsos();
+			}
 		}
 	}
 	

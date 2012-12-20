@@ -120,9 +120,9 @@
 	 					</TextBlock.Style>
 	 				</TextBlock>
 	 			</StackPanel>
- 				<DataGrid ItemsSource="{Binding Qsos}" AutoGenerateColumns="False"
+ 				<DataGrid AutoGenerateColumns="False"
  						  Width="{Binding Path=ActualWidth, ElementName=QsosBoxRectangle}"
- 						  Background="Transparent"
+ 						  Background="Transparent" x:Name="DisplayDataGrid"
 						  RowBackground="Transparent" 
 						  GridLinesVisibility="None"
  						  Foreground="{Binding Path=DataContext.ItemData.LineTextBrush,
@@ -136,7 +136,7 @@
 						  FontSize="{Binding Path=ItemData.FontSize}"
  						  Block.TextAlignment="Center"
 		   				  IsHitTestVisible="False">
-  					<DataGrid.CellStyle>
+					<DataGrid.CellStyle>
  						<Style TargetType="DataGridCell">
  							<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
@@ -155,7 +155,7 @@
  								<Style TargetType="{x:Type TextBlock}">
  									<Setter Property="Text" Value="{Binding Path=Date,
 											Converter={StaticResource YYYYMMDDConverter}}"/>
- 									<Style.Triggers>
+									<Style.Triggers>
  										<DataTrigger Binding="{Binding Path=DataContext.ItemData.DateFormat,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
 										Value="DD-MMM-YY">
@@ -178,8 +178,6 @@
 									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-   									<Setter Property="Width" Value="{Binding Path=DataContext.DateColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="Content" Value="{Binding Path=DataContext.ItemData.YYYYMMDDText,
 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Style.Triggers>
@@ -198,7 +196,7 @@
 									</Style.Triggers>
 								</Style>
  							</DataGridTextColumn.HeaderStyle>
-   						</DataGridTextColumn>
+    						</DataGridTextColumn>
 						<DataGridTextColumn Binding="{Binding Time}" CanUserReorder="True">
 	   						<DataGridTextColumn.HeaderStyle>
 	 							<Style TargetType="DataGridColumnHeader">
@@ -209,8 +207,6 @@
 									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-    								<Setter Property="MinWidth" Value="{Binding Path=DataContext.TimeColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
   								</Style>
  							</DataGridTextColumn.HeaderStyle>
    	   					</DataGridTextColumn>
@@ -224,9 +220,7 @@
  									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-    								<Setter Property="MinWidth" Value="{Binding Path=DataContext.BandColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-  									</Style>
+  								</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
 						<DataGridTextColumn Binding="{Binding Path=Frequency}" x:Name="FrequencyColumn">
@@ -239,8 +233,6 @@
   									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-    								<Setter Property="MinWidth" Value="{Binding Path=DataContext.FrequencyColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 								</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
@@ -254,8 +246,6 @@
  									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-   									<Setter Property="MinWidth" Value="{Binding Path=DataContext.ModeColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 	   							</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
@@ -269,8 +259,6 @@
  									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-   									<Setter Property="MinWidth" Value="{Binding Path=DataContext.RstColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
   								</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
@@ -285,8 +273,6 @@
  									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-   									<Setter Property="MinWidth" Value="{Binding Path=DataContext.QslColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
   								</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
@@ -392,8 +378,7 @@
 	 				</TextBlock>
 	 			</StackPanel>
  				<DataGrid ItemsSource="{Binding Qsos}" AutoGenerateColumns="False"
- 						  Width="{Binding Path=ActualWidth, ElementName=QsosBoxRectangle}"
- 						  Background="Transparent"
+ 						  Background="Transparent" x:Name="DesignDataGrid"
 						  RowBackground="Transparent" 
 						  GridLinesVisibility="None"
  						  Foreground="{Binding Path=DataContext.ItemData.LineTextBrush,
@@ -449,8 +434,6 @@
 									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-   									<Setter Property="Width" Value="{Binding Path=DataContext.DateColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
    									<Setter Property="Content" Value="{Binding Path=DataContext.ItemData.YYYYMMDDText,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Style.Triggers>
@@ -480,8 +463,6 @@
 									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-    								<Setter Property="MinWidth" Value="{Binding Path=DataContext.TimeColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
   								</Style>
  							</DataGridTextColumn.HeaderStyle>
    	   					</DataGridTextColumn>
@@ -495,8 +476,6 @@
  									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-    								<Setter Property="MinWidth" Value="{Binding Path=DataContext.BandColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
   									</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
@@ -510,8 +489,6 @@
   									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-    								<Setter Property="MinWidth" Value="{Binding Path=DataContext.FrequencyColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 								</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
@@ -525,8 +502,6 @@
  									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-   									<Setter Property="MinWidth" Value="{Binding Path=DataContext.ModeColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 	   							</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
@@ -540,8 +515,6 @@
  									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-   									<Setter Property="MinWidth" Value="{Binding Path=DataContext.RstColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
   								</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
@@ -556,8 +529,6 @@
  									<Setter Property="BorderBrush" Value="{Binding Path=DataContext.ItemData.LineTextBrush,
  										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 									<Setter Property="BorderThickness" Value="1, 2, 1, 1"/>
-   									<Setter Property="MinWidth" Value="{Binding Path=DataContext.QslColumnWidth,
- 										RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
   								</Style>
  							</DataGridTextColumn.HeaderStyle>
    						</DataGridTextColumn>
