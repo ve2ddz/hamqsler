@@ -553,6 +553,8 @@ namespace hamqsler
 			CardTabItem cardTab = new CardTabItem(5.5 * 96, 3.5 * 96);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
+			// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
+			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
 		}
 		
 		/// <summary>
@@ -773,6 +775,27 @@ namespace hamqsler
 					this.Title += "New Card" + (isDirty ? "- Modified" : string.Empty);
 				}
 			}
+		}
+		
+		/// <summary>
+		/// Handler for mainTabControl SelectionChanged event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			// all we do is set the window title based on tab selected
+			TabItem tItem = e.Source as TabItem;
+			if(e.Source is CardTabItem)
+			{
+				CardTabItem cti = e.Source as CardTabItem;
+				SetTitle(cti.cardCanvas.QslCard.FileName, cti.cardCanvas.QslCard.IsDirty);
+			}
+			else if(tItem != null && tItem.Name.Equals("qsosTab"))
+			{
+				this.Title = "HamQSLer";
+			}
+			e.Handled = true;
 		}
 	}
 }
