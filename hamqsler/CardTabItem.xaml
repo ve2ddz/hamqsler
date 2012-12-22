@@ -9,6 +9,11 @@
 			<scm:SortDescription PropertyName="Source"/>
 		</CollectionViewSource.SortDescriptions>
 	</CollectionViewSource>
+	<CollectionViewSource Source="{x:Static Fonts.SystemFontFamilies}" x:Key="fontCVS2">
+		<CollectionViewSource.SortDescriptions>
+			<scm:SortDescription PropertyName="Source"/>
+		</CollectionViewSource.SortDescriptions>
+	</CollectionViewSource>
 	<local:FontWeightConverter x:Key="FontWeightConverter"/>
 	<local:DoubleToPercentConverter x:Key="DoubleToPercentConverter"/>
 	<local:FontSizeConverter x:Key="=FontSizeConverter"/>
@@ -374,7 +379,7 @@ this card">
 								</ComboBox>
 								<GroupBox Header="Font" Grid.Row="4" Grid.ColumnSpan="2">
 									<ComboBox Name="QsosBoxFontFaceComboBox"  Margin="3" ItemsSource=
-											"{Binding Source={StaticResource fontCVS}}"
+											"{Binding Source={StaticResource fontCVS2}}"
 						  					Text="{Binding FontName, Mode=TwoWay}"
 											ToolTip="Select the font to display QSOs Box text in"/>
 								</GroupBox>
