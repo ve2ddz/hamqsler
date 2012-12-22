@@ -187,6 +187,14 @@ namespace hamqsler
 				ClipRectangle = new Rect(-DisplayX, -DisplayY, QslCard.DisplayWidth,
 				                         QslCard.DisplayHeight);
 			}
+			if((e.Property == DisplayXProperty ||
+			   e.Property == DisplayYProperty ||
+			   e.Property == DisplayWidthProperty ||
+			   e.Property == DisplayHeightProperty) &&
+			   QslCard != null)
+			{
+				QslCard.IsDirty = true;
+			}
 		}
 		
 	}

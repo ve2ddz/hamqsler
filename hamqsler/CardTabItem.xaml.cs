@@ -308,6 +308,9 @@ namespace hamqsler
 			}
 			((TextItem)ci).Text.RemoveExtraneousStaticText();
 			cardCanvas.UpdateTextForSelectedCardItem();
+			// must set IsDirty because changing contents of TextParts does not trigger
+			// Card PropertyChanged event
+			cardCanvas.QslCard.IsDirty = true;
 			
 		}
 		
@@ -326,6 +329,9 @@ namespace hamqsler
 				{
 					sText.Text = Text.Text;
 					cardCanvas.UpdateTextForSelectedCardItem();
+				// must set IsDirty because changing contents of StaticText object does not trigger
+				// Card PropertyChanged event
+					cardCanvas.QslCard.IsDirty = true;
 				}
 			}
 		}

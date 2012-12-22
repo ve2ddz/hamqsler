@@ -65,8 +65,8 @@ namespace hamqsler
 		/// </summary>
 		internal void ShowMainWindow()
 		{
-			MainWindow win = new MainWindow();
-			win.Show();
+			this.MainWindow = new MainWindow();
+			MainWindow.Show();
 		}
 		
 		/// <summary>

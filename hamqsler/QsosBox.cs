@@ -415,6 +415,7 @@ namespace hamqsler
 				if(QslCard != null && QBoxView != null)
 				{
 					QBoxView.CalculateColumnWidthsAndSetVisibilities();
+					QslCard.IsDirty = true;
 				}
 			}
 			if(e.Property == ShowManagerProperty ||

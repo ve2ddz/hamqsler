@@ -90,12 +90,14 @@ namespace hamqsler
 			
 		private UserPreferences userPreferences;
 		
-		private bool isDirty = false;
+		private static readonly DependencyProperty IsDirtyProperty =
+			DependencyProperty.Register("IsDirty", typeof(bool), typeof(Card),
+			                            new PropertyMetadata(false));
 		[XmlIgnore]
 		public bool IsDirty
 		{
-			get {return isDirty;}
-			set {isDirty = value;}
+			get {return (bool)GetValue(IsDirtyProperty);}
+			set {SetValue(IsDirtyProperty, value);}
 		}
 		
 		[XmlIgnore]
@@ -193,7 +195,7 @@ namespace hamqsler
 			qsosBox.QslCard = this;
 			// more card properties
 			QslCard = this;
-			isDirty = false;
+			IsDirty = false;
 		}
 		
 		/// <summary>
@@ -289,6 +291,7 @@ namespace hamqsler
 				ci.IsHighlighted = false;
 			}
 			si.IsSelected = true;
+			IsDirty = true;
 		}
 				
 		/// <summary>
@@ -309,6 +312,7 @@ namespace hamqsler
 				ci.IsHighlighted = false;
 			}
 			ti.IsSelected = true;
+			IsDirty = true;
 		}
 		
 		/// <summary>
@@ -322,6 +326,7 @@ namespace hamqsler
 				qBox.QslCard = this;
 				this.QsosBox = qBox;
 				qBox.IsSelected = true;
+				IsDirty = true;
 			}
 		}
 		
@@ -345,6 +350,7 @@ namespace hamqsler
 				{
 					QsosBox = null;
 				}
+				IsDirty = true;
 			}
 		}
 		
@@ -375,6 +381,25 @@ namespace hamqsler
 				xmlFormat.Serialize(fStream, this);
 				this.FileName = fileName;
 				this.IsDirty = false;
+			}
+		}
+		
+		/// <summary>
+		/// Handler for PropertyChanged event
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == PrintCardOutlinesProperty ||
+			   e.Property == FillLastPageWithBlankCardsProperty ||
+			   e.Property == SetCardMarginsToPrinterPageMarginsProperty)
+			{
+				IsDirty = true;
+			}
+			else if(e.Property == IsDirtyProperty)
+			{
+				((MainWindow)App.Current.MainWindow).SetTitle(FileName, IsDirty);
 			}
 		}
 				

@@ -119,6 +119,7 @@ namespace hamqsler
 							BitMapImage.BeginInit();
 							BitMapImage.UriSource = new Uri(fName, UriKind.RelativeOrAbsolute);
 							BitMapImage.EndInit();
+							QslCard.IsDirty = true;
 						}
 						catch(Exception fnfe)
 						{
