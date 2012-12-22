@@ -232,8 +232,13 @@ namespace hamqsler
 			if(civ != null)
 			{
 				QslCard.ClearHighlighted();
+				bool isDirty = QslCard.IsDirty;
 				civ.ItemData.IsSelected = true;
 				SetPropertiesPanelVisibility(civ.ItemData);
+				// Setting IsSelected may set Card.IsDirty, so we must
+				// reset this to previous value.
+				// Must come after SetPropertiesPanelVisibility call.
+				QslCard.IsDirty = isDirty;				
 			}
 		}
 		
