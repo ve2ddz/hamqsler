@@ -24,6 +24,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
@@ -56,11 +57,12 @@ namespace hamqsler
 			set {SetValue(DisplayHeightProperty, value); }
 		}
         
-		[NonSerialized]
+		[XmlIgnoreAttribute]
 		public static BitmapImage EmptyImage = new BitmapImage();
 		protected static readonly DependencyProperty BitMapImageProperty =
 			DependencyProperty.Register("BitMapImage", typeof(BitmapImage), typeof(CardImageBase),
 			                            new PropertyMetadata(EmptyImage));
+		[XmlIgnore]
 		public BitmapImage BitMapImage
 		{
 			get {return (BitmapImage)GetValue(BitMapImageProperty);}

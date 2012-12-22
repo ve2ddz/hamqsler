@@ -28,9 +28,12 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
@@ -42,6 +45,7 @@ namespace hamqsler
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
+		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
 		public static RoutedCommand QsosCommand = new RoutedCommand();
 		public static RoutedCommand InputQsosCommand = new RoutedCommand();
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
@@ -64,6 +68,17 @@ namespace hamqsler
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+		
+		/// <summary>
+		/// CanExecute for File->SaveCardAs
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void CardSaveAsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = cti != null;
 		}
 		
 		/// <summary>
@@ -274,6 +289,29 @@ namespace hamqsler
 		{
 			// Force program shutdown (required because App shutdown mode set to OnExplicitShutdown)
 			Application.Current.Shutdown();
+		}
+		
+		/// <summary>
+		/// Handler for Save Card As menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void CardSaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			Card qslCard = cti.cardCanvas.QslCard;
+			string fileName = qslCard.FileName;
+			SaveFileDialog sDialog = new SaveFileDialog();
+			sDialog.Filter = "QSL Card(*.qslx)|*.qslx";
+			if(fileName != null)
+			{
+				sDialog.FileName = fileName;
+			}
+			if(sDialog.ShowDialog() == true)
+			{
+				qslCard.SaveAsXml(sDialog.FileName);
+				SetTitle(sDialog.FileName, qslCard.IsDirty);
+			}
 		}
 		
 		/// <summary>
@@ -654,7 +692,6 @@ namespace hamqsler
 					{
 						ci.IsSelected = true;
 						cti.SetPropertiesVisibility(ci);
-						cti.cardCanvas.QslCard.InvalidateVisual();
 					}
 				}
 			}
@@ -675,7 +712,65 @@ namespace hamqsler
 				{
 					ci.IsSelected = false;
 					cti.SetPropertiesVisibility(null);
-					cti.cardCanvas.QslCard.InvalidateVisual();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Save card as XML
+		/// </summary>
+		/// <param name="card">the card to save</param>
+		/// <param name="fileName">name of file to save the card in</param>
+		private void SaveCard(Card card, string fileName)
+		{
+			XmlSerializer xmlFormat = new XmlSerializer(typeof(Card),
+			                                            new Type[]{typeof(BackgroundImage),
+			                                            	typeof(SecondaryImage),
+			                                            	typeof(CardImageBase),
+			                                            	typeof(TextItem),
+			                                            	typeof(QsosBox),
+			                                            	typeof(TextParts),
+			                                            	typeof(StaticText),
+			                                            	typeof(AdifMacro),
+			                                            	typeof(AdifExistsMacro),
+			                                            	typeof(CountMacro),
+			                                            	typeof(ManagerMacro),
+			                                            	typeof(ManagerExistsMacro),
+			                                            	typeof(SolidColorBrush),
+			                                            	typeof(MatrixTransform)});
+			using (Stream fStream = new FileStream(fileName, FileMode.Create,
+			                                       FileAccess.Write, FileShare.Read))
+			{
+				xmlFormat.Serialize(fStream, card);
+				card.FileName = fileName;
+				card.IsDirty = false;
+				SetTitle(fileName, card.IsDirty);
+			}
+		}
+		
+		/// <summary>
+		/// Set tab text and window title
+		/// </summary>
+		/// <param name="fileName">name of the card file</param>
+		/// <param name="isDirty">Boolean indicating whether any of the card properties has changed</param>
+		public void SetTitle(string fileName, bool isDirty)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				cti.Header = (isDirty ? "*" : string.Empty);
+				this.Title = "HamQSLer - ";
+				if(fileName != null)
+				{
+					FileInfo fileInfo = new FileInfo(fileName);
+					string fName = fileInfo.Name;
+					cti.Header += fName;
+					this.Title += fileName + (isDirty ? " - Modified" : string.Empty);
+				}
+				else
+				{
+					cti.Header += "New Card";
+					this.Title += "New Card" + (isDirty ? "- Modified" : string.Empty);
 				}
 			}
 		}

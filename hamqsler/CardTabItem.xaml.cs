@@ -53,17 +53,6 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Handles PrintCardOutlines checkbox clicked event
-		/// </summary>
-		/// <param name="sender">not used</param>
-		/// <param name="e">not used</param>
-		private void PrintCardOutlines_Clicked(object sender, RoutedEventArgs e)
-		{
-			// force redisplay of the card
-			cardCanvas.QslCard.InvalidateVisual();
-		}
-		
-		/// <summary>
 		/// Set visibility of properties groupboxes based on the CardItem selected in the card
 		/// </summary>
 		/// <param name="card">Card that contains the CardItems</param>

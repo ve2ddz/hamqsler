@@ -354,6 +354,9 @@ namespace hamqsler
 			base.OnMouseRightButtonDown(e);
 		}
 		
+		/// <summary>
+		/// Update TextItem.DisplayText
+		/// </summary>
 		public void UpdateTextForSelectedCardItem()
 		{
 			CardItemView civ = cardView.GetCardItemViewForSelectedCardItem();

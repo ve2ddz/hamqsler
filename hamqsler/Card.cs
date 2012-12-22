@@ -19,9 +19,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
@@ -86,14 +88,22 @@ namespace hamqsler
 			set {qsosBox = value;}
 		}
 			
-		[NonSerialized]
 		private UserPreferences userPreferences;
 		
 		private bool isDirty = false;
+		[XmlIgnore]
 		public bool IsDirty
 		{
 			get {return isDirty;}
 			set {isDirty = value;}
+		}
+		
+		[XmlIgnore]
+		private string fileName = null;
+		public string FileName
+		{
+			get {return fileName;}
+			set {fileName = value;}
 		}
 		
 		/// <summary>
@@ -135,7 +145,7 @@ namespace hamqsler
 				call.Text.Add(part);
 			}
 			call.SetDisplayText();
-			call.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
+			call.TextFontFace = userPreferences.DefaultTextItemsFontFace;
 			call.TextFontWeight = FontWeights.Black;
 			call.FontSize = 72.0;
 			call.DisplayX = -70;
@@ -152,7 +162,7 @@ namespace hamqsler
 				nameQth.Text.Add(part);
 			}
 			nameQth.SetDisplayText();
-			nameQth.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
+			nameQth.TextFontFace = userPreferences.DefaultTextItemsFontFace;
 			nameQth.TextFontWeight = FontWeights.Normal;
 			nameQth.FontSize = 10.0;
 			nameQth.DisplayX = DisplayWidth / 2;
@@ -169,7 +179,7 @@ namespace hamqsler
 				salutation.Text.Add(part);
 			}
 			salutation.SetDisplayText();
-			salutation.TextFontFace = new FontFamily(userPreferences.DefaultTextItemsFontFace);
+			salutation.TextFontFace = userPreferences.DefaultTextItemsFontFace;
 			salutation.FontSize = 10.0;
 			salutation.DisplayX = 5;
 			salutation.DisplayY = DisplayHeight - 25;
@@ -184,24 +194,6 @@ namespace hamqsler
 			// more card properties
 			QslCard = this;
 			isDirty = false;
-		}
-		
-		/// <summary>
-		/// Sets the CardItem that the cursor is over as highlighted
-		/// </summary>
-		/// <param name="x">X position of the cursor relative to the upper left corner of this Card</param>
-		/// <param name="y">Y position of the cursor relative to the upper left corner of this card</param>
-		/// <returns></returns>
-		public CardItem SetHighlighted(double x, double y)
-		{
-			CardItem ci;
-			ClearHighlighted();
-			ci = CursorOver(x, y);
-			if(ci != null)
-			{
-				ci.IsHighlighted = true;
-			}
-			return ci;
 		}
 		
 		/// <summary>
@@ -253,65 +245,6 @@ namespace hamqsler
 				si.IsHighlighted = false;
 			}
 			BackImage.IsHighlighted = false;
-		}
-		
-		/// <summary>
-		/// Get the CardItem that the cursor is over
-		/// </summary>
-		/// <param name="x">X position of the cursor relative to the top left corner of this Card</param>
-		/// <param name="y">Y poistion of the cursor relative to the top left corner of this Card</param>
-		/// <returns>CardItem the cursor is over, or null if not over a child CardItem</returns>
-		public CardItem CursorOver(double x, double y)
-		{
-			if(qsosBox != null && CardItem.WithinRectangle(new Rect(qsosBox.DisplayX, qsosBox.DisplayY,
-			                                                        qsosBox.DisplayWidth, 
-			                                                        qsosBox.DisplayHeight),
-			                                                        x, y))
-			{
-				return qsosBox;
-			}
-				
-			// reverse items in list so that latest items checked first
-			List<TextItem> revTextList = new List<TextItem>();
-			foreach(TextItem ti in TextItems)
-			{
-				revTextList.Add(ti);
-			}
-			revTextList.Reverse();
-			foreach(TextItem ti in revTextList)
-			{
-				if(CardItem.WithinRectangle(new Rect(ti.DisplayX, ti.DisplayY, ti.DisplayWidth,
-				                                     ti.DisplayHeight), x, y))
-				{
-					return ti;
-				}
-			}
-			
-			// reverse items in list so that latest items checked first
-			List<SecondaryImage> revImageList = new List<SecondaryImage>();
-			foreach(SecondaryImage si in SecondaryImages)
-			{
-				revImageList.Add(si);
-			}
-			revImageList.Reverse();
-			foreach(SecondaryImage si in revImageList)
-			{
-				if(CardItem.WithinRectangle(new Rect(si.DisplayX, si.DisplayY, si.DisplayWidth,
-				                                     si.DisplayHeight), x, y))
-				{
-					return si;
-				}
-			}
-			
-			if(BackImage != null && CardItem.WithinRectangle(new Rect(BackImage.DisplayX,
-			                                                          BackImage.DisplayY,
-			                                                          BackImage.DisplayWidth,
-			                                                          BackImage.DisplayHeight),
-			                                                 x, y))
-			{
-				return BackImage;
-			}
-			return null;
 		}
 		
 		/// <summary>
@@ -412,6 +345,36 @@ namespace hamqsler
 				{
 					QsosBox = null;
 				}
+			}
+		}
+		
+		/// <summary>
+		/// Save this card as an XML file
+		/// </summary>
+		/// <param name="fileName">Path to the file to save the XML text in</param>
+		public void SaveAsXml(string fileName)
+		{
+			XmlSerializer xmlFormat = new XmlSerializer(typeof(Card),
+			                                            new Type[]{typeof(BackgroundImage),
+			                                            	typeof(SecondaryImage),
+			                                            	typeof(CardImageBase),
+			                                            	typeof(TextItem),
+			                                            	typeof(QsosBox),
+			                                            	typeof(TextParts),
+			                                            	typeof(StaticText),
+			                                            	typeof(AdifMacro),
+			                                            	typeof(AdifExistsMacro),
+			                                            	typeof(CountMacro),
+			                                            	typeof(ManagerMacro),
+			                                            	typeof(ManagerExistsMacro),
+			                                            	typeof(SolidColorBrush),
+			                                            	typeof(MatrixTransform)});
+			using (Stream fStream = new FileStream(fileName, FileMode.Create,
+			                                       FileAccess.Write, FileShare.Read))
+			{
+				xmlFormat.Serialize(fStream, this);
+				this.FileName = fileName;
+				this.IsDirty = false;
 			}
 		}
 				

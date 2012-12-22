@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
@@ -306,7 +307,6 @@ namespace hamqsler
 			set { SetValue(TnxTextProperty, value); }
 		}
 		
-		[NonSerialized]
 		/// <summary>
 		/// Confirming text to display on the card. This is calculated based on value
 		/// of IsInDesignMode.
@@ -314,6 +314,7 @@ namespace hamqsler
 		private static readonly DependencyProperty ConfirmingDisplayTextProperty =
 			DependencyProperty.Register("DisplayText", typeof(string), typeof(QsosBox),
 			                            new PropertyMetadata(string.Empty));
+		[XmlIgnore]
 		public string ConfirmingDisplayText
 		{
 			get {return (string)GetValue(ConfirmingDisplayTextProperty);}
@@ -321,12 +322,21 @@ namespace hamqsler
 		}
 
         private QsosBoxView qView = null;
+        [XmlIgnore]
         public QsosBoxView QBoxView
         {
         	get {return qView;}
         	set {qView = value;}
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public QsosBox() : base(true)
+        {
+			UserPreferences userPrefs = ((App)Application.Current).UserPreferences;
+			InitializeDisplayProperties(userPrefs);        
+        }
 		/// <summary>
 		/// Constructor
 		/// </summary>

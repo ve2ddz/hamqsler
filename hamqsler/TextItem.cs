@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
@@ -32,11 +33,11 @@ namespace hamqsler
 	public class TextItem : CardItem
 	{
 		private static readonly DependencyProperty TextFontFaceProperty =
-			DependencyProperty.Register("TextFontFace", typeof(FontFamily), typeof(TextItem),
-			                            new PropertyMetadata(new FontFamily("Arial")));
-		public FontFamily TextFontFace
+			DependencyProperty.Register("TextFontFace", typeof(string), typeof(TextItem),
+			                            new PropertyMetadata("Arial"));
+		public string TextFontFace
 		{
-			get {return (FontFamily)GetValue(TextFontFaceProperty);}
+			get {return (string)GetValue(TextFontFaceProperty);}
 			set {SetValue(TextFontFaceProperty, value);}
 		}
 		
@@ -168,13 +169,13 @@ namespace hamqsler
 			set {SetValue(CheckBoxMarginProperty, value);}
 		}
 		
-		
+		[XmlIgnore]
 		public FormattedText FormattedTextItem
 		{
 			get
 			{
 				FontStyle style = (IsItalic==true) ? FontStyles.Italic : FontStyles.Normal;
-				Typeface typeface = new Typeface(TextFontFace, style, TextFontWeight,
+				Typeface typeface = new Typeface(new FontFamily(TextFontFace), style, TextFontWeight,
 				                                 FontStretches.Normal);
 				return new FormattedText(DisplayText, CultureInfo.CurrentUICulture,
 				                         FlowDirection.LeftToRight, typeface, FontSize, TextBrush);
@@ -182,11 +183,16 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Default constructor
+		/// </summary>
+		public TextItem() : base(true){}
+		
+		/// <summary>
 		/// TextItem constructor
 		/// </summary>
         /// <param name="isInDesignMode">Boolean to indicate if this image is to be displayed
         /// in design mode</param>
-		public TextItem(bool isInDesignMode = true) : base(isInDesignMode)
+		public TextItem(bool isInDesignMode) : base(isInDesignMode)
 		{
 			SetValue(TextPropertyKey, new TextParts());
 		}
@@ -251,7 +257,6 @@ namespace hamqsler
 				if(QslCard != null)		// properties may be set before QslCard is set
 				{
 					QslCard.IsDirty = true;
-					QslCard.InvalidateVisual();
 				}
 			}
 			else if(e.Property == IsInDesignModeProperty)

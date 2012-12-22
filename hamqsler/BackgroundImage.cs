@@ -28,11 +28,16 @@ namespace hamqsler
 	public class BackgroundImage : CardImageBase
 	{
 		/// <summary>
+		/// Default constructor
+		/// </summary>
+		public BackgroundImage() : base(true){}
+		
+		/// <summary>
 		/// Constructor
 		/// </summary>
         /// <param name="isInDesignMode">Boolean to indicate if this image is to be displayed
         /// in design mode</param>
-		public BackgroundImage(bool isInDesignMode = true) : base(isInDesignMode)
+		public BackgroundImage(bool isInDesignMode) : base(isInDesignMode)
 		{}
 		
 		/// <summary>

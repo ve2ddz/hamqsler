@@ -40,8 +40,7 @@
 				<GroupBox Name="cardProperties" Header="Card Properties" Visibility="Visible">
 					<StackPanel>
 						<CheckBox Content="Print Card Outlines" Margin="5"
-								IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"
-								Click="PrintCardOutlines_Clicked"/>
+								IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"/>
 						<CheckBox Content="Fill Last Page With Blank Cards" Margin="5"
 								IsChecked="{Binding Path=FillLastPageWithBlankCards, Mode=TwoWay}"/>
 						<CheckBox Content="Set Card Margins To Printer Margins" Margin="5"
