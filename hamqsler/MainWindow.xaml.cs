@@ -45,6 +45,7 @@ namespace hamqsler
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
+		public static RoutedCommand CardSaveCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
 		public static RoutedCommand QsosCommand = new RoutedCommand();
 		public static RoutedCommand InputQsosCommand = new RoutedCommand();
@@ -68,6 +69,17 @@ namespace hamqsler
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+		
+		/// <summary>
+		/// Handler for Card Save CanExecute event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void CardSaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = cti != null && cti.cardCanvas.QslCard.IsDirty;
 		}
 		
 		/// <summary>
@@ -292,6 +304,30 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Handler for Card Save Executed event
+		/// </summary>
+		/// <param name="sender">Object that is the source of this event</param>
+		/// <param name="e">ExecutedRoutedEventArgs object</param>
+		private void CardSaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			Card qslCard = cti.cardCanvas.QslCard;
+			if(qslCard.FileName != null)
+			{
+				qslCard.SaveAsXml(qslCard.FileName);
+				SetTitle(qslCard.FileName, qslCard.IsDirty);
+				// If the last property control changed was a color button, then the background
+				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
+				// different control, this will not happen
+				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+			}
+			else
+			{
+				CardSaveAsCommand_Executed(sender, e);
+			}
+		}
+		
+		/// <summary>
 		/// Handler for Save Card As menu item
 		/// </summary>
 		/// <param name="sender">not used</param>
@@ -311,6 +347,10 @@ namespace hamqsler
 			{
 				qslCard.SaveAsXml(sDialog.FileName);
 				SetTitle(sDialog.FileName, qslCard.IsDirty);
+				// If the last property control changed was a color button, then the background
+				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
+				// different control, this will not happen
+				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 			}
 		}
 		

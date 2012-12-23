@@ -8,6 +8,9 @@
 	Width="1000"
 	Closed="Window_Closed">
 	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:MainWindow.CardSaveCommand}"
+						CanExecute="CardSaveCommand_CanExecute"
+						Executed="CardSaveCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.CardSaveAsCommand}"
 						CanExecute="CardSaveAsCommand_CanExecute"
 						Executed="CardSaveAsCommand_Executed"/>
@@ -64,7 +67,8 @@
 					<MenuItem Header="4 by 6 inch (10 by 15 cm) Card"/>
 				</MenuItem>
 				<MenuItem Header="_Open Card..."/>
-				<MenuItem Header="_Save Card"/>
+				<MenuItem Header="_Save Card"
+						Command="{x:Static local:MainWindow.CardSaveCommand}"/>
 				<MenuItem Header="Save Card _As..." 
 						Command="{x:Static local:MainWindow.CardSaveAsCommand}"/>
 				<MenuItem Header="Close Card"/>
