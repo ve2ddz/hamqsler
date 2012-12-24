@@ -342,5 +342,15 @@ namespace hamqsler
 				}
 			}
 		}
+		
+		/// <summary>
+		/// Handler for CardTabButton click event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void CardTabButton_Click(object sender, RoutedEventArgs e)
+		{
+			((MainWindow)App.Current.MainWindow).CloseCardTab(this);
+		}
 	}
 }

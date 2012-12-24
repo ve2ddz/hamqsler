@@ -23,13 +23,21 @@
 	</Style>
 </TabItem.Resources>
 <TabItem.Header>
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="Auto"/>
-		</Grid.ColumnDefinitions>
-		<TextBlock Grid.Column="1">New Card</TextBlock>
-	</Grid>
+	<StackPanel Orientation="Horizontal">
+		<TextBlock x:Name="HeaderText" Margin="2">New Card</TextBlock>
+		<Button Margin="10,0,1,0" VerticalAlignment="Center" VerticalContentAlignment="Center"
+		        Width="20" Height="20" Background="Transparent" BorderBrush="Transparent"
+		 		Click="CardTabButton_Click">
+			<Path Stroke="Blue">
+				<Path.Data>
+					<GeometryGroup>
+						<LineGeometry StartPoint="0,0" EndPoint="11,11"/>
+						<LineGeometry StartPoint="11,0" EndPoint="0,11"/>
+					</GeometryGroup>
+				</Path.Data>
+			</Path>
+		</Button>
+	</StackPanel>
 </TabItem.Header>
 	<Grid>
 		<Grid.ColumnDefinitions>

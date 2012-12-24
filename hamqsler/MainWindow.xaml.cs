@@ -421,25 +421,7 @@ namespace hamqsler
 		private void CloseCardCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			if(cti.cardCanvas.QslCard.IsDirty)
-			{
-				MessageBoxResult result = MessageBox.Show("The design of this card has been modified.\n"
-				                + "Do you want to save the card before closing?", "Card Modified", 
-				                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-				if(result == MessageBoxResult.Yes)
-				{
-					if(cti.cardCanvas.QslCard.FileName != null)
-					{
-						CardSaveCommand_Executed(sender, e);
-					}
-					else
-					{
-						CardSaveAsCommand_Executed(sender, e);
-					}
-				}
-			}
-			mainTabControl.Items.Remove(cti);
-			cti = null;
+			CloseCardTab(cti);
 		}
 		
 		/// <summary>
@@ -916,18 +898,18 @@ namespace hamqsler
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				cti.Header = (isDirty ? "*" : string.Empty);
+				cti.HeaderText.Text = (isDirty ? "*" : string.Empty);
 				this.Title = "HamQSLer - ";
 				if(fileName != null)
 				{
 					FileInfo fileInfo = new FileInfo(fileName);
 					string fName = fileInfo.Name;
-					cti.Header += fName;
+					cti.HeaderText.Text += fName;
 					this.Title += fileName + (isDirty ? " - Modified" : string.Empty);
 				}
 				else
 				{
-					cti.Header += "New Card";
+					cti.HeaderText.Text += "New Card";
 					this.Title += "New Card" + (isDirty ? "- Modified" : string.Empty);
 				}
 			}
@@ -952,6 +934,35 @@ namespace hamqsler
 				this.Title = "HamQSLer";
 			}
 			e.Handled = true;
+		}
+		
+		/// <summary>
+		/// Close the CardTabItem
+		/// </summary>
+		/// <param name="cti">CardTabItem to close</param>
+		public void CloseCardTab(CardTabItem cti)
+		{
+			if(cti.cardCanvas.QslCard.IsDirty)
+			{
+				MessageBoxResult result = MessageBox.Show("The design of this card has been modified.\n"
+				                + "Do you want to save the card before closing?", "Card Modified", 
+				                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+				if(result == MessageBoxResult.Yes)
+				{
+					if(cti.cardCanvas.QslCard.FileName != null)
+					{
+						SaveCardMenuItem.Command.Execute(null);
+						//RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));
+					}
+					else
+					{
+						SaveCardAsMenuItem.Command.Execute(null);
+						//SaveCardAsMenuItem.RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));
+					}
+				}
+			}
+			mainTabControl.Items.Remove(cti);
+			cti = null;
 		}
 	}
 }

@@ -74,9 +74,9 @@
 				</MenuItem>
 				<MenuItem Header="_Open Card..."
 						Command="{x:Static local:MainWindow.CardOpenCommand}"/>
-				<MenuItem Header="_Save Card"
+				<MenuItem Header="_Save Card" x:Name="SaveCardMenuItem"
 						Command="{x:Static local:MainWindow.CardSaveCommand}"/>
-				<MenuItem Header="Save Card _As..." 
+				<MenuItem Header="Save Card _As..." x:Name="SaveCardAsMenuItem"
 						Command="{x:Static local:MainWindow.CardSaveAsCommand}"/>
 				<MenuItem Header="Close Card" Command="{x:Static local:MainWindow.CloseCardCommand}"/>
 				<MenuItem Header="Save Card as Jpeg..."/>
