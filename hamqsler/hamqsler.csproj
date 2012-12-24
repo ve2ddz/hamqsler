@@ -182,6 +182,7 @@
       <DependentUpon>UserPreferencesDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="XmlProcs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="AdifExistsMacroGroupBox.xaml" />

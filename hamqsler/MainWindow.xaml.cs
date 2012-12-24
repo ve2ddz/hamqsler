@@ -308,15 +308,41 @@ namespace hamqsler
 		private void CardOpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			OpenFileDialog oDialog = new OpenFileDialog();
-			oDialog.Filter = "QSL Card(*.qslx)|*.qslx";
+			oDialog.Filter = "QSL Card(*.qslx)|*.qslx|QslDnP Card(*xqsl)|*.xqsl";
 			if(oDialog.ShowDialog(this) == true)
 			{
 				string fileName = oDialog.FileName;
-				Card card = Card.DeserializeCard(fileName);
-				card.FileName = fileName;
+				string fileExt = fileName.Substring(fileName.Length - 4);
+				Card card;
+				if(fileExt.Equals("qslx"))		// HamQSLer card file
+				{
+					card = Card.DeserializeCard(fileName);
+					card.FileName = fileName;
+					card.IsDirty = false;
+				}
+				else if(fileExt.Equals("xqsl"))  // QslDnP card file
+				{
+					try
+					{
+						card = Card.DeserializeQslDnPCard(fileName);
+					}
+					catch(XmlException)
+					{
+	            		string msg = string.Format("The file '{0}' does not contain a valid QslDnP card description.",
+	            		                           fileName);
+	            		MessageBox.Show(msg, "File Content Error", MessageBoxButton.OK,
+	            		                MessageBoxImage.Error);
+						return;						
+					}
+					card.FileName = fileName.Substring(0, fileName.Length - 4) + "qslx";
+					card.IsDirty = true;
+				}
+				else			// neither file type - this really is a programming error
+				{
+					return;
+				}
 				CardTabItem cti = new CardTabItem(card);
 				mainTabControl.Items.Add(cti);
-				card.IsDirty = false;
 				cti.IsSelected = true;		// select the new tab
 				// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
 				SetTitle(card.FileName, card.IsDirty);

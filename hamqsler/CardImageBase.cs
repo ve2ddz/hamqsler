@@ -17,13 +17,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Microsoft.Win32;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace hamqsler
@@ -162,6 +165,63 @@ namespace hamqsler
 			else if(e.Property == QslCardProperty && DisplayWidth == 0)
 			{
 				ResetRectangle();
+			}
+		}
+		
+		/// <summary>
+		/// Load values for this image from QslDnP card file contents
+		/// </summary>
+		/// <param name="itemNode">The CardImageBase node</param>
+		/// <param name="culture">CultureInfo that the card was created in</param>
+		public override void Load(XmlNode itemNode, CultureInfo culture)
+		{
+			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);
+			while(node != null)
+			{
+				switch(node.Name)
+				{
+					case "ImageFileName":
+						XmlText text = XmlProcs.GetTextNode(node);
+						if(text != null)
+						{
+							string fileName = text.Value;
+							if(fileName.StartsWith("$MyDocs$"))
+							{
+								fileName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + 
+									fileName.Substring("$MyDocs$".Length);
+							}
+							FileInfo file = new FileInfo(fileName);
+							if(!file.Exists)
+							{
+								fileName = null;
+								string msg = "The image file '" + fileName + ";\ndoes not exist.\n" +
+									"Do you want to search for the file?\n\n" +
+									"Click OK to search, Cancel to delete the image";
+								MessageBoxResult result = MessageBox.Show(msg, "Image File Not Found",
+								                                          MessageBoxButton.OKCancel,
+								                                          MessageBoxImage.Question,
+								                                          MessageBoxResult.OK);
+								if(result == MessageBoxResult.OK)
+								{
+									OpenFileDialog oDialog = new OpenFileDialog();
+									oDialog.Filter = "Image Files (*.bmp, *jpg, *.gif, *.png)|" +
+										"*.bmp;*.jpg;*.gif;*.png";
+									oDialog.CheckFileExists = true;
+									oDialog.Multiselect = false;
+									if(oDialog.ShowDialog() == true)
+									{
+										fileName = oDialog.FileName;
+									}
+								}
+							}
+							ImageFileName = fileName;
+						}
+						break;
+					case "CardItem":
+						base.Load(node, culture);
+						break;
+				}
+				node = XmlProcs.GetNextSiblingElement(node);
 			}
 		}
 

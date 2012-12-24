@@ -19,9 +19,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace hamqsler
@@ -444,6 +446,158 @@ namespace hamqsler
 			if(e.Property == MaximumQsosProperty)
 			{
 				QBoxView.BuildQsos();
+			}
+		}
+		
+		public override void Load(XmlNode itemNode, CultureInfo culture)
+		{
+			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);
+			while(node != null)
+			{
+				switch(node.Name)
+				{
+					case "QsosBoxBase":
+						LoadQsosBoxBase(node, culture);
+						break;
+				}
+				node = XmlProcs.GetNextSiblingElement(node);
+			}
+		}
+		
+		/// <summary>
+		/// Load values for this QsosBox from QslDnP card file contents
+		/// </summary>
+		/// <param name="itemNode">The QsosBox node</param>
+		/// <param name="culture">CultureInfo that the card was created in</param>
+		private void LoadQsosBoxBase(XmlNode itemNode, CultureInfo culture)
+		{
+			CountMacro cMacro = new CountMacro();
+			cMacro.Count = 1;
+			cMacro.CountEquals = true;
+			ConfirmingText.Clear();
+			ConfirmingText.Add(cMacro);
+			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);
+			XmlNode child;
+			while(node != null)
+			{
+				XmlText text = XmlProcs.GetTextNode(node);
+				switch(node.Name)
+				{
+					case "CardItem":
+						base.Load(node, culture);
+						break;
+					case "ShowManager":
+						if(text.Value == "true")
+						{
+							ShowManager = true;
+						}
+						else
+						{
+							ShowManager = false;
+						}
+						break;
+					case "ShowFrequency":
+						if(text.Value == "true")
+						{
+							ShowFrequency = true;
+						}
+						else
+						{
+							ShowFrequency = false;
+						}
+						break;
+					case "ShowPseTnx":
+						if(text.Value == "true")
+						{
+							ShowPseTnx = true;
+						}
+						else
+						{
+							ShowPseTnx = false;
+						}
+						break;
+					case "MaximumQsos":
+						MaximumQsos = Int32.Parse(text.Value, culture);
+						break;
+					case "DateFormat":
+						DateFormat = text.Value;
+						break;
+					case "LineTextBrush":
+						child = XmlProcs.GetFirstChildElement(node);
+						LineTextBrush = XmlProcs.ConvertXmlToBrush(child, culture);
+						break;
+					case "CallsignBrush":
+						child = XmlProcs.GetFirstChildElement(node);
+						CallsignBrush = XmlProcs.ConvertXmlToBrush(child, culture);
+						break;
+					case "ManagerBrush":
+						child = XmlProcs.GetFirstChildElement(node);
+						ManagerBrush = XmlProcs.ConvertXmlToBrush(child, culture);
+						break;
+					case "FaceName":
+						FontName = text.Value;
+						break;
+					case "BackgroundBrush":
+						child = XmlProcs.GetFirstChildElement(node);
+						BackgroundBrush = XmlProcs.ConvertXmlToBrush(child, culture);
+						break;
+					case "BackgroundOpacity":
+						double value = 0;
+						if(!Double.TryParse(text.Value, NumberStyles.Float, culture, out value))
+						{
+							if(!Double.TryParse(text.Value, NumberStyles.Float,
+							                    CultureInfo.InvariantCulture, out value))
+							{
+								throw new XmlException("Bad QsosBox property value");
+							}
+						}
+						BackgroundOpacity = value;
+						break;
+					case "ConfirmingMultiText":
+						StaticText cMText = new StaticText();
+						cMText.Text = text.Value;
+						cMacro.FalseText.Add(cMText);
+						break;
+					case "Confirming1Text":
+						StaticText c1Text = new StaticText();
+						c1Text.Text = text.Value;
+						cMacro.TrueText.Add(c1Text);
+						break;
+					case "ViaText":
+						ViaText = text.Value;
+						break;
+					case "YYYYMMDDText":
+						YYYYMMDDText = text.Value;
+						break;
+					case "DDMMMYYText":
+						DDMMMYYText = text.Value;
+						break;
+					case "DDMMYYText":
+						DDMMYYText = text.Value;
+						break;
+					case "TimeText":
+						TimeText = text.Value;
+						break;
+					case "BandText":
+						BandText = text.Value;
+						break;
+					case "FrequencyText":
+						FreqText = text.Value;
+						break;
+					case "RSTText":
+						RSTText = text.Value;
+						break;
+					case "QslText":
+						QSLText = text.Value;
+						break;
+					case "PseText":
+						PseText = text.Value;
+						break;
+					case "TnxText":
+						TnxText = text.Value;
+						break;
+				}
+				node = XmlProcs.GetNextSiblingElement(node);
 			}
 		}
 	}

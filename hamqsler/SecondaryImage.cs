@@ -18,7 +18,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Globalization;
 using System.Windows;
+using System.Xml;
 
 namespace hamqsler
 {
@@ -79,5 +81,25 @@ namespace hamqsler
 			DisplayWidth = imageStartDimension;
 			DisplayHeight = imageStartDimension;
 		}
+
+		/// <summary>
+		/// Load values for this SecondaryImage from QslDnP card file contents
+		/// </summary>
+		/// <param name="itemNode">The SecondaryImage node</param>
+		/// <param name="culture">CultureInfo that the card was created in</param>
+		public override void Load(XmlNode itemNode, CultureInfo culture)
+		{
+			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);
+			while(node != null)
+			{
+				switch(node.Name)
+				{
+					case "CardImageBase":
+						base.Load(node, culture);
+						break;
+				}
+				node = XmlProcs.GetNextSiblingElement(node);
+			}
+	}
 	}
 }

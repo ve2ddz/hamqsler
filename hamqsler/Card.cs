@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Globalization;
 using System.Windows.Media;
 using System.Xml;
 using System.Xml.Serialization;
@@ -404,6 +405,11 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Deserialize a Qsl Card saved as XML
+		/// </summary>
+		/// <param name="fileName">Name of XML file containing card description</param>
+		/// <returns>Card object described by the XML file</returns>
 		public static Card DeserializeCard(string fileName)
 		{
 			XmlSerializer serializer = new XmlSerializer(typeof(Card),
@@ -430,7 +436,92 @@ namespace hamqsler
 			}
 			return card;
 		}
+		
+		/// <summary>
+		/// Deserialize a QslDnP card save as XML
+		/// </summary>
+		/// <param name="fileName">Name of the QslDnP card file</param>
+		/// <returns>Card object described by the XML file</returns>
+		public static Card DeserializeQslDnPCard(string fileName)
+		{
+            XmlDocument doc = new XmlDocument();
+            Stream fStream = new FileStream(fileName, FileMode.Open);
+            doc.Load(fStream);
+            XmlNode node = doc.DocumentElement;
+            Card card = new Card();
+            switch(node.Name)
+            {
+            	case "LandscapeCard55x425":
+            	case "LandscapeCard6x4":
+            	case "LandscapeCard15x10":
+            	case "LandscapeCard55x35":
+            		CultureInfo cardCulture = CultureInfo.InvariantCulture;
+            		XmlAttributeCollection attrCollection = node.Attributes;
+            		XmlAttribute culture = attrCollection["Culture"];
+            		if(culture != null)
+            		{
+            			cardCulture = new CultureInfo(culture.Value, false);
+            		}
+            		XmlNode cNode = XmlProcs.GetFirstChildElement(node);
+            		// make sure the node is a Card node, then process it
+            		if(cNode != null && cNode.Name.Equals("Card"))
+            		{
+            			card.LoadCard(cNode, cardCulture);
+            		}
+            		else
+            		{
+            			throw new XmlException("Invalid Card file. Node is not a Card node");
+            		}
+            		break;
+            	default:
+            		throw new XmlException("Invalid QslDnP card file");
+            }
+            return card;
+		}
+		
+		/// <summary>
+		/// Load values for this Card from QslDnP card file contents
+		/// </summary>
+		/// <param name="itemNode">The Card node</param>
+		/// <param name="culture">CultureInfo that the card was created in</param>
+		private void LoadCard(XmlNode cardNode, CultureInfo culture)
+		{
+			XmlNode node = XmlProcs.GetFirstChildElement(cardNode);
+			while(node != null)
+			{
+				switch(node.Name)
+				{
+					case "CardItem":
+						base.Load(node, culture);
+						QslCard = this;
+						break;
+					case "BackgroundImage":
+						BackImage = new BackgroundImage(true);
+						BackImage.Load(node, culture);
+						BackImage.QslCard = this;
+						break;
+					case "SecondaryImage":
+						SecondaryImage sImage = new SecondaryImage();
+						sImage.Load(node, culture);
+						SecondaryImages.Add(sImage);
+						sImage.QslCard = this;
+						break;
+					case "TextItem":
+						TextItem ti = new TextItem();
+						ti.Load(node, culture);
+						TextItems.Add(ti);
+						ti.QslCard = this;
+						ti.SetDisplayText();
+						break;
+					case "QsosBox":
+						QsosBox = new QsosBox(true);
+						QsosBox.Load(node, culture);
+						QsosBox.QslCard = this;
+						break;
+				}
+				node = XmlProcs.GetNextSiblingElement(node);
+			}
+		}
 				
 	}
-	
 }

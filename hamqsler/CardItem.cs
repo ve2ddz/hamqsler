@@ -18,9 +18,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace hamqsler
@@ -197,6 +199,62 @@ namespace hamqsler
 			   QslCard != null)
 			{
 				QslCard.IsDirty = true;
+			}
+		}
+		
+		/// <summary>
+		/// Load values for this CardItem from QslDnP card file contents
+		/// </summary>
+		/// <param name="itemNode">The CardItem node</param>
+		/// <param name="culture">CultureInfo that the card was created in</param>
+		public virtual void Load(XmlNode itemNode, CultureInfo culture)
+		{
+			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);
+			while(node != null)
+			{
+				switch(node.Name)
+				{
+					case "DisplayRectangle":
+						XmlNode drNode = XmlProcs.GetFirstChildElement(node);
+						while(drNode != null)
+						{
+							XmlText text = XmlProcs.GetTextNode(drNode);
+							if(text != null)
+							{
+								double value = 0;
+								if(!Double.TryParse(text.Value, NumberStyles.Float, culture, out value))
+								{
+									if(!Double.TryParse(text.Value, NumberStyles.Float,
+									                    CultureInfo.InvariantCulture, out value))
+									{
+										throw new XmlException("Bad DisplayRectangle property value in card file.");
+									}
+								}
+								switch(drNode.Name)
+								{
+									case "X":
+										DisplayX = value;
+										break;
+									case "Y":
+										DisplayY = value;
+										break;
+									case "Width":
+										DisplayWidth = value;
+										break;
+									case "Height":
+										DisplayHeight = value;
+										break;
+								}
+							}
+							else
+							{
+								throw new XmlException("DisplayRectangle property does not have a value");
+							}
+							drNode = XmlProcs.GetNextSiblingElement(drNode);
+						}
+						break;
+				}
+				node = XmlProcs.GetNextSiblingElement(node);
 			}
 		}
 		

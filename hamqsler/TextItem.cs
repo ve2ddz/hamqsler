@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace hamqsler
@@ -296,6 +297,95 @@ namespace hamqsler
 			CalculateRectangle();
 		}
 
-		
+		/// <summary>
+		/// Load values for this TextItem from QslDnP card file contents
+		/// </summary>
+		/// <param name="itemNode">The TextItem node</param>
+		/// <param name="culture">CultureInfo that the card was created in</param>
+		public override void Load(XmlNode itemNode, CultureInfo culture)
+		{
+			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);
+			while(node != null)
+			{
+				XmlText text = XmlProcs.GetTextNode(node);
+				switch(node.Name)
+				{
+					case "CardItem":
+						base.Load(node, culture);
+						break;
+					case "FaceName":
+						TextFontFace = text.Value;
+						break;
+					case "TextFontWeight":
+						FontWeight weight = FontWeights.Normal;
+						switch(text.Value)
+						{
+							case "Normal":
+								break;
+							case "Bold":
+								weight = FontWeights.Bold;
+								break;
+							case "Black":
+								weight = FontWeights.Black;
+								break;
+						}
+						TextFontWeight = weight;
+						break;
+					case "IsItalic":
+						if(text.Value == "true")
+						{
+							IsItalic = true;
+						}
+						else
+						{
+							IsItalic = false;
+						}
+						break;
+					case "FontSize":
+						double value = 0;
+						if(!Double.TryParse(text.Value, NumberStyles.Float, culture, out value))
+						{
+							if(!Double.TryParse(text.Value, NumberStyles.Float,
+							                    CultureInfo.InvariantCulture, out value))
+							{
+								throw new XmlException("Bad TextItem property value");
+							}
+						}
+						FontSize = value;
+						break;
+					case "TextBrush":
+						TextBrush = XmlProcs.ConvertXmlToBrush(XmlProcs.GetFirstChildElement(node), culture);
+						break;
+					case "Text":
+						StaticText sText = new StaticText();
+						sText.Text = text.Value;
+						Text.Add(sText);
+						break;
+					case "CheckboxBefore":
+						if(text.Value == "true")
+						{
+							CheckboxBefore = true;
+						}
+						else
+						{
+							CheckboxBefore = false;
+						}
+						CheckBoxRelativeSize = 1.0;
+						break;
+					case "CheckboxAfter":
+						if(text.Value == "true")
+						{
+							CheckboxAfter = true;
+						}
+						else
+						{
+							CheckboxAfter = false;
+						}
+						CheckBoxRelativeSize = 1.0;
+						break;
+				}
+				node = XmlProcs.GetNextSiblingElement(node);
+			}
+		}
 	}
 }

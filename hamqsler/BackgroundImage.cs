@@ -19,6 +19,7 @@
  */
 using System;
 using System.Windows;
+using System.Xml;
 
 namespace hamqsler
 {
@@ -94,6 +95,26 @@ namespace hamqsler
 			DisplayY = 0;
 			DisplayWidth = QslCard.DisplayWidth;
 			DisplayHeight = QslCard.DisplayHeight;
+		}
+		
+		/// <summary>
+		/// Load values for this BackgroundImage from QslDnP card file contents
+		/// </summary>
+		/// <param name="itemNode">The BackgroundImage node</param>
+		/// <param name="culture">CultureInfo that the card was created in</param>
+		public override void Load(System.Xml.XmlNode itemNode, System.Globalization.CultureInfo culture)
+		{
+			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);
+			while(node != null)
+			{
+				switch(node.Name)
+				{
+					case "CardImageBase":
+						base.Load(node, culture);
+						break;
+				}
+				node = XmlProcs.GetNextSiblingElement(node);
+			}
 		}
 	}
 }
