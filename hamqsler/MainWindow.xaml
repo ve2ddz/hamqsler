@@ -16,6 +16,10 @@
 		<CommandBinding Command="{x:Static local:MainWindow.CardSaveAsCommand}"
 						CanExecute="CardSaveAsCommand_CanExecute"
 						Executed="CardSaveAsCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.CloseCardCommand}"
+						CanExecute="CloseCardCommand_CanExecute"
+						Executed="CloseCardCommand_Executed"/>
+		
 		<CommandBinding Command="{x:Static local:MainWindow.QsosCommand}"
 						CanExecute="QsosCommand_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.InputQsosCommand}"
@@ -74,7 +78,7 @@
 						Command="{x:Static local:MainWindow.CardSaveCommand}"/>
 				<MenuItem Header="Save Card _As..." 
 						Command="{x:Static local:MainWindow.CardSaveAsCommand}"/>
-				<MenuItem Header="Close Card"/>
+				<MenuItem Header="Close Card" Command="{x:Static local:MainWindow.CloseCardCommand}"/>
 				<MenuItem Header="Save Card as Jpeg..."/>
 				<MenuItem Header="Save Cards For Printing..."/>
 				<MenuItem Header="Save 4 Up Cards For Printing..."/>

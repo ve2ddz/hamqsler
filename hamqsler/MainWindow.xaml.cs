@@ -48,6 +48,7 @@ namespace hamqsler
 		public static RoutedCommand CardOpenCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
+		public static RoutedCommand CloseCardCommand = new RoutedCommand();
 		public static RoutedCommand QsosCommand = new RoutedCommand();
 		public static RoutedCommand InputQsosCommand = new RoutedCommand();
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
@@ -90,6 +91,17 @@ namespace hamqsler
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void CardSaveAsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = cti != null;
+		}
+		
+		/// <summary>
+		/// CanExecute for File->Card Close
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void CloseCardCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			e.CanExecute = cti != null;
@@ -399,6 +411,35 @@ namespace hamqsler
 				// different control, this will not happen
 				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 			}
+		}
+		
+		/// <summary>
+		/// Handler for Close Card Executed event
+		/// </summary>
+		/// <param name="sender">object that generated the event</param>
+		/// <param name="e">ExecutedRoutedEventArgs object</param>
+		private void CloseCardCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti.cardCanvas.QslCard.IsDirty)
+			{
+				MessageBoxResult result = MessageBox.Show("The design of this card has been modified.\n"
+				                + "Do you want to save the card before closing?", "Card Modified", 
+				                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+				if(result == MessageBoxResult.Yes)
+				{
+					if(cti.cardCanvas.QslCard.FileName != null)
+					{
+						CardSaveCommand_Executed(sender, e);
+					}
+					else
+					{
+						CardSaveAsCommand_Executed(sender, e);
+					}
+				}
+			}
+			mainTabControl.Items.Remove(cti);
+			cti = null;
 		}
 		
 		/// <summary>
