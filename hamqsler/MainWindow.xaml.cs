@@ -645,6 +645,34 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Handles New -> 4 1/4 by 5 1/2 inch Card menu item processing
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void Card45MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			// create a CardTabItem and add it to the mainTabControl
+			CardTabItem cardTab = new CardTabItem(5.5 * 96, 4.25 * 96);
+			mainTabControl.Items.Add(cardTab);
+			cardTab.IsSelected = true;		// select the new tab
+			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
+		}
+
+		/// <summary>
+		/// Handles New -> 4 by 6 inch Card menu item processing
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void Card46MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			// create a CardTabItem and add it to the mainTabControl
+			CardTabItem cardTab = new CardTabItem(6 * 96, 4 * 96);
+			mainTabControl.Items.Add(cardTab);
+			cardTab.IsSelected = true;		// select the new tab
+			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
+		}
+
+		/// <summary>
 		/// Creates the Select menu MenuItems based on the CardItems in QslCard
 		/// </summary>
 		/// <param name="sender">not used</param>
