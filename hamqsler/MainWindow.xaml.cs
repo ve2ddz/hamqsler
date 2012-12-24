@@ -80,7 +80,8 @@ namespace hamqsler
 		private void CardSaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			e.CanExecute = cti != null && cti.cardCanvas.QslCard.IsDirty;
+			e.CanExecute = cti != null && cti.cardCanvas.QslCard.FileName != null &&
+				cti.cardCanvas.QslCard.IsDirty;
 		}
 		
 		/// <summary>
