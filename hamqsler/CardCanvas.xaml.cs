@@ -73,14 +73,20 @@ namespace hamqsler
 		/// <param name="cardHeight">Height of card in device independent units</param>
 		public void CreateCard(double cardWidth, double cardHeight)
 		{
-			QslCard = new Card(cardWidth, cardHeight, true);
-			double left = (this.Width - cardWidth) / 2;
-			double top = (this.Height - cardHeight) / 2;
+			AddCard(new Card(cardWidth, cardHeight, true));
+		}
+		
+		public void AddCard(Card card)
+		{
+			QslCard = card;
+			double left = (this.Width - card.DisplayWidth) / 2;
+			double top = (this.Height - card.DisplayHeight) / 2;
 			cardView = new CardView(QslCard, true);
 			Canvas.SetLeft(cardView, left);
 			Canvas.SetTop(cardView, top);
 			this.Children.Add(cardView);
 		}
+		
 		
 		/// <summary>
 		/// CanExecute handler for SelectCardItem menu item

@@ -18,8 +18,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections;
+//using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
@@ -27,7 +29,13 @@ namespace hamqsler
 	/// A very simple class that helps simplify text and TextItem code
 	/// </summary>
 	[Serializable]
-	public class TextParts : ArrayList
+	[XmlInclude(typeof(StaticText))]
+	[XmlInclude(typeof(AdifMacro))]
+	[XmlInclude(typeof(AdifExistsMacro))]
+	[XmlInclude(typeof(CountMacro))]
+	[XmlInclude(typeof(ManagerMacro))]
+	[XmlInclude(typeof(ManagerExistsMacro))]
+	public class TextParts : List<TextPart>
 	{
 		/// <summary>
 		/// Default Constructor

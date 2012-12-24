@@ -184,8 +184,11 @@ namespace hamqsler
 			   e.Property == QslCardProperty)
 			{
 				// set the ClipRectangle property
-				ClipRectangle = new Rect(-DisplayX, -DisplayY, QslCard.DisplayWidth,
-				                         QslCard.DisplayHeight);
+				if(QslCard != null)
+				{
+					ClipRectangle = new Rect(-DisplayX, -DisplayY, QslCard.DisplayWidth,
+					                         QslCard.DisplayHeight);
+				}
 			}
 			if((e.Property == DisplayXProperty ||
 			   e.Property == DisplayYProperty ||

@@ -388,15 +388,18 @@ namespace hamqsler
 		{
 			// Note: DisplayHeight is not calculated because it is determined automatically in
 			// XAML in QsosBoxView.
-			if(DisplayX == 0 && DisplayY == 0 && DisplayWidth == 0 && DisplayHeight == 0)
+			if(QslCard != null)
 			{
-				DisplayX = QslCard.DisplayWidth / 20;
-				DisplayY = QslCard.DisplayHeight / 2;
-				DisplayWidth = QslCard.DisplayWidth * 18 / 20;
-			}
-			else
-			{
-				DisplayWidth = QslCard.DisplayWidth * 18 / 20;
+				if(DisplayX == 0 && DisplayY == 0 && DisplayWidth == 0 && DisplayHeight == 0)
+				{
+					DisplayX = QslCard.DisplayWidth / 20;
+					DisplayY = QslCard.DisplayHeight / 2;
+					DisplayWidth = QslCard.DisplayWidth * 18 / 20;
+				}
+				else
+				{
+					DisplayWidth = QslCard.DisplayWidth * 18 / 20;
+				}
 			}
 		}
 		

@@ -119,7 +119,10 @@ namespace hamqsler
 							BitMapImage.BeginInit();
 							BitMapImage.UriSource = new Uri(fName, UriKind.RelativeOrAbsolute);
 							BitMapImage.EndInit();
-							QslCard.IsDirty = true;
+							if(QslCard != null)
+							{
+								QslCard.IsDirty = true;
+							}
 						}
 						catch(Exception fnfe)
 						{
@@ -151,9 +154,12 @@ namespace hamqsler
 				}
 				// Image has changed, so let QslCard know it has changed
 				// and redisplay card
-				QslCard.IsDirty = true;
+				if(QslCard != null)
+				{
+					QslCard.IsDirty = true;
+				}
 			}
-			else if(e.Property == QslCardProperty)
+			else if(e.Property == QslCardProperty && DisplayWidth == 0)
 			{
 				ResetRectangle();
 			}

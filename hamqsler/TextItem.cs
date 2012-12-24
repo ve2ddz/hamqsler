@@ -44,10 +44,17 @@ namespace hamqsler
 		private static readonly DependencyProperty TextFontWeightProperty =
 			DependencyProperty.Register("TextFontWeight", typeof(FontWeight), typeof(TextItem),
 			                            new PropertyMetadata(FontWeights.Normal));
+		[XmlIgnore]
 		public FontWeight TextFontWeight
 		{
 			get {return (FontWeight)GetValue(TextFontWeightProperty);}
 			set {SetValue(TextFontWeightProperty, value);}
+		}
+		
+		public int FontWeightAsInt
+		{
+			get {return TextFontWeight.ToOpenTypeWeight();}
+			set {TextFontWeight = FontWeight.FromOpenTypeWeight(value);}
 		}
 		
 		private static readonly DependencyProperty IsItalicProperty =
@@ -85,8 +92,9 @@ namespace hamqsler
 		public TextParts Text
 		{
 			get {return (TextParts)GetValue(TextProperty);}
+			set {SetValue(TextProperty, value);}
 		}
-				
+		
 		private static readonly DependencyProperty CheckboxBeforeProperty =
 			DependencyProperty.Register("CheckboxBefore", typeof(bool), typeof(TextItem),
 			                            new PropertyMetadata(false));
@@ -123,7 +131,6 @@ namespace hamqsler
 			set {SetValue(CheckBoxRelativeSizeProperty, value);}
 		}
 		
-		[NonSerialized]
 		private static readonly DependencyProperty DisplayTextProperty =
 			DependencyProperty.Register("DisplayText", typeof(string), typeof(TextItem),
 			                            new PropertyMetadata(string.Empty));
@@ -185,7 +192,10 @@ namespace hamqsler
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public TextItem() : base(true){}
+		public TextItem() : base(true)
+		{
+			SetValue(TextPropertyKey, new TextParts());
+		}
 		
 		/// <summary>
 		/// TextItem constructor
@@ -203,7 +213,7 @@ namespace hamqsler
 		/// </summary>
 		protected void CalculateRectangle()
 		{
-			if(Text.Count > 0)
+			if(Text != null && Text.Count > 0)
 			{
 				FormattedText forText = FormattedTextItem;
 				bool isModified = false;
@@ -264,14 +274,6 @@ namespace hamqsler
 				if(Text != null)
 				{
 					SetDisplayText();
-				}
-			}
-			else if(e.Property == TextProperty)
-			{
-				SetDisplayText();
-				if(QslCard != null)
-				{
-					QslCard.IsDirty = true;
 				}
 			}
 			if(e.Property == FontSizeProperty ||

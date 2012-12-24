@@ -54,28 +54,34 @@ namespace hamqsler
 			y = DisplayY;
 			w = DisplayWidth;
 			h = DisplayHeight;
-			if(BitMapImage != EmptyImage)
+			if(QslCard != null)
 			{
-	            double dWidth = BitMapImage.Width;
-	            double dHeight = BitMapImage.Height;
-	            
-	            w = QslCard.DisplayWidth;
-	            h = QslCard.DisplayHeight;
-	            double scaleX = w / dWidth;
-	            double scaleY = h / dHeight;
-	            double scale = scaleX > scaleY ? scaleX : scaleY;
-	            w *= scale;
-	            h *= scale;
-	            if (dWidth > w)
-	            {
-	                x = (w - dWidth) / 2;
-	                w = dWidth;
-	            }
-	            if (dHeight > h)
-	            {
-	                y = (h - dHeight) / 2;
-	                h = dHeight;
-	            }
+				if(BitMapImage != EmptyImage)
+				{
+		            double dWidth = BitMapImage.Width;
+		            double dHeight = BitMapImage.Height;
+		            
+		            w = QslCard.DisplayWidth;
+		            h = QslCard.DisplayHeight;
+		            double scaleX = w / dWidth;
+		            double scaleY = h / dHeight;
+		            double scale = scaleX > scaleY ? scaleX : scaleY;
+		            w *= scale;
+		            h *= scale;
+		            if(x == 0 && y == 0)
+		            {
+			            if (dWidth > w)
+			            {
+			                x = (w - dWidth) / 2;
+			                w = dWidth;
+			            }
+			            if (dHeight > h)
+			            {
+			                y = (h - dHeight) / 2;
+			                h = dHeight;
+			            }
+		            }
+				}
 			}
 		}
 		

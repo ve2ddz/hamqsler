@@ -45,6 +45,7 @@ namespace hamqsler
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
+		public static RoutedCommand CardOpenCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
 		public static RoutedCommand QsosCommand = new RoutedCommand();
@@ -301,6 +302,25 @@ namespace hamqsler
 		{
 			// Force program shutdown (required because App shutdown mode set to OnExplicitShutdown)
 			Application.Current.Shutdown();
+		}
+		
+		private void CardOpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			OpenFileDialog oDialog = new OpenFileDialog();
+			oDialog.Filter = "QSL Card(*.qslx)|*.qslx";
+			if(oDialog.ShowDialog(this) == true)
+			{
+				string fileName = oDialog.FileName;
+				Card card = Card.DeserializeCard(fileName);
+				card.FileName = fileName;
+				CardTabItem cti = new CardTabItem(card);
+				mainTabControl.Items.Add(cti);
+				card.IsDirty = false;
+				cti.IsSelected = true;		// select the new tab
+				// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
+				SetTitle(card.FileName, card.IsDirty);
+			}
+				
 		}
 		
 		/// <summary>

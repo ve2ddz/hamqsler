@@ -52,6 +52,13 @@ namespace hamqsler
 			this.DataContext = cardCanvas.QslCard;
 		}
 		
+		public CardTabItem(Card card)
+		{
+			InitializeComponent();
+			cardCanvas.AddCard(card);
+			this.DataContext = cardCanvas.QslCard;
+		}
+		
 		/// <summary>
 		/// Set visibility of properties groupboxes based on the CardItem selected in the card
 		/// </summary>
@@ -177,7 +184,7 @@ namespace hamqsler
 				SecondaryImage si = cardCanvas.QslCard.GetSelected() as SecondaryImage;
 				if(si != null)
 				{
-					si.ImageFileName = string.Empty;
+//					si.ImageFileName = string.Empty;
 					// set the file name and show in secondaryImageFileNameTextBox
 					si.ImageFileName = fileName;
 					secondaryImageFileNameTextBox.Text = fileName;

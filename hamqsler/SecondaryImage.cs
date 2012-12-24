@@ -46,10 +46,14 @@ namespace hamqsler
 		protected override void CalculateRectangle(out double x, out double y, out double w,
 		                                          out double h)
 		{
+			x = DisplayX;
+			y = DisplayY;
             w = imageStartDimension;
             h = imageStartDimension;
+            bool imageFound = false;
 			if(BitMapImage != EmptyImage)
 			{
+				imageFound = true;
 	            double dWidth = BitMapImage.Width;
 	            double dHeight = BitMapImage.Height;
 	            double scaleX = w / dWidth;
@@ -58,8 +62,11 @@ namespace hamqsler
 	            w = dWidth * scale;
 	            h = dHeight * scale;
 			}
-	        x = (QslCard.DisplayWidth - w) / 2;
-	        y = (QslCard.DisplayHeight - h) / 2;
+			if(QslCard != null && !imageFound)
+			{
+		        x = (QslCard.DisplayWidth - w) / 2;
+		        y = (QslCard.DisplayHeight - h) / 2;
+			}
 		}
 		
 		/// <summary>

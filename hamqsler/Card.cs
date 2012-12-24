@@ -23,6 +23,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace hamqsler
@@ -401,6 +402,33 @@ namespace hamqsler
 			{
 				((MainWindow)App.Current.MainWindow).SetTitle(FileName, IsDirty);
 			}
+		}
+		
+		public static Card DeserializeCard(string fileName)
+		{
+			XmlSerializer serializer = new XmlSerializer(typeof(Card),
+			                                             new Type[]{typeof(SolidColorBrush),
+			                                             	typeof(MatrixTransform)});
+			FileStream fs = new FileStream(fileName, FileMode.Open);
+			XmlReader reader = XmlReader.Create(fs);
+			
+			Card card = (Card)serializer.Deserialize(reader);
+			fs.Close();
+			// set QslCard for each CardItem in card to this card
+			card.BackImage.QslCard = card;
+			foreach(SecondaryImage si in card.SecondaryImages)
+			{
+				si.QslCard = card;
+			}
+			foreach(TextItem ti in card.TextItems)
+			{
+				ti.QslCard = card;
+			}
+			if(card.QsosBox != null)
+			{
+				card.QsosBox.QslCard = card;
+			}
+			return card;
 		}
 				
 	}
