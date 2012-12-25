@@ -79,6 +79,8 @@ namespace hamqsler
 		public string ImportQsos(string adifFile, QSOsView.OrderOfSort so)
 		{
             this.Clear();			// remove all entries from the ObservableCollection
+            UserPreferences prefs = ((App)App.Current).UserPreferences;
+            prefs.AdifFiles.Clear();
             return AddQsos(adifFile, so);
 		}
 		
@@ -144,6 +146,12 @@ namespace hamqsler
             {
             	this.Add(qwi);
             }
+            UserPreferences prefs = ((App)App.Current).UserPreferences;            
+			if(prefs.AdifReloadOnStartup)
+			{
+				prefs.AdifFiles.Add(adifFile);
+				prefs.SerializeAsXml();
+			}
             if (qsoError)
             {
                 return "One or more QSOs contains an invalid field.\n\rThese QSOs have not been imported.\n\r" +

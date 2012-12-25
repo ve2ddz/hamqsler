@@ -6,7 +6,7 @@
 	Title="HamQSLer"
 	Height="600"
 	Width="1000"
-	Closed="Window_Closed">
+	Closed="Window_Closed" Loaded="Window_Loaded">
 	<Window.CommandBindings>
 		<CommandBinding Command="{x:Static local:MainWindow.CardOpenCommand}"
 						Executed="CardOpenCommand_Executed"/>

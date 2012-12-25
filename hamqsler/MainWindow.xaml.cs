@@ -317,6 +317,43 @@ namespace hamqsler
 			Application.Current.Shutdown();
 		}
 		
+		/// <summary>
+		/// Handler for window Loaded event.
+		/// Loads Adif and card files that were loaded last time the program was terminated
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void Window_Loaded(object sender, EventArgs e)
+		{
+			UserPreferences prefs = ((App)Application.Current).UserPreferences;
+			// load Adif files
+			if(prefs.AdifReloadOnStartup)
+			{
+				string[] adifFiles = prefs.AdifFiles.ToArray();
+				prefs.AdifFiles.Clear();
+				if(adifFiles.Length > 0)
+				{
+					// import the QSOs from the ADIF file
+					for(int i = 0; i < adifFiles.Length; i++)
+					{
+						try
+						{
+							string error = qsosView.DisplayQsos.AddQsos(adifFiles[i], qsosView.SortOrder);
+							if(error != null)
+							{
+								MessageBox.Show(error, "Import Error", MessageBoxButton.OK,
+							                MessageBoxImage.Warning);
+							}
+						}
+						catch(Exception ex)
+						{
+							App.Logger.Log(ex);
+						}
+					}
+				}
+			}
+		}
+		
 		private void CardOpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			OpenFileDialog oDialog = new OpenFileDialog();
@@ -505,6 +542,9 @@ namespace hamqsler
 		private void ClearQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			qsosView.DisplayQsos.Clear();
+			UserPreferences prefs = ((App)App.Current).UserPreferences;
+			prefs.AdifFiles.Clear();
+			prefs.SerializeAsXml();
 			qsosView.ShowIncludeSelectors();
 		}
 		
@@ -546,6 +586,10 @@ namespace hamqsler
 				}
 				writer.Close();
 				qsosView.DisplayQsos.IsDirty = false;
+				UserPreferences prefs = ((App)Application.Current).UserPreferences;
+				prefs.AdifFiles.Clear();
+				prefs.AdifFiles.Add(fileName);
+				prefs.SerializeAsXml();
 			}
 		}
 		
