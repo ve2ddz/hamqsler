@@ -307,6 +307,26 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Handler for Window Closing event.
+		/// Check each Card to see if it should be saved.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Window_Closing(object sender, EventArgs e)
+		{
+			TabItem[] tabItems = new TabItem[mainTabControl.Items.Count];
+			mainTabControl.Items.CopyTo(tabItems, 0);
+			foreach(TabItem ti in tabItems)
+			{
+				CardTabItem cti = ti as CardTabItem;
+				if(cti != null)
+				{
+					CloseCardTab(cti, false);
+				}
+			}
+		}
+		
+		/// <summary>
 		/// Shutdown the program when MainWindow closes
 		/// </summary>
 		/// <param name="sender">not used</param>
@@ -325,7 +345,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void Window_Loaded(object sender, EventArgs e)
 		{
-			UserPreferences prefs = ((App)Application.Current).UserPreferences;
+			UserPreferences prefs = ((App)App.Current).UserPreferences;
 			// load Adif files
 			if(prefs.AdifReloadOnStartup)
 			{
@@ -368,6 +388,7 @@ namespace hamqsler
 					cti.SetTabLabel();
 					// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
 					SetTitle(card.FileName, card.IsDirty);
+					prefs.CardFiles.Add(fileName);
 				}
 			}
 		}
@@ -431,22 +452,7 @@ namespace hamqsler
 		/// <param name="e">ExecutedRoutedEventArgs object</param>
 		private void CardSaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			Card qslCard = cti.cardCanvas.QslCard;
-			if(qslCard.FileName != null)
-			{
-				qslCard.SaveAsXml(qslCard.FileName);
-				cti.SetTabLabel();
-				SetTitle(qslCard.FileName, qslCard.IsDirty);
-				// If the last property control changed was a color button, then the background
-				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
-				// different control, this will not happen
-				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-			}
-			else
-			{
-				CardSaveAsCommand_Executed(sender, e);
-			}
+			SaveCard();
 		}
 		
 		/// <summary>
@@ -456,35 +462,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void CardSaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			Card qslCard = cti.cardCanvas.QslCard;
-			string fileName = qslCard.FileName;
-			SaveFileDialog sDialog = new SaveFileDialog();
-			sDialog.Filter = "QSL Card(*.qslx)|*.qslx";
-			if(fileName != null)
-			{
-				sDialog.FileName = fileName;
-			}
-			if(sDialog.ShowDialog() == true)
-			{
-				qslCard.SaveAsXml(sDialog.FileName);
-				cti.SetTabLabel();
-				SetTitle(sDialog.FileName, qslCard.IsDirty);
-				UserPreferences prefs = ((App)App.Current).UserPreferences;
-				if(prefs.CardsReloadOnStartup)
-				{
-					if(fileName != sDialog.FileName)
-					{
-						prefs.CardFiles.Remove(fileName);
-						prefs.CardFiles.Add(sDialog.FileName);
-						prefs.SerializeAsXml();
-					}
-				}
-				// If the last property control changed was a color button, then the background
-				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
-				// different control, this will not happen
-				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-			}
+			SaveCardAs();
 		}
 		
 		/// <summary>
@@ -495,7 +473,7 @@ namespace hamqsler
 		private void CloseCardCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			CloseCardTab(cti);
+			CloseCardTab(cti, true);
 		}
 		
 		/// <summary>
@@ -1020,7 +998,7 @@ namespace hamqsler
 		/// Close the CardTabItem
 		/// </summary>
 		/// <param name="cti">CardTabItem to close</param>
-		public void CloseCardTab(CardTabItem cti)
+		public void CloseCardTab(CardTabItem cti, bool doNotReloadCard)
 		{
 			if(cti.cardCanvas.QslCard.IsDirty)
 			{
@@ -1029,21 +1007,12 @@ namespace hamqsler
 				                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
 				if(result == MessageBoxResult.Yes)
 				{
-					if(cti.cardCanvas.QslCard.FileName != null)
-					{
-						SaveCardMenuItem.Command.Execute(null);
-						//RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));
-					}
-					else
-					{
-						SaveCardAsMenuItem.Command.Execute(null);
-						//SaveCardAsMenuItem.RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));
-					}
+					SaveCard();
 				}
 			}
 			mainTabControl.Items.Remove(cti);
 			UserPreferences prefs = ((App)App.Current).UserPreferences;
-			if(prefs.CardsReloadOnStartup)
+			if(doNotReloadCard && prefs.CardsReloadOnStartup)
 			{
 				if(cti.cardCanvas.QslCard.FileName != null)
 				{
@@ -1052,6 +1021,67 @@ namespace hamqsler
 				}
 			}
 			cti = null;
+		}
+		
+		/// <summary>
+		/// Save card to file named in Card.FileName
+		/// </summary>
+		private void SaveCard()
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			Card qslCard = cti.cardCanvas.QslCard;
+			if(qslCard.FileName != null)
+			{
+				qslCard.SaveAsXml(qslCard.FileName);
+				cti.SetTabLabel();
+				SetTitle(qslCard.FileName, qslCard.IsDirty);
+				// If the last property control changed was a color button, then the background
+				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
+				// different control, this will not happen
+				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+			}
+			else
+			{
+				SaveCardAs();
+			}
+
+		}
+		
+		/// <summary>
+		/// Save card to new file
+		/// </summary>
+		private void SaveCardAs()
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			Card qslCard = cti.cardCanvas.QslCard;
+			string fileName = qslCard.FileName;
+			SaveFileDialog sDialog = new SaveFileDialog();
+			sDialog.Filter = "QSL Card(*.qslx)|*.qslx";
+			if(fileName != null)
+			{
+				sDialog.FileName = fileName;
+			}
+			if(sDialog.ShowDialog() == true)
+			{
+				qslCard.SaveAsXml(sDialog.FileName);
+				cti.SetTabLabel();
+				SetTitle(sDialog.FileName, qslCard.IsDirty);
+				UserPreferences prefs = ((App)App.Current).UserPreferences;
+				if(prefs.CardsReloadOnStartup)
+				{
+					if(fileName != sDialog.FileName)
+					{
+						prefs.CardFiles.Remove(fileName);
+						prefs.CardFiles.Add(sDialog.FileName);
+						prefs.SerializeAsXml();
+					}
+				}
+				// If the last property control changed was a color button, then the background
+				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
+				// different control, this will not happen
+				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+			}
+
 		}
 	}
 }

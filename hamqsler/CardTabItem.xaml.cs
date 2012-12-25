@@ -351,7 +351,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void CardTabButton_Click(object sender, RoutedEventArgs e)
 		{
-			((MainWindow)App.Current.MainWindow).CloseCardTab(this);
+			((MainWindow)App.Current.MainWindow).CloseCardTab(this, true);
 		}
 		
 		/// <summary>
