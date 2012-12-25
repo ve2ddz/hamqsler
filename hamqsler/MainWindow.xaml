@@ -19,6 +19,8 @@
 		<CommandBinding Command="{x:Static local:MainWindow.CloseCardCommand}"
 						CanExecute="CloseCardCommand_CanExecute"
 						Executed="CloseCardCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.ExitCommand}"
+						Executed="ExitCommand_Executed"/>
 		
 		<CommandBinding Command="{x:Static local:MainWindow.QsosCommand}"
 						CanExecute="QsosCommand_CanExecute"/>
@@ -87,7 +89,7 @@
 				<MenuItem Header="Calculate Number of Cards to be Printed..."/>
 				<MenuItem Header="_Print Cards..."/>
 				<Separator/>
-				<MenuItem Header="Quit"/>
+				<MenuItem Header="Quit" Command="{x:Static local:MainWindow.ExitCommand}"/>
 			</MenuItem>
 			<MenuItem Header="QSOs"
 						Command="{x:Static local:MainWindow.QsosCommand}">

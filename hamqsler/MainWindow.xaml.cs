@@ -49,6 +49,8 @@ namespace hamqsler
 		public static RoutedCommand CardSaveCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
 		public static RoutedCommand CloseCardCommand = new RoutedCommand();
+		public static RoutedCommand ExitCommand = new RoutedCommand();
+		
 		public static RoutedCommand QsosCommand = new RoutedCommand();
 		public static RoutedCommand InputQsosCommand = new RoutedCommand();
 		public static RoutedCommand ImportQsosCommand = new RoutedCommand();
@@ -393,6 +395,11 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handler for CardOpen Executed event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void CardOpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			OpenFileDialog oDialog = new OpenFileDialog();
@@ -474,6 +481,18 @@ namespace hamqsler
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			CloseCardTab(cti, true);
+		}
+		
+		/// <summary>
+		/// Handler for Exit menu item Executed event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// just close main window; Actual work done in Window_Closing and Window_Closed,
+			// which are called as result of Close call.
+			this.Close();
 		}
 		
 		/// <summary>
