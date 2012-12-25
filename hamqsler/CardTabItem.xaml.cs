@@ -20,6 +20,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -351,6 +352,25 @@ namespace hamqsler
 		void CardTabButton_Click(object sender, RoutedEventArgs e)
 		{
 			((MainWindow)App.Current.MainWindow).CloseCardTab(this);
+		}
+		
+		/// <summary>
+		/// Set the text in the tab
+		/// </summary>
+		public void SetTabLabel()
+		{
+			HeaderText.Text = (cardCanvas.QslCard.IsDirty ? "*" : string.Empty);
+			string fileName = cardCanvas.QslCard.FileName;
+			if(fileName != null)
+			{
+				FileInfo fileInfo = new FileInfo(fileName);
+				string fName = fileInfo.Name;
+				HeaderText.Text += fName;
+			}
+			else
+			{
+				HeaderText.Text += "New Card";
+			}
 		}
 	}
 }

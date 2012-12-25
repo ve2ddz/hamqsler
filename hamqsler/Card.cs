@@ -402,6 +402,12 @@ namespace hamqsler
 			else if(e.Property == IsDirtyProperty)
 			{
 				((MainWindow)App.Current.MainWindow).SetTitle(FileName, IsDirty);
+				CardTabItem cti = ((MainWindow)App.Current.MainWindow).mainTabControl.SelectedItem
+					as CardTabItem;
+				if(cti != null)
+				{
+					cti.SetTabLabel();
+				}
 			}
 		}
 		

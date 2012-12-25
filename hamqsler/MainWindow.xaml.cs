@@ -356,6 +356,7 @@ namespace hamqsler
 				CardTabItem cti = new CardTabItem(card);
 				mainTabControl.Items.Add(cti);
 				cti.IsSelected = true;		// select the new tab
+				cti.SetTabLabel();
 				// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
 				SetTitle(card.FileName, card.IsDirty);
 			}
@@ -374,6 +375,7 @@ namespace hamqsler
 			if(qslCard.FileName != null)
 			{
 				qslCard.SaveAsXml(qslCard.FileName);
+				cti.SetTabLabel();
 				SetTitle(qslCard.FileName, qslCard.IsDirty);
 				// If the last property control changed was a color button, then the background
 				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
@@ -405,6 +407,7 @@ namespace hamqsler
 			if(sDialog.ShowDialog() == true)
 			{
 				qslCard.SaveAsXml(sDialog.FileName);
+				cti.SetTabLabel();
 				SetTitle(sDialog.FileName, qslCard.IsDirty);
 				// If the last property control changed was a color button, then the background
 				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
@@ -663,6 +666,7 @@ namespace hamqsler
 			CardTabItem cardTab = new CardTabItem(5.5 * 96, 3.5 * 96);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
+			cardTab.SetTabLabel();
 			// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
 			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
 		}
@@ -678,6 +682,7 @@ namespace hamqsler
 			CardTabItem cardTab = new CardTabItem(5.5 * 96, 4.25 * 96);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
+			cardTab.SetTabLabel();
 			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
 		}
 
@@ -692,6 +697,7 @@ namespace hamqsler
 			CardTabItem cardTab = new CardTabItem(6 * 96, 4 * 96);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
+			cardTab.SetTabLabel();
 			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
 		}
 
@@ -898,18 +904,15 @@ namespace hamqsler
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				cti.HeaderText.Text = (isDirty ? "*" : string.Empty);
 				this.Title = "HamQSLer - ";
 				if(fileName != null)
 				{
 					FileInfo fileInfo = new FileInfo(fileName);
 					string fName = fileInfo.Name;
-					cti.HeaderText.Text += fName;
 					this.Title += fileName + (isDirty ? " - Modified" : string.Empty);
 				}
 				else
 				{
-					cti.HeaderText.Text += "New Card";
 					this.Title += "New Card" + (isDirty ? "- Modified" : string.Empty);
 				}
 			}
@@ -923,13 +926,12 @@ namespace hamqsler
 		void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			// all we do is set the window title based on tab selected
-			TabItem tItem = e.Source as TabItem;
-			if(e.Source is CardTabItem)
+			CardTabItem ti = mainTabControl.SelectedItem as CardTabItem;
+			if(ti != null)
 			{
-				CardTabItem cti = e.Source as CardTabItem;
-				SetTitle(cti.cardCanvas.QslCard.FileName, cti.cardCanvas.QslCard.IsDirty);
+				SetTitle(ti.cardCanvas.QslCard.FileName, ti.cardCanvas.QslCard.IsDirty);
 			}
-			else if(tItem != null && tItem.Name.Equals("qsosTab"))
+			else
 			{
 				this.Title = "HamQSLer";
 			}
