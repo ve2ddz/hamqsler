@@ -352,6 +352,24 @@ namespace hamqsler
 					}
 				}
 			}
+			// load card files
+			if(prefs.CardsReloadOnStartup)
+			{
+				string[] fileNames = prefs.CardFiles.ToArray();
+				prefs.CardFiles.Clear();
+				foreach(string fileName in fileNames)
+				{
+					Card card = Card.DeserializeCard(fileName);
+					card.FileName = fileName;
+					card.IsDirty = false;
+					CardTabItem cti = new CardTabItem(card);
+					mainTabControl.Items.Add(cti);
+					cti.IsSelected = true;		// select the new tab
+					cti.SetTabLabel();
+					// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
+					SetTitle(card.FileName, card.IsDirty);
+				}
+			}
 		}
 		
 		private void CardOpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -368,6 +386,12 @@ namespace hamqsler
 					card = Card.DeserializeCard(fileName);
 					card.FileName = fileName;
 					card.IsDirty = false;
+					UserPreferences prefs = ((App)App.Current).UserPreferences;
+					if(prefs.CardsReloadOnStartup)
+					{
+						prefs.CardFiles.Add(fileName);
+						prefs.SerializeAsXml();
+					}
 				}
 				else if(fileExt.Equals("xqsl"))  // QslDnP card file
 				{
@@ -446,6 +470,16 @@ namespace hamqsler
 				qslCard.SaveAsXml(sDialog.FileName);
 				cti.SetTabLabel();
 				SetTitle(sDialog.FileName, qslCard.IsDirty);
+				UserPreferences prefs = ((App)App.Current).UserPreferences;
+				if(prefs.CardsReloadOnStartup)
+				{
+					if(fileName != sDialog.FileName)
+					{
+						prefs.CardFiles.Remove(fileName);
+						prefs.CardFiles.Add(sDialog.FileName);
+						prefs.SerializeAsXml();
+					}
+				}
 				// If the last property control changed was a color button, then the background
 				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
 				// different control, this will not happen
@@ -1008,6 +1042,15 @@ namespace hamqsler
 				}
 			}
 			mainTabControl.Items.Remove(cti);
+			UserPreferences prefs = ((App)App.Current).UserPreferences;
+			if(prefs.CardsReloadOnStartup)
+			{
+				if(cti.cardCanvas.QslCard.FileName != null)
+				{
+					prefs.CardFiles.Remove(cti.cardCanvas.QslCard.FileName);
+					prefs.SerializeAsXml();
+				}
+			}
 			cti = null;
 		}
 	}
