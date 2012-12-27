@@ -22,6 +22,7 @@ using Qsos;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Printing;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -49,6 +50,7 @@ namespace hamqsler
 		public static RoutedCommand CardSaveCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
 		public static RoutedCommand CloseCardCommand = new RoutedCommand();
+		public static RoutedCommand PrintCardsCommand = new RoutedCommand();
 		public static RoutedCommand ExitCommand = new RoutedCommand();
 		
 		public static RoutedCommand QsosCommand = new RoutedCommand();
@@ -104,6 +106,17 @@ namespace hamqsler
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void CloseCardCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = cti != null;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for Print Cards... menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void PrintCardsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			e.CanExecute = cti != null;
@@ -481,6 +494,58 @@ namespace hamqsler
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			CloseCardTab(cti, true);
+		}
+		
+		/// <summary>
+		/// Handler for Print Cards menu item Executed event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void PrintCardsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			MessageBoxResult result = MessageBoxResult.No;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			PrintTicket ticket = new PrintTicket();
+			PrintDialog pDialog;
+			do
+			{
+				pDialog = new PrintDialog();
+				if(pDialog.ShowDialog() == true)
+				{
+					ticket = pDialog.PrintTicket.Clone();
+					// make sure at least one card can be printed on the page
+					double pageHeight = (double)ticket.PageMediaSize.Height;
+					double pageWidth = (double)ticket.PageMediaSize.Width;
+					double cardWidth = cti.cardCanvas.QslCard.DisplayWidth;
+					double cardHeight = cti.cardCanvas.QslCard.DisplayWidth;
+					// check that at least one card can be printed
+					if(Math.Min(cardWidth, cardHeight) > Math.Min(pageWidth, pageHeight) ||
+						Math.Max(cardWidth, cardHeight) > Math.Max(pageWidth, pageHeight))
+					{
+                        string msg = string.Format("The size of the cards to be printed is larger than the selected paper size.\r\n"
+                                        + "Card size is {0} by {1} inches and paper size is {2} by {3} inches.\r\n"
+                                        + "You must choose another paper size.", cardWidth / 96, cardHeight / 96,
+                                        pageHeight / 96, pageWidth / 96);
+						MessageBox.Show(msg, "Paper Size Too Small", MessageBoxButton.OK, MessageBoxImage.Error);
+						result = MessageBoxResult.No;
+						continue;
+					}
+					result = MessageBoxResult.Yes;
+				}
+				else
+				{
+					return;
+				}
+			} while(result == MessageBoxResult.No);
+			
+			ticket = pDialog.PrintTicket;
+			// force Landscape orientation
+			ticket.PageOrientation = PageOrientation.Landscape;
+			pDialog.PrintTicket = ticket;
+			// paginate and print
+			HamqslerPaginator paginator = new HamqslerPaginator(cti.cardCanvas.QslCard, 
+			                                                    new Size(8.5 * 96, 11 * 96));
+			pDialog.PrintDocument(paginator, "QSL Cards");
 		}
 		
 		/// <summary>

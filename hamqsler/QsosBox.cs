@@ -449,6 +449,11 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Set properties of this QsosBox from properties loaded from a QslDesignAndPrint card file
+		/// </summary>
+		/// <param name="itemNode">The QsosBox node</param>
+		/// <param name="culture">Culture that the card was written in</param>
 		public override void Load(XmlNode itemNode, CultureInfo culture)
 		{
 			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);

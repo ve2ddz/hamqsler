@@ -309,15 +309,24 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Handler for Loaded event
+		/// Override for Arrange method. This is necessary to force a call to
+		/// CalculateColumnWidthsAndSetVisibilities; otherwise, the QsosBox columns
+		/// will not be set to the proper widths when first displayed or when printing.
+		/// Note: For display, Window.Loaded could be overridden to call 
+		/// CalculateColumnWidthsAndSetVisibilities, but Loaded is not called when a control
+		/// is printed.
 		/// </summary>
-		/// <param name="sender">not used</param>
-		/// <param name="e">nopt used</param>
-		private void OnLoaded(object sender, RoutedEventArgs e)
+		/// <param name="arrangeBounds">Final area within the parent that this element should
+		/// use to arrange itself and its children (just passed to base.ArrangeOverride
+		/// in this case.</param>
+		/// <returns>Actual size used. Note that this is the size calculated by the base class
+		/// because we are not really interested in adjusting this size, just adjusting the 
+		/// column widths of the QsosBox.</returns>
+		protected override Size ArrangeOverride(Size arrangeBounds)
 		{
-			// must wait until here to calculate column widths because the QsosBoxView must be
-			// shown before it has a width (used to calculate widths)
-			CalculateColumnWidthsAndSetVisibilities();
+			Size size = base.ArrangeOverride(arrangeBounds);
+			this.CalculateColumnWidthsAndSetVisibilities();
+			return size;
 		}
 		
 	}

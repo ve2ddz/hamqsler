@@ -3,8 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:hamqsler"
 	Canvas.Left="{Binding Path=ItemData.DisplayX}" 
-	Canvas.Top="{Binding Path=ItemData.DisplayY}"
-	Loaded="OnLoaded">
+	Canvas.Top="{Binding Path=ItemData.DisplayY}">
 	<local:CardItemView.Resources>
 		<local:RectConverter x:Key="RectConverter"/>
 		<local:MarginConverter x:Key="MarginConverter"/>
