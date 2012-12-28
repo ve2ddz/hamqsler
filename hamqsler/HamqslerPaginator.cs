@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -30,18 +31,25 @@ namespace hamqsler
 	/// </summary>
 	public class HamqslerPaginator : DocumentPaginator
 	{
+		private int cardsWide;
+		private int cardsHigh;
+		private int cardsPerPage;
+		private int pageCount;
 		private Card card;
 		private Size pageSize;
+		private List<List<DispQso>> dispQsos;
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="qslCard">Card to be printed</param>
 		/// <param name="size"></param>
-		public HamqslerPaginator(Card qslCard, Size size)
+		public HamqslerPaginator(Card qslCard, DisplayQsos qsos, Size size)
 		{
 			card = qslCard;
+			dispQsos = qsos.GetDispQsosList(card);
 			pageSize = size;
+			CalculatePageCount();
 		}
 		
 		public override bool IsPageCountValid {
@@ -49,7 +57,7 @@ namespace hamqsler
 		}
 		
 		public override int PageCount {
-			get {return 1;}
+			get {return pageCount;}
 		}
 		
 		public override IDocumentPaginatorSource Source {
@@ -91,6 +99,25 @@ namespace hamqsler
 			canvas.Children.Add(cView4);
 			canvas.UpdateLayout();
 			return new DocumentPage(canvas);
+		}
+		
+		/// <summary>
+		/// Calculate number of pages to be printed, along with a number of
+		/// other properties used in the calculation that are needed in GetPage
+		/// </summary>
+		private void CalculatePageCount()
+		{
+			// NOTE: currently assumes landscape mode
+			double pageWidth = PageSize.Height;
+			double pageHeight = PageSize.Width;
+			cardsWide = ((int)(pageWidth / card.DisplayWidth));
+			cardsHigh = ((int)(pageHeight / card.DisplayHeight));
+			cardsPerPage = cardsWide * cardsHigh;
+			pageCount = (dispQsos.Count + cardsPerPage - 1) / cardsPerPage;
+			if(pageCount == 0)
+			{
+				pageCount = 1;
+			}
 		}
 	}
 }

@@ -534,5 +534,107 @@ namespace hamqsler
 				this.Add(qso);
 			}
 		}
+		
+		/// <summary>
+		/// Create lists of DispQsos for printing on cards
+		/// </summary>
+		/// <param name="card">Card object that will be printed</param>
+		/// <returns>A List of DispQsos to be displayed on the cards</returns>
+		public List<List<DispQso>> GetDispQsosList(Card card)
+		{
+			List<DispQso> cardQsos = null;
+			List<List<DispQso>> cardsQsosList = new List<List<DispQso>>();
+			string thisManagerCall = string.Empty;
+			QsoWithInclude thisQso = new QsoWithInclude(new Qso());
+			int qsosCount = 0;
+			HashSet<string> fields = new HashSet<string>();
+			HashSet<string> existFields = new HashSet<string>();
+			foreach(QsoWithInclude qwi in this)
+			{
+				string managerCall = qwi.Manager + qwi.Callsign;
+				if(qwi.Include)
+				{
+					if(managerCall == thisManagerCall &&
+					   qsosCount < card.QsosBox.MaximumQsos &&
+					   card.QsosBox != null &&
+					   qsosCount < card.QsosBox.MaximumQsos && 
+					   AdifFieldsEqual(fields, qwi, thisQso) &&
+					   AdifFieldsExist(existFields, qwi, thisQso))
+					{
+						cardQsos.Add(new DispQso(qwi));
+						qsosCount++;
+					}
+					else
+					{
+						cardQsos = new List<DispQso>();
+						thisManagerCall = managerCall;
+						thisQso = qwi;
+						cardQsos.Add(new DispQso(qwi));
+						qsosCount = 1;
+						cardsQsosList.Add(cardQsos);
+					}
+				}
+			}
+			return cardsQsosList;
+		}
+		
+		/// <summary>
+		/// Determine if Adif fields are equal for two Qsos
+		/// </summary>
+		/// <param name="fields">Adif Fields to compare</param>
+		/// <param name="q1">First Qso in the comparison</param>
+		/// <param name="q2">Second Qso in the comparison</param>
+		/// <returns>True if all Adif fields in the list are equal for the two Qsos. Equality
+		/// means same values in both Qsos, or no value in both Qsos.
+		/// False otherwise.</returns>
+		private bool AdifFieldsEqual(HashSet<string> fields, QsoWithInclude q1, QsoWithInclude q2)
+		{
+			foreach(string field in fields)
+			{
+				if(q1.Qso.ContainsKey(field))
+				{
+					if(!q2.Qso.ContainsKey(field))
+					{
+						return false;
+					}
+					else if(q1.Qso.getValue(field) != q2.Qso.getValue(field))
+					{
+						return false;
+					}
+				}
+				else if(q2.Qso.ContainsKey(field))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		/// <summary>
+		/// Determine if Adif Fields exist in both Qsos
+		/// </summary>
+		/// <param name="fields">Adif Fields to determine existence of</param>
+		/// <param name="q1">First Qso to compare</param>
+		/// <param name="q2">Second Qso to compare</param>
+		/// <returns>True of both Qsos contains each field or neither Qso contains each field.
+		/// False if one Qso contains at least one field that the other does not.</returns>
+		private bool AdifFieldsExist(HashSet<string> fields, QsoWithInclude q1, QsoWithInclude q2)
+		{
+			foreach(string field in fields)
+			{
+				if(q1.Qso.ContainsKey(field))
+				{
+					if(!q2.Qso.ContainsKey(field))
+					{
+						return false;
+					}
+				}
+				else if(q2.Qso.ContainsKey(field))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 }

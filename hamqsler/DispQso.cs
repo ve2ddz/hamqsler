@@ -17,6 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Qsos;
 using System;
 
 namespace hamqsler
@@ -26,6 +27,20 @@ namespace hamqsler
 	/// </summary>
 	public class DispQso
 	{
+		private string manager = string.Empty;
+		public string Manager
+		{
+			get {return manager;}
+			set {manager = value;}
+		}
+		
+		private string callsign = string.Empty;
+		public string Callsign
+		{
+			get {return callsign;}
+			set {callsign = value;}
+		}
+		
 		private string date = string.Empty;
 		public string Date
 		{
@@ -75,11 +90,36 @@ namespace hamqsler
 			set {qsl = value;}
 		}
 		
+		private Qso qso = null;
+		public Qso Qso
+		{
+			get {return qso;}
+			set {qso =  value;}
+		}
+		
 		/// <summary>
-		/// Constructor
+		/// Default Constructor
 		/// </summary>
 		public DispQso()
 		{
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="qwi">QsoWithInclude object to build DispQso from</param>
+		public DispQso(QsoWithInclude qwi)
+		{
+			Manager = qwi.Manager;
+			Callsign = qwi.Callsign;
+			Date = qwi.Date;
+			Time = qwi.Time;
+			Band = qwi.Band;
+			Frequency = qwi.Frequency;
+			Mode = qwi.Mode;
+			RST = qwi.RST;
+			Qsl = qwi.Rcvd;
+			Qso = qwi.Qso;
 		}
 	}
 }
