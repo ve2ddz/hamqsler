@@ -69,7 +69,14 @@ namespace hamqsler
 		public List<DispQso> Qsos
 		{
 			get {return (List<DispQso>)GetValue(QsosProperty);}
-			set {SetValue(QsosProperty, value);}
+			set 
+			{
+				Qsos.Clear();
+				foreach(DispQso q in value)
+				{
+					Qsos.Add(q);
+				}
+			}
 		}
 		
 		// Amount of rounding for the rectangle that surrounds the QsosBox on the card

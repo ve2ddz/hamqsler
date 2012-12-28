@@ -43,7 +43,8 @@ namespace hamqsler
 		/// Constructor
 		/// </summary>
 		/// <param name="qslCard">Card to be printed</param>
-		/// <param name="size"></param>
+		/// <param name="qsos">Collection of Qsos to be displayed on all cards</param>
+		/// <param name="size">Size of the paper the cards are to be printed on</param>
 		public HamqslerPaginator(Card qslCard, DisplayQsos qsos, Size size)
 		{
 			card = qslCard;
@@ -77,23 +78,43 @@ namespace hamqsler
 		public override DocumentPage GetPage(int pageNumber)
 		{
 			// for now, we assume Letter sized paper and 4 cards per page
+			int cardNumber = pageNumber * cardsPerPage;
 			Canvas canvas = new Canvas();
 			canvas.Measure(PageSize);
 			canvas.Arrange(new Rect(PageSize));
-			CardView cView = new CardView(card, true);
+			CardView cView = new CardView(card, cardNumber > dispQsos.Count);
+			if(cardNumber < dispQsos.Count)
+			{
+				card.QsosBox.QBoxView.Qsos = dispQsos[cardNumber];
+			}
+			cardNumber++;
 			Canvas.SetLeft(cView, 0);
 			Canvas.SetTop(cView, 0);
 			canvas.Children.Add(cView);
-			CardView cView2 = new CardView(card, true);
-			cView2.UpdateLayout();
+			CardView cView2 = new CardView(card, cardNumber > dispQsos.Count);
+			if(cardNumber < dispQsos.Count)
+			{
+				card.QsosBox.QBoxView.Qsos = dispQsos[cardNumber];
+			}
+			cardNumber++;
 			Canvas.SetLeft(cView2, card.DisplayWidth);
 			Canvas.SetTop(cView2, 0);
 			canvas.Children.Add(cView2);
-			CardView cView3 = new CardView(card, true);
+			CardView cView3 = new CardView(card, cardNumber > dispQsos.Count);
+			if(cardNumber < dispQsos.Count)
+			{
+				card.QsosBox.QBoxView.Qsos = dispQsos[cardNumber];
+			}
+			cardNumber++;
 			Canvas.SetLeft(cView3, 0);
 			Canvas.SetTop(cView3, card.DisplayHeight);
 			canvas.Children.Add(cView3);
-			CardView cView4 = new CardView(card, true);
+			CardView cView4 = new CardView(card, cardNumber > dispQsos.Count);
+			if(cardNumber < dispQsos.Count)
+			{
+				card.QsosBox.QBoxView.Qsos = dispQsos[cardNumber];
+			}
+			cardNumber++;
 			Canvas.SetLeft(cView4, card.DisplayWidth);
 			Canvas.SetTop(cView4, card.DisplayHeight);
 			canvas.Children.Add(cView4);
