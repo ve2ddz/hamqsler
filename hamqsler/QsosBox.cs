@@ -309,20 +309,6 @@ namespace hamqsler
 			set { SetValue(TnxTextProperty, value); }
 		}
 		
-		/// <summary>
-		/// Confirming text to display on the card. This is calculated based on value
-		/// of IsInDesignMode.
-		/// </summary>
-		private static readonly DependencyProperty ConfirmingDisplayTextProperty =
-			DependencyProperty.Register("DisplayText", typeof(string), typeof(QsosBox),
-			                            new PropertyMetadata(string.Empty));
-		[XmlIgnore]
-		public string ConfirmingDisplayText
-		{
-			get {return (string)GetValue(ConfirmingDisplayTextProperty);}
-			set {SetValue(ConfirmingDisplayTextProperty, value);}
-		}
-
         private QsosBoxView qView = null;
         [XmlIgnore]
         public QsosBoxView QBoxView
@@ -332,12 +318,13 @@ namespace hamqsler
         }
 
         /// <summary>
-        /// Default constructor
+        /// Default constructor - called when deserializing a card file
         /// </summary>
         public QsosBox() : base(true)
         {
 			UserPreferences userPrefs = ((App)Application.Current).UserPreferences;
-			InitializeDisplayProperties(userPrefs);        
+			InitializeDisplayProperties(userPrefs);
+			ConfirmingText.Clear();		// must clear or text is entered twice
         }
 		/// <summary>
 		/// Constructor
@@ -366,7 +353,6 @@ namespace hamqsler
 			{
 				this.ConfirmingText.Add(part);
 			}
-			ConfirmingDisplayText = ConfirmingText.GetText(IsInDesignMode);
 			this.ViaText = userPrefs.ViaText;
 			this.DateFormat = userPrefs.DefaultDateFormat;
 			this.YYYYMMDDText = userPrefs.YYYYMMDDText;
@@ -480,6 +466,10 @@ namespace hamqsler
 			cMacro.Count = 1;
 			cMacro.CountEquals = true;
 			ConfirmingText.Clear();
+			ConfirmingText.Add(cMacro);
+			StaticText cText = new StaticText();
+			cText.Text = "Confirming 2-Way QSO<S> with";
+			cMacro.DesignText.Add(cText);
 			ConfirmingText.Add(cMacro);
 			XmlNode node = XmlProcs.GetFirstChildElement(itemNode);
 			XmlNode child;

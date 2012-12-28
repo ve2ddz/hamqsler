@@ -79,6 +79,15 @@ namespace hamqsler
 			}
 		}
 		
+		private static readonly DependencyProperty ConfirmingDisplayTextProperty =
+			DependencyProperty.Register("ConfirmingDisplayText", typeof(string), typeof(QsosBoxView),
+			                            new PropertyMetadata(string.Empty));
+		public string ConfirmingDisplayText
+		{
+			get {return (string)GetValue(ConfirmingDisplayTextProperty);}
+			set {SetValue(ConfirmingDisplayTextProperty, value);}
+		}
+		
 		// Amount of rounding for the rectangle that surrounds the QsosBox on the card
 		private const double cornerRounding = 3.0;
 		public double CornerRounding
@@ -136,6 +145,7 @@ namespace hamqsler
 			SetValue(QsosPropertyKey, new List<DispQso>());
 			DataContext = this;
 			qsosBox.QBoxView = this;
+			ConfirmingDisplayText = qsosBox.ConfirmingText.GetText(qsosBox.IsInDesignMode);
 			InitializeComponent();
 			if(((QsosBox)ItemData).IsInDesignMode)
 			{

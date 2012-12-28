@@ -46,7 +46,7 @@
  			<StackPanel x:Name="DisplayPanel">
 	 			<StackPanel Orientation="Horizontal" Canvas.Left="{Binding Path=ConfirmingXOffset}"
 	 						Canvas.Top="{Binding Path=ConfirmingYOffset}">
-	 				<TextBlock Text="{Binding Path=ItemData.ConfirmingDisplayText}"
+	 				<TextBlock Text="{Binding Path=ConfirmingDisplayText}"
 							FontFamily="{Binding Path=ItemData.FontName}"
 							FontSize="{Binding Path=ItemData.FontSize}"
 							Foreground="{Binding Path=ItemData.LineTextBrush}">
@@ -312,7 +312,7 @@
  			<StackPanel x:Name="DesignPanel">
 	 			<StackPanel Orientation="Horizontal" Canvas.Left="{Binding Path=ConfirmingXOffset}"
 	 						Canvas.Top="{Binding Path=ConfirmingYOffset}">
-	 				<TextBlock Text="{Binding Path=ItemData.ConfirmingDisplayText}"
+	 				<TextBlock Text="{Binding Path=ConfirmingDisplayText}"
 							FontFamily="{Binding Path=ItemData.FontName}"
 							FontSize="{Binding Path=ItemData.FontSize}"
 							Foreground="{Binding Path=ItemData.LineTextBrush}">
