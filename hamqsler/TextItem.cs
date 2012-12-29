@@ -150,15 +150,6 @@ namespace hamqsler
 			set {SetValue(CheckBoxAfterRightOffsetProperty, value);}
 		}
 		
-		private static readonly DependencyProperty CheckBoxMarginProperty =
-			DependencyProperty.Register("CheckBoxMargin", typeof(Thickness), typeof(TextItem),
-			                            new PropertyMetadata(new Thickness(0)));
-		public Thickness CheckBoxMargin
-		{
-			get {return (Thickness)GetValue(CheckBoxMarginProperty);}
-			set {SetValue(CheckBoxMarginProperty, value);}
-		}
-		
 		private TextItemView tItemView = null;
 		[XmlIgnore]
 		public TextItemView TItemView

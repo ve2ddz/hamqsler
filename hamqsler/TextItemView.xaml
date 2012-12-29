@@ -26,7 +26,7 @@
 							StrokeThickness="{Binding Path=ItemData.CheckboxLineThickness}"
 							Canvas.Left="{Binding Path=ItemData.CheckBoxBeforeLeftOffset}"
 				            Fill="Transparent"
-							VerticalAlignment="Center" Margin="{Binding Path=ItemData.CheckBoxMargin}">
+							VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
 					<Rectangle.Style>
 						<Style TargetType="{x:Type Rectangle}">
 							<Setter Property="Stroke" Value="Transparent"/>
@@ -58,7 +58,7 @@
 							StrokeThickness="{Binding Path=ItemData.CheckboxLineThickness}"
 							Canvas.Right="{Binding Path=ItemData.CheckBoxAfterRightOffset}"
 				            Fill="Transparent"
-							VerticalAlignment="Center" Margin="{Binding Path=ItemData.CheckBoxMargin}">
+							VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
 					<Rectangle.Style>
 						<Style TargetType="{x:Type Rectangle}">
 							<Setter Property="Stroke" Value="Transparent"/>
@@ -108,7 +108,7 @@
 							StrokeThickness="{Binding Path=ItemData.CheckboxLineThickness}"
 							Canvas.Left="{Binding Path=ItemData.CheckBoxBeforeLeftOffset}"
 				            Fill="Transparent"
-							VerticalAlignment="Center" Margin="{Binding Path=ItemData.CheckBoxMargin}">
+							VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
 					<Rectangle.Style>
 						<Style TargetType="{x:Type Rectangle}">
 							<Setter Property="Stroke" Value="Transparent"/>
@@ -135,12 +135,12 @@
 						</Style>
 					</TextBlock.Style>
 				</TextBlock>
-				<Rectangle Width="{Binding Path=ItemData.CheckBoxSize}"
-							Height="{Binding Path=ItemData.CheckBoxSize}"
+				<Rectangle Width="{Binding Path=CheckBoxSize}"
+							Height="{Binding Path=CheckBoxSize}"
 							StrokeThickness="{Binding Path=ItemData.CheckboxLineThickness}"
 							Canvas.Right="{Binding Path=ItemData.CheckBoxAfterRightOffset}"
 				            Fill="Transparent"
-							VerticalAlignment="Center" Margin="{Binding Path=ItemData.CheckBoxMargin}">
+							VerticalAlignment="Center" Margin="{Binding Path=CheckBoxMargin}">
 					<Rectangle.Style>
 						<Style TargetType="{x:Type Rectangle}">
 							<Setter Property="Stroke" Value="Transparent"/>

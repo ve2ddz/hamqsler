@@ -53,6 +53,15 @@ namespace hamqsler
 			set {SetValue(CheckBoxSizeProperty, value);}
 		}
 		
+		private static readonly DependencyProperty CheckBoxMarginProperty =
+			DependencyProperty.Register("CheckBoxMargin", typeof(Thickness), typeof(TextItemView),
+			                            new PropertyMetadata(new Thickness(0)));
+		public Thickness CheckBoxMargin
+		{
+			get {return (Thickness)GetValue(CheckBoxMarginProperty);}
+			set {SetValue(CheckBoxMarginProperty, value);}
+		}
+		
 		public FormattedText FormattedTextItem
 		{
 			get
@@ -164,7 +173,7 @@ namespace hamqsler
 				// must use FormattedTextItem.Height here, not ti.DisplayHeight
 				CheckBoxSize = FormattedTextItem.Height * ti.CheckBoxRelativeSize;
 				double margin = (FormattedTextItem.Height - CheckBoxSize) / 2 + 2;
-				ti.CheckBoxMargin = new Thickness(margin, 0, margin, 0);
+				CheckBoxMargin = new Thickness(margin, 0, margin, 0);
 			
 		}
 	}
