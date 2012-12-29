@@ -132,24 +132,6 @@ namespace hamqsler
 			set {SetValue(CheckBoxRelativeSizeProperty, value);}
 		}
 		
-		private static readonly DependencyProperty CheckBoxBeforeLeftOffsetProperty = 
-			DependencyProperty.Register("CheckBoxBeforeLeftOffset", typeof(double), typeof(TextItem),
-			                            new PropertyMetadata(0.0));
-		public double CheckBoxBeforeLeftOffset
-		{
-			get {return (double)GetValue(CheckBoxBeforeLeftOffsetProperty);}
-			set {SetValue(CheckBoxBeforeLeftOffsetProperty, value);}
-		}
-		
-		private static readonly DependencyProperty CheckBoxAfterRightOffsetProperty =
-			DependencyProperty.Register("CheckBoxAfterRightOffset", typeof(double), typeof(TextItem),
-			                            new PropertyMetadata(0.0));
-		public double CheckBoxAfterRightOffset
-		{
-			get {return (double)GetValue(CheckBoxAfterRightOffsetProperty);}
-			set {SetValue(CheckBoxAfterRightOffsetProperty, value);}
-		}
-		
 		private TextItemView tItemView = null;
 		[XmlIgnore]
 		public TextItemView TItemView
@@ -199,10 +181,7 @@ namespace hamqsler
 				}
 				DisplayWidth = forText.Width + 2 * forText.Height + 6;
 				DisplayHeight = forText.Height;
-				CheckBoxBeforeLeftOffset = DisplayX + DisplayHeight * //FormattedTextItem.Height * 
-				                          (1 - CheckBoxRelativeSize) / 2;
-				CheckBoxAfterRightOffset = DisplayX + DisplayWidth -
-										   (1 - CheckBoxRelativeSize) / 2;
+				TItemView.SetCheckBoxOffsets();
 				
 				if(QslCard != null)		// various properties that result in CalculateRectangle being
 										// called may be set before QslCard is set

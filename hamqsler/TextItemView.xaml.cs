@@ -62,6 +62,24 @@ namespace hamqsler
 			set {SetValue(CheckBoxMarginProperty, value);}
 		}
 		
+		private static readonly DependencyProperty CheckBoxBeforeLeftOffsetProperty = 
+			DependencyProperty.Register("CheckBoxBeforeLeftOffset", typeof(double), typeof(TextItem),
+			                            new PropertyMetadata(0.0));
+		public double CheckBoxBeforeLeftOffset
+		{
+			get {return (double)GetValue(CheckBoxBeforeLeftOffsetProperty);}
+			set {SetValue(CheckBoxBeforeLeftOffsetProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CheckBoxAfterRightOffsetProperty =
+			DependencyProperty.Register("CheckBoxAfterRightOffset", typeof(double), typeof(TextItem),
+			                            new PropertyMetadata(0.0));
+		public double CheckBoxAfterRightOffset
+		{
+			get {return (double)GetValue(CheckBoxAfterRightOffsetProperty);}
+			set {SetValue(CheckBoxAfterRightOffsetProperty, value);}
+		}
+		
 		public FormattedText FormattedTextItem
 		{
 			get
@@ -174,7 +192,15 @@ namespace hamqsler
 				CheckBoxSize = FormattedTextItem.Height * ti.CheckBoxRelativeSize;
 				double margin = (FormattedTextItem.Height - CheckBoxSize) / 2 + 2;
 				CheckBoxMargin = new Thickness(margin, 0, margin, 0);
-			
+		}
+		
+		public void SetCheckBoxOffsets()
+		{
+			TextItem ti = (TextItem)ItemData;
+			CheckBoxBeforeLeftOffset = ti.DisplayX + ti.DisplayHeight *
+				                          (1 - ti.CheckBoxRelativeSize) / 2;
+			CheckBoxAfterRightOffset = ti.DisplayX + ti.DisplayWidth -
+										   (1 - ti.CheckBoxRelativeSize) / 2;
 		}
 	}
 }
