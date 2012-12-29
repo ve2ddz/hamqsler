@@ -19,6 +19,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,6 +42,20 @@ namespace hamqsler
 		{
 			get {return (string)GetValue(DisplayTextProperty);}
 			set {SetValue(DisplayTextProperty, value);}
+		}
+		
+		public FormattedText FormattedTextItem
+		{
+			get
+			{
+				TextItem ti = ItemData as TextItem;
+				FontStyle style = (ti.IsItalic==true) ? FontStyles.Italic : FontStyles.Normal;
+				Typeface typeface = new Typeface(new FontFamily(ti.TextFontFace), style, 
+				                                 ti.TextFontWeight, FontStretches.Normal);
+					return new FormattedText(DisplayText, CultureInfo.CurrentUICulture,
+					                         FlowDirection.LeftToRight, typeface, ti.FontSize, 
+					                         ti.TextBrush);
+			}
 		}
 		
 
@@ -116,15 +131,29 @@ namespace hamqsler
 			DisplayText = ((TextItem)ItemData).Text.GetText(ItemData.IsInDesignMode);
 		}
 		
+		/// <summary>
+		/// Handler for DependencyPropertyChanged event
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object</param>
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
 			if(e.Property == DisplayTextProperty)
 			{
+				SetCheckBoxSize();
 				TextItem ti = (TextItem)ItemData;
-				ti.CheckBoxSize = ti.FormattedTextItem.Height * ti.CheckBoxRelativeSize;
 				ti.CalculateRectangle();
 			}
+		}
+		
+		/// <summary>
+		/// Calculate CheckBox size property
+		/// </summary>
+		public void SetCheckBoxSize()
+		{
+				TextItem ti = (TextItem)ItemData;
+				ti.CheckBoxSize = FormattedTextItem.Height * ti.CheckBoxRelativeSize;
+			
 		}
 	}
 }

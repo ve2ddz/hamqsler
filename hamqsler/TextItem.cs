@@ -168,27 +168,6 @@ namespace hamqsler
 			set {SetValue(CheckBoxMarginProperty, value);}
 		}
 		
-		[XmlIgnore]
-		public FormattedText FormattedTextItem
-		{
-			get
-			{
-				FontStyle style = (IsItalic==true) ? FontStyles.Italic : FontStyles.Normal;
-				Typeface typeface = new Typeface(new FontFamily(TextFontFace), style, TextFontWeight,
-				                                 FontStretches.Normal);
-				if(TItemView != null)
-				{
-					return new FormattedText(TItemView.DisplayText, CultureInfo.CurrentUICulture,
-					                         FlowDirection.LeftToRight, typeface, FontSize, TextBrush);
-				}
-				else
-				{
-					return new FormattedText(string.Empty, CultureInfo.CurrentUICulture,
-					                         FlowDirection.LeftToRight, typeface, FontSize, TextBrush);
-				}
-			}
-		}
-		
 		private TextItemView tItemView = null;
 		[XmlIgnore]
 		public TextItemView TItemView
@@ -222,9 +201,9 @@ namespace hamqsler
 		/// </summary>
 		public void CalculateRectangle()
 		{
-			if(Text != null && Text.Count > 0)
+			if(Text != null && Text.Count > 0 && TItemView != null)
 			{
-				FormattedText forText = FormattedTextItem;
+				FormattedText forText = TItemView.FormattedTextItem;
 				bool isModified = false;
 				if(QslCard != null)		// various properties that result in CalculateRectangle being
 										// called may be set before QslCard is set
@@ -282,10 +261,11 @@ namespace hamqsler
 			{
 					TItemView.SetDisplayText();
 			}
-			if(e.Property == FontSizeProperty ||
-			   e.Property == CheckBoxRelativeSizeProperty)
+			if((e.Property == FontSizeProperty ||
+			   e.Property == CheckBoxRelativeSizeProperty) &&
+			   TItemView != null)
 			{
-				CheckBoxSize = FormattedTextItem.Height * CheckBoxRelativeSize;
+				TItemView.SetCheckBoxSize();
 				double margin = (DisplayHeight - CheckBoxSize) / 2 + 2;
 				CheckBoxMargin = new Thickness(margin, 0, margin, 0);
 				// no need to set QslCard.IsDirty because this is done above for these properties
