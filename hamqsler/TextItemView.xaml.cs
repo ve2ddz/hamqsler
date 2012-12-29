@@ -63,7 +63,7 @@ namespace hamqsler
 		}
 		
 		private static readonly DependencyProperty CheckBoxBeforeLeftOffsetProperty = 
-			DependencyProperty.Register("CheckBoxBeforeLeftOffset", typeof(double), typeof(TextItem),
+			DependencyProperty.Register("CheckBoxBeforeLeftOffset", typeof(double), typeof(TextItemView),
 			                            new PropertyMetadata(0.0));
 		public double CheckBoxBeforeLeftOffset
 		{
@@ -72,7 +72,7 @@ namespace hamqsler
 		}
 		
 		private static readonly DependencyProperty CheckBoxAfterRightOffsetProperty =
-			DependencyProperty.Register("CheckBoxAfterRightOffset", typeof(double), typeof(TextItem),
+			DependencyProperty.Register("CheckBoxAfterRightOffset", typeof(double), typeof(TextItemView),
 			                            new PropertyMetadata(0.0));
 		public double CheckBoxAfterRightOffset
 		{
@@ -194,6 +194,9 @@ namespace hamqsler
 				CheckBoxMargin = new Thickness(margin, 0, margin, 0);
 		}
 		
+		/// <summary>
+		/// Calculate the CheckBox offset properties
+		/// </summary>
 		public void SetCheckBoxOffsets()
 		{
 			TextItem ti = (TextItem)ItemData;
