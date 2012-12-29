@@ -370,10 +370,10 @@ namespace hamqsler
 		/// </summary>
 		public void UpdateTextForSelectedCardItem()
 		{
-			CardItemView civ = cardView.GetCardItemViewForSelectedCardItem();
+			TextItemView civ = cardView.GetCardItemViewForSelectedCardItem() as TextItemView;
         	if(civ != null)
         	{
-        		((TextItem)civ.ItemData).SetDisplayText();
+        		civ.SetDisplayText();
         	}
 		}
 	}

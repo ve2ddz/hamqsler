@@ -34,6 +34,16 @@ namespace hamqsler
 	/// </summary>
 	public partial class TextItemView : CardItemView
 	{
+		private static readonly DependencyProperty DisplayTextProperty =
+			DependencyProperty.Register("DisplayText", typeof(string), typeof(TextItemView),
+			                            new PropertyMetadata(string.Empty));
+		public string DisplayText
+		{
+			get {return (string)GetValue(DisplayTextProperty);}
+			set {SetValue(DisplayTextProperty, value);}
+		}
+		
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -41,6 +51,7 @@ namespace hamqsler
 		public TextItemView(TextItem ti) : base(ti)
 		{
 			DataContext = this;
+			ti.TItemView = this;
 			InitializeComponent();
 		}
 		
@@ -95,6 +106,25 @@ namespace hamqsler
 		protected override double GetHeight()
 		{
 			return SelectRectangle.ActualHeight;
+		}
+		
+		/// <summary>
+		/// Set DisplayText value
+		/// </summary>
+		public void SetDisplayText()
+		{
+			DisplayText = ((TextItem)ItemData).Text.GetText(ItemData.IsInDesignMode);
+		}
+		
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == DisplayTextProperty)
+			{
+				TextItem ti = (TextItem)ItemData;
+				ti.CheckBoxSize = ti.FormattedTextItem.Height * ti.CheckBoxRelativeSize;
+				ti.CalculateRectangle();
+			}
 		}
 	}
 }

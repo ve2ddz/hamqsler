@@ -148,7 +148,6 @@ namespace hamqsler
 			{
 				call.Text.Add(part);
 			}
-			call.SetDisplayText();
 			call.TextFontFace = userPreferences.DefaultTextItemsFontFace;
 			call.TextFontWeight = FontWeights.Black;
 			call.FontSize = 72.0;
@@ -156,7 +155,6 @@ namespace hamqsler
 			call.DisplayY = 0;
 			call.DisplayWidth = 0;
 			call.DisplayHeight = 0;
-			call.SetDisplayText();
 			TextItems.Add(call);
 			// name Qth text item
 			TextItem nameQth = new TextItem(isInDesignMode);
@@ -165,7 +163,6 @@ namespace hamqsler
 			{
 				nameQth.Text.Add(part);
 			}
-			nameQth.SetDisplayText();
 			nameQth.TextFontFace = userPreferences.DefaultTextItemsFontFace;
 			nameQth.TextFontWeight = FontWeights.Normal;
 			nameQth.FontSize = 10.0;
@@ -173,7 +170,6 @@ namespace hamqsler
 			nameQth.DisplayY = 15;
 			nameQth.DisplayWidth = 0;
 			nameQth.DisplayHeight = 0;
-			nameQth.SetDisplayText();
 			TextItems.Add(nameQth);
 			// salutation
 			TextItem salutation = new TextItem(isInDesignMode);
@@ -182,14 +178,12 @@ namespace hamqsler
 			{
 				salutation.Text.Add(part);
 			}
-			salutation.SetDisplayText();
 			salutation.TextFontFace = userPreferences.DefaultTextItemsFontFace;
 			salutation.FontSize = 10.0;
 			salutation.DisplayX = 5;
 			salutation.DisplayY = DisplayHeight - 25;
 			salutation.DisplayWidth = 0;
 			salutation.DisplayHeight = 0;
-			salutation.SetDisplayText();
 			TextItems.Add(salutation);
 			
 			// QsosBox
@@ -307,7 +301,7 @@ namespace hamqsler
 			StaticText sText = new StaticText();
 			sText.Text = "Text Item";
 			ti.Text.Add(sText);
-			ti.SetDisplayText();
+//			ti.SetDisplayText();
 			CardItem ci = GetHighlighted();
 			if(ci != null)
 			{
@@ -517,7 +511,7 @@ namespace hamqsler
 						ti.Load(node, culture);
 						TextItems.Add(ti);
 						ti.QslCard = this;
-						ti.SetDisplayText();
+//						ti.SetDisplayText();
 						break;
 					case "QsosBox":
 						QsosBox = new QsosBox(true);

@@ -38,7 +38,7 @@
 						</Style>
 					</Rectangle.Style>
 				</Rectangle>
-				<TextBlock Text="{Binding Path=ItemData.DisplayText, Mode=OneWay}"
+				<TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"
 							FontFamily="{Binding Path=ItemData.TextFontFace, Mode=OneWay}"
 							FontSize="{Binding Path=ItemData.FontSize, Mode=OneWay}"
 							FontWeight="{Binding Path=ItemData.TextFontWeight, Mode=OneWay}"
@@ -120,7 +120,7 @@
 						</Style>
 					</Rectangle.Style>
 				</Rectangle>
-				<TextBlock Text="{Binding Path=ItemData.DisplayText, Mode=OneWay}"
+				<TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"
 							FontFamily="{Binding Path=ItemData.TextFontFace, Mode=OneWay}"
 							FontSize="{Binding Path=ItemData.FontSize, Mode=OneWay}"
 							FontWeight="{Binding Path=ItemData.TextFontWeight, Mode=OneWay}"

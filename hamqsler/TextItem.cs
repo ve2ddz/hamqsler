@@ -132,15 +132,6 @@ namespace hamqsler
 			set {SetValue(CheckBoxRelativeSizeProperty, value);}
 		}
 		
-		private static readonly DependencyProperty DisplayTextProperty =
-			DependencyProperty.Register("DisplayText", typeof(string), typeof(TextItem),
-			                            new PropertyMetadata(string.Empty));
-		public string DisplayText
-		{
-			get {return (string)GetValue(DisplayTextProperty);}
-			set {SetValue(DisplayTextProperty, value);}
-		}
-		
 		private static readonly DependencyProperty CheckBoxSizeProperty =
 			DependencyProperty.Register("CheckBoxSize", typeof(double), typeof(TextItem),
 			                            new PropertyMetadata(0.0));
@@ -185,10 +176,27 @@ namespace hamqsler
 				FontStyle style = (IsItalic==true) ? FontStyles.Italic : FontStyles.Normal;
 				Typeface typeface = new Typeface(new FontFamily(TextFontFace), style, TextFontWeight,
 				                                 FontStretches.Normal);
-				return new FormattedText(DisplayText, CultureInfo.CurrentUICulture,
-				                         FlowDirection.LeftToRight, typeface, FontSize, TextBrush);
+				if(TItemView != null)
+				{
+					return new FormattedText(TItemView.DisplayText, CultureInfo.CurrentUICulture,
+					                         FlowDirection.LeftToRight, typeface, FontSize, TextBrush);
+				}
+				else
+				{
+					return new FormattedText(string.Empty, CultureInfo.CurrentUICulture,
+					                         FlowDirection.LeftToRight, typeface, FontSize, TextBrush);
+				}
 			}
 		}
+		
+		private TextItemView tItemView = null;
+		[XmlIgnore]
+		public TextItemView TItemView
+		{
+			get {return tItemView;}
+			set {tItemView = value;}
+		}
+		
 		
 		/// <summary>
 		/// Default constructor
@@ -212,7 +220,7 @@ namespace hamqsler
 		/// Sets DisplayRectangle to a size that contains all of the text plus space for checkboxes
 		/// before and after the text
 		/// </summary>
-		protected void CalculateRectangle()
+		public void CalculateRectangle()
 		{
 			if(Text != null && Text.Count > 0)
 			{
@@ -230,7 +238,7 @@ namespace hamqsler
 				}
 				DisplayWidth = forText.Width + 2 * forText.Height + 6;
 				DisplayHeight = forText.Height;
-				CheckBoxBeforeLeftOffset = DisplayX + FormattedTextItem.Height * 
+				CheckBoxBeforeLeftOffset = DisplayX + DisplayHeight * //FormattedTextItem.Height * 
 				                          (1 - CheckBoxRelativeSize) / 2;
 				CheckBoxAfterRightOffset = DisplayX + DisplayWidth -
 										   (1 - CheckBoxRelativeSize) / 2;
@@ -272,10 +280,7 @@ namespace hamqsler
 			}
 			else if(e.Property == IsInDesignModeProperty)
 			{
-				if(Text != null)
-				{
-					SetDisplayText();
-				}
+					TItemView.SetDisplayText();
 			}
 			if(e.Property == FontSizeProperty ||
 			   e.Property == CheckBoxRelativeSizeProperty)
@@ -287,16 +292,6 @@ namespace hamqsler
 			}
 		}
 		
-		/// <summary>
-		/// Determine the text to display based on setting of IsInDesignMode property
-		/// </summary>
-		public void SetDisplayText()
-		{
-			DisplayText = Text.GetText(IsInDesignMode);
-			CheckBoxSize = FormattedTextItem.Height * CheckBoxRelativeSize;
-			CalculateRectangle();
-		}
-
 		/// <summary>
 		/// Load values for this TextItem from QslDnP card file contents
 		/// </summary>
