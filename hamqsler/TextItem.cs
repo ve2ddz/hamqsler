@@ -132,15 +132,6 @@ namespace hamqsler
 			set {SetValue(CheckBoxRelativeSizeProperty, value);}
 		}
 		
-		private static readonly DependencyProperty CheckBoxSizeProperty =
-			DependencyProperty.Register("CheckBoxSize", typeof(double), typeof(TextItem),
-			                            new PropertyMetadata(0.0));
-		public double CheckBoxSize
-		{
-			get {return (double)GetValue(CheckBoxSizeProperty);}
-			set {SetValue(CheckBoxSizeProperty, value);}
-		}
-		
 		private static readonly DependencyProperty CheckBoxBeforeLeftOffsetProperty = 
 			DependencyProperty.Register("CheckBoxBeforeLeftOffset", typeof(double), typeof(TextItem),
 			                            new PropertyMetadata(0.0));
@@ -221,8 +212,6 @@ namespace hamqsler
 				                          (1 - CheckBoxRelativeSize) / 2;
 				CheckBoxAfterRightOffset = DisplayX + DisplayWidth -
 										   (1 - CheckBoxRelativeSize) / 2;
-				double margin = (DisplayHeight - CheckBoxSize) / 2 + 2;
-				CheckBoxMargin = new Thickness(margin, 0, margin, 0);
 				
 				if(QslCard != null)		// various properties that result in CalculateRectangle being
 										// called may be set before QslCard is set
@@ -265,9 +254,7 @@ namespace hamqsler
 			   e.Property == CheckBoxRelativeSizeProperty) &&
 			   TItemView != null)
 			{
-				TItemView.SetCheckBoxSize();
-				double margin = (DisplayHeight - CheckBoxSize) / 2 + 2;
-				CheckBoxMargin = new Thickness(margin, 0, margin, 0);
+				TItemView.SetCheckBoxSizeAndMargin();
 				// no need to set QslCard.IsDirty because this is done above for these properties
 			}
 		}

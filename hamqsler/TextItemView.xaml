@@ -21,8 +21,8 @@
  				</RectangleGeometry>
 			</Canvas.Clip>
 			<StackPanel Orientation="Horizontal" >
-				<Rectangle Width="{Binding Path=ItemData.CheckBoxSize}"
-							Height="{Binding Path=ItemData.CheckBoxSize}"
+				<Rectangle Width="{Binding Path=CheckBoxSize}"
+							Height="{Binding Path=CheckBoxSize}"
 							StrokeThickness="{Binding Path=ItemData.CheckboxLineThickness}"
 							Canvas.Left="{Binding Path=ItemData.CheckBoxBeforeLeftOffset}"
 				            Fill="Transparent"
@@ -53,8 +53,8 @@
 						</Style>
 					</TextBlock.Style>
 				</TextBlock>
-				<Rectangle Width="{Binding Path=ItemData.CheckBoxSize}"
-							Height="{Binding Path=ItemData.CheckBoxSize}"
+				<Rectangle Width="{Binding Path=CheckBoxSize}"
+							Height="{Binding Path=CheckBoxSize}"
 							StrokeThickness="{Binding Path=ItemData.CheckboxLineThickness}"
 							Canvas.Right="{Binding Path=ItemData.CheckBoxAfterRightOffset}"
 				            Fill="Transparent"
@@ -103,8 +103,8 @@
 				</CombinedGeometry>
  			</Canvas.Clip>
 			<StackPanel Orientation="Horizontal" >
-				<Rectangle Width="{Binding Path=ItemData.CheckBoxSize}"
-							Height="{Binding Path=ItemData.CheckBoxSize}"
+				<Rectangle Width="{Binding Path=CheckBoxSize}"
+							Height="{Binding Path=CheckBoxSize}"
 							StrokeThickness="{Binding Path=ItemData.CheckboxLineThickness}"
 							Canvas.Left="{Binding Path=ItemData.CheckBoxBeforeLeftOffset}"
 				            Fill="Transparent"

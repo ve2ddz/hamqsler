@@ -44,6 +44,15 @@ namespace hamqsler
 			set {SetValue(DisplayTextProperty, value);}
 		}
 		
+		private static readonly DependencyProperty CheckBoxSizeProperty =
+			DependencyProperty.Register("CheckBoxSize", typeof(double), typeof(TextItemView),
+			                            new PropertyMetadata(0.0));
+		public double CheckBoxSize
+		{
+			get {return (double)GetValue(CheckBoxSizeProperty);}
+			set {SetValue(CheckBoxSizeProperty, value);}
+		}
+		
 		public FormattedText FormattedTextItem
 		{
 			get
@@ -140,19 +149,22 @@ namespace hamqsler
 			base.OnPropertyChanged(e);
 			if(e.Property == DisplayTextProperty)
 			{
-				SetCheckBoxSize();
+				SetCheckBoxSizeAndMargin();
 				TextItem ti = (TextItem)ItemData;
 				ti.CalculateRectangle();
 			}
 		}
 		
 		/// <summary>
-		/// Calculate CheckBox size property
+		/// Calculate CheckBox size and CheckBox margin properties
 		/// </summary>
-		public void SetCheckBoxSize()
+		public void SetCheckBoxSizeAndMargin()
 		{
 				TextItem ti = (TextItem)ItemData;
-				ti.CheckBoxSize = FormattedTextItem.Height * ti.CheckBoxRelativeSize;
+				// must use FormattedTextItem.Height here, not ti.DisplayHeight
+				CheckBoxSize = FormattedTextItem.Height * ti.CheckBoxRelativeSize;
+				double margin = (FormattedTextItem.Height - CheckBoxSize) / 2 + 2;
+				ti.CheckBoxMargin = new Thickness(margin, 0, margin, 0);
 			
 		}
 	}
