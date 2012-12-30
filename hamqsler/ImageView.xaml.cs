@@ -41,6 +41,7 @@ namespace hamqsler
 		public ImageView(CardImageBase image) : base(image)
 		{
 			DataContext	= this;
+			image.CardItemView = this;
 			InitializeComponent();
 		}
 				

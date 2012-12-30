@@ -131,16 +131,7 @@ namespace hamqsler
 			get {return (double)GetValue(CheckBoxRelativeSizeProperty);}
 			set {SetValue(CheckBoxRelativeSizeProperty, value);}
 		}
-		
-		private TextItemView tItemView = null;
-		[XmlIgnore]
-		public TextItemView TItemView
-		{
-			get {return tItemView;}
-			set {tItemView = value;}
-		}
-		
-		
+				
 		/// <summary>
 		/// Default constructor
 		/// </summary>
@@ -165,9 +156,9 @@ namespace hamqsler
 		/// </summary>
 		public void CalculateRectangle()
 		{
-			if(Text != null && Text.Count > 0 && TItemView != null)
+			if(Text != null && Text.Count > 0 && CardItemView != null)
 			{
-				FormattedText forText = TItemView.FormattedTextItem;
+				FormattedText forText = ((TextItemView)CardItemView).FormattedTextItem;
 				bool isModified = false;
 				if(QslCard != null)		// various properties that result in CalculateRectangle being
 										// called may be set before QslCard is set
@@ -181,7 +172,7 @@ namespace hamqsler
 				}
 				DisplayWidth = forText.Width + 2 * forText.Height + 6;
 				DisplayHeight = forText.Height;
-				TItemView.SetCheckBoxOffsets();
+				((TextItemView)CardItemView).SetCheckBoxOffsets();
 				
 				if(QslCard != null)		// various properties that result in CalculateRectangle being
 										// called may be set before QslCard is set
@@ -218,13 +209,13 @@ namespace hamqsler
 			}
 			else if(e.Property == IsInDesignModeProperty)
 			{
-					TItemView.SetDisplayText();
+					((TextItemView)CardItemView).SetDisplayText();
 			}
 			if((e.Property == FontSizeProperty ||
 			   e.Property == CheckBoxRelativeSizeProperty) &&
-			   TItemView != null)
+			   ((TextItemView)CardItemView) != null)
 			{
-				TItemView.SetCheckBoxSizeAndMargin();
+				((TextItemView)CardItemView).SetCheckBoxSizeAndMargin();
 				// no need to set QslCard.IsDirty because this is done above for these properties
 			}
 		}

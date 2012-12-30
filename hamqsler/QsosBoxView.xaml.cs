@@ -144,7 +144,7 @@ namespace hamqsler
 		{
 			SetValue(QsosPropertyKey, new List<DispQso>());
 			DataContext = this;
-			qsosBox.QBoxView = this;
+			qsosBox.CardItemView = this;
 			ConfirmingDisplayText = qsosBox.ConfirmingText.GetText(qsosBox.IsInDesignMode);
 			InitializeComponent();
 			if(((QsosBox)ItemData).IsInDesignMode)

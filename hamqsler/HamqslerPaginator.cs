@@ -85,7 +85,7 @@ namespace hamqsler
 			CardView cView = new CardView(card, cardNumber > dispQsos.Count);
 			if(cardNumber < dispQsos.Count)
 			{
-				card.QsosBox.QBoxView.Qsos = dispQsos[cardNumber];
+				((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
 			}
 			cardNumber++;
 			Canvas.SetLeft(cView, 0);
@@ -94,7 +94,7 @@ namespace hamqsler
 			CardView cView2 = new CardView(card, cardNumber > dispQsos.Count);
 			if(cardNumber < dispQsos.Count)
 			{
-				card.QsosBox.QBoxView.Qsos = dispQsos[cardNumber];
+				((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
 			}
 			cardNumber++;
 			Canvas.SetLeft(cView2, card.DisplayWidth);
@@ -103,7 +103,7 @@ namespace hamqsler
 			CardView cView3 = new CardView(card, cardNumber > dispQsos.Count);
 			if(cardNumber < dispQsos.Count)
 			{
-				card.QsosBox.QBoxView.Qsos = dispQsos[cardNumber];
+				((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
 			}
 			cardNumber++;
 			Canvas.SetLeft(cView3, 0);
@@ -112,7 +112,7 @@ namespace hamqsler
 			CardView cView4 = new CardView(card, cardNumber > dispQsos.Count);
 			if(cardNumber < dispQsos.Count)
 			{
-				card.QsosBox.QBoxView.Qsos = dispQsos[cardNumber];
+				((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
 			}
 			cardNumber++;
 			Canvas.SetLeft(cView4, card.DisplayWidth);

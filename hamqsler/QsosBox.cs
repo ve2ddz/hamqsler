@@ -309,14 +309,6 @@ namespace hamqsler
 			set { SetValue(TnxTextProperty, value); }
 		}
 		
-        private QsosBoxView qView = null;
-        [XmlIgnore]
-        public QsosBoxView QBoxView
-        {
-        	get {return qView;}
-        	set {qView = value;}
-        }
-
         /// <summary>
         /// Default constructor - called when deserializing a card file
         /// </summary>
@@ -403,9 +395,9 @@ namespace hamqsler
 			   e.Property == ShowPseTnxProperty ||
 			   e.Property == DateFormatProperty)
 			{
-				if(QslCard != null && QBoxView != null)
+				if(QslCard != null && CardItemView != null)
 				{
-					QBoxView.CalculateColumnWidthsAndSetVisibilities();
+					((QsosBoxView)CardItemView).CalculateColumnWidthsAndSetVisibilities();
 					QslCard.IsDirty = true;
 				}
 			}
@@ -431,7 +423,7 @@ namespace hamqsler
 			}
 			if(e.Property == MaximumQsosProperty)
 			{
-				QBoxView.BuildQsos();
+				((QsosBoxView)CardItemView).BuildQsos();
 			}
 		}
 		

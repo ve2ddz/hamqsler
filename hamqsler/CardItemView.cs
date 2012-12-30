@@ -30,6 +30,18 @@ namespace hamqsler
 	/// </summary>
 	public abstract class CardItemView : UserControl
 	{
+		/// <summary>
+		/// Clip rectangle for this card item 
+		/// </summary>
+		protected static readonly DependencyProperty ClipRectangleProperty =
+			DependencyProperty.Register("ClipRectangle", typeof(Rect), typeof(CardItemView),
+			                            new PropertyMetadata(new Rect(0, 0, 0, 0)));
+		public Rect ClipRectangle
+		{
+			get {return (Rect)GetValue(ClipRectangleProperty);}
+			set {SetValue(ClipRectangleProperty, value);}
+		}
+		
 		// Reference to the CardItem that this view displays
 		private CardItem itemData = null;
 		public CardItem ItemData

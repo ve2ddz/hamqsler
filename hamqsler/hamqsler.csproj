@@ -152,7 +152,6 @@
     </Compile>
     <Compile Include="QsoWithInclude.cs" />
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
-    <Compile Include="RectConverter.cs" />
     <Compile Include="SecondaryImage.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="StaticText.cs" />

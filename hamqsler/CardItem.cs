@@ -90,19 +90,6 @@ namespace hamqsler
 			set {SetValue(QslCardProperty, value);}
 		}
 		
-		/// <summary>
-		/// Clip rectangle for this card item 
-		/// </summary>
-		protected static readonly DependencyProperty ClipRectangleProperty =
-			DependencyProperty.Register("ClipRectangle", typeof(Rect), typeof(CardItem),
-			                            new PropertyMetadata(new Rect(0, 0, 0, 0)));
-		[XmlIgnore]
-		public Rect ClipRectangle
-		{
-			get {return (Rect)GetValue(ClipRectangleProperty);}
-			set {SetValue(ClipRectangleProperty, value);}
-		}
-		
 		private static readonly DependencyProperty IsHighlightedProperty =
 			DependencyProperty.Register("IsHighlighted", typeof(bool), typeof(CardItem),
 			                            new PropertyMetadata(false));
@@ -148,6 +135,17 @@ namespace hamqsler
 		
 		protected const int cornerSize = 5;
 		
+		private static readonly DependencyProperty CardItemViewProperty =
+			DependencyProperty.Register("CardItemView", typeof(CardItemView),
+			                            typeof(CardItem), 
+			                            new PropertyMetadata(null));
+		[XmlIgnore]
+		public CardItemView CardItemView
+		{
+			get {return (CardItemView)GetValue(CardItemViewProperty);}
+			set {SetValue(CardItemViewProperty, value);}
+		}
+		
 				
 		/// <summary>
 		/// default constructor
@@ -183,13 +181,14 @@ namespace hamqsler
 			base.OnPropertyChanged(e);
 			if(e.Property == DisplayXProperty ||
 			   e.Property == DisplayYProperty ||
-			   e.Property == QslCardProperty)
+			   e.Property == QslCardProperty ||
+			   e.Property == CardItemViewProperty)
 			{
 				// set the ClipRectangle property
-				if(QslCard != null)
+				if(QslCard != null && CardItemView != null)
 				{
-					ClipRectangle = new Rect(-DisplayX, -DisplayY, QslCard.DisplayWidth,
-					                         QslCard.DisplayHeight);
+					CardItemView.ClipRectangle = new Rect(-DisplayX, -DisplayY, QslCard.DisplayWidth, 
+					                              		  QslCard.DisplayHeight);
 				}
 			}
 			if((e.Property == DisplayXProperty ||

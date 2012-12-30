@@ -102,7 +102,7 @@ namespace hamqsler
 		public TextItemView(TextItem ti) : base(ti)
 		{
 			DataContext = this;
-			ti.TItemView = this;
+			ti.CardItemView = this;
 			InitializeComponent();
 		}
 		

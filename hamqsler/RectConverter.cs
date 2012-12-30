@@ -39,13 +39,12 @@ namespace hamqsler
 		/// <returns></returns>
 		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
 		{
-			if(values[2] == DependencyProperty.UnsetValue)
+			for(int i = 0; i < 4; i++)
 			{
-				values[2] = 0.0;
-			}
-			if(values[3] == DependencyProperty.UnsetValue)
-			{
-				values[3] = 0.0;
+				if(values[i] == DependencyProperty.UnsetValue)
+				{
+					values[i] = 0.0;
+				}
 			}
 			return new Rect((double)values[0], (double)values[1], (double)values[2], (double)values[3]);
 		}

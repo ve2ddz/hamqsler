@@ -3,24 +3,12 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:local="clr-namespace:hamqsler"
 	Canvas.Left="{Binding Path=ItemData.DisplayX}" Canvas.Top="{Binding Path=ItemData.DisplayY}">
-	<local:CardItemView.Resources>
-		<local:RectConverter x:Key="RectConverter"/>
-	</local:CardItemView.Resources>
 	<Canvas>
 		<Image Source="{Binding Path=ItemData.BitMapImage}" HorizontalAlignment="Stretch"
 			   VerticalAlignment="Stretch" Width="{Binding Path=ItemData.DisplayWidth}"
 				Height="{Binding Path=ItemData.DisplayHeight}">
  			<Image.Clip>
-				<RectangleGeometry>
- 					<RectangleGeometry.Rect>
-						<MultiBinding Converter="{StaticResource RectConverter}">
- 							<Binding Path="ItemData.ClipRectangle.X"/>
- 							<Binding Path="ItemData.ClipRectangle.Y"/>
- 							<Binding Path="ItemData.QslCard.DisplayWidth"/>
- 							<Binding Path="ItemData.QslCard.DisplayHeight"/>
- 						</MultiBinding>
-					</RectangleGeometry.Rect>
- 				</RectangleGeometry>
+				<RectangleGeometry Rect="{Binding Path=ClipRectangle}"/>
 			</Image.Clip>
 		</Image>
 		<Image Source="{Binding Path=ItemData.BitMapImage}"
@@ -44,17 +32,8 @@
 	 				</RectangleGeometry> 							
 					</CombinedGeometry.Geometry1>
 					<CombinedGeometry.Geometry2>
-					<RectangleGeometry>
-	 					<RectangleGeometry.Rect>
-							<MultiBinding Converter="{StaticResource RectConverter}">
-	 							<Binding Path="ItemData.ClipRectangle.X"/>
-	 							<Binding Path="ItemData.ClipRectangle.Y"/>
-	 							<Binding Path="ItemData.QslCard.DisplayWidth"/>
-	 							<Binding Path="ItemData.QslCard.DisplayHeight"/>
-	 						</MultiBinding>
-						</RectangleGeometry.Rect>
-	 				</RectangleGeometry>
-				</CombinedGeometry.Geometry2>
+						<RectangleGeometry Rect="{Binding Path=ClipRectangle}"/>
+					</CombinedGeometry.Geometry2>
 				</CombinedGeometry>
  			</Image.Clip>
 		</Image>
