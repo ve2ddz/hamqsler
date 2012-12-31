@@ -76,6 +76,10 @@ namespace hamqsler
 				{
 					Qsos.Add(q);
 				}
+					DisplayDataGrid.ItemsSource = null;
+					DisplayDataGrid.ItemsSource = Qsos;
+					DesignDataGrid.ItemsSource = null;
+					DesignDataGrid.ItemsSource = Qsos;
 			}
 		}
 		
@@ -145,7 +149,8 @@ namespace hamqsler
 			SetValue(QsosPropertyKey, new List<DispQso>());
 			DataContext = this;
 			qsosBox.CardItemView = this;
-			ConfirmingDisplayText = qsosBox.ConfirmingText.GetText(qsosBox.IsInDesignMode);
+			ConfirmingDisplayText = qsosBox.ConfirmingText.GetText(qsosBox.QslCard, Qsos, 
+			                                                       qsosBox.IsInDesignMode);
 			InitializeComponent();
 			if(((QsosBox)ItemData).IsInDesignMode)
 			{
@@ -159,15 +164,12 @@ namespace hamqsler
 		/// </summary>
 		public void BuildQsos()
 		{
-			Qsos.Clear();
+			List<DispQso> qsos = new List<DispQso>();
 			for(int i = 0; i < ((QsosBox)ItemData).MaximumQsos; i++)
 			{
-				Qsos.Add(new DispQso());
+				qsos.Add(new DispQso());
 			}
-			DisplayDataGrid.ItemsSource = null;
-			DisplayDataGrid.ItemsSource = Qsos;
-			DesignDataGrid.ItemsSource = null;
-			DesignDataGrid.ItemsSource = Qsos;
+			Qsos = qsos;
 		}
 		
 		/// <summary>

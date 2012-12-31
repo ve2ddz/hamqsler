@@ -403,6 +403,23 @@ namespace hamqsler
 					cti.SetTabLabel();
 				}
 			}
+			else if(e.Property == IsInDesignModeProperty)
+			{
+				BackImage.IsInDesignMode = (bool)e.NewValue;
+				foreach(SecondaryImage si in SecondaryImages)
+				{
+					si.IsInDesignMode = (bool)e.NewValue;
+				}
+				foreach(TextItem ti in TextItems)
+				{
+					ti.IsInDesignMode = (bool)e.NewValue;
+					((TextItemView)ti.CardItemView).SetDisplayText();
+				}
+				if(QsosBox != null)
+				{
+					QsosBox.IsInDesignMode = (bool)e.NewValue;
+				}
+			}
 		}
 		
 		/// <summary>

@@ -51,6 +51,14 @@ namespace hamqsler
 			// create a card and position it in the middle of the CardCanvas
 			cardCanvas.CreateCard(cardWidth, cardHeight);
 			this.DataContext = cardCanvas.QslCard;
+			foreach(FrameworkElement elt in cardCanvas.CardView.CanvasForCard.Children)
+			{
+				TextItemView ti = elt as TextItemView;
+				if(ti != null)
+				{
+					ti.SetDisplayText();
+				}
+			}
 		}
 		
 		public CardTabItem(Card card)
@@ -58,6 +66,14 @@ namespace hamqsler
 			InitializeComponent();
 			cardCanvas.AddCard(card);
 			this.DataContext = cardCanvas.QslCard;
+			foreach(FrameworkElement elt in cardCanvas.CardView.CanvasForCard.Children)
+			{
+				TextItemView ti = elt as TextItemView;
+				if(ti != null)
+				{
+					ti.SetDisplayText();
+				}
+			}
 		}
 		
 		/// <summary>
@@ -302,7 +318,7 @@ namespace hamqsler
 			if(((TextItem)ci).Text.Count == 1 && ((TextItem)ci).Text[0].GetType() == typeof(StaticText))
 			{
 				Text.Visibility = Visibility.Visible;
-				Text.Text = ((TextItem)ci).Text.GetText(true);
+				Text.Text = ((TextItem)ci).Text.GetText(cardCanvas.QslCard, null, true);
 			}
 			else
 			{

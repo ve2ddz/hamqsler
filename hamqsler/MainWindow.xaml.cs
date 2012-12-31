@@ -543,10 +543,13 @@ namespace hamqsler
 			ticket.PageOrientation = PageOrientation.Landscape;
 			pDialog.PrintTicket = ticket;
 			// paginate and print
+			Card card = cti.cardCanvas.QslCard;
+			card.IsInDesignMode = false;
 			HamqslerPaginator paginator = new HamqslerPaginator(cti.cardCanvas.QslCard, 
 			                                                    qsosView.DisplayQsos,
 			                                                    new Size(8.5 * 96, 11 * 96));
 			pDialog.PrintDocument(paginator, "QSL Cards");
+			card.IsInDesignMode = true;
 		}
 		
 		/// <summary>
@@ -922,7 +925,7 @@ namespace hamqsler
 			{
 				MenuItem mi = new MenuItem();
 				TextParts parts = ti.Text;
-				string text = parts.GetText(true);
+				string text = parts.GetText(null, null, true);
 				text = (text.Length > 10) ? text.Substring(0, 10) : text;
 				mi.Header = text;
 				mi.Click += OnSelectItem_Clicked;

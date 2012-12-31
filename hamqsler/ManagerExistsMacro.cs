@@ -106,14 +106,16 @@ namespace hamqsler
 		/// <returns>
 		/// The text
 		/// </returns>
+		/// <param name="card">Qsl card that is being displayed/printed</param>
+		/// <param name="qsos">Qsos to print on the card</param>
 		/// <param name='screen'>
 		/// Indicates whether in design mode (true) or in print mode (false)
 		/// </param>
-		public override string GetText(bool screen)
+		public override string GetText(Card card, List<DispQso> qsos, bool screen)
 		{
 			if(screen)
 			{
-				return DesignText.GetText(screen);
+				return DesignText.GetText(card, qsos, screen);
 			}
 			else
 			{

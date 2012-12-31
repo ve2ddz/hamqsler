@@ -130,7 +130,18 @@ namespace hamqsler
 		public override void GetAdifFieldsForSorting(ref HashSet<string>fields, 
 												 ref HashSet<string> existFields)
 		{
-			throw new NotImplementedException();
+			foreach(TextPart part in DesignText)
+			{
+				part.GetAdifFieldsForSorting(ref fields, ref existFields);
+			}
+			foreach(TextPart part in TrueText)
+			{
+				part.GetAdifFieldsForSorting(ref fields, ref existFields);
+			}
+			foreach(TextPart part in FalseText)
+			{
+				part.GetAdifFieldsForSorting(ref fields, ref existFields);
+			}
 		}
 		
 		/// <summary>
@@ -139,18 +150,52 @@ namespace hamqsler
 		/// <returns>
 		/// The text
 		/// </returns>
+		/// <param name="card">Qsl card that is being displayed/printed</param>
+		/// <param name="qsos">Qsos to print on the card</param>
 		/// <param name='screen'>
 		/// Indicates whether in design mode (true) or in print mode (false)
 		/// </param>
-		public override string GetText(bool screen)
+		public override string GetText(Card card, List<DispQso> qsos, bool screen)
 		{
 			if(screen)
 			{
-				return DesignText.GetText(screen);
+				return DesignText.GetText(card, qsos, screen);
+			}
+			else if(card != null && card.QsosBox != null)
+			{
+				int qCount = card.QsosBox.MaximumQsos;
+				if(qsos != null && qsos.Count != 0)
+				{
+					qCount = qsos.Count;
+				}
+				bool match = false;
+				if(CountEquals)
+				{
+					if(qCount == Count)
+					{
+						match = true;
+					}
+				}
+				else if(CountLessThan)
+				{
+					if(qCount < Count)
+					{
+						match = true;
+					}
+				}
+				else if(CountGreaterThan)
+				{
+					if(qCount > Count)
+					{
+						match = true;
+					}
+				}
+				return match ? TrueText.GetText(card, qsos, screen) :
+					FalseText.GetText(card, qsos, screen);	
 			}
 			else
 			{
-				throw new NotImplementedException();
+				return string.Empty;
 			}
 		}
 		

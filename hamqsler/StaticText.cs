@@ -54,10 +54,12 @@ namespace hamqsler
 		/// <returns>
 		/// The text
 		/// </returns>
+		/// <param name="card">Qsl card that is being displayed/printed</param>
+		/// <param name="qsos">Qsos to print on the card</param>
 		/// <param name='screen'>
 		/// not used
 		/// </param>
-		public override string GetText(bool screen)
+		public override string GetText(Card card, List<DispQso> qsos, bool screen)
 		{
 			return Text;
 		}

@@ -48,10 +48,12 @@ namespace hamqsler
 		/// <returns>
 		/// The text.
 		/// </returns>
+		/// <param name="card">Qsl card that is being displayed/printed</param>
+		/// <param name="qsos">Qsos to print on the card</param>
 		/// <param name='screen'>
 		/// Boolean indicating whether the card is being displayed on screen or printed.
 		/// </param>
-		public string GetText(bool screen)
+		public string GetText(Card card, List<DispQso> qsos, bool screen)
 		{
 			string text = string.Empty;
 			foreach (object o in this)
@@ -59,7 +61,7 @@ namespace hamqsler
 				TextPart part = o as TextPart;
 				if(part != null)
 				{
-					text += ((TextPart)part).GetText(screen);
+					text += ((TextPart)part).GetText(card, qsos, screen);
 				}
 			}
 			return text;
