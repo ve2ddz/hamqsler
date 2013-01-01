@@ -224,6 +224,20 @@ namespace hamqsler
 				node = XmlProcs.GetNextSiblingElement(node);
 			}
 		}
+		
+		/// <summary>Make a deep copy of image properties
+		/// </summary>
+		/// <param name="card">Card object that this image belongs to</param>
+		/// <param name="image">Image whose properties are to be copied</param>
+		public void CopyImageProperties(Card card, CardImageBase image)
+		{
+			CopyBaseProperties(card, image);
+			ImageFileName = image.ImageFileName;
+			if(BitMapImage != EmptyImage)
+			{
+				BitMapImage = image.BitMapImage.Clone();
+			}
+		}
 
 	}
 }

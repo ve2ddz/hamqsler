@@ -587,6 +587,40 @@ namespace hamqsler
 				node = XmlProcs.GetNextSiblingElement(node);
 			}
 		}
+		
+		public void CopyQsosBoxProperties(Card card, QsosBox box)
+		{
+			CopyBaseProperties(card, box);
+			ShowManager = box.ShowManager;
+			ShowFrequency = box.ShowFrequency;
+			ShowPseTnx = box.ShowPseTnx;
+			MaximumQsos = box.MaximumQsos;
+			DateFormat = box.DateFormat;
+			LineTextBrush = box.LineTextBrush.Clone();
+			CallsignBrush = box.CallsignBrush.Clone();
+			ManagerBrush = box.ManagerBrush.Clone();
+			FontSize = box.FontSize;
+			FontName = box.FontName;
+			BackgroundBrush = box.BackgroundBrush.Clone();
+			BackgroundOpacity = box.BackgroundOpacity;
+			foreach(TextPart part in box.ConfirmingText)
+			{
+				ConfirmingText.Add(part.Clone());
+			}
+			ViaText = box.ViaText;
+			YYYYMMDDText = box.YYYYMMDDText;
+			DDMMMYYText = box.DDMMMYYText;
+			DDMMYYText = box.DDMMYYText;
+			TimeText = box.TimeText;
+			ModeText = box.ModeText;
+			BandText = box.BandText;
+			FreqText = box.FreqText;
+			RSTText = box.RSTText;
+			QSLText = box.QSLText;
+			PseText = box.PseText;
+			TnxText = box.TnxText;
+			
+		}
 	}
 	
 	

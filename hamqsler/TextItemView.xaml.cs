@@ -162,14 +162,13 @@ namespace hamqsler
 		/// <summary>
 		/// Set DisplayText value
 		/// </summary>
-		public void SetDisplayText()
+		public void SetDisplayText(List<DispQso> qsos)
 		{
 			QsosBoxView qView = (QsosBoxView)ItemData.QslCard.QsosBox.CardItemView;
 			if(qView != null)
 			{
-				DisplayText = ((TextItem)ItemData).Text.GetText(ItemData.QslCard, 
-			                                                qView.Qsos,
-			                                                ItemData.IsInDesignMode);
+				DisplayText = ((TextItem)ItemData).Text.GetText(ItemData.QslCard, qsos,
+			                                                	ItemData.IsInDesignMode);
 			}
 		}
 		

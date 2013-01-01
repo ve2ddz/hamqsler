@@ -100,5 +100,12 @@ namespace hamqsler
 		{
 			// do nothing for StaticText objects
 		}
+		
+		public override TextPart Clone()
+		{
+			StaticText sText = new StaticText();
+			sText.Text = Text;
+			return sText;
+		}
 	}
 }

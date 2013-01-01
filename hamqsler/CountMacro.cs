@@ -209,5 +209,34 @@ namespace hamqsler
 			TrueText.RemoveExtraneousStaticText();
 			FalseText.RemoveExtraneousStaticText();
 		}
+		
+		/// <summary>
+		/// Create a deep copy of this CountMacro object
+		/// </summary>
+		/// <returns>CountMacro object that is a deep clone of this one</returns>
+		public override TextPart Clone()
+		{
+			CountMacro cMacro = new CountMacro();
+			cMacro.CountEquals = CountEquals;
+			cMacro.CountLessThan = CountLessThan;
+			cMacro.CountGreaterThan = CountGreaterThan;
+			cMacro.Count = Count;
+			cMacro.DesignText.Clear();
+			foreach(TextPart part in DesignText)
+			{
+				cMacro.DesignText.Add(part.Clone());
+			}
+			cMacro.TrueText.Clear();
+			foreach(TextPart part in TrueText)
+			{
+				cMacro.TrueText.Add(part.Clone());
+			}
+			cMacro.FalseText.Clear();
+			foreach(TextPart part in FalseText)
+			{
+				cMacro.FalseText.Add(part.Clone());
+			}
+			return cMacro;
+		}
 	}
 }

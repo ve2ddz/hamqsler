@@ -113,5 +113,21 @@ namespace hamqsler
 			DesignText.RemoveExtraneousStaticText();
 			NoManagerText.RemoveExtraneousStaticText();
 		}
+		
+		public override TextPart Clone()
+		{
+			ManagerMacro mMacro = new ManagerMacro();
+			mMacro.DesignText.Clear();
+			foreach(TextPart part in DesignText)
+			{
+				mMacro.DesignText.Add(part.Clone());
+			}
+			mMacro.NoManagerText.Clear();
+			foreach(TextPart part in NoManagerText)
+			{
+				mMacro.NoManagerText.Add(part.Clone());
+			}
+			return mMacro;
+		}
 	}
 }

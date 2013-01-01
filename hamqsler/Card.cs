@@ -395,11 +395,11 @@ namespace hamqsler
 			}
 			else if(e.Property == IsDirtyProperty)
 			{
-				((MainWindow)App.Current.MainWindow).SetTitle(FileName, IsDirty);
 				CardTabItem cti = ((MainWindow)App.Current.MainWindow).mainTabControl.SelectedItem
 					as CardTabItem;
-				if(cti != null)
+				if(cti != null && this == cti.cardCanvas.QslCard)
 				{
+					((MainWindow)App.Current.MainWindow).SetTitle(FileName, IsDirty);
 					cti.SetTabLabel();
 				}
 			}
@@ -413,7 +413,11 @@ namespace hamqsler
 				foreach(TextItem ti in TextItems)
 				{
 					ti.IsInDesignMode = (bool)e.NewValue;
-					((TextItemView)ti.CardItemView).SetDisplayText();
+					if(ti.CardItemView != null && QsosBox != null)
+					{
+						((TextItemView)ti.CardItemView).SetDisplayText(((QsosBoxView)QsosBox.CardItemView).
+						                                               Qsos);
+					}
 				}
 				if(QsosBox != null)
 				{
@@ -528,7 +532,6 @@ namespace hamqsler
 						ti.Load(node, culture);
 						TextItems.Add(ti);
 						ti.QslCard = this;
-//						ti.SetDisplayText();
 						break;
 					case "QsosBox":
 						QsosBox = new QsosBox(true);
@@ -539,6 +542,49 @@ namespace hamqsler
 				node = XmlProcs.GetNextSiblingElement(node);
 			}
 		}
-				
+		
+		/// <summary>
+		/// Create a deep clone of this card
+		/// </summary>
+		/// <returns>Card that is a deep clone of this one</returns>
+		public Card Clone()
+		{
+Card card = new Card();
+			card.BackImage = new BackgroundImage();
+			card.CopyCardProperties(this);
+			card.BackImage = new BackgroundImage();
+			card.BackImage.CopyImageProperties(card, BackImage);
+			foreach(SecondaryImage si in SecondaryImages)
+			{
+				SecondaryImage si2 = new SecondaryImage();
+				si2.CopyImageProperties(card, si);
+				card.SecondaryImages.Add(si2);
+			}
+			foreach(TextItem ti in TextItems)
+			{
+				TextItem ti2 = new TextItem();
+				ti2.CopyTextItem(card, ti);
+				card.TextItems.Add(ti2);
+			}
+			if(QsosBox != null)
+			{
+				card.QsosBox = new QsosBox();
+				card.QsosBox.CopyQsosBoxProperties(card, QsosBox);
+			}
+			return card;
+		}
+		
+		/// <summary>
+		/// Helper method that copies card specific properties
+		/// </summary>
+		/// <param name="card">card whose properties are to be copied</param>
+		private void CopyCardProperties(Card card)
+		{
+			CopyBaseProperties(this, card);
+			PrintCardOutlines = card.PrintCardOutlines;
+			FillLastPageWithBlankCards = card.FillLastPageWithBlankCards;
+			SetCardMarginsToPrinterPageMargins = card.SetCardMarginsToPrinterPageMargins;
+		}
+		
 	}
 }

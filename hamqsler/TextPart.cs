@@ -63,5 +63,7 @@ namespace hamqsler
 		/// </summary>
 		public abstract void RemoveExtraneousStaticTextMacros();
 		
+		public abstract TextPart Clone();
+		
 	}
 }

@@ -135,5 +135,27 @@ namespace hamqsler
 			DesignText.RemoveExtraneousStaticText();
 			NoFieldText.RemoveExtraneousStaticText();
 		}
+		
+		/// <summary>
+		/// Create a deep copy of this AdifMacro
+		/// </summary>
+		/// <returns>new AdifMacro that is a deep copy of this one</returns>
+		public override TextPart Clone()
+		{
+			AdifMacro aMacro = new AdifMacro();
+			aMacro.SeparateCardsByField = SeparateCardsByField;
+			aMacro.AdifField = (StaticText)AdifField.Clone();
+			aMacro.DesignText.Clear();
+			foreach(TextPart part in DesignText)
+			{
+				aMacro.DesignText.Add(part.Clone());
+			}
+			aMacro.NoFieldText.Clear();
+			foreach(TextPart part in NoFieldText)
+			{
+				aMacro.NoFieldText.Add(part.Clone());
+			}
+			return aMacro;
+		}
 	}
 }

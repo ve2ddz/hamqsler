@@ -133,5 +133,30 @@ namespace hamqsler
 			ExistsText.RemoveExtraneousStaticText();
 			DoesntExistText.RemoveExtraneousStaticText();
 		}
+		
+		/// <summary>
+		/// Create a deep clone of this ManagerExistsMacro
+		/// </summary>
+		/// <returns>ManagerExistsMacro that is a deep copy of this one</returns>
+		public override TextPart Clone()
+		{
+			ManagerExistsMacro meMacro = new ManagerExistsMacro();
+			meMacro.DesignText.Clear();
+			foreach(TextPart part in DesignText)
+			{
+				meMacro.DesignText.Add(part.Clone());
+			}
+			meMacro.ExistsText.Clear();
+			foreach(TextPart part in ExistsText)
+			{
+				meMacro.ExistsText.Add(part.Clone());
+			}
+			meMacro.DoesntExistText.Clear();
+			foreach(TextPart part in DoesntExistText)
+			{
+				meMacro.DoesntExistText.Add(part.Clone());
+			}
+			return meMacro;
+		}
 	}
 }

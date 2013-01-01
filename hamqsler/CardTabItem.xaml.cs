@@ -54,9 +54,9 @@ namespace hamqsler
 			foreach(FrameworkElement elt in cardCanvas.CardView.CanvasForCard.Children)
 			{
 				TextItemView ti = elt as TextItemView;
-				if(ti != null)
+				if(ti != null && cardCanvas.QslCard.QsosBox != null)
 				{
-					ti.SetDisplayText();
+					ti.SetDisplayText(((QsosBoxView)cardCanvas.QslCard.QsosBox.CardItemView).Qsos);
 				}
 			}
 		}
@@ -69,9 +69,9 @@ namespace hamqsler
 			foreach(FrameworkElement elt in cardCanvas.CardView.CanvasForCard.Children)
 			{
 				TextItemView ti = elt as TextItemView;
-				if(ti != null)
+				if(ti != null && cardCanvas.QslCard.QsosBox != null)
 				{
-					ti.SetDisplayText();
+					ti.SetDisplayText(((QsosBoxView)cardCanvas.QslCard.QsosBox.CardItemView).Qsos);
 				}
 			}
 		}

@@ -371,9 +371,9 @@ namespace hamqsler
 		public void UpdateTextForSelectedCardItem()
 		{
 			TextItemView civ = cardView.GetCardItemViewForSelectedCardItem() as TextItemView;
-        	if(civ != null)
+        	if(civ != null && QslCard.QsosBox != null && QslCard.QsosBox.CardItemView != null)
         	{
-        		civ.SetDisplayText();
+        		civ.SetDisplayText(null);
         	}
 		}
 	}

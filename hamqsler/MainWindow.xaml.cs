@@ -544,12 +544,9 @@ namespace hamqsler
 			pDialog.PrintTicket = ticket;
 			// paginate and print
 			Card card = cti.cardCanvas.QslCard;
-			card.IsInDesignMode = false;
-			HamqslerPaginator paginator = new HamqslerPaginator(cti.cardCanvas.QslCard, 
-			                                                    qsosView.DisplayQsos,
+			HamqslerPaginator paginator = new HamqslerPaginator(card, qsosView.DisplayQsos,
 			                                                    new Size(8.5 * 96, 11 * 96));
 			pDialog.PrintDocument(paginator, "QSL Cards");
-			card.IsInDesignMode = true;
 		}
 		
 		/// <summary>

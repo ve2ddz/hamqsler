@@ -207,13 +207,14 @@ namespace hamqsler
 					QslCard.IsDirty = true;
 				}
 			}
-			else if(e.Property == IsInDesignModeProperty)
+			else if(e.Property == IsInDesignModeProperty &&
+			       CardItemView != null && QslCard.QsosBox != null && QslCard.QsosBox.CardItemView != null)
 			{
-					((TextItemView)CardItemView).SetDisplayText();
+				((TextItemView)CardItemView).SetDisplayText(((QsosBoxView)QslCard.QsosBox.CardItemView).Qsos);
 			}
 			if((e.Property == FontSizeProperty ||
 			   e.Property == CheckBoxRelativeSizeProperty) &&
-			   ((TextItemView)CardItemView) != null)
+			   CardItemView != null)
 			{
 				((TextItemView)CardItemView).SetCheckBoxSizeAndMargin();
 				// no need to set QslCard.IsDirty because this is done above for these properties
@@ -309,6 +310,24 @@ namespace hamqsler
 				}
 				node = XmlProcs.GetNextSiblingElement(node);
 			}
+		}
+		
+		public void CopyTextItem(Card card, TextItem ti)
+		{
+			CopyBaseProperties(card, ti);
+			TextFontFace = ti.TextFontFace;
+//			TextFontWeight = ti.TextFontWeight;
+			IsItalic = ti.IsItalic;
+			FontSize = ti.FontSize;
+			TextBrush = ti.TextBrush.Clone();
+			foreach(TextPart part in ti.Text)
+			{
+				Text.Add(part.Clone());
+			}
+			CheckboxBefore = ti.CheckboxBefore;
+			CheckboxAfter = ti.CheckboxAfter;
+			CheckboxLineThickness = ti.CheckboxLineThickness;
+			CheckBoxRelativeSize = ti.CheckBoxRelativeSize;
 		}
 	}
 }

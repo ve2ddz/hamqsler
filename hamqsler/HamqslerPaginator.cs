@@ -82,44 +82,53 @@ namespace hamqsler
 			Canvas canvas = new Canvas();
 			canvas.Measure(PageSize);
 			canvas.Arrange(new Rect(PageSize));
-			CardView cView = new CardView(card, cardNumber > dispQsos.Count);
-			if(cardNumber < dispQsos.Count)
-			{
-				((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
-			}
-			cardNumber++;
+			CardView cView = BuildCardViewForPrinting(ref cardNumber);
 			Canvas.SetLeft(cView, 0);
 			Canvas.SetTop(cView, 0);
 			canvas.Children.Add(cView);
-			CardView cView2 = new CardView(card, cardNumber > dispQsos.Count);
-			if(cardNumber < dispQsos.Count)
-			{
-				((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
-			}
-			cardNumber++;
+			CardView cView2 = BuildCardViewForPrinting(ref cardNumber);
 			Canvas.SetLeft(cView2, card.DisplayWidth);
 			Canvas.SetTop(cView2, 0);
 			canvas.Children.Add(cView2);
-			CardView cView3 = new CardView(card, cardNumber > dispQsos.Count);
-			if(cardNumber < dispQsos.Count)
-			{
-				((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
-			}
-			cardNumber++;
+			CardView cView3 = BuildCardViewForPrinting(ref cardNumber);
 			Canvas.SetLeft(cView3, 0);
 			Canvas.SetTop(cView3, card.DisplayHeight);
 			canvas.Children.Add(cView3);
-			CardView cView4 = new CardView(card, cardNumber > dispQsos.Count);
-			if(cardNumber < dispQsos.Count)
-			{
-				((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
-			}
-			cardNumber++;
+			CardView cView4 = BuildCardViewForPrinting(ref cardNumber);
 			Canvas.SetLeft(cView4, card.DisplayWidth);
 			Canvas.SetTop(cView4, card.DisplayHeight);
 			canvas.Children.Add(cView4);
 			canvas.UpdateLayout();
 			return new DocumentPage(canvas);
+		}
+
+		/// <summary>
+		/// Helper method that creates a CardView object for printing
+		/// </summary>
+		/// <param name="cardNumber">Number of the card that is being printed</param>
+		/// <returns>CardView object to be printed</returns>
+		private CardView BuildCardViewForPrinting(ref int cardNumber)
+		{
+			Card vCard = card.Clone();
+			vCard.IsInDesignMode = false;
+			CardView cView = new CardView(vCard, cardNumber > dispQsos.Count);
+			if (cardNumber < dispQsos.Count) {
+				((QsosBoxView)vCard.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
+			}
+			else
+			{
+				((QsosBoxView)vCard.QsosBox.CardItemView).BuildQsos();
+			}
+			foreach (FrameworkElement elt in cView.CanvasForCard.Children) 
+			{
+				TextItemView tiv = elt as TextItemView;
+				if (tiv != null) 
+				{
+					tiv.SetDisplayText(((QsosBoxView)vCard.QsosBox.CardItemView).Qsos);
+				}
+			}
+			cardNumber++;
+			return cView;
 		}
 		
 		/// <summary>
