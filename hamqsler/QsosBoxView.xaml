@@ -335,6 +335,9 @@
 	 								<DataTrigger Binding="{Binding Path=ItemData.ShowManager}" Value="False">
 	 									<Setter Property="Visibility" Value="Collapsed"/>
 	 								</DataTrigger>
+	 								<DataTrigger Binding="{Binding Path=Manager}" Value="">
+	 									<Setter Property="Visibility" Value="Collapsed"/>
+	 								</DataTrigger>
 	  							</Style.Triggers>
 	 						</Style>
 	 					</TextBlock.Style>
@@ -356,6 +359,9 @@
 	 						<Style TargetType="{x:Type TextBlock}">
 	 							<Style.Triggers>
 	 								<DataTrigger Binding="{Binding Path=ItemData.ShowManager}" Value="False">
+	 									<Setter Property="Visibility" Value="Collapsed"/>
+	 								</DataTrigger>
+	 								<DataTrigger Binding="{Binding Path=Manager}" Value="">
 	 									<Setter Property="Visibility" Value="Collapsed"/>
 	 								</DataTrigger>
 	  							</Style.Triggers>
