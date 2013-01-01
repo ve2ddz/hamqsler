@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,10 +44,10 @@ namespace hamqsler
 			string qslRcvd = (string)value;
 			switch(qslRcvd)
 			{
-				case "Y":
+				case "Yes":
 					return "Tnx";
-				case "N":
-				case "R":
+				case "No":
+				case "Requested":
 					return "Pse";
 				default:
 					return string.Empty;

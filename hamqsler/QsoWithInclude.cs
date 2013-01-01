@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -257,7 +257,7 @@ namespace hamqsler
 			band = q.getValue("band", string.Empty).ToLower();
 			frequency = q.getValue("freq", string.Empty);
 			mode = q.getValue("mode", string.Empty).ToUpper();
-			rst = q.getValue("rst", string.Empty);
+			rst = q.getValue("rst_sent", string.Empty);
 			sent = q.getValue("qsl_sent", string.Empty).ToUpper();
 			rcvd = q.getValue("qsl_rcvd", string.Empty).ToUpper();
 			sentVia = q.getValue("qsl_sent_via", string.Empty).ToUpper();
