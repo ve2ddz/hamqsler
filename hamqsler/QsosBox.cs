@@ -588,6 +588,11 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Make a deep copy of QsosBox properties
+		/// </summary>
+		/// <param name="card">Card object that this QsosBox belongs to</param>
+		/// <param name="box">QsosBox whose properties are to be copied</param>
 		public void CopyQsosBoxProperties(Card card, QsosBox box)
 		{
 			CopyBaseProperties(card, box);

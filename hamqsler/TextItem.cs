@@ -312,6 +312,11 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Deep copy properties from one TextItem object to this one
+		/// </summary>
+		/// <param name="card">Card object that this TextItem belongs to</param>
+		/// <param name="ti">TextItem object whose properties are to be copied</param>
 		public void CopyTextItem(Card card, TextItem ti)
 		{
 			CopyBaseProperties(card, ti);

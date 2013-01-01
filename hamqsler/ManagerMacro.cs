@@ -114,6 +114,10 @@ namespace hamqsler
 			NoManagerText.RemoveExtraneousStaticText();
 		}
 		
+		/// <summary>
+		/// Create a deep copy of this ManagerMacro
+		/// </summary>
+		/// <returns>ManagerMacro object that is a deep copy of this one</returns>
 		public override TextPart Clone()
 		{
 			ManagerMacro mMacro = new ManagerMacro();

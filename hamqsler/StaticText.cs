@@ -101,6 +101,10 @@ namespace hamqsler
 			// do nothing for StaticText objects
 		}
 		
+		/// <summary>
+		/// Make a deep copy of this StaticText object
+		/// </summary>
+		/// <returns>StaticText object that is a deep copy of this one</returns>
 		public override TextPart Clone()
 		{
 			StaticText sText = new StaticText();
