@@ -76,10 +76,24 @@ namespace hamqsler
 				{
 					Qsos.Add(q);
 				}
-					DisplayDataGrid.ItemsSource = null;
-					DisplayDataGrid.ItemsSource = Qsos;
-					DesignDataGrid.ItemsSource = null;
-					DesignDataGrid.ItemsSource = Qsos;
+				if(Qsos.Count > 0)
+				{
+					if(ItemData.IsInDesignMode)
+					{
+						Manager = "ZZZZZZ";
+						Callsign = "XXXXXX";
+					}
+					else
+					{
+						Manager = Qsos[0].Manager;
+						Callsign = Qsos[0].Callsign;
+					}
+				}
+
+				DisplayDataGrid.ItemsSource = null;
+				DisplayDataGrid.ItemsSource = Qsos;
+				DesignDataGrid.ItemsSource = null;
+				DesignDataGrid.ItemsSource = Qsos;
 			}
 		}
 		
@@ -347,6 +361,6 @@ namespace hamqsler
 			this.CalculateColumnWidthsAndSetVisibilities();
 			return size;
 		}
-		
+
 	}
 }
