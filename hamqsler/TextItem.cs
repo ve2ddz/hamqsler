@@ -321,7 +321,7 @@ namespace hamqsler
 		{
 			CopyBaseProperties(card, ti);
 			TextFontFace = ti.TextFontFace;
-//			TextFontWeight = ti.TextFontWeight;
+			TextFontWeight = ti.TextFontWeight;
 			IsItalic = ti.IsItalic;
 			FontSize = ti.FontSize;
 			TextBrush = ti.TextBrush.Clone();
