@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright © 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -111,7 +111,7 @@ namespace hamqsler
 		{
 			Card vCard = card.Clone();
 			vCard.IsInDesignMode = false;
-			CardView cView = new CardView(vCard, cardNumber > dispQsos.Count);
+			CardView cView = new CardView(vCard, vCard.IsInDesignMode);
 			if (cardNumber < dispQsos.Count) {
 				((QsosBoxView)vCard.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
 			}
