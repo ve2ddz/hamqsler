@@ -77,27 +77,20 @@ namespace hamqsler
 		/// <returns>DocumentPage obejct to be printed</returns>
 		public override DocumentPage GetPage(int pageNumber)
 		{
-			// for now, we assume Letter sized paper and 4 cards per page
 			int cardNumber = pageNumber * cardsPerPage;
 			Canvas canvas = new Canvas();
+			for(int j = 0; j < cardsHigh; j++)
+			{
+				for(int i = 0; i < cardsWide; i++)
+				{
+					CardView cView = BuildCardViewForPrinting(ref cardNumber);
+					Canvas.SetLeft(cView, i * card.DisplayWidth);
+					Canvas.SetTop(cView, j * card.DisplayHeight);
+					canvas.Children.Add(cView);
+				}
+			}
 			canvas.Measure(PageSize);
 			canvas.Arrange(new Rect(PageSize));
-			CardView cView = BuildCardViewForPrinting(ref cardNumber);
-			Canvas.SetLeft(cView, 0);
-			Canvas.SetTop(cView, 0);
-			canvas.Children.Add(cView);
-			CardView cView2 = BuildCardViewForPrinting(ref cardNumber);
-			Canvas.SetLeft(cView2, card.DisplayWidth);
-			Canvas.SetTop(cView2, 0);
-			canvas.Children.Add(cView2);
-			CardView cView3 = BuildCardViewForPrinting(ref cardNumber);
-			Canvas.SetLeft(cView3, 0);
-			Canvas.SetTop(cView3, card.DisplayHeight);
-			canvas.Children.Add(cView3);
-			CardView cView4 = BuildCardViewForPrinting(ref cardNumber);
-			Canvas.SetLeft(cView4, card.DisplayWidth);
-			Canvas.SetTop(cView4, card.DisplayHeight);
-			canvas.Children.Add(cView4);
 			canvas.UpdateLayout();
 			return new DocumentPage(canvas);
 		}
