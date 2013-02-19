@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright © 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -231,12 +231,12 @@ namespace hamqsler
 		/// <param name="image">Image whose properties are to be copied</param>
 		public void CopyImageProperties(Card card, CardImageBase image)
 		{
-			CopyBaseProperties(card, image);
 			ImageFileName = image.ImageFileName;
 			if(BitMapImage != EmptyImage)
 			{
 				BitMapImage = image.BitMapImage.Clone();
 			}
+			CopyBaseProperties(card, image);
 		}
 
 	}
