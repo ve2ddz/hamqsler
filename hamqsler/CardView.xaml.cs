@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright © 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,8 +49,9 @@ namespace hamqsler
 		/// in design mode or print mode</param>
 		public CardView(Card card, bool isInDesignMode) : base(card)
 		{
-			InitializeComponent();
 			qslCard = card;
+			DataContext = card;
+			InitializeComponent();
 			BuildCard();
 			
 		}
