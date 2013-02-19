@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright © 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -517,7 +517,7 @@ namespace hamqsler
 					double pageHeight = (double)ticket.PageMediaSize.Height;
 					double pageWidth = (double)ticket.PageMediaSize.Width;
 					double cardWidth = cti.cardCanvas.QslCard.DisplayWidth;
-					double cardHeight = cti.cardCanvas.QslCard.DisplayWidth;
+					double cardHeight = cti.cardCanvas.QslCard.DisplayHeight;
 					// check that at least one card can be printed
 					if(Math.Min(cardWidth, cardHeight) > Math.Min(pageWidth, pageHeight) ||
 						Math.Max(cardWidth, cardHeight) > Math.Max(pageWidth, pageHeight))
