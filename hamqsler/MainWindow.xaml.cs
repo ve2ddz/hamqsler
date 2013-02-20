@@ -503,10 +503,11 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void PrintCardsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
+			const double GRAPHICSPIXELSPERINCH = 96;
 			MessageBoxResult result = MessageBoxResult.No;
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			PrintTicket ticket = new PrintTicket();
-			PrintDialog pDialog;
+			PrintDialog pDialog = new PrintDialog();
 			do
 			{
 				pDialog = new PrintDialog();
@@ -524,8 +525,11 @@ namespace hamqsler
 					{
                         string msg = string.Format("The size of the cards to be printed is larger than the selected paper size.\r\n"
                                         + "Card size is {0} by {1} inches and paper size is {2} by {3} inches.\r\n"
-                                        + "You must choose another paper size.", cardWidth / 96, cardHeight / 96,
-                                        pageHeight / 96, pageWidth / 96);
+                                        + "You must choose another paper size.", 
+                                        cardWidth / GRAPHICSPIXELSPERINCH, 
+                                        cardHeight / GRAPHICSPIXELSPERINCH,
+                                        pageHeight / GRAPHICSPIXELSPERINCH, 
+                                        pageWidth / GRAPHICSPIXELSPERINCH);
 						MessageBox.Show(msg, "Paper Size Too Small", MessageBoxButton.OK, MessageBoxImage.Error);
 						result = MessageBoxResult.No;
 						continue;
@@ -537,10 +541,15 @@ namespace hamqsler
 					return;
 				}
 			} while(result == MessageBoxResult.No);
-			
 			ticket = pDialog.PrintTicket;
 			// force Landscape orientation
 			ticket.PageOrientation = PageOrientation.Landscape;
+			// kludge to get printer to print to near bottom of page
+			// add 1/2 inch to page height
+			PageMediaSize pms = new PageMediaSize((double)ticket.PageMediaSize.Width,
+			                                      (double)ticket.PageMediaSize.Height + 
+			                                      GRAPHICSPIXELSPERINCH / 2);
+			ticket.PageMediaSize = pms;
 			pDialog.PrintTicket = ticket;
 			// paginate and print
 			Card card = cti.cardCanvas.QslCard;
