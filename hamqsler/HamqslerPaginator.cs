@@ -92,7 +92,7 @@ namespace hamqsler
 			canvas.Measure(PageSize);
 			canvas.Arrange(new Rect(PageSize));
 			canvas.UpdateLayout();
-			return new DocumentPage(canvas);
+			return new DocumentPage(canvas, pageSize, new Rect(pageSize), new Rect(pageSize));
 		}
 
 		/// <summary>
@@ -131,8 +131,8 @@ namespace hamqsler
 		private void CalculatePageCount()
 		{
 			// NOTE: currently assumes landscape mode
-			double pageWidth = PageSize.Height;
-			double pageHeight = PageSize.Width;
+			double pageWidth = PageSize.Width;
+			double pageHeight = PageSize.Height;
 			cardsWide = ((int)(pageWidth / card.DisplayWidth));
 			cardsHigh = ((int)(pageHeight / card.DisplayHeight));
 			cardsPerPage = cardsWide * cardsHigh;

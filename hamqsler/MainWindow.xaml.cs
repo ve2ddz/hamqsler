@@ -22,6 +22,7 @@ using Qsos;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Packaging;
 using System.Printing;
 using System.Text;
 using System.Windows;
@@ -33,6 +34,9 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Xps;
+using System.Windows.Xps.Packaging;
+using System.Windows.Xps.Serialization;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -542,21 +546,49 @@ namespace hamqsler
 				}
 			} while(result == MessageBoxResult.No);
 			ticket = pDialog.PrintTicket;
-			// force Landscape orientation
-			ticket.PageOrientation = PageOrientation.Landscape;
-			// kludge to get printer to print to near bottom of page
-			// add 1/2 inch to page height
-			PageMediaSize pms = new PageMediaSize((double)ticket.PageMediaSize.Width,
-			                                      (double)ticket.PageMediaSize.Height + 
-			                                      GRAPHICSPIXELSPERINCH / 2);
-			ticket.PageMediaSize = pms;
-			pDialog.PrintTicket = ticket;
 			// paginate and print
 			Card card = cti.cardCanvas.QslCard;
-			HamqslerPaginator paginator = new HamqslerPaginator(card, qsosView.DisplayQsos,
-			                                                    new Size((double)ticket.PageMediaSize.Width,
-			                                                             (double)ticket.PageMediaSize.Height));
-			pDialog.PrintDocument(paginator, "QSL Cards");
+			PrintSettingsDialog psDialog = PrintSettingsDialog.CreatePrintSettingsDialog(ticket, card);
+			if(psDialog.ShowDialog() == true)
+			{
+				if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Print)
+				{
+					HamqslerPaginator paginator = 
+						new HamqslerPaginator(card, qsosView.DisplayQsos,
+						                      new Size((double)ticket.PageMediaSize.Height,
+						                               (double)ticket.PageMediaSize.Width));
+					// Kludge: to get printer to print to near bottom of page
+					// add 1/2 inch to page height
+					PageMediaSize pms = new PageMediaSize((double)ticket.PageMediaSize.Width,
+					                                      (double)ticket.PageMediaSize.Height + 
+					                                      GRAPHICSPIXELSPERINCH / 2);
+					ticket.PageMediaSize = pms;
+					// force Landscape orientation
+					ticket.PageOrientation = PageOrientation.Landscape;
+					pDialog.PrintTicket = ticket;
+					pDialog.PrintDocument(paginator, "QSL Cards");
+				}
+				else if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Preview)
+				{
+					MemoryStream ms = new MemoryStream();
+					Package pkg = Package.Open(ms, FileMode.Create, FileAccess.ReadWrite);
+					string pack = "pack://temp.xps";
+					Uri uri = new Uri(pack);
+					PackageStore.AddPackage(uri, pkg);
+					XpsDocument doc = new XpsDocument(pkg, CompressionOption.NotCompressed, pack);
+					XpsSerializationManager rsm =
+						new XpsSerializationManager(new XpsPackagingPolicy(doc), false);
+					HamqslerPaginator paginator = 
+						new HamqslerPaginator(card, qsosView.DisplayQsos,
+						                      new Size((double)ticket.PageMediaSize.Height,
+						                               (double)ticket.PageMediaSize.Width));
+					rsm.SaveAsXaml(paginator);
+
+					XpsDocumentWindow docWindow = new XpsDocumentWindow();
+					docWindow.docViewer.Document = doc.GetFixedDocumentSequence();
+					docWindow.Show();
+				}
+			}
 		}
 		
 		/// <summary>
