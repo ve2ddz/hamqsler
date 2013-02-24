@@ -47,6 +47,8 @@ namespace hamqsler
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private PrintDialog printDialog = null;
+		private PageMediaSize pageSize = null;
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
@@ -511,13 +513,20 @@ namespace hamqsler
 			MessageBoxResult result = MessageBoxResult.No;
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			PrintTicket ticket = new PrintTicket();
-			PrintDialog pDialog = new PrintDialog();
+			if(printDialog == null)
+			{
+				printDialog = new PrintDialog();
+			}
+			else
+			{
+				printDialog.PrintTicket.PageMediaSize = pageSize;
+			}
 			do
 			{
-				pDialog = new PrintDialog();
-				if(pDialog.ShowDialog() == true)
+				if(printDialog.ShowDialog() == true)
 				{
-					ticket = pDialog.PrintTicket.Clone();
+					ticket = printDialog.PrintTicket.Clone();
+					pageSize =ticket.PageMediaSize;
 					// make sure at least one card can be printed on the page
 					double pageHeight = (double)ticket.PageMediaSize.Height;
 					double pageWidth = (double)ticket.PageMediaSize.Width;
@@ -545,7 +554,7 @@ namespace hamqsler
 					return;
 				}
 			} while(result == MessageBoxResult.No);
-			ticket = pDialog.PrintTicket;
+			ticket = printDialog.PrintTicket;
 			// paginate and print
 			Card card = cti.cardCanvas.QslCard;
 			PrintSettingsDialog psDialog = PrintSettingsDialog.CreatePrintSettingsDialog(ticket, card);
@@ -571,8 +580,8 @@ namespace hamqsler
 					{
 						ticket.PageOrientation = PageOrientation.Landscape;
 					}
-					pDialog.PrintTicket = ticket;
-					pDialog.PrintDocument(paginator, "QSL Cards");
+					printDialog.PrintTicket = ticket;
+					printDialog.PrintDocument(paginator, "QSL Cards");
 				}
 				else if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Preview)
 				{
