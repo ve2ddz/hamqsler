@@ -37,6 +37,9 @@ namespace hamqsler
 		private int pageCount;
 		private Card card;
 		private Size pageSize;
+		private PrintSettingsDialog.CardLayout cardLayout;
+		private double xOffset;
+		private double yOffset;
 		private List<List<DispQso>> dispQsos;
 		
 		/// <summary>
@@ -45,12 +48,23 @@ namespace hamqsler
 		/// <param name="qslCard">Card to be printed</param>
 		/// <param name="qsos">Collection of Qsos to be displayed on all cards</param>
 		/// <param name="size">Size of the paper the cards are to be printed on</param>
-		public HamqslerPaginator(Card qslCard, DisplayQsos qsos, Size size)
+		public HamqslerPaginator(PrintSettingsDialog.CardLayout layout, Card qslCard, 
+		                         DisplayQsos qsos, Size size)
 		{
 			card = qslCard;
 			dispQsos = qsos.GetDispQsosList(card);
+			if(layout == PrintSettingsDialog.CardLayout.LandscapeEdge ||
+			   layout == PrintSettingsDialog.CardLayout.LandscapeTopCentre || 
+			   layout == PrintSettingsDialog.CardLayout.LandscapeCentre)
+			{
+				double w = size.Width;
+				size.Width = size.Height;
+				size.Height = w;
+			}
 			pageSize = size;
+			cardLayout = layout;
 			CalculatePageCount();
+			CalculateOffsets();
 		}
 		
 		public override bool IsPageCountValid {
@@ -84,8 +98,8 @@ namespace hamqsler
 				for(int i = 0; i < cardsWide; i++)
 				{
 					CardView cView = BuildCardViewForPrinting(ref cardNumber);
-					Canvas.SetLeft(cView, i * card.DisplayWidth);
-					Canvas.SetTop(cView, j * card.DisplayHeight);
+					Canvas.SetLeft(cView, i * card.DisplayWidth + xOffset);
+					Canvas.SetTop(cView, j * card.DisplayHeight + yOffset);
 					canvas.Children.Add(cView);
 				}
 			}
@@ -140,6 +154,42 @@ namespace hamqsler
 			if(pageCount == 0)
 			{
 				pageCount = 1;
+			}
+		}
+		
+		/// <summary>
+		/// Calculate the X and Y offsets for the first card displayed on a page.
+		/// CalculatePageCount must be called before CalculateOffsets because
+		/// cardsWide and cardsHigh are calculated in CalculatePageCount
+		/// </summary>
+		private void CalculateOffsets()
+		{
+			switch(cardLayout)
+			{
+				case PrintSettingsDialog.CardLayout.PortraitEdge:
+					xOffset = 0;
+					yOffset = 0;
+					break;
+				case PrintSettingsDialog.CardLayout.PortraitTopCentre:
+					xOffset = (pageSize.Width - cardsWide * card.DisplayWidth) / 2;
+					yOffset = 0;
+					break;
+				case PrintSettingsDialog.CardLayout.PortraitCentre:
+					xOffset = (pageSize.Width - cardsWide * card.DisplayWidth) / 2;
+					yOffset = (pageSize.Height - cardsHigh * card.DisplayHeight) / 2;
+					break;
+				case PrintSettingsDialog.CardLayout.LandscapeEdge:
+					xOffset = 0;
+					yOffset = 0;
+					break;
+				case PrintSettingsDialog.CardLayout.LandscapeTopCentre:
+					xOffset = 0;
+					yOffset = (pageSize.Height - cardsHigh * card.DisplayHeight) / 2;
+					break;
+				case PrintSettingsDialog.CardLayout.LandscapeCentre:
+					xOffset = (pageSize.Width - cardsWide * card.DisplayWidth) / 2;
+					yOffset = (pageSize.Height - cardsHigh * card.DisplayHeight) / 2;
+					break;
 			}
 		}
 	}

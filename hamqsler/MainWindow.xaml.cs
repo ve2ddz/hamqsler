@@ -554,9 +554,9 @@ namespace hamqsler
 				if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Print)
 				{
 					HamqslerPaginator paginator = 
-						new HamqslerPaginator(card, qsosView.DisplayQsos,
-						                      new Size((double)ticket.PageMediaSize.Height,
-						                               (double)ticket.PageMediaSize.Width));
+						new HamqslerPaginator(psDialog.CardsLayout, card, qsosView.DisplayQsos,
+						                      new Size((double)ticket.PageMediaSize.Width,
+						                               (double)ticket.PageMediaSize.Height));
 					// Kludge: to get printer to print to near bottom of page
 					// add 1/2 inch to page height
 					PageMediaSize pms = new PageMediaSize((double)ticket.PageMediaSize.Width,
@@ -564,7 +564,13 @@ namespace hamqsler
 					                                      GRAPHICSPIXELSPERINCH / 2);
 					ticket.PageMediaSize = pms;
 					// force Landscape orientation
-					ticket.PageOrientation = PageOrientation.Landscape;
+					ticket.PageOrientation = PageOrientation.Portrait;
+					if(psDialog.CardsLayout == PrintSettingsDialog.CardLayout.LandscapeEdge ||
+					   psDialog.CardsLayout == PrintSettingsDialog.CardLayout.LandscapeCentre ||
+					   psDialog.CardsLayout == PrintSettingsDialog.CardLayout.LandscapeTopCentre)
+					{
+						ticket.PageOrientation = PageOrientation.Landscape;
+					}
 					pDialog.PrintTicket = ticket;
 					pDialog.PrintDocument(paginator, "QSL Cards");
 				}
@@ -579,14 +585,15 @@ namespace hamqsler
 					XpsSerializationManager rsm =
 						new XpsSerializationManager(new XpsPackagingPolicy(doc), false);
 					HamqslerPaginator paginator = 
-						new HamqslerPaginator(card, qsosView.DisplayQsos,
-						                      new Size((double)ticket.PageMediaSize.Height,
-						                               (double)ticket.PageMediaSize.Width));
+						new HamqslerPaginator(psDialog.CardsLayout, card, qsosView.DisplayQsos,
+						                      new Size((double)ticket.PageMediaSize.Width,
+						                               (double)ticket.PageMediaSize.Height));
 					rsm.SaveAsXaml(paginator);
 
 					XpsDocumentWindow docWindow = new XpsDocumentWindow();
 					docWindow.docViewer.Document = doc.GetFixedDocumentSequence();
-					docWindow.Show();
+					docWindow.ShowDialog();
+					PackageStore.RemovePackage(uri);
 				}
 			}
 		}
