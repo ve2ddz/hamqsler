@@ -40,32 +40,32 @@
                     </Grid.RowDefinitions>
                     <RadioButton Grid.Column="0" Grid.Row ="0" 
                              Name="portraitEdgeButton" GroupName="CardStock" 
-                             Margin="3" VerticalAlignment="Center"
+                             Margin="3,3,10,3" VerticalAlignment="Center"
                              Checked="LayoutRadioButton_Checked">
                     </RadioButton>
                      <RadioButton  Grid.Column="0" Grid.Row ="1" 
                               Name="portraitTopCentreButton" GroupName="CardStock" 
-                              Margin="3" VerticalAlignment="Center"
+                              Margin="3,3,10,3" VerticalAlignment="Center"
                               Checked="LayoutRadioButton_Checked">
                      </RadioButton>
                      <RadioButton  Grid.Column="0" Grid.Row ="2" 
                               Name="portraitCentreButton" GroupName="CardStock" 
-                              Margin="3" VerticalAlignment="Center"
+                              Margin="3,3,10,3" VerticalAlignment="Center"
                               Checked="LayoutRadioButton_Checked">
                      </RadioButton>
                     <RadioButton Grid.Column="1" Grid.Row ="0" 
                              Name="landscapeEdgeButton" GroupName="CardStock" 
-                             Margin="3" VerticalAlignment="Center"
+                             Margin="10,3,3,3" VerticalAlignment="Center"
                              Checked="LayoutRadioButton_Checked">
                     </RadioButton>
                     <RadioButton Grid.Column="1" Grid.Row ="1"  
                              Name="landscapeTopCentreButton" GroupName="CardStock" 
-                             Margin="3" VerticalAlignment="Center" 
+                             Margin="10,3,3,3" VerticalAlignment="Center" 
                              Checked="LayoutRadioButton_Checked">
                     </RadioButton>
                     <RadioButton Grid.Column="1" Grid.Row ="2"  
                              Name="landscapeCentreButton" GroupName="CardStock" 
-                             Margin="3" VerticalAlignment="Center" 
+                             Margin="10,3,3,3" VerticalAlignment="Center" 
                              Checked="LayoutRadioButton_Checked">
                     </RadioButton>
                 </Grid>

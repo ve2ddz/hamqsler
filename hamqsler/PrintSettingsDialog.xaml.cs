@@ -114,28 +114,28 @@ namespace hamqsler
 		{
 			PrintSettingsDialog psD = new PrintSettingsDialog();
 			// cards aligned to edge on portrait orientation
-			Path path = psD.CreatePortraitButtonContent(ticket, card, CardLayout.PortraitEdge);
-			SetButtonContentAndVisibility(ref psD.portraitEdgeButton, ref path);
-
+			Grid grid = psD.CreatePortraitButtonContent(ticket, card, CardLayout.PortraitEdge);
+			SetButtonContentAndVisibility(ref psD.portraitEdgeButton, ref grid);
+			
 			// cards top-centred on portrait orientation
-			path = psD.CreatePortraitButtonContent(ticket, card, CardLayout.PortraitTopCentre);
-			SetButtonContentAndVisibility(ref psD.portraitTopCentreButton, ref path);
+			grid = psD.CreatePortraitButtonContent(ticket, card, CardLayout.PortraitTopCentre);
+			SetButtonContentAndVisibility(ref psD.portraitTopCentreButton, ref grid);
 			
 			// cards centred on portrait orientation
-			path = psD.CreatePortraitButtonContent(ticket, card, CardLayout.PortraitCentre);
-			SetButtonContentAndVisibility(ref psD.portraitCentreButton, ref path);
+			grid = psD.CreatePortraitButtonContent(ticket, card, CardLayout.PortraitCentre);
+			SetButtonContentAndVisibility(ref psD.portraitCentreButton, ref grid);
 			
 			// cards aligned to edge on landscape orientation
-			path = psD.CreateLandscapeButtonContent(ticket, card, CardLayout.LandscapeEdge);
-			SetButtonContentAndVisibility(ref psD.landscapeEdgeButton, ref path);
+			grid = psD.CreateLandscapeButtonContent(ticket, card, CardLayout.LandscapeEdge);
+			SetButtonContentAndVisibility(ref psD.landscapeEdgeButton, ref grid);
 			
 			// cards top centred on landscape orientation
-			path = psD.CreateLandscapeButtonContent(ticket, card, CardLayout.LandscapeTopCentre);
-			SetButtonContentAndVisibility(ref psD.landscapeTopCentreButton, ref path);
+			grid = psD.CreateLandscapeButtonContent(ticket, card, CardLayout.LandscapeTopCentre);
+			SetButtonContentAndVisibility(ref psD.landscapeTopCentreButton, ref grid);
 			
 			// cards centred on landscape orientation
-			path = psD.CreateLandscapeButtonContent(ticket, card, CardLayout.LandscapeCentre);
-			SetButtonContentAndVisibility(ref psD.landscapeCentreButton, ref path);
+			grid = psD.CreateLandscapeButtonContent(ticket, card, CardLayout.LandscapeCentre);
+			SetButtonContentAndVisibility(ref psD.landscapeCentreButton, ref grid);
 			
 			// determine which button to check
 			psD.CheckLastVisibleButton();
@@ -177,10 +177,10 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="button">button to operate one</param>
 		/// <param name="path">Path object for the content of the button</param>
-		private static void SetButtonContentAndVisibility(ref RadioButton button, ref Path path)
+		private static void SetButtonContentAndVisibility(ref RadioButton button, ref Grid grid)
 		{
-			if (path != null) {
-				button.Content = path;
+			if (grid != null) {
+				button.Content = grid;
 				button.Visibility = Visibility.Visible;
 			} else {
 				button.Visibility = Visibility.Collapsed;
@@ -248,7 +248,7 @@ namespace hamqsler
 		/// are used.</param>
 		/// <param name="centreCards">Indicates whether the cards should be centred on the paper</param>
 		/// <returns>Path object showing the layout of cards on the paper, or null if no cards fit on the paper</returns>
-		private Path CreatePortraitButtonContent(PrintTicket ticket, Card card, CardLayout layout)
+		private Grid CreatePortraitButtonContent(PrintTicket ticket, Card card, CardLayout layout)
 		{
 			// get card and paper width and height
 			double cardWidth = card.DisplayWidth;
@@ -291,14 +291,21 @@ namespace hamqsler
 					break;
 			}
 			
-			// now create the geometry for the paper and cards
+			Grid grid = new Grid();
+			// create path for the paper
+			Path p1 = new Path();
+			RectangleGeometry pageGeometry = new RectangleGeometry(new Rect(
+				0, 0, pageWidth*ratio, pageHeight*ratio));
+			p1.Fill = Brushes.LightPink;
+			p1.Stroke = Brushes.LightPink;
+			p1.StrokeThickness = 1;
+			p1.Data = pageGeometry;
+			grid.Children.Add(p1);
+			// now create the geometry for the cards
 			GeometryGroup geo = new GeometryGroup();
-			RectangleGeometry rect = new RectangleGeometry(new Rect(0, 0, pageWidth*ratio, pageHeight*ratio));
 			
 			if(portraitWidthCards > 0 && portraitHeightCards > 0) // check that there are cards
 			{
-				// create layout image for first radio button
-				geo.Children.Add(rect);
 				// add the cards
 				for(int x = 0; x < portraitWidthCards; x++)
 				{
@@ -311,10 +318,11 @@ namespace hamqsler
 				}
 				// create and return the Path object
 				Path path = new Path();
-				path.Stroke = new SolidColorBrush(Colors.Blue);
-				path.Fill = new SolidColorBrush(Colors.White);
+				path.Stroke = Brushes.Blue;
+				path.Fill = Brushes.White;
 				path.Data = geo;
-				return path;
+				grid.Children.Add(path);
+				return grid;
 			}
 			else			// no cards, so return null
 			{
@@ -332,7 +340,7 @@ namespace hamqsler
 		/// are used.</param>
 		/// <param name="centreCards">Indicates whether the cards should be centred on the paper</param>
 		/// <returns>Path object showing the layout of cards on the paper, or null if no cards fit on the paper</returns>
-		private Path CreateLandscapeButtonContent(PrintTicket ticket, Card card, CardLayout layout)
+		private Grid CreateLandscapeButtonContent(PrintTicket ticket, Card card, CardLayout layout)
 		{
 			// get card and paper width and height
 			double cardWidth = card.DisplayWidth;
@@ -378,25 +386,34 @@ namespace hamqsler
 						centreYOffset = (pageHeight - landscapeWidthCards * cardWidth) * ratio / 2;
 						break;						
 				}
-				//create geometry for paper and cards
+				Grid grid = new Grid();
+				// create path for the paper
+				Path p1 = new Path();
+				RectangleGeometry pageGeometry = new RectangleGeometry(new Rect(
+					0, 0, pageHeight*ratio, pageWidth*ratio));
+				p1.Fill = Brushes.LightPink;
+				p1.Stroke = Brushes.LightPink;
+				p1.StrokeThickness = 1;
+				p1.Data = pageGeometry;
+				grid.Children.Add(p1);
+					//create geometry for paper and cards
 				GeometryGroup geo = new GeometryGroup();
-				RectangleGeometry rect = new RectangleGeometry(new Rect(0, 0, pageWidth*ratio, pageHeight*ratio));
-				geo.Children.Add(rect);
 				for(int x = 0; x < landscapeWidthCards; x++)
 				{
 					for(int y = 0; y < landscapeHeightCards; y++)
 					{
-						geo.Children.Add(new RectangleGeometry(new Rect(y*cardHeight*ratio + centreXOffset,
-						                                                x*cardWidth*ratio + centreYOffset,
-						                                                cardHeight*ratio, cardWidth*ratio)));
+						geo.Children.Add(new RectangleGeometry(new Rect(x*cardWidth*ratio + centreYOffset,
+						                                                y*cardHeight*ratio + centreXOffset,
+						                                                cardWidth*ratio, cardHeight*ratio)));
 					}
 				}
 				//create and return path object
 				Path path = new Path();
-				path.Stroke = new SolidColorBrush(Colors.Blue);
-				path.Fill = new SolidColorBrush(Colors.White);
+				path.Stroke = Brushes.Blue;
+				path.Fill = Brushes.White;
 				path.Data = geo;
-				return path;
+				grid.Children.Add(path);
+				return grid;
 			}
 			else
 			{
