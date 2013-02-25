@@ -581,7 +581,9 @@ namespace hamqsler
 						ticket.PageOrientation = PageOrientation.Landscape;
 					}
 					printDialog.PrintTicket = ticket;
+					Mouse.OverrideCursor = Cursors.Wait;
 					printDialog.PrintDocument(paginator, "QSL Cards");
+					Mouse.OverrideCursor = null;
 				}
 				else if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Preview)
 				{
@@ -597,8 +599,9 @@ namespace hamqsler
 						new HamqslerPaginator(psDialog.CardsLayout, card, qsosView.DisplayQsos,
 						                      new Size((double)ticket.PageMediaSize.Width,
 						                               (double)ticket.PageMediaSize.Height));
+					Mouse.OverrideCursor = Cursors.Wait;
 					rsm.SaveAsXaml(paginator);
-
+					Mouse.OverrideCursor = null;
 					XpsDocumentWindow docWindow = new XpsDocumentWindow();
 					docWindow.docViewer.Document = doc.GetFixedDocumentSequence();
 					docWindow.ShowDialog();
