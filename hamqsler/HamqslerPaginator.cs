@@ -106,10 +106,14 @@ namespace hamqsler
 			{
 				for(int i = 0; i < cardsWide; i++)
 				{
-					CardView cView = BuildCardViewForPrinting(ref cardNumber);
-					Canvas.SetLeft(cView, i * card.DisplayWidth + xOffset);
-					Canvas.SetTop(cView, j * card.DisplayHeight + yOffset);
-					canvas.Children.Add(cView);
+					if(fillLastPageWithBlankCards ||
+					   cardNumber < dispQsos.Count)
+					{
+						CardView cView = BuildCardViewForPrinting(ref cardNumber);
+						Canvas.SetLeft(cView, i * card.DisplayWidth + xOffset);
+						Canvas.SetTop(cView, j * card.DisplayHeight + yOffset);
+						canvas.Children.Add(cView);
+					}
 				}
 			}
 			canvas.Measure(PageSize);
