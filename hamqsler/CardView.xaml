@@ -33,7 +33,10 @@
 				<Style  TargetType="{x:Type Rectangle}">
 					<Setter Property="Visibility" Value="Collapsed"/>
 					<Style.Triggers>
-						<DataTrigger Binding="{Binding Path=PrintCardOutlines}" Value="True">
+						<DataTrigger Binding="{Binding Path=PrintCardOutlines,
+						             RelativeSource={RelativeSource 
+						             AncestorType={x:Type UserControl}}}"
+						             Value="True">
 							<Setter Property="Visibility" Value="Visible"/>
 						</DataTrigger>
 					</Style.Triggers>

@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ namespace hamqsler
 			QslCard = card;
 			double left = (this.Width - card.DisplayWidth) / 2;
 			double top = (this.Height - card.DisplayHeight) / 2;
-			cardView = new CardView(QslCard, true);
+			cardView = new CardView(QslCard);
 			Canvas.SetLeft(cardView, left);
 			Canvas.SetTop(cardView, top);
 			this.Children.Add(cardView);

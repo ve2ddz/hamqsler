@@ -38,6 +38,10 @@ namespace hamqsler
 		private Card card;
 		private Size pageSize;
 		private PrintSettingsDialog.CardLayout cardLayout;
+		private bool printCardOutline;
+		private bool fillLastPageWithBlankCards;
+		private bool useCardMargins;
+		private double cardMargin;
 		private double xOffset;
 		private double yOffset;
 		private List<List<DispQso>> dispQsos;
@@ -48,10 +52,15 @@ namespace hamqsler
 		/// <param name="qslCard">Card to be printed</param>
 		/// <param name="qsos">Collection of Qsos to be displayed on all cards</param>
 		/// <param name="size">Size of the paper the cards are to be printed on</param>
-		public HamqslerPaginator(PrintSettingsDialog.CardLayout layout, Card qslCard, 
-		                         DisplayQsos qsos, Size size)
+		public HamqslerPaginator(PrintSettingsDialog.CardLayout layout, bool printOutline,
+		                         bool fillLastPage, bool setCardMargins, double margin, 
+		                         Card qslCard, DisplayQsos qsos, Size size)
 		{
 			card = qslCard;
+			printCardOutline = printOutline;
+			fillLastPageWithBlankCards = fillLastPage;
+			useCardMargins = setCardMargins;
+			cardMargin = margin;
 			dispQsos = qsos.GetDispQsosList(card);
 			if(layout == PrintSettingsDialog.CardLayout.LandscapeEdge ||
 			   layout == PrintSettingsDialog.CardLayout.LandscapeTopCentre || 
@@ -118,7 +127,7 @@ namespace hamqsler
 		{
 			Card vCard = card.Clone();
 			vCard.IsInDesignMode = false;
-			CardView cView = new CardView(vCard, vCard.IsInDesignMode);
+			CardView cView = new CardView(vCard, printCardOutline, useCardMargins, cardMargin);
 			if (cardNumber < dispQsos.Count) {
 				((QsosBoxView)vCard.QsosBox.CardItemView).Qsos = dispQsos[cardNumber];
 			}

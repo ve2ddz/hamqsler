@@ -35,10 +35,65 @@ namespace hamqsler
 	/// </summary>
 	public partial class CardView : CardItemView
 	{
-		private Card qslCard;
+		private static readonly DependencyProperty PrintCardOutlinesProperty =
+			DependencyProperty.Register("PrintCardOutlines", typeof(bool), typeof(CardView),
+			                            new PropertyMetadata(false));
+		public bool PrintCardOutlines
+		{
+			get {return (bool)GetValue(PrintCardOutlinesProperty);}
+			set {SetValue(PrintCardOutlinesProperty, value);}
+		}
+		
+		private static readonly DependencyProperty SetCardMarginsToPrinterMarginsProperty =
+			DependencyProperty.Register("SetCardMarginsToPrinterMargins", typeof(bool),
+			                            typeof(CardView), new PropertyMetadata(false));
+		public bool SetCardMarginsToPrinterMargins
+		{
+			get {return (bool)GetValue(SetCardMarginsToPrinterMarginsProperty);}
+			set {SetValue(SetCardMarginsToPrinterMarginsProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CardMarginsLeftProperty = 
+			DependencyProperty.Register("CardMarginsLeft", typeof(double), typeof(CardView),
+			                            new PropertyMetadata(0.0));
+		public double CardMarginsLeft
+		{
+			get {return (double)GetValue(CardMarginsLeftProperty);}
+			set {SetValue(CardMarginsLeftProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CardMarginsTopProperty = 
+			DependencyProperty.Register("CardMarginsTop", typeof(double), typeof(CardView),
+			                            new PropertyMetadata(0.0));
+		public double CardMarginsTop
+		{
+			get {return (double)GetValue(CardMarginsTopProperty);}
+			set {SetValue(CardMarginsTopProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CardMarginsWidthProperty = 
+			DependencyProperty.Register("CardMarginsWidth", typeof(double), typeof(CardView),
+			                            new PropertyMetadata(0.0));
+		public double CardMarginsWidth
+		{
+			get {return (double)GetValue(CardMarginsWidthProperty);}
+			set {SetValue(CardMarginsWidthProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CardMarginsHeightProperty = 
+			DependencyProperty.Register("CardMarginsHeight", typeof(double), typeof(CardView),
+			                            new PropertyMetadata(0.0));
+		public double CardMarginsHeight
+		{
+			get {return (double)GetValue(CardMarginsHeightProperty);}
+			set {SetValue(CardMarginsHeightProperty, value);}
+		}
+		
+		private Card qslCard = null;
 		public Card QslCard
 		{
 			get {return qslCard;}
+			set {qslCard = value;}
 		}
 		
 		/// <summary>
@@ -47,13 +102,27 @@ namespace hamqsler
 		/// <param name="card">Qsl card that view will display</param>
 		/// <param name="isInDesignMode">bool indicating whether card is being created
 		/// in design mode or print mode</param>
-		public CardView(Card card, bool isInDesignMode) : base(card)
+		public CardView(Card card) : base(card)
 		{
 			qslCard = card;
-			DataContext = card;
+			DataContext = qslCard;
 			InitializeComponent();
 			BuildCard();
 			
+		}
+		
+		public CardView(Card card, bool showCardOutline, bool showCardMargins, double margin)
+		{
+			PrintCardOutlines = showCardOutline;
+			SetCardMarginsToPrinterMargins = showCardMargins;
+			CardMarginsLeft = margin;
+			CardMarginsTop = margin;
+			CardMarginsWidth = card.DisplayWidth - 2 * margin;
+			CardMarginsHeight = card.DisplayHeight - 2 * margin;
+			qslCard = card;
+			DataContext = qslCard;
+			InitializeComponent();
+			BuildCard();
 		}
 		
 		/// <summary>

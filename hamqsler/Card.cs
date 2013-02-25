@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,33 +35,6 @@ namespace hamqsler
 	[Serializable]
 	public class Card : CardItem
 	{
-		private static readonly DependencyProperty PrintCardOutlinesProperty =
-			DependencyProperty.Register("PrintCardOutlines", typeof(bool), typeof(Card),
-			                            new PropertyMetadata(true));
-		public bool PrintCardOutlines
-		{
-			get {return (bool)GetValue(PrintCardOutlinesProperty);}
-			set {SetValue(PrintCardOutlinesProperty, value);}
-		}
-		
-		private static readonly DependencyProperty FillLastPageWithBlankCardsProperty =
-			DependencyProperty.Register("FillLastPageWithBlankCards", typeof(bool), typeof(Card),
-			                            new PropertyMetadata(true));
-		public bool FillLastPageWithBlankCards
-		{
-			get {return (bool)GetValue(FillLastPageWithBlankCardsProperty);}
-			set {SetValue(FillLastPageWithBlankCardsProperty, value);}
-		}
-		
-		private static readonly DependencyProperty SetCardMarginsToPrinterPageMarginsProperty =
-			DependencyProperty.Register("SetCardMarginsToPrinterPageMargins", typeof(bool),
-			                            typeof(Card), new PropertyMetadata(true));
-		public bool SetCardMarginsToPrinterPageMargins
-		{
-			get {return (bool)GetValue(SetCardMarginsToPrinterPageMarginsProperty);}
-			set {SetValue(SetCardMarginsToPrinterPageMarginsProperty, value);}
-		}
-		
 		private static readonly DependencyProperty BackgroundImageProperty = 
 			DependencyProperty.Register("BackImage", typeof(BackgroundImage), typeof(Card),
 			                            new PropertyMetadata(null));
@@ -135,9 +108,6 @@ namespace hamqsler
 		{
 			userPreferences = ((App)Application.Current).UserPreferences;
 			// card properties
-			PrintCardOutlines = userPreferences.PrintCardOutlines;
-			FillLastPageWithBlankCards = userPreferences.PrintCardOutlines;
-			SetCardMarginsToPrinterPageMargins = userPreferences.SetCardMarginsToPrinterPageMargins;
 			// background image
 			BackImage = new BackgroundImage(isInDesignMode);
 			BackImage.QslCard = this;
@@ -387,13 +357,7 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property == PrintCardOutlinesProperty ||
-			   e.Property == FillLastPageWithBlankCardsProperty ||
-			   e.Property == SetCardMarginsToPrinterPageMarginsProperty)
-			{
-				IsDirty = true;
-			}
-			else if(e.Property == IsDirtyProperty)
+			if(e.Property == IsDirtyProperty)
 			{
 				CardTabItem cti = ((MainWindow)App.Current.MainWindow).mainTabControl.SelectedItem
 					as CardTabItem;
@@ -581,9 +545,6 @@ Card card = new Card();
 		private void CopyCardProperties(Card card)
 		{
 			CopyBaseProperties(this, card);
-			PrintCardOutlines = card.PrintCardOutlines;
-			FillLastPageWithBlankCards = card.FillLastPageWithBlankCards;
-			SetCardMarginsToPrinterPageMargins = card.SetCardMarginsToPrinterPageMargins;
 		}
 		
 	}

@@ -563,7 +563,9 @@ namespace hamqsler
 				if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Print)
 				{
 					HamqslerPaginator paginator = 
-						new HamqslerPaginator(psDialog.CardsLayout, card, qsosView.DisplayQsos,
+						new HamqslerPaginator(psDialog.CardsLayout, psDialog.CardOutline,
+						                      psDialog.FillLastPage, psDialog.CardMargins,
+						                      0, card, qsosView.DisplayQsos,
 						                      new Size((double)ticket.PageMediaSize.Width,
 						                               (double)ticket.PageMediaSize.Height));
 					// Kludge: to get printer to print to near bottom of page
@@ -572,7 +574,7 @@ namespace hamqsler
 					                                      (double)ticket.PageMediaSize.Height + 
 					                                      GRAPHICSPIXELSPERINCH / 2);
 					ticket.PageMediaSize = pms;
-					// force Landscape orientation
+					// set orientation based on CardLayout
 					ticket.PageOrientation = PageOrientation.Portrait;
 					if(psDialog.CardsLayout == PrintSettingsDialog.CardLayout.LandscapeEdge ||
 					   psDialog.CardsLayout == PrintSettingsDialog.CardLayout.LandscapeCentre ||
@@ -581,6 +583,7 @@ namespace hamqsler
 						ticket.PageOrientation = PageOrientation.Landscape;
 					}
 					printDialog.PrintTicket = ticket;
+					
 					Mouse.OverrideCursor = Cursors.Wait;
 					printDialog.PrintDocument(paginator, "QSL Cards");
 					Mouse.OverrideCursor = null;
@@ -596,12 +599,16 @@ namespace hamqsler
 					XpsSerializationManager rsm =
 						new XpsSerializationManager(new XpsPackagingPolicy(doc), false);
 					HamqslerPaginator paginator = 
-						new HamqslerPaginator(psDialog.CardsLayout, card, qsosView.DisplayQsos,
+						new HamqslerPaginator(psDialog.CardsLayout, psDialog.CardOutline,
+						                      psDialog.FillLastPage, psDialog.CardMargins,
+						                      0, card, qsosView.DisplayQsos,
 						                      new Size((double)ticket.PageMediaSize.Width,
 						                               (double)ticket.PageMediaSize.Height));
+					
 					Mouse.OverrideCursor = Cursors.Wait;
 					rsm.SaveAsXaml(paginator);
 					Mouse.OverrideCursor = null;
+					
 					XpsDocumentWindow docWindow = new XpsDocumentWindow();
 					docWindow.docViewer.Document = doc.GetFixedDocumentSequence();
 					docWindow.ShowDialog();
