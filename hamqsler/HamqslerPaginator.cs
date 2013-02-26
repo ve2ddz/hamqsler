@@ -107,7 +107,8 @@ namespace hamqsler
 				for(int i = 0; i < cardsWide; i++)
 				{
 					if(fillLastPageWithBlankCards ||
-					   cardNumber < dispQsos.Count)
+					   cardNumber < dispQsos.Count ||
+					   dispQsos.Count == 0)
 					{
 						CardView cView = BuildCardViewForPrinting(ref cardNumber);
 						Canvas.SetLeft(cView, i * card.DisplayWidth + xOffset);
