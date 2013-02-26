@@ -37,7 +37,7 @@
 		       Opacity="0.4">
 			<Image.Style>
 				<Style TargetType="{x:Type Image}">
-					<Setter Property="Visibility" Value="Collapsed"/>
+					<Setter Property="Visibility" Value="Hidden"/>
 					<Style.Triggers>
 						<DataTrigger Binding="{Binding Path=ItemData.IsInDesignMode}" Value="True">
 							<Setter Property="Visibility" Value="Visible"/>

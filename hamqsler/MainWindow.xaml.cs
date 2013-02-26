@@ -555,6 +555,11 @@ namespace hamqsler
 				}
 			} while(result == MessageBoxResult.No);
 			ticket = printDialog.PrintTicket;
+			PrintQueue queue = printDialog.PrintQueue;
+			PrintCapabilities caps = queue.GetPrintCapabilities();
+			PageImageableArea area = caps.PageImageableArea;
+			double margin = area.OriginHeight > area.OriginWidth ? area.OriginHeight :
+				area.OriginWidth;
 			// paginate and print
 			Card card = cti.cardCanvas.QslCard;
 			PrintSettingsDialog psDialog = PrintSettingsDialog.CreatePrintSettingsDialog(ticket, card);
@@ -565,7 +570,7 @@ namespace hamqsler
 					HamqslerPaginator paginator = 
 						new HamqslerPaginator(psDialog.CardsLayout, psDialog.CardOutline,
 						                      psDialog.FillLastPage, psDialog.CardMargins,
-						                      0, card, qsosView.DisplayQsos,
+						                      margin, card, qsosView.DisplayQsos,
 						                      new Size((double)ticket.PageMediaSize.Width,
 						                               (double)ticket.PageMediaSize.Height));
 					// Kludge: to get printer to print to near bottom of page
@@ -601,7 +606,7 @@ namespace hamqsler
 					HamqslerPaginator paginator = 
 						new HamqslerPaginator(psDialog.CardsLayout, psDialog.CardOutline,
 						                      psDialog.FillLastPage, psDialog.CardMargins,
-						                      0, card, qsosView.DisplayQsos,
+						                      margin, card, qsosView.DisplayQsos,
 						                      new Size((double)ticket.PageMediaSize.Width,
 						                               (double)ticket.PageMediaSize.Height));
 					

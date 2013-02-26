@@ -53,42 +53,6 @@ namespace hamqsler
 			set {SetValue(SetCardMarginsToPrinterMarginsProperty, value);}
 		}
 		
-		private static readonly DependencyProperty CardMarginsLeftProperty = 
-			DependencyProperty.Register("CardMarginsLeft", typeof(double), typeof(CardView),
-			                            new PropertyMetadata(0.0));
-		public double CardMarginsLeft
-		{
-			get {return (double)GetValue(CardMarginsLeftProperty);}
-			set {SetValue(CardMarginsLeftProperty, value);}
-		}
-		
-		private static readonly DependencyProperty CardMarginsTopProperty = 
-			DependencyProperty.Register("CardMarginsTop", typeof(double), typeof(CardView),
-			                            new PropertyMetadata(0.0));
-		public double CardMarginsTop
-		{
-			get {return (double)GetValue(CardMarginsTopProperty);}
-			set {SetValue(CardMarginsTopProperty, value);}
-		}
-		
-		private static readonly DependencyProperty CardMarginsWidthProperty = 
-			DependencyProperty.Register("CardMarginsWidth", typeof(double), typeof(CardView),
-			                            new PropertyMetadata(0.0));
-		public double CardMarginsWidth
-		{
-			get {return (double)GetValue(CardMarginsWidthProperty);}
-			set {SetValue(CardMarginsWidthProperty, value);}
-		}
-		
-		private static readonly DependencyProperty CardMarginsHeightProperty = 
-			DependencyProperty.Register("CardMarginsHeight", typeof(double), typeof(CardView),
-			                            new PropertyMetadata(0.0));
-		public double CardMarginsHeight
-		{
-			get {return (double)GetValue(CardMarginsHeightProperty);}
-			set {SetValue(CardMarginsHeightProperty, value);}
-		}
-		
 		private Card qslCard = null;
 		public Card QslCard
 		{
@@ -111,14 +75,12 @@ namespace hamqsler
 			
 		}
 		
-		public CardView(Card card, bool showCardOutline, bool showCardMargins, double margin)
+		public CardView(Card card, bool showCardOutline, bool showCardMargins, double margin) :
+			base(card)
 		{
 			PrintCardOutlines = showCardOutline;
 			SetCardMarginsToPrinterMargins = showCardMargins;
-			CardMarginsLeft = margin;
-			CardMarginsTop = margin;
-			CardMarginsWidth = card.DisplayWidth - 2 * margin;
-			CardMarginsHeight = card.DisplayHeight - 2 * margin;
+			CardMargin = margin;
 			qslCard = card;
 			DataContext = qslCard;
 			InitializeComponent();
@@ -131,21 +93,25 @@ namespace hamqsler
 		private void BuildCard()
 		{
 			ImageView iView = new ImageView(QslCard.BackImage);
+			iView.CardMargin = CardMargin;
 			CanvasForCard.Children.Add(iView);
 			foreach(SecondaryImage si in QslCard.SecondaryImages)
 			{
 				ImageView view = new ImageView(si);
+				view.CardMargin = CardMargin;
 				CanvasForCard.Children.Add(view);
 			}
 			foreach(TextItem ti in QslCard.TextItems)
 			{
 				TextItemView view = new TextItemView(ti);
+				view.CardMargin = CardMargin;
 				CanvasForCard.Children.Add(view);
 				view.SetDisplayText(null);
 			}
 			if(QslCard.QsosBox != null)
 			{
 				QsosBoxView qView = new QsosBoxView(QslCard.QsosBox);
+				qView.CardMargin = CardMargin;
 				CanvasForCard.Children.Add(qView);
 			}
 		}
@@ -216,6 +182,5 @@ namespace hamqsler
 			// now rebuild the view
 			BuildCard();
 		}
-		
 	}
 }

@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,6 +40,15 @@ namespace hamqsler
 		{
 			get {return (Rect)GetValue(ClipRectangleProperty);}
 			set {SetValue(ClipRectangleProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CardMarginProperty =
+			DependencyProperty.Register("CardMargin", typeof(double), typeof(CardItemView),
+			                            new PropertyMetadata(0.0));
+		public double CardMargin
+		{
+			get {return (double)GetValue(CardMarginProperty);}
+			set {SetValue(CardMarginProperty, value);}
 		}
 		
 		// Reference to the CardItem that this view displays
@@ -279,6 +288,24 @@ namespace hamqsler
 		{
 			// must be overridden in child views
 			throw new NotImplementedException();
+		}
+		
+		public void CalculateClipRectangle()
+		{
+			ClipRectangle = new Rect(-itemData.DisplayX + CardMargin, 
+			                         -itemData.DisplayY + CardMargin, 
+			                         itemData.QslCard.DisplayWidth - 2 * CardMargin,
+					                 itemData.QslCard.DisplayHeight - 2 * CardMargin);
+			
+		}
+		
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == CardMarginProperty)
+			{
+				CalculateClipRectangle();
+			}
 		}
 	}
 }
