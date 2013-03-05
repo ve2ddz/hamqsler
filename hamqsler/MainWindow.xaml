@@ -107,7 +107,6 @@
 				<MenuItem Header="Save Cards For Printing..."/>
 				<MenuItem Header="Save 4 Up Cards For Printing..."/>
 				<Separator/>
-				<MenuItem Header="Page Setup..."/>
 				<MenuItem Header="Calculate Number of Cards to be Printed..."/>
 				<MenuItem Header="_Print Cards..." 
 				          Command="{x:Static local:MainWindow.PrintCardsCommand}"/>
