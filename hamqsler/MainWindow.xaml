@@ -37,6 +37,9 @@
 		<CommandBinding Command="{x:Static local:MainWindow.CloseCardCommand}"
 						CanExecute="CloseCardCommand_CanExecute"
 						Executed="CloseCardCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.CalculateCardsToBePrintedCommand}"
+						CanExecute="CalculateCardsToBePrintedCommand_CanExecute"
+						Executed="CalculateCardsToBePrintedCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.PrintCardsCommand}"
 						CanExecute="PrintCardsCommand_CanExecute"
 						Executed="PrintCardsCommand_Executed"/>
@@ -107,7 +110,8 @@
 				<MenuItem Header="Save Cards For Printing..."/>
 				<MenuItem Header="Save 4 Up Cards For Printing..."/>
 				<Separator/>
-				<MenuItem Header="Calculate Number of Cards to be Printed..."/>
+				<MenuItem Header="Calculate Number of Cards to be Printed..."
+						  Command="{x:Static local:MainWindow.CalculateCardsToBePrintedCommand}"/>
 				<MenuItem Header="_Print Cards..." 
 				          Command="{x:Static local:MainWindow.PrintCardsCommand}"/>
 				<Separator/>

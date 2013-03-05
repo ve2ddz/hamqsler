@@ -56,6 +56,7 @@ namespace hamqsler
 		public static RoutedCommand CardSaveCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
 		public static RoutedCommand CloseCardCommand = new RoutedCommand();
+		public static RoutedCommand CalculateCardsToBePrintedCommand = new RoutedCommand();
 		public static RoutedCommand PrintCardsCommand = new RoutedCommand();
 		public static RoutedCommand ExitCommand = new RoutedCommand();
 		
@@ -105,6 +106,17 @@ namespace hamqsler
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void CardSaveAsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = cti != null;
+		}
+		
+		/// <summary>
+		/// CanExecute for File->Calculate Number of Cards to be Printed...
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void CalculateCardsToBePrintedCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			e.CanExecute = cti != null;
@@ -507,6 +519,27 @@ namespace hamqsler
 			CloseCardTab(cti, true);
 		}
 		
+		/// <summary>
+		/// Display MessageBox showing the number of cards that would be printed given the
+		/// current selections
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void CalculateCardsToBePrintedCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				
+				List<List<DispQso>> qList = qsosView.DisplayQsos.GetDispQsosList(
+						cti.cardCanvas.QslCard);
+				int cards = qList.Count;
+				MessageBox.Show("Given the currently loaded and included QSOs, and the selected card,\r\n"
+                                 + cards + " cards will be printed.",
+                                 " Number of Cards to be Printed", MessageBoxButton.OK,
+                                 MessageBoxImage.Information);
+			}
+		}
 		/// <summary>
 		/// Handler for Print Cards menu item Executed event
 		/// </summary>
