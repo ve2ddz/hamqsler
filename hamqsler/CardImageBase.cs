@@ -152,7 +152,7 @@ namespace hamqsler
 				else
 				{
 					// reset bImage
-					BitMapImage = new BitmapImage();
+					BitMapImage = EmptyImage;
 					ResetRectangle();
 				}
 				// Image has changed, so let QslCard know it has changed
@@ -229,14 +229,16 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="card">Card object that this image belongs to</param>
 		/// <param name="image">Image whose properties are to be copied</param>
-		public void CopyImageProperties(Card card, CardImageBase image)
+		public virtual void CopyImageProperties(Card card, CardImageBase image)
 		{
+			IsInDesignMode = card.IsInDesignMode;
+			QslCard = card;
+
 			ImageFileName = image.ImageFileName;
 			if(BitMapImage != EmptyImage)
 			{
 				BitMapImage = image.BitMapImage.Clone();
 			}
-			CopyBaseProperties(card, image);
 		}
 
 	}

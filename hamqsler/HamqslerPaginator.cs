@@ -38,6 +38,7 @@ namespace hamqsler
 		private Card card;
 		private Size pageSize;
 		private PrintSettingsDialog.CardLayout cardLayout;
+		private PrintSettingsDialog.PrintButtonTypes printType;
 		private bool printCardOutline;
 		private bool fillLastPageWithBlankCards;
 		private bool useCardMargins;
@@ -52,10 +53,12 @@ namespace hamqsler
 		/// <param name="qslCard">Card to be printed</param>
 		/// <param name="qsos">Collection of Qsos to be displayed on all cards</param>
 		/// <param name="size">Size of the paper the cards are to be printed on</param>
-		public HamqslerPaginator(PrintSettingsDialog.CardLayout layout, bool printOutline,
+		public HamqslerPaginator(PrintSettingsDialog.PrintButtonTypes type,
+		                         PrintSettingsDialog.CardLayout layout, bool printOutline,
 		                         bool fillLastPage, bool setCardMargins, double margin, 
 		                         Card qslCard, DisplayQsos qsos, Size size)
 		{
+			printType = type;
 			card = qslCard;
 			printCardOutline = printOutline;
 			fillLastPageWithBlankCards = fillLastPage;
@@ -117,6 +120,54 @@ namespace hamqsler
 					}
 				}
 			}
+			Size size = PageSize;
+			TransformGroup tGroup = new TransformGroup();
+			TranslateTransform tForm = new TranslateTransform();
+			if(printType == PrintSettingsDialog.PrintButtonTypes.Print)
+			{
+				TranslateTransform firstTransform = new TranslateTransform(0,0);
+				RotateTransform rTransform = new RotateTransform(0.0, 0, 0);
+				switch(cardLayout)
+				{
+					case PrintSettingsDialog.CardLayout.PortraitEdge:
+						tForm.X = 0;
+						tForm.Y = 0;
+						break;
+					case PrintSettingsDialog.CardLayout.PortraitTopCentre:
+						tForm.X = (PageSize.Width - cardsWide * card.DisplayWidth) / 2;
+						tForm.Y = 0;
+						break;
+					case PrintSettingsDialog.CardLayout.PortraitCentre:
+						tForm.X = (PageSize.Width - cardsWide * card.DisplayWidth) / 2;
+						tForm.Y = (PageSize.Height - cardsHigh * card.DisplayHeight) / 2;
+						break;
+					case PrintSettingsDialog.CardLayout.LandscapeEdge:
+						firstTransform.Y = -cardsHigh * card.DisplayHeight;
+						rTransform.Angle = 90.0;
+						tForm.X = 0;
+						tForm.Y = 0;
+						size = new Size(PageSize.Height, PageSize.Width);
+						break;
+					case PrintSettingsDialog.CardLayout.LandscapeTopCentre:
+						firstTransform.Y = -cardsHigh * card.DisplayHeight;
+						rTransform.Angle = 90.0;
+						tForm.X = (PageSize.Height - cardsHigh * card.DisplayHeight) / 2;
+						tForm.Y = 0;
+						size = new Size(PageSize.Height, PageSize.Width);
+						break;
+					case PrintSettingsDialog.CardLayout.LandscapeCentre:
+						firstTransform.Y = -cardsHigh * card.DisplayHeight;
+						rTransform.Angle = 90.0;
+						tForm.X = (PageSize.Height - cardsHigh * card.DisplayHeight) / 2;
+						tForm.Y = (PageSize.Width - cardsWide * card.DisplayWidth) / 2;
+						size = new Size(PageSize.Height, PageSize.Width);
+						break;
+				}
+				tGroup.Children.Add(firstTransform);
+				tGroup.Children.Add(rTransform);
+				tGroup.Children.Add(tForm);
+				canvas.RenderTransform = tGroup;
+			}
 			canvas.Measure(PageSize);
 			canvas.Arrange(new Rect(PageSize));
 			canvas.UpdateLayout();
@@ -140,7 +191,7 @@ namespace hamqsler
 			{
 				((QsosBoxView)vCard.QsosBox.CardItemView).BuildQsos();
 			}
-			foreach (FrameworkElement elt in cView.CanvasForCard.Children) 
+			foreach (FrameworkElement elt in cView.CardItems) 
 			{
 				TextItemView tiv = elt as TextItemView;
 				if (tiv != null) 

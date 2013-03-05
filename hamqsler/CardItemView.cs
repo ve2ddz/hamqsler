@@ -21,6 +21,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace hamqsler
@@ -30,32 +31,14 @@ namespace hamqsler
 	/// </summary>
 	public abstract class CardItemView : UserControl
 	{
-		/// <summary>
-		/// Clip rectangle for this card item 
-		/// </summary>
-		protected static readonly DependencyProperty ClipRectangleProperty =
-			DependencyProperty.Register("ClipRectangle", typeof(Rect), typeof(CardItemView),
-			                            new PropertyMetadata(new Rect(0, 0, 0, 0)));
-		public Rect ClipRectangle
-		{
-			get {return (Rect)GetValue(ClipRectangleProperty);}
-			set {SetValue(ClipRectangleProperty, value);}
-		}
-		
-		private static readonly DependencyProperty CardMarginProperty =
-			DependencyProperty.Register("CardMargin", typeof(double), typeof(CardItemView),
-			                            new PropertyMetadata(0.0));
-		public double CardMargin
-		{
-			get {return (double)GetValue(CardMarginProperty);}
-			set {SetValue(CardMarginProperty, value);}
-		}
-		
 		// Reference to the CardItem that this view displays
-		private CardItem itemData = null;
+		protected static readonly DependencyProperty ItemDataProperty =
+			DependencyProperty.Register("ItemData", typeof(CardItem), typeof(CardItemView),
+			                            new PropertyMetadata(null));
 		public CardItem ItemData
 		{
-			get {return itemData;}
+			get {return (CardItem)GetValue(ItemDataProperty);}
+			set {SetValue(ItemDataProperty, value);}
 		}
 		
 		private bool isLeftMouseButtonDown = false;
@@ -82,6 +65,15 @@ namespace hamqsler
 		
 		protected CursorLocation cursorLoc = CursorLocation.Outside;
 		
+		protected static Pen selectedPen = null;
+		protected static Pen highlightedPen = null;
+		
+		static CardItemView()
+		{
+			CreateSelectedPen();
+			CreateHighlightedPen();
+		}
+		
 		/// <summary>
 		/// Default constructor
 		/// </summary>
@@ -94,7 +86,43 @@ namespace hamqsler
 		/// <param name="item">CardItem that this view displays</param>
 		public CardItemView(CardItem item)
 		{
-			itemData = item;
+			ItemData = item;
+		}
+		
+		/// <summary>
+		/// Helper method that creates the pen used to draw rectangles around a carditem
+		/// when that carditem is selected
+		/// </summary>
+		private static void CreateSelectedPen()
+		{
+			selectedPen = new Pen(Brushes.DarkBlue, 4.0);
+			selectedPen.DashStyle = DashStyles.DashDot;
+			selectedPen.StartLineCap = PenLineCap.Square;
+			selectedPen.EndLineCap = PenLineCap.Square;
+			selectedPen.DashCap = PenLineCap.Square;
+		}
+		
+		/// <summary>
+		/// Helper method that creates the pen used to draw rectangles around a carditem
+		/// when that carditem is highlighted
+		/// </summary>
+		private static void CreateHighlightedPen()
+		{
+			highlightedPen = new Pen(Brushes.Orange, 4.0);
+			highlightedPen.DashStyle = DashStyles.DashDot;
+			highlightedPen.StartLineCap = PenLineCap.Square;
+			highlightedPen.EndLineCap = PenLineCap.Square;
+			highlightedPen.DashCap = PenLineCap.Square;			
+		}
+		
+		/// <summary>
+		/// Draw the carditemview.
+		/// This method provides a public interface to OnRender
+		/// </summary>
+		/// <param name="dc">DrawingContext to draw the carditem on</param>
+		public void Render(DrawingContext dc)
+		{
+			OnRender(dc);
 		}
 		
 		/// <summary>
@@ -105,23 +133,10 @@ namespace hamqsler
 		/// <returns>True if (x, y) is over this CardItemView</returns>
 		public bool CursorIsOverThisView(double x, double y)
 		{
-			// Note: The method below is more accurate than using IsMouseDirectlyOver for each
-			// UIElement that makes up the view because Margins are not considered in IsMouseDirectlyOver
-			// The content of each CardItemView is always a Panel (e.g. StackPanel or Canvas)
-			Panel panel = Content as Panel;
 			// Get the rectangle that surrounds this CardItemView
-			Rectangle r = new Rectangle();
-			foreach(FrameworkElement elt in panel.Children)
-			{
-				r = elt as Rectangle;
-				if(r != null)
-				{
-					break;
-				}
-			}
-			// If the Rectangle is under the mouse, then we have the correct CardItemView
-			return CardItemView.WithinRectangle(new Rect(Canvas.GetLeft(this), Canvas.GetTop(this),
-					                            r.ActualWidth, r.ActualHeight), x, y);
+			Rect r = new Rect(ItemData.DisplayX, ItemData.DisplayY,
+			                  ItemData.DisplayWidth, ItemData.DisplayHeight);
+			return CardItemView.WithinRectangle(r, x, y);
 		}
 		
 		/// <summary>
@@ -152,7 +167,7 @@ namespace hamqsler
 				}
 				else
 				{
-					HandleMouseMoveWithLeftMouseButtonUp(e);
+					HandleMouseMoveWithLeftMouseButtonUp(view, e);
 				}
 			}
 			else
@@ -174,12 +189,13 @@ namespace hamqsler
         // Must be public because called from CardCanvas
         public void OnMouseLeftButtonDown(CardView view, MouseButtonEventArgs e)
         {
-                Point pt = e.GetPosition(this);
+                Point pt = e.GetPosition(view);
                 if(GetCursorLocation(pt.X, pt.Y) != CursorLocation.Outside)
                 {
 	                IsLeftMouseButtonDown = true;
 	                originalDisplayRectangle = new Rect(ItemData.DisplayX, ItemData.DisplayY,
-	                                                    GetWidth(), GetHeight());
+	                                                    ItemData.DisplayWidth,
+	                                                    ItemData.DisplayHeight);
 	                leftMouseDownPoint = e.GetPosition(view);
             }
             e.Handled = true;
@@ -192,7 +208,7 @@ namespace hamqsler
         public void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             IsLeftMouseButtonDown = false;
-            Point pt = e.GetPosition(this);
+            Point pt = e.GetPosition(ItemData.QslCard.CardItemView);
             if(GetCursorLocation(pt.X, pt.Y) == CursorLocation.Outside)
             {
             	Mouse.OverrideCursor = Cursors.Arrow;
@@ -217,7 +233,7 @@ namespace hamqsler
 		/// TextItemView, and QsosBoxView classes.
 		/// </summary>
 		/// <param name="e">MouseEventArgs object</param>
-		protected virtual void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
+		protected virtual void HandleMouseMoveWithLeftMouseButtonUp(CardView view, MouseEventArgs e)
 		{
 			throw new NotImplementedException();
 		}
@@ -236,13 +252,17 @@ namespace hamqsler
 		/// </returns>
 		public CursorLocation GetCursorLocation(double x, double y)
 		{
-			Rect nw = new Rect(-cornerSize, -cornerSize,
+			Rect nw = new Rect(ItemData.DisplayX - cornerSize, 
+			                   ItemData.DisplayY - cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);
-			Rect ne = new Rect(GetWidth() - cornerSize, -cornerSize,
+			Rect ne = new Rect(ItemData.DisplayX + ItemData.DisplayWidth - cornerSize, 
+			                   ItemData.DisplayY - cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);
-			Rect se = new Rect(GetWidth() - cornerSize, GetHeight() - cornerSize,
+			Rect se = new Rect(ItemData.DisplayX + ItemData.DisplayWidth - cornerSize, 
+			                   ItemData.DisplayY + ItemData.DisplayHeight- cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);
-			Rect sw = new Rect(cornerSize, GetHeight() - cornerSize,
+			Rect sw = new Rect(ItemData.DisplayX - cornerSize, 
+			                   ItemData.DisplayY + ItemData.DisplayHeight - cornerSize,
 			                   2 * cornerSize, 2 * cornerSize);
 			if(WithinRectangle(nw, x, y))
  		    {
@@ -260,7 +280,9 @@ namespace hamqsler
 			{
 				return CursorLocation.SW;
 			}
-			else if(WithinRectangle(new Rect(0, 0, GetWidth(), GetHeight()), x, y))
+			else if(WithinRectangle(new Rect(ItemData.DisplayX, ItemData.DisplayY,
+			                                 ItemData.DisplayWidth,
+			                                 ItemData.DisplayHeight), x, y))
 			{
 				return CursorLocation.Inside;
 			}
@@ -271,40 +293,25 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Helper method that returns the actual rendered width of this CardItemView
+		/// Render the CardItemView - this just draws a rectangle around a CardItem if it is
+		/// selected or highlighted
 		/// </summary>
-		/// <returns>Rendered width in device independent units</returns>
-		protected virtual double GetWidth()
+		/// <param name="drawingContext">DrawingContext on which to draw the rectangle</param>
+		protected override void OnRender(DrawingContext drawingContext)
 		{
-			// nust be overridden in child views
-			throw new NotImplementedException();
-		}
-		
-		/// <summary>
-		/// Helper method that returns the actual rendered height of this CardItemView
-		/// </summary>
-		/// <returns>Rendered height in device independent units</returns>
-		protected virtual double GetHeight()
-		{
-			// must be overridden in child views
-			throw new NotImplementedException();
-		}
-		
-		public void CalculateClipRectangle()
-		{
-			ClipRectangle = new Rect(-itemData.DisplayX + CardMargin, 
-			                         -itemData.DisplayY + CardMargin, 
-			                         itemData.QslCard.DisplayWidth - 2 * CardMargin,
-					                 itemData.QslCard.DisplayHeight - 2 * CardMargin);
-			
-		}
-		
-		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-		{
-			base.OnPropertyChanged(e);
-			if(e.Property == CardMarginProperty)
+			base.OnRender(drawingContext);
+			if(ItemData.IsSelected)
 			{
-				CalculateClipRectangle();
+				drawingContext.DrawRectangle(Brushes.Transparent, selectedPen,
+				                             new Rect(ItemData.DisplayX, ItemData.DisplayY,
+				                                      ItemData.DisplayWidth, ItemData.DisplayHeight));
+			}
+			else if(ItemData.IsHighlighted)
+			{
+				drawingContext.DrawRectangle(Brushes.Transparent, highlightedPen,
+				                             new Rect(ItemData.DisplayX, ItemData.DisplayY,
+				                                      ItemData.DisplayWidth, ItemData.DisplayHeight));
+				
 			}
 		}
 	}

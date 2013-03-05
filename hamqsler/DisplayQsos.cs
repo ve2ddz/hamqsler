@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -551,7 +551,12 @@ namespace hamqsler
 			HashSet<string> existFields = new HashSet<string>();
 			foreach(QsoWithInclude qwi in this)
 			{
-				string managerCall = qwi.Manager + qwi.Callsign;
+				string manager = qwi.Manager;
+				if(!CallSign.IsValid(manager))
+				{
+					manager = string.Empty;
+				}
+				string managerCall = manager + qwi.Callsign;
 				if(qwi.Include)
 				{
 					if(managerCall == thisManagerCall &&

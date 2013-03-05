@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -101,9 +101,7 @@ namespace hamqsler
 		/// <param name="ti">TextItem that this view displays</param>
 		public TextItemView(TextItem ti) : base(ti)
 		{
-			DataContext = this;
 			ti.CardItemView = this;
-			InitializeComponent();
 		}
 		
 		/// <summary>
@@ -128,12 +126,13 @@ namespace hamqsler
 		/// but the left mouse button is not down.
 		/// </summary>
 		/// <param name="e">MouseEventArgs object</param>
-		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
+		protected override void HandleMouseMoveWithLeftMouseButtonUp(CardView view, MouseEventArgs e)
 		{
 			Cursor cursor = Cursors.Arrow;
 			cursorLoc = CursorLocation.Outside;
-			Point pt = e.GetPosition(this);
-			if (new Rect(0, 0, GetWidth(), GetHeight()).Contains(pt))
+			Point pt = e.GetPosition(view);
+			if (new Rect(ItemData.DisplayX, ItemData.DisplayY, 
+			             ItemData.DisplayWidth, ItemData.DisplayHeight).Contains(pt))
 			{
 				cursorLoc = CursorLocation.Inside;
 				cursor = Cursors.SizeAll;
@@ -142,34 +141,12 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Retrieve the actual width of this ImageView
-		/// </summary>
-		/// <returns>Width of this ImageView in device independent units</returns>
-		protected override double GetWidth()
-		{
-			return SelectRectangle.ActualWidth;
-		}
-		
-		/// <summary>
-		/// Retrieve the actual height of this ImageView
-		/// </summary>
-		/// <returns>Height of this ImageView in device independent units</returns>
-		protected override double GetHeight()
-		{
-			return SelectRectangle.ActualHeight;
-		}
-		
-		/// <summary>
 		/// Set DisplayText value
 		/// </summary>
 		public void SetDisplayText(List<DispQso> qsos)
 		{
-			QsosBoxView qView = (QsosBoxView)ItemData.QslCard.QsosBox.CardItemView;
-			if(qView != null)
-			{
-				DisplayText = ((TextItem)ItemData).Text.GetText(ItemData.QslCard, qsos,
-			                                                	ItemData.IsInDesignMode);
-			}
+			DisplayText = ((TextItem)ItemData).Text.GetText(ItemData.QslCard, qsos,
+		                                                	ItemData.IsInDesignMode);
 		}
 		
 		/// <summary>
@@ -184,6 +161,10 @@ namespace hamqsler
 				SetCheckBoxSizeAndMargin();
 				TextItem ti = (TextItem)ItemData;
 				ti.CalculateRectangle();
+			}
+			if(ItemData != null && ItemData.QslCard != null && ItemData.QslCard.CardItemView != null)
+			{
+				ItemData.QslCard.CardItemView.InvalidateVisual();
 			}
 		}
 		
@@ -209,6 +190,47 @@ namespace hamqsler
 				                          (1 - ti.CheckBoxRelativeSize) / 2;
 			CheckBoxAfterRightOffset = ti.DisplayX + ti.DisplayWidth -
 										   (1 - ti.CheckBoxRelativeSize) / 2;
+		}
+		
+		/// <summary>
+		/// Render the TextItem on the card
+		/// </summary>
+		/// <param name="drawingContext">CrawingContext on which to render the text</param>
+		protected override void OnRender(DrawingContext drawingContext)
+		{
+			TextItem tItem = ItemData as TextItem;
+			CultureInfo culture = CultureInfo.CurrentCulture;
+			FontStyle style = (tItem.IsItalic==true) ? FontStyles.Italic : FontStyles.Normal;
+			FontWeight weight = tItem.TextFontWeight;
+			FontFamily family = new FontFamily(tItem.TextFontFace);
+			Typeface typeface = new Typeface(family, style, weight, FontStretches.Normal);
+			FormattedText fText = new FormattedText(DisplayText, culture,
+			                                        culture.TextInfo.IsRightToLeft ?
+			                                        FlowDirection.RightToLeft : FlowDirection.LeftToRight,
+			                                        typeface, tItem.FontSize, tItem.TextBrush);
+			drawingContext.DrawText(fText, new Point(tItem.DisplayX + 
+			                                         CheckBoxSize + 2.0 * CheckBoxMargin.Left,
+			                                         tItem.DisplayY));
+			if(tItem.CheckboxBefore)
+			{
+				drawingContext.DrawRectangle(Brushes.Transparent, 
+				                             new Pen(tItem.TextBrush, tItem.CheckboxLineThickness),
+				                             new Rect(tItem.DisplayX + CheckBoxMargin.Left,
+				                                      tItem.DisplayY + (fText.Height - CheckBoxSize) / 2,
+				                                      CheckBoxSize, CheckBoxSize));
+			}
+			if(tItem.CheckboxAfter)
+			{
+				double boxX = tItem.DisplayX + tItem.DisplayWidth - tItem.CheckBoxRelativeSize *
+					fText.Height - CheckBoxMargin.Right;
+				drawingContext.DrawRectangle(Brushes.Transparent,
+				                             new Pen(tItem.TextBrush, tItem.CheckboxLineThickness),
+				                                     new Rect(boxX, 
+				                                      tItem.DisplayY + (fText.Height - CheckBoxSize) / 2,
+				                                      CheckBoxSize, CheckBoxSize));
+				                                              
+			}
+			base.OnRender(drawingContext);
 		}
 	}
 }

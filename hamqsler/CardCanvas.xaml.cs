@@ -260,6 +260,7 @@ namespace hamqsler
 			{
 				ci.IsSelected = false;
 				SetPropertiesPanelVisibility(null);
+				Mouse.OverrideCursor = Cursors.Arrow;
 			}
 		}
 		

@@ -135,7 +135,7 @@ namespace hamqsler
 		
 		protected const int cornerSize = 5;
 		
-		private static readonly DependencyProperty CardItemViewProperty =
+		protected static readonly DependencyProperty CardItemViewProperty =
 			DependencyProperty.Register("CardItemView", typeof(CardItemView),
 			                            typeof(CardItem), 
 			                            new PropertyMetadata(null));
@@ -179,17 +179,6 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property == DisplayXProperty ||
-			   e.Property == DisplayYProperty ||
-			   e.Property == QslCardProperty ||
-			   e.Property == CardItemViewProperty)
-			{
-				// set the ClipRectangle property
-				if(QslCard != null && CardItemView != null)
-				{
-					CardItemView.CalculateClipRectangle();
-				}
-			}
 			if((e.Property == DisplayXProperty ||
 			   e.Property == DisplayYProperty ||
 			   e.Property == DisplayWidthProperty ||
@@ -197,6 +186,13 @@ namespace hamqsler
 			   QslCard != null)
 			{
 				QslCard.IsDirty = true;
+			}
+			else if(e.Property == IsHighlightedProperty ||
+			        e.Property == IsSelectedProperty)
+			{
+				bool isDirty = QslCard.IsDirty;
+				QslCard.CardItemView.InvalidateVisual();
+				QslCard.IsDirty = isDirty;
 			}
 		}
 		

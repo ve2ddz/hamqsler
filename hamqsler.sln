@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.2.2.8818
+# SharpDevelop 4.3
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qsos", "Qsos\Qsos.csproj", "{4457D328-BC0E-4D99-AB72-77A51D111B74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hamqsler", "hamqsler\hamqsler.csproj", "{16E25B0E-FD8E-4E54-B546-CF81CB50C5D5}"

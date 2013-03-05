@@ -513,7 +513,7 @@ namespace hamqsler
 		/// <returns>Card that is a deep clone of this one</returns>
 		public Card Clone()
 		{
-Card card = new Card();
+			Card card = new Card();
 			card.BackImage = new BackgroundImage();
 			card.CopyCardProperties(this);
 			card.BackImage = new BackgroundImage();

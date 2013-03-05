@@ -78,6 +78,10 @@ namespace hamqsler
 		public static RoutedCommand SelectCommand = new RoutedCommand();
 		public static RoutedCommand SelectItemCommand = new RoutedCommand();
 		public static RoutedCommand NoneCommand = new RoutedCommand();
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -331,8 +335,8 @@ namespace hamqsler
 		/// Handler for Window Closing event.
 		/// Check each Card to see if it should be saved.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">Not used</param>
+		/// <param name="e">Not used</param>
 		void Window_Closing(object sender, EventArgs e)
 		{
 			TabItem[] tabItems = new TabItem[mainTabControl.Items.Count];
@@ -391,6 +395,7 @@ namespace hamqsler
 							App.Logger.Log(ex);
 						}
 					}
+					qsosView.ShowIncludeSelectors();
 				}
 			}
 			// load card files
@@ -402,12 +407,12 @@ namespace hamqsler
 				{
 					Card card = Card.DeserializeCard(fileName);
 					card.FileName = fileName;
-					card.IsDirty = false;
 					CardTabItem cti = new CardTabItem(card);
 					mainTabControl.Items.Add(cti);
 					cti.IsSelected = true;		// select the new tab
 					cti.SetTabLabel();
 					// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
+					card.IsDirty = false;
 					SetTitle(card.FileName, card.IsDirty);
 					prefs.CardFiles.Add(fileName);
 				}
@@ -568,7 +573,8 @@ namespace hamqsler
 				if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Print)
 				{
 					HamqslerPaginator paginator = 
-						new HamqslerPaginator(psDialog.CardsLayout, psDialog.CardOutline,
+						new HamqslerPaginator(PrintSettingsDialog.PrintButtonTypes.Print,
+						                      psDialog.CardsLayout, psDialog.CardOutline,
 						                      psDialog.FillLastPage, psDialog.CardMargins,
 						                      margin, card, qsosView.DisplayQsos,
 						                      new Size((double)ticket.PageMediaSize.Width,
@@ -577,16 +583,11 @@ namespace hamqsler
 					// add 1/2 inch to page height
 					PageMediaSize pms = new PageMediaSize((double)ticket.PageMediaSize.Width,
 					                                      (double)ticket.PageMediaSize.Height + 
-					                                      GRAPHICSPIXELSPERINCH / 2);
+					                                      GRAPHICSPIXELSPERINCH);
 					ticket.PageMediaSize = pms;
-					// set orientation based on CardLayout
+					// force Portrait orientation - HamqslerPaginator uses CardsLayout
+					// to determine orientation.
 					ticket.PageOrientation = PageOrientation.Portrait;
-					if(psDialog.CardsLayout == PrintSettingsDialog.CardLayout.LandscapeEdge ||
-					   psDialog.CardsLayout == PrintSettingsDialog.CardLayout.LandscapeCentre ||
-					   psDialog.CardsLayout == PrintSettingsDialog.CardLayout.LandscapeTopCentre)
-					{
-						ticket.PageOrientation = PageOrientation.Landscape;
-					}
 					printDialog.PrintTicket = ticket;
 					
 					Mouse.OverrideCursor = Cursors.Wait;
@@ -604,7 +605,8 @@ namespace hamqsler
 					XpsSerializationManager rsm =
 						new XpsSerializationManager(new XpsPackagingPolicy(doc), false);
 					HamqslerPaginator paginator = 
-						new HamqslerPaginator(psDialog.CardsLayout, psDialog.CardOutline,
+						new HamqslerPaginator(PrintSettingsDialog.PrintButtonTypes.Preview,
+						                      psDialog.CardsLayout, psDialog.CardOutline,
 						                      psDialog.FillLastPage, psDialog.CardMargins,
 						                      margin, card, qsosView.DisplayQsos,
 						                      new Size((double)ticket.PageMediaSize.Width,
@@ -707,8 +709,8 @@ namespace hamqsler
 		/// <summary>
 		/// Handles Clear Qsos menu item processing
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">not  used</param>
+		/// <param name="e">not used</param>
 		private void ClearQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			qsosView.DisplayQsos.Clear();
@@ -880,6 +882,7 @@ namespace hamqsler
 			CardTabItem cardTab = new CardTabItem(5.5 * 96, 3.5 * 96);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
+			cardTab.cardCanvas.QslCard.IsDirty = false;
 			cardTab.SetTabLabel();
 			// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
 			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
@@ -896,6 +899,7 @@ namespace hamqsler
 			CardTabItem cardTab = new CardTabItem(5.5 * 96, 4.25 * 96);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
+			cardTab.cardCanvas.QslCard.IsDirty = false;
 			cardTab.SetTabLabel();
 			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
 		}
@@ -911,6 +915,7 @@ namespace hamqsler
 			CardTabItem cardTab = new CardTabItem(6 * 96, 4 * 96);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
+			cardTab.cardCanvas.QslCard.IsDirty = false;
 			cardTab.SetTabLabel();
 			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
 		}
@@ -1135,8 +1140,8 @@ namespace hamqsler
 		/// <summary>
 		/// Handler for mainTabControl SelectionChanged event
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">not used</param>
+		/// <param name="e">SelectionChangedEventArgs object</param>
 		void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			// all we do is set the window title based on tab selected
@@ -1156,6 +1161,8 @@ namespace hamqsler
 		/// Close the CardTabItem
 		/// </summary>
 		/// <param name="cti">CardTabItem to close</param>
+		/// <param name="doNotReloadCard">Boolean indicating that the card should not
+		/// be reloaded next time program is started.</param>
 		public void CloseCardTab(CardTabItem cti, bool doNotReloadCard)
 		{
 			if(cti.cardCanvas.QslCard.IsDirty)

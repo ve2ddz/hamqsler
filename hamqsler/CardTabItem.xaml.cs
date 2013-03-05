@@ -51,7 +51,7 @@ namespace hamqsler
 			// create a card and position it in the middle of the CardCanvas
 			cardCanvas.CreateCard(cardWidth, cardHeight);
 			this.DataContext = cardCanvas.QslCard;
-			foreach(FrameworkElement elt in cardCanvas.CardView.CanvasForCard.Children)
+			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
 				TextItemView ti = elt as TextItemView;
 				if(ti != null && cardCanvas.QslCard.QsosBox != null)
@@ -61,12 +61,16 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="card">Card object to display on the CardTabItem</param>
 		public CardTabItem(Card card)
 		{
 			InitializeComponent();
 			cardCanvas.AddCard(card);
 			this.DataContext = cardCanvas.QslCard;
-			foreach(FrameworkElement elt in cardCanvas.CardView.CanvasForCard.Children)
+			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
 				TextItemView ti = elt as TextItemView;
 				if(ti != null && cardCanvas.QslCard.QsosBox != null)

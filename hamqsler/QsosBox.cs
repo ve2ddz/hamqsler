@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -364,22 +364,29 @@ namespace hamqsler
 		/// <summary>
 		/// Calculate the size of the QsosBox based on text size and maxQsos
 		/// </summary>
-		private void CalculateRectangle()
+		public void CalculateRectangle()
 		{
-			// Note: DisplayHeight is not calculated because it is determined automatically in
-			// XAML in QsosBoxView.
 			if(QslCard != null)
 			{
 				if(DisplayX == 0 && DisplayY == 0 && DisplayWidth == 0 && DisplayHeight == 0)
 				{
 					DisplayX = QslCard.DisplayWidth / 20;
 					DisplayY = QslCard.DisplayHeight / 2;
-					DisplayWidth = QslCard.DisplayWidth * 18 / 20;
 				}
-				else
+				DisplayWidth = QslCard.DisplayWidth * 18 / 20;
+				Typeface typeface = new Typeface(new FontFamily(FontName), FontStyles.Normal,
+				                                 FontWeights.Normal, FontStretches.Normal);
+				CultureInfo culture = CultureInfo.CurrentCulture;
+				FormattedText fText = new FormattedText("SampleText", culture,
+				                                        culture.TextInfo.IsRightToLeft ?
+				                                        FlowDirection.RightToLeft : FlowDirection.LeftToRight,
+				                                        typeface, FontSize, LineTextBrush);
+				int qCount = MaximumQsos;
+				if(CardItemView != null)
 				{
-					DisplayWidth = QslCard.DisplayWidth * 18 / 20;
+					qCount = ((QsosBoxView)CardItemView).Qsos.Count;
 				}
+				DisplayHeight = (fText.Height + 4) * (2 + qCount);
 			}
 		}
 		
@@ -391,28 +398,13 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property == ShowFrequencyProperty ||
-			   e.Property == ShowPseTnxProperty ||
-			   e.Property == DateFormatProperty)
-			{
-				if(QslCard != null && CardItemView != null)
-				{
-					((QsosBoxView)CardItemView).CalculateColumnWidthsAndSetVisibilities();
-					QslCard.IsDirty = true;
-				}
-			}
-			if(e.Property == ShowManagerProperty ||
-			   e.Property == MaximumQsosProperty ||
-			   e.Property == LineTextBrushProperty ||
-			   e.Property == CallsignBrushProperty ||
-			   e.Property == ManagerBrushProperty ||
-			   e.Property == FontSizeProperty ||
-			   e.Property == FontNameProperty ||
-			   e.Property == BackgroundBrushProperty ||
-			   e.Property == BackgroundOpacityProperty)
+			QsosBoxView view = CardItemView as QsosBoxView;
+			if(view != null)
 			{
 				CalculateRectangle();
-				if(QslCard != null)		// properties may be set before QslCard is set
+				view.CalculateColumnWidths();
+				view.BuildColumnHeaders();
+				if(QslCard != null)
 				{
 					QslCard.IsDirty = true;
 				}
@@ -421,9 +413,18 @@ namespace hamqsler
 			{
 				CalculateRectangle();
 			}
-			if(e.Property == MaximumQsosProperty)
+			if(e.Property == MaximumQsosProperty && view != null)
 			{
-				((QsosBoxView)CardItemView).BuildQsos();
+				view.BuildQsos();
+				CalculateRectangle();
+				if(QslCard != null)		// properties may be set before QslCard is set
+				{
+					QslCard.IsDirty = true;
+				}
+			}
+			if(QslCard != null && QslCard.CardItemView != null)
+			{
+				QslCard.CardItemView.InvalidateVisual();
 			}
 		}
 		

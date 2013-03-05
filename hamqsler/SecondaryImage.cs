@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright © 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -100,6 +100,16 @@ namespace hamqsler
 				}
 				node = XmlProcs.GetNextSiblingElement(node);
 			}
-	}
+		}
+		
+		/// <summary>Make a deep copy of image properties
+		/// </summary>
+		/// <param name="card">Card object that this image belongs to</param>
+		/// <param name="image">Image whose properties are to be copied</param>
+		public override void CopyImageProperties(Card card, CardImageBase image)
+		{
+			base.CopyImageProperties(card, image);
+			CopyBaseProperties(card, image);
+		}
 	}
 }

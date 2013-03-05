@@ -35,6 +35,15 @@ namespace hamqsler
 	/// </summary>
 	public partial class CardView : CardItemView
 	{
+		private static readonly DependencyProperty CardMarginProperty =
+			DependencyProperty.Register("CardMargin", typeof(double), typeof(CardItemView),
+			                            new PropertyMetadata(0.0));
+		public double CardMargin
+		{
+			get {return (double)GetValue(CardMarginProperty);}
+			set {SetValue(CardMarginProperty, value);}
+		}
+		
 		private static readonly DependencyProperty PrintCardOutlinesProperty =
 			DependencyProperty.Register("PrintCardOutlines", typeof(bool), typeof(CardView),
 			                            new PropertyMetadata(false));
@@ -60,21 +69,32 @@ namespace hamqsler
 			set {qslCard = value;}
 		}
 		
+		private List<CardItemView> cardItems = new List<CardItemView>();
+		public List<CardItemView> CardItems
+		{
+			get {return cardItems;}
+		}
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="card">Qsl card that view will display</param>
-		/// <param name="isInDesignMode">bool indicating whether card is being created
-		/// in design mode or print mode</param>
 		public CardView(Card card) : base(card)
 		{
 			qslCard = card;
-			DataContext = qslCard;
-			InitializeComponent();
+			QslCard.CardItemView = this;
 			BuildCard();
 			
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="card">Qsl card that view will display</param>
+		/// <param name="showCardOutline">Boolean indicating whether to print (show)
+		/// card outline</param>
+		/// <param name="showCardMargins">Boolean indicating whether to show card margins</param>
+		/// <param name="margin">Size of margin to show on card</param>
 		public CardView(Card card, bool showCardOutline, bool showCardMargins, double margin) :
 			base(card)
 		{
@@ -82,8 +102,7 @@ namespace hamqsler
 			SetCardMarginsToPrinterMargins = showCardMargins;
 			CardMargin = margin;
 			qslCard = card;
-			DataContext = qslCard;
-			InitializeComponent();
+			QslCard.CardItemView = this;
 			BuildCard();
 		}
 		
@@ -92,27 +111,24 @@ namespace hamqsler
 		/// </summary>
 		private void BuildCard()
 		{
+			cardItems.Clear();
 			ImageView iView = new ImageView(QslCard.BackImage);
-			iView.CardMargin = CardMargin;
-			CanvasForCard.Children.Add(iView);
+			cardItems.Add(iView);
 			foreach(SecondaryImage si in QslCard.SecondaryImages)
 			{
 				ImageView view = new ImageView(si);
-				view.CardMargin = CardMargin;
-				CanvasForCard.Children.Add(view);
+				cardItems.Add(view);
 			}
 			foreach(TextItem ti in QslCard.TextItems)
 			{
 				TextItemView view = new TextItemView(ti);
-				view.CardMargin = CardMargin;
-				CanvasForCard.Children.Add(view);
+				cardItems.Add(view);
 				view.SetDisplayText(null);
 			}
 			if(QslCard.QsosBox != null)
 			{
 				QsosBoxView qView = new QsosBoxView(QslCard.QsosBox);
-				qView.CardMargin = CardMargin;
-				CanvasForCard.Children.Add(qView);
+				cardItems.Add(qView);
 			}
 		}
 		
@@ -125,7 +141,7 @@ namespace hamqsler
 			// create a List of the CardItemView objects and reverse it.
 			// We need to find the last CardItemView under the mouse cursor
 			List<FrameworkElement> revFEList = new List<FrameworkElement>();
-			foreach(FrameworkElement elt in CanvasForCard.Children)
+			foreach(FrameworkElement elt in cardItems)
 			{
 				revFEList.Add(elt);
 			}
@@ -147,7 +163,7 @@ namespace hamqsler
 		/// <returns>CardItemView corresponding to the selected CardItem, or null if no selection</returns>
 		public CardItemView GetCardItemViewForSelectedCardItem()
 		{
-			foreach(FrameworkElement elt in CanvasForCard.Children)
+			foreach(FrameworkElement elt in cardItems)
 			{
 				CardItemView civ = elt as CardItemView;
 				if(civ != null && civ.ItemData.IsSelected)
@@ -164,23 +180,57 @@ namespace hamqsler
 		/// </summary>
 		public void RebuildCardView()
 		{
-			// get a list of all CardItemViews in the CardView
-			List<FrameworkElement> children = new List<FrameworkElement>();
-			foreach(FrameworkElement elt in CanvasForCard.Children)
-			{
-				CardItemView view = elt as CardItemView;
-				if(view != null)
-				{
-					children.Add(view);
-				}
-			}
-			// now delete all of the CardItemViews
-			foreach(CardItemView view in children)
-			{
-				CanvasForCard.Children.Remove(view);
-			}
-			// now rebuild the view
+			cardItems.Clear();
 			BuildCard();
+		}
+		
+		/// <summary>
+		/// Render the CardView
+		/// </summary>
+		/// <param name="drawingContext">DrawingContext on which to render the view</param>
+		protected override void OnRender(DrawingContext drawingContext)
+		{
+			base.OnRender(drawingContext);
+			Rect cardRect = new Rect(0, 0, ItemData.DisplayWidth, ItemData.DisplayHeight);
+			drawingContext.DrawRectangle(Brushes.White, new Pen(Brushes.White, 1.0),
+			                             cardRect);
+			if(PrintCardOutlines)
+			{
+				drawingContext.DrawRectangle(Brushes.Transparent, new Pen(Brushes.Black, 1.0),
+				                             cardRect);
+			}
+			if(QslCard.IsInDesignMode)
+			{
+				drawingContext.PushOpacity(0.4);
+				DrawCardItems(drawingContext);
+				drawingContext.Pop();
+			}
+			RectangleGeometry clipRect = new RectangleGeometry(
+				new Rect(QslCard.DisplayX + CardMargin, QslCard.DisplayY + CardMargin,
+				         QslCard.DisplayWidth - 2 * CardMargin,
+				         QslCard.DisplayHeight - 2 * CardMargin));
+			drawingContext.PushClip(clipRect);
+			DrawCardItems(drawingContext);
+			drawingContext.Pop();
+				
+			if(PrintCardOutlines)
+			{
+				drawingContext.DrawRectangle(Brushes.Transparent, new Pen(Brushes.Black, 1.0),
+				                             cardRect);
+			}
+
+		}
+		
+		/// <summary>
+		/// Helper method that renders all of the CardItems on this CardView
+		/// </summary>
+		/// <param name="drawingContext">>DrawingContext on which to render the views</param>
+		private void DrawCardItems(DrawingContext drawingContext)
+		{
+			foreach(CardItemView civ in cardItems)
+			{
+				civ.Render(drawingContext);
+			}
 		}
 	}
 }

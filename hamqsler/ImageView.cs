@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,9 +40,7 @@ namespace hamqsler
 		/// <param name="image">CardImageBase that is the base class for the image to be displayed</param>
 		public ImageView(CardImageBase image) : base(image)
 		{
-			DataContext	= this;
 			image.CardItemView = this;
-			InitializeComponent();
 		}
 				
 		/// <summary>
@@ -158,6 +156,7 @@ namespace hamqsler
             	ItemData.DisplayY = y;
             	ItemData.DisplayWidth = width;
             	ItemData.DisplayHeight = height;
+            	view.InvalidateVisual();
             }
 		}
 		
@@ -166,20 +165,23 @@ namespace hamqsler
 		/// but the left mouse button is not down.
 		/// </summary>
 		/// <param name="e">MouseEventArgs object</param>
-		protected override void HandleMouseMoveWithLeftMouseButtonUp(MouseEventArgs e)
+		protected override void HandleMouseMoveWithLeftMouseButtonUp(CardView view, MouseEventArgs e)
 		{
 			// not dragging so set the mouse cursor based on where cursor is relative
 			// to this image
             cursorLoc = CursorLocation.Outside;
-            Point pt = e.GetPosition(this);
-            Rect nw = new Rect(-cornerSize,- cornerSize,
+            Point pt = e.GetPosition(view);
+            Rect nw = new Rect(ItemData.DisplayX - cornerSize,
+                               ItemData.DisplayY - cornerSize,
                                2 * cornerSize, 2 * cornerSize);
-            Rect ne = new Rect(ItemData.DisplayWidth - cornerSize, -cornerSize,
+            Rect ne = new Rect(ItemData.DisplayX + ItemData.DisplayWidth - cornerSize, 
+                               ItemData.DisplayY - cornerSize,
                                2 * cornerSize, 2 * cornerSize);
-            Rect se = new Rect(ItemData.DisplayWidth - cornerSize, 
-                               ItemData.DisplayHeight - cornerSize,
+            Rect se = new Rect(ItemData.DisplayX + ItemData.DisplayWidth - cornerSize, 
+                               ItemData.DisplayY + ItemData.DisplayHeight - cornerSize,
                                2 * cornerSize, 2 * cornerSize);
-            Rect sw = new Rect(-cornerSize, ItemData.DisplayHeight - cornerSize,
+            Rect sw = new Rect(ItemData.DisplayX - cornerSize, 
+                               ItemData.DisplayY + ItemData.DisplayHeight - cornerSize,
                                2 * cornerSize, 2 * cornerSize);
             Cursor cursor = Cursors.Arrow;
             if (nw.Contains(pt))
@@ -202,31 +204,31 @@ namespace hamqsler
                 cursorLoc = CursorLocation.SW;
                 cursor = Cursors.SizeNESW;
             }
-            else if (new Rect(0, 0, GetWidth(), GetHeight()).Contains(pt))
+            else if (new Rect(ItemData.DisplayX, ItemData.DisplayY, 
+                              ItemData.DisplayWidth, ItemData.DisplayHeight).Contains(pt))
             {
                 cursorLoc = CursorLocation.Inside;
                 cursor = Cursors.SizeAll;
             }
-
+			
             Mouse.OverrideCursor = cursor;
 		}
 
 		/// <summary>
-		/// Retrieve the actual width of this ImageView
+		/// Render this ImageView
 		/// </summary>
-		/// <returns>Width of this ImageView in device independent units</returns>
-		protected override double GetWidth()
+		/// <param name="drawingContext">DrawingContext on which to render the image</param>
+		protected override void OnRender(DrawingContext drawingContext)
 		{
-			return SelectRectangle.ActualWidth;
-		}
-		
-		/// <summary>
-		/// Retrieve the actual height of this ImageView
-		/// </summary>
-		/// <returns>Height of this ImageView in device independent units</returns>
-		protected override double GetHeight()
-		{
-			return SelectRectangle.ActualHeight;
+			if(((CardImageBase)ItemData).ImageFileName != null &&
+			   ((CardImageBase)ItemData).ImageFileName != string.Empty)
+			{
+				drawingContext.DrawImage(((CardImageBase)ItemData).BitMapImage, 
+				                         new Rect(ItemData.DisplayX, ItemData.DisplayY,
+				                                  ItemData.DisplayWidth,
+				                                  ItemData.DisplayHeight));
+			}
+			base.OnRender(drawingContext);
 		}
 	}
 }

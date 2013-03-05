@@ -81,7 +81,9 @@
       <DependentUpon>AdifMacroGroupBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="AdifToDDMMMYYDateConverter.cs" />
-    <Compile Include="AdifToDDMMYYDateConverter.cs" />
+    <Compile Include="AdifToDDMMYYDateConverter.cs">
+      <DependentUpon>App.xaml.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdifToYYYYMMDDDateConverter.cs" />
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>
@@ -103,10 +105,7 @@
       <DependentUpon>CardTabItem.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CardView.xaml.cs">
-      <DependentUpon>CardView.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="CardView.cs" />
     <Compile Include="CountMacro.cs" />
     <Compile Include="CountMacroGroupBox.xaml.cs">
       <DependentUpon>CountMacroGroupBox.xaml</DependentUpon>
@@ -119,10 +118,7 @@
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
     <Compile Include="HamqslerPaginator.cs" />
-    <Compile Include="ImageView.xaml.cs">
-      <DependentUpon>ImageView.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="ImageView.cs" />
     <Compile Include="MacroGroupBox.cs" />
     <Compile Include="ManagerExistsMacro.cs" />
     <Compile Include="ManagerExistsMacroGroupBox.xaml.cs">
@@ -146,13 +142,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="QsosBox.cs" />
-    <Compile Include="QsosBoxView.xaml.cs">
-      <DependentUpon>QsosBoxView.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="QsosBoxView.cs" />
     <Compile Include="QSOsView.xaml.cs">
       <DependentUpon>QSOsView.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="QsoWithInclude.cs" />
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
@@ -168,10 +160,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TextItem.cs" />
-    <Compile Include="TextItemView.xaml.cs">
-      <DependentUpon>TextItemView.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="TextItemView.cs" />
     <Compile Include="TextMacrosDialog.xaml.cs">
       <DependentUpon>TextMacrosDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -203,22 +192,18 @@
     <Page Include="AdifMacroGroupBox.xaml" />
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
-    <Page Include="CardView.xaml" />
     <Page Include="CountMacroGroupBox.xaml">
       <DependentUpon>CountMacro.cs</DependentUpon>
     </Page>
-    <Page Include="ImageView.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
     <Page Include="ManagerMacroGroupBox.xaml" />
     <Page Include="PrintSettingsDialog.xaml" />
     <Page Include="QsoInputDialog.xaml" />
-    <Page Include="QsosBoxView.xaml" />
     <Page Include="QSOsView.xaml" />
     <Page Include="SplashPage.xaml" />
     <Page Include="StaticTextGroupBox.xaml" />
     <Page Include="StaticTextViewer.xaml" />
-    <Page Include="TextItemView.xaml" />
     <Page Include="TextMacrosDialog.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />
     <Page Include="XpsDocumentWindow.xaml" />
