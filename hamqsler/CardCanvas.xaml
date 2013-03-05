@@ -23,7 +23,8 @@
     xmlns:local="clr-namespace:hamqsler"
 	MouseMove="OnMouseMove" MouseLeftButtonDown="OnMouseLeftButtonDown"
 	MouseLeftButtonUp="OnMouseLeftButtonUp"
-	MouseRightButtonDown="OnMouseRightButtonDown">
+	MouseRightButtonDown="OnMouseRightButtonDown"
+	ContextMenuOpening="CardCanvas_ContextMenuOpening">
 	<Canvas.Resources>
 		<Style TargetType="MenuItem">
 			<Setter Property="CommandTarget" Value="{Binding PlacementTarget,

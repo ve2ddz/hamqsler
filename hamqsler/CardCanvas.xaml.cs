@@ -377,5 +377,10 @@ namespace hamqsler
         		civ.SetDisplayText(null);
         	}
 		}
+		
+		void CardCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+		{
+			Mouse.OverrideCursor = Cursors.Arrow;
+		}
 	}
 }
