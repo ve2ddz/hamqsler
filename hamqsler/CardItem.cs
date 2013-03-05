@@ -90,7 +90,7 @@ namespace hamqsler
 			set {SetValue(QslCardProperty, value);}
 		}
 		
-		private static readonly DependencyProperty IsHighlightedProperty =
+		protected static readonly DependencyProperty IsHighlightedProperty =
 			DependencyProperty.Register("IsHighlighted", typeof(bool), typeof(CardItem),
 			                            new PropertyMetadata(false));
 		[XmlIgnore]

@@ -404,10 +404,6 @@ namespace hamqsler
 				CalculateRectangle();
 				view.CalculateColumnWidths();
 				view.BuildColumnHeaders();
-				if(QslCard != null)
-				{
-					QslCard.IsDirty = true;
-				}
 			}
 			else if(e.Property == QslCardProperty)
 			{
@@ -417,10 +413,10 @@ namespace hamqsler
 			{
 				view.BuildQsos();
 				CalculateRectangle();
-				if(QslCard != null)		// properties may be set before QslCard is set
-				{
-					QslCard.IsDirty = true;
-				}
+			}
+			if(QslCard != null && e.Property != IsHighlightedProperty)		// properties may be set before QslCard is set
+			{
+				QslCard.IsDirty = true;
 			}
 			if(QslCard != null && QslCard.CardItemView != null)
 			{
