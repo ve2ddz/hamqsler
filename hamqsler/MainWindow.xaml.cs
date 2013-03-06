@@ -86,6 +86,8 @@ namespace hamqsler
 		public static RoutedCommand SelectItemCommand = new RoutedCommand();
 		public static RoutedCommand NoneCommand = new RoutedCommand();
 		
+		public static RoutedCommand HelpCommand = new RoutedCommand();
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -1660,6 +1662,39 @@ namespace hamqsler
                                                             	return null;
                                                             }), null);
 			Dispatcher.PushFrame(frame);
+		}
+		
+		/// <summary>
+		/// Handler for Help->HamQSLer Help... menu item
+		/// Displays the first page of the help files
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void HelpCommand_Executed(object sender, RoutedEventArgs e)
+		{
+			string path = null;
+			try
+			{
+				string baseDir = System.IO.Path.GetDirectoryName(this.GetType().Assembly.CodeBase);
+				path = System.IO.Path.Combine(baseDir, "help/index.html");
+				System.Diagnostics.Process.Start(path);
+			}
+			catch (Exception ex)
+			{
+				// wrap the exception inside another with an appropriate message
+				Exception exc = new Exception("Error encountered while trying to display Help File", ex);
+				exc.Data.Add("Path:", path);
+				// now throw the exception inside a try/catch so we can log with the message
+				try
+				{
+					throw exc;
+				}
+				catch (Exception except)
+				{
+					App.Logger.Log(except);
+				}
+			}
+						
 		}
 	}
 }

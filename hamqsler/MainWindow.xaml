@@ -98,6 +98,9 @@
 						CanExecute="SelectItemCommand_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.NoneCommand}"
 						CanExecute="NoneCommand_CanExecute"/>
+	
+		<CommandBinding Command="{x:Static local:MainWindow.HelpCommand}"
+						Executed="HelpCommand_Executed"/>
 	</Window.CommandBindings>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
@@ -168,7 +171,8 @@
 				<Separator/>
 			</MenuItem>
 			<MenuItem Header="Help">
-				<MenuItem Header="HamQSLer Help..."/>
+				<MenuItem Header="HamQSLer Help..."
+						  Command="{x:Static local:MainWindow.HelpCommand}"/>
 				<MenuItem Header="About..."/>
 				<MenuItem Header="HamQSLer Website"/>
 				<MenuItem Header="View Log File..."/>
