@@ -135,6 +135,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MarginConverter.cs" />
+    <Compile Include="Print4UpDialog.xaml.cs">
+      <DependentUpon>Print4UpDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PrintSettingsDialog.xaml.cs">
       <DependentUpon>PrintSettingsDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -203,6 +207,7 @@
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
     <Page Include="ManagerMacroGroupBox.xaml" />
+    <Page Include="Print4UpDialog.xaml" />
     <Page Include="PrintSettingsDialog.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />

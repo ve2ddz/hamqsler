@@ -61,6 +61,7 @@ namespace hamqsler
 		public static RoutedCommand CloseCardCommand = new RoutedCommand();
 		public static RoutedCommand SaveCardAsJpegCommand = new RoutedCommand();
 		public static RoutedCommand SaveCardsForPrintingCommand = new RoutedCommand();
+		public static RoutedCommand Save4UpCardsForPrintingCommand = new RoutedCommand();
 		public static RoutedCommand CalculateCardsToBePrintedCommand = new RoutedCommand();
 		public static RoutedCommand PrintCardsCommand = new RoutedCommand();
 		public static RoutedCommand ExitCommand = new RoutedCommand();
@@ -139,7 +140,7 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// CanExecute for File->Save Card As Jpeg...
+		/// CanExecute for Cards->Save Card As Jpeg...
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
@@ -159,7 +160,7 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// CanExecute for File->Save Card As Jpeg...
+		/// CanExecute for Cards->Save Card As Jpeg...
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
@@ -167,6 +168,27 @@ namespace hamqsler
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			e.CanExecute = cti != null;
+		}
+		
+		/// <summary>
+		/// CanExecute for Cards->Save 4 Up Card For Printing
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void Save4UpCardsForPrintingCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			bool canExecute = false;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				Card card = cti.cardCanvas.QslCard;
+				if(card.DisplayWidth == 5.5 * PIXELSPERINCH && 
+				   card.DisplayHeight == 3.5 * PIXELSPERINCH)
+				{
+					canExecute = true;
+				}
+			}
+			e.CanExecute = canExecute;
 		}
 		
 		/// <summary>
@@ -763,6 +785,105 @@ namespace hamqsler
 					+ directoryName;
 			}
 		}
+
+		/// <summary>
+		/// Handler for Cards->Save 4-Up Cards for Printing menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void Save4UpCardsForPrintingCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			Print4UpDialog p4D = new Print4UpDialog();
+			if(p4D.ShowDialog() == true)
+			{
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                saveDialog.Filter = "Image(*.jpg)|*.jpg";
+                if (saveDialog.ShowDialog() == true)
+                {
+                    string fileName = saveDialog.FileName;
+
+                    try
+                    {
+                        // save the card as a JPEG
+                        Save4UpAsJpeg(fileName, p4D.Resolution, p4D.IncludeCardOutlines);
+                    }
+                    catch (Exception ex)
+                    {
+                    	App.Logger.Log(ex);
+                    }
+                }
+            }
+        }
+
+		/// <summary>
+		/// Helper method that saves 4 Up Cards in a JPEG file
+		/// </summary>
+		/// <param name="fileName">name of file to store image in</param>
+		/// <param name="resolution">Resolution to store the image at</param>
+		/// <param name="incBorders">Boolean indicating whether card edges should be included</param>
+        private void Save4UpAsJpeg(string fileName, int resolution, bool incBorders)
+        {
+            // create visual of the card
+            DrawingVisual visual = new DrawingVisual();
+            DrawingContext drawingContext = visual.RenderOpen();
+            CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+            for (int cardNo = 0; cardNo <= 3; cardNo++)
+            {
+				Card card = cti.cardCanvas.QslCard.Clone();
+				card.IsInDesignMode = false;
+				CardView cView = new CardView(card);
+				if(card.QsosBox != null)
+				{
+					((QsosBoxView)card.QsosBox.CardItemView).BuildQsos();
+				}
+				// update texts based on number of QSOs.
+				foreach (FrameworkElement elt in cView.CardItems) 
+				{
+					TextItemView tiv = elt as TextItemView;
+					if (tiv != null) 
+					{
+						tiv.SetDisplayText(((QsosBoxView)card.QsosBox.CardItemView).Qsos);
+					}
+				}
+				
+	            double offX = (cardNo % 2 == 0) ? 0 : card.DisplayWidth;
+                double offY = (cardNo < 2) ? 0 : card.DisplayHeight;
+                drawingContext.PushTransform(new TranslateTransform(offX, offY));
+                cView.Render(drawingContext);
+	            drawingContext.Pop();
+	            if (incBorders)
+	            {
+	                Pen pen = new Pen(Brushes.Black, 1);
+	                drawingContext.DrawLine(pen, new Point(0, 0), new Point(card.DisplayWidth * 2 + 1, 0));
+	                drawingContext.DrawLine(pen, new Point(card.DisplayWidth, 0),
+	                            new Point(card.DisplayWidth, card.DisplayHeight * 2 + 1));
+	                drawingContext.DrawLine(pen, new Point(card.DisplayWidth * 2 + 1, 0),
+	                            new Point(card.DisplayWidth * 2 + 1, 0));
+	                drawingContext.DrawLine(pen, new Point(0, card.DisplayHeight + 1),
+	                            new Point(card.DisplayWidth * 2 + 1, card.DisplayHeight + 1));
+	                drawingContext.DrawLine(pen, new Point(0, card.DisplayHeight * 2 + 1),
+	                            new Point(card.DisplayWidth + 2 + 1, card.DisplayHeight * 2 + 1));
+	                drawingContext.DrawLine(pen, new Point(0, 0), new Point(0, card.DisplayHeight * 2 + 1));
+	            }
+            }
+            drawingContext.Close();
+            // calculate width and height of card in pixels
+            int width = (int)((double)resolution * 5.5 * 2 + 5 * (resolution / 300));
+            int height = (int)((double)resolution * 3.5 * 2 + 5 * (resolution / 300));
+            // render visual as a bitmap
+            RenderTargetBitmap rtb = new RenderTargetBitmap(width, height, resolution, resolution, PixelFormats.Default);
+            rtb.Clear();
+            rtb.Render(visual);
+
+            // encode as a JPEG and save the file
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.QualityLevel = 95;
+            encoder.Frames.Add(BitmapFrame.Create(rtb));
+            FileStream jpgFile = new FileStream(fileName, FileMode.OpenOrCreate);
+            encoder.Save(jpgFile);
+            jpgFile.Close();
+        }
+
 
 		/// <summary>
 		/// Display MessageBox showing the number of cards that would be printed given the
