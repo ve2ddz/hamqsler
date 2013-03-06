@@ -103,6 +103,8 @@
 						Executed="HelpCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.AboutCommand}"
 						Executed="AboutCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.WebsiteCommand}"
+						Executed="WebsiteCommand_Executed"/>
 	
 	</Window.CommandBindings>
 	<DockPanel>
@@ -178,7 +180,8 @@
 						  Command="{x:Static local:MainWindow.HelpCommand}"/>
 				<MenuItem Header="About..."
 						  Command="{x:Static local:MainWindow.AboutCommand}"/>
-				<MenuItem Header="HamQSLer Website"/>
+				<MenuItem Header="HamQSLer Website" 
+				          Command="{x:Static local:MainWindow.WebsiteCommand}"/>
 				<MenuItem Header="View Log File..."/>
 			</MenuItem>
 		</Menu>

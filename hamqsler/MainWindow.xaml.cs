@@ -88,6 +88,7 @@ namespace hamqsler
 		
 		public static RoutedCommand HelpCommand = new RoutedCommand();
 		public static RoutedCommand AboutCommand = new RoutedCommand();
+		public static RoutedCommand WebsiteCommand = new RoutedCommand();
 		
 		/// <summary>
 		/// Constructor
@@ -1698,10 +1699,25 @@ namespace hamqsler
 						
 		}
 		
+		/// <summary>
+		/// Handle Help->About... menu item event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void AboutCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			AboutDialog aboutD = new AboutDialog();
 			aboutD.ShowDialog();
+		}
+		
+		/// <summary>
+		/// Handle Help->HamQSLer Website menu item event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void WebsiteCommand_Executed(object sender, RoutedEventArgs e)
+		{
+			System.Diagnostics.Process.Start("http://www.va3hj.ca");			
 		}
 	}
 }
