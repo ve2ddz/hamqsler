@@ -57,8 +57,6 @@ namespace hamqsler
 		/// <param name="e"></param>
 		void Window_ContentRendered(object sender, EventArgs e)
 		{
-//			Thread thr = new Thread(new ThreadStart(InitializeApplication));
-//			thr.Start();
 			InitializeApplication();
 
 		}
@@ -160,6 +158,12 @@ namespace hamqsler
 			{
 				ShowUserPrefsCreatedLabel();
 			}
+			else
+			{
+				App app = (App)Application.Current;
+				app.ShowMainWindow();
+				this.Close();
+			}
 			
 		}
 
@@ -187,7 +191,6 @@ namespace hamqsler
 		public void ShowContinueButton()
 		{
 			okButton.Visibility = Visibility.Visible;
-//			UpdateUI();
 		}
 		
 		/// <summary>
@@ -196,7 +199,6 @@ namespace hamqsler
 		public void ShowTerminateButton()
 		{
 			termButton.Visibility = Visibility.Visible;
-//			UpdateUI();
 		}
 		
 		/// <summary>
