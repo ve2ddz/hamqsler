@@ -471,6 +471,9 @@ namespace hamqsler
 						catch(Exception ex)
 						{
 							App.Logger.Log(ex);
+							prefs.AdifFiles.Remove(adifFiles[i]);
+							((App)Application.Current).UserPreferences = prefs;
+							((App)Application.Current).UserPreferences.SerializeAsXml();
 						}
 					}
 					qsosView.ShowIncludeSelectors();
@@ -481,9 +484,18 @@ namespace hamqsler
 			{
 				string[] fileNames = prefs.CardFiles.ToArray();
 				prefs.CardFiles.Clear();
+				Card card;
 				foreach(string fileName in fileNames)
 				{
-					Card card = Card.DeserializeCard(fileName);
+					try
+					{
+						card = Card.DeserializeCard(fileName);
+					}
+					catch(Exception ex)
+					{
+						App.Logger.Log(ex);
+						continue;
+					}
 					card.FileName = fileName;
 					CardTabItem cti = new CardTabItem(card);
 					mainTabControl.Items.Add(cti);
@@ -494,6 +506,8 @@ namespace hamqsler
 					SetTitle(card.FileName, card.IsDirty);
 					prefs.CardFiles.Add(fileName);
 				}
+				((App)Application.Current).UserPreferences = prefs;
+				((App)Application.Current).UserPreferences.SerializeAsXml();
 			}
 		}
 		
