@@ -126,6 +126,12 @@ namespace hamqsler
 			{
 				ShowContinueButton();
 			}
+			else
+			{
+				App app = (App)Application.Current;
+				app.ShowMainWindow();
+				this.Close();
+			}
 			this.Cursor = oldCursor;
 			
 		}
@@ -157,14 +163,7 @@ namespace hamqsler
 			else if(showUserPrefsLabel)		// UserPreferences file has been created
 			{
 				ShowUserPrefsCreatedLabel();
-			}
-			else
-			{
-				App app = (App)Application.Current;
-				app.ShowMainWindow();
-				this.Close();
-			}
-			
+			}			
 		}
 
 		/// <summary>
