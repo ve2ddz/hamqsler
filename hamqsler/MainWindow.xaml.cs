@@ -25,6 +25,7 @@ using System.IO;
 using System.IO.Packaging;
 using System.Printing;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -32,6 +33,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Windows.Xps;
@@ -49,6 +51,7 @@ namespace hamqsler
 	{
 		private PrintDialog printDialog = null;
 		private PageMediaSize pageSize = null;
+		private static double PIXELSPERINCH = 96;
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
@@ -56,6 +59,8 @@ namespace hamqsler
 		public static RoutedCommand CardSaveCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
 		public static RoutedCommand CloseCardCommand = new RoutedCommand();
+		public static RoutedCommand SaveCardAsJpegCommand = new RoutedCommand();
+		public static RoutedCommand SaveCardsForPrintingCommand = new RoutedCommand();
 		public static RoutedCommand CalculateCardsToBePrintedCommand = new RoutedCommand();
 		public static RoutedCommand PrintCardsCommand = new RoutedCommand();
 		public static RoutedCommand ExitCommand = new RoutedCommand();
@@ -128,6 +133,37 @@ namespace hamqsler
 		/// <param name="sender">not used</param>
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void CloseCardCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = cti != null;
+		}
+		
+		/// <summary>
+		/// CanExecute for File->Save Card As Jpeg...
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void SaveCardsForPrintingCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			bool canExecute = false;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				Card card = cti.cardCanvas.QslCard;
+				if(card.DisplayWidth <= 6 * PIXELSPERINCH && card.DisplayHeight <= 4 * PIXELSPERINCH)
+				{
+					canExecute = true;
+				}
+			}
+			e.CanExecute = canExecute;
+		}
+		
+		/// <summary>
+		/// CanExecute for File->Save Card As Jpeg...
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void SaveCardAsJpegCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			e.CanExecute = cti != null;
@@ -519,6 +555,215 @@ namespace hamqsler
 			CloseCardTab(cti, true);
 		}
 		
+		/// <summary>
+		/// Handler for Save Card As Jpeg Executed event
+		/// </summary>
+		/// <param name="sender">object that generated the event</param>
+		/// <param name="e">ExecutedRoutedEventArgs object</param>
+		private void SaveCardAsJpegCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			Card card = cti.cardCanvas.QslCard;
+			JpegPropsDialog jpD = new JpegPropsDialog();
+			if(jpD.ShowDialog() == true)
+			{
+				SaveFileDialog saveDialog = new SaveFileDialog();
+				saveDialog.Filter = "Image (*.jpg)|*.jpg";
+				if(saveDialog.ShowDialog() == true)
+				{
+					string fileName = saveDialog.FileName;
+					try
+					{
+						// save card as JPEG
+						SaveCardAsJpeg(fileName, jpD.Resolution, jpD.Quality, jpD.ShowQsos);
+					}
+					catch(Exception ex)
+					{
+						App.Logger.Log(ex);
+					}
+				}
+					
+			}
+		}
+		
+		/// <summary>
+		/// Save a card as JPEG file
+		/// </summary>
+		/// <param name="fileName">path to the file to save</param>
+		/// <param name="resolution">image resolution</param>
+		/// <param name="quality">image quality</param>
+		/// <param name="showQsos">Boolean to indicate whether the card should include QSO info</param>
+		private void SaveCardAsJpeg(string fileName, int resolution, int quality,
+		                            bool showQsos)
+		{
+			// create visual of the card
+			DrawingVisual visual = new DrawingVisual();
+			DrawingContext drawingContext = visual.RenderOpen();
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				Card card = cti.cardCanvas.QslCard.Clone();
+				card.IsInDesignMode = false;
+				CardView cView = new CardView(card);
+				if(card.QsosBox != null)
+				{
+					if(showQsos)
+					{
+						List<List<DispQso>> dispQsos = qsosView.DisplayQsos.GetDispQsosList(card);
+						((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[0];
+					}
+					else
+					{
+						((QsosBoxView)card.QsosBox.CardItemView).BuildQsos();
+					}
+					// update texts based on number of QSOs.
+					foreach (FrameworkElement elt in cView.CardItems) 
+					{
+						TextItemView tiv = elt as TextItemView;
+						if (tiv != null) 
+						{
+							tiv.SetDisplayText(((QsosBoxView)card.QsosBox.CardItemView).Qsos);
+						}
+					}
+				}
+	
+				cView.Render(drawingContext);
+				drawingContext.Close();
+				// render visual as a bitmap
+				RenderTargetBitmap rtb = new RenderTargetBitmap((int)card.DisplayWidth, 
+				                                                (int)card.DisplayHeight,
+				                                                resolution, resolution, 
+				                                                PixelFormats.Default);
+				rtb.Clear();
+				rtb.Render(visual);
+				
+				// encode as a JPEG and save the file
+				JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+				encoder.QualityLevel = quality;
+				encoder.Frames.Add(BitmapFrame.Create(rtb));
+				FileStream jpgFile = new FileStream(fileName, FileMode.OpenOrCreate);
+				encoder.Save(jpgFile);
+				jpgFile.Close();
+			}
+		}
+
+		/// <summary>
+		/// Handle processing for Cards->Save Cards for Printing menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void SaveCardsForPrintingCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			// use FolderBrowserDialog for user to select directory that files are to be save in
+			System.Windows.Forms.FolderBrowserDialog folderBrowser = 
+				new System.Windows.Forms.FolderBrowserDialog();
+			folderBrowser.RootFolder = System.Environment.SpecialFolder.MyDocuments;
+			folderBrowser.Description = "Select folder to save card images in";
+			folderBrowser.ShowNewFolderButton = true;
+			if(folderBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+				string directory = folderBrowser.SelectedPath;
+				try
+				{
+					// check the directory for preexisting files and make sure that they are not overwritten
+					DirectoryInfo dirInfo = new DirectoryInfo(directory);
+					FileInfo[] files = dirInfo.GetFiles("Qsl*.jpg");
+					int startNum = 0;
+					Regex regex = new Regex("^[0-9]*$");
+					foreach (FileInfo fInfo in files)
+					{
+						string fName = fInfo.Name;
+						fName = fName.Substring(3);
+						fName = fName.Substring(0, fName.Length - 4);
+						if(regex.IsMatch(fName))
+						{
+							Int32 num = Int32.Parse(fName);
+							if(num > startNum)
+							{
+								startNum = num;
+							}
+						}
+					}
+					// now create and save card images in the directory
+					SaveCardsAsJpegsForPrinting(startNum, directory);
+					
+				}
+				catch(Exception ex)
+				{
+					App.Logger.Log(ex);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Saves cards with QSO info as JPEGs for photo printing
+		/// </summary>
+		/// <param name="startNumber">largest number (nnn) in file names QSLnnn.jpeg in print directory before printing starts</param>
+		/// <param name="directoryName">path to directory that JPEG files are to be written to</param>
+		/// <exception>DirectoryNotFoundException when directory has been deleted between time directory was selected and attempt
+		/// to create or write file.</exception>
+		/// <exception>SecurityException when user does not permission to access the directory or file (e.g. write permission on directory.</exception>
+		/// <exception>IOException for an IO error</exception>
+		/// <exception>PathTooLongException when the directory is longer than 248 characters, or filename is longer than 260 characters.</exception>
+		/// <exception>Several others that definitely should never occur.</exception>
+		private void SaveCardsAsJpegsForPrinting(int startNumber, string directoryName)
+		{
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti != null)
+			{
+				//create a list of QSOs for each card
+				List<List<DispQso>> qsos = qsosView.DisplayQsos.GetDispQsosList(cti.cardCanvas.QslCard);
+				// now create file for each card
+				for(int cardNum = 0; cardNum < qsos.Count; cardNum++)
+				{
+					Card card = cti.cardCanvas.QslCard.Clone();
+					card.IsInDesignMode = false;
+					CardView cView = new CardView(card);
+					// inform user of progress
+					StatusText.Text = "Creating card " + (cardNum+1) + " of " + qsos.Count;
+					StatusText.InvalidateVisual();
+					ForceUIUpdate();
+					// create the card and render it
+					DrawingVisual visual = new DrawingVisual();
+					DrawingContext drawingContext = visual.RenderOpen();
+					// always make image 4 by 6 inches
+					drawingContext.DrawRectangle(Brushes.White, new Pen(Brushes.White, 0),
+					                             new Rect(0, 0, 6 * 96, 4 * 96));
+					if(card.QsosBox != null)
+					{
+						List<List<DispQso>> dispQsos = qsosView.DisplayQsos.GetDispQsosList(card);
+						((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNum];
+					}
+					cView.Render(drawingContext);
+					drawingContext.Close();
+					// render image as a bitmap
+					RenderTargetBitmap rtb = new RenderTargetBitmap(1800, 1200, 300, 300, PixelFormats.Default);
+					rtb.Clear();
+					rtb.Render(visual);
+	
+					// save the image as a JPEG
+					JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+					encoder.QualityLevel = 95;
+					encoder.Frames.Add(BitmapFrame.Create(rtb));
+					FileStream jpgFile = new FileStream(directoryName + "\\Qsl" + 
+					                                    (startNumber + cardNum + 1) + ".jpg", 
+					                                    FileMode.Create);
+					encoder.Save(jpgFile);
+					jpgFile.Close();
+					
+					// force garbage collection to prevent Out of Memory exception
+					if(cardNum % 50 == 0)
+					{
+						System.GC.WaitForPendingFinalizers();
+						System.GC.Collect();
+					}
+				}
+				// tell user that all cards are created
+				StatusText.Text = qsos.Count + " of " + qsos.Count + " cards created in directory: "
+					+ directoryName;
+			}
+		}
+
 		/// <summary>
 		/// Display MessageBox showing the number of cards that would be printed given the
 		/// current selections
@@ -1279,7 +1524,21 @@ namespace hamqsler
 				// different control, this will not happen
 				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 			}
+		}
 
+		/// <summary>
+		/// Routine to force update of UI
+		/// </summary>
+		private void ForceUIUpdate() 
+		{
+			DispatcherFrame frame = new DispatcherFrame();
+			Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, 
+			                                         new DispatcherOperationCallback(delegate(object parameter)
+                                                            {
+                                                            	frame.Continue = false;
+                                                            	return null;
+                                                            }), null);
+			Dispatcher.PushFrame(frame);
 		}
 	}
 }
