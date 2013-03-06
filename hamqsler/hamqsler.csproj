@@ -71,6 +71,10 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="AdifExistsMacro.cs" />
     <Compile Include="AdifExistsMacroGroupBox.xaml.cs">
       <DependentUpon>AdifExistsMacroGroupBox.xaml</DependentUpon>
@@ -196,6 +200,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AboutDialog.xaml" />
     <Page Include="AdifExistsMacroGroupBox.xaml" />
     <Page Include="AdifMacroGroupBox.xaml" />
     <Page Include="CardCanvas.xaml" />

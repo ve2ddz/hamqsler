@@ -87,6 +87,7 @@ namespace hamqsler
 		public static RoutedCommand NoneCommand = new RoutedCommand();
 		
 		public static RoutedCommand HelpCommand = new RoutedCommand();
+		public static RoutedCommand AboutCommand = new RoutedCommand();
 		
 		/// <summary>
 		/// Constructor
@@ -1695,6 +1696,12 @@ namespace hamqsler
 				}
 			}
 						
+		}
+		
+		private void AboutCommand_Executed(object sender, RoutedEventArgs e)
+		{
+			AboutDialog aboutD = new AboutDialog();
+			aboutD.ShowDialog();
 		}
 	}
 }
