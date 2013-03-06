@@ -68,21 +68,28 @@
 	<Canvas.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Select Highlighted Item"
-			          Command="{x:Static local:CardCanvas.SelectCardItemCommand}"/>
+			          Command="{x:Static local:CardCanvas.SelectCardItemCommand}"
+					  ToolTip="Select the hgihlighted card item"/>
 			<MenuItem Header="Deselect Item"
-			          Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"/>
+			          Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"
+					  ToolTip="Deselect the selected card item"/>
 			<Separator/>
 			<MenuItem Header="Add Image" InputGestureText="Ctrl-I"
-					  Command="{x:Static local:CardCanvas.AddImageCommand}"/>
+					  Command="{x:Static local:CardCanvas.AddImageCommand}"
+					  ToolTip="Add a new image to the card"/>
 			<MenuItem Header="Add Text" InputGestureText="Ctrl-T"
-					  Command="{x:Static local:CardCanvas.AddTextCommand}"/>
+					  Command="{x:Static local:CardCanvas.AddTextCommand}"
+					  ToolTip="Add a new Text Item to the card"/>
 			<MenuItem Header="Add QsosBox"
-					  Command="{x:Static local:CardCanvas.AddQsosBoxCommand}"/>
+					  Command="{x:Static local:CardCanvas.AddQsosBoxCommand}"
+					  ToolTip="Add a QsosBox to the card"/>
 			<Separator/>
 			<MenuItem Header="Delete Selected Item" InputGestureText="Delete"
-					  Command="{x:Static local:CardCanvas.DeleteItemCommand}"/>
+					  Command="{x:Static local:CardCanvas.DeleteItemCommand}"
+					  ToolTip="Delete the select card item from the card"/>
 			<MenuItem Header="Clear Background" InputGestureText="Ctrl-Delete"
-					  Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"/>
+					  Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"
+					  ToolTip="Remove the background image from the card"/>
 		</ContextMenu>
 	</Canvas.ContextMenu>
 </Canvas>

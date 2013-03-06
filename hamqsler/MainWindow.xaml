@@ -143,34 +143,44 @@
 		</Window.InputBindings>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
-			<MenuItem Header="Cards">
+			<MenuItem Header="_Cards">
 				<MenuItem Header="_New">
 					<MenuItem Name="BureauCardMenuItem" Header="Bureau Card" 
 					          InputGestureText="Ctrl-N"
-					          Command="{x:Static local:MainWindow.NewBureauCardCommand}"/>
+					          Command="{x:Static local:MainWindow.NewBureauCardCommand}"
+							  ToolTip="Create a new Bureau sized QSL card"/>
 					<MenuItem Header="4 1/4 by 5 1/2 inch Card" 
-					          Command="{x:Static local:MainWindow.New45CardCommand}"/>
+					          Command="{x:Static local:MainWindow.New45CardCommand}"
+							  ToolTip="Create a new 4 1/4 by 5 1/2 inch QSL card"/>
 					<MenuItem Header="4 by 6 inch (10 by 15 cm) Card" 
-					          Command="{x:Static local:MainWindow.New46CardCommand}"/>
+					          Command="{x:Static local:MainWindow.New46CardCommand}"
+							  ToolTip="Create a new 4 by 6 inch (10 by 15 cm QSL card)"/>
 				</MenuItem>
 				<MenuItem Header="_Open Card..."
 				          InputGestureText="Ctrl-O"
-						Command="{x:Static local:MainWindow.CardOpenCommand}"/>
+						Command="{x:Static local:MainWindow.CardOpenCommand}"
+						ToolTip="Open and display a QSL card"/>
 				<MenuItem Header="_Save Card" x:Name="SaveCardMenuItem"
 				          InputGestureText="Ctrl-S"
-						Command="{x:Static local:MainWindow.CardSaveCommand}"/>
+						Command="{x:Static local:MainWindow.CardSaveCommand}"
+						ToolTip="Save the active QSL card"/>
 				<MenuItem Header="Save Card _As..." x:Name="SaveCardAsMenuItem"
 				          InputGestureText="Ctrl-A"
-						Command="{x:Static local:MainWindow.CardSaveAsCommand}"/>
+						Command="{x:Static local:MainWindow.CardSaveAsCommand}"
+						ToolTip="Save the active QSL card under a different name"/>
 				<MenuItem Header="Close Card" 
 				          InputGestureText="Ctrl-W"
-				          Command="{x:Static local:MainWindow.CloseCardCommand}"/>
+				          Command="{x:Static local:MainWindow.CloseCardCommand}"
+						  ToolTip="Close the active QSL card"/>
 				<MenuItem Header="Save Card as Jpeg..."
-						  Command="{x:Static local:MainWindow.SaveCardAsJpegCommand}"/>
+						  Command="{x:Static local:MainWindow.SaveCardAsJpegCommand}"
+						  ToolTip="Save an image of the active QSL card"/>
 				<MenuItem Header="Save Cards For Printing..."
-						  Command="{x:Static local:MainWindow.SaveCardsForPrintingCommand}"/>
+						  Command="{x:Static local:MainWindow.SaveCardsForPrintingCommand}"
+						  ToolTip="Save images of the active QSL card with QSO data for printing later"/>
 				<MenuItem Header="Save 4 Up Cards For Printing..."
-						  Command="{x:Static local:MainWindow.Save4UpCardsForPrintingCommand}"/>
+						  Command="{x:Static local:MainWindow.Save4UpCardsForPrintingCommand}"
+						  ToolTip="Save an image of a 2 by 2 array of the active blank QSL card"/>
 				<Separator/>
 				<MenuItem Header="Calculate Number of Cards to be Printed..."
 						  Command="{x:Static local:MainWindow.CalculateCardsToBePrintedCommand}"/>
@@ -178,40 +188,54 @@
 				          Command="{x:Static local:MainWindow.PrintCardsCommand}"/>
 				<Separator/>
 				<MenuItem Header="Quit" InputGestureText="Ctrl-Q"
-				          Command="{x:Static local:MainWindow.ExitCommand}"/>
+				          Command="{x:Static local:MainWindow.ExitCommand}"
+						  ToolTip="Exit the program"/>
 			</MenuItem>
 			<MenuItem Header="QSOs"
 						Command="{x:Static local:MainWindow.QsosCommand}">
 				<MenuItem Header="Input QSOs..."
-						Command="{x:Static local:MainWindow.InputQsosCommand}"/>
+						Command="{x:Static local:MainWindow.InputQsosCommand}"
+						ToolTip="Manually enter QSOs for printing on a QSL card"/>
 				<MenuItem Header="Import QSOs..." 
-						Command="{x:Static local:MainWindow.ImportQsosCommand}"/>
+						Command="{x:Static local:MainWindow.ImportQsosCommand}"
+						ToolTip="Import QSOs from an ADIF file"/>
 				<MenuItem Header="Add QSOs..."
-						Command="{x:Static local:MainWindow.AddQsosCommand}"/>
+						Command="{x:Static local:MainWindow.AddQsosCommand}"
+						ToolTip="Add QSOs from an ADIF file"/>
 				<MenuItem Header="Clear QSOs"
-						Command="{x:Static local:MainWindow.ClearQsosCommand}"/>
+						Command="{x:Static local:MainWindow.ClearQsosCommand}"
+						ToolTip="Remove all loaded QSOs"/>
 				<MenuItem Header="Export QSOs..."
-						Command="{x:Static local:MainWindow.ExportQsosCommand}"/>
+						Command="{x:Static local:MainWindow.ExportQsosCommand}"
+						ToolTip="Save all loaded QSOs to an ADIF file"/>
 				<Separator/>
 				<MenuItem Header="Include All QSOs"
-						Command="{x:Static local:MainWindow.IncludeAllQsosCommand}"/>
+						Command="{x:Static local:MainWindow.IncludeAllQsosCommand}"
+						ToolTip="Set the Include checkbox for all QSOs"/>
 				<MenuItem Header="Exclude All QSOs"
-						Command="{x:Static local:MainWindow.ExcludeAllQsosCommand}"/>
+						Command="{x:Static local:MainWindow.ExcludeAllQsosCommand}"
+						ToolTip="Clear the Include checkbox for all QSOs"/>
 			</MenuItem>
 			<MenuItem Header="Edit">
 				<MenuItem Header="Add Image" InputGestureText="Ctrl-I"
-						Command="{x:Static local:MainWindow.AddImageCommand}"/>
+						Command="{x:Static local:MainWindow.AddImageCommand}"
+						ToolTip="Add a new image to the card"/>
 				<MenuItem Header="Add Text Item" InputGestureText="Ctrl-T"
-						Command="{x:Static local:MainWindow.AddTextCommand}"/>
+						Command="{x:Static local:MainWindow.AddTextCommand}"
+						ToolTip="Add a new TextItem to the card"/>
 				<MenuItem Header="Add QsosBox"
-						Command="{x:Static local:MainWindow.AddQsosBoxCommand}"/>
+						Command="{x:Static local:MainWindow.AddQsosBoxCommand}"
+						ToolTip="Add a QsosBox to the card"/>
 				<MenuItem Header="Delete Selected Item" InputGestureText="Delete"
-						Command="{x:Static local:MainWindow.DeleteItemCommand}"/>
+						Command="{x:Static local:MainWindow.DeleteItemCommand}"
+						ToolTip="Delete the selected card item from the card"/>
 				<MenuItem Header="Clear Background Image" InputGestureText="Ctrl-Delete"
-						Command="{x:Static local:MainWindow.ClearBackgroundCommand}"/>
+						Command="{x:Static local:MainWindow.ClearBackgroundCommand}"
+						ToolTip="Clear the background image"/>
 				<Separator/>
 				<MenuItem Header="User Preferences..." 
-				          Command="{x:Static local:MainWindow.UserPreferencesCommand}"/>
+				          Command="{x:Static local:MainWindow.UserPreferencesCommand}"
+						ToolTip="Edit the user preferences"/>
 			</MenuItem>
 			<MenuItem Header="Select" Name="SelectMenu"
 					  SubmenuOpened="SelectMenu_SubmenuOpened"
@@ -220,13 +244,17 @@
 			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="HamQSLer Help..." InputGestureText="F1"
-						  Command="{x:Static local:MainWindow.HelpCommand}"/>
+						  Command="{x:Static local:MainWindow.HelpCommand}"
+						  ToolTip="Display HamQSLer's help files"/>
 				<MenuItem Header="About..."
-						  Command="{x:Static local:MainWindow.AboutCommand}"/>
+						  Command="{x:Static local:MainWindow.AboutCommand}"
+						  ToolTip="Show the About dialog"/>
 				<MenuItem Header="HamQSLer Website" 
-				          Command="{x:Static local:MainWindow.WebsiteCommand}"/>
+				          Command="{x:Static local:MainWindow.WebsiteCommand}"
+						  ToolTip="Open the program's main web page"/>
 				<MenuItem Header="View Log File..."
-				          Command="{x:Static local:MainWindow.ViewLogFileCommand}"/>
+				          Command="{x:Static local:MainWindow.ViewLogFileCommand}"
+						  ToolTip="Open the HamQSLer log file for viewing"/>
 			</MenuItem>
 		</Menu>
 		<StatusBar DockPanel.Dock="Bottom">

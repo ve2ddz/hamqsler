@@ -1443,6 +1443,7 @@ namespace hamqsler
 			none.Header = "None";
 			none.Click += OnNone_Clicked;
 			none.Command = NoneCommand;
+			none.ToolTip = "Deselect the selected card item";
 			SelectMenu.Items.Add(none);
 		}
 		
