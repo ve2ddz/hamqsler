@@ -89,6 +89,7 @@ namespace hamqsler
 		public static RoutedCommand HelpCommand = new RoutedCommand();
 		public static RoutedCommand AboutCommand = new RoutedCommand();
 		public static RoutedCommand WebsiteCommand = new RoutedCommand();
+		public static RoutedCommand ViewLogFileCommand = new RoutedCommand();
 		
 		/// <summary>
 		/// Constructor
@@ -1718,6 +1719,36 @@ namespace hamqsler
 		private void WebsiteCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			System.Diagnostics.Process.Start("http://www.va3hj.ca");			
+		}
+		
+		/// <summary>
+		/// Handler for Help=>View Log File menu item event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ViewLogFileCommand_Executed(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				string baseDir = ((App)Application.Current).HamqslerFolder;
+				string path = System.IO.Path.Combine(baseDir, "Logs/hamqsler.log");
+				System.Diagnostics.Process.Start(path);
+			}
+			catch (Exception ex)
+			{
+				// create new exception with better error message
+				Exception exc = new Exception("Error encountered while trying to display the log file", ex);
+				// now throw from with try/catch so it can be logged
+				try
+				{
+					throw exc;
+				}
+				catch (Exception except)
+				{
+					App.Logger.Log(except);
+				}
+			}
+			
 		}
 	}
 }

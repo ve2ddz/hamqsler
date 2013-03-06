@@ -105,6 +105,8 @@
 						Executed="AboutCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.WebsiteCommand}"
 						Executed="WebsiteCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.ViewLogFileCommand}"
+						Executed="ViewLogFileCommand_Executed"/>
 	
 	</Window.CommandBindings>
 	<DockPanel>
@@ -182,7 +184,8 @@
 						  Command="{x:Static local:MainWindow.AboutCommand}"/>
 				<MenuItem Header="HamQSLer Website" 
 				          Command="{x:Static local:MainWindow.WebsiteCommand}"/>
-				<MenuItem Header="View Log File..."/>
+				<MenuItem Header="View Log File..."
+				          Command="{x:Static local:MainWindow.ViewLogFileCommand}"/>
 			</MenuItem>
 		</Menu>
 		<StatusBar DockPanel.Dock="Bottom">
