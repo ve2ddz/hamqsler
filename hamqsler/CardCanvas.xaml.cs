@@ -297,6 +297,7 @@ namespace hamqsler
 			// Clear Background was called, it remains selected.
 			QslCard.BackImage.IsSelected = false;
 			GetCardTabItem().SetPropertiesVisibility(null);
+			cardView.InvalidateVisual();
 		}
 		
 		/// <summary>
