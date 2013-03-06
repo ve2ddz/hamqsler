@@ -119,6 +119,10 @@
     <Compile Include="FontWeightConverter.cs" />
     <Compile Include="HamqslerPaginator.cs" />
     <Compile Include="ImageView.cs" />
+    <Compile Include="JpegPropsDialog.xaml.cs">
+      <DependentUpon>JpegPropsDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MacroGroupBox.cs" />
     <Compile Include="ManagerExistsMacro.cs" />
     <Compile Include="ManagerExistsMacroGroupBox.xaml.cs">
@@ -195,6 +199,7 @@
     <Page Include="CountMacroGroupBox.xaml">
       <DependentUpon>CountMacro.cs</DependentUpon>
     </Page>
+    <Page Include="JpegPropsDialog.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
     <Page Include="ManagerMacroGroupBox.xaml" />

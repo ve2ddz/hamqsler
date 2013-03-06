@@ -1,0 +1,54 @@
+﻿<Window x:Class="hamqsler.JpegPropsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="JPEG Image Properties" SizeToContent="Height" Width="250"
+	DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <StackPanel Orientation="Vertical">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition  Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Show QSOs:" HorizontalAlignment="Right" VerticalAlignment="Center"
+                       Grid.Column="0" Grid.Row="0" Margin="5"/>
+            <CheckBox Name="QsosCheckbox" Grid.Column="1" Grid.Row="0"
+                      VerticalAlignment="Center" Margin="5"
+        			  IsChecked="{Binding Path=ShowQsos, Mode=TwoWay}"/>
+            <TextBlock Text="Resolution (DPI):" HorizontalAlignment="Right"  VerticalAlignment="Center"
+                       Grid.Column="0" Grid.Row="1" Margin="5"/>
+            <ComboBox Name="ResolutionCombo" IsEditable="True" 
+                      Grid.Column="1" Grid.Row="1" Margin="5,5,25,5">
+            	<ComboBox.Text>
+            		<Binding Path="Resolution" Mode="TwoWay"/>
+            	</ComboBox.Text>
+                <ComboBoxItem Content="96"/>
+                <ComboBoxItem Content="150"/>
+                <ComboBoxItem Content="200"/>
+                <ComboBoxItem Content="300"/>
+            </ComboBox>
+            <TextBlock Text="Quality:" HorizontalAlignment="Right" VerticalAlignment="Center"
+                       Grid.Column="0" Grid.Row="2" Margin="5"/>
+            <ComboBox Name="QualityCombo" IsEditable="True" 
+                      Grid.Column="1" Grid.Row="2" Margin="5,5,25,5">
+				<ComboBox.Text>
+					<Binding Path="Quality" Mode="TwoWay"/>
+				</ComboBox.Text>
+                <ComboBoxItem Content="50"/>
+                <ComboBoxItem Content="75"/>
+                <ComboBoxItem Content="85"/>
+                <ComboBoxItem Content="95"/>
+                <ComboBoxItem Content="100"/>
+            </ComboBox>
+        </Grid>
+        <Separator Margin="0,5,0,5"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="OK" Click="OK_Click" IsDefault="True" Width="50" Margin="5,5,25,5"/>
+            <Button Content="Cancel" IsCancel="True" Width="50" Margin="10,5,5,5"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

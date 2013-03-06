@@ -37,6 +37,9 @@
 		<CommandBinding Command="{x:Static local:MainWindow.CloseCardCommand}"
 						CanExecute="CloseCardCommand_CanExecute"
 						Executed="CloseCardCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.SaveCardAsJpegCommand}"
+						CanExecute="SaveCardAsJpegCommand_CanExecute"
+						Executed="SaveCardAsJpegCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.CalculateCardsToBePrintedCommand}"
 						CanExecute="CalculateCardsToBePrintedCommand_CanExecute"
 						Executed="CalculateCardsToBePrintedCommand_Executed"/>
@@ -106,7 +109,8 @@
 						Command="{x:Static local:MainWindow.CardSaveAsCommand}"/>
 				<MenuItem Header="Close Card" 
 				          Command="{x:Static local:MainWindow.CloseCardCommand}"/>
-				<MenuItem Header="Save Card as Jpeg..."/>
+				<MenuItem Header="Save Card as Jpeg..."
+						  Command="{x:Static local:MainWindow.SaveCardAsJpegCommand}"/>
 				<MenuItem Header="Save Cards For Printing..."/>
 				<MenuItem Header="Save 4 Up Cards For Printing..."/>
 				<Separator/>
