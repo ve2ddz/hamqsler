@@ -14,6 +14,9 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Configuration;
 
+using Qsos;
+using QslBureaus;
+
 namespace hamqsler
 {
 	/// <summary>
@@ -175,16 +178,16 @@ namespace hamqsler
 		/// </summary>
 		internal void LogRuntimeInfo()
 		{
-			string os = Environment.OSVersion.VersionString;
-/*			// get version of QsosLibary
+			string os = Environment.OSVersion.VersionString;			
+			Assembly assembly = Assembly.GetAssembly(new QslBureau().GetType());
+			// get version of QsosLibary
 			// AdifString object only used so that I can get the Type for it to get
 			// the Assembly it is in
-			Assembly assembly = Assembly.GetAssembly(new QslBureau().GetType());
 			AssemblyName aName2 = assembly.GetName();
 			AdifString aStr = new AdifString("<eor>");
 			Type t = aStr.GetType();
 			Assembly asm = Assembly.GetAssembly(t);
-			AssemblyName aName = asm.GetName(); */
+			AssemblyName aName = asm.GetName(); 
 			// get CLR version info
 			Version ver = Environment.Version;
 			// get newline for this platform
@@ -192,8 +195,8 @@ namespace hamqsler
 			// output start log message
 			logger.Log(string.Format("HamQSLer started" + newline +
 			                         "HamQSLer version: {6}" + newline +
-//			                         "QsosLibrary version: {8}" + newline +
-//			                         "QslBureaus version: {9}" + newline +
+			                         "QsosLibrary version: {8}" + newline +
+			                         "QslBureaus version: {9}" + newline +
 			                         "CLR version: {2}.{3}.{4}.{5}" + newline +
 			                         "OS: {0}" + newline + 
 			                         "Processors: {1}" + newline +
@@ -202,9 +205,9 @@ namespace hamqsler
 			                         Environment.ProcessorCount, 
 									 ver.Major, ver.Minor, ver.Build, ver.Revision,
 			                         Assembly.GetExecutingAssembly().GetName().Version.ToString(),
-			                         CultureInfo.CurrentCulture.Name //,
-//			                         aName.Version.ToString(),
-//			                         aName2.Version.ToString()
+			                         CultureInfo.CurrentCulture.Name,
+			                         aName.Version.ToString(),
+			                         aName2.Version.ToString()
 			                ));
 			
 		}
