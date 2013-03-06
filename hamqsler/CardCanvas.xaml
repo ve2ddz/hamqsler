@@ -55,6 +55,16 @@
 						CanExecute="ClearBackgroundCommand_CanExecute"
 						Executed="ClearBackgroundCommand_Executed"/>
 	</Canvas.CommandBindings>
+	<Canvas.InputBindings>
+			<KeyBinding Key="I" Modifiers="Control" 
+		                Command="{x:Static local:CardCanvas.AddImageCommand}"/>
+			<KeyBinding Key="T" Modifiers="Control" 
+		                Command="{x:Static local:CardCanvas.AddTextCommand}"/>
+			<KeyBinding Key="Delete" 
+		                Command="{x:Static local:CardCanvas.DeleteItemCommand}"/>
+			<KeyBinding Key="Delete" Modifiers="Control"
+		                Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"/>
+	</Canvas.InputBindings>
 	<Canvas.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Select Highlighted Item"
@@ -62,16 +72,16 @@
 			<MenuItem Header="Deselect Item"
 			          Command="{x:Static local:CardCanvas.DeselectCardItemCommand}"/>
 			<Separator/>
-			<MenuItem Header="Add Image"
+			<MenuItem Header="Add Image" InputGestureText="Ctrl-I"
 					  Command="{x:Static local:CardCanvas.AddImageCommand}"/>
-			<MenuItem Header="Add Text"
+			<MenuItem Header="Add Text" InputGestureText="Ctrl-T"
 					  Command="{x:Static local:CardCanvas.AddTextCommand}"/>
 			<MenuItem Header="Add QsosBox"
 					  Command="{x:Static local:CardCanvas.AddQsosBoxCommand}"/>
 			<Separator/>
-			<MenuItem Header="Delete Selected Item"
+			<MenuItem Header="Delete Selected Item" InputGestureText="Delete"
 					  Command="{x:Static local:CardCanvas.DeleteItemCommand}"/>
-			<MenuItem Header="Clear Background"
+			<MenuItem Header="Clear Background" InputGestureText="Ctrl-Delete"
 					  Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"/>
 		</ContextMenu>
 	</Canvas.ContextMenu>

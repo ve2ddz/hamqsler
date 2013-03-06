@@ -26,6 +26,12 @@
 	Width="1000"
 	Closed="Window_Closed" Loaded="Window_Loaded" Closing="Window_Closing">
 	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:MainWindow.NewBureauCardCommand}"
+						Executed="NewBureauCardCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.New45CardCommand}"
+						Executed="New45CardCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.New46CardCommand}"
+						Executed="New46CardCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.CardOpenCommand}"
 						Executed="CardOpenCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.CardSaveCommand}"
@@ -108,22 +114,56 @@
 		<CommandBinding Command="{x:Static local:MainWindow.ViewLogFileCommand}"
 						Executed="ViewLogFileCommand_Executed"/>
 	
-	</Window.CommandBindings>
+		</Window.CommandBindings>
+		<Window.InputBindings>
+			<KeyBinding Key="N" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.New45CardCommand}"/>
+			<KeyBinding Key="O" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.CardOpenCommand}"/>
+			<KeyBinding Key="S" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.CardSaveCommand}"/>
+			<KeyBinding Key="A" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.CardSaveAsCommand}"/>
+			<KeyBinding Key="W" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.CloseCardCommand}"/>
+			<KeyBinding Key="P" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.PrintCardsCommand}"/>
+			<KeyBinding Key="Q" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.ExitCommand}"/>
+			<KeyBinding Key="I" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.AddImageCommand}"/>
+			<KeyBinding Key="T" Modifiers="Control" 
+		                Command="{x:Static local:MainWindow.AddTextCommand}"/>
+			<KeyBinding Key="Delete" 
+		                Command="{x:Static local:MainWindow.DeleteItemCommand}"/>
+			<KeyBinding Key="Delete" Modifiers="Control"
+		                Command="{x:Static local:MainWindow.ClearBackgroundCommand}"/>
+			<KeyBinding Key="F1"
+		                Command="{x:Static local:MainWindow.HelpCommand}"/>
+		</Window.InputBindings>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="Cards">
 				<MenuItem Header="_New">
-					<MenuItem Name="BureauCardMenuItem" Header="Bureau Card" Click="BureauCardMenuItem_Click"/>
-					<MenuItem Header="4 1/4 by 5 1/2 inch Card" Click="Card45MenuItem_Click"/>
-					<MenuItem Header="4 by 6 inch (10 by 15 cm) Card" Click="Card46MenuItem_Click"/>
+					<MenuItem Name="BureauCardMenuItem" Header="Bureau Card" 
+					          InputGestureText="Ctrl-N"
+					          Command="{x:Static local:MainWindow.NewBureauCardCommand}"/>
+					<MenuItem Header="4 1/4 by 5 1/2 inch Card" 
+					          Command="{x:Static local:MainWindow.New45CardCommand}"/>
+					<MenuItem Header="4 by 6 inch (10 by 15 cm) Card" 
+					          Command="{x:Static local:MainWindow.New46CardCommand}"/>
 				</MenuItem>
 				<MenuItem Header="_Open Card..."
+				          InputGestureText="Ctrl-O"
 						Command="{x:Static local:MainWindow.CardOpenCommand}"/>
 				<MenuItem Header="_Save Card" x:Name="SaveCardMenuItem"
+				          InputGestureText="Ctrl-S"
 						Command="{x:Static local:MainWindow.CardSaveCommand}"/>
 				<MenuItem Header="Save Card _As..." x:Name="SaveCardAsMenuItem"
+				          InputGestureText="Ctrl-A"
 						Command="{x:Static local:MainWindow.CardSaveAsCommand}"/>
 				<MenuItem Header="Close Card" 
+				          InputGestureText="Ctrl-W"
 				          Command="{x:Static local:MainWindow.CloseCardCommand}"/>
 				<MenuItem Header="Save Card as Jpeg..."
 						  Command="{x:Static local:MainWindow.SaveCardAsJpegCommand}"/>
@@ -134,10 +174,11 @@
 				<Separator/>
 				<MenuItem Header="Calculate Number of Cards to be Printed..."
 						  Command="{x:Static local:MainWindow.CalculateCardsToBePrintedCommand}"/>
-				<MenuItem Header="_Print Cards..." 
+				<MenuItem Header="_Print Cards..." InputGestureText="Ctrl-P"				          
 				          Command="{x:Static local:MainWindow.PrintCardsCommand}"/>
 				<Separator/>
-				<MenuItem Header="Quit" Command="{x:Static local:MainWindow.ExitCommand}"/>
+				<MenuItem Header="Quit" InputGestureText="Ctrl-Q"
+				          Command="{x:Static local:MainWindow.ExitCommand}"/>
 			</MenuItem>
 			<MenuItem Header="QSOs"
 						Command="{x:Static local:MainWindow.QsosCommand}">
@@ -158,15 +199,15 @@
 						Command="{x:Static local:MainWindow.ExcludeAllQsosCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Edit">
-				<MenuItem Header="Add Image"
+				<MenuItem Header="Add Image" InputGestureText="Ctrl-I"
 						Command="{x:Static local:MainWindow.AddImageCommand}"/>
-				<MenuItem Header="Add Text Item"
+				<MenuItem Header="Add Text Item" InputGestureText="Ctrl-T"
 						Command="{x:Static local:MainWindow.AddTextCommand}"/>
 				<MenuItem Header="Add QsosBox"
 						Command="{x:Static local:MainWindow.AddQsosBoxCommand}"/>
-				<MenuItem Header="Delete Selected Item"
+				<MenuItem Header="Delete Selected Item" InputGestureText="Delete"
 						Command="{x:Static local:MainWindow.DeleteItemCommand}"/>
-				<MenuItem Header="Clear Background Image"
+				<MenuItem Header="Clear Background Image" InputGestureText="Ctrl-Delete"
 						Command="{x:Static local:MainWindow.ClearBackgroundCommand}"/>
 				<Separator/>
 				<MenuItem Header="User Preferences..." 
@@ -178,7 +219,7 @@
 				<Separator/>
 			</MenuItem>
 			<MenuItem Header="Help">
-				<MenuItem Header="HamQSLer Help..."
+				<MenuItem Header="HamQSLer Help..." InputGestureText="F1"
 						  Command="{x:Static local:MainWindow.HelpCommand}"/>
 				<MenuItem Header="About..."
 						  Command="{x:Static local:MainWindow.AboutCommand}"/>

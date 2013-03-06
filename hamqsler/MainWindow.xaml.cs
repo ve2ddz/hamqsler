@@ -55,6 +55,9 @@ namespace hamqsler
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
+		public static RoutedCommand NewBureauCardCommand = new RoutedCommand();
+		public static RoutedCommand New45CardCommand = new RoutedCommand();
+		public static RoutedCommand New46CardCommand = new RoutedCommand();
 		public static RoutedCommand CardOpenCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveCommand = new RoutedCommand();
 		public static RoutedCommand CardSaveAsCommand = new RoutedCommand();
@@ -1280,7 +1283,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		void BureauCardMenuItem_Click(object sender, RoutedEventArgs e)
+		void NewBureauCardCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			// create a CardTabItem and add it to the mainTabControl
 			CardTabItem cardTab = new CardTabItem(5.5 * 96, 3.5 * 96);
@@ -1297,7 +1300,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		void Card45MenuItem_Click(object sender, RoutedEventArgs e)
+		void New45CardCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			// create a CardTabItem and add it to the mainTabControl
 			CardTabItem cardTab = new CardTabItem(5.5 * 96, 4.25 * 96);
@@ -1313,7 +1316,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		void Card46MenuItem_Click(object sender, RoutedEventArgs e)
+		void New46CardCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			// create a CardTabItem and add it to the mainTabControl
 			CardTabItem cardTab = new CardTabItem(6 * 96, 4 * 96);
