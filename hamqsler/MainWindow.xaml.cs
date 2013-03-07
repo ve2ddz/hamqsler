@@ -558,7 +558,11 @@ namespace hamqsler
 				{
 					return;
 				}
+				// Card.IsDirty is set to true in CardTabItem constructor so we must
+				// save IsDirty and restore its value afterwards
+				bool isDirty = card.IsDirty;
 				CardTabItem cti = new CardTabItem(card);
+				card.IsDirty = isDirty;
 				mainTabControl.Items.Add(cti);
 				cti.IsSelected = true;		// select the new tab
 				cti.SetTabLabel();
