@@ -524,10 +524,29 @@ namespace hamqsler
 			{
 				string fileName = oDialog.FileName;
 				string fileExt = fileName.Substring(fileName.Length - 4);
-				Card card;
+				Card card = null;
 				if(fileExt.Equals("qslx"))		// HamQSLer card file
 				{
-					card = Card.DeserializeCard(fileName);
+					try
+					{
+						card = Card.DeserializeCard(fileName);
+					}
+					catch(InvalidOperationException ioe)
+					{
+						MessageBox.Show("An error occurred while opening "
+						                + "the card. See the log file for details. The problem "
+						                + "must be fixed before the card can be loaded.",
+						                "Error Loading Card", MessageBoxButton.OK, 
+						                MessageBoxImage.Error);
+						App.Logger.Log(ioe, true, false);
+						return;
+						
+					}
+					catch(Exception ex)
+					{
+						App.Logger.Log(ex);
+						return;
+					}
 					card.FileName = fileName;
 					card.IsDirty = false;
 					UserPreferences prefs = ((App)App.Current).UserPreferences;

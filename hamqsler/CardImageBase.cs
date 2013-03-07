@@ -140,7 +140,8 @@ namespace hamqsler
 						App.Logger.Log(msg);
 						MessageBox.Show(msg, "Image File Error", MessageBoxButton.OK,
 						                MessageBoxImage.Warning);
-						BitMapImage = EmptyImage;
+						Exception ex = new Exception(msg);
+						throw ex;
 					}
 					double x, y, w, h;
 					CalculateRectangle(out x, out y, out w, out h);
