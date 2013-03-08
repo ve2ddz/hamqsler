@@ -479,6 +479,9 @@ namespace hamqsler
 					case "CardItem":
 						base.Load(node, culture);
 						QslCard = this;
+						// upper left corner of hamqsler cards always 0, 0
+						QslCard.DisplayX = 0;
+						QslCard.DisplayY = 0;
 						break;
 					case "BackgroundImage":
 						BackImage = new BackgroundImage(true);
