@@ -3,3 +3,4 @@
 *.g.cs
 */bin/*
 */obj/*
+docbook/*
