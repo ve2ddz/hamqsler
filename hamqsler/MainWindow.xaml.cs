@@ -1011,7 +1011,8 @@ namespace hamqsler
 				area.OriginWidth;
 			// paginate and print
 			Card card = cti.cardCanvas.QslCard;
-			PrintSettingsDialog psDialog = PrintSettingsDialog.CreatePrintSettingsDialog(ticket, card);
+			PrintSettingsDialog psDialog = PrintSettingsDialog.CreatePrintSettingsDialog(ticket, queue,
+			                                                                             card);
 			if(psDialog.ShowDialog() == true)
 			{
 				if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Print)

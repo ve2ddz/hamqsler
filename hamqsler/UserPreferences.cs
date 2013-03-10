@@ -787,6 +787,15 @@ namespace hamqsler
 			set {SetValue(SetCardMarginsToPrinterPageMarginsProperty, value);}
 		}
 		
+        private static readonly DependencyProperty DoNotShowNullImageableAreaMessagePrintersProperty =
+        	DependencyProperty.Register("DoNotShowNullImageableAreaMessagePrinters",
+        	                            typeof(List<string>), typeof(UserPreferences),
+        	                            new PropertyMetadata(new List<string>()));
+        public List<string> DoNotShowNullImageableAreaMessagePrinters
+        {
+        	get {return (List<string>)GetValue(DoNotShowNullImageableAreaMessagePrintersProperty);}
+        }
+
         [NonSerialized]
         private ExceptionLogger logger = null;
         public ExceptionLogger Logger
@@ -987,6 +996,10 @@ namespace hamqsler
 			PrintCardOutlines = prefs.PrintCardOutlines;
 			FillLastPageWithBlankCards = prefs.FillLastPageWithBlankCards;
 			SetCardMarginsToPrinterPageMargins = prefs.SetCardMarginsToPrinterPageMargins;
+			foreach(string pr in prefs.DoNotShowNullImageableAreaMessagePrinters)
+			{
+				this.DoNotShowNullImageableAreaMessagePrinters.Add(pr);
+			}
 		}
 
         /// <summary>

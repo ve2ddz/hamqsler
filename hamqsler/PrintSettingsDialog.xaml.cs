@@ -110,9 +110,46 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="ticket">PrintTicket object containing paper and printer settings</param>
 		/// <param name="card">Card object describing the cards to be printed</param>
-		public static PrintSettingsDialog CreatePrintSettingsDialog(PrintTicket ticket, Card card)
+		public static PrintSettingsDialog CreatePrintSettingsDialog(PrintTicket ticket, PrintQueue queue,
+		                                                            Card card)
 		{
 			PrintSettingsDialog psD = new PrintSettingsDialog();
+			// Some printers (some Brother printers at least), do not report a PageImageableArea,
+			// so it is not possible to determine card margins from printer margins.
+			// In this case, show a message indicating this, and do not allow user
+			// to set the SetCardMarginsCheckBox.
+			PrintCapabilities caps = queue.GetPrintCapabilities();
+			PageImageableArea imageableArea = caps.PageImageableArea;
+			if(imageableArea != null)
+			{
+				UserPreferences prefs = ((App)Application.Current).UserPreferences;
+				psD.CardMargins = false;
+				psD.SetCardMarginsCheckBox.IsEnabled = false;
+				// check to see if printer is in list of "Do not show again for this printer"
+				// and show or don't show message
+				string printer = queue.Name;
+				bool printerFound = false;
+				foreach(string pr in prefs.DoNotShowNullImageableAreaMessagePrinters)
+				{
+					if(printer == pr)
+					{
+						printerFound = true;
+						break;
+					}
+				}
+				// printer not in do not show list, so show the dialog
+				if(!printerFound)
+				{
+					PrinterImageableAreaErrorDialog pDialog = new PrinterImageableAreaErrorDialog();
+					pDialog.ShowDialog();
+					// if do not show again checkbox checked, add printer to the do not show list
+					if(pDialog.DoNotShowForThisPrinter)
+					{
+						prefs.DoNotShowNullImageableAreaMessagePrinters.Add(printer);
+						prefs.SerializeAsXml();
+					}
+				}
+			}
 			// cards aligned to edge on portrait orientation
 			Grid grid = psD.CreatePortraitButtonContent(ticket, card, CardLayout.PortraitEdge);
 			SetButtonContentAndVisibility(ref psD.portraitEdgeButton, ref grid);
@@ -199,32 +236,50 @@ namespace hamqsler
 			if ((RadioButton)sender == portraitEdgeButton)
 			{
 				CardsLayout = CardLayout.PortraitEdge;
-				CardMargins = true;
+				if(SetCardMarginsCheckBox.IsEnabled)
+				{
+					CardMargins = true;
+				}
 			}
 			else if ((RadioButton)sender == portraitTopCentreButton)
 			{
 				CardsLayout = CardLayout.PortraitTopCentre;
-				CardMargins = portraitCardMargins;
+				if(SetCardMarginsCheckBox.IsEnabled)
+				{
+					CardMargins = portraitCardMargins;
+				}
 			}
 			else if ((RadioButton)sender == portraitCentreButton)
 			{
 				CardsLayout = CardLayout.PortraitCentre;
-				CardMargins = portraitCardMargins;
+				if(SetCardMarginsCheckBox.IsEnabled)
+				{
+					CardMargins = portraitCardMargins;
+				}
 			}
 			else if ((RadioButton)sender == landscapeEdgeButton)
 			{
 				CardsLayout = CardLayout.LandscapeEdge;
-				CardMargins = true;
+				if(SetCardMarginsCheckBox.IsEnabled)
+				{
+					CardMargins = true;
+				}
 			}
 			else if ((RadioButton)sender == landscapeTopCentreButton)
 			{
 				CardsLayout = CardLayout.LandscapeTopCentre;
-				CardMargins = landscapeCardMargins;
+				if(SetCardMarginsCheckBox.IsEnabled)
+				{
+					CardMargins = landscapeCardMargins;
+				}
 			}
 			else if ((RadioButton)sender == landscapeCentreButton)
 			{
 				CardsLayout = CardLayout.LandscapeCentre;
-				CardMargins = landscapeCardMargins;
+				if(SetCardMarginsCheckBox.IsEnabled)
+				{
+					CardMargins = landscapeCardMargins;
+				}
 			}
 		}
 
