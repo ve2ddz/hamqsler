@@ -1152,9 +1152,9 @@ namespace hamqsler
                 {
                     Exception ex = new Exception("Programming Error: Bad User Preferences filename or mode:\r\n"
                         + userPreferencesFilename + "\r\n"
-                        + "Please do the following when you have finished using QslDesignAndPrint:\r\n"
+                        + "Please do the following when you have finished using HamQSLer:\r\n"
                         + "1. Make a copy of the log file.\r\n"
-                        + "2. Post a message on the QslDesignAndPrint forum including the content of this message/r/n"
+                        + "2. Post a bug report on the HamQSLer website forum including the content of this message/r/n"
                         + "Preferences will be initialized. You may continue to use the program.",
                         e);
                     logger.Log(ex);
@@ -1163,8 +1163,8 @@ namespace hamqsler
                 {
                     MessageBox.Show("Programming Error: Bad User Preferences User filename:\r\n"
                         + userPreferencesFilename + "\r\n"
-                        + "Please do the following when you have finished using QslDesignAndPrint:\r\n"
-                        + "1. Post a message on the QslDesignAndPrint forum including the content of this message/r/n"
+                        + "Please do the following when you have finished using HamQSLer:\r\n"
+                        + "1. Post a bug report on the HamQSLer website forum including the content of this message/r/n"
                         + "Preferences will be initialized. You may continue to use the program.",
                         "Cannot access User Preferences File",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -1308,8 +1308,8 @@ namespace hamqsler
                         + "\r\nUnable to save preferences file."
                         + "\r\n\r\nPlease do the following:\r\n"
                         + "1. Terminate this program.\r\n"
-                        + "2. Make a backup copy of the log file\r\n"
-                        + "3. Post a message using the Contact Us form at www.va3hj.ca", e);
+                        + "2. Post a bug report on the HamQSLer website and include the\r\n" 
+                        + "contents of the log file.", e);
                     logger.Log(ex);
                 }
                 else
@@ -1319,10 +1319,9 @@ namespace hamqsler
                         + "\r\nUnable to save preferences file."
                         + "\r\n\r\nPlease do the following:\r\n"
                         + "1. Terminate this program.\r\n"
-                        + "2. Post a message containing this error message\r\n"
-                        + "     using the Contact Us form at www.va3hj.ca\r\n"
-                        + "     and stating that the error was not posted to the log file\r\n"
-                        + "3. Restart QslDesignAndPrint and proceed without modifying preferences.",
+                        + "2. Post a bug report on the HamQSLer website and include the\r\n" 
+                        + "contents of the log file."
+                        + "3. Restart HamQSLer and proceed without modifying preferences.",
                         "Cannot Save Preferences File", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
@@ -1337,8 +1336,8 @@ namespace hamqsler
                         + "\r\nUnable to save preferences file."
                         + "\r\n\r\nPlease do the following:\r\n"
                         + "1. Terminate this program.\r\n"
-                        + "2. Make a backup copy of the log file\r\n"
-                        + "3. Post a message using the Contact Us form at www.va3hj.ca", e);
+                        + "2. Post a bug report on the HamQSLer web site and include a copy" +
+                        "\r\nof the log file.", e);
                     logger.Log(ex);
                 }
                 else
@@ -1348,10 +1347,9 @@ namespace hamqsler
                         + "\r\nUnable to save preferences file."
                         + "\r\n\r\nPlease do the following:\r\n"
                         + "1. Terminate this program.\r\n"
-                        + "2. Make a backup copy of the log file\r\n"
-                        + "3. Post a message containing this error message\r\n"
-                        + "     using the Contact Us form at www.va3hj.ca\r\n"
-                        + "4. Restart QslDesignAndPrint and proceed without modifying preferences.",
+                        + "2. Post a bug report on the HamQSLer web site and include a copy" +
+                        "\r\nof the log file."
+                        + "3. Restart HamQSLer and proceed without modifying preferences.",
                         "Cannot Save Preferences File", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
@@ -1368,8 +1366,8 @@ namespace hamqsler
                         + "\r\nUnable to save preferences file."
                         + "\r\n\r\nPlease do the following:\r\n"
                         + "1. Terminate this program.\r\n"
-                        + "2. Make a backup copy of the log file\r\n"
-                        + "3. Post a message using the Contact Us form at www.va3hj.ca", e);
+                        + "2. Post a bug report on the HamQSLer web site and include a copy" +
+                        "\r\nof the log file.", e);
                     logger.Log(ex);
                 }
                 else
@@ -1380,10 +1378,9 @@ namespace hamqsler
                         + "\r\nUnable to save preferences file."
                         + "\r\n\r\nPlease do the following:\r\n"
                         + "1. Terminate this program.\r\n"
-                        + "2. Make a backup copy of the log file\r\n"
-                        + "3. Post a message containing this error message\r\n"
-                        + "     using the Contact Us at www.va3hj.ca\r\n"
-                        + "4. Restart QslDesignAndPrint and proceed without modifying preferences.",
+                        + "2. Post a bug report on the HamQSLer web site and include a copy" +
+                        "\r\nof the log file."
+                        + "3. Restart HamQSLer and proceed without modifying preferences.",
                         "Cannot Save Preferences File", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
@@ -1399,9 +1396,9 @@ namespace hamqsler
                         + "\r\nUnable to save preferences file."
                         + "\r\n\r\nPlease do the following:\r\n"
                         + "1. Terminate this program.\r\n"
-                        + "2. Make a backup copy of the log file\r\n"
-                        + "3. Post a message using the Contact Us at www.va3hj.ca"
-                        + "4. Restart QslDesignAndPrint and proceed without modifying preferences", 
+                        + "2. Post a bug report on the HamQSLer web site and include a copy" +
+                        "\r\nof the log file."
+                        + "3. Restart HamQSLer and proceed without modifying preferences.",
                         e);
                     logger.Log(ex);
                 }
@@ -1413,9 +1410,9 @@ namespace hamqsler
                         + "\r\nUnable to save preferences file."
                         + "\r\n\r\nPlease do the following:\r\n"
                         + "1. Terminate this program.\r\n"
-                        + "2. Post a message containing this error message\r\n"
-                        + "     using the Contact Us form at www.va3hj.ca\r\n"
-                        + "3. Restart QslDesignAndPrint and proceed without modifying preferences.",
+                        + "2. Post a bug report on the HamQSLer web site and include a copy" +
+                        "\r\nof the log file."
+                        + "3. Restart HamQSLer and proceed without modifying preferences.",
                         "Cannot Save Preferences File", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
@@ -1428,7 +1425,7 @@ namespace hamqsler
                     // wrap exception in another and log it
                     Exception ex = new Exception("The path or filename of the User Preferences file is too long:\r\n"
                             + userPreferencesFilename + "\r\n"
-                            + "The most likely cause is a path to the QslDnP directory being more than 248 characters.\r\n"
+                            + "The most likely cause is a path to the hamqsler directory being more than 248 characters.\r\n"
                             + "The log file may contain more information."
                             , e);
                     logger.Log(ex);
@@ -1438,7 +1435,7 @@ namespace hamqsler
                     // can't log, so just display message
                     MessageBox.Show("The path or filename of the User Preferences file is too long:\r\n"
                             + userPreferencesFilename + "\r\n"
-                            + "The most likely cause is a path to the QslDnP directory being more than 248 characters.\r\n"
+                            + "The most likely cause is a path to the hamqsler directory being more than 248 characters.\r\n"
                             + "Error message: " + e.Message,
                         "Cannot Save Preferences File", MessageBoxButton.OK,
                         MessageBoxImage.Error);
@@ -1494,7 +1491,7 @@ namespace hamqsler
                 {
                     // wrap in another exception and log it
                     Exception ex = new Exception("Write access to the Preferences File is not allowed by the operating system.\r\n"
-                        + "Check to see if the QslDnP directory or userprefs.xml is set to read-only.",
+                        + "Check to see if the hamqsler directory or .hamqsler is set to read-only.",
                         e);
                     logger.Log(ex);
                 }
@@ -1502,7 +1499,7 @@ namespace hamqsler
                 {
                     // can't log, so just display message
                     MessageBox.Show("Write access to the Preferences File is not allowed by the operating system.\r\n"
-                        + "Check to see if the QslDnP directory or userprefs.xml is set to read-only.",
+                        + "Check to see if the hamqsler directory or .hamqsler is set to read-only.",
                         "Cannot Save Preferences File", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
