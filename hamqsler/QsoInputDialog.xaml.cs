@@ -40,7 +40,7 @@ namespace hamqsler
 		public static RoutedCommand AddButtonCommand = new RoutedCommand();
 		public static RoutedCommand OkButtonCommand = new RoutedCommand();
 		public static RoutedCommand CancelButtonCommand = new RoutedCommand();
-			
+		
 		private static int BEEPFREQUENCY = 800;		// Hz
 		private static int BEEPDURATION = 200;		// ms
 		private DisplayQsos dispQsos;
@@ -65,9 +65,9 @@ namespace hamqsler
 		private void AddButtonCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute =  (QsoData["Callsign"] == null && QsoData["Manager"] == null &&
-			        QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
-			        QsoData.Mode != string.Empty &&
-			        (QsoData.Band != string.Empty || QsoData.Frequency != string.Empty));
+			                 QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
+			                 QsoData.Mode != string.Empty &&
+			                 (QsoData.Band != string.Empty || QsoData.Frequency != string.Empty));
 		}
 		
 		/// <summary>
@@ -78,9 +78,9 @@ namespace hamqsler
 		private void OkButtonCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = (QsoData["Callsign"] == null && QsoData["Manager"] == null &&
-			        QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
-			        QsoData.Mode != string.Empty &&
-			        (QsoData.Band != string.Empty || QsoData.Frequency != string.Empty));
+			                QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
+			                QsoData.Mode != string.Empty &&
+			                (QsoData.Band != string.Empty || QsoData.Frequency != string.Empty));
 		}
 		
 		/// <summary>
@@ -183,11 +183,32 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void AddButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			Qso qso = BuildQsoFromInput();
-			QsoWithInclude qwi = new QsoWithInclude(qso);
-			dispQsos.Add(qwi);
-			QsoData.ClearQsoData();
+			SaveQso();		
 		}
+
+		/// <summary>
+		/// Helper method that saves a QSO, then clears the fields in QsoInputDialog
+		/// </summary>
+		/// <returns>false if there is an error in the QSO data, true otherwiser</returns>
+		private bool SaveQso()
+		{
+			try 
+			{
+				Qso qso = BuildQsoFromInput();
+				QsoWithInclude qwi = new QsoWithInclude(qso);
+				dispQsos.Add(qwi);
+				QsoData.ClearQsoData();
+				return true;
+			} 
+			catch (QsoException ex) 
+			{
+				MessageBox.Show(ex.Message, "QSO Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				App.Logger.Log(ex.Message);
+				return false;
+			}
+		}
+		
+		
 		
 		/// <summary>
 		/// Executed handler for OK button. Saves QSO info and closes dialog
@@ -196,8 +217,10 @@ namespace hamqsler
 		/// <param name="e">ExecutedRoutedEventArgs</param>
 		void OkButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			AddButtonCommand_Executed(sender, e);
-			this.Close();
+			if(SaveQso())
+			{
+				this.Close();
+			}
 		}
 		
 		/// <summary>
@@ -229,6 +252,15 @@ namespace hamqsler
 			if(QsoData.Band != string.Empty)
 			{
 				qso.setField("band", QsoData.Band);
+			}
+			else
+			{
+				float freq;
+				if(float.TryParse(QsoData.Frequency, out freq))
+				{
+					HamBand band = HamBands.getHamBand(freq);
+					qso.setField("band", band.Band);
+				}
 			}
 			if(QsoData.Frequency != string.Empty)
 			{
