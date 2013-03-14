@@ -49,7 +49,7 @@ namespace hamqsler
 		public UserPreferencesDialog()
 		{
 			InitializeComponent();
-
+			Mouse.OverrideCursor = Cursors.Arrow;
 			// create a clone of the UserPreferences object
 			userPrefs = new UserPreferences(((App)Application.Current).UserPreferences);
 			propertiesDisplay.DataContext = userPrefs;
