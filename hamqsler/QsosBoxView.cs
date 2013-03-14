@@ -496,7 +496,20 @@ namespace hamqsler
 				}
 				PrintQsoDataColumnAndAdjustToNextStartColumn(Qsos[qsoNum].RST, y, Columns.RstColumn,
 				                                             ref xStart, drawingContext);
-				PrintQsoDataColumnAndAdjustToNextStartColumn(Qsos[qsoNum].Qsl, y, Columns.QslColumn, 
+				string pse = string.Empty;
+				if(!date.Equals(string.Empty))
+				{
+					switch(Qsos[qsoNum].Qsl)
+					{
+						case "Yes":
+							pse = ((App)Application.Current).UserPreferences.TnxText;
+							break;
+						default:
+							pse = ((App)Application.Current).UserPreferences.PseText;
+							break;
+					}
+				}
+				PrintQsoDataColumnAndAdjustToNextStartColumn(pse, y, Columns.QslColumn, 
 				                                             ref xStart, drawingContext);
 			}
 		}
