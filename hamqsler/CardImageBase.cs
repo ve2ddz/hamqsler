@@ -126,6 +126,7 @@ namespace hamqsler
 							{
 								QslCard.IsDirty = true;
 							}
+							QslCard.CardItemView.InvalidateVisual();
 						}
 						catch(Exception fnfe)
 						{
