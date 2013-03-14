@@ -1394,7 +1394,7 @@ namespace hamqsler
 			MenuItem mi = new MenuItem();
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			string fName = cti.cardCanvas.QslCard.BackImage.ImageFileName;
-			if(fName != string.Empty)
+			if(fName != null && fName != string.Empty)
 			{
 				fName = System.IO.Path.GetFileName(fName);
 			}
