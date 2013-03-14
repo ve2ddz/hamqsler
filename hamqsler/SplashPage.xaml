@@ -36,12 +36,12 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-				<Button Grid.Column="1" Name="okButton" Margin="3"
+				<Button Grid.Column="1" Name="okButton" Margin="0,5,20,5"
 						Padding="3" Click="OkButton_Click"
 						 Visibility="Collapsed" IsDefault="true"
 						ToolTip="Close splashscreen and display main program window"
 						>Continue</Button>
-				<Button Grid.Column="2" Name="termButton" Margin="3,3,10,3"
+				<Button Grid.Column="2" Name="termButton" Margin="0,5,20,5"
 						Padding="3" Click="TermButton_Click"
 				        ToolTip="Terminate the program"
 				         Visibility="Collapsed" IsCancel="true">Terminate</Button>
