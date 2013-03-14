@@ -120,7 +120,7 @@ namespace hamqsler
 			// to set the SetCardMarginsCheckBox.
 			PrintCapabilities caps = queue.GetPrintCapabilities();
 			PageImageableArea imageableArea = caps.PageImageableArea;
-			if(imageableArea != null)
+			if(imageableArea == null)
 			{
 				UserPreferences prefs = ((App)Application.Current).UserPreferences;
 				psD.CardMargins = false;
