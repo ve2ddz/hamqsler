@@ -520,6 +520,7 @@ namespace hamqsler
 		{
 			OpenFileDialog oDialog = new OpenFileDialog();
 			oDialog.Filter = "QSL Card(*.qslx)|*.qslx|QslDnP Card(*xqsl)|*.xqsl";
+			oDialog.InitialDirectory = ((App)Application.Current).HamqslerFolder;
 			if(oDialog.ShowDialog(this) == true)
 			{
 				string fileName = oDialog.FileName;
@@ -636,6 +637,7 @@ namespace hamqsler
 			{
 				SaveFileDialog saveDialog = new SaveFileDialog();
 				saveDialog.Filter = "Image (*.jpg)|*.jpg";
+				saveDialog.InitialDirectory = ((App)Application.Current).HamqslerFolder;
 				if(saveDialog.ShowDialog() == true)
 				{
 					string fileName = saveDialog.FileName;
@@ -1668,6 +1670,7 @@ namespace hamqsler
 			string fileName = qslCard.FileName;
 			SaveFileDialog sDialog = new SaveFileDialog();
 			sDialog.Filter = "QSL Card(*.qslx)|*.qslx";
+			sDialog.InitialDirectory = ((App)Application.Current).HamqslerFolder;
 			if(fileName != null)
 			{
 				sDialog.FileName = fileName;
