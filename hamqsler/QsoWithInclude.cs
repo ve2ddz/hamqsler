@@ -150,13 +150,13 @@ namespace hamqsler
 			}
 		}
 		
-		private string sentVia;
-		public string SentVia
+		private string sendVia;
+		public string SendVia
 		{
 			get 
 			{
 				string retValue = string.Empty;
-				switch(sentVia)
+				switch(sendVia)
 				{
 					case "B":
 						retValue = "Bureau";
@@ -171,11 +171,21 @@ namespace hamqsler
 						retValue = "Manager";
 						break;
 					case "":
-						retValue = string.Empty;
+						retValue = "Bureau";
 						break;
 					default:
-						retValue = "***";
+						retValue = "Bureau";
 						break;
+				}
+				string call = Callsign;
+				if(!Manager.Equals(string.Empty))
+				{
+					call = Manager;
+				}
+				string buro = QslBureaus.QslBureaus.Bureau(call);
+				if(retValue.Equals("Bureau") && buro.Equals(QslBureaus.QslBureaus.NoBureau))
+				{
+					retValue = "Direct";
 				}
 				return retValue;
 			}
@@ -220,17 +230,10 @@ namespace hamqsler
 			
 		public string BureauManagerCallDateTime
 		{
-			get {string bmcdt = ((sentVia == string.Empty || sentVia == "B") &&
+			get {string bmcdt = (SendVia.Equals("Bureau") &&
 			                     !bureau.Equals(QslBureaus.QslBureaus.NoBureau)) ?
 			                     	bureau : QslBureaus.QslBureaus.NoBureau;
 				return bmcdt + ManagerCallDateTime;}
-		}
-		
-		public string ViaBureau
-		{
-			get {return bureau != QslBureaus.QslBureaus.NoBureau && 
-						(sentVia == string.Empty || sentVia == "B") 
-					? "Y" : string.Empty;}
 		}
 		
 		private Qso qso;
@@ -260,7 +263,7 @@ namespace hamqsler
 			rst = q.getValue("rst_sent", string.Empty);
 			sent = q.getValue("qsl_sent", string.Empty).ToUpper();
 			rcvd = q.getValue("qsl_rcvd", string.Empty).ToUpper();
-			sentVia = q.getValue("qsl_sent_via", string.Empty).ToUpper();
+			sendVia = q.getValue("qsl_sent_via", string.Empty).ToUpper();
 			string mcall = (CallSign.IsValid(manager) ? manager : callsign);
 			bureau = QslBureaus.QslBureaus.Bureau(mcall);
 			qso = q;

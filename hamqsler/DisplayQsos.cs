@@ -375,7 +375,7 @@ namespace hamqsler
 			List<string> sentVias = new List<string>();
 			foreach(QsoWithInclude qwi in this)
 			{
-				sentVias.Add(qwi.SentVia);
+				sentVias.Add(qwi.SendVia);
 			}
 			List<string> sentVias2 = new List<string>(sentVias.Distinct());
 			sentVias2.Sort();
@@ -428,7 +428,7 @@ namespace hamqsler
 				include =include && rcvdStatuses[rcvd];
 				string sent = qwi.Sent;
 				include = include && sentStatuses[sent];
-				string sentVia = qwi.SentVia;
+				string sentVia = qwi.SendVia;
 				include = include && sentViaStatuses[sentVia];
 				qwi.Include = include;
 				this.Add(qwi);

@@ -88,8 +88,8 @@
 										Mode=OneWay}"/>
 								<GridViewColumn Header="Rcvd" DisplayMemberBinding="{Binding Path=Rcvd,
 										Mode=OneWay}"/>
-								<GridViewColumn Header="Sent Via" DisplayMemberBinding="{Binding
-										Path=SentVia, Mode=OneWay}"/>
+								<GridViewColumn Header="Send Via" DisplayMemberBinding="{Binding
+										Path=SendVia, Mode=OneWay}"/>
 							</GridView.Columns>
 						</GridView>
 					</ListView.View>
@@ -280,8 +280,8 @@ and end date/time to date/time of latest QSO"
 							<GroupBox Header="Sent Status">
 								<StackPanel Name="SentPanel"/>
 							</GroupBox>
-							<GroupBox Header="Sent Via Status">
-								<StackPanel Name="SentViaPanel"/>
+							<GroupBox Header="Send Via Status">
+								<StackPanel Name="SendViaPanel"/>
 							</GroupBox>
 						</StackPanel>
 					</TabItem>

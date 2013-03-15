@@ -279,7 +279,7 @@ namespace hamqsler
 		private void SetSentViaStatuses()
 		{
 			// remove old checkboxes
-			SentViaPanel.Children.RemoveRange(0, SentViaPanel.Children.Count);
+			SendViaPanel.Children.RemoveRange(0, SendViaPanel.Children.Count);
 			// create button for each status
 			foreach(string status in DisplayQsos.GetSentViaStatuses())
 			{
@@ -289,7 +289,7 @@ namespace hamqsler
 				bcb.Margin=new Thickness(20, 5, 20, 5);
 				bcb.Checked += OnSentViaCheckBoxChecked;
 				bcb.Unchecked += OnSentViaCheckBoxChecked;
-				SentViaPanel.Children.Add(bcb);
+				SendViaPanel.Children.Add(bcb);
 			}
 		}
 		
@@ -445,7 +445,7 @@ namespace hamqsler
 		private Dictionary<string, bool> CreateSentViaDictionary()
 		{
 			Dictionary<string, bool> sents = new Dictionary<string, bool>();
-			foreach(UIElement element in SentViaPanel.Children)
+			foreach(UIElement element in SendViaPanel.Children)
 			{
 				CheckBox cb = element as CheckBox;
 				if(cb != null)
