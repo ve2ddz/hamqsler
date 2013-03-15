@@ -1421,7 +1421,7 @@ namespace hamqsler
 			{
 				MenuItem mi = new MenuItem();
 				string fName = si.ImageFileName;
-				if(fName != string.Empty)
+				if(fName != null && fName != string.Empty)
 				{
 					fName = System.IO.Path.GetFileName(fName);
 				}
