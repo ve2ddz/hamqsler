@@ -135,7 +135,7 @@ namespace hamqsler
 			}
 			nameQth.TextFontFace = userPreferences.DefaultTextItemsFontFace;
 			nameQth.TextFontWeight = FontWeights.Normal;
-			nameQth.FontSize = 10.0;
+			nameQth.FontSize = 12.0;
 			nameQth.DisplayX = DisplayWidth / 2;
 			nameQth.DisplayY = 15;
 			nameQth.DisplayWidth = 0;
@@ -149,7 +149,7 @@ namespace hamqsler
 				salutation.Text.Add(part);
 			}
 			salutation.TextFontFace = userPreferences.DefaultTextItemsFontFace;
-			salutation.FontSize = 10.0;
+			salutation.FontSize = 12.0;
 			salutation.DisplayX = 5;
 			salutation.DisplayY = DisplayHeight - 25;
 			salutation.DisplayWidth = 0;
