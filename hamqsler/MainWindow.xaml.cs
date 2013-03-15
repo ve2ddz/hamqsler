@@ -51,7 +51,7 @@ namespace hamqsler
 	{
 		private PrintDialog printDialog = null;
 		private PageMediaSize pageSize = null;
-		private static double PIXELSPERINCH = 96;
+		public static double PIXELSPERINCH = 96;
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 

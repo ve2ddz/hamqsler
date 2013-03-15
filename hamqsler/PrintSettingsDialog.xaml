@@ -20,7 +20,8 @@
 <Window x:Class="hamqsler.PrintSettingsDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Print Settings" SizeToContent="WidthAndHeight">
+    Title="Print Settings" SizeToContent="WidthAndHeight"
+	DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
             <GroupBox Name="LetterPanel" Margin="6" BorderBrush="Black" Visibility="Visible" >
@@ -41,32 +42,38 @@
                     <RadioButton Grid.Column="0" Grid.Row ="0" 
                              Name="portraitEdgeButton" GroupName="CardStock" 
                              Margin="3,3,10,3" VerticalAlignment="Center"
-                             Checked="LayoutRadioButton_Checked">
+                             Checked="LayoutRadioButton_Checked"
+                			 ToolTip="{Binding Path=PortraitEdgeTooltip, Mode=OneWay}">
                     </RadioButton>
                      <RadioButton  Grid.Column="0" Grid.Row ="1" 
                               Name="portraitTopCentreButton" GroupName="CardStock" 
                               Margin="3,3,10,3" VerticalAlignment="Center"
-                              Checked="LayoutRadioButton_Checked">
+                              Checked="LayoutRadioButton_Checked"
+                			 ToolTip="{Binding Path=PortraitTopCenterTooltip, Mode=OneWay}">
                      </RadioButton>
                      <RadioButton  Grid.Column="0" Grid.Row ="2" 
                               Name="portraitCentreButton" GroupName="CardStock" 
                               Margin="3,3,10,3" VerticalAlignment="Center"
-                              Checked="LayoutRadioButton_Checked">
+                              Checked="LayoutRadioButton_Checked"
+                			 ToolTip="{Binding Path=PortraitCenterTooltip, Mode=OneWay}">
                      </RadioButton>
                     <RadioButton Grid.Column="1" Grid.Row ="0" 
                              Name="landscapeEdgeButton" GroupName="CardStock" 
                              Margin="10,3,3,3" VerticalAlignment="Center"
-                             Checked="LayoutRadioButton_Checked">
+                             Checked="LayoutRadioButton_Checked"
+                			 ToolTip="{Binding Path=LandscapeEdgeTooltip, Mode=OneWay}">
                     </RadioButton>
                     <RadioButton Grid.Column="1" Grid.Row ="1"  
                              Name="landscapeTopCentreButton" GroupName="CardStock" 
                              Margin="10,3,3,3" VerticalAlignment="Center" 
-                             Checked="LayoutRadioButton_Checked">
+                             Checked="LayoutRadioButton_Checked"
+                			 ToolTip="{Binding Path=LandscapeTopCenterTooltip, Mode=OneWay}">
                     </RadioButton>
                     <RadioButton Grid.Column="1" Grid.Row ="2"  
                              Name="landscapeCentreButton" GroupName="CardStock" 
                              Margin="10,3,3,3" VerticalAlignment="Center" 
-                             Checked="LayoutRadioButton_Checked">
+                             Checked="LayoutRadioButton_Checked"
+                			 ToolTip="{Binding Path=LandscapeCenterTooltip, Mode=OneWay}">
                     </RadioButton>
                 </Grid>
             </GroupBox>
@@ -78,17 +85,14 @@
                 <StackPanel Orientation="Vertical">
                     <CheckBox Name="CardOutlineCheckBox" Content="Print Card Outlines" 
                               Visibility="Visible" Width="240" Margin="3"
-                              IsChecked="{Binding Path=CardOutline, Mode=TwoWay,
-                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                              IsChecked="{Binding Path=CardOutline, Mode=TwoWay}"
                               />
                     <CheckBox Name="FillLastPageCheckBox" Content="Fill Last Page With Blank Cards" 
                               Visibility="Visible" Width="240" Margin="3"
-                              IsChecked="{Binding Path=FillLastPage, Mode=TwoWay,
-                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                              IsChecked="{Binding Path=FillLastPage, Mode=TwoWay}"/>
                     <CheckBox Name="SetCardMarginsCheckBox" Content="Set Card Margins to Printer Page Margins" 
                               Visibility="Visible" Width="240" Margin="3"
-                              IsChecked="{Binding Path=CardMargins, Mode=TwoWay,
-                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                              IsChecked="{Binding Path=CardMargins, Mode=TwoWay}"/>
                 </StackPanel>
             </GroupBox>
            

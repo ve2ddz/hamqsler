@@ -38,6 +38,65 @@ namespace hamqsler
 	/// </summary>
 	public partial class PrintSettingsDialog : Window
 	{
+		private static readonly DependencyProperty PortraitEdgeTooltipProperty =
+			DependencyProperty.Register("PortraitEdgeTooltip", typeof(string),
+			                                typeof(PrintSettingsDialog),
+			                                new PropertyMetadata(null));
+		public string PortraitEdgeTooltip
+		{
+			get {return (string)GetValue(PortraitEdgeTooltipProperty);}
+			set {SetValue(PortraitEdgeTooltipProperty, value);}
+		}
+		
+		private static readonly DependencyProperty PortraitTopCenterTooltipProperty =
+			DependencyProperty.Register("PortraitTopCenterTooltip", typeof(string),
+			                                typeof(PrintSettingsDialog),
+			                                new PropertyMetadata(null));
+		public string PortraitTopCenterTooltip
+		{
+			get {return (string)GetValue(PortraitTopCenterTooltipProperty);}
+			set {SetValue(PortraitTopCenterTooltipProperty, value);}
+		}
+		
+		private static readonly DependencyProperty PortraitCenterTooltipProperty =
+			DependencyProperty.Register("PortraitCenterTooltip", typeof(string),
+			                                typeof(PrintSettingsDialog),
+			                                new PropertyMetadata(null));
+		public string PortraitCenterTooltip
+		{
+			get {return (string)GetValue(PortraitCenterTooltipProperty);}
+			set {SetValue(PortraitCenterTooltipProperty, value);}
+		}
+		
+		private static readonly DependencyProperty LandscapeEdgeTooltipProperty =
+			DependencyProperty.Register("LandscapeEdgeTooltip", typeof(string),
+			                                typeof(PrintSettingsDialog),
+			                                new PropertyMetadata(null));
+		public string LandscapeEdgeTooltip
+		{
+			get {return (string)GetValue(LandscapeEdgeTooltipProperty);}
+			set {SetValue(LandscapeEdgeTooltipProperty, value);}
+		}
+		
+		private static readonly DependencyProperty LandscapeTopCenterTooltipProperty =
+			DependencyProperty.Register("LandscapeTopCenterTooltip", typeof(string),
+			                                typeof(PrintSettingsDialog),
+			                                new PropertyMetadata(null));
+		public string LandscapeTopCenterTooltip
+		{
+			get {return (string)GetValue(LandscapeTopCenterTooltipProperty);}
+			set {SetValue(LandscapeTopCenterTooltipProperty, value);}
+		}
+		
+		private static readonly DependencyProperty LandscapeCenterTooltipProperty =
+			DependencyProperty.Register("LandscapeCenterTooltip", typeof(string),
+			                                typeof(PrintSettingsDialog),
+			                                new PropertyMetadata(null));
+		public string LandscapeCenterTooltip
+		{
+			get {return (string)GetValue(LandscapeCenterTooltipProperty);}
+			set {SetValue(LandscapeCenterTooltipProperty, value);}
+		}
 		
 		private bool portraitCardMargins;
 		private bool landscapeCardMargins;
@@ -181,7 +240,7 @@ namespace hamqsler
 			try
 			{
 				PageMediaSizeName pmsName = (PageMediaSizeName)ticket.PageMediaSize.PageMediaSizeName;
-				GenerateToolTips(psD, pmsName, card.GetType().Name);
+				GenerateToolTips(psD, pmsName, card);
 			}
 			catch(InvalidOperationException) {} // throw if PageMediaSizeName not set
 			
@@ -196,13 +255,13 @@ namespace hamqsler
 			if (landscapeCentreButton.Visibility == Visibility.Visible) {
 				landscapeCentreButton.IsChecked = true;
 			} else if (landscapeTopCentreButton.Visibility == Visibility.Visible) {
-				landscapeEdgeButton.IsChecked = true;
+				landscapeTopCentreButton.IsChecked = true;
 			} else if (landscapeEdgeButton.Visibility == Visibility.Visible) {
 				landscapeEdgeButton.IsChecked = true;
 			} else if (portraitCentreButton.Visibility == Visibility.Visible) {
 				portraitCentreButton.IsChecked = true;
 			} else if (portraitTopCentreButton.Visibility == Visibility.Visible) {
-				portraitCentreButton.IsChecked = true;
+				portraitTopCentreButton.IsChecked = true;
 			} else {
 				portraitEdgeButton.IsChecked = true;
 			}
@@ -482,31 +541,34 @@ namespace hamqsler
 		/// <param name="psD">PrintSettingsDialog object containing the buttons</param>
 		/// <param name="mName">PageMediaSizeName for the cardstock</param>
 		/// <param name="cType">Card type being printed</param>
-		private static void GenerateToolTips(PrintSettingsDialog psD, PageMediaSizeName mName, string cType)
+		private static void GenerateToolTips(PrintSettingsDialog psD, PageMediaSizeName mName, 
+		                                    Card card)
 		{
-			psD.portraitEdgeButton.ToolTip = null;
-			psD.portraitCentreButton.ToolTip = null;
-			psD.landscapeEdgeButton.ToolTip = null;
-			psD.landscapeCentreButton.ToolTip = null;
-			
 			// for Bureau standard cards
-			if(mName == PageMediaSizeName.NorthAmericaLetter &&
-			   cType == "LandscapeCard55x35")
+			double width = Math.Max(card.DisplayWidth, card.DisplayHeight);
+			double height = Math.Min(card.DisplayWidth, card.DisplayHeight);
+			if(mName == PageMediaSizeName.NorthAmericaLetter)
 			{
-				psD.portraitCentreButton.ToolTip = "Use for 3UPPCSTOCK micro-perfed cardstock from yourofficestop.com";
-				psD.landscapeEdgeButton.ToolTip = "Use for The QSLKit micro-perfed card stock";
-				psD.landscapeCentreButton.ToolTip = "Use for micro-perfed cardstock from QslPaper.com or Avery 3263, 3380, 5689, 8383, 8387, or equivalent";
+				if(width == 5.5 * MainWindow.PIXELSPERINCH &&
+				   height == 3.5 * MainWindow.PIXELSPERINCH)
+				{
+					psD.PortraitCenterTooltip = "Use for 3UPPCSTOCK micro-perfed cardstock from yourofficestop.com";
+					psD.LandscapeEdgeTooltip = "Use for The QSLKit micro-perfed card stock";
+					psD.LandscapeCenterTooltip = "Use for micro-perfed cardstock from QslPaper.com or Avery 3263, 3380, 5689, 8383, 8387, or equivalent";
+				}
+				// for 4¼ by 5½ inch cards
+				else if(width == 5.5 * MainWindow.PIXELSPERINCH &&
+				       height == 4.25 * MainWindow.PIXELSPERINCH)
+				{
+					psD.LandscapeEdgeTooltip = "Use for Avery postcard 3263, 3380, 5689, 8383, 8387, or equivalent";
+				}
+				// for 4 by 6 inch cards
+				else if(width == 6 * MainWindow.PIXELSPERINCH &&
+				        height == 4 * MainWindow.PIXELSPERINCH)
+				{
+					psD.PortraitCenterTooltip = "Use for Avery 5389, 5889, 8386, or equivalent";
+				}
 			}
-			// for 4¼ by 5½ inch cards
-			else if(mName == PageMediaSizeName.NorthAmericaLetter &&
-			        cType == "LandscapeCard55x425")
-			{
-				psD.landscapeEdgeButton.ToolTip = "Use for Avery postcard 3263, 3380, 5689, 8383, 8387, or equivalent";
-			}
-			// for 4 by 6 inch cards
-			else if(mName == PageMediaSizeName.NorthAmericaLetter &&
-			        cType == "LandscapeCard6x4")
-				psD.portraitCentreButton.ToolTip = "Use for Avery 5389, 5889, 8386, or equivalent";
 		}
 	}
 }
