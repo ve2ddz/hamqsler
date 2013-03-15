@@ -125,7 +125,10 @@ namespace hamqsler
 							if(QslCard != null)
 							{
 								QslCard.IsDirty = true;
-								QslCard.CardItemView.InvalidateVisual();
+								if(QslCard.CardItemView != null)
+								{
+									QslCard.CardItemView.InvalidateVisual();
+								}
 							}
 						}
 						catch(Exception fnfe)
