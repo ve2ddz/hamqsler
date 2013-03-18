@@ -231,6 +231,7 @@ namespace hamqsler
 			cDialog.Color = System.Drawing.Color.FromArgb(brush.Color.A, brush.Color.R,
 			                                              brush.Color.G, brush.Color.B);
 			Color c = brush.Color;
+			cDialog.FullOpen = true;
 			if(cDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				// a color was selected, so convert to WPF color and set button background to that color
