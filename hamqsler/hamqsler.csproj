@@ -211,9 +211,7 @@
     <Page Include="AdifMacroGroupBox.xaml" />
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
-    <Page Include="CountMacroGroupBox.xaml">
-      <DependentUpon>CountMacro.cs</DependentUpon>
-    </Page>
+    <Page Include="CountMacroGroupBox.xaml" />
     <Page Include="JpegPropsDialog.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />

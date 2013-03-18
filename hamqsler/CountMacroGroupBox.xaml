@@ -53,11 +53,6 @@
 					<ComboBoxItem>13</ComboBoxItem>
 					<ComboBoxItem>14</ComboBoxItem>
 					<ComboBoxItem>15</ComboBoxItem>
-					<ComboBoxItem>16</ComboBoxItem>
-					<ComboBoxItem>17</ComboBoxItem>
-					<ComboBoxItem>18</ComboBoxItem>
-					<ComboBoxItem>19</ComboBoxItem>
-					<ComboBoxItem>20</ComboBoxItem>
 				</ComboBox>
 			</Grid>
 		</GroupBox>		
