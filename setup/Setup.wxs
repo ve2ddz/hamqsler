@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product Id="*"
-		Name="Your Application"
+		Name="HamQSLer"
 		Language="1033"
-		Version="1.0.0.0"
+		Version="0.8.0"
 		UpgradeCode="A1F04156-EC44-4836-9999-639BDC229B09"
-		Manufacturer="Your Company">
+		Manufacturer="VA3HJ Software">
 		<Package Description="#Description"
-			Comments="Comments"
+			Comments="HamQSLer is an open source program for designing and printing amateur radio QSL cards."
 			InstallerVersion="200"
 			Compressed="yes"/>
 		<!--
@@ -17,13 +17,20 @@
 		<Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high"/>
 		
 		<!-- Installation directory and files are defined in Files.wxs -->
-		<Directory Id="TARGETDIR" Name="SourceDir"/>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+				<Directory Id="INSTALLDIR" Name="HamQSLer">
+					<Directory Id="SAMPLESDIR" Name="Samples"/>
+				</Directory>
+			</Directory>
+		</Directory>
 		
 		<Feature Id="Complete"
-		         Title="Your Application"
-		         Description="Your description"
+		         Title="HamQSLer"
+		         Description="All of HamQSLer"
 		         Level="1">
-		         <ComponentRef Id="MyComponent"/>
+			<ComponentRef Id="Executable"/>
+			<ComponentRef Id="Samples"/>
 		</Feature>
 		
 		<!--
@@ -35,6 +42,12 @@
 			WixUI_Minimal is appropriate when your product has no optional 
 			features.
  		-->
-		<UIRef Id="WixUI_Minimal"/>
+		<UI>
+			<UIRef Id="WixUI_Minimal"/>
+			<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+		</UI>
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch HamQSLer" />
+		<Property Id="WixShellExecTarget" Value="[#HamqslerEXE]" />
+		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 	</Product>
 </Wix>

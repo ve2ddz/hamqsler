@@ -1,14 +1,23 @@
-﻿<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding='utf-8'?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Fragment>
-		<DirectoryRef Id="TARGETDIR">
-			<Directory Id="ProgramFilesFolder" Name="PFiles">
-				<Directory Id="INSTALLDIR" Name="Your Application">
-					<Component Id="MyComponent" Guid="57930A3E-6369-4B01-B68A-6DBCE4178173" DiskId="1">
-						<File Id="LicenseFile" Name="license.rtf" Source="license.rtf"/>
-					</Component>
-				</Directory>
-			</Directory>
+		<DirectoryRef Id="INSTALLDIR">
+			<Component Id="Executable" Guid="57930A3E-6369-4B01-B68A-6DBCE4178173" DiskId="1">
+				<File Id="HamqslerEXE" Name="hamqsler.exe" 
+				      Source="../hamqsler/bin/Release/hamqsler.exe"/>
+				<File Id="QslBureausDLL" Name="QslBureaus.dll" 
+				      Source="../hamqsler/bin/Release/QslBureaus.dll"/>
+				<File Id="QsosDLL" Name="Qsos.dll" 
+				      Source="../hamqsler/bin/Release/Qsos.dll"/>
+			</Component>
+		</DirectoryRef>
+		<DirectoryRef Id="SAMPLESDIR">
+			<Component Id="Samples" Guid="F169386B-F2B6-4779-8463-CDC8BC633161" DiskId="1">
+				<File Id="sampleADI" Name="sample.adi" 
+					  Source="../hamqsler/Samples/sample.adi"/>
+				<File Id="sampleJPG" Name="sample.jpg" 
+					  Source="../hamqsler/Samples/sample.jpg"/>
+			</Component>
 		</DirectoryRef>
 	</Fragment>
 </Wix>

@@ -28,6 +28,8 @@
     <Optimize>True</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <WixExtension Include="..\..\..\..\..\..\Program Files %28x86%29\WiX Toolset v3.8\bin\WixNetFxExtension.dll" />
+    <WixExtension Include="..\..\..\..\..\..\Program Files %28x86%29\WiX Toolset v3.8\bin\WixUtilExtension.dll" />
     <WixExtension Include="WixUIExtension.dll" />
   </ItemGroup>
   <ItemGroup>
