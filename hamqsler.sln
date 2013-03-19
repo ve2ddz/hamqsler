@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QslBureaus", "QslBureaus\Qs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QslBureausTests", "QslBureausTests\QslBureausTests.csproj", "{3952D29C-FCA1-4012-995E-303639CAF0FD}"
 EndProject
+Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "setup", "setup\setup.wixproj", "{49C30A00-BEA6-4421-BB3D-6BAD7A2AADD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -38,5 +40,9 @@ Global
 		{3952D29C-FCA1-4012-995E-303639CAF0FD}.Debug|x86.ActiveCfg = Debug|x86
 		{3952D29C-FCA1-4012-995E-303639CAF0FD}.Release|x86.Build.0 = Release|x86
 		{3952D29C-FCA1-4012-995E-303639CAF0FD}.Release|x86.ActiveCfg = Release|x86
+		{49C30A00-BEA6-4421-BB3D-6BAD7A2AADD1}.Debug|x86.Build.0 = Debug|Any CPU
+		{49C30A00-BEA6-4421-BB3D-6BAD7A2AADD1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49C30A00-BEA6-4421-BB3D-6BAD7A2AADD1}.Release|x86.Build.0 = Release|Any CPU
+		{49C30A00-BEA6-4421-BB3D-6BAD7A2AADD1}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal
