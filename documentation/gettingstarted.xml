@@ -1,0 +1,1073 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
+		  xmlns:xlink="http://www.w3.org/1999/xlink" 
+		  xml:id="gettingstarted">
+	<title>Getting Started Tutorial</title>
+	<section>
+		<title>Introduction</title>
+		<para>In this tutorial, we will create and save a simple 
+		card, load QSOs from an ADIF file and select the QSOs to 
+		print, and finally, print the QSOs.</para>
+		<para>The first steps are to become familiar with
+		the <link linkend="splashscreen">HamQSLer splash screen
+		</link>, become familiar with the 
+		<link linkend="mainprogramwindow">main program window,</link>
+		and then <link linkend="setfewuserprefs">set a few user 
+		preferences</link>.
+		</para>
+	</section>
+	<section xml:id="splashscreen">
+		<title>The HamQSLer Splash Screen</title>
+		<para>When the HamQSLer program starts, it performs a number
+		of functions:</para>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>Displays the splash screen;</para>
+				</listitem>
+			<listitem>
+				<para>Performs a number of initialization steps
+			including initializing the HamQSLer directory and its
+			contents, creating the user preferences if it doesn't 
+			exist, and checking if a new version of the program or
+			data files are available.</para>
+			</listitem>
+			<listitem>
+				<para>Destroys the splash screen and displays the main
+				program window.</para>
+			</listitem>
+		</orderedlist>
+		<para>The first time that you execute HamQSLer, the splash
+		screen will look similar to this:</para>
+		<figure xml:id="firstsplashscreen">
+			<title>Splash Screen First Time HamQSLer Started</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/firstsplashscreen.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>There may be one or more additional messages, but as long
+		as the Continue button is displayed you may click that to
+		continue on to see what the <link linkend="mainprogramwindow">
+		main program window</link> looks like.</para>
+		<para>If only a Terminate button is visible, a non-recoverable
+		error has occurred and this must be corrected before you can
+		go any further. If you cannot determine the cause or solution
+		of the problem from the messages displayed on the splash
+		screen, see the <link linkend="programinit">
+		Program Initialization and the Splash Screen</link> chapter.</para>
+	</section>
+	<section xml:id="mainprogramwindow">
+		<title>HamQSLer Main Program Window</title>
+		<para>After you click the Continue button on the splash screen,
+		the splash screen disappears, and the main program window,
+		shown below, is	displayed.</para>
+		<figure xml:id="mainwindow">
+			<title>Main Program Window</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/mainwindow.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The first time that you start HamQSLer, only the QSOs 
+		function tab
+		will be shown. After you have created one or more cards, and
+		depending on certain user preferences, there may be an additional
+		tab for each card the next time that you start the program.</para>
+		<para>The function tabs select the view that is displayed in 
+		the Work Area. The QSOs tab shows the loaded QSOs for which 
+		cards may be printed. The QSOs panel, shown in the image below, 
+		contains 5 QSOs that have been loaded from an ADIF file, the 
+		Sort Cards Panel, and the QSOs filters tabs. The Sort Cards 
+		Panel allows you to sort the cards by date and time, by callsign, 
+		or by a 
+		combination of QSL bureau and manager or callsign. There are
+		four QSOs filters tab, each of which contain filters
+		for selecting QSOs. The four filters are:</para>
+		<simplelist>
+			<member>mode</member>
+			<member>band</member>
+			<member>date and time</member>
+			<member>QSL statuses</member>
+		</simplelist>
+		<figure xml:id="qsospanel">
+			<title>QSOs Panel</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/qsos.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The image below shows the card design panel and card
+		properties panel. The image shows the design panel immediately
+		after a new card has been created. Note the tab label of
+		"New Card". This label changes to the name of the card file
+		when the card is saved. The X button on the tab can be used
+		to close the tab.</para>
+		<figure xml:id="cardpanel">
+			<title>Card Panel</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/cardpanel.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>With no card item (text, background or other image,
+		or the QSOs Box) selected, the properties panel is empty. 
+		When a card item is selected, the properties
+		panel shows the properties for that card item. In the image above,
+		The callsign text item is selected, so the properties panel
+		contains the corresponding text item properties panel.</para>
+	</section>
+	<section xml:id="setfewuserprefs">
+		<title>Setting a Few User Preferences</title>
+		<para>Now that you are familiar with the main program window,
+		we will start to create a sample QSL card. But before we begin
+		with the actual design of the card, we must first set a few
+		user preferences.</para>
+		<para>Select the User Preferences... menu item from the Edit
+		dropdown menu. This will display the User Preferences dialog
+		shown in the image below.</para>
+		<figure xml:id="userprefsdialog">
+			<title>User Preferences Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/userprefsdialog.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<section>
+			<title>Select the Default Text Font</title>
+			<para>Click on the triangle to the left of "TextItems", or
+			double-click on the "TextItems" text 
+			to open the expander. Now click on "Default Text Font to
+			display the Default Text Font panel.
+			See the image below.</para>
+			<figure xml:id="defaulttextfont">
+				<title>Default Text Font Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaulttextfont.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The dropdown list contains a list of every font that
+			is registered on your computer. Select the font that you
+			want as the default font for all text items. Don't worry,
+			the font can be set individually for each text item when you
+			design your card. Sample text in the selected font face is
+			shown in the text block below the dropdown.</para>
+			<para>You can click on the Apply button to save this change,
+			or wait until you have made additional changes before applying
+			them.</para>
+		</section>
+		<section>
+			<title>Set Your Default Callsign</title>
+			<para>Click on "Callsign Text" under the TextItems
+			expander to display the Callsign Text item panel. There is a
+			text editing field that contains the text "MyCall".
+			Change "MyCall" to the callsign that you most often use. Do
+			not click the Macros button; we will discuss this later when
+			we look at the salutation.</para>
+			<para>The image below shows what you should see at this point,
+			replacing VA3HJ with your callsign.
+			</para>
+			<figure xml:id="defaultcallsign">
+				<title>Default Callsign Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultcallsign.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Either click on the Apply button to save this change,
+			or wait until more changes have been made.</para>
+		</section>
+		<section>
+			<title>Set Your Name and QTH</title>
+			<para>Click on "Name and QTH Text" under the Text Items
+			expander to display the Name and QTH item panel. In that
+			panel, click on My Name and QTH to open that expander. The
+			expander contains a text editing field containing the text
+			"My Name and QTH". Change this text to your name and mailing
+			address, using the Return key at the end of all except the
+			last line. Again, do not click the Macros button.</para>
+			<para>The image below shows what you would see at this
+			point if you had entered my name and address.</para>
+			<figure xml:id="defaultnameQth">
+				<title>Default Name and QTH Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultnameQth.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+		<section>
+			<title>Set Salutation</title>
+			<para>Click on the Salutation Text item under the TextItems
+			expander to display the Salution panel. This panel contains
+			only the Macros button. Click on this button to open the 
+			Text and Macros dialog. The dialog should
+			look like this:</para>
+			<figure xml:id="defaultsalutation">
+				<title>Default Salutation Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultsalutation.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The first Static Text groupbox contains
+			an edit box with the text "Thanks for the QSO" in it. The 
+			Static Text groupbox at the bottom of the dialog similarly 
+			contains an edit box with the text ". 73," in it. The
+			groupbox in the middle, labeled "Count Macro", contains fields for
+			editing the content of a CountMacro. Macros are beyond the
+			scope of this tutorial; the CountMacro is simply mentioned
+			here because we will discuss it later while we design
+			a sample card. Click the Close button to close the dialog.</para>
+			<para>Macros are discussed in the 
+			<link linkend="macros">Macros</link> chapter.</para>
+		</section>
+		<section>
+			<title>Select the Default QSOs Box Font</title>
+			<para>Open the QSOs Box expander and click on the "Default
+			QSOs Box Font" text to open the Default QSOs Box Font
+			panel. This panel is similar to the Default Text Font panel.
+			Select the font to display QSO information in; this font
+			may be the same or different than the default text font.</para>
+			<para>All user preferences are discussed in the 
+			<link linkend="settinguserprefs">Setting
+			User Preferences</link> chapter.</para>
+			<para>Now that we have set a number of user preferences, it
+			is time to design your first card.</para>
+		</section>
+	</section>
+	<section>
+		<title>Designing Your First Card</title>
+		<section>
+			<title>Creating a Default Card</title>
+			<para>To create a card, click on the 
+			<guimenu>Cards</guimenu> dropdown
+			menu. Click on <guisubmenu>New</guisubmenu>, and then 
+			<guimenuitem>Bureau Card</guimenuitem>. Note that you
+			can also just type 
+				<keycombo action="simul">
+					<keycap>Ctrl</keycap>
+					<keycap>N</keycap>
+				</keycombo>.
+			</para>
+			<para>The image below shows the main window when you have
+			performed this action. Note that the properties panel is empty.
+			</para>
+			<figure xml:id="newcard">
+				<title>New Card When First Created</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/newcard.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+		<section>
+			<title>Selecting and Deselecting Card Items</title>
+			<para>Move the mouse cursor over the card and the various
+			text items and QSOs Box. Each item in turn is surrounded
+			by an orange dashed rectangle. This indicates the card item
+			that can be selected. With the mouse cursor over the card and
+			not one of the text items or QSOs Box, click the 
+			<keycombo action="click">
+				<mousebutton>right mouse button</mousebutton>
+			</keycombo> 
+			to display the card context menu.</para>
+			<figure xml:id="selectcontextmenu">
+				<title>Select Context Menu</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/selectcontextmenu.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The image above shows the context menu that is displayed.
+			Click on the 
+				<guimenuitem>Select Highlighted Item</guimenuitem>
+			menu item.
+			The orange dashed rectangle changes to a blue dashed rectangle
+			to indicate that the card (actually the Background Image) 
+			item is selected, and the properties
+			panel changes to contain the properties associated with the
+			Background Item.</para>
+			<para>Now click the 
+				<keycombo action="click">
+					<mousebutton>right mouse button</mousebutton>
+				</keycombo>
+			with the mouse cursor anywhere within the card design panel,
+			even outside the card to redisplay the Select Context Menu.
+			Click on the 
+			<guimenuitem>Deselect Selected Item</guimenuitem> menu item to deselect
+			the selected card item.</para>
+			<para>Card items may also be selected and deselected using
+			the <guimenu>Select</guimenu> dropdown menu. The menu
+			contains a menu item for each card item on the card; for 
+			any	Image items that have been added for which a filename has
+			been specified, there is a menu item that
+			contains the name of the image file, and for Image items for
+			which a filename has not been specified, 
+			the menu items are labeled "Image 1", "Image 2", and so
+			forth. The menu items for text items are labeled with the
+			first ten characters or the text. There is also a menu item
+			with the label "Qsos Box" to allow selection of the QSOs
+			Box.</para>
+			<para>The final menu item in the Select dropdown menu,
+			labeled "None" is used to deselect the selected card item.</para>
+			<para>The image below shows the Select dropdown menu for
+			the card in its current state. The labels for the callsign
+			and name and QTH menu items will match the first ten
+			letters of the callsign and name and QTH field that you set
+			in the user preferences earlier.</para>
+			<figure xml:id="selectmenu">
+				<title>Select Dropdown Menu</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/selectmenu.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+		<section>
+			<title>Setting the Background Image</title>
+			<para>Select the background using either the Select context
+			menu or the Select dropdown menu. The card will be surrounded
+			by a blue dashed line indicating that it is selected, and
+			the properties panel will contain the background image
+			properties panel, shown in the image below.</para>
+			<figure xml:id="backgroundimageproperties">
+				<title>Background Image Properties</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/backgroundimageproperties.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Click on the button labeled "..." to open the file
+			open dialog, shown below.</para>
+			<figure xml:id="fileopendialog">
+				<title>File Open Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/fileopendialog.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The dialog opens in the hamqsler directory in your
+			documents directory ("My Documents"). The actual directory
+			is determined by a user preferences setting; see the 
+			<link linkend="settinguserprefs">User Preferences chapter</link> for more 
+			information.</para>
+			<para>Navigate to the Samples directory and select the
+			samples.jpg file. The program's main window will now look
+			like this:</para>
+			<figure xml:id="backgroundimageoncard">
+				<title>Main Window With Background Image Added to Card</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/backgroundimageoncard.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Note the selection rectangle has now extended above 
+			and below the top and bottom of the card. The rectangle
+			now outlines the edges of the background image, which does
+			not have the same aspect ratio as the card. Also, in
+			the background image properties panel, the location of the
+			image file is shown below the "..." button.</para>
+			<para>Move the mouse cursor over the background image. The
+			cursor changes to 
+			<inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/movecursor.png" valign="middle" />
+				</imageobject>
+			</inlinemediaobject>
+			unless
+			you are using a custom set of mouse cursors). This is the
+			move cursor. Press and hold the left mouse button and drag
+			the mouse around the screen to move background image.</para>
+			<para>To change the size of the size of the image, release the
+			mouse button, then move the mouse cursor to one of the four
+			corners of the image. The cursor will change to either
+			<inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/nwse.png" valign="middle" />
+				</imageobject>
+			</inlinemediaobject>
+			or
+			<inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/nesw.png" valign="middle" />
+				</imageobject>
+			</inlinemediaobject>
+			to indicate
+			that you are over the corner of the image. Press and hold
+			the left mouse button, then drag the cursor away from the
+			centre of the image to increase the size of the image, and
+			drag the cursor towards the centre of the image to decrease
+			the size of the image.</para>
+			<para>It is difficult to return the image to its original
+			size and position. A simpler way to do this is to reload
+			the image. Do so now.</para>
+		</section>
+		<section>
+			<title>Setting Text Items</title>
+			<para>Deselect the background image using either the deselect
+			context menu or Select dropdown menu. Select the callsign
+			text item. The text item properties panel, shown below,
+			 will now be displayed in the properties panel.</para>
+			<figure xml:id="textitemproperties">
+				<title>Text Item Properties Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/textitemproperties.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>There are a number of properties related to text items;
+			we will look at each of them in turn.</para>
+			<para>The font dropdown box contains all of the fonts registered
+			with your operating system. The font that is currently
+			selected is the font that you selected in the user
+			preferences earlier in this tutorial. Select a different
+			font. The callsign on the card is now displayed in that
+			font. Notice that only this text changed font, not the other
+			text items.</para>
+			<para>The text may be displayed in Black, Bold, or Normal 
+			weight by selecting the weight from the Font Weight combo box.
+			Italic or Normal style may be selected by checking and 
+			unchecking the
+			Italic checkbutton. Try this. For the callsign
+			text, the default is normal style and Black weight.</para>
+			<para>The size dropdown box contains a number of predefined
+			font sizes (in device independent units which are equal
+			to ¾ of a point). 72 is the default value for callsigns.
+			You can select any of the sizes
+			directly from the list, or edit the size box to enter any
+			size that you want. When editing the value, use "." 
+			as the decimal separator. Try entering a character other than
+			a number or ".". Note the beep emitted by your computer to
+			indicate that you entered an invalid character.Now select 
+			the font size that you want.</para>
+			<para>The color button (the button with the black rectangle)
+			shows the color that the text is displayed in. Click on this
+			button to open the color picker dialog, shown below.</para>
+			<figure xml:id="colorpicker">
+				<title>Color Picker Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/colorpicker.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+			The color picker lets you set a color in a number of
+			different ways. For example, you can select one of the basic
+			or custom colors shown in swatches on the left side of the
+			dialog, or you can select a custom color by clicking in the
+			rainbow on the right side of the dialog and then adjusting
+			the slider to the right of the rainbow to adjust the luminance
+			value. Alternatively you may enter hue, saturation and luminance
+			values or red, green and blue values in the entry boxes below
+			the rainbow. To save as a custom color for later use in the
+			program, click on the "Add to Custom Colors" button.</para>
+			<para>For this tutorial, a bright orange works best. Set
+			red to 255, green to 128, and blue to 0. Save this as a
+			custom color because we will be using it again, then click 
+			the OK button.
+			This closes the color picker dialog. The button in the 
+			text item properties panel now displays an orange rectangle,
+			and the callsign text on the card is displayed in orange.</para>
+			<para>The group box labeled Text holds an edit box containing
+			the text of the callsign. Make some changes to the text and
+			note that the changes are immediately reflected on the card.
+			Reset the text to your callsign.</para>
+			<para>Ignore the "Macros" button for now.</para>
+			<para>The Checkboxes group box contains four controls, a
+			checkbutton for adding a checkbox in front of the text,
+			a checkbutton for adding a checkbox after the text, a slider
+			for adjusting the thickness of the lines making up the checkboxes,
+			and a slider to set the size of the checkboxes as a percentage
+			of the height of the text. Adjust each of these controls to see the effect
+			they have. The line thickness and check box ratio sliders only
+			have an effect when at least
+			one of the checkbuttons is checked. Note that the checkboxes
+			are displayed in the same color as the text. Uncheck both
+			checkbuttons.</para>
+			<para>Move the mouse cursor over the callsign text on the
+			card. The mouse cursor will change to the move cursor. Press
+			and hold the left mouse button, and drag the text to be near
+			the top left corner of the card, then release the mouse 
+			button.</para>
+			<para>Deselect the callsign text and select the text with
+			your name and QTH. Change the color of the text to the same
+			orange color as the callsign. Adjust the postion of the
+			text so that the top of the top line of the text is in
+			line with the top of the callsign text. Position the text
+			so that it is to the right of the callsign.Deselect the 
+			text item.</para>
+			<para>Now look at the salutation text on the card. Note
+			the text is "Thanks for the QSO$. 73, ". The "&lt;S&gt;" characters
+			are a placeholder for a Count Macro. We will look at this
+			macro in a moment.</para>
+			<para>Select the salutation text item. In the text item
+			properties panel, note that Text group box contains only 
+			a Macros button. Click on this
+			button to open the Text and Macros dialog.</para>
+			<para>The Text and Macros dialog will contain three main group boxes:
+			the groupbox at the top of the dialog, labelled "Static Text",
+			contains a text edit box with the text "Thanks for the QSO",
+			The second main group box, labelled "Count Macro" will be discussed
+			in a moment. The third main group box located at the bottom of
+			the dialog is labelled "Static Text" and contains a text edit
+			box with the text ". 73," in it. The dialog will look like 
+			the image below.</para>
+			<figure xml:id="salutationtextandmacros">
+				<title>Salutation Text and Macro Dialog (Expanded)</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/salutationtextandmacros.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			
+			
+			<para>The Count Macro group box
+			contains controls for the contents of a Count Macro. A Count
+			Macro displays text based on the number of QSOs rows that
+			are printed in the QSOs Box for cards with no QSOs, and 
+			the number of QSOs printed for cards with QSOs. This count 
+			macro is set up to print "s" when the QSOs count is greater
+			than one, print nothing when the QSOs count is 1, and to
+			display
+			"&lt;S&gt;" on the card in design mode. Each of these values, and
+			the condition may be modified. See the 
+			<link linkend="macros">Macros chapter</link> for
+			more information. We will not make any changes to the
+			count macro or its text in this tutorial.</para>
+			<para>Change the color of the text to the same orange color
+			as the other text items, and make any adjustments to the
+			position of the text that you would like. Deselect the salutation
+			text item.</para>
+			<para>Your card should now look like this:</para>
+			<figure xml:id="cardaftertextitemschanged">
+				<title>Card After Text Items Edited</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/cardaftertextitemschanged.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+		<section>
+			<title>Setting Qsos Box Properties</title>
+			<para>Deselect any selected card item, then select the Qsos Box.
+			The Qsos Box properties panel will be displayed in the properties
+			panel. See the image below for a view of the Qsos Box properties 
+			panel. The panel contains many properties, and does not fit
+			fully in the HamQSLer window. The
+			scrollbar to the right of the panel may be used to scroll down
+			to the remaining properties, or you may increase the height of
+			the program's window to show all of the properties.</para>
+			<figure xml:id="qsosboxprops">
+				<title>Qsos Box Properties Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/qsosboxprops.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The text that is displayed in the Qsos Box (e.g. the
+			confirming text (in the top line of the box, the text for
+			each column header, and the text that is displayed in the 
+			QSL column, not yet shown on the card) is determined by 
+			user preferences and is fixed when the card is first created.
+			See the <link linkend="settinguserprefs">User 
+			Preferences</link> chapter for details on setting these
+			values.</para>
+			<section>
+				<title>Setting QSOs and Fields Properties</title>
+				<para>Let's look at each property. The Show Manager checkbox
+				when checked adds the text "via ZZZZZZ" to the confirmation
+				line in design mode, and will replace "ZZZZZZ" with the
+				other station's QSL manager if one exists and is included
+				in the Manager column of the QSOs printed on the card. We
+				will look at this later when we select the QSOs to be printed.
+				If no manager exists, the text, including "via" is not
+				printed. Check this checkbox as we will be using it later.</para>
+				<para>Below the Show Manager checkbox are two radio buttons,
+				one labeled "Show Band Column" and the other labeled 
+				"Show Frequency Column". When
+				you create a card, the "Show Band Column" radio button 
+				is selected by
+				default. These two radio buttons determine whether the 
+				Qsos Box displays a band column or a frequency column. Click
+				the "Show Frequency Column" button. 
+				Note that the Band column header
+				has changed to MHz and that the size of the various columns
+				have adjusted themselves.</para>
+				<para>What happens if you select the Band radio button but
+				your logging program only logs frequency? When the ADIF file
+				containing the QSOs is loaded, or when you manually input
+				QSOs, a band field will be generated
+				for each QSO, with the band corresponding to the band
+				containing the logged frequency.</para>
+				<para>And what happens if you select the Frequency radio
+				button but the QSO only has a band field and not a frequency
+				field? When each card is printed, a default frequency for
+				that band is substituted. The default frequency for each
+				band may be set in the user preferences.</para>
+				<para>Make sure that the "Show Band Column" radio button 
+				is selected.</para>
+				<para>The QSL Pse/Tnx checkbox controls the visibility of
+				the QSL column in the Qsos Box. When a card is first created,
+				this checkbox is checked. Uncheck the checkbox; note that
+				the column labeled "QSL" at the left of the
+				Qsos Box has been removed, and the other columns have been 
+				resized. The values
+				printed in this column depend on the value of the QSL_RCVD
+				ADIF field for each QSO. If the field contains "Y" indicating
+				that a QSL card has been received confirming this QSO, then
+				the text "Tnx" is printed in the column for that QSO. If
+				the column contains any other value, the text "Pse" is printed
+				in the column. "Tnx" and "Pse" are default values; they may
+				be changed in user preferences.</para>
+				<para>Make sure that the checkbox is checked before continuing
+				with this tutorial.</para>
+				<para>The Date Format dropdown box contains three values:
+				</para>
+				<simplelist type="vert">
+					<member>YYYY-MM-DD</member>
+					<member>DD-MMM-YY</member>
+					<member>DD-MM-YY</member>
+				</simplelist>
+				<para>The value selected determines both the text that is
+				displayed in the date column, and the format of the date printed
+				for each QSO. Change to a different value to see the effect on
+				the Qsos Box. Finally, set this value to YYYY-MM-DD for this
+				tutorial.</para>
+				<para>The Max Qsos control specifies the maximum number of
+				QSOs that may be printed on the card. The control is an
+				editable spinner; you may change values by clicking on the
+				up or down triangles on the right side of the control, or
+				you may directly edit the value. Valid values are between
+				1 and 15. Try multiple values to see how the Qsos Box changes.
+				</para>
+				<para>The default value when you create a new card is 4.
+				There is no way to change this default.</para>
+				<para>Finally, set this value to 2.</para>
+			</section>
+			<section>
+				<title>Setting Line and Text Properties</title>
+				<para>There are three color buttons. Each button opens the
+				color picker dialog to allow you to select a color. The three
+				colors control the color of the lines and text in the Qsos
+				Box, the color of the callsign in the confirming text, and
+				the color of the manager in the confirming text. Set the
+				line and text color to orange (red=255, green=128, blue=0),
+				and set the manager color to green (red=0, green=255,
+				blue=0). The orange text is a bit hard to read but we will
+				fix that in a moment.</para>
+				<para>The Font Size dropdown box contains values between
+				8.0 and 14.0. This sets the size of the font in the QSOs
+				Box. Try different values. For the 2 QSOs that we have set
+				as the maximum, a value of 12.0 points is good. Smaller 
+				values will
+				be needed when you select a large Max QSOs value; otherwise
+				the box would not fit on the card.</para>
+				<para>The Font dropdown box allows you to select the font
+				that the text in the Qsos Box is displayed and printed in.
+				The initial font selected in the dropdown box is the font
+				that you specified as the default QSOs Box font in the
+				User Preferences earlier.
+				Select a few different fonts and notice how the height of
+				the Qsos Box changes. The actual height of a line of text
+				in each font will be different, even though the font size
+				has not changed.</para>
+				<para>Set the font to a value that looks good to you.</para>
+			</section>
+			<section>
+				<title>Setting Qsos Box Background Properties</title>
+				<para>These properties control the color and the opacity
+				(opposite of transparency) of the background of the Qsos
+				Box.</para>
+				<para>Click on the Color button to display the color picker
+				dialog. This dialog may be used to change the color of the
+				background of the Qsos Box. Note that any change you make
+				is not visible. We will correct that in a moment.</para>
+				<para>The opacity slider adjusts the opacity 
+				(1 - transparency) of the background. Adjust the slider to
+				select values between 0 and 100% to see the effect on the
+				Qsos Box.</para>
+				<para>When you have finished playing, set the color to black
+				(red=0, green=0, blue=0), and set the opacity to 30%. Note
+				that the orange text in the Qsos Box is now much more visible,
+				and that a considerable amount of the detail in the 
+				background image shows through.</para>
+			</section>
+			<section>
+				<title>Adjusting the Position of the Qsos Box</title>
+				<para>Move the mouse cursor over the Qsos Box. The cursor
+				will change to 
+				<inlinemediaobject>
+					<imageobject>
+						<imagedata fileref="images/updown.png" valign="middle" />
+					</imageobject>
+				</inlinemediaobject>
+				. This cursor indicates that you can only adjust the Qsos Box
+				vertically and not horizontally. Press the left mouse button
+				and drag the Qsos Box. When you are done, release the mouse
+				button. For this card, positioning the Qsos Box anywhere that
+				is not over a text item will work.</para>
+				<para>Deselect the Qsos Box. Your card should look similar
+				to the image below:</para>
+				<figure xml:id="samplecard">
+					<title>Card After Design Complete</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/samplecard.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</section>
+			<section>
+				<title>Saving the Card</title>
+				<para>Select the Save Card As... menu item from the Cards
+				dropdown menu. This opens the File Save dialog, shown
+				in the image below:</para>
+				<figure xml:id="savecarddialog">
+					<title>Save Card Dialog</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/savecarddialog.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>Note that the dialog opens in the hamqsler directory.
+				Select the Samples directory; enter the file name
+				"sample" in the Name edit box near the top of the dialog,
+				and click the Save button. The card will be saved with
+				the name "sample.qslx".</para>
+				<para>The text on the tab will in the main window will
+				change from "New Card*" to "sample.qslx".</para>
+				<para>In the future, this card may be opened using the
+				Open Card... menu item in the Cards dropdown menu.</para>
+				<para>We are now done designing the card, so let's load
+				an ADIF file containing some QSOs to select for printing.</para>
+			</section>
+		</section>
+	</section>
+	<section>
+		<title>Selecting QSOs to Print on the Card</title>
+		<para>Click on the QSOs tab. Select Import QSOs... from the 
+		QSOs dropdown menu. This opens the File Open dialog in the
+		hamqsler directory. Select the Samples directory, and open
+		the file "sample.adi". The program main window should look
+		like this:</para>
+		<figure xml:id="sampleqsosloaded">
+			<title>Sample QSOs Loaded</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/sampleqsosloaded.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<section>
+			<title>Selecting QSOs Sort Order</title>
+			<para>The QSOs properties panel is shown below.</para>
+			<figure xml:id="qsospropspanel">
+				<title>QSOS Properties Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/qsospropspanel.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>As noted here, when an ADIF file is first imported,
+			the QSOs are sorted by date and time. QSOs may also be sorted
+			by manager and callsign, and by bureau followed by manager
+			and callsign. Select each of the sort order radio buttons
+			and note how the order of the QSOs changes in the QSOs panel.</para>
+			<para>With the Bureau radio button set, note that all QSOs
+			with the Send Via column set to "Bureau" are sorted to the
+			top of the QSOs panel, followed by QSOs whose Send Via is
+			set to Direct. The values in the Send Via column are set 
+			according to the values of the QSL_SENT_VIA field in ADIF
+			records as follows:</para>
+			<table frame='all'>
+				<title>Send Via Column Values</title>
+				<tgroup cols='2' align='center' colsep='1' rowsep='1'>
+					<colspec colname='QSL_SENT_VIA' />
+					<colspec colname='Send Via Value' />
+					<thead>
+					<row>
+						<entry namest='QSL_SENT_VIA'>QSL_SENT_VIA</entry>
+						<entry namest='Send Via Value'>Send Via Value</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>B</entry>
+							<entry>Bureau</entry>
+						</row>
+						<row>
+							<entry>D</entry>
+							<entry>Direct</entry>
+						</row>
+						<row>
+							<entry>E</entry>
+							<entry>Electronic</entry>
+						</row>
+						<row>
+							<entry>M</entry>
+							<entry>Manager</entry>
+						</row>
+						<row>
+							<entry />
+							<entry>Bureau</entry>
+						</row>
+						<row>
+							<entry>Any other value</entry>
+							<entry>Bureau</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			<para>Even though some QSOs may have a value of Electronic
+			or Manager in the Send Via column, it is still possible to
+			include these QSOs on cards that you print.</para>
+			<para>Leave the Bureau radio button selected.</para>
+		</section>
+		<section>
+			<title>Selecting QSOs by Band</title>
+			<para>Note that the checkboxes in the Include column for
+			all QSOs are checked to indicate that all QSOs will be
+			printed on cards.</para>
+			<para>In the QSOs properties panel, click on the Band tab.
+			The expanded widget looks like this:</para>
+			<figure xml:id="bandproperties">
+				<title>Band Properties</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/bandproperties.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Uncheck the 40m checkbox. Note that the checkbox in
+			the Include column of the third QSO is now
+			unchecked; this is the only QSO that took place
+			on the 40m band.</para>
+			<para>Leave this unchecked.</para>
+		</section>
+		<section>
+			<title>Selecting QSOs by Mode</title>
+			<para>Click on the Mode tab; it looks like
+			the image below.</para>
+			<figure xml:id="modeproperties">
+				<title>Mode Properties</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/modeproperties.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			
+			<para>Deselect the CW checkbox. All QSOs in the CW mode are
+			deselected. Reselect the CW mode checkbox. Again all QSOs
+			except the QSO on 40m are selected.</para>
+			<para>Leave all modes selected.</para>
+		</section>
+		<section>
+			<title>Selecting QSOs by Date and Time</title>
+			<para>Click on the Date/Time tab. The tab contents
+			look like this:</para>
+			<figure xml:id="datetimeproperties">
+				<title>Date/Time Properties</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/datetimeproperties.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The start date and time fields contain the date and
+			time of the earliest QSO in the QSOs panel. The end date
+			and time correspond to the date and time of the latest QSO.
+			Change the start date to "20021201". Note that the QSOs whose
+			start date occur before this date are now deselected. Similarly, 
+			you could change
+			the start time and the end date and time to deselect other
+			QSOs.</para>
+			<para>Now click the Reset button. The start and end dates
+			are reset to the dates and times of the earliest and latest
+			QSOs.</para>
+		</section>
+		<section>
+			<title>Selecting QSOs by QSL Statuses</title>
+			<para>The image below shows the content of the QSL Status tab.
+			It contains three sections, one for Rcvd statuses, one for
+			Sent statuses, and one for Sent Via statuses. </para>
+			<figure xml:id="qslstatusproperties">
+				<title>Expanded QSL Status Properties</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/qslstatusproperties.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Select various statuses to see the QSOs that are selected
+			and deselected. When you are finished, make sure that all
+			checkboxes are checked.</para>
+		</section>
+		<section>
+			<title>Selecting Individual QSOs</title>
+			<para>You may select individual QSOs by checking and unchecking
+			the checkboxes in the Include column. To do this, you must
+			click on the checkbox itself. If you click
+			anywhere else on the QSO, the QSO is selected. this is not what
+			you want at this time.</para>
+			<para>It is also possible to check and uncheck all QSOs at
+			once or multiple QSOs at a time. That is covered in the 
+			chapter titled <link linkend="workingwithqsos">Working With
+			QSOs</link>.</para>
+			<para>Before proceeding, make sure that only the third QSO
+			is deselected.</para>
+		</section>
+	</section>
+	<section>
+		<title>Printing the Cards</title>
+		<section>
+			<title>Default Printer and Print Options Properties</title>
+			<para>Click on the tab labeled "sample.qslx" to redisplay the
+			card that you designed earlier.</para>
+			<para>Select the Print Cards... menu item from the Cards
+			dropdown menu. This opens the Print dialog shown below.</para>
+			<figure xml:id="printdialog">
+				<title>Print Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printdialog.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Select the printer you would use for printing the cards,
+			and then click the "Preferences" button to set printing preferences
+			such as print quality and paper size. For now, select a paper
+			size of either letter or A4. Do not set Portrait or
+			Landscape mode because this setting is overridden later. Now click the
+			OK button to close the Printing Preferences dialog.</para>
+			<para>Click the "Print" button to close the Print dialog and
+			open the Print Settings dialog, shown below.</para>
+			<figure xml:id="printsettingsdialog">
+				<title>Print Settings Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printsettingsdialog.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The card layout group box on the left of the dialog allows
+			you to select how the cards are printed on the page. Depending
+			on the size of the paper you selected in the Printing Preferences
+			dialog and the size of the cards you will be printing, there
+			will be up to six choices. The layouts shown in the figure above
+			are for bureau sized cards on letter sized (8½ by 11 inch) paper.
+			The cards are shown in white with a blue edge and the paper
+			or cardstock is shown in light pink so you can see how the cards
+			are layed out. For this tutorial, select the layout at the top
+			left.</para>
+			<para>The Options group box on the right of the Print Settings
+			dialog controls certain print options:</para>
+			<para>The Print Card Outlines checkbox controls whether a black
+			line is printed around the edges of each card. Printing the card
+			outline makes it easier to cut the cards out of the cardstock.</para>
+			<para>If the number of cards to be printed does not exactly
+			equal the number of pages to be printed multiplied by the number
+			of cards per page, then a portion of the last page would be
+			wasted. In this tutorial for example, four cards would be printed
+			at three cards per page. In order not to waste a portion of the
+			cardstock, you may print "blank" cards to fill the rest of the
+			page. These blank cards contain no QSO information; you may enter
+			this information using a pen at a later time. Printing or not
+			printing these blank cards is controlled by the Fill Last Page
+			With Blank Cards checkbox.</para>
+			<para>Unless you selected a borderless page size, then your printer
+			will not print to the edge of the cardstock, but will leave margins
+			of different sizes around the edges of the cardstock when you
+			print the cards. Because you will be printing multiple cards
+			per page, the cards would have unequal, unprinted margins along one or
+			more sides of each card. To create equal sized margins around the
+			edges of each card, check the Set Card Margins to Printer Page
+			Margins checkbox. Depending on card layout that you choose, this
+			checkbox may be checked or unchecked. For this tutorial, make
+			sure that this checkbox is checked.</para>
+			<para>Please note: if you are using a printer that does not
+			provide its margin information, this checkbox will be unchecked
+			and disabled, so you will not be able to check it. After you
+			clicked the "Print" button on the Print dialog, a message dialog
+			will have been displayed to inform you of this.</para>
+			<para>To print the cards you would click the "Print" button.
+			Since you probably do not want to waste the paper and ink
+			on this first card, click the "Preview" button. This
+			opens the print preview dialog.</para>
+			<figure xml:id="printpreview">
+				<title>Print Preview Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printpreview.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>There is a toolbar at the top of the dialog. The buttons
+			on this toolbar allow you to control the magnification of each page
+			and to specify whether you want to display one or two pages at 
+			a time. A scrollbar on the right side of the dialog allows
+			you to scroll through the various pages to be printed.</para>
+			<para>On the first page, the first card contains the two QSOs
+			to VA3JNO with VA3HJ as the manager. The second card contains
+			a single QSO with VA3JNO, and the third card contains a single
+			QSO with 5C5CW. If the maximum number of QSOs on a card
+			had been set to 1, only a single QSO would have been printed
+			on each card.</para>
+			<para>Note that on the cards with one QSO, the confirming
+			text in the QSOs Box is "Confirming 2-Way QSO with ...", and
+			the salutation text is "Thanks for the QSO. 73,". On the
+			card with two QSOs the texts are "Confirming 2-Way QSOs
+			with..." and "Thanks for the QSOs. 73,". The inclusion and
+			exclusion of the "s" on "QSO" is controlled by a Count Macro.
+			See <link linkend="macros">Macros</link> for more information.
+			</para>
+			<para>Now view the second page of cards. The first card is 
+			for the QSO with CG3JNO, and the last two cards contain a
+			QSOs Box with two empty lines. These cards are printed because
+			you checked the "Fill Last Page With Blank Cards" checkbox.</para>
+			<para>Every card is surrounded by a black line on all sides
+			because you checked the "Print Card Outlines" checkbox.</para>
+			<para>Close the print preview dialog. Go back and try the
+			various print options settings combinations to see the effect
+			that each setting has.</para>
+			<para>If, after viewing the pages to be printed in the Print
+			Preview dialog, you want to print the pages, you must close
+			the dialog and restart the print process, clicking the Print
+			button on the Print Settings dialog. It is not possible to
+			print from the Print Preview dialog.
+			</para>
+		</section>
+		<section>
+			<title>Concluding the Tutorial</title>
+			<para>You have now concluded this tutorial, but you have
+			only scratched the surface of the capabilities of HamQSLer.
+			Be sure to read the remaining chapters in this user
+			manual as they contain more information on every aspect of
+			the program and also contain many helpful hints and suggestions
+			to get the most out of HamQSLer.</para>
+		</section>
+	</section>
+</chapter>

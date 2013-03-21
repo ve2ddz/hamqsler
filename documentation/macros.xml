@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
+		 xmlns:xlink="http://www.w3.org/1999/xlink"
+		 xml:id="macros">
+	<title>Macros</title>
+	<section>
+		<title>Introduction to Macros</title>
+		<para>Macros add a powerful feature to HamQSLer by providing
+		<emphasis>active</emphasis> text. For every macro there is text
+		that is displayed on the card in design view, and text that is
+		inserted when the cards are printed. These macros may be used
+		in any text item and also in the confirming text user preference.
+		If you followed the Getting
+		Started Tutorial, you got your first glimpse of Count Macro.</para>
+		<para>This discussion will focus on macros used in text items;
+		using macros in the confirming text user preference are similar
+		to macros within the Text and Macros dialog which you
+		will see shortly.</para>
+		<para>The image below shows the text area in a text item properties
+		panel. If there are no macros used in the text item, then this
+		is what you will see: a text box for editing the static text,
+		and a button labeled "Macros". If there are macros
+		being used in the text item, then only the button is visible.</para>
+		<figure xml:id="statictextonly">
+			<title>Static Text Only in Text Item Properties</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/statictextonly.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Clicking the button opens the Text and Macros dialog, shown
+		with static text only, in the image below.</para>
+		<figure xml:id="textonlymacrosdialog">
+			<title>Static Text Only in the Text and Macros Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/textonlymacrosdialog.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>To add a macro, place the mouse cursor over the colored
+		rectangle that contains the "Static Text" and click the right 
+		mouse button to bring up the macros
+		context menu, shown below.</para>
+		<figure xml:id="macroscontextmenu">
+			<title>Macros Context Menu</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/macroscontextmenu.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The context menu permits you to add a macro either before
+		or after the static text or macro colored rectangle you opened the
+		context menu over. There are a few things to notice:</para>
+		<simplelist>
+			<member>The Delete menu item cannot be selected when only
+			one static text or macro exists.</member>
+			<member>Static text items cannot be inserted next to another
+			static text item, only next to macros.</member>
+		</simplelist>
+		<para>The image below shows the dialog after a Manager Macro has
+		been inserted after the static text item, and all expanders have
+		been expanded.</para>
+		<figure xml:id="managermacroafter">
+			<title>Static Text and Manager Macro in Text and Macros Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/managermacroafter.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Every macro has a section called "Design Text". This is
+		the text that is displayed on the card in design mode. In the
+		Getting Started Tutorial, this is the "&lt;S&gt;" in both the confirming
+		text in the QSOs Box and in the salutation text item. Other sections
+		are specific to the macros. At print time, the Manager Macro
+		will place the contents of the Manager field for the QSO on the
+		card, or the No Manager Text if the Manager field is empty.
+		Any of these fields may be blank.</para>
+		<para>Macros may be inserted inside macros anywhere that a static
+		text field is allowed. For example, you could add a macro inside
+		the Design Text or No Manager Text fields of the Manager Macro,
+		but you could not add another macro at the same level as the
+		Design Text or No Manager Text sections. While macros may theoretically
+		be added to any depth, you should take great care with this facility
+		as keeping track of the macro level becomes increasingly difficult
+		as macros are added to greater depths.</para>
+		<para>The remaining sections in this chapter describe each macro.</para>
+	</section>
+	<section>
+		<title>ADIF Macro</title>
+		<para>An ADIF Macro prints the contents of an ADIF field on a
+		card if the field exists and is not an empty string; otherwise,
+		it prints user specified text. The image below shows a view of 
+		the ADIF Macro as it would first appear after adding in the
+		Text and Macros dialog.</para>
+		<figure xml:id="adifmacro">
+			<title>ADIF Macro</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/adifmacro.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The contents of an ADIF field may change from one QSO to
+		the next. Because of this, you will normally want to print a
+		different card every time the contents of the ADIF field changes.
+		Checking the "Separate Cards By This ADIF Field" checkbox will
+		do this; if you do not check this checkbox, then the contents
+		of the ADIF field from the first QSO that is printed on the card
+		will be added to the card.</para>
+		<para>Add the name of the ADIF field for this macro to the ADIF
+		Field text box. Standard ADIF fields are defined in the ADIF
+		standard, available at <link xlink:href="http://www.adif.org">
+		http://www.adif.org</link>. Be sure to select the
+		version of the standard that corresponds to the version specified by
+		your logging application. In addition to the fields defined in the
+		standard, your logger may also export application specific fields.
+		See the documentation for your logger for these fields.</para>
+		<para>The field name is not case sensitive; for example, "CALL",
+		"call", and "CalL" are all valid.</para>
+		<para>The No Field Text section contains the text that would
+		be printed if either the ADIF field does not exist for the QSOs,
+		or the value of the field is an empty string.</para>
+		<tip>
+			<para>Do you operate using a number of different callsigns?
+			If you do and your exported ADIF file contains the 
+			STATION_CALLSIGN field, then you could replace the static
+			callsign text item with an ADIF Macro for the STATION_CALLSIGN.
+			Be sure to check the "Separate Cards By This ADIF Field"
+			checkbox. Then a single card can be used for every one of
+			your callsigns.</para>
+		</tip>
+		<tip>
+			<para>QSL bureaus prefer that the callsign of the station
+			that is to receive a QSL card be written in the upper right
+			or left corner of the back or front of the card. You could
+			do this by adding a new text item, positioning it appropriately,
+			and including text such as "To: " as well as an ADIF macro
+			for the CALL field.</para>
+			<para>HamQSLer does not easily support printing
+			this on the opposite side of the card from other text and
+			the QSOs Box, but if you properly design your card, it can
+			be placed on the same side as these items and still be very
+			visible to the sorters at the QSL bureaus.</para>
+		</tip>
+		<tip>
+			<para>You could customize the confirming text in the QSOs
+			Box or the salutation text item to contain mode information.
+			For example, your salutation could be "Thanks for the CW
+			QSOs. 73, " for CW QSOs and so forth.</para>
+		</tip>
+	</section>
+	<section>
+		<title>ADIF Exists Macro</title>
+		<para>The ADIF Exists Macro prints user specified text if the
+		ADIF field exists for a QSO and its contents are not an empty 
+		string, and
+		prints a different user specified text if the field either does
+		not exist or the field contents are empty. The image below shows 
+		a view of the ADIF Exists Macro.</para>
+		<para>This image shows the various sections
+		as they would be immediately after the macro has been added to
+		the Text and Macros dialog.</para>
+		<figure xml:id="adifexistsmacro">
+			<title>ADIF Exists Macro</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/adifexistsmacro.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Checking the "Separate Cards By This ADIF Field Exists"
+		checkbox will cause a new QSL card to be printed every time 
+		that consecutive QSOs have and have not included this ADIF field,
+		or the field contents are not empty.</para>
+		<para>Add the name of the ADIF field for this macro to the ADIF
+		Field text box. Standard ADIF fields are defined in the ADIF
+		standard, available at <link xlink:href="http://www.adif.org">
+		http://www.adif.org</link>. Be sure to select the
+		version of the standard that corresponds to the version specified by
+		your logging application. In addition to the fields defined in the
+		standard, your logger may also export application specific fields.
+		See the documentation for your logger for these fields.</para>
+		<para>The field name is not case sensitive; for example, "CALL",
+		"call", and "CalL" are all valid.</para>
+		<para>Enter the text that you want to appear on the card in design
+		view in the Design Text edit box.</para>
+		<para>Enter the text that you want displayed if the ADIF field
+		exists in the Field Exists Text section.</para>
+		<para>Enter the text that you want displayed if the ADIF field
+		doesn't exist in the Field Doesn't Exist Text section.</para>
+		<tip>
+			<para>If you are a contester, you could use this macro to
+			modify the salutation to say "Thanks for the contest QSOs.
+			73, " for cards for your contest QSOs and not include the
+			"contest" word for non-contest QSOs.</para>
+		</tip>
+	</section>
+	<section>
+		<title>Count Macro</title>
+		<para>The Count Macro specifies text that is to be printed when
+		the condition is met and text that is printed when the condition
+		is not met. When a card with QSOs in the QSOs Box is printed,
+		the condition is tested against the number of QSOs being  printed
+		in the QSOs Box. If a blank card (i.e. a card without QSOs) is
+		printed, the condition is tested against the max QSOs count for
+		the QSOs Box. This matches the number of blank rows printed on
+		the card.</para>
+		<para>The image below shows a view of the Count Macro. This image 
+		shows the various sections
+		as they would be immediately after the macro has been added to
+		the Text and Macros dialog.</para>
+		<figure xml:id="countmacro">
+			<title>Count Macro</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/countmacro.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The Condition radio buttons set the test that is to be
+		performed against the Condition Value. The conditions are:</para>
+		<simplelist>
+			<member>Equals,</member>
+			<member>Less than, and</member>
+			<member>Greater than.</member>
+		</simplelist>
+		<para>The Condition Value is the number of QSOs or the max QSOs
+		value for the QSOs Box. This value may be set to any value between
+		1 and 15, and matches the range of values allowed for max QSOs.</para>
+		<para>Enter the text you want to be displayed on the card in
+		design mode in the Design Text section.</para>
+		<para>Enter the text that is to be printed when the condition
+		is met in the True Text section. This is the "&lt;S&gt;" text that is
+		displayed in the confirming text and the salutation text as set
+		in the original user preferences.</para>
+		<para>Enter the text that is to be printed when the condition
+		is not met in the False Text section.</para>
+		<para>You may reverse conditions by reversing the True Text and
+		False Text texts.</para>
+		<tip>
+			<para>The confirming text in the QSOs Box and the salutation
+			text defined in the original user preferences (set when you
+			start HamQSLer for the first time) each contain a Count Macro.
+			As used there, the design text is "&lt;S&gt;", "s" is printed when
+			the number of QSOs (or the max QSOs count for blank cards)
+			is greater than 1 and no text is printed when the number of
+			QSOs is 1.</para>
+			<para>It would appear that the use of this macro is limited
+			to cases such as this.</para>
+		</tip>
+	</section>
+	<section>
+		<title>Manager Macro</title>
+		<para>The Manager Macro prints the contents of the Manager
+		column in the QSOs tab if this field is a valid callsign, and
+		prints user defined text if the manager's callsign is not valid.</para>
+		<para>The image below shows the various sections
+		as they would be immediately after the macro has been added to
+		the Text and Macros dialog.</para>
+		<figure xml:id="managermacro">
+			<title>Manager Macro</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/managermacro.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Enter the text you want displayed on the card in design
+		mode into the Design Text section.</para>
+		<para>Enter the text you want printed when there is no valid
+		manager in the No Manager Text section.</para>
+		<para>See the Manager Exists Macro section, below, for one use
+		of this macro.</para>
+	</section>
+	<section>
+		<title>Manager Exists Macro</title>
+		<para>The Manager Exists Macro prints one set of user defined
+		text if the manager field exists and its contents are a valid
+		callsign, and another set of user defined text if the field is
+		empty or does not contain a valid callsign.</para>
+		<para>The image below shows the various sections
+		as they would be immediately after the macro has been added to
+		the Text and Macros dialog.</para>
+		<figure xml:id="managerexistsmacro">
+			<title>Manager Exists Macro</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/managerexistsmacro.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Enter the text that you want to be displayed in card design
+		mode in the Design Text section.</para>
+		<para>Enter the text that you want printed when the manager
+		field exists and is a valid callsign in the Exists Text section.</para>
+		<para>Enter the text that you want printed on the card when the
+		manager field does not exist, or its contents is not a valid
+		callsign.</para>
+		<tip>
+			<para>QSL bureaus prefer that the callsign of the station
+			that is to receive a QSL card be written in the upper right
+			or left corner of the back or front of the card. You could
+			do this by adding a new text item, positioning it appropriately,
+			and including text such as "To: " or "Via: " as well as a
+			Manager Exists Macro for the manager field. In the Exists
+			Text section, add a Manager Macro so that the callsign of
+			the manager is printed after the "To: " or "Via: " text.</para>
+			<para>HamQSLer does not easily support printing
+			this on the opposite side of the card from other text and
+			the QSOs Box, but if you properly design your card, it can
+			be placed on the same side as these items and still be very
+			visible to the sorters at the QSL bureaus.</para>
+		</tip>
+		</section>
+</chapter>

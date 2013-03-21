@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
+		 xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Introduction</title>
+	<section>
+		<title>HamQSLer</title>
+	<para>HamQSLer is a program for 
+	designing and printing amateur
+	radio QSL cards. HamQSLer is the most 
+	feature rich QSL design
+	and print program available today. Its capabilities include:
+	</para>
+	<itemizedlist spacing="compact">
+		<listitem>
+			<para>One-sided landscape card;</para>
+		</listitem>
+    <listitem>
+    <para>Resizable and movable background image, or no background 
+    image;</para>
+    </listitem>
+    <listitem>
+		<para>Add resizable and movable secondary images;</para>
+    </listitem>
+    <listitem>
+		<para>Resizable, movable, and editable text fields, including callsign, 
+			name and QTH, and a salutation by default;</para>
+    </listitem>
+    <listitem>
+		<para>User settable default text for the following fields so that 
+    you do not have to enter for each card you design:</para>
+    <itemizedlist spacing="compact" mark="opencircle">
+        <listitem>
+			<para>callsign;</para>
+		</listitem>
+        <listitem>
+			<para>name and QTH; and,</para>
+        </listitem>
+        <listitem>
+			<para>salutation</para>
+		</listitem>
+        </itemizedlist>
+    </listitem>
+    <listitem>
+		<para>Add resizable, movable, and editable text fields;</para>
+    </listitem>
+    <listitem>
+		<para>Macros that can be inserted into text fields;</para>
+	</listitem>
+    <listitem>
+		<para>Variable number of QSOs in the QSOs box;</para>
+    </listitem>
+    <listitem>
+		<para>Choice of date formats in the QSOs box;</para>
+    </listitem>
+    <listitem>
+		<para>Choice of printing bands or frequencies in the QSOs box;</para>
+    </listitem>
+    <listitem>
+		<para>Choice of including or not including a QSL column in the QSOs box;</para>
+    </listitem>
+    <listitem>
+		<para>User settable defaults for the QSOs box:</para>
+		<itemizedlist spacing="compact" mark="opencircle">
+			<listitem>
+				<para>confirmation text;</para>
+			</listitem>
+			<listitem>
+				<para>column headers;</para>
+			</listitem>
+			<listitem>
+				<para>frequencies to be displayed when none provided in 
+				QSO;</para>
+			</listitem>
+			<listitem>
+				<para>text placed in QSL column; and,</para>
+			</listitem>
+			<listitem>
+				<para>font used to print the QSOs box text.</para>
+			</listitem>
+		</itemizedlist>
+	</listitem>
+	<listitem>
+		<para>Supports import of ADIF 2.0 files, including support up to
+		version 2.2.7;</para>
+	</listitem>
+	<listitem>
+		<para>QSOs to be printed may be selected by:</para>
+		<itemizedlist spacing="compact" mark="opencircle">
+			<listitem>
+				<para>band,</para>
+			</listitem>
+			<listitem>
+				<para>mode;</para>
+			</listitem>
+			<listitem>
+				<para>date and time;</para>
+			</listitem>
+			<listitem>
+				<para>QSL sent and received value;</para>
+			</listitem>
+			<listitem>
+				<para>individual selection; or,</para>
+			</listitem>
+			<listitem>
+				<para>any combination of the above.</para>
+			</listitem>
+		</itemizedlist>
+	</listitem>
+	<listitem>
+		<para>QSOs to be printed may be sorted by date and time, callsign
+		 or by QSL bureau;</para>
+	</listitem>
+	<listitem>
+		<para>Save cards to be printed as JPEG images for sending 
+		or taking to a photo store for printing on 4 by 6 inch or 10 by 15 
+		cm photo paper;</para>
+	</listitem>
+	<listitem>
+		<para>Print multiple cards per page;</para>
+	</listitem>
+	<listitem>
+		<para>Support for commonly available perforated cardstock;</para>
+	</listitem>
+	<listitem>
+		<para>Print "blank QSO" cards so that pages are not wasted; 
+		and,</para>
+	</listitem>
+	<listitem>
+		<para>Automatic checking for program updates.</para>
+	</listitem>
+   </itemizedlist>
+   </section>
+   <section>
+	   <title>Why Another QSL Design And Print Program</title>
+   <para>There are a large number of computer programs available for 
+   printing QSL cards. A cross-section of these include:</para>
+   <itemizedlist spacing="compact">
+	   <listitem>
+		   <para>QSO logging programs that print cards, or labels for 
+		   affixing to preprinted cards;</para>
+		</listitem>
+		<listitem>
+			<para>Programs that print labels for affixing to preprinted 
+			cards;</para>
+		</listitem>
+		<listitem>
+			<para>Programs that print a single QSO on each card; and,</para>
+		</listitem>
+		<listitem>
+			<para>Logging programs that provide DDE capability for 
+			import into Microsoft Word or similar programs for printing 
+			cards.</para>
+		</listitem>
+	</itemizedlist>
+    <para>They are all limited in one way or another and therefore have 
+    never satisfied my requirements. Specifically,they either provide 
+    limited or no design capability, or only print one QSO per card. 
+    They also tend to waste cardstock because they stop printing when 
+    the card for the last QSO is printed on the page. I wanted more!</para>
+	<para>Have I succeeded? Well, many of my goals have been satisfied. 
+	Each future release of this software will provide greater capabilities 
+	and let me at least come closer to my desired goal of providing the 
+	best QSL design and print program that money can't buy.</para>
+	</section>
+	<section>
+		<title>Tips and Cautions</title>
+		<para>There are a number of tips and cautions in the various 
+		pages of this user manual.</para>
+
+		<tip>
+			<para>This is an example of a tip. Tips provide information 
+			on simplifying your use of QslDesignAndPrint, or provide 
+			information on how to get the most out of the program.</para>
+		</tip>
+		<caution>
+			<para>This is an example of a caution. Cautions provide 
+			information about traps and pitfalls in the use of HamQSLer.
+			</para>
+		</caution>
+	</section>
+</chapter>

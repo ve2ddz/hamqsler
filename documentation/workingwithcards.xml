@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
+		 xmlns:xlink="http://www.w3.org/1999/xlink"
+		 xml:id="carddesign">
+	<title>Working With Cards</title>
+	<section>
+		<title>Saving HamQSLer Card Files</title>
+		<para>Once a card has been created, it may be saved to be loaded
+		and used at a future time. To do this, select the Cards->File Save or
+		Cards->File Save As... menu items. File Save is only available if the
+		card has previously been saved because the program must know the
+		directory in which you want to save the card.</para>
+		<para>When you select the Card Save As... menu item, the File Save
+		dialog, shown below, is displayed.</para>
+		<figure xml:id="savecarddialog2">
+			<title>File Save Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/savecarddialog.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The dialog opens with the default directory set to your hamqsler
+		folder. Navigate to the folder where you want to save the card file,
+		then click on the Save button. The card file will be saved and the
+		dialog will close.</para>
+	</section>
+	<section>
+		<title>Loading HamQSLer Card Files</title>
+		<para>Once a card has been saved, it can be loaded at a later time
+		by selecting the Cards->Open Card... menu item. This displays the
+		File Open dialog with the default directory set to your hamqsler
+		folder. See the image below:</para>
+		<figure xml:id="cardopendialog">
+			<title>File Open Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/cardopendialog.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The dropdown box circled in red near the bottom right of the
+		dialog lets you select the type of card to open. It defaults to
+		HamQSLer cards, which have an extension of ".qslx".</para>
+		<para>Navigate to the directory containing the card file you want
+		to open, and either click on the file and then the Open button,
+		or double-click on the file.</para>
+		<tip>
+			<para>Keep all of your card related files (card files, images,
+			logos, etc.) in the hamqsler directory or create subdirectories
+			for each file type. That way, all of the files needed for
+			your cards are located in one place so they are easy to back
+			up and to move to another location.</para>
+			<para>In the past, as Microsoft released new versions of Windows,
+			they sometimes changed the location of the My Directories folder.
+			This occurred, for example, when Windows Vista was released,
+			and people who upgraded from Windows XP had problems with hard-coded 
+			paths.</para>
+		</tip>
+		<tip>
+			<para>If you want to reload the saved card or cards every time
+			you restart the program, check the "Reload Card Files on Startup"
+			checkbox in the User Preferences. See the <link linkend="settinguserprefs">
+			User Preferences</link> chapter for more information.</para>
+		</tip>
+	</section>
+	<section>
+		<title>Loading QslDesignAndPrint Card Files</title>
+		<para>Card files that were created with QslDesignAndPrint may be
+		loaded into HamQSLer. To do this, select the Cards->Open Card...
+		menu item. Then select the QslDnP Card type from the dropdown
+		box circled in red in the figure above.</para>
+		<para>Navigate to the directory containing the card file you want
+		to open, and either click on the file and then the Open button,
+		or double-click on the file.</para>
+		<caution>
+			<para>This feature is deprecated and will be removed in the
+			future. Load all of your QslDesignAndPrint cards
+			into HamQSLer and then save them using the Cards->Save As...
+			menu item. Be sure to save the new cards in the hamqsler folder.</para>
+		</caution>
+		<caution>
+			<para>When you load a QslDesignAndPrint card into HamQSLer,
+			the program marks the card as modified. If you attempt to close
+			the program before you have saved the card, you will get a
+			message asking if you want to save the file. If you answer
+			Yes, then the file is saved in the same directory as the card
+			file was loaded from. You are not given the option of saving
+			the file in a different directory.</para>
+		</caution>
+	</section>
+</chapter>
