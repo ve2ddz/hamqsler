@@ -4,12 +4,36 @@
 		Name="HamQSLer"
 		Language="1033"
 		Version="0.8.0"
-		UpgradeCode="A1F04156-EC44-4836-9999-639BDC229B09"
-		Manufacturer="VA3HJ Software">
-		<Package Description="#Description"
-			Comments="HamQSLer is an open source program for designing and printing amateur radio QSL cards."
+		UpgradeCode="A01D591C-91AC-4F1F-AD08-041A0500C1CA"
+		Manufacturer="Jim Orcheson">
+		<Package Description="HamQSLer Installer Package"
 			InstallerVersion="200"
 			Compressed="yes"/>
+		<Upgrade Id="B4FB1901-CFD5-4CDD-B80F-DECBCE9717B7">
+			<UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND"
+					Minimum="0.1.0" IncludeMinimum="yes"
+					Maximum="0.8.0" IncludeMaximum="no" />
+		</Upgrade>
+		<CustomAction Id='NoDowngrade' Error='A later version of HamQSLer is already installed.' />
+		
+		<InstallExecuteSequence>
+			<Custom Action='NoDowngrade' After='FindRelatedProducts'>NEWERFOUND</Custom>
+    		<RemoveExistingProducts After="InstallInitialize"/>
+		</InstallExecuteSequence>
+		<!--Windows version must be Windows XP or later.-->
+		<Condition Message="This application is only supported on Windows XP, Windows Server 2003, or higher.">
+      		VersionNT &gt;= 501
+		</Condition>
+		<!--Must be administrator to install-->
+		<Condition Message="You need to be an administator to install this product">
+			Privileged
+		</Condition>
+		<!--Need .Net 4.0 or later-->
+		<PropertyRef Id="NETFRAMEWORK40CLIENT" />
+		<Condition Message="This application requires .NET Framework 4.0. Please install Microsoft .NET 4.0, then run this installer again.">
+ 			(NETFRAMEWORK40CLIENT)
+		</Condition>
+		<Icon Id="HamQSLerIcon" SourceFile="..\hamqsler\hamqsler.ico" />
 		<!--
 			Source media for the installation. 
  			Specifies a single cab file to be embedded in the installer's .msi. 
@@ -18,21 +42,22 @@
 		
 		<!-- Installation directory and files are defined in Files.wxs -->
 		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder" Name="PFiles">
-				<Directory Id="INSTALLDIR" Name="HamQSLer">
-					<Directory Id="SAMPLESDIR" Name="Samples"/>
-				</Directory>
-			</Directory>
-		</Directory>
-		
-		<Feature Id="Complete"
+		</Directory>		
+		<Feature Id="HamQSLer"
 		         Title="HamQSLer"
 		         Description="All of HamQSLer"
 		         Level="1">
-			<ComponentRef Id="Executable"/>
-			<ComponentRef Id="Samples"/>
+			<ComponentRef Id="HamqslerEXE"/>
+			<ComponentRef Id="SampleFiles"/>
+			<ComponentRef Id="HtmlHelp"/>
+			<ComponentRef Id="HelpImages"/>
+			<ComponentRef Id="PdfHelp"/>
+			<ComponentRef Id="HamQSLerShortcuts"/>
 		</Feature>
 		
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch HamQSLer" />
+		<Property Id="WixShellExecTarget" Value="[#hamqsler.exe]" />
+		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 		<!--
  			Using the Wix UI library.
 
@@ -42,12 +67,9 @@
 			WixUI_Minimal is appropriate when your product has no optional 
 			features.
  		-->
+		<UIRef Id="WixUI_Minimal" />
 		<UI>
-			<UIRef Id="WixUI_Minimal"/>
 			<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
 		</UI>
-		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch HamQSLer" />
-		<Property Id="WixShellExecTarget" Value="[#HamqslerEXE]" />
-		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 	</Product>
 </Wix>
