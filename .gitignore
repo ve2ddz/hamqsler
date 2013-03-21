@@ -14,4 +14,6 @@ documentation/fop/*
 documentation/html-docs
 documentation/pdf-docs
 documentation/jing/*
+packages/*
+packages.config
 
