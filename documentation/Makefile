@@ -35,7 +35,7 @@ pdf-A4: hamqsler.xml images/*.png
 		--stringparam paper.type A4 \
 		docbook/fo/docbook.xsl  \
 		hamqsler.xml
-	fop\fop.cmd -fo hamqsler-A4.fo -pdf pdf-docs/hamqlser-A4.pdf
+	fop\fop.cmd -fo hamqsler-A4.fo -pdf pdf-docs/hamqsler-A4.pdf
 	touch pdf-A4
 	
 html-docs\images:
