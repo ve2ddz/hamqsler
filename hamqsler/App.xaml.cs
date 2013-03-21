@@ -57,6 +57,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void Application_Startup(object sender, StartupEventArgs e)
 		{
+			Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
 			// create and show SplashPage
 			splash = new SplashPage();
 			splash.ShowDialog();

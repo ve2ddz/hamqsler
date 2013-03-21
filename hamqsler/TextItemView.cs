@@ -204,9 +204,7 @@ namespace hamqsler
 			FontWeight weight = tItem.TextFontWeight;
 			FontFamily family = new FontFamily(tItem.TextFontFace);
 			Typeface typeface = new Typeface(family, style, weight, FontStretches.Normal);
-			FormattedText fText = new FormattedText(DisplayText, culture,
-			                                        culture.TextInfo.IsRightToLeft ?
-			                                        FlowDirection.RightToLeft : FlowDirection.LeftToRight,
+			FormattedText fText = new FormattedText(DisplayText, culture, FlowDirection.LeftToRight,
 			                                        typeface, tItem.FontSize, tItem.TextBrush);
 			drawingContext.DrawText(fText, new Point(tItem.DisplayX + 
 			                                         CheckBoxSize + 2.0 * CheckBoxMargin.Left,
