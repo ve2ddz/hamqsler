@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -80,6 +80,17 @@ namespace hamqsler
 		void OnPreviewKeyDown(object sender, KeyEventArgs e)
 		{
 			IsDirty = true;
+		}
+		
+		/// <summary>
+		/// Handles Window Loaded event
+		/// All we need to do is set the cursor to Arrow
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			Mouse.OverrideCursor = Cursors.Arrow;
 		}
 	}
 }
