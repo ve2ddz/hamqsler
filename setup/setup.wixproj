@@ -21,6 +21,7 @@
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
