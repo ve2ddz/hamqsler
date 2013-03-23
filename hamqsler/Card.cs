@@ -414,10 +414,18 @@ namespace hamqsler
 			foreach(TextItem ti in card.TextItems)
 			{
 				ti.QslCard = card;
+				foreach(TextPart part in ti.Text)
+				{
+					part.RemoveExtraneousStaticTextMacros();
+				}
 			}
 			if(card.QsosBox != null)
 			{
 				card.QsosBox.QslCard = card;
+				foreach(TextPart part in card.QsosBox.ConfirmingText)
+				{
+					part.RemoveExtraneousStaticTextMacros();
+				}
 			}
 			return card;
 		}

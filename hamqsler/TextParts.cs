@@ -68,15 +68,31 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Remove the first TextPart if there is more than 1 TextPart and the first TextPart
-		/// is an empty StaticText object.
+		/// Remove empty StaticText items that are followed by another StaticText item.
 		/// </summary>
 		public void RemoveExtraneousStaticText()
 		{
-			if(this.Count > 1 && this[0].GetType() == typeof(StaticText)
-			   && ((StaticText)this[0]).Text.Equals(string.Empty))
+			TextParts parts = new TextParts();
+			for(int partNum = 0; partNum < this.Count - 1; partNum++)
 			{
-				this.RemoveAt(0);
+				if(this[partNum].GetType() == typeof(StaticText) &&
+				   this[partNum + 1].GetType() == typeof(StaticText))
+			    {
+					if(!((StaticText)this[partNum]).Text.Equals(string.Empty))
+					{
+						parts.Add(this[partNum]);
+					}
+			    }
+				else
+				{
+					parts.Add(this[partNum]);
+				}
+			}
+			parts.Add(this[this.Count - 1]);
+			this.Clear();
+			foreach(TextPart part in parts)
+			{
+				this.Add(part);
 			}
 		}
 	}
