@@ -71,5 +71,29 @@ namespace hamqsler
 				FalseTextPanel.Children.Add(box);
 			}
 		}
+		
+		private void Condition_Click(object sender, RoutedEventArgs e)
+		{
+			SetIsDirty();		
+		}
+
+		private void SetIsDirty()
+		{
+			FrameworkElement elt = (FrameworkElement)this.Parent;
+			if (elt != null) {
+				while (elt.GetType() != typeof(TextMacrosDialog)) {
+					elt = (FrameworkElement)elt.Parent;
+				}
+				((TextMacrosDialog)elt).IsDirty = true;
+			}
+		}
+		
+		private void CountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(e.RemovedItems.Count != 0)
+			{
+				SetIsDirty();
+			}
+		}
 	}
 }

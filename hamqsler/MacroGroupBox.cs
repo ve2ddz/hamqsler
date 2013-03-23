@@ -787,15 +787,18 @@ namespace hamqsler
 		/// <summary>
 		/// Force a redraw of the TextMacrosDialog containing this group box
 		/// </summary>
-		private void UpdateDialog()
+		protected void UpdateDialog()
 		{
 			FrameworkElement elt = (FrameworkElement)this.Parent;
-			while (elt.GetType() != typeof(TextMacrosDialog))
+			if(elt != null)
 			{
-				elt = (FrameworkElement)elt.Parent;
+				while (elt.GetType() != typeof(TextMacrosDialog))
+				{
+					elt = (FrameworkElement)elt.Parent;
+				}
+				((TextMacrosDialog) elt).InvalidateVisual();
+				((TextMacrosDialog) elt).IsDirty = true;
 			}
-			((TextMacrosDialog) elt).InvalidateVisual();
-			((TextMacrosDialog) elt).IsDirty = true;
 		}
 	}
 }

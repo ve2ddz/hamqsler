@@ -68,11 +68,13 @@ namespace hamqsler
 			// Rebuild all of the Macro displays. This simplifies processing as there is no need to
 			// attempt to add expanders in the correct locations in the dialog.
 			ContentPanel.Children.RemoveRange(0, ContentPanel.Children.Count);
+			bool isDirty = IsDirty;
 			foreach(TextPart part in partItems)
 			{
 				MacroGroupBox box = part.BuildGroupBox(partItems, MacroGroupBox.INCLUDECONTENTMENU);
 				ContentPanel.Children.Add(box);
 			}
+			IsDirty = isDirty;
 			// have the base class perform any other rendering needed.
 			base.OnRender(drawingContext);
 		}
