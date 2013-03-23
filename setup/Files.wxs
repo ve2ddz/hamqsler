@@ -112,7 +112,7 @@
 						</Directory>
 						<Directory Id="PDFDir" Name="pdf">
 							<Component Id="PdfHelp" Guid="67457C0A-9BBD-454E-93B6-C6B10F8AF59D" DiskId="1">
-								<File Id="hamqsler_A4.pdf" Name="hamqlser-A4.pdf" Source="..\documentation\pdf-docs\hamqlser-A4.pdf" />
+								<File Id="hamqsler_A4.pdf" Name="hamqlser-A4.pdf" Source="..\documentation\pdf-docs\hamqsler-A4.pdf" />
 								<File Id="hamqsler_letter.pdf" Name="hamqsler-letter.pdf" Source="..\documentation\pdf-docs\hamqsler-letter.pdf" />
 							</Component>
 						</Directory>
