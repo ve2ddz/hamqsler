@@ -23,8 +23,7 @@
     xmlns:local="clr-namespace:hamqsler"
 	MouseMove="OnMouseMove" MouseLeftButtonDown="OnMouseLeftButtonDown"
 	MouseLeftButtonUp="OnMouseLeftButtonUp"
-	MouseRightButtonDown="OnMouseRightButtonDown"
-	ContextMenuOpening="CardCanvas_ContextMenuOpening">
+	MouseRightButtonDown="OnMouseRightButtonDown">
 	<Canvas.Resources>
 		<Style TargetType="MenuItem">
 			<Setter Property="CommandTarget" Value="{Binding PlacementTarget,
@@ -66,7 +65,7 @@
 		                Command="{x:Static local:CardCanvas.ClearBackgroundCommand}"/>
 	</Canvas.InputBindings>
 	<Canvas.ContextMenu>
-		<ContextMenu>
+		<ContextMenu MouseEnter="ContextMenu_MouseEnter">
 			<MenuItem Header="Select Highlighted Item"
 			          Command="{x:Static local:CardCanvas.SelectCardItemCommand}"
 					  ToolTip="Select the hgihlighted card item"/>

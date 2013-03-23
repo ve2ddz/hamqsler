@@ -379,7 +379,7 @@ namespace hamqsler
         	}
 		}
 		
-		void CardCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+		void ContextMenu_MouseEnter(object sender, MouseEventArgs e)
 		{
 			Mouse.OverrideCursor = Cursors.Arrow;
 		}
