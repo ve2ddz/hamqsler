@@ -72,24 +72,43 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handle click on one of the count condition radio buttons
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void Condition_Click(object sender, RoutedEventArgs e)
 		{
+			// all we do is set TextMacrosDialog.IsDirty
 			SetIsDirty();		
 		}
 
+		/// <summary>
+		/// Helper method that sets TextMacrosDialog.IsDirty
+		/// </summary>
 		private void SetIsDirty()
 		{
 			FrameworkElement elt = (FrameworkElement)this.Parent;
+			// make sure that the TextMacrosDialog is displayed
 			if (elt != null) {
 				while (elt.GetType() != typeof(TextMacrosDialog)) {
 					elt = (FrameworkElement)elt.Parent;
 				}
+				// now we have the TextMacrosDialog, so set IsDirty
 				((TextMacrosDialog)elt).IsDirty = true;
 			}
 		}
 		
+		/// <summary>
+		/// Handle Selection changed event for the CountMacroBox
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">SelectionChangedEventArgs object</param>
 		private void CountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+			// e.RemovedItems empty when set during initial display
+			// and contains old value when a new value is selected.
+			// We want to set TextMacrosDialog.IsDirty only when user selects a new value
 			if(e.RemovedItems.Count != 0)
 			{
 				SetIsDirty();
