@@ -795,6 +795,7 @@ namespace hamqsler
 				elt = (FrameworkElement)elt.Parent;
 			}
 			((TextMacrosDialog) elt).InvalidateVisual();
+			((TextMacrosDialog) elt).IsDirty = true;
 		}
 	}
 }

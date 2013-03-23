@@ -334,8 +334,10 @@ namespace hamqsler
 			cardCanvas.UpdateTextForSelectedCardItem();
 			// must set IsDirty because changing contents of TextParts does not trigger
 			// Card PropertyChanged event
-			cardCanvas.QslCard.IsDirty = true;
-			
+			if(dialog.IsDirty)
+			{
+				cardCanvas.QslCard.IsDirty = true;
+			}
 		}
 		
 		/// <summary>

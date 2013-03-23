@@ -34,6 +34,8 @@ namespace hamqsler
 	/// </summary>
 	public partial class TextMacrosDialog : Window
 	{
+		public bool IsDirty {get; set;}
+		
 		private TextParts partItems;
 		
 		/// <summary>
@@ -44,6 +46,7 @@ namespace hamqsler
 		{
 			InitializeComponent();
 			partItems = parts;
+			IsDirty = false;
 		}
 		/// <summary>
 		/// Handler for the CloseButton Clicked event 
@@ -72,6 +75,11 @@ namespace hamqsler
 			}
 			// have the base class perform any other rendering needed.
 			base.OnRender(drawingContext);
+		}
+		
+		void OnPreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			IsDirty = true;
 		}
 	}
 }
