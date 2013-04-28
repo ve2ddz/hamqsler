@@ -70,7 +70,7 @@
 									<File Id="cardpanel.png" Name="cardpanel.png" Source="..\documentation\html-docs\images\cardpanel.png" />
 									<File Id="colorpicker.png" Name="colorpicker.png" Source="..\documentation\html-docs\images\colorpicker.png" />
 									<File Id="countmacro.png" Name="countmacro.png" Source="..\documentation\html-docs\images\countmacro.png" />
-									<File Id="datetimeproeprties.png" Name="datetimeproeprties.png" Source="..\documentation\html-docs\images\datetimeproeprties.png" />
+									<File Id="datetimeproperties.png" Name="datetimeproperties.png" Source="..\documentation\html-docs\images\datetimeproperties.png" />
 									<File Id="defaultcallsign.png" Name="defaultcallsign.png" Source="..\documentation\html-docs\images\defaultcallsign.png" />
 									<File Id="defaultnameQth.png" Name="defaultnameQth.png" Source="..\documentation\html-docs\images\defaultnameQth.png" />
 									<File Id="defaultpagelayout.png" Name="defaultpagelayout.png" Source="..\documentation\html-docs\images\defaultpagelayout.png" />
