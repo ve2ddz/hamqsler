@@ -107,6 +107,10 @@
       <DependentUpon>CardAlignmentGroupBox.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CardPropertiesGroupBox.xaml.cs">
+      <DependentUpon>CardPropertiesGroupBox.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CardWF.cs" />
     <Compile Include="CardCanvas.xaml.cs">
       <DependentUpon>CardCanvas.xaml</DependentUpon>
@@ -236,6 +240,7 @@
     <Page Include="AdifMacroGroupBox.xaml" />
     <Page Include="CardAlignmentGroupBox.xaml" />
     <Page Include="CardCanvas.xaml" />
+    <Page Include="CardPropertiesGroupBox.xaml" />
     <Page Include="CardTabItem.xaml" />
     <Page Include="CountMacroGroupBox.xaml" />
     <Page Include="JpegPropsDialog.xaml" />

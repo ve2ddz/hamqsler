@@ -69,15 +69,8 @@
 		<local:CardCanvas Grid.Column="0" x:Name="cardCanvas" Background="LightGray" Width="10" Height="10"/>
 		<ScrollViewer Width="250" HorizontalAlignment="Right" Grid.Column="1">
 			<StackPanel>
-				<GroupBox Name="cardProperties" Header="Card Properties"
-						 Visibility="Collapsed">
-					<StackPanel>
-						<local:PrinterPropertiesGroupBox Header="Default Printer Properties"/>
-						<local:PrintPropertiesGroupBox Header="Default Print Properties"/>
-						<local:CardAlignmentGroupBox x:Name="cardAlignmentPanel"
-													 Header="Default Card Alignment"/>
-					</StackPanel>
-				</GroupBox>
+				<local:CardPropertiesGroupBox x:Name="cardProperties" Header="Card Properties"
+						 Visibility="Collapsed"/>
 				<GroupBox Name="backgroundImageProperties" Header="Background Image Properties"
 						 Visibility="Collapsed">
 					<StackPanel>
