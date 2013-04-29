@@ -50,7 +50,8 @@ namespace hamqsler
 			InitializeComponent();
 			// create a card and position it in the middle of the CardCanvas
 			cardPanel.CreateCard(cardWidth, cardHeight);
-//			this.DataContext = cardPanel.QslCard;
+			cardProperties.Visibility = Visibility.Visible;
+			this.DataContext = cardPanel.QslCard;
 /*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
 				TextItemView ti = elt as TextItemView;
