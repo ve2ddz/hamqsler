@@ -1,0 +1,18 @@
+﻿<GroupBox x:Class="hamqsler.PrintPropertiesGroupBox"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<StackPanel>
+		<CheckBox x:Name="insideMarginsButton" Content="Print Inside Margins"
+				Margin="5"/>
+		<CheckBox x:Name="printCardOutlinesButton"
+				Content="Print Card Outlines" Margin="5"/>
+		<CheckBox x:Name="fillLastPageButton"
+				Content="Fill Last Page With Blank Cards"
+				Margin="5"/>
+		<CheckBox x:Name="setCardMarginsButton" Height="32"
+				Margin="5">
+			<TextBlock Text="Set Card Margins to Printer Margins"
+				TextWrapping="Wrap"/>
+		</CheckBox>
+	</StackPanel>
+</GroupBox>

@@ -103,6 +103,10 @@
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardAlignmentGroupBox.xaml.cs">
+      <DependentUpon>CardAlignmentGroupBox.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CardWF.cs" />
     <Compile Include="CardCanvas.xaml.cs">
       <DependentUpon>CardCanvas.xaml</DependentUpon>
@@ -157,8 +161,17 @@
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PrinterPropertiesGroupBox.xaml.cs">
+      <DependentUpon>PrinterPropertiesGroupBox.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PrintImageableAreaErrorDialog.xaml.cs">
       <DependentUpon>PrintImageableAreaErrorDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PrintProperties.cs" />
+    <Compile Include="PrintPropertiesGroupBox.xaml.cs">
+      <DependentUpon>PrintPropertiesGroupBox.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PrintSettingsDialog.xaml.cs">
@@ -221,6 +234,7 @@
     <Page Include="AboutDialog.xaml" />
     <Page Include="AdifExistsMacroGroupBox.xaml" />
     <Page Include="AdifMacroGroupBox.xaml" />
+    <Page Include="CardAlignmentGroupBox.xaml" />
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardTabItem.xaml" />
     <Page Include="CountMacroGroupBox.xaml" />
@@ -229,7 +243,9 @@
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
     <Page Include="ManagerMacroGroupBox.xaml" />
     <Page Include="Print4UpDialog.xaml" />
+    <Page Include="PrinterPropertiesGroupBox.xaml" />
     <Page Include="PrintImageableAreaErrorDialog.xaml" />
+    <Page Include="PrintPropertiesGroupBox.xaml" />
     <Page Include="PrintSettingsDialog.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />

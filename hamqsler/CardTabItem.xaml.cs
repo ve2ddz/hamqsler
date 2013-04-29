@@ -52,6 +52,7 @@ namespace hamqsler
 			cardPanel.CreateCard(cardWidth, cardHeight);
 			cardProperties.Visibility = Visibility.Visible;
 			this.DataContext = cardPanel.QslCard;
+
 /*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
 				TextItemView ti = elt as TextItemView;
@@ -70,7 +71,8 @@ namespace hamqsler
 		{
 			InitializeComponent();
 			cardCanvas.AddCard(card);
-			this.DataContext = cardCanvas.QslCard;
+			this.DataContext = cardPanel.QslCard;
+			
 /*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
 				TextItemView ti = elt as TextItemView;
