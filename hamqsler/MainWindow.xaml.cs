@@ -1326,13 +1326,13 @@ namespace hamqsler
 		void NewBureauCardCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			// create a CardTabItem and add it to the mainTabControl
-			CardTabItem cardTab = new CardTabItem(5.5 * 96, 3.5 * 96);
+			CardTabItem cardTab = new CardTabItem(550, 350);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
-			cardTab.cardCanvas.QslCard.IsDirty = false;
+			cardTab.cardPanel.QslCard.IsDirty = false;
 			cardTab.SetTabLabel();
 			// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
-			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
+			SetTitle(cardTab.cardPanel.QslCard.FileName, cardTab.cardPanel.QslCard.IsDirty);
 		}
 		
 		/// <summary>
@@ -1343,12 +1343,12 @@ namespace hamqsler
 		void New45CardCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			// create a CardTabItem and add it to the mainTabControl
-			CardTabItem cardTab = new CardTabItem(5.5 * 96, 4.25 * 96);
+			CardTabItem cardTab = new CardTabItem(550, 425);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
-			cardTab.cardCanvas.QslCard.IsDirty = false;
+			cardTab.cardPanel.QslCard.IsDirty = false;
 			cardTab.SetTabLabel();
-			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
+			SetTitle(cardTab.cardPanel.QslCard.FileName, cardTab.cardPanel.QslCard.IsDirty);
 		}
 
 		/// <summary>
@@ -1359,12 +1359,12 @@ namespace hamqsler
 		void New46CardCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			// create a CardTabItem and add it to the mainTabControl
-			CardTabItem cardTab = new CardTabItem(6 * 96, 4 * 96);
+			CardTabItem cardTab = new CardTabItem(600, 400);
 			mainTabControl.Items.Add(cardTab);
 			cardTab.IsSelected = true;		// select the new tab
-			cardTab.cardCanvas.QslCard.IsDirty = false;
+			cardTab.cardPanel.QslCard.IsDirty = false;
 			cardTab.SetTabLabel();
-			SetTitle(cardTab.cardCanvas.QslCard.FileName, cardTab.cardCanvas.QslCard.IsDirty);
+			SetTitle(cardTab.cardPanel.QslCard.FileName, cardTab.cardPanel.QslCard.IsDirty);
 		}
 
 		/// <summary>
@@ -1596,7 +1596,7 @@ namespace hamqsler
 			CardTabItem ti = mainTabControl.SelectedItem as CardTabItem;
 			if(ti != null)
 			{
-				SetTitle(ti.cardCanvas.QslCard.FileName, ti.cardCanvas.QslCard.IsDirty);
+				SetTitle(ti.cardPanel.QslCard.FileName, ti.cardPanel.QslCard.IsDirty);
 			}
 			else
 			{
@@ -1613,7 +1613,7 @@ namespace hamqsler
 		/// be reloaded next time program is started.</param>
 		public void CloseCardTab(CardTabItem cti, bool doNotReloadCard)
 		{
-			if(cti.cardCanvas.QslCard.IsDirty)
+			if(cti.cardPanel.QslCard.IsDirty)
 			{
 				MessageBoxResult result = MessageBox.Show("The design of this card has been modified.\n"
 				                + "Do you want to save the card before closing?", "Card Modified", 
@@ -1627,9 +1627,9 @@ namespace hamqsler
 			UserPreferences prefs = ((App)App.Current).UserPreferences;
 			if(doNotReloadCard && prefs.CardsReloadOnStartup)
 			{
-				if(cti.cardCanvas.QslCard.FileName != null)
+				if(cti.cardPanel.QslCard.FileName != null)
 				{
-					prefs.CardFiles.Remove(cti.cardCanvas.QslCard.FileName);
+					prefs.CardFiles.Remove(cti.cardPanel.QslCard.FileName);
 					prefs.SerializeAsXml();
 				}
 			}

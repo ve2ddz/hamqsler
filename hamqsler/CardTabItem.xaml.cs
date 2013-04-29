@@ -45,20 +45,20 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="cardWidth">Width of the card in graphics independent units</param>
 		/// <param name="cardHeight">Height of the card in graphics independent units</param>
-		public CardTabItem(double cardWidth, double cardHeight)
+		public CardTabItem(int cardWidth, int cardHeight)
 		{
 			InitializeComponent();
 			// create a card and position it in the middle of the CardCanvas
-			cardCanvas.CreateCard(cardWidth, cardHeight);
-			this.DataContext = cardCanvas.QslCard;
-			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
+			cardPanel.CreateCard(cardWidth, cardHeight);
+//			this.DataContext = cardPanel.QslCard;
+/*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
 				TextItemView ti = elt as TextItemView;
 				if(ti != null && cardCanvas.QslCard.QsosBox != null)
 				{
 					ti.SetDisplayText(((QsosBoxView)cardCanvas.QslCard.QsosBox.CardItemView).Qsos);
 				}
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -70,14 +70,14 @@ namespace hamqsler
 			InitializeComponent();
 			cardCanvas.AddCard(card);
 			this.DataContext = cardCanvas.QslCard;
-			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
+/*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
 				TextItemView ti = elt as TextItemView;
 				if(ti != null && cardCanvas.QslCard.QsosBox != null)
 				{
 					ti.SetDisplayText(((QsosBoxView)cardCanvas.QslCard.QsosBox.CardItemView).Qsos);
 				}
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -377,8 +377,8 @@ namespace hamqsler
 		/// </summary>
 		public void SetTabLabel()
 		{
-			HeaderText.Text = (cardCanvas.QslCard.IsDirty ? "*" : string.Empty);
-			string fileName = cardCanvas.QslCard.FileName;
+			HeaderText.Text = (cardPanel.QslCard.IsDirty ? "*" : string.Empty);
+			string fileName = cardPanel.QslCard.FileName;
 			if(fileName != null)
 			{
 				FileInfo fileInfo = new FileInfo(fileName);

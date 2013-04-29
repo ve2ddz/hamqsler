@@ -63,10 +63,10 @@
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
-		<ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto"
-		              VerticalScrollBarVisibility="Auto">
-			<local:CardCanvas x:Name="cardCanvas" Background="LightGray" Width="700" Height="490"/>
-		</ScrollViewer>
+		<WindowsFormsHost Grid.Column="0">
+			<local:CardPanel x:Name="cardPanel" BackColor="LightGray" Width="700" Height="500"/>
+		</WindowsFormsHost>
+		<local:CardCanvas Grid.Column="0" x:Name="cardCanvas" Background="LightGray" Width="10" Height="10"/>
 		<ScrollViewer Width="250" HorizontalAlignment="Right" Grid.Column="1">
 			<StackPanel>
 				<GroupBox Name="backgroundImageProperties" Header="Background Image Properties"

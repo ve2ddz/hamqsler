@@ -117,7 +117,7 @@
 		</Window.CommandBindings>
 		<Window.InputBindings>
 			<KeyBinding Key="N" Modifiers="Control" 
-		                Command="{x:Static local:MainWindow.New45CardCommand}"/>
+		                Command="{x:Static local:MainWindow.NewBureauCardCommand}"/>
 			<KeyBinding Key="O" Modifiers="Control" 
 		                Command="{x:Static local:MainWindow.CardOpenCommand}"/>
 			<KeyBinding Key="S" Modifiers="Control" 

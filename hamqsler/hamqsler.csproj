@@ -68,6 +68,9 @@
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -100,6 +103,7 @@
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardWF.cs" />
     <Compile Include="CardCanvas.xaml.cs">
       <DependentUpon>CardCanvas.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -107,6 +111,10 @@
     <Compile Include="CardImageBase.cs" />
     <Compile Include="CardItem.cs" />
     <Compile Include="CardItemView.cs" />
+    <Compile Include="CardPanel.cs" />
+    <Compile Include="CardPanel.Designer.cs">
+      <DependentUpon>CardPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="CardTabItem.xaml.cs">
       <DependentUpon>CardTabItem.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -123,6 +131,10 @@
     <Compile Include="DoubleToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
+    <Compile Include="FormsCardView.cs" />
+    <Compile Include="FormsCardView.Designer.cs">
+      <DependentUpon>FormsCardView.cs</DependentUpon>
+    </Compile>
     <Compile Include="HamqslerPaginator.cs" />
     <Compile Include="ImageView.cs" />
     <Compile Include="JpegPropsDialog.xaml.cs">
@@ -252,6 +264,14 @@
     <None Include="Samples\sample.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CardPanel.resx">
+      <DependentUpon>CardPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormsCardView.resx">
+      <DependentUpon>FormsCardView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
