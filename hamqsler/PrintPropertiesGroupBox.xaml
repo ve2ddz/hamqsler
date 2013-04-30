@@ -3,14 +3,19 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<StackPanel>
 		<CheckBox x:Name="insideMarginsButton" Content="Print Inside Margins"
-				Margin="5"/>
+				Margin="5" Checked="InsideMarginsButton_CheckedChanged"
+				Unchecked="InsideMarginsButton_CheckedChanged"/>
 		<CheckBox x:Name="printCardOutlinesButton"
-				Content="Print Card Outlines" Margin="5"/>
+				Content="Print Card Outlines" Margin="5"
+		        Unchecked="PrintCardOutlinesButton_CheckedChanged"
+				Checked="PrintCardOutlinesButton_CheckedChanged"/>
 		<CheckBox x:Name="fillLastPageButton"
 				Content="Fill Last Page With Blank Cards"
-				Margin="5"/>
+				Margin="5" Checked="FillLastPageButton_CheckedChanged"
+		Unchecked="FillLastPageButton_CheckedChanged"/>
 		<CheckBox x:Name="setCardMarginsButton" Height="32"
-				Margin="5">
+				Margin="5" Checked="SetCardMarginsButton_CheckedChanged"
+				Unchecked="SetCardMarginsButton_CheckedChanged">
 			<TextBlock Text="Set Card Margins to Printer Margins"
 				TextWrapping="Wrap"/>
 		</CheckBox>

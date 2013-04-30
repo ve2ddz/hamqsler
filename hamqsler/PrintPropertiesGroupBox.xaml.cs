@@ -41,7 +41,25 @@ namespace hamqsler
 			set
 			{
 				qslCard = value;
+				Initializing = true;
+				insideMarginsButton.IsChecked = QslCard.CardPrintProperties.InsideMargins;
+				printCardOutlinesButton.IsChecked = QslCard.CardPrintProperties.PrintCardOutlines;
+				fillLastPageButton.IsChecked = QslCard.CardPrintProperties.FillLastPage;
+				setCardMarginsButton.IsChecked = QslCard.CardPrintProperties.SetCardMargins;
+				Initializing = false;
 			}
+		}
+		
+		// delegate and event handler for Properties changed
+		public delegate void PrintPropertiesChangedEventHandler(
+			object sender, EventArgs e);
+		public event PrintPropertiesChangedEventHandler PrintPropertiesChanged;
+		
+		private bool initializing = true;
+		public bool Initializing
+		{
+			get {return initializing;}
+			set {initializing = value;}
 		}
 		
 		/// <summary>
@@ -51,5 +69,74 @@ namespace hamqsler
 		{
 			InitializeComponent();
 		}
+		
+		/// <summary>
+		/// Handler for insideMarginsButton Checked and Unchecked events
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void InsideMarginsButton_CheckedChanged(object sender, RoutedEventArgs e)
+		{
+			// set InsideMargins property
+			QslCard.CardPrintProperties.InsideMargins = 
+				(bool)insideMarginsButton.IsChecked;
+			// raise PrintPropertiesChanged event
+			if(PrintPropertiesChanged != null && !Initializing)
+			{
+				PrintPropertiesChanged(this, new EventArgs());
+			}
+		}
+		
+		/// <summary>
+		/// Handler for printCardOutlinesButton Checked and Unchecked events
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void PrintCardOutlinesButton_CheckedChanged(object sender, RoutedEventArgs e)
+		{
+			// set PrintCardOutlines property
+			QslCard.CardPrintProperties.PrintCardOutlines = 
+				(bool)printCardOutlinesButton.IsChecked;
+			// raise PrintPropertiesChanged event
+			if(PrintPropertiesChanged != null && !Initializing)
+			{
+				PrintPropertiesChanged(this, new EventArgs());
+			}
+		}
+		
+		/// <summary>
+		/// Handler for fillLastPageButton Checked and Unchecked events
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void FillLastPageButton_CheckedChanged(object sender, RoutedEventArgs e)
+		{
+			// set FillLastPage property
+			QslCard.CardPrintProperties.FillLastPage = 
+				(bool)fillLastPageButton.IsChecked;
+			// raise PrintPropertiesChanged event
+			if(PrintPropertiesChanged != null && !Initializing)
+			{
+				PrintPropertiesChanged(this, new EventArgs());
+			}
+		}
+		
+		/// <summary>
+		/// Handler for setCardMarginsButton Checked and Unchecked events
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void SetCardMarginsButton_CheckedChanged(object sender, RoutedEventArgs e)
+		{
+			// set SetCardMargins property
+			QslCard.CardPrintProperties.SetCardMargins = 
+				(bool)setCardMarginsButton.IsChecked;
+			// raise PrintPropertiesChanged event
+			if(PrintPropertiesChanged != null && !Initializing)
+			{
+				PrintPropertiesChanged(this, new EventArgs());
+			}
+		}
+		
 	}
 }
