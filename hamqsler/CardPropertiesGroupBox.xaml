@@ -3,9 +3,11 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
     xmlns:local="clr-namespace:hamqsler">
 	<StackPanel>
-		<local:PrinterPropertiesGroupBox Header="Default Printer Properties"/>
-		<local:PrintPropertiesGroupBox Header="Default Print Properties"/>
-		<local:CardAlignmentGroupBox x:Name="cardAlignmentPanel"
+		<local:PrinterPropertiesGroupBox x:Name="printerPropsGroupBox" 
+										Header="Default Printer Properties"/>
+		<local:PrintPropertiesGroupBox x:Name="printPropsComboBox"
+										Header="Default Print Properties"/>
+		<local:CardAlignmentGroupBox x:Name="cardAlignmentGroupBox"
 									 Header="Default Card Alignment"/>
 	</StackPanel>
 </GroupBox>

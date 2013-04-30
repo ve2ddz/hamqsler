@@ -30,10 +30,23 @@ using System.Windows.Media;
 namespace hamqsler
 {
 	/// <summary>
-	/// Interaction logic for PrintPropertiesGroupBox.xaml
+	/// PrintPropertiesGroupBox class - displays and interacts with QslCard print properties
 	/// </summary>
 	public partial class PrintPropertiesGroupBox : GroupBox
 	{
+		private CardWF qslCard = null;
+		public CardWF QslCard
+		{
+			get {return qslCard;}
+			set
+			{
+				qslCard = value;
+			}
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public PrintPropertiesGroupBox()
 		{
 			InitializeComponent();

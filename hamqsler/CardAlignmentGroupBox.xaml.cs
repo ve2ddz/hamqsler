@@ -30,13 +30,41 @@ using System.Windows.Media;
 namespace hamqsler
 {
 	/// <summary>
-	/// Interaction logic for CardAlignmentPanel.xaml
+	/// CardAlignmentGroupBox class - displays and interacts with QslCard cards layout property
 	/// </summary>
 	public partial class CardAlignmentGroupBox : GroupBox
 	{
+		private CardWF qslCard = null;
+		public CardWF QslCard
+		{
+			get {return qslCard;}
+			set
+			{
+				qslCard = value;
+				SetCardAlignment();
+			}
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public CardAlignmentGroupBox()
 		{
 			InitializeComponent();
+		}
+		
+		/// <summary>
+		/// Helper method that selects the alignment radio box based on Layout setting
+		/// of QslCard CardPrintProperties
+		/// </summary>
+		private void SetCardAlignment()
+		{
+			switch(QslCard.CardPrintProperties.Layout)
+			{
+				case PrintProperties.CardLayouts.PortraitTopLeft:
+					portraitTopLeftButton.IsChecked = true;
+					break;
+			}
 		}
 	}
 }

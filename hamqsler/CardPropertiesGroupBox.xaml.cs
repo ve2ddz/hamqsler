@@ -34,6 +34,22 @@ namespace hamqsler
 	/// </summary>
 	public partial class CardPropertiesGroupBox : GroupBox
 	{
+		private CardWF qslCard = null;
+		public CardWF QslCard
+		{
+			get {return qslCard;}
+			set
+			{
+				qslCard = value;
+				printerPropsGroupBox.QslCard = QslCard;
+				printPropsComboBox.QslCard = QslCard;
+				cardAlignmentGroupBox.QslCard = QslCard;
+			}
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public CardPropertiesGroupBox()
 		{
 			InitializeComponent();

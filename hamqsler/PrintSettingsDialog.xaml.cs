@@ -179,36 +179,6 @@ namespace hamqsler
 			// to set the SetCardMarginsCheckBox.
 			PrintCapabilities caps = queue.GetPrintCapabilities();
 			PageImageableArea imageableArea = caps.PageImageableArea;
-			if(imageableArea == null)
-			{
-				UserPreferences prefs = ((App)Application.Current).UserPreferences;
-				psD.CardMargins = false;
-				psD.SetCardMarginsCheckBox.IsEnabled = false;
-				// check to see if printer is in list of "Do not show again for this printer"
-				// and show or don't show message
-				string printer = queue.Name;
-				bool printerFound = false;
-				foreach(string pr in prefs.DoNotShowNullImageableAreaMessagePrinters)
-				{
-					if(printer == pr)
-					{
-						printerFound = true;
-						break;
-					}
-				}
-				// printer not in do not show list, so show the dialog
-				if(!printerFound)
-				{
-					PrinterImageableAreaErrorDialog pDialog = new PrinterImageableAreaErrorDialog();
-					pDialog.ShowDialog();
-					// if do not show again checkbox checked, add printer to the do not show list
-					if(pDialog.DoNotShowForThisPrinter)
-					{
-						prefs.DoNotShowNullImageableAreaMessagePrinters.Add(printer);
-						prefs.SerializeAsXml();
-					}
-				}
-			}
 			// cards aligned to edge on portrait orientation
 			Grid grid = psD.CreatePortraitButtonContent(ticket, card, CardLayout.PortraitEdge);
 			SetButtonContentAndVisibility(ref psD.portraitEdgeButton, ref grid);

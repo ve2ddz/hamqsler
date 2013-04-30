@@ -21,6 +21,7 @@ using Qsos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
 using System.Security;
@@ -144,6 +145,86 @@ namespace hamqsler
 		{
 			get {return (string)GetValue(DefaultCardFilesFolderProperty);}
 			set {SetValue(DefaultCardFilesFolderProperty, value);}
+		}
+		
+		private static readonly DependencyProperty DefaultPrinterNameProperty =
+			DependencyProperty.Register("DefaultPrinterName", typeof(string),
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata(null));
+		public string DefaultPrinterName
+		{
+			get {return GetValue(DefaultPrinterNameProperty) as string;}
+			set {SetValue(DefaultPrinterNameProperty, value);}
+		}
+		
+		private static readonly DependencyProperty DefaultPaperSizeProperty =
+			DependencyProperty.Register("DefaultPaperSize", typeof(PaperSize),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(null));
+		public PaperSize DefaultPaperSize
+		{
+			get {return GetValue(DefaultPaperSizeProperty) as PaperSize;}
+			set {SetValue(DefaultPaperSizeProperty, value);}
+		}
+		
+		private static readonly DependencyProperty DefaultPrinterResolutionProperty =
+			DependencyProperty.Register("DefaultPrinterResolution", typeof(PrinterResolution),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(null));
+		public PrinterResolution DefaultPrinterResolution
+		{
+			get {return GetValue(DefaultPrinterResolutionProperty) as PrinterResolution;}
+			set {SetValue(DefaultPrinterResolutionProperty, value);}
+		}
+		
+		private static readonly DependencyProperty InsideMarginsProperty =
+			DependencyProperty.Register("InsideMargins", typeof(bool),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(false));
+		public bool InsideMargins
+		{
+			get {return (bool)GetValue(InsideMarginsProperty);}
+			set {SetValue(InsideMarginsProperty, value);}
+		}
+		
+		private static readonly DependencyProperty PrintCardOutlinesProperty =
+			DependencyProperty.Register("PrintCardOutlines", typeof(bool),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(false));
+		public bool PrintCardOutlines
+		{
+			get {return (bool)GetValue(PrintCardOutlinesProperty);}
+			set {SetValue(PrintCardOutlinesProperty, value);}
+		}
+		
+		private static readonly DependencyProperty FillLastPageProperty =
+			DependencyProperty.Register("FillLastPage", typeof(bool),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(false));
+		public bool FillLastPage
+		{
+			get {return (bool)GetValue(FillLastPageProperty);}
+			set {SetValue(FillLastPageProperty, value);}
+		}
+		
+		private static readonly DependencyProperty SetCardMarginsProperty =
+			DependencyProperty.Register("SetCardMargins", typeof(bool),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(false));
+		public bool SetCardMargins
+		{
+			get {return (bool)GetValue(SetCardMarginsProperty);}
+			set {SetValue(SetCardMarginsProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CardsLayoutProperty =
+			DependencyProperty.Register("CardsLayout", typeof(PrintProperties.CardLayouts),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(PrintProperties.CardLayouts.None));
+		public PrintProperties.CardLayouts CardsLayout
+		{
+			get {return (PrintProperties.CardLayouts)GetValue(CardsLayoutProperty);}
+			set {SetValue(CardsLayoutProperty, value);}
 		}
 		
 		// Default font face to display text items in
@@ -757,45 +838,6 @@ namespace hamqsler
 			set {SetValue(Frequency1mmProperty, value);}
 		}
 		
-		// Print card outlines
-		private static readonly DependencyProperty PrintCardOutlinesProperty = 
-			DependencyProperty.Register("PrintCardOutlines", typeof(bool),
-			                            typeof(UserPreferences), new PropertyMetadata(false));
-		public bool PrintCardOutlines
-		{
-			get {return (bool)GetValue(PrintCardOutlinesProperty);}
-			set {SetValue(PrintCardOutlinesProperty, value);}
-		}
-		
-		// Fill last page with blank cards
-		private static readonly DependencyProperty FillLastPageWithBlankCardsProperty = 
-			DependencyProperty.Register("FillLastPageWithBlankCards", typeof(bool),
-			                            typeof(UserPreferences), new PropertyMetadata(false));
-		public bool FillLastPageWithBlankCards
-		{
-			get {return (bool)GetValue(FillLastPageWithBlankCardsProperty);}
-			set {SetValue(FillLastPageWithBlankCardsProperty, value);}
-		}
-		
-		// Set card margins to printer page margins
-		private static readonly DependencyProperty SetCardMarginsToPrinterPageMarginsProperty = 
-			DependencyProperty.Register("SetCardMarginsToPrinterPageMargins", typeof(bool),
-			                            typeof(UserPreferences), new PropertyMetadata(false));
-		public bool SetCardMarginsToPrinterPageMargins
-		{
-			get {return (bool)GetValue(SetCardMarginsToPrinterPageMarginsProperty);}
-			set {SetValue(SetCardMarginsToPrinterPageMarginsProperty, value);}
-		}
-		
-        private static readonly DependencyProperty DoNotShowNullImageableAreaMessagePrintersProperty =
-        	DependencyProperty.Register("DoNotShowNullImageableAreaMessagePrinters",
-        	                            typeof(List<string>), typeof(UserPreferences),
-        	                            new PropertyMetadata(new List<string>()));
-        public List<string> DoNotShowNullImageableAreaMessagePrinters
-        {
-        	get {return (List<string>)GetValue(DoNotShowNullImageableAreaMessagePrintersProperty);}
-        }
-
         [NonSerialized]
         private ExceptionLogger logger = null;
         public ExceptionLogger Logger
@@ -827,6 +869,13 @@ namespace hamqsler
 			SetValue(NameQthPropertyKey, new TextParts());
 			SetValue(SalutationPropertyKey, new TextParts());
 			SetValue(ConfirmingTextPropertyKey, new TextParts());
+			if(DefaultPrinterName == null)
+			{
+				PrinterSettings settings = new PrinterSettings();
+				DefaultPrinterName = settings.PrinterName;
+				DefaultPaperSize = settings.DefaultPageSettings.PaperSize;
+				DefaultPrinterResolution = settings.DefaultPageSettings.PrinterResolution;
+			}
 		}
 		
 				
@@ -912,6 +961,15 @@ namespace hamqsler
 			CardsReloadOnStartup = prefs.CardsReloadOnStartup;
 			CardFiles = prefs.CardFiles;
 			DefaultCardFilesFolder = prefs.DefaultCardFilesFolder;
+			DefaultPrinterName = prefs.DefaultPrinterName;
+			DefaultPaperSize = prefs.DefaultPaperSize;
+			DefaultPrinterResolution = prefs.DefaultPrinterResolution;
+			InsideMargins = prefs.InsideMargins;
+			PrintCardOutlines = prefs.PrintCardOutlines;
+			FillLastPage = prefs.FillLastPage;
+			SetCardMargins = prefs.SetCardMargins;
+			CardsLayout = prefs.CardsLayout;
+
 			DefaultTextItemsFontFace = prefs.DefaultTextItemsFontFace;
 			SetValue(CallsignPropertyKey, new TextParts());
 			foreach(TextPart part in prefs.Callsign)
@@ -993,13 +1051,6 @@ namespace hamqsler
 			Frequency2p5mm = prefs.Frequency2p5mm;
 			Frequency2mm = prefs.Frequency2mm;
 			Frequency1mm = prefs.Frequency1mm;
-			PrintCardOutlines = prefs.PrintCardOutlines;
-			FillLastPageWithBlankCards = prefs.FillLastPageWithBlankCards;
-			SetCardMarginsToPrinterPageMargins = prefs.SetCardMarginsToPrinterPageMargins;
-			foreach(string pr in prefs.DoNotShowNullImageableAreaMessagePrinters)
-			{
-				this.DoNotShowNullImageableAreaMessagePrinters.Add(pr);
-			}
 		}
 
         /// <summary>
