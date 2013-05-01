@@ -3,7 +3,9 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<WrapPanel>
 		<RadioButton x:Name="portraitTopLeftButton" Margin="5"
-		             GroupName="alignmentGroup" Height="100" Width="115"/>
+		             GroupName="alignmentGroup" Height="100" Width="115">
+			<Image x:Name="portraitTopLeftButtonImage"/>
+		</RadioButton>
 		<RadioButton x:Name="portraitTopCenterButton" Margin="5"
 		             GroupName="alignmentGroup" Height="100" Width="115"/>
 		<RadioButton x:Name="portraitCenterButton" Margin="5"

@@ -54,5 +54,15 @@ namespace hamqsler
 		{
 			InitializeComponent();
 		}
+		
+		private void printerPropertiesGroupBox1_PaperSizePropertyChanged(object sender, EventArgs e)
+		{
+			cardAlignmentGroupBox.SetCardsLayouts();
+		}
+		
+		void printPropertiesGroupBox1_PrintPropertiesChanged(object sender, EventArgs e)
+		{
+			cardAlignmentGroupBox.SetCardsLayouts();
+		}
 	}
 }

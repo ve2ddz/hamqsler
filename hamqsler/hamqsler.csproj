@@ -242,7 +242,9 @@
     <Page Include="CardCanvas.xaml" />
     <Page Include="CardPropertiesGroupBox.xaml" />
     <Page Include="CardTabItem.xaml" />
-    <Page Include="CountMacroGroupBox.xaml" />
+    <Page Include="CountMacroGroupBox.xaml">
+      <DependentUpon>DispQso.cs</DependentUpon>
+    </Page>
     <Page Include="JpegPropsDialog.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
