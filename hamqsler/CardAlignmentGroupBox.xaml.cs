@@ -120,8 +120,8 @@ namespace hamqsler
 				// and landscape pages
 				CalculateCardsPerPortraitPage();
 				CalculateCardsPerLandscapePage();
-				// create the image
-				portraitTopLeftButton.Content = CreatePortraitTopLeftButtonImage();
+				// create the images
+				CreatePortraitButtonImages();
 			}
 		}
 		
@@ -177,15 +177,54 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Create image to be displayed in the portraitTopLeftButton
+		/// Create the images for the portrait radio buttons
 		/// </summary>
-		/// <returns>Canvas object containing the generated image</returns>
-		private Canvas CreatePortraitTopLeftButtonImage()
+		private void CreatePortraitButtonImages()
+		{
+			RectangleF area = settings.DefaultPageSettings.PrintableArea;
+			int leftOffset = 0;
+			int topOffset = 0;
+			if(QslCard.CardPrintProperties.InsideMargins)
+			{
+				leftOffset = (int)area.Left / scaleFactor;
+				topOffset = (int)area.Top / scaleFactor;				
+			}
+			portraitTopLeftButton.Content = 
+				CreateButtonImage(scaledPageWidth, scaledPageHeight, leftOffset, topOffset);
+			
+			leftOffset = (scaledPageWidth - scaledCardWidth * portraitCardsWide) / 2;
+			if(QslCard.CardPrintProperties.InsideMargins &&
+			   leftOffset < (MAXMARGIN / scaleFactor))
+			{
+				leftOffset = (MAXMARGIN / scaleFactor);
+			}
+			portraitTopCenterButton.Content =
+				CreateButtonImage(scaledPageWidth, scaledPageHeight, leftOffset, topOffset);
+			topOffset = (scaledPageHeight - scaledCardHeight * portraitCardsHigh) / 2;
+			if(QslCard.CardPrintProperties.InsideMargins &&
+			   topOffset < (MAXMARGIN / scaleFactor))
+			{
+				topOffset = (MAXMARGIN / scaleFactor);
+			}
+			portraitCenterButton.Content =
+				CreateButtonImage(scaledPageWidth, scaledPageHeight, leftOffset, topOffset);
+		}
+		
+		/// <summary>
+		/// Create an individual image for a radio button
+		/// </summary>
+		/// <param name="sPageWidth">Scaled page width to create the image for</param>
+		/// <param name="sPageHeight">Scaled page height to create the image for</param>
+		/// <param name="leftOffset">Scaled card left offset</param>
+		/// <param name="topOffset">Scaled card top offset</param>
+		/// <returns>Canvas object containing the image</returns>
+		private Canvas CreateButtonImage(int sPageWidth, int sPageHeight,
+		                                 int leftOffset, int topOffset)
 		{
 			Canvas canvas = new Canvas();
 			// create a Path for the page
 			RectangleGeometry rect = new RectangleGeometry(
-				new Rect(0, 0, scaledPageWidth, scaledPageHeight));
+				new Rect(0, 0, sPageWidth, sPageHeight));
 			Path pagePath = new Path();
 			pagePath.Stroke = System.Windows.Media.Brushes.LightPink;
 			pagePath.Fill = System.Windows.Media.Brushes.LightPink;
@@ -197,21 +236,13 @@ namespace hamqsler
 			cardsPath.Stroke = System.Windows.Media.Brushes.Blue;
 			cardsPath.Fill = System.Windows.Media.Brushes.White;
 			GeometryGroup geo = new GeometryGroup();
-			int leftMargin = 0;
-			int topMargin = 0;
-			if(QslCard.CardPrintProperties.InsideMargins)
-			{
-				RectangleF area = settings.DefaultPageSettings.PrintableArea;
-				leftMargin = (int)area.Left / scaleFactor;
-				topMargin = (int)area.Top / scaleFactor;
-			}
 			for(int hCard = 0; hCard < portraitCardsWide; hCard++)
 			{
 				for(int vCard = 0; vCard < portraitCardsHigh; vCard++)
 				{
 					geo.Children.Add(new RectangleGeometry(
-						new Rect(hCard*scaledCardWidth + leftMargin, 
-						         vCard*scaledCardHeight + topMargin,
+						new Rect(hCard*scaledCardWidth + leftOffset, 
+						         vCard*scaledCardHeight + topOffset,
 						         scaledCardWidth, scaledCardHeight)));
 				}
 			}
