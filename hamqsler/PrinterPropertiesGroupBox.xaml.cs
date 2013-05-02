@@ -146,25 +146,28 @@ namespace hamqsler
 		/// Handler for paperSizeComboBox SelectionChanged event
 		/// </summary>
 		/// <param name="sender">not used</param>
-		/// <param name="e">not used</param>
+		/// <param name="e">SelectionChangedEventArgs object</param>
 		private void PaperSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			// find matching PaperSize object for the selected item
-			PrinterSettings settings = new PrinterSettings();
-			settings.PrinterName = QslCard.CardPrintProperties.PrinterName;
-			foreach(PaperSize size in settings.PaperSizes)
+			if(e.AddedItems.Count != 0)
 			{
-				if(size.PaperName == paperSizeComboBox.SelectedItem.ToString())
+				// find matching PaperSize object for the selected item
+				PrinterSettings settings = new PrinterSettings();
+				settings.PrinterName = QslCard.CardPrintProperties.PrinterName;
+				foreach(PaperSize size in settings.PaperSizes)
 				{
-					// found, so set PaperSize property
-					QslCard.CardPrintProperties.PrinterPaperSize = size;
-					break;
+					if(size.PaperName == paperSizeComboBox.SelectedItem.ToString())
+					{
+						// found, so set PaperSize property
+						QslCard.CardPrintProperties.PrinterPaperSize = size;
+						break;
+					}
 				}
-			}
-			// raise PaperSizePropertyChanged event
-			if(PaperSizePropertyChanged != null)
-			{
-				PaperSizePropertyChanged(this, new EventArgs());
+				// raise PaperSizePropertyChanged event
+				if(PaperSizePropertyChanged != null)
+				{
+					PaperSizePropertyChanged(this, new EventArgs());
+				}
 			}
 		}
 		
@@ -175,17 +178,20 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void QualityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			// find matching PrinterResolution object for the selected item
-			PrinterSettings settings = new PrinterSettings();
-			settings.PrinterName = QslCard.CardPrintProperties.PrinterName;
-			foreach(PrinterResolution res in settings.PrinterResolutions)
+			if(e.AddedItems.Count != 0)
 			{
-				if(ResolutionString(res).Equals(qualityComboBox.SelectedItem.ToString()))
-			    {
-			   		 // found match, so set Resolution property
-			   		 QslCard.CardPrintProperties.Resolution = res;
-			   		 break;
-			    }
+				// find matching PrinterResolution object for the selected item
+				PrinterSettings settings = new PrinterSettings();
+				settings.PrinterName = QslCard.CardPrintProperties.PrinterName;
+				foreach(PrinterResolution res in settings.PrinterResolutions)
+				{
+					if(ResolutionString(res).Equals(qualityComboBox.SelectedItem.ToString()))
+				    {
+				   		 // found match, so set Resolution property
+				   		 QslCard.CardPrintProperties.Resolution = res;
+				   		 break;
+				    }
+				}
 			}
 		}
 	}
