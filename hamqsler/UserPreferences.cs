@@ -838,6 +838,28 @@ namespace hamqsler
 			set {SetValue(Frequency1mmProperty, value);}
 		}
 		
+		// Debug printing
+		private static readonly DependencyProperty DebugPrintingProperty =
+			DependencyProperty.Register("DebugPrinting", typeof(bool),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(true));
+		public bool DebugPrinting
+		{
+			get {return (bool)GetValue(DebugPrintingProperty);}
+			set {SetValue(DebugPrintingProperty, value);}
+		}
+		
+		// Debug Logging
+		private static readonly DependencyProperty DebugLoggingProperty =
+			DependencyProperty.Register("DebugLogging", typeof(bool),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(true));
+		public bool DebugLogging
+		{
+			get {return (bool)GetValue(DebugLoggingProperty);}
+			set {SetValue(DebugLoggingProperty, value);}
+		}
+		
         [NonSerialized]
         private ExceptionLogger logger = null;
         public ExceptionLogger Logger
@@ -1051,6 +1073,8 @@ namespace hamqsler
 			Frequency2p5mm = prefs.Frequency2p5mm;
 			Frequency2mm = prefs.Frequency2mm;
 			Frequency1mm = prefs.Frequency1mm;
+			DebugPrinting = prefs.DebugPrinting;
+			DebugLogging = prefs.DebugLogging;
 		}
 
         /// <summary>

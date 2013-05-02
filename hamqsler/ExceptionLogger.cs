@@ -39,8 +39,6 @@ namespace hamqsler
     	public const bool SHOWMESSAGE = true;
     	public const bool DONTSHOWMESSAGE = false;
     	
-        private Dictionary<string, bool> debugTypes = new Dictionary<string, bool>();
-        private bool badLog = true;
         private FileInfo logInfo = null;
         private bool noWrite = false; 
         private FileStream loggerStream = null;
@@ -51,13 +49,6 @@ namespace hamqsler
 		/// <param name="logFileName">Name of the file to log messages to.</param>
         public ExceptionLogger(string logFileName)
         {
-        	// TODO: Set debugTypes to valid names and values and consider a scheme for setting these at run time
-            debugTypes.Add("ADIF", false);
-            debugTypes.Add("logTrace", false);
-            debugTypes.Add("QSOsel", false);
-            debugTypes.Add("QSOprt", false);
-            debugTypes.Add("CardDisplay", false);
-            debugTypes.Add("ImageableArea", false);
             try
             {
                 logInfo = new FileInfo(logFileName);
@@ -91,39 +82,15 @@ namespace hamqsler
         }
 
         /// <summary>
-        /// Log a message based on debugType
+        /// Log a message based printDebugInfo
         /// </summary>
         /// <param name="message">Message to log</param>
-        /// <param name="debugType">debugType (determines whether to log the messsage or not.</param>
-        public void Log(string message, string debugType)
+        /// <param name="printDebugInfo">bool indicating whether to log the messsage 
+        /// or not.</param>
+        public void Log(string message, bool printDebugInfo)
         {
-            if ((debugType == null || debugType == string.Empty) && badLog == true)
-            {
-                Exception e = new Exception("Null or empty debugType encountered.\r\n"
-                        + "This is a programming error. Contact the author.");
-                badLog = false;
-                try
-                {
-                    throw e;
-                }
-                catch (Exception ex)
-                {
-                    Log(ex);
-                    return;
-                }
-            }
-            bool log;
-            bool gotValue = debugTypes.TryGetValue(debugType, out log);
-            if (!gotValue && badLog)
-            {
-                Exception e = new Exception("Invalid debugType encountered.\r\n"
-                        + "This is a programming error. Contact the author.");
-                badLog = false;
-                Log(e);
-                return;
-            }
-            if (log == true)
-            {
+        	if(printDebugInfo)
+        	{
                 Log(message);
             }
         }
@@ -212,11 +179,12 @@ namespace hamqsler
         public void Log(Exception e, bool showTrace=ExceptionLogger.SHOWTRACE, 
                         bool showMessage=ExceptionLogger.SHOWMESSAGE)
         {
-            Log("Inside Log(Exception e", "logTrace");
+        	bool debugLogging = ((App)Application.Current).UserPreferences.DebugLogging;
+            Log("Inside Log(Exception e", debugLogging);
             string msg = GetExceptionInfo(e, showTrace);
-            Log("ExceptionInfo: " + msg, "logTrace");
+            Log("ExceptionInfo: " + msg, debugLogging);
             Log(msg);
-            Log("Back from logging exceptionInfo", "logTrace");
+            Log("Back from logging exceptionInfo",debugLogging);
             if (showMessage)
             {
                 ShowMessage("HamQSLer encountered an error:\r\n" +
@@ -234,7 +202,8 @@ namespace hamqsler
         /// <returns></returns>
         private string GetExceptionInfo(Exception e, bool showTrace=SHOWTRACE)
         {
-            Log("Inside GetExceptionInfo", "logTrace");
+        	bool debugLogging = ((App)Application.Current).UserPreferences.DebugLogging;
+            Log("Inside GetExceptionInfo", debugLogging);
             string msg = e.GetType() + "\r\n";
             msg += "   " + e.Message + "\r\n";
             if (e.Data.Count > 0)
@@ -245,23 +214,23 @@ namespace hamqsler
                 	// while there may be an entry in e.Data, the value may be null
                 	if(data.Value != null)
                 	{
-	                    Log("data= " + data, "logTrace");
+	                    Log("data= " + data, debugLogging);
 	                    DictionaryEntry pair = (DictionaryEntry) data;
 	                    msg += "   " + pair.Key.ToString() + ": " + pair.Value.ToString() + "\r\n";
-	                    Log("datastring= " + msg, "logTrace");
+	                    Log("datastring= " + msg, debugLogging);
                 	}
                 }
             }
             msg += "Trace:\r\n";
-            Log("Trace", "logTrace");
+            Log("Trace", debugLogging);
             if (showTrace)
             {
                 string trace = e.StackTrace;
                 if (trace != null)
                 {
-                    Log("Trace= " + trace + "\r", "logTrace");
+                    Log("Trace= " + trace + "\r", debugLogging);
                     int inIndex = trace.IndexOf("in ");
-                    Log("inIndex= " + inIndex, "logTrace");
+                    Log("inIndex= " + inIndex, debugLogging);
                     if (inIndex != -1)
                     {
                         msg += trace.Substring(0, inIndex) + "\r\n";

@@ -43,14 +43,6 @@ namespace Qsos
             logger = l;
         }
 
-        private void Debug(string msg)
-        {
-            if (logger != null)
-            {
-                logger.Log(msg, "ADIF");
-            }
-        }
-
         /// <summary>
         /// Populates the Qso object from an ADIF string
         /// </summary>
@@ -59,8 +51,6 @@ namespace Qsos
         /// </throws>
         public void setQsoFromAdif(string adifQso)
         {
-            Debug("Inside QSO.setQsoFromAdif");
-            Debug("QSO string is: " + adifQso);
             Clear();
             try
             {
@@ -93,8 +83,6 @@ namespace Qsos
 			// determine if callsign is valid
             if(!validateQso())
             {
-                Debug("QSO does not contain minimum required fields:\n" +
-                "call, date, time, mode, band or frequency");
                 QsoException ex = new QsoException("QSO does not contain minimum required fields:\n" +
                 "call, date, time, mode, band or frequency");
                 ex.Data.Add("ADIF QSO", adifQso);
@@ -103,7 +91,6 @@ namespace Qsos
 			CallSign call = new CallSign(this["call"]);
 			if(!CallSign.IsValid(call.Call))
 			{
-				Debug("Callsign is not valid");
 				QsoException ex = new QsoException("QSO does not contain a valid callsign");
 				ex.Data.Add("ADIF QSO", adifQso);
 				throw ex;
@@ -363,7 +350,6 @@ namespace Qsos
         {
             if (field == null || field == string.Empty)
             {
-                Debug("Invalid ADIF field: null or empty");
                 throw new QsoException("Invalid ADIF field: null or empty");
             }
             string fStr = AdifString.getFieldName(field);

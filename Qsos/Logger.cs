@@ -28,7 +28,7 @@ namespace Qsos
     public interface Logger
     {
         void Log(string s);
-        void Log(string s, string debugType);
+        void Log(string s, bool print);
         void Log(Exception e, bool showTrace=true, bool showMessage=true);
     }
 }
