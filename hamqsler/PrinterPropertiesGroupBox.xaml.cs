@@ -175,7 +175,7 @@ namespace hamqsler
 		/// Handler for qualityComboBox SelectionChanged event
 		/// </summary>
 		/// <param name="sender">not used</param>
-		/// <param name="e">not used</param>
+		/// <param name="e">SelectionChangedEventArgs object</param>
 		void QualityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(e.AddedItems.Count != 0)
