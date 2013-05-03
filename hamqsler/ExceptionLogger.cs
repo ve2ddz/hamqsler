@@ -42,6 +42,16 @@ namespace hamqsler
         private FileInfo logInfo = null;
         private bool noWrite = false; 
         private FileStream loggerStream = null;
+        
+        public bool DebugPrinting
+        {
+        	get {return ((App)Application.Current).UserPreferences.DebugPrinting;}
+        }
+        
+        public bool DebugLogging
+        {
+        	get {return ((App)Application.Current).UserPreferences.DebugLogging;}
+        }
 
         /// <summary>
 		/// Constructor
@@ -179,12 +189,11 @@ namespace hamqsler
         public void Log(Exception e, bool showTrace=ExceptionLogger.SHOWTRACE, 
                         bool showMessage=ExceptionLogger.SHOWMESSAGE)
         {
-        	bool debugLogging = ((App)Application.Current).UserPreferences.DebugLogging;
-            Log("Inside Log(Exception e", debugLogging);
+            Log("Inside Log(Exception e", DebugLogging);
             string msg = GetExceptionInfo(e, showTrace);
-            Log("ExceptionInfo: " + msg, debugLogging);
+            Log("ExceptionInfo: " + msg, DebugLogging);
             Log(msg);
-            Log("Back from logging exceptionInfo",debugLogging);
+            Log("Back from logging exceptionInfo",DebugLogging);
             if (showMessage)
             {
                 ShowMessage("HamQSLer encountered an error:\r\n" +
@@ -202,10 +211,9 @@ namespace hamqsler
         /// <returns></returns>
         private string GetExceptionInfo(Exception e, bool showTrace=SHOWTRACE)
         {
-        	bool debugLogging = ((App)Application.Current).UserPreferences.DebugLogging;
-            Log("Inside GetExceptionInfo", debugLogging);
-            string msg = e.GetType() + "\r\n";
-            msg += "   " + e.Message + "\r\n";
+            Log("Inside GetExceptionInfo", DebugLogging);
+            string msg = e.GetType() + Environment.NewLine;
+            msg += "   " + e.Message + Environment.NewLine;
             if (e.Data.Count > 0)
             {
                 msg += "Data:\r\n";
@@ -214,41 +222,41 @@ namespace hamqsler
                 	// while there may be an entry in e.Data, the value may be null
                 	if(data.Value != null)
                 	{
-	                    Log("data= " + data, debugLogging);
+	                    Log("data= " + data, DebugLogging);
 	                    DictionaryEntry pair = (DictionaryEntry) data;
 	                    msg += "   " + pair.Key.ToString() + ": " + pair.Value.ToString() + "\r\n";
-	                    Log("datastring= " + msg, debugLogging);
+	                    Log("datastring= " + msg, DebugLogging);
                 	}
                 }
             }
             msg += "Trace:\r\n";
-            Log("Trace", debugLogging);
+            Log("Trace", DebugLogging);
             if (showTrace)
             {
                 string trace = e.StackTrace;
                 if (trace != null)
                 {
-                    Log("Trace= " + trace + "\r", debugLogging);
+                    Log("Trace= " + trace + Environment.NewLine, DebugLogging);
                     int inIndex = trace.IndexOf("in ");
-                    Log("inIndex= " + inIndex, debugLogging);
+                    Log("inIndex= " + inIndex, DebugLogging);
                     if (inIndex != -1)
                     {
-                        msg += trace.Substring(0, inIndex) + "\r\n";
+                        msg += trace.Substring(0, inIndex) + Environment.NewLine;
                         trace = trace.Substring(inIndex);
                         while ((inIndex = trace.IndexOf("in ", 3)) != -1)
                         {
-                            msg += "   " + trace.Substring(0, inIndex) + "\r\n";
+                            msg += "   " + trace.Substring(0, inIndex) + Environment.NewLine;
                             trace = trace.Substring(inIndex);
                         }
                     }
-                    msg += "   " + trace + "\r\n";
+                    msg += "   " + trace + Environment.NewLine;
                 }
             }
             if (e.InnerException != null)
             {
-                msg += "Inner Exception:\r\n";
+                msg += "Inner Exception:" + Environment.NewLine;
                 msg += GetExceptionInfo(e.InnerException, true);
-                msg += "\r\n";
+                msg += Environment.NewLine;
             }
             return msg;
         }
@@ -275,7 +283,7 @@ namespace hamqsler
                     if (firstline)
                     {
                         message += line;
-                        message += 1 == lines.Length ? "\r\n" : "\n";
+                        message += 1 == lines.Length ? Environment.NewLine : "\n";
                         firstline = false;
                     }
                     else
