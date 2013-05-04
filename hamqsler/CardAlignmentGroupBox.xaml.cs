@@ -387,5 +387,96 @@ namespace hamqsler
 			canvas.Children.Add(cardsPath);
 			return canvas;
 		}
+		
+		/// <summary>
+		/// Handler for portraitTopLeftButton Checked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void PortraitTopLeftButton_Checked(object sender, RoutedEventArgs e)
+		{
+			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.PortraitTopLeft;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("Cards layout set to PortraitTopLeft" +
+				               Environment.NewLine);
+			}
+		}
+		
+		/// <summary>
+		/// Handler for portraitTopCenterButton Checked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void PortraitTopCenterButton_Checked(object sender, RoutedEventArgs e)
+		{
+			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.PortraitTopCenter;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("Cards layout set to PortraitTopCenter" +
+				               Environment.NewLine);
+			}
+		}
+		
+		/// <summary>
+		/// Handler for portraitCenterButton Checked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void PortraitCenterButton_Checked(object sender, RoutedEventArgs e)
+		{
+			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.PortraitCenter;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("Cards layout set to PortraitCenter" +
+				               Environment.NewLine);
+			}
+		}
+		
+		/// <summary>
+		/// Handler for landscapeTopLeftButton Checked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void LandscapeTopLeftButton_Checked(object sender, RoutedEventArgs e)
+		{
+			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.LandscapeTopLeft;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("Cards layout set to LandscapeTopLeft" +
+				               Environment.NewLine);
+			}
+		}
+		
+		/// <summary>
+		/// Handler for landscapeTopCenter Checked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void LandscapeTopCenterButton_Checked(object sender, RoutedEventArgs e)
+		{
+			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.LandscapeTopCenter;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("Cards layout set to LandscapeTopCenter" +
+				               Environment.NewLine);
+			}
+		}
+		
+		/// <summary>
+		/// Handler for landscapeCenterButton Checked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void LandscapeCenterButton_Checked(object sender, RoutedEventArgs e)
+		{
+			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.LandscapeCenter;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("Cards layout set to LandscapeCenter" +
+				               Environment.NewLine);
+			}
+		}
+		
 	}
 }
