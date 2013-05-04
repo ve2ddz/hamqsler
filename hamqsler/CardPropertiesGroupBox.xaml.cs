@@ -32,20 +32,18 @@ namespace hamqsler
 	/// <summary>
 	/// Interaction logic for CardPropertiesGroupBox.xaml
 	/// </summary>
-	public partial class CardPropertiesGroupBox : GroupBox
+	public partial class CardPropertiesGroupBox : UserControl
 	{
-		private CardWF qslCard = null;
+		private static readonly DependencyProperty QslCardProperty =
+			DependencyProperty.Register("QslCard", typeof(CardWF), typeof(CardPropertiesGroupBox),
+			                            new PropertyMetadata(null));
 		public CardWF QslCard
 		{
-			get {return qslCard;}
-			set
-			{
-				qslCard = value;
-				printerPropsGroupBox.QslCard = QslCard;
-				printPropsComboBox.QslCard = QslCard;
-				cardAlignmentGroupBox.QslCard = QslCard;
-			}
+			get {return GetValue(QslCardProperty) as CardWF;}
+			set {SetValue(QslCardProperty, value);}
 		}
+		
+		private bool initializing = true;
 		
 		/// <summary>
 		/// Constructor
@@ -53,16 +51,57 @@ namespace hamqsler
 		public CardPropertiesGroupBox()
 		{
 			InitializeComponent();
+			printPropsPanel.printerPropertiesGroupBox.Header = "Default Printer Properties";
+			printPropsPanel.printPropertiesGroupBox.Header = "Default Print Properties";
+			printPropsPanel.cardsLayoutGroupBox.Header = "Default Cards Layout";
+			printPropsPanel.PrintPropertiesChanged += OnPrintPropertiesChanged;
+
 		}
 		
-		private void printerPropertiesGroupBox1_PaperSizePropertyChanged(object sender, EventArgs e)
+		/// <summary>
+		/// Event handler for DependencyProperty Changed event
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
-			cardAlignmentGroupBox.SetCardsLayouts();
+			base.OnPropertyChanged(e);
+			if(e.Property == QslCardProperty)
+			{
+				// pass the print properties on to printPropsPanel
+				initializing = true;
+				printPropsPanel.PrinterName = QslCard.CardPrintProperties.PrinterName;
+				printPropsPanel.PrinterPaperSize = QslCard.CardPrintProperties.PrinterPaperSize;
+				printPropsPanel.Resolution = QslCard.CardPrintProperties.Resolution;
+				printPropsPanel.InsideMargins = QslCard.CardPrintProperties.InsideMargins;
+				printPropsPanel.PrintCardOutlines = QslCard.CardPrintProperties.PrintCardOutlines;
+				printPropsPanel.FillLastPage = QslCard.CardPrintProperties.FillLastPage;
+				printPropsPanel.SetCardMargins = QslCard.CardPrintProperties.SetCardMargins;
+				printPropsPanel.Layout = QslCard.CardPrintProperties.Layout;
+				printPropsPanel.CardWidth = QslCard.Width;
+				printPropsPanel.CardHeight = QslCard.Height;
+				initializing = false;
+			}
 		}
 		
-		void printPropertiesGroupBox1_PrintPropertiesChanged(object sender, EventArgs e)
+		/// <summary>
+		/// Handler for printPropsPanel PrintProperties changed event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnPrintPropertiesChanged(object sender, EventArgs e)
 		{
-			cardAlignmentGroupBox.SetCardsLayouts();
+			if(!initializing)
+			{
+				QslCard.CardPrintProperties.PrinterName = printPropsPanel.PrinterName;
+				QslCard.CardPrintProperties.PrinterPaperSize = printPropsPanel.PrinterPaperSize;
+				QslCard.CardPrintProperties.Resolution = printPropsPanel.Resolution;
+				QslCard.CardPrintProperties.InsideMargins = printPropsPanel.InsideMargins;
+				QslCard.CardPrintProperties.PrintCardOutlines = printPropsPanel.PrintCardOutlines;
+				QslCard.CardPrintProperties.FillLastPage = printPropsPanel.FillLastPage;
+				QslCard.CardPrintProperties.SetCardMargins = printPropsPanel.SetCardMargins;
+				QslCard.CardPrintProperties.Layout = printPropsPanel.Layout;
+			}
 		}
+		
 	}
 }

@@ -69,7 +69,7 @@
 		<local:CardCanvas Grid.Column="0" x:Name="cardCanvas" Background="LightGray" Width="10" Height="10"/>
 		<ScrollViewer Width="250" HorizontalAlignment="Right" Grid.Column="1">
 			<StackPanel>
-				<local:CardPropertiesGroupBox x:Name="cardProperties" Header="Card Properties"
+				<local:CardPropertiesGroupBox x:Name="cardProperties"
 						 Visibility="Collapsed"/>
 				<GroupBox Name="backgroundImageProperties" Header="Background Image Properties"
 						 Visibility="Collapsed">

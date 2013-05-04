@@ -220,7 +220,7 @@ namespace hamqsler
 		private static readonly DependencyProperty CardsLayoutProperty =
 			DependencyProperty.Register("CardsLayout", typeof(PrintProperties.CardLayouts),
 			                            typeof(UserPreferences),
-			                            new PropertyMetadata(PrintProperties.CardLayouts.None));
+			                            new PropertyMetadata(PrintProperties.CardLayouts.LandscapeCenter));
 		public PrintProperties.CardLayouts CardsLayout
 		{
 			get {return (PrintProperties.CardLayouts)GetValue(CardsLayoutProperty);}

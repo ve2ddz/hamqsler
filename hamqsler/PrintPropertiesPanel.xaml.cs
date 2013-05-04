@@ -28,30 +28,115 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
-using RadioButtonImage = System.Windows.Controls.Image;
 
 namespace hamqsler
 {
 	/// <summary>
-	/// CardAlignmentGroupBox class - displays and interacts with QslCard cards layout property
+	/// Interaction logic for PrintPropertiesPanel.xaml
 	/// </summary>
-	public partial class CardAlignmentGroupBox : GroupBox
+	public partial class PrintPropertiesPanel : UserControl
 	{
-		private CardWF qslCard = null;
-		public CardWF QslCard
+		private static readonly DependencyProperty PrinterNameProperty =
+			DependencyProperty.Register("PrinterName", typeof(string), 
+			                            typeof(CardPropertiesGroupBox),
+			                            new PropertyMetadata(string.Empty));
+		public string PrinterName
 		{
-			get {return qslCard;}
-			set
-			{
-				qslCard = value;
-				SetCardsLayouts();
-				SetCardLayout();
-			}
+			get {return GetValue(PrinterNameProperty) as string;}
+			set {SetValue(PrinterNameProperty, value);}
 		}
 		
+		private static readonly DependencyProperty PrinterPaperSizeProperty =
+			DependencyProperty.Register("PrinterPaperSize", typeof(PaperSize),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(null));
+		public PaperSize PrinterPaperSize
+		{
+			get {return GetValue(PrinterPaperSizeProperty) as PaperSize;}
+			set {SetValue(PrinterPaperSizeProperty, value);}
+		}
+		
+		private static readonly DependencyProperty PrinterResolutionProperty =
+			DependencyProperty.Register("Resolution", typeof(PrinterResolution),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(null));
+		public PrinterResolution Resolution
+		{
+			get {return GetValue(PrinterResolutionProperty) as PrinterResolution;}
+			set {SetValue(PrinterResolutionProperty, value);}
+		}
+		
+		private static readonly DependencyProperty InsideMarginsProperty =
+			DependencyProperty.Register("InsideMargins", typeof(bool),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(false));
+		public bool InsideMargins
+		{
+			get {return (bool)GetValue(InsideMarginsProperty);}
+			set {SetValue(InsideMarginsProperty, value);}
+		}
+		
+		private static readonly DependencyProperty PrintCardOutlinesProperty =
+			DependencyProperty.Register("PrintCardOutlines", typeof(bool),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(false));
+		public bool PrintCardOutlines
+		{
+			get {return (bool)GetValue(PrintCardOutlinesProperty);}
+			set {SetValue(PrintCardOutlinesProperty, value);}
+		}
+		
+		private static readonly DependencyProperty FillLastPageProperty =
+			DependencyProperty.Register("FillLastPage", typeof(bool),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(false));
+		public bool FillLastPage
+		{
+			get {return (bool)GetValue(FillLastPageProperty);}
+			set {SetValue(FillLastPageProperty, value);}
+		}
+		
+		private static readonly DependencyProperty SetCardMarginsProperty =
+			DependencyProperty.Register("SetCardMargins", typeof(bool),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(false));
+		public bool SetCardMargins
+		{
+			get {return(bool) GetValue(SetCardMarginsProperty);}
+			set {SetValue(SetCardMarginsProperty, value);}
+		}
+		
+		private static readonly DependencyProperty LayoutProperty =
+			DependencyProperty.Register("Layout", typeof(PrintProperties.CardLayouts),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(PrintProperties.CardLayouts.None));
+		public PrintProperties.CardLayouts Layout
+		{
+			get {return (PrintProperties.CardLayouts)GetValue(LayoutProperty);}
+			set {SetValue(LayoutProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CardWidthProperty =
+			DependencyProperty.Register("CardWidth", typeof(int), 
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(1));
+		public int CardWidth
+		{
+			get {return (int)GetValue(CardWidthProperty);}
+			set {SetValue(CardWidthProperty, value);}
+		}
+		
+		private static readonly DependencyProperty CardHeightProperty =
+			DependencyProperty.Register("CardHeight", typeof(int),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(1));
+		public int CardHeight
+		{
+			get {return (int)GetValue(CardHeightProperty);}
+			set {SetValue(CardHeightProperty, value);}
+		}
+
 		private const int MAXMARGIN = 25;
 		// size of the paper in the radio button images is SCALEFACTOR/SCALEDPAGESZIE
 		private const int SCALEFACTOR = 10000;
@@ -67,14 +152,202 @@ namespace hamqsler
 		private int landscapeCardsHigh = 0;
 		private int scaleFactor = 0;
 		
-		private PrinterSettings settings;
-
+		private PrinterSettings settings;		// delegate and event handler for Properties changed
+		public delegate void PrintPropertiesChangedEventHandler(
+			object sender, EventArgs e);
+		public event PrintPropertiesChangedEventHandler PrintPropertiesChanged;
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public CardAlignmentGroupBox()
+		public PrintPropertiesPanel()
 		{
 			InitializeComponent();
+			DataContext = this;
+			LoadInstalledPrinterNames();
+		}
+		
+		/// <summary>
+		/// Load printerComboBox with the list of installed printers
+		/// </summary>
+		private void LoadInstalledPrinterNames()
+		{
+			// initialize printerComboBox with the list of installed printers
+			foreach(string printer in PrinterSettings.InstalledPrinters)
+			{
+				printerComboBox.Items.Add(printer);
+			}
+		}
+		
+		/// <summary>
+		/// Processes DependencyProperty changes
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == PrinterNameProperty)
+			{
+				insideMarginsButton.IsEnabled = true;
+				PrinterSettings settings = new PrinterSettings();
+				settings.PrinterName = PrinterName;
+				SetPaperSizes(settings);
+				SetResolutions(settings);
+			}
+			else if(e.Property == PrinterPaperSizeProperty)
+			{
+				SetCardsLayouts();
+			}
+			else if(e.Property == InsideMarginsProperty)
+			{
+				SetCardsLayouts();
+			}
+			else if(e.Property == CardWidthProperty)
+			{
+				SetCardsLayouts();
+			}
+			else if(e.Property == CardHeightProperty)
+			{
+				SetCardsLayouts();
+			}
+			else if(e.Property == LayoutProperty)
+			{
+				SetCardLayout();
+			}
+			if(e.Property == PrinterNameProperty ||
+			   e.Property == PrinterPaperSizeProperty ||
+			   e.Property == PrinterResolutionProperty ||
+			   e.Property == InsideMarginsProperty ||
+			   e.Property == PrintCardOutlinesProperty ||
+			   e.Property == FillLastPageProperty ||
+			   e.Property == SetCardMarginsProperty ||
+			   e.Property == LayoutProperty)
+			{
+				if(PrintPropertiesChanged != null)
+				{
+					PrintPropertiesChanged(this, new EventArgs());
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Populate paperSizeComboBox with the list of PaperSizes for the selected printer
+		/// and select the PrinterPaperSize, or the default paper size for the printer if
+		/// PrinterPaperSize is not valid for the selected printer
+		/// </summary>
+		/// <param name="settings">PrinterSettings object for the selected printer</param>
+		private void SetPaperSizes(PrinterSettings settings)
+		{
+			paperSizeComboBox.Items.Clear();
+			foreach(PaperSize size in settings.PaperSizes)
+			{
+				paperSizeComboBox.Items.Add(size.PaperName);
+			}
+			if(PrinterPaperSize != null)
+			{
+				paperSizeComboBox.SelectedItem = PrinterPaperSize.PaperName;
+			}
+			if(paperSizeComboBox.SelectedIndex == -1)
+			{
+				paperSizeComboBox.SelectedItem = settings.DefaultPageSettings.PaperSize.PaperName;
+			}
+		}
+		
+		/// <summary>
+		/// Handles paperSizeComboBox SelectionChanged event processing.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e"SelectionChangedEventArgs object</param>
+		void PaperSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			PrinterSettings settings = new PrinterSettings();
+			settings.PrinterName = PrinterName;
+			if(e.AddedItems.Count > 0)
+			{
+				foreach(PaperSize size in settings.PaperSizes)
+				{
+					if(size.PaperName.Equals(e.AddedItems[0]))
+					{
+						PrinterPaperSize = size;
+						if(App.Logger.DebugPrinting)
+						{
+							App.Logger.Log("PaperSizeComboBox_SelectionChanged:" +
+							               Environment.NewLine +
+							               "PaperSize changed to " + PrinterPaperSize +
+							               Environment.NewLine);
+						}
+						break;
+					}
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Populate qualityComboBox with list of PrinterResolutions that are valid for the selected
+		/// printer and select the PrinterResolution, or default resolution  if PrinterResolution 
+		/// is not valid for the selected printer.
+		/// </summary>
+		/// <param name="settings">PrinterSettings object for the selected printer</param>
+		private void SetResolutions(PrinterSettings settings)
+		{
+			qualityComboBox.Items.Clear();
+			foreach(PrinterResolution res in settings.PrinterResolutions)
+			{
+				qualityComboBox.Items.Add(ResolutionString(res));
+			}
+			if(Resolution != null)
+			{
+				qualityComboBox.SelectedItem = ResolutionString(Resolution);
+			}
+			if(qualityComboBox.SelectedIndex == -1)
+			{
+				qualityComboBox.SelectedItem = 
+					ResolutionString(settings.DefaultPageSettings.PrinterResolution);
+			}
+		}
+
+		/// <summary>
+		/// Helper method that creates string representation of the PrinterResolution
+		/// </summary>
+		/// <param name="res">PrinterResolution object to create string representation of</param>
+		/// <returns>String containing resolution</returns>
+		private string ResolutionString(PrinterResolution res)
+		{
+			string resolution = res.Kind.ToString();
+			if (resolution.Equals("Custom")) 
+			{
+				resolution = string.Format("{0} ({1} x {2})", res.Kind, res.X, res.Y);
+			}
+			return resolution;
+		}
+		
+		/// <summary>
+		/// Handler for qualityComboBox SelectionChanged event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">SelectionChangedEventArgs object</param>
+		void QualityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			PrinterSettings settings = new PrinterSettings();
+			settings.PrinterName = PrinterName;
+			if(e.AddedItems.Count > 0)
+			{
+				foreach(PrinterResolution res in settings.PrinterResolutions)
+				{
+					if(e.AddedItems[0].Equals(ResolutionString(res)))
+					{
+						Resolution = res;
+						if(App.Logger.DebugPrinting)
+						{
+							App.Logger.Log("QualityComboBox_SelectionChanged:" +
+							               Environment.NewLine +
+							               "Resolution changed to " + ResolutionString(Resolution) +
+							               Environment.NewLine);
+						}
+						break;
+					}
+				}
+			}
 		}
 		
 		/// <summary>
@@ -84,25 +357,18 @@ namespace hamqsler
 		private void SetCardLayout()
 		{
 			portraitTopLeftButton.IsChecked = 
-				(QslCard.CardPrintProperties.Layout == 
-				 PrintProperties.CardLayouts.PortraitTopLeft);
+				(Layout ==  PrintProperties.CardLayouts.PortraitTopLeft);
 			portraitTopCenterButton.IsChecked = 
-				(QslCard.CardPrintProperties.Layout == 
-				 PrintProperties.CardLayouts.PortraitTopCenter);
+				(Layout == PrintProperties.CardLayouts.PortraitTopCenter);
 			portraitCenterButton.IsChecked = 
-				(QslCard.CardPrintProperties.Layout == 
-				 PrintProperties.CardLayouts.PortraitCenter);
+				(Layout == PrintProperties.CardLayouts.PortraitCenter);
 			landscapeTopLeftButton.IsChecked = 
-				(QslCard.CardPrintProperties.Layout ==
-				 PrintProperties.CardLayouts.LandscapeTopLeft);
+				(Layout == PrintProperties.CardLayouts.LandscapeTopLeft);
 			landscapeTopCenterButton.IsChecked = 
-				(QslCard.CardPrintProperties.Layout ==
-				 PrintProperties.CardLayouts.LandscapeTopCenter);
+				(Layout == PrintProperties.CardLayouts.LandscapeTopCenter);
 			landscapeCenterButton.IsChecked = 
-				(QslCard.CardPrintProperties.Layout ==
-				 PrintProperties.CardLayouts.LandscapeCenter) ||
-				(QslCard.CardPrintProperties.Layout ==
-				 PrintProperties.CardLayouts.None);
+				(Layout == PrintProperties.CardLayouts.LandscapeCenter) ||
+				(Layout == PrintProperties.CardLayouts.None);
 		}
 		
 		/// <summary>
@@ -110,19 +376,17 @@ namespace hamqsler
 		/// </summary>
 		public void SetCardsLayouts()
 		{
-			if(QslCard != null)
+			if(PrinterPaperSize != null && CardWidth != 1 && CardHeight != 1)
 			{
 				CalculateScaledPaperAndCardSizes();
 				settings = new PrinterSettings();
-				settings.PrinterName = QslCard.CardPrintProperties.PrinterName;
-				settings.DefaultPageSettings.PaperSize =
-					QslCard.CardPrintProperties.PrinterPaperSize;
-				settings.DefaultPageSettings.PrinterResolution =
-					QslCard.CardPrintProperties.Resolution;
+				settings.PrinterName = PrinterName;
+				settings.DefaultPageSettings.PaperSize = PrinterPaperSize;
+				settings.DefaultPageSettings.PrinterResolution = Resolution;
 				// if the page margins are greater than ¼ inch, then force InsideMargins
 				// to be set
 				RectangleF area = settings.DefaultPageSettings.PrintableArea;
-				bool insideMargins = QslCard.CardPrintProperties.InsideMargins;
+				bool insideMargins = InsideMargins;
 				if(App.Logger.DebugPrinting)
 				{
 					string info = 
@@ -134,29 +398,30 @@ namespace hamqsler
 					              Environment.NewLine +
 					              "\tInsideMargins original value = {6}" +
 					              Environment.NewLine,
-					              QslCard.CardPrintProperties.PrinterPaperSize.Width,
-					              QslCard.CardPrintProperties.PrinterPaperSize.Height,
+					              PrinterPaperSize.Width,
+					              PrinterPaperSize.Height,
 					              area.Left, area.Top, area.Width, area.Height,
 					             insideMargins);
 					App.Logger.Log(info);
 				}
-				QslCard.CardPrintProperties.InsideMargins = 
-				QslCard.CardPrintProperties.InsideMargins ||
+				InsideMargins = InsideMargins ||
 				area.X > MAXMARGIN ||
 				settings.DefaultPageSettings.PaperSize.Width - area.X -
 				area.Width > MAXMARGIN ||
 				area.Y > MAXMARGIN ||
 				settings.DefaultPageSettings.PaperSize.Height - area.Y -
 				area.Height > MAXMARGIN;
-				if(App.Logger.DebugPrinting && 
-				   insideMargins != QslCard.CardPrintProperties.InsideMargins)
+				if(insideMargins != InsideMargins)
 				{
-					App.Logger.Log(string.Format("CardAlignmentGroupBox.SetCardsLayouts:" +
-					              Environment.NewLine +
-					              "\tInsideMargins changed to {0}" +
-					              Environment.NewLine,
-					              QslCard.CardPrintProperties.InsideMargins));
-					              
+					insideMarginsButton.IsEnabled = false;
+					if(App.Logger.DebugPrinting)
+					{
+						App.Logger.Log(string.Format("CardAlignmentGroupBox.SetCardsLayouts:" +
+						              Environment.NewLine +
+						              "\tInsideMargins changed to {0}" +
+						              Environment.NewLine,
+						              InsideMargins));
+					}
 				}
 				// determine the number of cards that can be printed on portrait
 				// and landscape pages
@@ -174,13 +439,13 @@ namespace hamqsler
 		/// </summary>
 		private void CalculateScaledPaperAndCardSizes()
 		{
-			int pageWidth = QslCard.CardPrintProperties.PrinterPaperSize.Width;
-			int pageHeight = QslCard.CardPrintProperties.PrinterPaperSize.Height;
+			int pageWidth = PrinterPaperSize.Width;
+			int pageHeight = PrinterPaperSize.Height;
 			scaleFactor = SCALEFACTOR / pageHeight;
 			scaledPageWidth = (pageWidth * scaleFactor) / SCALEDPAGESIZE;
 			scaledPageHeight = (pageHeight * scaleFactor) / SCALEDPAGESIZE;
-			scaledCardWidth = (QslCard.Width * scaleFactor) / SCALEDPAGESIZE;
-			scaledCardHeight = (QslCard.Height * scaleFactor) / SCALEDPAGESIZE;
+			scaledCardWidth = (CardWidth * scaleFactor) / SCALEDPAGESIZE;
+			scaledCardHeight = (CardHeight * scaleFactor) / SCALEDPAGESIZE;
 			if(App.Logger.DebugPrinting)
 			{
 				string info =
@@ -204,16 +469,16 @@ namespace hamqsler
 		/// </summary>
 		private void CalculateCardsPerPortraitPage()
 		{
-			int pageWidth = QslCard.CardPrintProperties.PrinterPaperSize.Width;
-			int pageHeight = QslCard.CardPrintProperties.PrinterPaperSize.Height;
-			if(QslCard.CardPrintProperties.InsideMargins)
+			int pageWidth = PrinterPaperSize.Width;
+			int pageHeight = PrinterPaperSize.Height;
+			if(InsideMargins)
 			{
 				RectangleF area = settings.DefaultPageSettings.PrintableArea;
 				pageWidth = (int)(area.Width - area.Left);
 				pageHeight = (int)(area.Height - area.Top);
 			}
-			portraitCardsWide = pageWidth / QslCard.Width;
-			portraitCardsHigh = pageHeight / QslCard.Height;
+			portraitCardsWide = pageWidth / CardWidth;
+			portraitCardsHigh = pageHeight / CardHeight;
 			if(App.Logger.DebugPrinting)
 			{
 				string info = 
@@ -229,9 +494,9 @@ namespace hamqsler
 					              Environment.NewLine +
 					              "\tPortrait cards high = {5}" +
 					              Environment.NewLine,
-					              pageWidth, pageHeight, QslCard.Width, QslCard.Height,
+					              pageWidth, pageHeight, CardWidth, CardHeight,
 					              portraitCardsWide, portraitCardsHigh,
-					              QslCard.CardPrintProperties.InsideMargins);
+					              InsideMargins);
 				App.Logger.Log(info);
 			}
 		}
@@ -242,16 +507,16 @@ namespace hamqsler
 		/// </summary>
 		private void CalculateCardsPerLandscapePage()
 		{
-			int pageWidth = QslCard.CardPrintProperties.PrinterPaperSize.Height;
-			int pageHeight = QslCard.CardPrintProperties.PrinterPaperSize.Width;
-			if(QslCard.CardPrintProperties.InsideMargins)
+			int pageWidth = PrinterPaperSize.Height;
+			int pageHeight = PrinterPaperSize.Width;
+			if(InsideMargins)
 			{
 				RectangleF area = settings.DefaultPageSettings.PrintableArea;
 				pageWidth = (int)(area.Height - area.Top);
 				pageHeight = (int)(area.Width - area.Left);
 			}
-			landscapeCardsWide = pageWidth / QslCard.Width;
-			landscapeCardsHigh = pageHeight / QslCard.Height;
+			landscapeCardsWide = pageWidth / CardWidth;
+			landscapeCardsHigh = pageHeight / CardHeight;
 			if(App.Logger.DebugPrinting)
 			{
 				string info = 
@@ -267,9 +532,9 @@ namespace hamqsler
 					              Environment.NewLine +
 					              "\tLandscape cards high = {5}" +
 					              Environment.NewLine,
-					              pageWidth, pageHeight, QslCard.Width, QslCard.Height,
+					              pageWidth, pageHeight, CardWidth, CardHeight,
 					              landscapeCardsWide, landscapeCardsHigh,
-					              QslCard.CardPrintProperties.InsideMargins);
+					              InsideMargins);
 				App.Logger.Log(info);
 			}
 		}
@@ -282,7 +547,7 @@ namespace hamqsler
 			RectangleF area = settings.DefaultPageSettings.PrintableArea;
 			int leftOffset = 0;
 			int topOffset = 0;
-			if(QslCard.CardPrintProperties.InsideMargins)
+			if(InsideMargins)
 			{
 				leftOffset = (int)area.Left / scaleFactor;
 				topOffset = (int)area.Top / scaleFactor;				
@@ -292,7 +557,7 @@ namespace hamqsler
 				                 portraitCardsWide, portraitCardsHigh);
 			
 			leftOffset = (scaledPageWidth - scaledCardWidth * portraitCardsWide) / 2;
-			if(QslCard.CardPrintProperties.InsideMargins &&
+			if(InsideMargins &&
 			   leftOffset < (MAXMARGIN / scaleFactor))
 			{
 				leftOffset = (MAXMARGIN / scaleFactor);
@@ -301,7 +566,7 @@ namespace hamqsler
 				CreateButtonImage(scaledPageWidth, scaledPageHeight, leftOffset, topOffset,
 				                 portraitCardsWide, portraitCardsHigh);
 			topOffset = (scaledPageHeight - scaledCardHeight * portraitCardsHigh) / 2;
-			if(QslCard.CardPrintProperties.InsideMargins &&
+			if(InsideMargins &&
 			   topOffset < (MAXMARGIN / scaleFactor))
 			{
 				topOffset = (MAXMARGIN / scaleFactor);
@@ -319,7 +584,7 @@ namespace hamqsler
 			RectangleF area = settings.DefaultPageSettings.PrintableArea;
 			int leftOffset = 0;
 			int topOffset = 0;
-			if(QslCard.CardPrintProperties.InsideMargins)
+			if(InsideMargins)
 			{
 				leftOffset = (int)area.Top / scaleFactor;
 				topOffset = (int)area.Left / scaleFactor;
@@ -328,7 +593,7 @@ namespace hamqsler
 				CreateButtonImage(scaledPageHeight, scaledPageWidth, leftOffset, topOffset,
 				                 landscapeCardsWide, landscapeCardsHigh);
 			leftOffset = (scaledPageHeight - scaledCardWidth * landscapeCardsWide) / 2;
-			if(QslCard.CardPrintProperties.InsideMargins &&
+			if(InsideMargins &&
 			   leftOffset < MAXMARGIN / scaleFactor)
 			{
 				leftOffset = MAXMARGIN / scaleFactor;
@@ -337,7 +602,7 @@ namespace hamqsler
 				CreateButtonImage(scaledPageHeight, scaledPageWidth, leftOffset, topOffset,
 				                 landscapeCardsWide, landscapeCardsHigh);
 			topOffset = (scaledPageWidth - scaledCardHeight * landscapeCardsHigh) / 2;
-			if(QslCard.CardPrintProperties.InsideMargins &&
+			if(InsideMargins &&
 			   topOffset < MAXMARGIN / scaleFactor)
 			{
 				topOffset = MAXMARGIN / scaleFactor;
@@ -387,7 +652,7 @@ namespace hamqsler
 			canvas.Children.Add(cardsPath);
 			return canvas;
 		}
-		
+
 		/// <summary>
 		/// Handler for portraitTopLeftButton Checked event
 		/// </summary>
@@ -395,7 +660,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void PortraitTopLeftButton_Checked(object sender, RoutedEventArgs e)
 		{
-			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.PortraitTopLeft;
+			Layout = PrintProperties.CardLayouts.PortraitTopLeft;
 			if(App.Logger.DebugPrinting)
 			{
 				App.Logger.Log("Cards layout set to PortraitTopLeft" +
@@ -410,7 +675,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void PortraitTopCenterButton_Checked(object sender, RoutedEventArgs e)
 		{
-			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.PortraitTopCenter;
+			Layout = PrintProperties.CardLayouts.PortraitTopCenter;
 			if(App.Logger.DebugPrinting)
 			{
 				App.Logger.Log("Cards layout set to PortraitTopCenter" +
@@ -425,7 +690,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void PortraitCenterButton_Checked(object sender, RoutedEventArgs e)
 		{
-			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.PortraitCenter;
+			Layout = PrintProperties.CardLayouts.PortraitCenter;
 			if(App.Logger.DebugPrinting)
 			{
 				App.Logger.Log("Cards layout set to PortraitCenter" +
@@ -440,7 +705,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LandscapeTopLeftButton_Checked(object sender, RoutedEventArgs e)
 		{
-			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.LandscapeTopLeft;
+			Layout = PrintProperties.CardLayouts.LandscapeTopLeft;
 			if(App.Logger.DebugPrinting)
 			{
 				App.Logger.Log("Cards layout set to LandscapeTopLeft" +
@@ -455,7 +720,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LandscapeTopCenterButton_Checked(object sender, RoutedEventArgs e)
 		{
-			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.LandscapeTopCenter;
+			Layout = PrintProperties.CardLayouts.LandscapeTopCenter;
 			if(App.Logger.DebugPrinting)
 			{
 				App.Logger.Log("Cards layout set to LandscapeTopCenter" +
@@ -470,13 +735,12 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LandscapeCenterButton_Checked(object sender, RoutedEventArgs e)
 		{
-			QslCard.CardPrintProperties.Layout = PrintProperties.CardLayouts.LandscapeCenter;
+			Layout = PrintProperties.CardLayouts.LandscapeCenter;
 			if(App.Logger.DebugPrinting)
 			{
 				App.Logger.Log("Cards layout set to LandscapeCenter" +
 				               Environment.NewLine);
 			}
 		}
-		
 	}
 }
