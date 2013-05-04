@@ -83,12 +83,26 @@ namespace hamqsler
 		/// </summary>
 		private void SetCardLayout()
 		{
-			switch(QslCard.CardPrintProperties.Layout)
-			{
-				case PrintProperties.CardLayouts.PortraitTopLeft:
-					portraitTopLeftButton.IsChecked = true;
-					break;
-			}
+			portraitTopLeftButton.IsChecked = 
+				(QslCard.CardPrintProperties.Layout == 
+				 PrintProperties.CardLayouts.PortraitTopLeft);
+			portraitTopCenterButton.IsChecked = 
+				(QslCard.CardPrintProperties.Layout == 
+				 PrintProperties.CardLayouts.PortraitTopCenter);
+			portraitCenterButton.IsChecked = 
+				(QslCard.CardPrintProperties.Layout == 
+				 PrintProperties.CardLayouts.PortraitCenter);
+			landscapeTopLeftButton.IsChecked = 
+				(QslCard.CardPrintProperties.Layout ==
+				 PrintProperties.CardLayouts.LandscapeTopLeft);
+			landscapeTopCenterButton.IsChecked = 
+				(QslCard.CardPrintProperties.Layout ==
+				 PrintProperties.CardLayouts.LandscapeTopCenter);
+			landscapeCenterButton.IsChecked = 
+				(QslCard.CardPrintProperties.Layout ==
+				 PrintProperties.CardLayouts.LandscapeCenter) ||
+				(QslCard.CardPrintProperties.Layout ==
+				 PrintProperties.CardLayouts.None);
 		}
 		
 		/// <summary>
@@ -108,14 +122,42 @@ namespace hamqsler
 				// if the page margins are greater than ¼ inch, then force InsideMargins
 				// to be set
 				RectangleF area = settings.DefaultPageSettings.PrintableArea;
+				bool insideMargins = QslCard.CardPrintProperties.InsideMargins;
+				if(App.Logger.DebugPrinting)
+				{
+					string info = 
+						string.Format("CardAlignmentGroupBox.SetCardsLayouts:" +
+					              Environment.NewLine +
+					              "\tPapersize = {0} x {1}" +
+					              Environment.NewLine +
+					              "\tPrintableArea = {2}, {3}: {4} x {5}" +
+					              Environment.NewLine +
+					              "\tInsideMargins original value = {6}" +
+					              Environment.NewLine,
+					              QslCard.CardPrintProperties.PrinterPaperSize.Width,
+					              QslCard.CardPrintProperties.PrinterPaperSize.Height,
+					              area.Left, area.Top, area.Width, area.Height,
+					             insideMargins);
+					App.Logger.Log(info);
+				}
 				QslCard.CardPrintProperties.InsideMargins = 
-					QslCard.CardPrintProperties.InsideMargins ||
-					area.X > MAXMARGIN ||
-					settings.DefaultPageSettings.PaperSize.Width - area.X -
-					area.Width > MAXMARGIN ||
-					area.Y > MAXMARGIN ||
-					settings.DefaultPageSettings.PaperSize.Height - area.Y -
-					area.Height > MAXMARGIN;
+				QslCard.CardPrintProperties.InsideMargins ||
+				area.X > MAXMARGIN ||
+				settings.DefaultPageSettings.PaperSize.Width - area.X -
+				area.Width > MAXMARGIN ||
+				area.Y > MAXMARGIN ||
+				settings.DefaultPageSettings.PaperSize.Height - area.Y -
+				area.Height > MAXMARGIN;
+				if(App.Logger.DebugPrinting && 
+				   insideMargins != QslCard.CardPrintProperties.InsideMargins)
+				{
+					App.Logger.Log(string.Format("CardAlignmentGroupBox.SetCardsLayouts:" +
+					              Environment.NewLine +
+					              "\tInsideMargins changed to {0}" +
+					              Environment.NewLine,
+					              QslCard.CardPrintProperties.InsideMargins));
+					              
+				}
 				// determine the number of cards that can be printed on portrait
 				// and landscape pages
 				CalculateCardsPerPortraitPage();
@@ -138,7 +180,22 @@ namespace hamqsler
 			scaledPageWidth = (pageWidth * scaleFactor) / SCALEDPAGESIZE;
 			scaledPageHeight = (pageHeight * scaleFactor) / SCALEDPAGESIZE;
 			scaledCardWidth = (QslCard.Width * scaleFactor) / SCALEDPAGESIZE;
-			scaledCardHeight = (QslCard.Height * scaleFactor) / SCALEDPAGESIZE;			
+			scaledCardHeight = (QslCard.Height * scaleFactor) / SCALEDPAGESIZE;
+			if(App.Logger.DebugPrinting)
+			{
+				string info =
+					string.Format("CardAlignmentGroupBox.CalculateScaledPaperAndCardSizes:" +
+					              Environment.NewLine +
+					              "\tscaledPage size = {0} x {1}" +
+					              Environment.NewLine +
+					              "\tscaledCard size = {2} x {3}" +
+					              Environment.NewLine +
+					              "\tscaleFactor = {4}" +
+					              Environment.NewLine,
+					              scaledPageWidth, scaledPageHeight,
+					              scaledCardWidth, scaledCardHeight, scaleFactor);
+				App.Logger.Log(info);
+			}
 		}
 		
 		/// <summary>
@@ -156,7 +213,27 @@ namespace hamqsler
 				pageHeight = (int)(area.Height - area.Top);
 			}
 			portraitCardsWide = pageWidth / QslCard.Width;
-			portraitCardsHigh = pageHeight / QslCard.Height; 
+			portraitCardsHigh = pageHeight / QslCard.Height;
+			if(App.Logger.DebugPrinting)
+			{
+				string info = 
+					string.Format("CardAlignmentGroupBox.CalculateCardsPerPortraitPage:" +
+					              Environment.NewLine +
+					              "\tInside Margins = {6}" +
+					              Environment.NewLine +
+					              "\tPage Size = {0} x {1}" +
+					              Environment.NewLine +
+					              "\tCard Size = {2} x {3}" +
+					              Environment.NewLine +
+					              "\tPortrait cards wide = {4}" +
+					              Environment.NewLine +
+					              "\tPortrait cards high = {5}" +
+					              Environment.NewLine,
+					              pageWidth, pageHeight, QslCard.Width, QslCard.Height,
+					              portraitCardsWide, portraitCardsHigh,
+					              QslCard.CardPrintProperties.InsideMargins);
+				App.Logger.Log(info);
+			}
 		}
 		
 		/// <summary>
@@ -175,6 +252,26 @@ namespace hamqsler
 			}
 			landscapeCardsWide = pageWidth / QslCard.Width;
 			landscapeCardsHigh = pageHeight / QslCard.Height;
+			if(App.Logger.DebugPrinting)
+			{
+				string info = 
+					string.Format("CardAlignmentGroupBox.CalculateCardsPerLandscapePage:" +
+					              Environment.NewLine +
+					              "\tInside Margins = {6}" +
+					              Environment.NewLine +
+					              "\tPage Size = {0} x {1}" +
+					              Environment.NewLine +
+					              "\tCard Size = {2} x {3}" +
+					              Environment.NewLine +
+					              "\tLandscape cards wide = {4}" +
+					              Environment.NewLine +
+					              "\tLandscape cards high = {5}" +
+					              Environment.NewLine,
+					              pageWidth, pageHeight, QslCard.Width, QslCard.Height,
+					              landscapeCardsWide, landscapeCardsHigh,
+					              QslCard.CardPrintProperties.InsideMargins);
+				App.Logger.Log(info);
+			}
 		}
 		
 		/// <summary>

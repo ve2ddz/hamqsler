@@ -71,11 +71,30 @@ namespace hamqsler
 		/// </summary>
 		private void SetDefaultPrinter()
 		{
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("PrinterPropertiesGroupBox.SetDefaultPrinter:" +
+			               Environment.NewLine +
+			               "\tAttempting to set printer from Card.PrintProperties:" +
+			               Environment.NewLine +
+			               "\t" + QslCard.CardPrintProperties.PrinterName +
+			               Environment.NewLine);
+			}
 			printerComboBox.SelectedItem = QslCard.CardPrintProperties.PrinterName;
 			if(printerComboBox.SelectedIndex == -1)
 			{
 				PrinterSettings settings = new PrinterSettings();
 				printerComboBox.SelectedItem = settings.PrinterName;
+				if(App.Logger.DebugPrinting)
+				{
+					App.Logger.Log("PrinterPropertiesGroupBox.SetDefaultPrinter:" +
+				               Environment.NewLine +
+				               "\tCould not set printer from Card.PrintProperties, " +
+				               "so setting computer system default printer:" +
+				               Environment.NewLine +
+				               "\t" + QslCard.CardPrintProperties.PrinterName +
+				               Environment.NewLine);
+				}
 			}
 		}
 
@@ -91,6 +110,13 @@ namespace hamqsler
 			{
 				// save the selected printer name
 				QslCard.CardPrintProperties.PrinterName = printerComboBox.SelectedItem.ToString();
+				if(App.Logger.DebugPrinting)
+				{
+					App.Logger.Log("PrinterComboBox_SelectionChanged:" + Environment.NewLine +
+						           "\tSelectedPrinter: " + 
+						           QslCard.CardPrintProperties.PrinterName + 
+						           Environment.NewLine);
+				}
 				PrinterSettings settings = new PrinterSettings();
 				settings.PrinterName = QslCard.CardPrintProperties.PrinterName;
 				// get list of paper sizes for this printer and initialize
@@ -102,9 +128,23 @@ namespace hamqsler
 				}
 				// set selected paper size to card default, or printer default if card
 				// default size is not available on this printer
+				if(App.Logger.DebugPrinting)
+				{
+					App.Logger.Log("PrinterComboBox_SelectionChanged:" + Environment.NewLine +
+					               "\tAttempting to set PaperSize to " +
+					               QslCard.CardPrintProperties.PrinterPaperSize +
+					               Environment.NewLine);
+				}
 				paperSizeComboBox.SelectedItem = QslCard.CardPrintProperties.PrinterPaperSize;
 				if(paperSizeComboBox.SelectedIndex == -1)
 				{
+					if(App.Logger.DebugPrinting)
+					{
+						App.Logger.Log("PrinterComboBox_SelectionChanged:" + Environment.NewLine +
+						               "\tSetting PaperSize to printer default size: " +
+						               settings.DefaultPageSettings.PaperSize.PaperName +
+						               Environment.NewLine);
+					}
 					paperSizeComboBox.SelectedItem =
 						settings.DefaultPageSettings.PaperSize.PaperName;
 				}
@@ -117,10 +157,24 @@ namespace hamqsler
 				}
 				// set selected resolution to card default, or printer default if card
 				// default resolution is not available on this printer
+				if(App.Logger.DebugPrinting)
+				{
+					App.Logger.Log("PrinterComboBox_SelectionChanged:" + Environment.NewLine +
+					               "\tAttempting to set Resolution to " +
+					               ResolutionString(QslCard.CardPrintProperties.Resolution) +
+					               Environment.NewLine);
+				}
 				qualityComboBox.SelectedItem = ResolutionString(
 					QslCard.CardPrintProperties.Resolution);
 				if(qualityComboBox.SelectedIndex == -1)
 				{
+					if(App.Logger.DebugPrinting)
+					{
+						App.Logger.Log("PrinterComboBox_SelectionChanged:" + Environment.NewLine +
+						               "\tSetting Resolution to printer default: " +
+						               ResolutionString(settings.DefaultPageSettings.PrinterResolution) +
+						               Environment.NewLine);
+					}
 					qualityComboBox.SelectedItem = ResolutionString(
 						settings.DefaultPageSettings.PrinterResolution);
 				}
@@ -160,6 +214,13 @@ namespace hamqsler
 					{
 						// found, so set PaperSize property
 						QslCard.CardPrintProperties.PrinterPaperSize = size;
+						if(App.Logger.DebugPrinting)
+						{
+							App.Logger.Log("PaperSizeComboBox_SelectionChanged: "
+							               + Environment.NewLine +
+							               "\tPaperSize selected is " +
+							               size.PaperName + Environment.NewLine);
+						}
 						break;
 					}
 				}
@@ -189,6 +250,14 @@ namespace hamqsler
 				    {
 				   		 // found match, so set Resolution property
 				   		 QslCard.CardPrintProperties.Resolution = res;
+				   		 if(App.Logger.DebugPrinting)
+				   		 {
+				   		 	App.Logger.Log("QualityComboBox_SelectionChanged:" +
+				   		 	               Environment.NewLine +
+				   		 	               "\tResolution selected = " +
+				   		 	               ResolutionString(res) +
+				   		 	               Environment.NewLine);
+				   		 }
 				   		 break;
 				    }
 				}

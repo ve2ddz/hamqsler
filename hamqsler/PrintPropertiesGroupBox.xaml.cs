@@ -46,6 +46,19 @@ namespace hamqsler
 				printCardOutlinesButton.IsChecked = QslCard.CardPrintProperties.PrintCardOutlines;
 				fillLastPageButton.IsChecked = QslCard.CardPrintProperties.FillLastPage;
 				setCardMarginsButton.IsChecked = QslCard.CardPrintProperties.SetCardMargins;
+				if(App.Logger.DebugPrinting)
+				{
+					string info = string.Format(
+						"PrintPropertiesGroupBox_SetQslCard:" + Environment.NewLine +
+					    "Initial Values:" + Environment.NewLine +
+					    "\tInside Margins = {0}" +Environment.NewLine +
+					    "\tPrintCardOutlines = {1}" + Environment.NewLine +
+					    "\tFillLastPage = {2}" + Environment.NewLine +
+					    "\tSetCardMargins = {3}" + Environment.NewLine,
+					    insideMarginsButton.IsChecked, printCardOutlinesButton.IsChecked,
+					    fillLastPageButton.IsChecked, setCardMarginsButton.IsChecked);
+					App.Logger.Log(info);
+				}
 				Initializing = false;
 			}
 		}
@@ -80,6 +93,14 @@ namespace hamqsler
 			// set InsideMargins property
 			QslCard.CardPrintProperties.InsideMargins = 
 				(bool)insideMarginsButton.IsChecked;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("InsideMarginsButton_CheckedChanged: " +
+				               Environment.NewLine +
+				               "\tInside Margins set to " +
+				               QslCard.CardPrintProperties.InsideMargins +
+				               Environment.NewLine);
+			}
 			// raise PrintPropertiesChanged event
 			if(PrintPropertiesChanged != null && !Initializing)
 			{
@@ -97,6 +118,14 @@ namespace hamqsler
 			// set PrintCardOutlines property
 			QslCard.CardPrintProperties.PrintCardOutlines = 
 				(bool)printCardOutlinesButton.IsChecked;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("PrintCardOutlinesButton_CheckedChanged: " +
+				               Environment.NewLine +
+				               "\tPrintCardOutlines set to " +
+				               QslCard.CardPrintProperties.PrintCardOutlines +
+				               Environment.NewLine);
+			}
 			// raise PrintPropertiesChanged event
 			if(PrintPropertiesChanged != null && !Initializing)
 			{
@@ -114,6 +143,14 @@ namespace hamqsler
 			// set FillLastPage property
 			QslCard.CardPrintProperties.FillLastPage = 
 				(bool)fillLastPageButton.IsChecked;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("FillLastPageButton_CheckedChanged: " +
+				               Environment.NewLine +
+				               "\tFillLastPage set to " +
+				               QslCard.CardPrintProperties.FillLastPage +
+				               Environment.NewLine);
+			}
 			// raise PrintPropertiesChanged event
 			if(PrintPropertiesChanged != null && !Initializing)
 			{
@@ -131,6 +168,14 @@ namespace hamqsler
 			// set SetCardMargins property
 			QslCard.CardPrintProperties.SetCardMargins = 
 				(bool)setCardMarginsButton.IsChecked;
+			if(App.Logger.DebugPrinting)
+			{
+				App.Logger.Log("SetCardMarginsButton_CheckedChanged: " +
+				               Environment.NewLine +
+				               "\tSetCardMargins set to " +
+				               QslCard.CardPrintProperties.SetCardMargins +
+				               Environment.NewLine);
+			}
 			// raise PrintPropertiesChanged event
 			if(PrintPropertiesChanged != null && !Initializing)
 			{

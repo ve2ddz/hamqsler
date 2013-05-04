@@ -101,6 +101,8 @@ namespace hamqsler
 		/// </summary>
 		public CardWF()
 		{
+			App.Logger.Log("In CardWF default constructor:" + Environment.NewLine,
+						   App.Logger.DebugPrinting);
 			CardPrintProperties = new PrintProperties();
 		}
 		
@@ -112,6 +114,8 @@ namespace hamqsler
 		/// <param name="isInDesignMode"></param>
 		public CardWF(int width, int height, bool isInDesignMode)
 		{
+			App.Logger.Log("In CardWF constructor:" + Environment.NewLine,
+						   App.Logger.DebugPrinting);
 			CardPrintProperties = new PrintProperties();
 			IsInDesignMode = isInDesignMode;
 			CardSize = new System.Drawing.Size(width, height);

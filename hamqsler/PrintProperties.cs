@@ -139,6 +139,12 @@ namespace hamqsler
 			FillLastPage = prefs.FillLastPage;
 			SetCardMargins = prefs.SetCardMargins;
 			Layout = prefs.CardsLayout;
+			if(App.Logger.DebugPrinting)
+			{
+				string debugMsg = "In PrintProperties constructor:" + 
+					Environment.NewLine + this.ToString();
+				App.Logger.Log(debugMsg);
+			}
 		}
 		
 		/// <summary>
@@ -171,7 +177,7 @@ namespace hamqsler
 		public override string ToString()
 		{
 			string newLine = Environment.NewLine;
-			return string.Format("PrintProperties from Card:" + newLine +
+			return string.Format("PrintProperties:" + newLine +
 				              "\tPrinter Name: {0}" + newLine +
 				              "\tPaperSize: {1} {10} x {11}" + newLine +
 				              "\tResolution: {2} {3} x {4}" + newLine +
@@ -179,7 +185,7 @@ namespace hamqsler
 				              "\tPrintCardOutlines: {6}" + newLine +
 				              "\tFillLastPage: {7}" + newLine +
 				              "\tSetCardMargins: {8}" + newLine +
-				              "\tLayout: {9}",
+				              "\tLayout: {9}" + newLine,
 				              PrinterName, PrinterPaperSize.PaperName,
 				              Resolution.Kind, Resolution.X, Resolution.Y, 
 				              InsideMargins, PrintCardOutlines,
