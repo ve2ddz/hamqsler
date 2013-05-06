@@ -21,6 +21,7 @@ using Microsoft.Win32;
 using Qsos;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.IO.Packaging;
 using System.Printing;
@@ -49,9 +50,7 @@ namespace hamqsler
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private PrintDialog printDialog = null;
-		private PageMediaSize pageSize = null;
-		public static double PIXELSPERINCH = 96;
+		public static double PIXELSPERINCH = 100;
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
 
@@ -110,8 +109,8 @@ namespace hamqsler
 		private void CardSaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			e.CanExecute = cti != null && cti.cardCanvas.QslCard.FileName != null &&
-				cti.cardCanvas.QslCard.IsDirty;
+			e.CanExecute = cti != null && cti.cardPanel.QslCard.FileName != null &&
+				cti.cardPanel.QslCard.IsDirty;
 		}
 		
 		/// <summary>
@@ -158,8 +157,8 @@ namespace hamqsler
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				Card card = cti.cardCanvas.QslCard;
-				if(card.DisplayWidth <= 6 * PIXELSPERINCH && card.DisplayHeight <= 4 * PIXELSPERINCH)
+				CardWF card = cti.cardPanel.QslCard;
+				if(card.Width <= 6 * PIXELSPERINCH && card.Height <= 4 * PIXELSPERINCH)
 				{
 					canExecute = true;
 				}
@@ -189,9 +188,9 @@ namespace hamqsler
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				Card card = cti.cardCanvas.QslCard;
-				if(card.DisplayWidth == 5.5 * PIXELSPERINCH && 
-				   card.DisplayHeight == 3.5 * PIXELSPERINCH)
+				CardWF card = cti.cardPanel.QslCard;
+				if(card.Width == 5.5 * PIXELSPERINCH && 
+				   card.Height == 3.5 * PIXELSPERINCH)
 				{
 					canExecute = true;
 				}
@@ -960,113 +959,72 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void PrintCardsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			const double GRAPHICSPIXELSPERINCH = 96;
-			MessageBoxResult result = MessageBoxResult.No;
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			PrintTicket ticket = new PrintTicket();
-			if(printDialog == null)
+			PrintProperties props = new PrintProperties(
+				cti.cardPanel.QslCard.CardPrintProperties);
+			if(App.Logger.DebugPrinting)
 			{
-				printDialog = new PrintDialog();
+				App.Logger.Log("PrintCardsCommand_Executed:" +
+				               Environment.NewLine +
+				               "Card size = " + cti.cardPanel.QslCard.Width +
+				               " x " + cti.cardPanel.QslCard.Height +
+				               Environment.NewLine +
+				               props.ToString());
 			}
-			else
+			HamQSLerPrintDialog printDialog = new HamQSLerPrintDialog();
+			printDialog.PrinterName = props.PrinterName;
+			printDialog.PrinterPaperSize = props.PrinterPaperSize;
+			printDialog.Resolution = props.Resolution;
+			printDialog.InsideMargins = props.InsideMargins;
+			printDialog.PrintCardOutlines = props.PrintCardOutlines;
+			printDialog.FillLastPage = props.FillLastPage;
+			printDialog.SetCardMargins = props.SetCardMargins;
+			printDialog.Layout = props.Layout;
+			printDialog.CardWidth = cti.cardPanel.QslCard.Width;
+			printDialog.CardHeight = cti.cardPanel.QslCard.Height;
+			if(printDialog.ShowDialog() == true)
 			{
-				printDialog.PrintTicket.PageMediaSize = pageSize;
-			}
-			do
-			{
-				if(printDialog.ShowDialog() == true)
+				props.PrinterName = printDialog.PrinterName;
+				props.PrinterPaperSize = printDialog.PrinterPaperSize;
+				props.Resolution = printDialog.Resolution;
+				props.InsideMargins = printDialog.InsideMargins;
+				props.PrintCardOutlines = printDialog.PrintCardOutlines;
+				props.FillLastPage = printDialog.FillLastPage;
+				props.SetCardMargins = printDialog.SetCardMargins;
+				props.Layout = printDialog.Layout;
+				if(App.Logger.DebugPrinting)
 				{
-					ticket = printDialog.PrintTicket.Clone();
-					pageSize =ticket.PageMediaSize;
-					// make sure at least one card can be printed on the page
-					double pageHeight = (double)ticket.PageMediaSize.Height;
-					double pageWidth = (double)ticket.PageMediaSize.Width;
-					double cardWidth = cti.cardCanvas.QslCard.DisplayWidth;
-					double cardHeight = cti.cardCanvas.QslCard.DisplayHeight;
-					// check that at least one card can be printed
-					if(Math.Min(cardWidth, cardHeight) > Math.Min(pageWidth, pageHeight) ||
-						Math.Max(cardWidth, cardHeight) > Math.Max(pageWidth, pageHeight))
-					{
-                        string msg = string.Format("The size of the cards to be printed is larger than the selected paper size.\r\n"
-                                        + "Card size is {0} by {1} inches and paper size is {2} by {3} inches.\r\n"
-                                        + "You must choose another paper size.", 
-                                        cardWidth / GRAPHICSPIXELSPERINCH, 
-                                        cardHeight / GRAPHICSPIXELSPERINCH,
-                                        pageHeight / GRAPHICSPIXELSPERINCH, 
-                                        pageWidth / GRAPHICSPIXELSPERINCH);
-						MessageBox.Show(msg, "Paper Size Too Small", MessageBoxButton.OK, MessageBoxImage.Error);
-						result = MessageBoxResult.No;
-						continue;
-					}
-					result = MessageBoxResult.Yes;
+					App.Logger.Log("PrintCardsCommand after printDialog.ShowDialog:" +
+					               Environment.NewLine +
+					               "Card size = " + cti.cardPanel.QslCard.Width +
+					               " x " + cti.cardPanel.QslCard.Height +
+					               Environment.NewLine +
+					               props.ToString());
+				}
+				if(printDialog.Preview)
+				{
+					CardPrintDocument document = new CardPrintDocument();
+					document.PrintProperties = props;
+					document.QslCard = cti.cardPanel.QslCard;
+					System.Windows.Forms.PrintPreviewDialog ppDialog = 
+						new System.Windows.Forms.PrintPreviewDialog();
+					ppDialog.Document = document;
+					ppDialog.ShowDialog();
 				}
 				else
 				{
-					return;
+					CardPrintDocument document = new CardPrintDocument();
+					document.PrintProperties = props;
+					document.QslCard = cti.cardPanel.QslCard;
+					document.Print();
+					
 				}
-			} while(result == MessageBoxResult.No);
-			ticket = printDialog.PrintTicket;
-			PrintQueue queue = printDialog.PrintQueue;
-			PrintCapabilities caps = queue.GetPrintCapabilities();
-			PageImageableArea area = caps.PageImageableArea;
-			double margin = area.OriginHeight > area.OriginWidth ? area.OriginHeight :
-				area.OriginWidth;
-			// paginate and print
-			Card card = cti.cardCanvas.QslCard;
-			PrintSettingsDialog psDialog = PrintSettingsDialog.CreatePrintSettingsDialog(ticket, queue,
-			                                                                             card);
-			if(psDialog.ShowDialog() == true)
+			}
+			else
 			{
-				if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Print)
+				if(App.Logger.DebugPrinting)
 				{
-					HamqslerPaginator paginator = 
-						new HamqslerPaginator(PrintSettingsDialog.PrintButtonTypes.Print,
-						                      psDialog.CardsLayout, psDialog.CardOutline,
-						                      psDialog.FillLastPage, psDialog.CardMargins,
-						                      margin, card, qsosView.DisplayQsos,
-						                      new Size((double)ticket.PageMediaSize.Width,
-						                               (double)ticket.PageMediaSize.Height));
-					// Kludge: to get printer to print to near bottom of page
-					// add 1/2 inch to page height
-					PageMediaSize pms = new PageMediaSize((double)ticket.PageMediaSize.Width,
-					                                      (double)ticket.PageMediaSize.Height + 
-					                                      GRAPHICSPIXELSPERINCH);
-					ticket.PageMediaSize = pms;
-					// force Portrait orientation - HamqslerPaginator uses CardsLayout
-					// to determine orientation.
-					ticket.PageOrientation = PageOrientation.Portrait;
-					printDialog.PrintTicket = ticket;
-					
-					Mouse.OverrideCursor = Cursors.Wait;
-					printDialog.PrintDocument(paginator, "QSL Cards");
-					Mouse.OverrideCursor = null;
-				}
-				else if(psDialog.PrintType == PrintSettingsDialog.PrintButtonTypes.Preview)
-				{
-					MemoryStream ms = new MemoryStream();
-					Package pkg = Package.Open(ms, FileMode.Create, FileAccess.ReadWrite);
-					string pack = "pack://temp.xps";
-					Uri uri = new Uri(pack);
-					PackageStore.AddPackage(uri, pkg);
-					XpsDocument doc = new XpsDocument(pkg, CompressionOption.NotCompressed, pack);
-					XpsSerializationManager rsm =
-						new XpsSerializationManager(new XpsPackagingPolicy(doc), false);
-					HamqslerPaginator paginator = 
-						new HamqslerPaginator(PrintSettingsDialog.PrintButtonTypes.Preview,
-						                      psDialog.CardsLayout, psDialog.CardOutline,
-						                      psDialog.FillLastPage, psDialog.CardMargins,
-						                      margin, card, qsosView.DisplayQsos,
-						                      new Size((double)ticket.PageMediaSize.Width,
-						                               (double)ticket.PageMediaSize.Height));
-					
-					Mouse.OverrideCursor = Cursors.Wait;
-					rsm.SaveAsXaml(paginator);
-					Mouse.OverrideCursor = null;
-					
-					XpsDocumentWindow docWindow = new XpsDocumentWindow();
-					docWindow.docViewer.Document = doc.GetFixedDocumentSequence();
-					docWindow.ShowDialog();
-					PackageStore.RemovePackage(uri);
+					App.Logger.Log("Printing canceled");
 				}
 			}
 		}

@@ -20,7 +20,7 @@
 <UserControl x:Class="hamqsler.PrintPropertiesPanel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<WrapPanel>
+	<WrapPanel Orientation="Horizontal">
 		<StackPanel Orientation="Vertical">
 			<GroupBox Header="Printer Properties" x:Name="printerPropertiesGroupBox">
 				<Grid>
@@ -74,20 +74,26 @@
 				</StackPanel>
 			</GroupBox>
 		</StackPanel>
-		<GroupBox Header="Cards Layout" MinWidth="200" x:Name="cardsLayoutGroupBox">
+		<GroupBox Header="Cards Layout" MinWidth="200" MaxWidth="450" x:Name="cardsLayoutGroupBox">
 			<WrapPanel>
 				<RadioButton x:Name="portraitTopLeftButton" Margin="5"
-				             GroupName="alignmentGroup" Height="100" Width="115"/>
+				             GroupName="alignmentGroup" Height="100" Width="115"
+							 Checked="PortraitTopLeftButton_Checked"/>
 				<RadioButton x:Name="portraitTopCenterButton" Margin="5"
-				             GroupName="alignmentGroup" Height="100" Width="115"/>
+				             GroupName="alignmentGroup" Height="100" Width="115"
+							 Checked="PortraitTopCenterButton_Checked"/>
 				<RadioButton x:Name="portraitCenterButton" Margin="5"
-							 GroupName="alignmentGroup" Height="100" Width="115"/>
+							 GroupName="alignmentGroup" Height="100" Width="115"
+							 Checked="PortraitCenterButton_Checked"/>
 				<RadioButton x:Name="landscapeTopLeftButton" Margin="5"
-							 GroupName="alignmentGroup" Height="100" Width="115"/>
+							 GroupName="alignmentGroup" Height="100" Width="115"
+							 Checked="LandscapeTopLeftButton_Checked"/>
 				<RadioButton x:Name="landscapeTopCenterButton" Margin="5"
-							 GroupName="alignmentGroup" Height="100" Width="115"/>
+							 GroupName="alignmentGroup" Height="100" Width="115"
+							 Checked="LandscapeTopCenterButton_Checked"/>
 				<RadioButton x:Name="landscapeCenterButton" Margin="5"
-							 GroupName="alignmentGroup" Height="100" Width="115"/>
+							 GroupName="alignmentGroup" Height="100" Width="115"
+							 Checked="LandscapeCenterButton_Checked"/>
 			</WrapPanel>
 		</GroupBox>
 	</WrapPanel>

@@ -196,7 +196,23 @@ namespace hamqsler
 			}
 			else if(e.Property == PrinterPaperSizeProperty)
 			{
+				paperSizeComboBox.SelectedItem = PrinterPaperSize.PaperName;
+				if(paperSizeComboBox.SelectedIndex == -1)
+				{
+					paperSizeComboBox.SelectedItem = settings.DefaultPageSettings.PaperSize.PaperName;
+				}
 				SetCardsLayouts();
+			}
+			else if(e.Property == PrinterResolutionProperty)
+			{
+				qualityComboBox.SelectedItem = ResolutionString(Resolution);
+				if(qualityComboBox.SelectedIndex == -1)
+				{
+					PrinterSettings settings = new PrinterSettings();
+					settings.PrinterName = PrinterName;
+					qualityComboBox.SelectedItem = 
+						ResolutionString(settings.DefaultPageSettings.PrinterResolution);
+				}
 			}
 			else if(e.Property == InsideMarginsProperty)
 			{
@@ -742,5 +758,6 @@ namespace hamqsler
 				               Environment.NewLine);
 			}
 		}
+		
 	}
 }

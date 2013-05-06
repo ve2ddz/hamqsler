@@ -120,5 +120,18 @@ namespace hamqsler
 			IsInDesignMode = isInDesignMode;
 			CardSize = new System.Drawing.Size(width, height);
 		}
+		
+		/// <summary>
+		/// Create a new CardWF object that is a hardcopy of this card
+		/// </summary>
+		/// <returns>CardWF object that is a hardcopy of this CardWF object</returns>
+		public CardWF Clone()
+		{
+			CardWF card = new CardWF();
+			card.CardSize = new System.Drawing.Size(this.Width, this.Height);
+			card.Location = new System.Drawing.Point(this.X, this.Y);
+			return card;
+		}
+		
 	}
 }

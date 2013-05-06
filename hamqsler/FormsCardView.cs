@@ -59,12 +59,20 @@ namespace hamqsler
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
-			Graphics g = e.Graphics;
+			PaintCard(e.Graphics);
+		}
+		
+		/// <summary>
+		/// Draw the card
+		/// </summary>
+		/// <param name="g">Graphics object on which to draw the card</param>
+		public void PaintCard(Graphics g)
+		{
 			g.FillRectangle(Brushes.White, new Rectangle(
 				0, 0, QslCard.Width, QslCard.Height));
-			g.DrawRectangle(Pens.Black, new Rectangle(0, 0, QslCard.Width - 1, QslCard.Height - 1));
-			g.DrawLine(Pens.Black, 0, 0, QslCard.Width - 1, QslCard.Height - 1);
-			g.DrawLine(Pens.Black, QslCard.Width - 1, 0, 0, QslCard.Height - 1);
+			g.DrawRectangle(Pens.Red, new Rectangle(0, 0, QslCard.Width - 1, QslCard.Height - 1));
+			g.DrawLine(Pens.Blue, 0, 0, QslCard.Width - 1, QslCard.Height - 1);
+			g.DrawLine(Pens.Blue, QslCard.Width - 1, 0, 0, QslCard.Height - 1);
 		}
 	}
 }

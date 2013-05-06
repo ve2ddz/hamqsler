@@ -103,6 +103,7 @@
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardPrintDocument.cs" />
     <Compile Include="CardPropertiesGroupBox.xaml.cs">
       <DependentUpon>CardPropertiesGroupBox.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -139,7 +140,10 @@
     <Compile Include="FormsCardView.Designer.cs">
       <DependentUpon>FormsCardView.cs</DependentUpon>
     </Compile>
-    <Compile Include="HamqslerPaginator.cs" />
+    <Compile Include="HamQSLerPrintDialog.xaml.cs">
+      <DependentUpon>HamQSLerPrintDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ImageView.cs" />
     <Compile Include="JpegPropsDialog.xaml.cs">
       <DependentUpon>JpegPropsDialog.xaml</DependentUpon>
@@ -168,10 +172,6 @@
     <Compile Include="PrintProperties.cs" />
     <Compile Include="PrintPropertiesPanel.xaml.cs">
       <DependentUpon>PrintPropertiesPanel.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PrintSettingsDialog.xaml.cs">
-      <DependentUpon>PrintSettingsDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="QslRcvdToPseTnxConverter.cs" />
@@ -236,6 +236,7 @@
     <Page Include="CountMacroGroupBox.xaml">
       <DependentUpon>DispQso.cs</DependentUpon>
     </Page>
+    <Page Include="HamQSLerPrintDialog.xaml" />
     <Page Include="JpegPropsDialog.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
@@ -243,7 +244,6 @@
     <Page Include="Print4UpDialog.xaml" />
     <Page Include="PrintImageableAreaErrorDialog.xaml" />
     <Page Include="PrintPropertiesPanel.xaml" />
-    <Page Include="PrintSettingsDialog.xaml" />
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />
     <Page Include="SplashPage.xaml" />
