@@ -568,28 +568,24 @@ namespace hamqsler
 				leftOffset = (int)area.Left / scaleFactor;
 				topOffset = (int)area.Top / scaleFactor;				
 			}
-			portraitTopLeftButton.Content = 
-				CreateButtonImage(scaledPageWidth, scaledPageHeight, leftOffset, topOffset,
-				                 portraitCardsWide, portraitCardsHigh);
-			
+			CreateButtonImage(portraitTopLeftButtonCanvas, scaledPageWidth, scaledPageHeight,
+		 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
 			leftOffset = (scaledPageWidth - scaledCardWidth * portraitCardsWide) / 2;
 			if(InsideMargins &&
 			   leftOffset < (MAXMARGIN / scaleFactor))
 			{
 				leftOffset = (MAXMARGIN / scaleFactor);
 			}
-			portraitTopCenterButton.Content =
-				CreateButtonImage(scaledPageWidth, scaledPageHeight, leftOffset, topOffset,
-				                 portraitCardsWide, portraitCardsHigh);
+			CreateButtonImage(portraitTopCenterButtonCanvas, scaledPageWidth, scaledPageHeight,
+		 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
 			topOffset = (scaledPageHeight - scaledCardHeight * portraitCardsHigh) / 2;
 			if(InsideMargins &&
 			   topOffset < (MAXMARGIN / scaleFactor))
 			{
 				topOffset = (MAXMARGIN / scaleFactor);
 			}
-			portraitCenterButton.Content =
-				CreateButtonImage(scaledPageWidth, scaledPageHeight, leftOffset, topOffset,
-				                 portraitCardsWide, portraitCardsHigh);
+			CreateButtonImage(portraitCenterButtonCanvas, scaledPageWidth, scaledPageHeight,
+		 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
 		}
 		
 		/// <summary>
@@ -605,27 +601,24 @@ namespace hamqsler
 				leftOffset = (int)area.Top / scaleFactor;
 				topOffset = (int)area.Left / scaleFactor;
 			}
-			landscapeTopLeftButton.Content =
-				CreateButtonImage(scaledPageHeight, scaledPageWidth, leftOffset, topOffset,
-				                 landscapeCardsWide, landscapeCardsHigh);
+			CreateButtonImage(landscapeTopLeftButtonCanvas, scaledPageHeight, scaledPageWidth,
+		 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
 			leftOffset = (scaledPageHeight - scaledCardWidth * landscapeCardsWide) / 2;
 			if(InsideMargins &&
 			   leftOffset < MAXMARGIN / scaleFactor)
 			{
 				leftOffset = MAXMARGIN / scaleFactor;
 			}
-			landscapeTopCenterButton.Content =
-				CreateButtonImage(scaledPageHeight, scaledPageWidth, leftOffset, topOffset,
-				                 landscapeCardsWide, landscapeCardsHigh);
+			CreateButtonImage(landscapeTopCenterButtonCanvas, scaledPageHeight, scaledPageWidth,
+		 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
 			topOffset = (scaledPageWidth - scaledCardHeight * landscapeCardsHigh) / 2;
 			if(InsideMargins &&
 			   topOffset < MAXMARGIN / scaleFactor)
 			{
 				topOffset = MAXMARGIN / scaleFactor;
 			}
-			landscapeCenterButton.Content =
-				CreateButtonImage(scaledPageHeight, scaledPageWidth, leftOffset, topOffset,
-				                 landscapeCardsWide, landscapeCardsHigh);
+			CreateButtonImage(landscapeCenterButtonCanvas, scaledPageHeight, scaledPageWidth,
+		 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
 		}
 		
 		/// <summary>
@@ -636,10 +629,11 @@ namespace hamqsler
 		/// <param name="leftOffset">Scaled card left offset</param>
 		/// <param name="topOffset">Scaled card top offset</param>
 		/// <returns>Canvas object containing the image</returns>
-		private Canvas CreateButtonImage(int sPageWidth, int sPageHeight, int leftOffset, 
-		                                 int topOffset, int cardsWide, int cardsHigh)
+		private void CreateButtonImage(Canvas canvas, int sPageWidth, int sPageHeight, 
+		                               int leftOffset, int topOffset, int cardsWide, int cardsHigh)
 		{
-			Canvas canvas = new Canvas();
+			
+			canvas.Children.Clear();
 			// create a Path for the page
 			RectangleGeometry rect = new RectangleGeometry(
 				new Rect(0, 0, sPageWidth, sPageHeight));
@@ -666,7 +660,7 @@ namespace hamqsler
 			}
 			cardsPath.Data = geo;
 			canvas.Children.Add(cardsPath);
-			return canvas;
+//			return canvas;
 		}
 
 		/// <summary>
