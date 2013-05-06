@@ -635,8 +635,10 @@ namespace hamqsler
 			
 			canvas.Children.Clear();
 			// create a Path for the page
+			int pageOffsetX = 0;
+			int pageOffsetY = (int)((canvas.Height - sPageHeight) / 2);
 			RectangleGeometry rect = new RectangleGeometry(
-				new Rect(0, 0, sPageWidth, sPageHeight));
+				new Rect(pageOffsetX, pageOffsetY, sPageWidth, sPageHeight));
 			Path pagePath = new Path();
 			pagePath.Stroke = System.Windows.Media.Brushes.LightPink;
 			pagePath.Fill = System.Windows.Media.Brushes.LightPink;
@@ -653,14 +655,13 @@ namespace hamqsler
 				for(int vCard = 0; vCard < cardsHigh; vCard++)
 				{
 					geo.Children.Add(new RectangleGeometry(
-						new Rect(hCard*scaledCardWidth + leftOffset, 
-						         vCard*scaledCardHeight + topOffset,
+						new Rect(hCard*scaledCardWidth + leftOffset + pageOffsetX, 
+						         vCard*scaledCardHeight + topOffset + pageOffsetY,
 						         scaledCardWidth, scaledCardHeight)));
 				}
 			}
 			cardsPath.Data = geo;
 			canvas.Children.Add(cardsPath);
-//			return canvas;
 		}
 
 		/// <summary>

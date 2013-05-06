@@ -76,37 +76,37 @@
 		</StackPanel>
 		<GroupBox Header="Cards Layout" MinWidth="200" MaxWidth="450" x:Name="cardsLayoutGroupBox">
 			<WrapPanel>
-				<RadioButton x:Name="portraitTopLeftButton" Margin="5"
+				<RadioButton x:Name="portraitTopLeftButton" Margin="15,5,5,5"
 				             GroupName="alignmentGroup" Height="100" Width="115"
 							 Checked="PortraitTopLeftButton_Checked">
-					<Canvas Width="100" Height="100" 
+					<Canvas Width="100" Height="100"
 					        x:Name="portraitTopLeftButtonCanvas"/>
 				</RadioButton>
-				<RadioButton x:Name="portraitTopCenterButton" Margin="5"
+				<RadioButton x:Name="portraitTopCenterButton" Margin="15,5,5,5"
 				             GroupName="alignmentGroup" Height="100" Width="115"
 							 Checked="PortraitTopCenterButton_Checked">
 					<Canvas Width="100" Height="100"
 							x:Name="portraitTopCenterButtonCanvas"/>
 				</RadioButton>
-				<RadioButton x:Name="portraitCenterButton" Margin="5"
+				<RadioButton x:Name="portraitCenterButton" Margin="15,5,5,5"
 							 GroupName="alignmentGroup" Height="100" Width="115"
 							 Checked="PortraitCenterButton_Checked">
 					<Canvas Width="100" Height="100"
 							x:Name="portraitCenterButtonCanvas"/>
 				</RadioButton>
-				<RadioButton x:Name="landscapeTopLeftButton" Margin="5"
+				<RadioButton x:Name="landscapeTopLeftButton" Margin="15,5,5,5"
 							 GroupName="alignmentGroup" Height="100" Width="115"
 							 Checked="LandscapeTopLeftButton_Checked">
 					<Canvas Width="100" Height="100"
 							x:Name="landscapeTopLeftButtonCanvas"/>				
 				</RadioButton>
-				<RadioButton x:Name="landscapeTopCenterButton" Margin="5"
+				<RadioButton x:Name="landscapeTopCenterButton" Margin="15,5,5,5"
 							 GroupName="alignmentGroup" Height="100" Width="115"
 							 Checked="LandscapeTopCenterButton_Checked">
 					<Canvas Width="100" Height="100"
 							x:Name="landscapeTopCenterButtonCanvas"/>				
 				</RadioButton>
-				<RadioButton x:Name="landscapeCenterButton" Margin="5"
+				<RadioButton x:Name="landscapeCenterButton" Margin="15,5,5,5"
 							 GroupName="alignmentGroup" Height="100" Width="115"
 							 Checked="LandscapeCenterButton_Checked">
 					<Canvas Width="100" Height="100"
