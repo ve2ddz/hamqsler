@@ -103,6 +103,7 @@
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardItemWFView.cs" />
     <Compile Include="CardPrintDocument.cs" />
     <Compile Include="CardPropertiesGroupBox.xaml.cs">
       <DependentUpon>CardPropertiesGroupBox.xaml</DependentUpon>
@@ -125,6 +126,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CardView.cs" />
+    <Compile Include="CardWFItem.cs" />
     <Compile Include="CountMacro.cs" />
     <Compile Include="CountMacroGroupBox.xaml.cs">
       <DependentUpon>CountMacroGroupBox.xaml</DependentUpon>
@@ -137,9 +139,6 @@
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
     <Compile Include="FormsCardView.cs" />
-    <Compile Include="FormsCardView.Designer.cs">
-      <DependentUpon>FormsCardView.cs</DependentUpon>
-    </Compile>
     <Compile Include="HamQSLerPrintDialog.xaml.cs">
       <DependentUpon>HamQSLerPrintDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -281,9 +280,6 @@
   <ItemGroup>
     <EmbeddedResource Include="CardPanel.resx">
       <DependentUpon>CardPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormsCardView.resx">
-      <DependentUpon>FormsCardView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />

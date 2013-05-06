@@ -25,65 +25,33 @@ namespace hamqsler
 	/// <summary>
 	/// CardWF describes the QslCard.
 	/// </summary>
-	public class CardWF : DependencyObject
+	public class CardWF : CardWFItem
 	{
-		private System.Drawing.Point location = new System.Drawing.Point(0,0);
-		public System.Drawing.Point Location
-		{
-			get {return location;}
-			set {location = value;}
-		}
-		
-		public int X
-		{
-			get{return location.X;}
-			set{location.X = value;}
-		}
-		
-		public int Y
-		{
-			get {return location.Y;}
-			set {location.Y = value;}
-		}
-		
-		private System.Drawing.Size cardSize = new System.Drawing.Size(0,0);
-		public System.Drawing.Size CardSize
-		{
-			get {return cardSize;}
-			set {cardSize = value;}
-		}
-		
-		public int Width
-		{
-			get {return cardSize.Width;}
-			set {cardSize.Width = value;}
-		}
-			
-		public int Height
-		{
-			get {return cardSize.Height;}
-			set {cardSize.Height = value;}
-		}
-		
-		private bool isDirty = false;
+		private static readonly DependencyProperty IsDirtyProperty =
+			DependencyProperty.Register("IsDirty", typeof(bool),
+			                            typeof(CardWF), new PropertyMetadata(false));
 		public bool IsDirty
 		{
-			get {return isDirty;}
-			set {isDirty = value;}
+			get {return (bool)GetValue(IsDirtyProperty);}
+			set {SetValue(IsDirtyProperty, value);}
 		}
-		
-		private bool isInDesignMode = false;
+
+		private static readonly DependencyProperty IsInDesignModeProperty =
+			DependencyProperty.Register("IsInDesignMode", typeof(bool),
+			                            typeof(CardWF), new PropertyMetadata(false));
 		public bool IsInDesignMode
 		{
-			get {return isInDesignMode;}
-			set {isInDesignMode = value;}
+			get {return (bool)GetValue(IsInDesignModeProperty);}
+			set {SetValue(IsInDesignModeProperty, value);}
 		}
 		
-		private string fileName = null;
+		private static readonly DependencyProperty FileNameProperty =
+			DependencyProperty.Register("FileName", typeof(string),
+			                            typeof(CardWF), new PropertyMetadata(null));
 		public string FileName
 		{
-			get {return fileName;}
-			set {fileName = value;}
+			get {return GetValue(FileNameProperty) as string;}
+			set {SetValue(FileNameProperty, value);}
 		}
 		
 		private static readonly DependencyProperty CardPrintPropertiesProperty =
@@ -99,8 +67,9 @@ namespace hamqsler
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public CardWF()
+		public CardWF() : base()
 		{
+			QslCard = this;
 			App.Logger.Log("In CardWF default constructor:" + Environment.NewLine,
 						   App.Logger.DebugPrinting);
 			CardPrintProperties = new PrintProperties();
@@ -111,14 +80,16 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="width">Width of the card (100 units/inch)</param>
 		/// <param name="height">Height of the card (100 units/inch)</param>
-		/// <param name="isInDesignMode"></param>
-		public CardWF(int width, int height, bool isInDesignMode)
+		/// <param name="isInDesignMode">design mode indicator:
+		/// true if in design mode, false otherwise</param>
+		public CardWF(int width, int height, bool isInDesignMode) : base(width, height)
 		{
+			QslCard = this;
 			App.Logger.Log("In CardWF constructor:" + Environment.NewLine,
 						   App.Logger.DebugPrinting);
 			CardPrintProperties = new PrintProperties();
 			IsInDesignMode = isInDesignMode;
-			CardSize = new System.Drawing.Size(width, height);
+			ItemSize = new System.Drawing.Size(width, height);
 		}
 		
 		/// <summary>
@@ -128,7 +99,7 @@ namespace hamqsler
 		public CardWF Clone()
 		{
 			CardWF card = new CardWF();
-			card.CardSize = new System.Drawing.Size(this.Width, this.Height);
+			card.ItemSize = new System.Drawing.Size(this.Width, this.Height);
 			card.Location = new System.Drawing.Point(this.X, this.Y);
 			return card;
 		}

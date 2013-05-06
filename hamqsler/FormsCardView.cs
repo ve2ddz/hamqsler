@@ -25,17 +25,10 @@ using System.Windows.Forms;
 namespace hamqsler
 {
 	/// <summary>
-	/// Usercontrol that displays a CardWF object (QslCard).
+	/// Control that displays a CardWF object (QslCard).
 	/// </summary>
-	public partial class FormsCardView : UserControl
+	public class FormsCardView : CardItemWFView
 	{
-		// Reference to the CardItem that this view displays
-		private CardWF qslCard;
-		public CardWF QslCard
-		{
-			get {return qslCard;}
-			set {qslCard = value;}
-		}
 		
 		/// <summary>
 		/// Constructor
@@ -43,16 +36,10 @@ namespace hamqsler
 		/// <param name="card">QslCard to display</param>
 		public FormsCardView(CardWF card)
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
-			InitializeComponent();
-			
-			QslCard = card;
-			this.Size = new Size(QslCard.Width, QslCard.Height);
+			CardItem = card;
+			this.Size = new Size(card.Width, card.Height);
 		}
 		
-		/// <summary>
 		/// Draw the card
 		/// </summary>
 		/// <param name="e">PaintEventArgs object</param>
@@ -69,10 +56,10 @@ namespace hamqsler
 		public void PaintCard(Graphics g)
 		{
 			g.FillRectangle(Brushes.White, new Rectangle(
-				0, 0, QslCard.Width, QslCard.Height));
-			g.DrawRectangle(Pens.Red, new Rectangle(0, 0, QslCard.Width - 1, QslCard.Height - 1));
-			g.DrawLine(Pens.Blue, 0, 0, QslCard.Width - 1, QslCard.Height - 1);
-			g.DrawLine(Pens.Blue, QslCard.Width - 1, 0, 0, QslCard.Height - 1);
+				0, 0, CardItem.Width, CardItem.Height));
+			g.DrawRectangle(Pens.Red, new Rectangle(0, 0, CardItem.Width - 1, CardItem.Height - 1));
+			g.DrawLine(Pens.Blue, 0, 0, CardItem.Width - 1, CardItem.Height - 1);
+			g.DrawLine(Pens.Blue, CardItem.Width - 1, 0, 0, CardItem.Height - 1);
 		}
 	}
 }
