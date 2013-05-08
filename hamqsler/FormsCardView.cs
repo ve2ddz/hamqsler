@@ -57,6 +57,7 @@ namespace hamqsler
 		/// <param name="card">QslCard to display</param>
 		public FormsCardView(CardWF card)
 		{
+			this.DoubleBuffered = true;
 			QslCard = card;
 			QslCard.DispPropertyChanged += OnDispPropertyChanged;
 		}
@@ -160,8 +161,54 @@ namespace hamqsler
 					g.DrawImage(image.Image, new Rectangle(
 						image.X, image.Y, image.Width, image.Height), 0, 0, image.Image.Width,
 						image.Image.Height, GraphicsUnit.Pixel, outsideCardAttrs);
+					if(image.IsHighlighted)
+					{
+						g.DrawRectangle(highlighedPen, new Rectangle(
+							image.X, image.Y, image.Width, image.Height));
+					}
 				}
 			}
+		}
+		
+		/// <summary>
+		/// Handler for MouseMove events
+		/// </summary>
+		/// <param name="e">MouseEventArgs object</param>
+		protected override void OnMouseMove(MouseEventArgs e)
+		{
+			base.OnMouseMove(e);
+			if(e.Button == MouseButtons.None)
+			{
+				ClearHighlights();
+				if(QslCard.BackgroundImage.Contains(e.X - CardLocation.X,
+				                                    e.Y - CardLocation.Y))
+				{
+					QslCard.BackgroundImage.IsHighlighted = true;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Handler for MouseLeave events
+		/// </summary>
+		/// <param name="e">EventArgs object</param>
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			base.OnMouseLeave(e);
+			// clear IsHighlighted property for every card item on the card.
+			// This call is necessary because if the mouse is moved quickly away from the
+			// highlighted card item, the card item IsHighlighted property might not be
+			// unset.
+			ClearHighlights();
+		}
+		
+		/// <summary>
+		/// Helper function that sets the IsHighlighted property of every card item
+		/// on the displayed card to false;
+		/// </summary>
+		protected void ClearHighlights()
+		{
+			 QslCard.BackgroundImage.IsHighlighted = false;
 		}
 	}
 }

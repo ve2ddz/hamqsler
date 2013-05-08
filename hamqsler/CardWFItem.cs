@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Drawing;
 using System.Windows;
 
 namespace hamqsler
@@ -137,8 +138,17 @@ namespace hamqsler
 			   e.Property == IsSelectedProperty ||
 			   e.Property == IsHighlightedProperty)
 			{
-				QslCard.RaiseDispPropertyChangedEvent();
+				if(QslCard != null)
+				{
+					QslCard.RaiseDispPropertyChangedEvent();
+				}
 			}
+		}
+		
+		public bool Contains(int x, int y)
+		{
+			Rectangle contents = new Rectangle(this.X, this.Y, this.Width, this.Height);
+			return contents.Contains(x, y);
 		}
 	}
 }
