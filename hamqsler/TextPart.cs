@@ -35,7 +35,7 @@ namespace hamqsler
 		/// <param name="qsos">Qsos to print on the card</param>
 		/// <param name="screen">Indicates whether the text will be displayed on screen, or printed</param>
 		/// <returns>the text</returns>
-		public abstract string GetText(Card card, List<DispQso> qsos, bool screen);
+		public abstract string GetText(CardWF card, List<DispQso> qsos, bool screen);
 		
 		/// <summary>
 		/// Gets the adif fields for sorting.

@@ -66,7 +66,7 @@
 		<WindowsFormsHost Grid.Column="0">
 			<local:CardPanel x:Name="cardPanel" BackColor="LightGray" Width="700" Height="500"/>
 		</WindowsFormsHost>
-		<local:CardCanvas Grid.Column="0" x:Name="cardCanvas" Background="LightGray" Width="10" Height="10"/>
+<!-- 	<local:CardCanvas Grid.Column="0" x:Name="cardCanvas" Background="LightGray" Width="10" Height="10"/> -->	
 		<ScrollViewer Width="250" HorizontalAlignment="Right" Grid.Column="1">
 			<StackPanel>
 				<local:CardPropertiesGroupBox x:Name="cardProperties"

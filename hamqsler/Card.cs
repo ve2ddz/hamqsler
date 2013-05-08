@@ -361,7 +361,7 @@ namespace hamqsler
 			{
 				CardTabItem cti = ((MainWindow)App.Current.MainWindow).mainTabControl.SelectedItem
 					as CardTabItem;
-				if(cti != null && this == cti.cardCanvas.QslCard)
+				if(cti != null && this == cti.cardPanel.QslCard)
 				{
 					((MainWindow)App.Current.MainWindow).SetTitle(FileName, IsDirty);
 					cti.SetTabLabel();

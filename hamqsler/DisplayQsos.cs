@@ -540,11 +540,11 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="card">Card object that will be printed</param>
 		/// <returns>A List of DispQsos to be displayed on the cards</returns>
-		public List<List<DispQso>> GetDispQsosList(Card card)
+		public List<List<DispQso>> GetDispQsosList(CardWF card)
 		{
-			List<DispQso> cardQsos = null;
+//			List<DispQso> cardQsos = null;
 			List<List<DispQso>> cardsQsosList = new List<List<DispQso>>();
-			string thisManagerCall = string.Empty;
+/*			string thisManagerCall = string.Empty;
 			QsoWithInclude thisQso = new QsoWithInclude(new Qso());
 			int qsosCount = 0;
 			HashSet<string> fields = new HashSet<string>();
@@ -579,7 +579,7 @@ namespace hamqsler
 						cardsQsosList.Add(cardQsos);
 					}
 				}
-			}
+			}*/
 			return cardsQsosList;
 		}
 		

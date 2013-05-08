@@ -98,25 +98,16 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BackgroundImage.cs" />
     <Compile Include="BackgroundWFImage.cs" />
     <Compile Include="BandComparer.cs" />
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
-    <Compile Include="Card.cs" />
     <Compile Include="CardPrintDocument.cs" />
     <Compile Include="CardPropertiesGroupBox.xaml.cs">
       <DependentUpon>CardPropertiesGroupBox.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CardWF.cs" />
-    <Compile Include="CardCanvas.xaml.cs">
-      <DependentUpon>CardCanvas.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CardImageBase.cs" />
-    <Compile Include="CardItem.cs" />
-    <Compile Include="CardItemView.cs" />
     <Compile Include="CardPanel.cs" />
     <Compile Include="CardPanel.Designer.cs">
       <DependentUpon>CardPanel.cs</DependentUpon>
@@ -125,7 +116,6 @@
       <DependentUpon>CardTabItem.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CardView.cs" />
     <Compile Include="CardWFItem.cs" />
     <Compile Include="CountMacro.cs" />
     <Compile Include="CountMacroGroupBox.xaml.cs">
@@ -143,7 +133,6 @@
       <DependentUpon>HamQSLerPrintDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ImageView.cs" />
     <Compile Include="ImageWFBase.cs" />
     <Compile Include="JpegPropsDialog.xaml.cs">
       <DependentUpon>JpegPropsDialog.xaml</DependentUpon>
@@ -180,14 +169,11 @@
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="QsosBox.cs" />
-    <Compile Include="QsosBoxView.cs" />
     <Compile Include="QSOsView.xaml.cs">
       <DependentUpon>QSOsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="QsoWithInclude.cs" />
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
-    <Compile Include="SecondaryImage.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="StaticText.cs" />
     <Compile Include="StaticTextGroupBox.xaml.cs">
@@ -198,8 +184,6 @@
       <DependentUpon>StaticTextViewer.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TextItem.cs" />
-    <Compile Include="TextItemView.cs" />
     <Compile Include="TextMacrosDialog.xaml.cs">
       <DependentUpon>TextMacrosDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -221,16 +205,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="XmlProcs.cs" />
-    <Compile Include="XpsDocumentWindow.xaml.cs">
-      <DependentUpon>XpsDocumentWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="AboutDialog.xaml" />
     <Page Include="AdifExistsMacroGroupBox.xaml" />
     <Page Include="AdifMacroGroupBox.xaml" />
-    <Page Include="CardCanvas.xaml" />
     <Page Include="CardPropertiesGroupBox.xaml" />
     <Page Include="CardTabItem.xaml" />
     <Page Include="CountMacroGroupBox.xaml">
@@ -251,7 +230,6 @@
     <Page Include="StaticTextViewer.xaml" />
     <Page Include="TextMacrosDialog.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />
-    <Page Include="XpsDocumentWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QslBureaus\QslBureaus.csproj">

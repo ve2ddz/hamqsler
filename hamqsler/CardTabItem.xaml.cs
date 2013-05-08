@@ -68,10 +68,10 @@ namespace hamqsler
 		/// Constructor
 		/// </summary>
 		/// <param name="card">Card object to display on the CardTabItem</param>
-		public CardTabItem(Card card)
+		public CardTabItem(CardWF card)
 		{
 			InitializeComponent();
-			cardCanvas.AddCard(card);
+			cardPanel.AddCard(card);
 			this.DataContext = cardPanel.QslCard;
 			
 /*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
@@ -88,17 +88,17 @@ namespace hamqsler
 		/// Set visibility of properties groupboxes based on the CardItem selected in the card
 		/// </summary>
 		/// <param name="card">Card that contains the CardItems</param>
-		public void SetPropertiesVisibility(CardItem ci)
+		public void SetPropertiesVisibility(CardWFItem ci)
 		{
 			HideAllPropertiesPanels();
 			if(ci != null)
 			{
-				if(ci.GetType() == typeof(BackgroundImage))
+				if(ci.GetType() == typeof(BackgroundWFImage))
 				{
 					backgroundImageProperties.Visibility = Visibility.Visible;
 					backgroundImageProperties.DataContext = ci;
 				}
-				else if(ci.GetType() == typeof(SecondaryImage))
+/*				else if(ci.GetType() == typeof(SecondaryImage))
 				{
 					secondaryImageProperties.Visibility = Visibility.Visible;
 					secondaryImageProperties.DataContext = ci;
@@ -120,7 +120,12 @@ namespace hamqsler
 				{
 					qsosBoxProperties.Visibility = Visibility.Visible;
 					qsosBoxProperties.DataContext = ci;
-				}
+				}*/
+			}
+			else
+			{
+				cardProperties.Visibility = Visibility.Visible;
+				cardProperties.DataContext = cardPanel.QslCard;
 			}
 		}
 		
@@ -130,6 +135,7 @@ namespace hamqsler
 		/// </summary>
 		private void HideAllPropertiesPanels()
 		{
+			cardProperties.Visibility = Visibility.Collapsed;
 			backgroundImageProperties.Visibility = Visibility.Collapsed;
 			secondaryImageProperties.Visibility = Visibility.Collapsed;
 			textItemProperties.Visibility = Visibility.Collapsed;
@@ -165,9 +171,9 @@ namespace hamqsler
 				}
 				// if previous image, this will force new image to be centred on
 				// the card, even if reloading the same image.
-				cardCanvas.QslCard.BackImage.ImageFileName = string.Empty;
+				cardPanel.QslCard.BackgroundImage.ImageFileName = string.Empty;
 				// set the file name and show in backgroundImageFileNameTextBox
-				cardCanvas.QslCard.BackImage.ImageFileName = fileName;
+				cardPanel.QslCard.BackgroundImage.ImageFileName = fileName;
 				backgroundImageFileNameTextBox.Text = fileName;
 			}
 		}
@@ -180,7 +186,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LoadSecondaryImage_Click(object sender, RoutedEventArgs e)
 		{
-			// create and open OpenFileDialog
+/*			// create and open OpenFileDialog
 			OpenFileDialog oDialog = new OpenFileDialog();
 			oDialog.Title = "Select Secondary Image";
 			oDialog.InitialDirectory = ((App)Application.Current).UserPreferences.DefaultImagesFolder;
@@ -209,7 +215,7 @@ namespace hamqsler
 					si.ImageFileName = fileName;
 					secondaryImageFileNameTextBox.Text = fileName;
 				}
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -316,7 +322,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void OnMacrosButtonClicked(object sender, RoutedEventArgs e)
 		{
-			CardItem ci = cardCanvas.QslCard.GetSelected();
+/*			CardWFItem ci = cardPanel.QslCard.GetSelected();
 			TextMacrosDialog dialog = new TextMacrosDialog(((TextItem)ci).Text);
 			dialog.ShowDialog();
 			if(((TextItem)ci).Text.Count == 1 && ((TextItem)ci).Text[0].GetType() == typeof(StaticText))
@@ -341,7 +347,7 @@ namespace hamqsler
 			if(dialog.IsDirty)
 			{
 				cardCanvas.QslCard.IsDirty = true;
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -351,7 +357,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void Text_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			TextItem ti = textItemProperties.DataContext as TextItem;
+/*			TextItem ti = textItemProperties.DataContext as TextItem;
 			if(ti != null)
 			{
 				StaticText sText = ti.Text[0] as StaticText;
@@ -363,7 +369,7 @@ namespace hamqsler
 				// Card PropertyChanged event
 					cardCanvas.QslCard.IsDirty = true;
 				}
-			}
+			}*/
 		}
 		
 		/// <summary>

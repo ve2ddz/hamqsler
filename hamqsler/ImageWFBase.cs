@@ -31,7 +31,7 @@ namespace hamqsler
 	public abstract class ImageWFBase : CardWFItem
 	{
 		private static readonly DependencyProperty ImageFileNameProperty =
-			DependencyProperty.Register("ImageFileName", typeof(string), typeof(CardImageBase),
+			DependencyProperty.Register("ImageFileName", typeof(string), typeof(ImageWFBase),
 			                             new PropertyMetadata(null));
 		public string ImageFileName
 		{
@@ -41,7 +41,7 @@ namespace hamqsler
 		
 		public static System.Drawing.Bitmap EmptyImage = new System.Drawing.Bitmap(1,1);
 		protected static readonly DependencyProperty ImageProperty =
-			DependencyProperty.Register("Image", typeof(Image), typeof(CardImageBase),
+			DependencyProperty.Register("Image", typeof(Image), typeof(ImageWFBase),
 			                            new PropertyMetadata(EmptyImage));
 		[XmlIgnore]
 		public Bitmap Image

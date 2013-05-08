@@ -283,7 +283,7 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void AddImageCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
@@ -295,7 +295,7 @@ namespace hamqsler
 				e.CanExecute = ti.cardCanvas.QslCard.GetSelected() == null;
 				return;
 			}
-			e.CanExecute = ci == null;
+			e.CanExecute = ci == null;*/
 		}
 		
 		/// <summary>
@@ -305,14 +305,14 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void AddTextCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
 				return;
 			}
 			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
-			e.CanExecute = ci == null;
+			e.CanExecute = ci == null;*/
 		}
 		
 		/// <summary>
@@ -322,7 +322,7 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void AddQsosBoxCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
@@ -330,7 +330,7 @@ namespace hamqsler
 			}
 			Card card = ti.cardCanvas.QslCard;
 			CardItem ci = card.GetSelected();
-			e.CanExecute = ci == null && card.QsosBox == null;
+			e.CanExecute = ci == null && card.QsosBox == null;*/
 		}
 		
 		/// <summary>
@@ -340,14 +340,14 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void DeleteItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
 				return;
 			}
 			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
-			e.CanExecute = ci != null && ci.GetType() != typeof(BackgroundImage);
+			e.CanExecute = ci != null && ci.GetType() != typeof(BackgroundImage);*/
 		}
 		
 		/// <summary>
@@ -357,7 +357,7 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void ClearBackgroundCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
@@ -365,7 +365,7 @@ namespace hamqsler
 			}
 			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
 			e.CanExecute = (ci == null || ci.GetType() == typeof(BackgroundImage)) &&
-			                ti.cardCanvas.QslCard.BackImage != null;
+			                ti.cardCanvas.QslCard.BackImage != null;*/
 		}
 		
 		/// <summary>
@@ -394,7 +394,7 @@ namespace hamqsler
 		private void SelectItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
-			e.CanExecute = ti != null && ti.cardCanvas.QslCard.GetSelected() == null;
+			e.CanExecute = ti != null && ti.cardPanel.QslCard.GetSelectedItem() == null;
 		}
 		
 		/// <summary>
@@ -405,7 +405,7 @@ namespace hamqsler
 		private void NoneCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
-			e.CanExecute = ti != null && ti.cardCanvas.QslCard.GetSelected() != null;
+			e.CanExecute = ti != null && ti.cardPanel.QslCard.GetSelectedItem() != null;
 		}
 		
 		/// <summary>
@@ -479,11 +479,11 @@ namespace hamqsler
 				}
 			}
 			// load card files
-			if(prefs.CardsReloadOnStartup)
+/*			if(prefs.CardsReloadOnStartup)
 			{
 				string[] fileNames = prefs.CardFiles.ToArray();
 				prefs.CardFiles.Clear();
-				Card card;
+				CardWF card;
 				foreach(string fileName in fileNames)
 				{
 					try
@@ -507,7 +507,7 @@ namespace hamqsler
 				}
 				((App)Application.Current).UserPreferences = prefs;
 				((App)Application.Current).UserPreferences.SerializeAsXml();
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -517,14 +517,14 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void CardOpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			OpenFileDialog oDialog = new OpenFileDialog();
+/*			OpenFileDialog oDialog = new OpenFileDialog();
 			oDialog.Filter = "QSL Card(*.qslx)|*.qslx|QslDnP Card(*xqsl)|*.xqsl";
 			oDialog.InitialDirectory = ((App)Application.Current).HamqslerFolder;
 			if(oDialog.ShowDialog(this) == true)
 			{
 				string fileName = oDialog.FileName;
 				string fileExt = fileName.Substring(fileName.Length - 4);
-				Card card = null;
+				CardWF card = null;
 				if(fileExt.Equals("qslx"))		// HamQSLer card file
 				{
 					try
@@ -587,7 +587,7 @@ namespace hamqsler
 				cti.SetTabLabel();
 				// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
 				SetTitle(card.FileName, card.IsDirty);
-			}
+			}*/
 				
 		}
 		
@@ -629,7 +629,7 @@ namespace hamqsler
 		/// <param name="e">ExecutedRoutedEventArgs object</param>
 		private void SaveCardAsJpegCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			Card card = cti.cardCanvas.QslCard;
 			JpegPropsDialog jpD = new JpegPropsDialog();
 			if(jpD.ShowDialog() == true)
@@ -651,7 +651,7 @@ namespace hamqsler
 					}
 				}
 					
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -665,7 +665,7 @@ namespace hamqsler
 		                            bool showQsos)
 		{
 			// create visual of the card
-			DrawingVisual visual = new DrawingVisual();
+/*			DrawingVisual visual = new DrawingVisual();
 			DrawingContext drawingContext = visual.RenderOpen();
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
@@ -712,7 +712,7 @@ namespace hamqsler
 				FileStream jpgFile = new FileStream(fileName, FileMode.OpenOrCreate);
 				encoder.Save(jpgFile);
 				jpgFile.Close();
-			}
+			}*/
 		}
 
 		/// <summary>
@@ -776,7 +776,7 @@ namespace hamqsler
 		/// <exception>Several others that definitely should never occur.</exception>
 		private void SaveCardsAsJpegsForPrinting(int startNumber, string directoryName)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				//create a list of QSOs for each card
@@ -829,7 +829,7 @@ namespace hamqsler
 				// tell user that all cards are created
 				StatusText.Text = qsos.Count + " of " + qsos.Count + " cards created in directory: "
 					+ directoryName;
-			}
+			}*/
 		}
 
 		/// <summary>
@@ -870,7 +870,7 @@ namespace hamqsler
         private void Save4UpAsJpeg(string fileName, int resolution, bool incBorders)
         {
             // create visual of the card
-            DrawingVisual visual = new DrawingVisual();
+/*            DrawingVisual visual = new DrawingVisual();
             DrawingContext drawingContext = visual.RenderOpen();
             CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
             for (int cardNo = 0; cardNo <= 3; cardNo++)
@@ -927,7 +927,7 @@ namespace hamqsler
             encoder.Frames.Add(BitmapFrame.Create(rtb));
             FileStream jpgFile = new FileStream(fileName, FileMode.OpenOrCreate);
             encoder.Save(jpgFile);
-            jpgFile.Close();
+            jpgFile.Close();*/
         }
 
 
@@ -939,7 +939,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void CalculateCardsToBePrintedCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				
@@ -950,7 +950,7 @@ namespace hamqsler
                                  + cards + " cards will be printed.",
                                  " Number of Cards to be Printed", MessageBoxButton.OK,
                                  MessageBoxImage.Information);
-			}
+			}*/
 		}
 		/// <summary>
 		/// Handler for Print Cards menu item Executed event
@@ -1211,11 +1211,11 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void AddImageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				cti.cardCanvas.AddImageCommand_Executed(sender, e);
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -1225,11 +1225,11 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void AddTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				cti.cardCanvas.AddTextCommand_Executed(sender, e);
-			}
+			}*/
 			
 		}
 		
@@ -1240,11 +1240,11 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void AddQsosBoxCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				cti.cardCanvas.AddQsosBoxCommand_Executed(sender, e);
-			}			
+			}*/
 		}
 		
 		/// <summary>
@@ -1254,11 +1254,11 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				cti.cardCanvas.DeleteItemCommand_Executed(sender, e);
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -1268,12 +1268,12 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void ClearBackgroundCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				cti.cardCanvas.ClearBackgroundCommand_Executed(sender, e);
 			}
-			cti.cardCanvas.QslCard.BackImage.IsSelected = false;
+			cti.cardCanvas.QslCard.BackImage.IsSelected = false;*/
 		}
 		
 		/// <summary>
@@ -1336,12 +1336,11 @@ namespace hamqsler
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				Card card = cti.cardCanvas.QslCard;
 				BuildBackgroundMenuItem();
-				BuildSecondaryImagesMenuItems();
+/*				BuildSecondaryImagesMenuItems();
 				BuildTextItemsMenuItems();
 				BuildQsosBoxMenuItem();
-				SelectMenu.Items.Add(new Separator());
+				SelectMenu.Items.Add(new Separator());*/
 				BuildNoneMenuItem();
 			}
 		}
@@ -1353,7 +1352,7 @@ namespace hamqsler
 		{
 			MenuItem mi = new MenuItem();
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			string fName = cti.cardCanvas.QslCard.BackImage.ImageFileName;
+			string fName = cti.cardPanel.QslCard.BackgroundImage.ImageFileName;
 			if(fName != null && fName != string.Empty)
 			{
 				fName = System.IO.Path.GetFileName(fName);
@@ -1365,7 +1364,7 @@ namespace hamqsler
 			mi.Header = fName;
 			mi.Click += OnSelectItem_Clicked;
 			mi.Command = SelectItemCommand;
-			mi.Tag = cti.cardCanvas.QslCard.BackImage;
+			mi.Tag = cti.cardPanel.QslCard.BackgroundImage;
 			SelectMenu.Items.Add(mi);
 		}
 		
@@ -1374,7 +1373,7 @@ namespace hamqsler
 		/// </summary>
 		private void BuildSecondaryImagesMenuItems()
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			foreach(SecondaryImage si in cti.cardCanvas.QslCard.SecondaryImages)
 			{
 				MenuItem mi = new MenuItem();
@@ -1392,7 +1391,7 @@ namespace hamqsler
 				mi.Command = SelectItemCommand;
 				mi.Tag = si;
 				SelectMenu.Items.Add(mi);
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -1400,7 +1399,7 @@ namespace hamqsler
 		/// </summary>
 		private void BuildTextItemsMenuItems()
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			foreach(TextItem ti in cti.cardCanvas.QslCard.TextItems)
 			{
 				MenuItem mi = new MenuItem();
@@ -1412,7 +1411,7 @@ namespace hamqsler
 				mi.Command = SelectItemCommand;
 				mi.Tag = ti;
 				SelectMenu.Items.Add(mi);
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -1420,7 +1419,7 @@ namespace hamqsler
 		/// </summary>
 		private void BuildQsosBoxMenuItem()
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti.cardCanvas.QslCard.QsosBox != null)
 			{
 				MenuItem mi = new MenuItem();
@@ -1429,7 +1428,7 @@ namespace hamqsler
 				mi.Command = SelectItemCommand;
 				mi.Tag = cti.cardCanvas.QslCard.QsosBox;
 				SelectMenu.Items.Add(mi);
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -1458,7 +1457,7 @@ namespace hamqsler
 				MenuItem mi = (MenuItem) sender;
 				if(mi != null)
 				{
-					CardItem ci = ((MenuItem)sender).Tag as CardItem;
+					CardWFItem ci = ((MenuItem)sender).Tag as CardWFItem;
 					if(ci != null)
 					{
 						ci.IsSelected = true;
@@ -1478,7 +1477,7 @@ namespace hamqsler
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				CardItem ci = cti.cardCanvas.QslCard.GetSelected();
+				CardWFItem ci = cti.cardPanel.QslCard.GetSelectedItem();
 				if(ci != null)
 				{
 					ci.IsSelected = false;
@@ -1492,9 +1491,9 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="card">the card to save</param>
 		/// <param name="fileName">name of file to save the card in</param>
-		private void SaveCard(Card card, string fileName)
+		private void SaveCard(CardWF card, string fileName)
 		{
-			XmlSerializer xmlFormat = new XmlSerializer(typeof(Card),
+/*			XmlSerializer xmlFormat = new XmlSerializer(typeof(CardWF),
 			                                            new Type[]{typeof(BackgroundImage),
 			                                            	typeof(SecondaryImage),
 			                                            	typeof(CardImageBase),
@@ -1516,7 +1515,7 @@ namespace hamqsler
 				card.FileName = fileName;
 				card.IsDirty = false;
 				SetTitle(fileName, card.IsDirty);
-			}
+			}*/
 		}
 		
 		/// <summary>
@@ -1599,8 +1598,8 @@ namespace hamqsler
 		/// </summary>
 		private void SaveCard()
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			Card qslCard = cti.cardCanvas.QslCard;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardWF qslCard = cti.cardPanel.QslCard;
 			if(qslCard.FileName != null)
 			{
 				qslCard.SaveAsXml(qslCard.FileName);
@@ -1614,7 +1613,7 @@ namespace hamqsler
 			else
 			{
 				SaveCardAs();
-			}
+			}*/
 
 		}
 		
@@ -1623,7 +1622,7 @@ namespace hamqsler
 		/// </summary>
 		private void SaveCardAs()
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			Card qslCard = cti.cardCanvas.QslCard;
 			string fileName = qslCard.FileName;
 			SaveFileDialog sDialog = new SaveFileDialog();
@@ -1652,7 +1651,7 @@ namespace hamqsler
 				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
 				// different control, this will not happen
 				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-			}
+			}*/
 		}
 
 		/// <summary>

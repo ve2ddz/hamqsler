@@ -234,6 +234,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void SelectCardItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
+			CardWFItem = cardPanel.
 			CardItemView civ = cardView.GetCardItemViewCursorIsOver(highlightPoint.X, highlightPoint.Y);
 			if(civ != null)
 			{
@@ -268,7 +269,7 @@ namespace hamqsler
 		/// Helper method that calls SetPropertiesVisibility in CardTabItem to set visibility
 		/// of a properties panel based on selected carditem
 		/// </summary>
-		private void SetPropertiesPanelVisibility(CardItem ci)
+		private void SetPropertiesPanelVisibility(CardWFItem ci)
 		{
 			GetCardTabItem().SetPropertiesVisibility(ci);
 		}

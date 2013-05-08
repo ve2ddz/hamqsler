@@ -166,6 +166,11 @@ namespace hamqsler
 						g.DrawRectangle(highlighedPen, new Rectangle(
 							image.X, image.Y, image.Width, image.Height));
 					}
+					else if(image.IsSelected)
+					{
+						g.DrawRectangle(selectedPen, new Rectangle(
+							image.X, image.Y, image.Width, image.Height));
+					}
 				}
 			}
 		}
@@ -179,11 +184,15 @@ namespace hamqsler
 			base.OnMouseMove(e);
 			if(e.Button == MouseButtons.None)
 			{
-				ClearHighlights();
-				if(QslCard.BackgroundImage.Contains(e.X - CardLocation.X,
-				                                    e.Y - CardLocation.Y))
+				CardWFItem ci = QslCard.GetSelectedItem();
+				if(ci == null)
 				{
-					QslCard.BackgroundImage.IsHighlighted = true;
+					ClearHighlights();
+					if(QslCard.BackgroundImage.Contains(e.X - CardLocation.X,
+					                                    e.Y - CardLocation.Y))
+					{
+						QslCard.BackgroundImage.IsHighlighted = true;
+					}
 				}
 			}
 		}
@@ -210,5 +219,6 @@ namespace hamqsler
 		{
 			 QslCard.BackgroundImage.IsHighlighted = false;
 		}
+		
 	}
 }

@@ -257,7 +257,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="card">Card object this CardItem belongs to</param>
 		/// <param name="cItem">CardItem whose properties are to be copied.</param>
-		protected void CopyBaseProperties(Card card, CardItem cItem)
+		protected void CopyBaseProperties(CardWF card, CardItem cItem)
 		{
 			DisplayX = cItem.DisplayX;
 			DisplayY = cItem.DisplayY;

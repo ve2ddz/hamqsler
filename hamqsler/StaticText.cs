@@ -59,7 +59,7 @@ namespace hamqsler
 		/// <param name='screen'>
 		/// not used
 		/// </param>
-		public override string GetText(Card card, List<DispQso> qsos, bool screen)
+		public override string GetText(CardWF card, List<DispQso> qsos, bool screen)
 		{
 			return Text;
 		}

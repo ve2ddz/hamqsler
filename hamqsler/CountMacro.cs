@@ -155,9 +155,9 @@ namespace hamqsler
 		/// <param name='screen'>
 		/// Indicates whether in design mode (true) or in print mode (false)
 		/// </param>
-		public override string GetText(Card card, List<DispQso> qsos, bool screen)
+		public override string GetText(CardWF card, List<DispQso> qsos, bool screen)
 		{
-			if(screen)
+/*			if(screen)
 			{
 				return DesignText.GetText(card, qsos, screen);
 			}
@@ -194,9 +194,9 @@ namespace hamqsler
 					FalseText.GetText(card, qsos, screen);	
 			}
 			else
-			{
+			{*/
 				return string.Empty;
-			}
+//			}
 		}
 		
 		/// <summary>

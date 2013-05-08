@@ -131,5 +131,14 @@ namespace hamqsler
 				DispPropertyChanged(this, new EventArgs());
 			}
 		}
+		
+		public CardWFItem GetSelectedItem()
+		{
+			if(BackgroundImage.IsSelected)
+			{
+				return BackgroundImage;
+			}
+			else return null;
+		}
 	}
 }

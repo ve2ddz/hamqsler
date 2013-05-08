@@ -53,7 +53,7 @@ namespace hamqsler
 		/// <param name='screen'>
 		/// Boolean indicating whether the card is being displayed on screen or printed.
 		/// </param>
-		public string GetText(Card card, List<DispQso> qsos, bool screen)
+		public string GetText(CardWF card, List<DispQso> qsos, bool screen)
 		{
 			string text = string.Empty;
 			foreach (object o in this)
