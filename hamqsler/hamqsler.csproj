@@ -99,11 +99,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BackgroundImage.cs" />
+    <Compile Include="BackgroundWFImage.cs" />
     <Compile Include="BandComparer.cs" />
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
     <Compile Include="Card.cs" />
-    <Compile Include="CardItemWFView.cs" />
     <Compile Include="CardPrintDocument.cs" />
     <Compile Include="CardPropertiesGroupBox.xaml.cs">
       <DependentUpon>CardPropertiesGroupBox.xaml</DependentUpon>
@@ -144,6 +144,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ImageView.cs" />
+    <Compile Include="ImageWFBase.cs" />
     <Compile Include="JpegPropsDialog.xaml.cs">
       <DependentUpon>JpegPropsDialog.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -842,7 +842,7 @@ namespace hamqsler
 		private static readonly DependencyProperty DebugPrintingProperty =
 			DependencyProperty.Register("DebugPrinting", typeof(bool),
 			                            typeof(UserPreferences),
-			                            new PropertyMetadata(true));
+			                            new PropertyMetadata(false));
 		public bool DebugPrinting
 		{
 			get {return (bool)GetValue(DebugPrintingProperty);}
@@ -853,7 +853,7 @@ namespace hamqsler
 		private static readonly DependencyProperty DebugLoggingProperty =
 			DependencyProperty.Register("DebugLogging", typeof(bool),
 			                            typeof(UserPreferences),
-			                            new PropertyMetadata(true));
+			                            new PropertyMetadata(false));
 		public bool DebugLogging
 		{
 			get {return (bool)GetValue(DebugLoggingProperty);}

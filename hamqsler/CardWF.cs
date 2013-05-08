@@ -54,6 +54,13 @@ namespace hamqsler
 			set {SetValue(FileNameProperty, value);}
 		}
 		
+		private BackgroundWFImage backgroundImage = null;
+		public BackgroundWFImage BackgroundImage
+		{
+			get {return backgroundImage;}
+			set {backgroundImage = value;}
+		}
+		
 		private static readonly DependencyProperty CardPrintPropertiesProperty =
 			DependencyProperty.Register("CardPrintProperties", typeof(PrintProperties),
 			                            typeof(CardWF),
@@ -63,6 +70,13 @@ namespace hamqsler
 			get {return GetValue(CardPrintPropertiesProperty) as PrintProperties;}
 			set {SetValue(CardPrintPropertiesProperty, value);}
 		}
+		
+		/// <summary>
+		/// DispPropertyChanged event is called whenever a property that affects a
+		/// CardWFItem display is changed
+		/// </summary>
+		public delegate void DisplayPropertyChanged(object sender, EventArgs e);
+		public virtual event DisplayPropertyChanged DispPropertyChanged;
 		
 		/// <summary>
 		/// Default constructor
@@ -90,6 +104,9 @@ namespace hamqsler
 			CardPrintProperties = new PrintProperties();
 			IsInDesignMode = isInDesignMode;
 			ItemSize = new System.Drawing.Size(width, height);
+			BackgroundImage = new BackgroundWFImage();
+			BackgroundImage.QslCard = this;
+			BackgroundImage.ImageFileName = @"$hamqslerFolder$\Samples\sample.jpg";
 		}
 		
 		/// <summary>
@@ -104,5 +121,15 @@ namespace hamqsler
 			return card;
 		}
 		
+		/// <summary>
+		/// Raise the DispPropertyChanged event
+		/// </summary>
+		public void RaiseDispPropertyChangedEvent()
+		{
+			if(DispPropertyChanged != null)
+			{
+				DispPropertyChanged(this, new EventArgs());
+			}
+		}
 	}
 }

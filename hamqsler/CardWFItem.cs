@@ -92,6 +92,24 @@ namespace hamqsler
 			}
 		}
 		
+		private static readonly DependencyProperty IsSelectedProperty =
+			DependencyProperty.Register("IsSelected", typeof(bool), typeof(CardWFItem),
+			                            new PropertyMetadata(false));
+		public bool IsSelected
+		{
+			get {return (bool)GetValue(IsSelectedProperty);}
+			set {SetValue(IsSelectedProperty, value);}
+		}
+		
+		private static readonly DependencyProperty IsHighlightedProperty =
+			DependencyProperty.Register("IsHighlighed", typeof(bool), typeof(CardWFItem),
+			                            new PropertyMetadata(false));
+		public bool IsHighlighted
+		{
+			get {return (bool)GetValue(IsHighlightedProperty);}
+			set {SetValue(IsHighlightedProperty, value);}
+		}
+		
 		/// <summary>
 		/// Default constructor
 		/// </summary>
@@ -105,6 +123,22 @@ namespace hamqsler
 		public CardWFItem(int width, int height)
 		{
 			ItemSize = new System.Drawing.Size(width, height);
+		}
+		
+		/// <summary>
+		/// Handler for PropertyChanged event
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == LocationProperty ||
+			   e.Property == ItemSizeProperty ||
+			   e.Property == IsSelectedProperty ||
+			   e.Property == IsHighlightedProperty)
+			{
+				QslCard.RaiseDispPropertyChangedEvent();
+			}
 		}
 	}
 }

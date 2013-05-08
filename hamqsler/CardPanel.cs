@@ -66,7 +66,9 @@ namespace hamqsler
 		{
 			QslCard = card;
 			FormsCardView view = new FormsCardView(QslCard);
-			view.Location = new Point((this.Width - QslCard.Width) / 2,
+			view.Location = new Point(0, 0);
+			view.Size = new Size(this.Width, this.Height);
+			view.CardLocation = new Point((this.Width - QslCard.Width) / 2,
 			                          (this.Height - QslCard.Height) / 2);
 			this.Controls.Add(view);
 		}
