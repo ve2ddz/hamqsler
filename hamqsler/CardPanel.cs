@@ -73,5 +73,10 @@ namespace hamqsler
 			this.Controls.Add(view);
 		}
 		
+		public void ClearBackgroundImage()
+		{
+			QslCard.BackgroundImage.ImageFileName = string.Empty;
+		}
+		
 	}
 }

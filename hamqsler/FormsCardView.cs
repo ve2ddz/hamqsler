@@ -51,6 +51,9 @@ namespace hamqsler
 		protected static Pen highlighedPen = CreateHighlightedPen();
 		protected static ImageAttributes outsideCardAttrs = CreateOutsideCardImageAttributes();
 		
+		private System.Windows.Controls.ContextMenu contextMenu = 
+			new System.Windows.Controls.ContextMenu();
+		private CardWFItem highlightedCardItem;
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -60,6 +63,7 @@ namespace hamqsler
 			this.DoubleBuffered = true;
 			QslCard = card;
 			QslCard.DispPropertyChanged += OnDispPropertyChanged;
+			BuildContextMenu();
 		}
 		
 		/// <summary>
@@ -161,16 +165,19 @@ namespace hamqsler
 					g.DrawImage(image.Image, new Rectangle(
 						image.X, image.Y, image.Width, image.Height), 0, 0, image.Image.Width,
 						image.Image.Height, GraphicsUnit.Pixel, outsideCardAttrs);
-					if(image.IsHighlighted)
-					{
-						g.DrawRectangle(highlighedPen, new Rectangle(
-							image.X, image.Y, image.Width, image.Height));
-					}
-					else if(image.IsSelected)
-					{
-						g.DrawRectangle(selectedPen, new Rectangle(
-							image.X, image.Y, image.Width, image.Height));
-					}
+				}
+			}
+			if(QslCard.IsInDesignMode)
+			{
+				if(image.IsHighlighted)
+				{
+					g.DrawRectangle(highlighedPen, new Rectangle(
+						image.X, image.Y, image.Width, image.Height));
+				}
+				else if(image.IsSelected)
+				{
+					g.DrawRectangle(selectedPen, new Rectangle(
+						image.X, image.Y, image.Width, image.Height));
 				}
 			}
 		}
@@ -188,7 +195,7 @@ namespace hamqsler
 				if(ci == null)
 				{
 					ClearHighlights();
-					if(QslCard.BackgroundImage.Contains(e.X - CardLocation.X,
+					if(QslCard.BackgroundImage.Contains(e.X - CardLocation.X, 
 					                                    e.Y - CardLocation.Y))
 					{
 						QslCard.BackgroundImage.IsHighlighted = true;
@@ -211,6 +218,15 @@ namespace hamqsler
 			ClearHighlights();
 		}
 		
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			base.OnMouseUp(e);
+			if(e.Button == MouseButtons.Right)
+			{
+				contextMenu.IsOpen = true;
+			}
+		}
+		
 		/// <summary>
 		/// Helper function that sets the IsHighlighted property of every card item
 		/// on the displayed card to false;
@@ -218,6 +234,73 @@ namespace hamqsler
 		protected void ClearHighlights()
 		{
 			 QslCard.BackgroundImage.IsHighlighted = false;
+		}
+		
+		private void BuildContextMenu()
+		{
+			contextMenu.Opened += OnContextMenuOpen;
+			System.Windows.Controls.MenuItem select = 
+				new System.Windows.Controls.MenuItem();
+			select.Header = "Select Item";
+			select.Name = "SelectItem";
+			select.Click += OnSelectItemClicked;
+			contextMenu.Items.Add(select);
+			
+			System.Windows.Controls.MenuItem  deselect = 
+				new System.Windows.Controls.MenuItem();
+			deselect.Header = "Deselect Item";
+			deselect.Name = "DeselectItem";
+			deselect.Click += OnDeselectItemClicked;
+			contextMenu.Items.Add(deselect);
+			
+			System.Windows.Controls.MenuItem clearBackground =
+				new System.Windows.Controls.MenuItem();
+			clearBackground.Header = "Clear Background Image";
+			clearBackground.Name = "ClearBackgroundItem";
+			clearBackground.Click += OnClearBackgroundClicked;
+			contextMenu.Items.Add(clearBackground);
+		}
+		
+		private void OnContextMenuOpen(object sender, System.Windows.RoutedEventArgs e)
+		{
+			highlightedCardItem = QslCard.GetHighlightedItem();
+			CardWFItem selectedCardItem = QslCard.GetSelectedItem();
+			foreach(System.Windows.Controls.MenuItem mi in contextMenu.Items)
+			{
+				switch(mi.Name)
+				{
+					case "SelectItem":
+						mi.IsEnabled = highlightedCardItem != null;
+						break;
+					case "DeselectItem":
+						mi.IsEnabled = selectedCardItem != null;
+						break;
+					case "ClearBackgroundItem":
+						mi.IsEnabled = QslCard.BackgroundImage.ImageFileName != null &&
+							QslCard.BackgroundImage.ImageFileName != string.Empty &&
+							(selectedCardItem == null || 
+							 selectedCardItem == QslCard.BackgroundImage);
+						break;
+				}
+			}
+		}
+		
+		private void OnSelectItemClicked(object sender, System.Windows.RoutedEventArgs e)
+		{
+			System.Windows.Controls.MenuItem mi = sender as System.Windows.Controls.MenuItem;
+			mi.Tag = highlightedCardItem;
+			((MainWindow)App.Current.MainWindow).OnSelectItem_Clicked(sender, e);
+		}
+		
+		private void OnDeselectItemClicked(object sender, System.Windows.RoutedEventArgs e)
+		{
+			((MainWindow)App.Current.MainWindow).OnNone_Clicked(sender, e);
+		}
+		
+		private void OnClearBackgroundClicked(object sender, System.Windows.RoutedEventArgs e)
+		{
+			((MainWindow)App.Current.MainWindow).ClearBackgroundCommand_Executed(
+				sender, null);
 		}
 		
 	}

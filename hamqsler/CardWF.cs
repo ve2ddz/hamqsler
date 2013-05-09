@@ -140,5 +140,14 @@ namespace hamqsler
 			}
 			else return null;
 		}
+		
+		public CardWFItem GetHighlightedItem()
+		{
+			if(BackgroundImage.IsHighlighted)
+			{
+				return BackgroundImage;
+			}
+			else return null;
+		}
 	}
 }

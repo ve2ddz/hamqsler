@@ -357,15 +357,15 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void ClearBackgroundCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
 				return;
 			}
-			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
-			e.CanExecute = (ci == null || ci.GetType() == typeof(BackgroundImage)) &&
-			                ti.cardCanvas.QslCard.BackImage != null;*/
+			CardWFItem ci = ti.cardPanel.QslCard.GetSelectedItem();
+			e.CanExecute = (ci == null || ci.GetType() == typeof(BackgroundWFImage)) &&
+			                ti.cardPanel.QslCard.BackgroundImage != null;
 		}
 		
 		/// <summary>
@@ -1266,14 +1266,13 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void ClearBackgroundCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		internal void ClearBackgroundCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				cti.cardCanvas.ClearBackgroundCommand_Executed(sender, e);
+				cti.cardPanel.ClearBackgroundImage();
 			}
-			cti.cardCanvas.QslCard.BackImage.IsSelected = false;*/
 		}
 		
 		/// <summary>
@@ -1449,7 +1448,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">menu item that was clicked</param>
 		/// <param name="e">Not used</param>
-		private void OnSelectItem_Clicked(object sender, RoutedEventArgs e)
+		internal void OnSelectItem_Clicked(object sender, RoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
@@ -1472,7 +1471,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void OnNone_Clicked(object sender, RoutedEventArgs e)
+		internal void OnNone_Clicked(object sender, RoutedEventArgs e)
 		{
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
