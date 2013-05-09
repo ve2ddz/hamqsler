@@ -73,6 +73,9 @@ namespace hamqsler
 			this.Controls.Add(view);
 		}
 		
+		/// <summary>
+		/// Clear the filename and therefore the image for the card's background image
+		/// </summary>
 		public void ClearBackgroundImage()
 		{
 			QslCard.BackgroundImage.ImageFileName = string.Empty;

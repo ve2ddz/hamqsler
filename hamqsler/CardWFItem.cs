@@ -145,6 +145,12 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Determine if the input coordinates are inside the card item
+		/// </summary>
+		/// <param name="x">X coordinate</param>
+		/// <param name="y">Y coordinate</param>
+		/// <returns>true if coordinates are inside this card item, false otherwise</returns>
 		public bool Contains(int x, int y)
 		{
 			Rectangle contents = new Rectangle(this.X, this.Y, this.Width, this.Height);

@@ -92,7 +92,7 @@ namespace hamqsler
 		/// Creates the ImageAttributes needed to display card items outside the card
 		/// at 40% opacity
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>ImageAttributes object with 40% opacity</returns>
 		public static ImageAttributes CreateOutsideCardImageAttributes()
 		{
 		    // Create a color matrix that is 40% opaque
@@ -218,6 +218,10 @@ namespace hamqsler
 			ClearHighlights();
 		}
 		
+		/// <summary>
+		/// Handler for MouseUp events
+		/// </summary>
+		/// <param name="e">MouseEventArgs object</param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
@@ -236,6 +240,9 @@ namespace hamqsler
 			 QslCard.BackgroundImage.IsHighlighted = false;
 		}
 		
+		/// <summary>
+		/// Helper method that builds the card view's context menu
+		/// </summary>
 		private void BuildContextMenu()
 		{
 			contextMenu.Opened += OnContextMenuOpen;
@@ -261,10 +268,16 @@ namespace hamqsler
 			contextMenu.Items.Add(clearBackground);
 		}
 		
+		/// <summary>
+		/// Handler for context menu's opened event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void OnContextMenuOpen(object sender, System.Windows.RoutedEventArgs e)
 		{
 			highlightedCardItem = QslCard.GetHighlightedItem();
 			CardWFItem selectedCardItem = QslCard.GetSelectedItem();
+			// determine the IsEnabled property for each menu item
 			foreach(System.Windows.Controls.MenuItem mi in contextMenu.Items)
 			{
 				switch(mi.Name)
@@ -285,8 +298,14 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handler for context menu's Select Item menu item clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked (Select Item)</param>
+		/// <param name="e">RoutedEventArgs objecgt</param>
 		private void OnSelectItemClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
+			// pass processing to MainWindow.OnSelectItem_Clicked
 			System.Windows.Controls.MenuItem mi = sender as System.Windows.Controls.MenuItem;
 			mi.Tag = highlightedCardItem;
 			((MainWindow)App.Current.MainWindow).OnSelectItem_Clicked(sender, e);
@@ -294,11 +313,13 @@ namespace hamqsler
 		
 		private void OnDeselectItemClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
+			// pass processing to MainWindow.OnNone_Clicked
 			((MainWindow)App.Current.MainWindow).OnNone_Clicked(sender, e);
 		}
 		
 		private void OnClearBackgroundClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
+			// pass processing to MainWindow.ClearBackgroundCommand_Executed
 			((MainWindow)App.Current.MainWindow).ClearBackgroundCommand_Executed(
 				sender, null);
 		}
