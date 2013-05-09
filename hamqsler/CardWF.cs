@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace hamqsler
@@ -59,6 +60,12 @@ namespace hamqsler
 		{
 			get {return backgroundImage;}
 			set {backgroundImage = value;}
+		}
+		
+		private List<SecondaryWFImage> secondaryImages = new List<SecondaryWFImage>();
+		public List<SecondaryWFImage> SecondaryImages
+		{
+			get {return secondaryImages;}
 		}
 		
 		private static readonly DependencyProperty CardPrintPropertiesProperty =
@@ -132,8 +139,19 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Retrieve the card item that is selected on this card
+		/// </summary>
+		/// <returns>Selected card item, if any, or null if none selected</returns>
 		public CardWFItem GetSelectedItem()
 		{
+			foreach(SecondaryWFImage sImage in SecondaryImages)
+			{
+				if(sImage.IsSelected)
+				{
+					return sImage;
+				}
+			}
 			if(BackgroundImage.IsSelected)
 			{
 				return BackgroundImage;
@@ -141,8 +159,19 @@ namespace hamqsler
 			else return null;
 		}
 		
+		/// <summary>
+		/// Retrieve the highlighted card item on this card
+		/// </summary>
+		/// <returns>Highlighted card item, if any, or null if none highlighted</returns>
 		public CardWFItem GetHighlightedItem()
 		{
+			foreach(SecondaryWFImage sImage in SecondaryImages)
+			{
+				if(sImage.IsHighlighted)
+				{
+					return sImage;
+				}
+			}
 			if(BackgroundImage.IsHighlighted)
 			{
 				return BackgroundImage;

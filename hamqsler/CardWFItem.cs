@@ -28,7 +28,7 @@ namespace hamqsler
 	/// </summary>
 	public abstract class CardWFItem : DependencyObject
 	{
-		private static readonly DependencyProperty QslCardProperty =
+		protected static readonly DependencyProperty QslCardProperty =
 			DependencyProperty.Register("QslCard", typeof(CardWF), typeof(CardWFItem),
 			                            new PropertyMetadata(null));
 		public CardWF QslCard

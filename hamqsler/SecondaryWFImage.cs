@@ -22,17 +22,23 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// Description of BackgroundWFImage.
+	/// SecondaryWFImage class - describes secondary images.
 	/// </summary>
-	public class BackgroundWFImage : ImageWFBase
+	public class SecondaryWFImage : ImageWFBase
 	{
-		public BackgroundWFImage()
+		private int initialSize = 100;
+		
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		public SecondaryWFImage()
 		{
 		}
-
+		
 		/// <summary>
-		/// Calculate the DisplayRectangle for this BackgroundImage
+		/// Calculate the DisplayRectangle for this SecondaryImage
 		/// </summary>
+
 		protected override void CalculateRectangle()
 		{
 			double x = this.X;
@@ -46,30 +52,17 @@ namespace hamqsler
 		            double dWidth = Image.Width;
 		            double  dHeight = Image.Height;
 		            
-		            w = QslCard.Width;
-		            h = QslCard.Height;
+		            w = initialSize;
+		            h = initialSize;
 		            double scaleX = w / dWidth;
 		            double scaleY = h / dHeight;
 		            double scale = scaleX > scaleY ? scaleX : scaleY;
 		            dWidth *= scale;
 		            dHeight *= scale;
-		            if(x == 0 && y == 0)
-		            {
-			            if (dWidth > w)
-			            {
-			            	x = (w - dWidth) / 2;
-			                w = dWidth;
-			            }
-			            if (dHeight > h)
-			            {
-			            	y = (h - dHeight) / 2;
-			                h = dHeight;
-			            }
-		            }
 		            this.X = (int)x;
 		            this.Y = (int)y;
-		            this.Width = (int)w;
-		            this.Height = (int)h;
+		            this.Width = (int)dWidth;
+		            this.Height = (int)dHeight;
 				}
 			}
 		}
@@ -79,10 +72,10 @@ namespace hamqsler
 		/// </summary>
 		protected override void ResetRectangle()
 		{
-			this.X = 0;
-			this.Y = 0;
-			this.Width = QslCard.Width;
-			this.Height = QslCard.Height;
+			this.X = (QslCard.Width - initialSize) / 2;
+			this.Y = (QslCard.Height - initialSize) / 2;
+			this.Width = initialSize;
+			this.Height = initialSize;
 		}
 	}
 }

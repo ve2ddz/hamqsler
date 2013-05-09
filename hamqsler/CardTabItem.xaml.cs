@@ -98,12 +98,12 @@ namespace hamqsler
 					backgroundImageProperties.Visibility = Visibility.Visible;
 					backgroundImageProperties.DataContext = ci;
 				}
-/*				else if(ci.GetType() == typeof(SecondaryImage))
+				else if(ci.GetType() == typeof(SecondaryWFImage))
 				{
 					secondaryImageProperties.Visibility = Visibility.Visible;
 					secondaryImageProperties.DataContext = ci;
 				}
-				else if(ci.GetType() == typeof(TextItem))
+/*				else if(ci.GetType() == typeof(TextItem))
 				{
 					TextItem ti = (TextItem)ci;
 					textItemProperties.Visibility = Visibility.Visible;
@@ -186,7 +186,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LoadSecondaryImage_Click(object sender, RoutedEventArgs e)
 		{
-/*			// create and open OpenFileDialog
+			// create and open OpenFileDialog
 			OpenFileDialog oDialog = new OpenFileDialog();
 			oDialog.Title = "Select Secondary Image";
 			oDialog.InitialDirectory = ((App)Application.Current).UserPreferences.DefaultImagesFolder;
@@ -207,15 +207,15 @@ namespace hamqsler
 				}
 				// if previous image, this will force new image to be centred on
 				// the card, even if reloading the same image.
-				SecondaryImage si = cardCanvas.QslCard.GetSelected() as SecondaryImage;
+				SecondaryWFImage si = cardPanel.QslCard.GetSelectedItem() as SecondaryWFImage;
 				if(si != null)
 				{
-//					si.ImageFileName = string.Empty;
+					si.ImageFileName = string.Empty;
 					// set the file name and show in secondaryImageFileNameTextBox
 					si.ImageFileName = fileName;
 					secondaryImageFileNameTextBox.Text = fileName;
 				}
-			}*/
+			}
 		}
 		
 		/// <summary>

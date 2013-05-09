@@ -283,19 +283,19 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void AddImageCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
 				return;
 			}
-			CardItem ci = null;
-			if(ti.cardCanvas != null && ti.cardCanvas.QslCard != null)
+			CardWFItem ci = null;
+			if(ti.cardPanel != null && ti.cardPanel.QslCard != null)
 			{
-				e.CanExecute = ti.cardCanvas.QslCard.GetSelected() == null;
+				e.CanExecute = ti.cardPanel.QslCard.GetSelectedItem() == null;
 				return;
 			}
-			e.CanExecute = ci == null;*/
+			e.CanExecute = ci == null;
 		}
 		
 		/// <summary>
@@ -1209,13 +1209,14 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void AddImageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		internal void AddImageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				cti.cardCanvas.AddImageCommand_Executed(sender, e);
-			}*/
+				SecondaryWFImage sImage = cti.cardPanel.AddImage();
+				cti.SetPropertiesVisibility(sImage);
+			}
 		}
 		
 		/// <summary>
@@ -1336,10 +1337,10 @@ namespace hamqsler
 			if(cti != null)
 			{
 				BuildBackgroundMenuItem();
-/*				BuildSecondaryImagesMenuItems();
-				BuildTextItemsMenuItems();
-				BuildQsosBoxMenuItem();
-				SelectMenu.Items.Add(new Separator());*/
+				BuildSecondaryImagesMenuItems();
+/*				BuildTextItemsMenuItems();
+				BuildQsosBoxMenuItem();*/
+				SelectMenu.Items.Add(new Separator());
 				BuildNoneMenuItem();
 			}
 		}
@@ -1372,8 +1373,8 @@ namespace hamqsler
 		/// </summary>
 		private void BuildSecondaryImagesMenuItems()
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			foreach(SecondaryImage si in cti.cardCanvas.QslCard.SecondaryImages)
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			foreach(SecondaryWFImage si in cti.cardPanel.QslCard.SecondaryImages)
 			{
 				MenuItem mi = new MenuItem();
 				string fName = si.ImageFileName;
@@ -1390,7 +1391,7 @@ namespace hamqsler
 				mi.Command = SelectItemCommand;
 				mi.Tag = si;
 				SelectMenu.Items.Add(mi);
-			}*/
+			}
 		}
 		
 		/// <summary>

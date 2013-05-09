@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -133,6 +134,10 @@ namespace hamqsler
 			g.TranslateTransform(CardLocation.X, CardLocation.Y);
 			g.FillRectangle(Brushes.White, new Rectangle(0, 0, QslCard.Width, QslCard.Height));
 			PaintImage(g, QslCard.BackgroundImage);
+			foreach(SecondaryWFImage sImage in QslCard.SecondaryImages)
+			{
+				PaintImage(g, sImage);
+			}
 			if(QslCard.CardPrintProperties.PrintCardOutlines)
 			{
 				g.DrawRectangle(Pens.Black, new Rectangle(
@@ -273,6 +278,10 @@ namespace hamqsler
 		/// </summary>
 		protected void ClearHighlights()
 		{
+			foreach(SecondaryWFImage sImage in QslCard.SecondaryImages)
+			{
+				sImage.IsHighlighted = false;
+			}
 			 QslCard.BackgroundImage.IsHighlighted = false;
 		}
 		
@@ -296,6 +305,17 @@ namespace hamqsler
 			deselect.Click += OnDeselectItemClicked;
 			contextMenu.Items.Add(deselect);
 			
+			contextMenu.Items.Add(new System.Windows.Controls.Separator());
+			
+			System.Windows.Controls.MenuItem addImage =
+				new System.Windows.Controls.MenuItem();
+			addImage.Header = "Add Image";
+			addImage.Name = "AddImage";
+			addImage.Click += OnAddImageClicked;
+			contextMenu.Items.Add(addImage);
+			
+			contextMenu.Items.Add(new System.Windows.Controls.Separator());
+
 			System.Windows.Controls.MenuItem clearBackground =
 				new System.Windows.Controls.MenuItem();
 			clearBackground.Header = "Clear Background Image";
@@ -314,22 +334,29 @@ namespace hamqsler
 			highlightedCardItem = QslCard.GetHighlightedItem();
 			CardWFItem selectedCardItem = QslCard.GetSelectedItem();
 			// determine the IsEnabled property for each menu item
-			foreach(System.Windows.Controls.MenuItem mi in contextMenu.Items)
+			foreach(System.Windows.Controls.Control ctrl in contextMenu.Items)
 			{
-				switch(mi.Name)
+				System.Windows.Controls.MenuItem mi = ctrl as System.Windows.Controls.MenuItem;
+				if(mi != null)
 				{
-					case "SelectItem":
-						mi.IsEnabled = highlightedCardItem != null;
-						break;
-					case "DeselectItem":
-						mi.IsEnabled = selectedCardItem != null;
-						break;
-					case "ClearBackgroundItem":
-						mi.IsEnabled = QslCard.BackgroundImage.ImageFileName != null &&
-							QslCard.BackgroundImage.ImageFileName != string.Empty &&
-							(selectedCardItem == null || 
-							 selectedCardItem == QslCard.BackgroundImage);
-						break;
+					switch(mi.Name)
+					{
+						case "SelectItem":
+							mi.IsEnabled = highlightedCardItem != null;
+							break;
+						case "DeselectItem":
+							mi.IsEnabled = selectedCardItem != null;
+							break;
+						case "ClearBackgroundItem":
+							mi.IsEnabled = QslCard.BackgroundImage.ImageFileName != null &&
+								QslCard.BackgroundImage.ImageFileName != string.Empty &&
+								(selectedCardItem == null || 
+								 selectedCardItem == QslCard.BackgroundImage);
+							break;
+						case "AddImage":
+							mi.IsEnabled = selectedCardItem == null;
+							break;
+					}
 				}
 			}
 		}
@@ -357,6 +384,13 @@ namespace hamqsler
 		{
 			// pass processing to MainWindow.ClearBackgroundCommand_Executed
 			((MainWindow)App.Current.MainWindow).ClearBackgroundCommand_Executed(
+				sender, null);
+		}
+		
+		private void OnAddImageClicked(object sender, System.Windows.RoutedEventArgs e)
+		{
+			// pass processing to MainWindow.ClearBackgroundCommand_Executed
+			((MainWindow)App.Current.MainWindow).AddImageCommand_Executed(
 				sender, null);
 		}
 		
@@ -408,6 +442,15 @@ namespace hamqsler
 		private void HighlightCardItem(int x, int y)
 		{
 			ClearHighlights();
+			Array revImages = QslCard.SecondaryImages.ToArray();
+			for(int index = revImages.Length - 1; index >= 0; index--)
+			{
+				if(((SecondaryWFImage)revImages.GetValue(index)).Contains(x, y))
+				{
+					((SecondaryWFImage)revImages.GetValue(index)).IsHighlighted = true;
+					return;
+				}
+			}
 			if(QslCard.BackgroundImage.Contains(x, y))
 			{
 				QslCard.BackgroundImage.IsHighlighted = true;

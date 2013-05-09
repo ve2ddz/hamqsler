@@ -126,6 +126,10 @@ namespace hamqsler
 					QslCard.IsDirty = true;
 				}
 			}
+			else if(e.Property == QslCardProperty)
+			{
+				ResetRectangle();
+			}
 		}
 		
 		/// <summary>

@@ -81,5 +81,17 @@ namespace hamqsler
 			QslCard.BackgroundImage.ImageFileName = string.Empty;
 		}
 		
+		/// <summary>
+		/// Add a SecondaryWFImage to the card
+		/// </summary>
+		/// <returns>SecondaryWFImage that was added</returns>
+		public SecondaryWFImage AddImage()
+		{
+			SecondaryWFImage sImage = new SecondaryWFImage();
+			sImage.QslCard = QslCard;
+			sImage.IsSelected = true;
+			QslCard.SecondaryImages.Add(sImage);
+			return sImage;			
+		}
 	}
 }
