@@ -127,5 +127,37 @@ namespace hamqsler
 				}
 			}
 		}
+		
+		/// <summary>
+		/// Determine the relative location of the input coordinates within the image item 
+		/// </summary>
+		/// <param name="x">Card relative X coordinate</param>
+		/// <param name="y">Card relative Y coordinate</param>
+		/// <returns>Relative location</returns>
+		public override CardWFItem.RelativeLocations GetRelativeLocation(int x, int y)
+		{
+			RelativeLocations location = RelativeLocations.Outside;
+			if(NW.Contains(x, y))
+			{
+				location = CardWFItem.RelativeLocations.NW;
+			}
+			else if(NE.Contains(x, y))
+			{
+				location = RelativeLocations.NE;
+			}
+			else if(SW.Contains(x, y))
+			{
+				location = RelativeLocations.SW;
+			}
+			else if(SE.Contains(x, y))
+			{
+				location = RelativeLocations.SE;
+			}
+			else if(this.Contains(x, y))
+			{
+				location = RelativeLocations.Inside;
+			}
+			return location;
+		}
 	}
 }

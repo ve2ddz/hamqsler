@@ -111,6 +111,70 @@ namespace hamqsler
 			set {SetValue(IsHighlightedProperty, value);}
 		}
 		
+		private const int SENSITIVESIZE = 10;	// should always be divisible by 2;
+		public enum RelativeLocations
+		{
+			Outside,
+			Inside,
+			NW,
+			NE,
+			SW,
+			SE,
+			E,
+			W
+		};
+		
+		private RelativeLocations relativeLocation = RelativeLocations.Inside;
+		public RelativeLocations RelativeLocation
+		{
+			get {return relativeLocation;}
+			set {relativeLocation = value;}
+		}
+		
+		public Rectangle NW
+		{
+			get {return new Rectangle(this.X - SENSITIVESIZE / 2,
+			                          this.Y - SENSITIVESIZE / 2,
+			                          SENSITIVESIZE, SENSITIVESIZE);}
+		}
+		
+		public Rectangle NE
+		{
+			get {return new Rectangle(this.X + this.Width - SENSITIVESIZE / 2,
+			                          this.Y - SENSITIVESIZE / 2,
+			                          SENSITIVESIZE, SENSITIVESIZE);}
+		}
+		
+		public Rectangle SW
+		{
+			get {return new Rectangle(this.X - SENSITIVESIZE / 2,
+			                          this.Y + this.Height - SENSITIVESIZE / 2,
+			                          SENSITIVESIZE, SENSITIVESIZE);}
+		}
+		
+		public Rectangle SE
+		{
+			get {return new Rectangle(this.X + this.Width - SENSITIVESIZE / 2,
+			                          this.Y + this.Height - SENSITIVESIZE / 2,
+			                          SENSITIVESIZE, SENSITIVESIZE);}
+		}
+		
+		public Rectangle W
+		{
+			get {return new Rectangle(this.X - SENSITIVESIZE / 2,
+			                          this.Y, SENSITIVESIZE, this.Height);}
+		}
+		
+		public Rectangle E
+		{
+			get {return new Rectangle(this.X + this.Width - SENSITIVESIZE / 2,
+			                          this.Y, SENSITIVESIZE, this.Height);}
+		}
+		
+		public abstract RelativeLocations GetRelativeLocation(int x, int y);
+		public static int MinimumSize = 25;
+
+		
 		/// <summary>
 		/// Default constructor
 		/// </summary>

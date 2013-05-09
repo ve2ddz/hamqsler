@@ -149,5 +149,21 @@ namespace hamqsler
 			}
 			else return null;
 		}
+		
+		/// <summary>
+		/// Get the relative position of the input coordinates relative to this card
+		/// </summary>
+		/// <param name="x">Card relative X coordinate</param>
+		/// <param name="y">Card relative Y coordinate</param>
+		/// <returns>RelativeLocations value</returns>
+		public override CardWFItem.RelativeLocations GetRelativeLocation(int x, int y)
+		{
+			RelativeLocations location = RelativeLocations.Outside;
+			if(this.Contains(x, y))
+			{
+				location = RelativeLocations.Inside;
+			}
+			return location;
+		}
 	}
 }

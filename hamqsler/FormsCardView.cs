@@ -88,6 +88,11 @@ namespace hamqsler
 			return pen;
 		}
 		
+		private CardWFItem.RelativeLocations relativeLocation = 
+			CardWFItem.RelativeLocations.Outside;
+		private Point cursorDownLocation = new Point(0, 0);
+		private Rectangle originalItemRectangle;
+		
 		/// <summary>
 		/// Creates the ImageAttributes needed to display card items outside the card
 		/// at 40% opacity
@@ -185,22 +190,27 @@ namespace hamqsler
 		/// <summary>
 		/// Handler for MouseMove events
 		/// </summary>
-		/// <param name="e">MouseEventArgs object</param>
+		/// <param name="e">MouseEventArgs object that describes this event</param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			base.OnMouseMove(e);
+			CardWFItem selectedItem = QslCard.GetSelectedItem();
 			if(e.Button == MouseButtons.None)
 			{
-				CardWFItem ci = QslCard.GetSelectedItem();
-				if(ci == null)
+				if(selectedItem == null)
 				{
-					ClearHighlights();
-					if(QslCard.BackgroundImage.Contains(e.X - CardLocation.X, 
-					                                    e.Y - CardLocation.Y))
-					{
-						QslCard.BackgroundImage.IsHighlighted = true;
-					}
+					HighlightCardItem(e.X - CardLocation.X, e.Y - CardLocation.Y);
 				}
+				else
+				{
+					this.Cursor = GetCardItemCursor(selectedItem, 
+						e.X - CardLocation.X, e.Y - CardLocation.Y);
+				}
+			}
+			else if(e.Button == MouseButtons.Left)
+			{
+				MoveOrResizeCardItem(selectedItem, e.X - CardLocation.X, 
+				                     e.Y - CardLocation.Y);
 			}
 		}
 		
@@ -221,13 +231,39 @@ namespace hamqsler
 		/// <summary>
 		/// Handler for MouseUp events
 		/// </summary>
-		/// <param name="e">MouseEventArgs object</param>
+		/// <param name="e">MouseEventArgs object that describes this event</param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
 			if(e.Button == MouseButtons.Right)
 			{
 				contextMenu.IsOpen = true;
+			}
+			else if(e.Button == MouseButtons.Left)
+			{
+				relativeLocation = CardWFItem.RelativeLocations.Outside;
+			}
+		}
+		
+		/// <summary>
+		/// Handler for mouse down events
+		/// </summary>
+		/// <param name="e">MouseEventArgs object that describes this event</param>
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			base.OnMouseDown(e);
+			if(e.Button == MouseButtons.Left)
+			{
+				CardWFItem ci = QslCard.GetSelectedItem();
+				if(ci != null)
+				{
+					relativeLocation = ci.GetRelativeLocation(
+						e.X - CardLocation.X, e.Y - CardLocation.Y);
+					cursorDownLocation = new Point(
+						e.X - CardLocation.X, e.Y - CardLocation.Y);
+					originalItemRectangle = new Rectangle(
+						ci.X, ci.Y, ci.Width, ci.Height);
+				}
 			}
 		}
 		
@@ -322,6 +358,111 @@ namespace hamqsler
 			// pass processing to MainWindow.ClearBackgroundCommand_Executed
 			((MainWindow)App.Current.MainWindow).ClearBackgroundCommand_Executed(
 				sender, null);
+		}
+		
+		/// <summary>
+		/// Get the cursor to display when an image card item is selected. The cursor
+		/// that is returned is determined by the location of the mouse relative
+		/// to the card item.
+		/// </summary>
+		/// <param name="imageItem">Image card item that is selected</param>
+		/// <param name="x">Card relative X coordinate</param>
+		/// <param name="y">Card relative Y coordinate</param>
+		/// <returns>Cursor to display</returns>
+		private Cursor GetCardItemCursor(CardWFItem cardItem, int x, int y)
+		{
+			Cursor cursor;
+			switch(cardItem.GetRelativeLocation(x, y))
+			{
+				case CardWFItem.RelativeLocations.NW:
+					cursor = Cursors.SizeNWSE;
+					break;
+				case CardWFItem.RelativeLocations.NE:
+					cursor = Cursors.SizeNESW;
+					break;
+				case CardWFItem.RelativeLocations.SW:
+					cursor = Cursors.SizeNESW;
+					break;
+				case CardWFItem.RelativeLocations.SE:
+					cursor = Cursors.SizeNWSE;
+					break;
+				case CardWFItem.RelativeLocations.W:
+				case CardWFItem.RelativeLocations.E:
+					cursor = Cursors.SizeWE;
+					break;
+				case CardWFItem.RelativeLocations.Inside:
+					cursor = Cursors.SizeAll;
+					break;
+				default:
+					cursor = Cursors.Arrow;
+					break;
+			}
+			return cursor;
+		}
+		
+		/// <summary>
+		///  Helper method that highlights the card item that the cursor is over
+		/// </summary>
+		/// <param name="x">Card relative X cursor coordinate</param>
+		/// <param name="y">Card relative Y cursor coordinate</param>
+		private void HighlightCardItem(int x, int y)
+		{
+			ClearHighlights();
+			if(QslCard.BackgroundImage.Contains(x, y))
+			{
+				QslCard.BackgroundImage.IsHighlighted = true;
+			}
+		}
+		
+		/// <summary>
+		/// Move or resize card items based on Relative location
+		/// </summary>
+		/// <param name="cardItem">card item to be moved or resized</param>
+		/// <param name="x">Current card relative mouse cursor X coordinate</param>
+		/// <param name="y">Current card relative mouse cursor Y coordinate</param>
+		private void MoveOrResizeCardItem(CardWFItem cardItem, int x, int y)
+		{
+			double ratio = (double)originalItemRectangle.Width / 
+				(double)originalItemRectangle.Height;
+			int minWidth = ratio > 1.0 ? (int)(CardWFItem.MinimumSize * ratio) :
+				CardWFItem.MinimumSize;
+			int width;
+			switch(relativeLocation)
+			{
+				case CardWFItem.RelativeLocations.Inside:
+					cardItem.X = originalItemRectangle.X - cursorDownLocation.X + x;
+					cardItem.Y = originalItemRectangle.Y - cursorDownLocation.Y + y;
+					break;
+				case CardWFItem.RelativeLocations.NW:
+					width = originalItemRectangle.Width + cursorDownLocation.X - x;
+					cardItem.Width = (width > minWidth) ? width : minWidth;
+					cardItem.Height = (int)(cardItem.Width / ratio);
+					cardItem.X = originalItemRectangle.X + originalItemRectangle.Width - 
+						cardItem.Width;
+					cardItem.Y = originalItemRectangle.Y + originalItemRectangle.Height -
+						cardItem.Height;
+					break;
+				case CardWFItem.RelativeLocations.NE:
+					width = originalItemRectangle.Width - cursorDownLocation.X + x;
+					cardItem.Width = (width > minWidth) ? width : minWidth;
+					cardItem.Height = (int)(cardItem.Width / ratio);
+					cardItem.Y = originalItemRectangle.Y + originalItemRectangle.Height -
+						cardItem.Height;
+					break;
+				case CardWFItem.RelativeLocations.SW:
+					width = originalItemRectangle.Width + cursorDownLocation.X - x;
+					cardItem.Width = (width > minWidth) ? width : minWidth;
+					cardItem.Height = (int)(cardItem.Width / ratio);
+					cardItem.X = originalItemRectangle.X + originalItemRectangle.Width - 
+						cardItem.Width;
+					break;
+				case CardWFItem.RelativeLocations.SE:
+					width = originalItemRectangle.Width - cursorDownLocation.X + x;
+					cardItem.Width = (width > minWidth) ? width : minWidth;
+					cardItem.Height = (int)(cardItem.Width / ratio);
+					break;
+			}
+			this.Invalidate();
 		}
 		
 	}
