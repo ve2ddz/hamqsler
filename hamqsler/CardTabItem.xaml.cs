@@ -53,6 +53,13 @@ namespace hamqsler
 			cardProperties.Visibility = Visibility.Visible;
 			cardProperties.QslCard = cardPanel.QslCard;
 			this.DataContext = cardPanel.QslCard;
+			// load list of font names that are available to Windows Forms
+			System.Drawing.Text.InstalledFontCollection fontCol =
+				new System.Drawing.Text.InstalledFontCollection();
+			foreach(System.Drawing.FontFamily family in fontCol.Families)
+			{
+				FontFaceComboBox.Items.Add(family.Name);
+			}
 
 /*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
@@ -103,9 +110,9 @@ namespace hamqsler
 					secondaryImageProperties.Visibility = Visibility.Visible;
 					secondaryImageProperties.DataContext = ci;
 				}
-/*				else if(ci.GetType() == typeof(TextItem))
+				else if(ci.GetType() == typeof(TextWFItem))
 				{
-					TextItem ti = (TextItem)ci;
+					TextWFItem ti = (TextWFItem)ci;
 					textItemProperties.Visibility = Visibility.Visible;
 					textItemProperties.DataContext = ti;
 					Text.Visibility = ti.Text.Count == 1 ? Visibility.Visible :
@@ -116,7 +123,7 @@ namespace hamqsler
 						Text.Text = sText.Text;
 					}
 				}
-				else if(ci.GetType() == typeof(QsosBox))
+/*				else if(ci.GetType() == typeof(QsosBox))
 				{
 					qsosBoxProperties.Visibility = Visibility.Visible;
 					qsosBoxProperties.DataContext = ci;
@@ -322,32 +329,33 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void OnMacrosButtonClicked(object sender, RoutedEventArgs e)
 		{
-/*			CardWFItem ci = cardPanel.QslCard.GetSelected();
-			TextMacrosDialog dialog = new TextMacrosDialog(((TextItem)ci).Text);
+			TextWFItem ti = cardPanel.QslCard.GetSelectedItem() as TextWFItem;
+			TextMacrosDialog dialog = new TextMacrosDialog(ti.Text);
 			dialog.ShowDialog();
-			if(((TextItem)ci).Text.Count == 1 && ((TextItem)ci).Text[0].GetType() == typeof(StaticText))
+			if(ti.Text.Count == 1 && ti.Text[0].GetType() == typeof(StaticText))
 			{
 				Text.Visibility = Visibility.Visible;
-				Text.Text = ((TextItem)ci).Text.GetText(cardCanvas.QslCard, null, true);
+				Text.Text = ti.Text.GetText(cardPanel.QslCard, null, true);
 			}
 			else
 			{
 				Text.Visibility = Visibility.Collapsed;
 			}
 			// remove the first TextPart if it is an empty StaticText object
-			((TextItem)ci).Text.RemoveExtraneousStaticText();
-			foreach(TextPart part in ((TextItem)ci).Text)
+			ti.Text.RemoveExtraneousStaticText();
+			foreach(TextPart part in ti.Text)
 			{
 				part.RemoveExtraneousStaticTextMacros();
 			}
-			((TextItem)ci).Text.RemoveExtraneousStaticText();
-			cardCanvas.UpdateTextForSelectedCardItem();
+			ti.Text.RemoveExtraneousStaticText();
+			ti.CalculateRectangle();
+			cardPanel.QslCard.RaiseDispPropertyChangedEvent();
 			// must set IsDirty because changing contents of TextParts does not trigger
 			// Card PropertyChanged event
 			if(dialog.IsDirty)
 			{
-				cardCanvas.QslCard.IsDirty = true;
-			}*/
+				cardPanel.QslCard.IsDirty = true;
+			}
 		}
 		
 		/// <summary>
@@ -357,19 +365,20 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void Text_TextChanged(object sender, TextChangedEventArgs e)
 		{
-/*			TextItem ti = textItemProperties.DataContext as TextItem;
+			TextWFItem ti = textItemProperties.DataContext as TextWFItem;
 			if(ti != null)
 			{
 				StaticText sText = ti.Text[0] as StaticText;
 				if(sText != null)
 				{
 					sText.Text = Text.Text;
-					cardCanvas.UpdateTextForSelectedCardItem();
+					ti.CalculateRectangle();
+					cardPanel.QslCard.RaiseDispPropertyChangedEvent();
 				// must set IsDirty because changing contents of StaticText object does not trigger
 				// Card PropertyChanged event
-					cardCanvas.QslCard.IsDirty = true;
+					cardPanel.QslCard.IsDirty = true;
 				}
-			}*/
+			}
 		}
 		
 		/// <summary>

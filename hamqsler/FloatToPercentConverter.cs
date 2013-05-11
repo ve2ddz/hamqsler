@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright © 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,27 +24,42 @@ using System.Windows.Data;
 namespace hamqsler
 {
 	/// <summary>
-	/// Converter for converting a double to a percent value (also a double)
+	/// Converter for converting a float to a percent value (also a float)
 	/// </summary>
-	[ValueConversion(typeof(double), typeof(double))]
-	public class DoubleToPercentConverter : IValueConverter
+	[ValueConversion(typeof(float), typeof(float))]
+	public class FloatToPercentConverter : IValueConverter
 	{
 		/// <summary>
-		/// Convert from a double to a percent value
+		/// Convert from a float to a percent value
 		/// </summary>
 		/// <param name="value">value to convert</param>
-		/// <param name="targetType"></param>
-		/// <param name="parameter"></param>
-		/// <param name="culture"></param>
+		/// <param name="targetType">not used</param>
+		/// <param name="parameter">not used</param>
+		/// <param name="culture">not used</param>
 		/// <returns></returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return ((double)value) * 100;
+			return ((float)value) * 100;
 		}
 		
+		/// <summary>
+		/// Convert from a percent value to a float
+		/// </summary>
+		/// <param name="value">value to convert</param>
+		/// <param name="targetType">not used</param>
+		/// <param name="parameter">not used</param>
+		/// <param name="culture">not used</param>
+		/// <returns></returns>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return ((double)value) / 100;
+			if(value.GetType() == typeof(double))
+		    {
+				return ((double)value) / 100;
+		    }
+			else
+			{
+				return ((float)value) / 100;
+			}
 		}
 	}
 }

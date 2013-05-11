@@ -68,6 +68,12 @@ namespace hamqsler
 			get {return secondaryImages;}
 		}
 		
+		private List<TextWFItem> textItems = new List<TextWFItem>();
+		public List<TextWFItem> TextItems
+		{
+			get {return textItems;}
+		}
+		
 		private static readonly DependencyProperty CardPrintPropertiesProperty =
 			DependencyProperty.Register("CardPrintProperties", typeof(PrintProperties),
 			                            typeof(CardWF),
@@ -105,15 +111,34 @@ namespace hamqsler
 		/// true if in design mode, false otherwise</param>
 		public CardWF(int width, int height, bool isInDesignMode) : base(width, height)
 		{
+			UserPreferences prefs = ((App)App.Current).UserPreferences;
 			QslCard = this;
 			App.Logger.Log("In CardWF constructor:" + Environment.NewLine,
 						   App.Logger.DebugPrinting);
 			CardPrintProperties = new PrintProperties();
 			IsInDesignMode = isInDesignMode;
 			ItemSize = new System.Drawing.Size(width, height);
+			// background image
 			BackgroundImage = new BackgroundWFImage();
 			BackgroundImage.QslCard = this;
 			BackgroundImage.ImageFileName = @"$hamqslerFolder$\Samples\sample.jpg";
+			// call text item
+			TextWFItem call = new TextWFItem();
+			call.QslCard = this;
+			foreach(TextPart part in prefs.Callsign)
+			{
+				call.Text.Add(part);
+			}
+			call.TextFontFace = prefs.DefaultTextItemsFontFace;
+			call.IsBold = true;
+			call.FontSize = 48.0F;
+			call.X = -70;
+			call.Y = 0;
+			call.CheckboxAfter = true;
+			call.CheckboxBefore = true;
+			call.CheckBoxRelativeSize = 0.75F;
+			call.CheckboxLineThickness = 10;
+			TextItems.Add(call);
 		}
 		
 		/// <summary>
@@ -145,6 +170,13 @@ namespace hamqsler
 		/// <returns>Selected card item, if any, or null if none selected</returns>
 		public CardWFItem GetSelectedItem()
 		{
+			foreach(TextWFItem tItem in TextItems)
+			{
+				if(tItem.IsSelected)
+				{
+					return tItem;
+				}
+			}
 			foreach(SecondaryWFImage sImage in SecondaryImages)
 			{
 				if(sImage.IsSelected)
@@ -165,6 +197,13 @@ namespace hamqsler
 		/// <returns>Highlighted card item, if any, or null if none highlighted</returns>
 		public CardWFItem GetHighlightedItem()
 		{
+			foreach(TextWFItem tItem in TextItems)
+			{
+				if(tItem.IsHighlighted)
+				{
+					return tItem;
+				}
+			}
 			foreach(SecondaryWFImage sImage in SecondaryImages)
 			{
 				if(sImage.IsHighlighted)

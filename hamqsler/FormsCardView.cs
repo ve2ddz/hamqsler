@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace hamqsler
@@ -126,22 +127,69 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Draw the card
+		/// Draw the card and its constituent items
 		/// </summary>
 		/// <param name="g">Graphics object on which to draw the card</param>
 		public void PaintCard(Graphics g)
 		{
-			g.TranslateTransform(CardLocation.X, CardLocation.Y);
-			g.FillRectangle(Brushes.White, new Rectangle(0, 0, QslCard.Width, QslCard.Height));
+			GraphicsState state;
+			g.FillRectangle(Brushes.White, new Rectangle(
+				CardLocation.X, CardLocation.Y, QslCard.Width, QslCard.Height));
+			if(QslCard.IsInDesignMode)
+			{
+				// Create a bitmap containing the card and its items.
+				//This is necessary because we want to display the parts of the card
+				// items outside the card boundary at 40% opacity, and this can
+				// only be done with Graphics.DrawImage, not Graphics.DrawString, etc.
+				Bitmap designSurface = new Bitmap(this.Width, this.Height);
+				Graphics bGraphics = Graphics.FromImage(designSurface);
+				PaintCardItems(bGraphics);
+				// create a graphics path that excludes the card itself
+				GraphicsPath path = new GraphicsPath();
+				path.AddRectangle(new RectangleF(this.Location.X, this.Location.Y, 
+				                                 this.Width, this.Height));
+				path.AddRectangle(new RectangleF(CardLocation.X, CardLocation.Y,
+				                                 QslCard.Width, QslCard.Height));
+				state = g.Save();
+				g.Clip = new Region(path);
+				g.DrawImage(designSurface, 
+				                     new Rectangle(0, 0, this.Width, this.Height),
+				                     0, 0, this.Width, this.Height, GraphicsUnit.Pixel,
+				                     outsideCardAttrs);
+				g.Restore(state);
+				bGraphics.Dispose();
+				designSurface.Dispose();
+			}
+			// now draw the card items on the card.
+			state = g.Save();
+			RectangleF clipRect = new RectangleF(CardLocation.X, CardLocation.Y, 
+			                                     QslCard.Width, QslCard.Height);
+			g.Clip = new Region(clipRect);
+			PaintCardItems(g);
+			// paint the card outline if requested
+			if(QslCard.CardPrintProperties.PrintCardOutlines)
+			{
+				g.DrawRectangle(Pens.Black, new Rectangle(
+					CardLocation.X, CardLocation.Y, QslCard.Width - 1, QslCard.Height - 1));
+			}
+			g.Restore(state);
+
+		}
+		
+		// Helper method that paints each card item on the card
+		private void PaintCardItems(Graphics g)
+		{
+			// paint the background image
 			PaintImage(g, QslCard.BackgroundImage);
+			// paint secondary images
 			foreach(SecondaryWFImage sImage in QslCard.SecondaryImages)
 			{
 				PaintImage(g, sImage);
 			}
-			if(QslCard.CardPrintProperties.PrintCardOutlines)
+			// paint text items
+			foreach(TextWFItem tItem in QslCard.TextItems)
 			{
-				g.DrawRectangle(Pens.Black, new Rectangle(
-					0, 0, QslCard.Width - 1, QslCard.Height - 1));
+				PaintTextItem(g, tItem);
 			}
 		}
 		
@@ -162,32 +210,86 @@ namespace hamqsler
 		/// <param name="image">BackgorundImage object to draw</param>
 		private void PaintImage(Graphics g, ImageWFBase image)
 		{
-			if(image.ImageFileName != null && image.ImageFileName != string.Empty)
+			if(image != null && 
+			   image.ImageFileName != null && 
+			   image.ImageFileName != string.Empty)
 			{
-				GraphicsState state = g.Save();
-				RectangleF clipRect = new RectangleF(0, 0, QslCard.Width, QslCard.Height);
-				g.Clip = new Region(clipRect);
 				g.DrawImage(image.Image, 
-				            new Rectangle(image.X, image.Y, image.Width, image.Height));
-				g.Restore(state);
-				if(QslCard.IsInDesignMode)
-				{
-					g.DrawImage(image.Image, new Rectangle(
-						image.X, image.Y, image.Width, image.Height), 0, 0, image.Image.Width,
-						image.Image.Height, GraphicsUnit.Pixel, outsideCardAttrs);
-				}
+				            new Rectangle(image.X + CardLocation.X,
+				                          image.Y + cardLocation.Y, 
+				                          image.Width, image.Height));
 			}
 			if(QslCard.IsInDesignMode)
 			{
 				if(image.IsHighlighted)
 				{
 					g.DrawRectangle(highlighedPen, new Rectangle(
-						image.X, image.Y, image.Width, image.Height));
+						image.X + CardLocation.X, image.Y + CardLocation.Y, 
+						image.Width, image.Height));
 				}
 				else if(image.IsSelected)
 				{
 					g.DrawRectangle(selectedPen, new Rectangle(
-						image.X, image.Y, image.Width, image.Height));
+						image.X + CardLocation.X, image.Y + CardLocation.Y, 
+						image.Width, image.Height));
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Paint the text item on the card.
+		/// </summary>
+		/// <param name="g">Graphics object on which to do the drawing</param>
+		/// <param name="image">TextWFItem object to draw</param>
+		private void PaintTextItem(Graphics g, TextWFItem tItem)
+		{
+			FontStyle style = FontStyle.Regular;
+			if(tItem.IsBold)
+			{
+				style = FontStyle.Bold;
+			}
+			if(tItem.IsItalic)
+			{
+				style |= FontStyle.Italic;
+			}
+			Font font = new Font(new FontFamily(tItem.TextFontFace), tItem.FontSize,
+				         style, GraphicsUnit.Point);
+			g.TextRenderingHint = TextRenderingHint.AntiAlias;
+			int startTextX = CardLocation.X + tItem.X + tItem.Height + 4;
+			g.DrawString(tItem.Text.GetText(QslCard, null, QslCard.IsInDesignMode),
+			             font, tItem.TextBrush, startTextX, CardLocation.Y + tItem.Y);
+			float checkBoxSize = (float)tItem.Height * tItem.CheckBoxRelativeSize;
+			float margin = (tItem.Height - checkBoxSize) / 2 + 2;
+			if(tItem.CheckboxBefore)
+			{
+				Pen pen = new Pen(tItem.TextBrush, tItem.CheckboxLineThickness);
+				g.DrawRectangle(pen, CardLocation.X + tItem.X + margin, 
+				                CardLocation.Y +tItem.Y + (tItem.Height - checkBoxSize) / 2,
+				                checkBoxSize, checkBoxSize);
+				pen.Dispose();
+			}
+			if(tItem.CheckboxAfter)
+			{
+				Pen pen = new Pen(tItem.TextBrush, tItem.CheckboxLineThickness);
+				g.DrawRectangle(pen, CardLocation.X + tItem.X + tItem.Width - 
+				                tItem.Height + 4,
+				                 CardLocation.Y + tItem.Y + (tItem.Height - checkBoxSize) / 2,
+				                checkBoxSize, checkBoxSize);
+				pen.Dispose();
+			}
+			if(QslCard.IsInDesignMode)
+			{
+				if(tItem.IsHighlighted)
+				{
+					g.DrawRectangle(highlighedPen, new Rectangle(
+						CardLocation.X + tItem.X, CardLocation.Y + tItem.Y, 
+						tItem.Width, tItem.Height));
+				}
+				else if(tItem.IsSelected)
+				{
+					g.DrawRectangle(selectedPen, new Rectangle(
+						CardLocation.X + tItem.X, CardLocation.Y + tItem.Y, 
+						tItem.Width, tItem.Height));
 				}
 			}
 		}
@@ -278,6 +380,10 @@ namespace hamqsler
 		/// </summary>
 		protected void ClearHighlights()
 		{
+			foreach(TextWFItem tItem in QslCard.TextItems)
+			{
+				tItem.IsHighlighted = false;
+			}
 			foreach(SecondaryWFImage sImage in QslCard.SecondaryImages)
 			{
 				sImage.IsHighlighted = false;
@@ -442,6 +548,15 @@ namespace hamqsler
 		private void HighlightCardItem(int x, int y)
 		{
 			ClearHighlights();
+			Array revText = QslCard.TextItems.ToArray();
+			for(int index = revText.Length - 1; index >= 0; index--)
+			{
+				if(((TextWFItem)revText.GetValue(index)).Contains(x, y))
+				{
+					((TextWFItem)revText.GetValue(index)).IsHighlighted = true;
+					 return;
+				}
+			}
 			Array revImages = QslCard.SecondaryImages.ToArray();
 			for(int index = revImages.Length - 1; index >= 0; index--)
 			{

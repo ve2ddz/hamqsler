@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright © 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,30 +18,36 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Drawing;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace hamqsler
 {
 	/// <summary>
-	/// Converts double to string values for FontSize
+	/// FormsBrushToWPFSolidColorBrushConverter converts between System.Drawing.Brush and
+	/// System.Windows.Media.SolidColorBrush.
 	/// </summary>
-	[ValueConversion(typeof(object), typeof(string))]
-	public class FontSizeConverter : IValueConverter
+	[ValueConversion(typeof(System.Drawing.Brush), typeof(System.Windows.Media.SolidColorBrush))]
+	public class FormsBrushToWPFSolidColorBrushConverter : IValueConverter
 	{
 		/// <summary>
-		/// Convert a FontSize value to string representation.
+		/// Convert a System.Drawing.Brush value to System.Windows.Media.SolidColorBrush.
 		/// </summary>
-		/// <param name="value">FontSize to convert</param>
+		/// <param name="value">Brushto convert</param>
 		/// <param name="targetType">not used</param>
 		/// <param name="parameter">not used</param>
 		/// <param name="culture">not used</param>
-		/// <returns>string representation of the input FontWeight</returns>
+		/// <returns>System.Windows.Media.SolidColorBrush object</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			float size = (float)value;
-			return string.Format(CultureInfo.InvariantCulture, "{0:F1}", size);
+			System.Drawing.SolidBrush winFormsBrush = value as System.Drawing.SolidBrush;
+			System.Drawing.Color color = winFormsBrush.Color;
+			System.Windows.Media.SolidColorBrush brush = 
+				new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(
+					color.A, color.R, color.G, color.B));
+			return brush;
 		}
 		
 		/// <summary>
@@ -54,22 +60,12 @@ namespace hamqsler
 		/// <returns>FontWeight that corresponds to the input string</returns>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			string size = (string)value;
-			if(value.Equals(string.Empty))
-			{
-				return 1;
-			}
-			float val;
-			if(Single.TryParse(size, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,
-			                   out val))
-			{
-				return val;
-			}
-			else
-			{
-				return 1;
-			}
-			   
+			System.Windows.Media.SolidColorBrush wpfBrush = 
+				value as System.Windows.Media.SolidColorBrush;
+			System.Windows.Media.Color wpfColor = wpfBrush.Color;
+			return new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(
+				255, wpfColor.R, wpfColor.G, wpfColor.B));
 		}
+
 	}
 }

@@ -125,9 +125,10 @@
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="DispQso.cs" />
-    <Compile Include="DoubleToPercentConverter.cs" />
+    <Compile Include="FloatToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FontWeightConverter.cs" />
+    <Compile Include="FormsBrushToWPFSolidColorBrushConverter.cs" />
     <Compile Include="FormsCardView.cs" />
     <Compile Include="HamQSLerPrintDialog.xaml.cs">
       <DependentUpon>HamQSLerPrintDialog.xaml</DependentUpon>
@@ -191,6 +192,7 @@
     </Compile>
     <Compile Include="TextPart.cs" />
     <Compile Include="TextParts.cs" />
+    <Compile Include="TextWFItem.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="MainWindow.xaml.cs">

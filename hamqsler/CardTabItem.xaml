@@ -23,19 +23,15 @@
 	xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"        
     xmlns:local="clr-namespace:hamqsler">
 <TabItem.Resources>
-	<CollectionViewSource Source="{x:Static Fonts.SystemFontFamilies}" x:Key="fontCVS">
-		<CollectionViewSource.SortDescriptions>
-			<scm:SortDescription PropertyName="Source"/>
-		</CollectionViewSource.SortDescriptions>
-	</CollectionViewSource>
 	<CollectionViewSource Source="{x:Static Fonts.SystemFontFamilies}" x:Key="fontCVS2">
 		<CollectionViewSource.SortDescriptions>
 			<scm:SortDescription PropertyName="Source"/>
 		</CollectionViewSource.SortDescriptions>
 	</CollectionViewSource>
 	<local:FontWeightConverter x:Key="FontWeightConverter"/>
-	<local:DoubleToPercentConverter x:Key="DoubleToPercentConverter"/>
+	<local:FloatToPercentConverter x:Key="FloatToPercentConverter"/>
 	<local:FontSizeConverter x:Key="=FontSizeConverter"/>
+	<local:FormsBrushToWPFSolidColorBrushConverter x:Key="FormsBrushToWPFSolidColorBrushConverter"/>
 	<Style TargetType="Button">
 		<Setter Property="Width" Value="50"/>
 		<Setter Property="Height" Value="20"/>
@@ -102,9 +98,8 @@
 					<StackPanel>
 						<GroupBox Header="Font" Margin="3">
 							<StackPanel>
-								<ComboBox Name="FontFaceComboBox"  Margin="3" ItemsSource=
-										"{Binding Source={StaticResource fontCVS}}"
-					  					Text="{Binding TextFontFace, Mode=TwoWay}"
+								<ComboBox Name="FontFaceComboBox"  Margin="3"
+					  					Text="{Binding TextFontFace, Mode=TwoWay}"	
 										ToolTip="Font face the text will be displayed in"/>
 								<Grid>
 									<Grid.ColumnDefinitions>
@@ -119,15 +114,11 @@
 									</Grid.RowDefinitions>
 									<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
 											VerticalAlignment="Center" HorizontalAlignment="Right"
-											>Font Weight:</TextBlock>
-									<ComboBox Name="FontWeightComboBox" Margin="5" Grid.Column="1"
-											Grid.Row="0" Text="{Binding TextFontWeight, Mode=TwoWay,
-											Converter={StaticResource FontWeightConverter}}"
-											ToolTip="Font weight for this text item">
-										<ComboBoxItem Content="Normal"/>
-										<ComboBoxItem Content="Bold"/>
-										<ComboBoxItem Content="Black"/>
-									</ComboBox>
+											>Bold:</TextBlock>
+									<CheckBox Name="BoldCheckBox" Margin="5" Grid.Row="0"
+											Grid.Column="1" IsChecked="{Binding IsBold,
+											Mode=TwoWay}"
+											ToolTip="Display the text using an Italic style"/>
 									<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
 											VerticalAlignment="Center" HorizontalAlignment="Right"
 											>Italic:</TextBlock>
@@ -177,9 +168,16 @@
 											>Text Color:</TextBlock>
 									<Button Grid.Row="3" Grid.Column="1" Margin="5" 
 											HorizontalAlignment="Left"
-									        Background="{Binding TextBrush, Mode=TwoWay}"
 											ToolTip="Select the color to display the text in"
-											Click="TextColorButton_Clicked" Name="TextColorButton"/>
+											Click="TextColorButton_Clicked" Name="TextColorButton">
+										<Button.Background>
+											<Binding Path="TextBrush" Mode="TwoWay">
+												<Binding.Converter>
+													<local:FormsBrushToWPFSolidColorBrushConverter/>
+												</Binding.Converter>
+											</Binding>
+										</Button.Background>
+									</Button>
 								</Grid>
 							</StackPanel>
 						</GroupBox>
@@ -245,7 +243,7 @@
 											<Slider.Value>
 												<Binding Path="CheckBoxRelativeSize" Mode="TwoWay">
 													<Binding.Converter>
-														<local:DoubleToPercentConverter/>
+														<local:FloatToPercentConverter/>
 													</Binding.Converter>
 												</Binding>
 											</Slider.Value>
@@ -432,7 +430,7 @@ this card">
 											<Slider.Value>
 												<Binding Path="BackgroundOpacity" Mode="TwoWay">
 													<Binding.Converter>
-														<local:DoubleToPercentConverter/>
+														<local:FloatToPercentConverter/>
 													</Binding.Converter>
 												</Binding>
 											</Slider.Value>
