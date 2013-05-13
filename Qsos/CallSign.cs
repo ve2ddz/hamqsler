@@ -93,7 +93,10 @@ namespace Qsos
 			"OEH20",
 			"SX1912",
 			"VI6ARG30",
-			"XM31812"		
+			"XM31812",
+			"TE1856",
+			"8J2KSG7X",
+			"ZW1CCOM54"			
 		};
 
         // static constructor used to load the List above

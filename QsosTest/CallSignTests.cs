@@ -147,6 +147,30 @@ namespace QsosTests
 			Assert.AreEqual("XM31812", c.Call);
 		}
 		
+		// test ctor for special callsign TE1856
+		[Test]
+		public void TestCTorTE1856()
+		{
+			CallSign c = new CallSign("TE1856");
+			Assert.AreEqual("TE1856", c.Call);
+		}
+		
+		// test ctor for special callsign 8J2KSG7X
+		[Test]
+		public void TestCTor8J2KSG7X()
+		{
+			CallSign c = new CallSign("8J2KSG7X");
+			Assert.AreEqual("8J2KSG7X", c.Call);
+		}
+		
+		// test ctor for special callsign ZW1CCOM54
+		[Test]
+		public void TestCTorZW1CCOM54()
+		{
+			CallSign c = new CallSign("ZW1CCOM54");
+			Assert.AreEqual("ZW1CCOM54", c.Call);
+		}
+		
 	}
 }
 

@@ -148,6 +148,34 @@ namespace QsosTests
 		{
 			Assert.IsTrue(CallSign.IsValid("VI6ARG30"));
 		}
+
+		// test IsValid with non-standard callsign XM31812
+		[Test]
+		public void TestIsValidTrueXM31812()
+		{
+			Assert.IsTrue(CallSign.IsValid("XM31812"));
+		}
+
+		// test IsValid with non-standard callsign TE1856
+		[Test]
+		public void TestIsValidTrueTE1856()
+		{
+			Assert.IsTrue(CallSign.IsValid("TE1856"));
+		}
+
+		// test IsValid with non-standard callsign 
+		[Test]
+		public void TestIsValidTrue8J2KSG7X()
+		{
+			Assert.IsTrue(CallSign.IsValid("8J2KSG7X"));
+		}
+
+		// test IsValid with non-standard callsign ZW1CCOM54
+		[Test]
+		public void TestIsValidTrueZW1CCOM54()
+		{
+			Assert.IsTrue(CallSign.IsValid("ZW1CCOM54"));
+		}
 	}
 }
 
