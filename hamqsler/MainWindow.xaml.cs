@@ -305,14 +305,14 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void AddTextCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
 				return;
 			}
-			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
-			e.CanExecute = ci == null;*/
+			CardWFItem ci = ti.cardPanel.QslCard.GetSelectedItem();
+			e.CanExecute = ci == null;
 		}
 		
 		/// <summary>
@@ -1224,13 +1224,14 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void AddTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		internal void AddTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				cti.cardCanvas.AddTextCommand_Executed(sender, e);
-			}*/
+				TextWFItem tItem = cti.cardPanel.AddTextItem();
+				cti.SetPropertiesVisibility(tItem);
+			}
 			
 		}
 		

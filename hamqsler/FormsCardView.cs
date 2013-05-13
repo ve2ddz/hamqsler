@@ -754,6 +754,13 @@ namespace hamqsler
 			addImage.Click += OnAddImageClicked;
 			contextMenu.Items.Add(addImage);
 			
+			System.Windows.Controls.MenuItem addText =
+				new System.Windows.Controls.MenuItem();
+			addText.Header = "Add Text Item";
+			addText.Name = "AddText";
+			addText.Click += OnAddTextClicked;
+			contextMenu.Items.Add(addText);
+			
 			contextMenu.Items.Add(new System.Windows.Controls.Separator());
 
 			System.Windows.Controls.MenuItem clearBackground =
@@ -796,6 +803,9 @@ namespace hamqsler
 						case "AddImage":
 							mi.IsEnabled = selectedCardItem == null;
 							break;
+						case "AddText":
+							mi.IsEnabled = selectedCardItem == null;
+							break;
 					}
 				}
 			}
@@ -805,7 +815,7 @@ namespace hamqsler
 		/// Handler for context menu's Select Item menu item clicked event
 		/// </summary>
 		/// <param name="sender">menu item that was clicked (Select Item)</param>
-		/// <param name="e">RoutedEventArgs objecgt</param>
+		/// <param name="e">RoutedEventArgs object</param>
 		private void OnSelectItemClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
 			// pass processing to MainWindow.OnSelectItem_Clicked
@@ -814,12 +824,22 @@ namespace hamqsler
 			((MainWindow)App.Current.MainWindow).OnSelectItem_Clicked(sender, e);
 		}
 		
+		/// <summary>
+		/// Handler for context menu's Deselect Item menu item clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked (Deselect Item)</param>
+		/// <param name="e">RoutedEventArgs object</param>
 		private void OnDeselectItemClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
 			// pass processing to MainWindow.OnNone_Clicked
 			((MainWindow)App.Current.MainWindow).OnNone_Clicked(sender, e);
 		}
 		
+		/// <summary>
+		/// Handler for context menu's Clear Background Image menu item clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked (Clear Background Image)</param>
+		/// <param name="e">RoutedEventArgs object</param>
 		private void OnClearBackgroundClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
 			// pass processing to MainWindow.ClearBackgroundCommand_Executed
@@ -827,10 +847,27 @@ namespace hamqsler
 				sender, null);
 		}
 		
+		/// <summary>
+		/// Handler for context menu's Add Image menu item clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked (Add Image)</param>
+		/// <param name="e">RoutedEventArgs object</param>
 		private void OnAddImageClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
 			// pass processing to MainWindow.ClearBackgroundCommand_Executed
 			((MainWindow)App.Current.MainWindow).AddImageCommand_Executed(
+				sender, null);
+		}
+		
+		/// <summary>
+		/// Handler for context menu's Add Text Item menu item clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked (Add Text Item)</param>
+		/// <param name="e">RoutedEventArgs object</param>
+		private void OnAddTextClicked(object sender, System.Windows.RoutedEventArgs e)
+		{
+			// pass processing to MainWindow.ClearBackgroundCommand_Executed
+			((MainWindow)App.Current.MainWindow).AddTextCommand_Executed(
 				sender, null);
 		}
 		
