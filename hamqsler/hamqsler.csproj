@@ -173,6 +173,7 @@
     <Compile Include="QSOsView.xaml.cs">
       <DependentUpon>QSOsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="QsosWFBox.cs" />
     <Compile Include="QsoWithInclude.cs" />
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
     <Compile Include="SecondaryWFImage.cs" />

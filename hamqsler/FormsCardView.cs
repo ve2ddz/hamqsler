@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -48,10 +49,19 @@ namespace hamqsler
 			set {cardLocation = value;}
 		}
 		
+		private int boxMinimumWidth = 250;
+		public int BoxMinimumWidth
+		{
+			get {return boxMinimumWidth;}
+			set {boxMinimumWidth = value;}
+		}
+		
 		private static float[] dashPattern =  {5, 2, 3, 2};
 		protected static Pen selectedPen = CreateSelectedPen();
 		protected static Pen highlighedPen = CreateHighlightedPen();
 		protected static ImageAttributes outsideCardAttrs = CreateOutsideCardImageAttributes();
+		private const int boxRoundX = 5;
+		private const int boxRoundY = 5;
 		
 		private System.Windows.Controls.ContextMenu contextMenu = 
 			new System.Windows.Controls.ContextMenu();
@@ -132,6 +142,7 @@ namespace hamqsler
 		/// <param name="g">Graphics object on which to draw the card</param>
 		public void PaintCard(Graphics g)
 		{
+			g.TextRenderingHint = TextRenderingHint.AntiAlias;
 			GraphicsState state;
 			g.FillRectangle(Brushes.White, new Rectangle(
 				CardLocation.X, CardLocation.Y, QslCard.Width, QslCard.Height));
@@ -191,6 +202,10 @@ namespace hamqsler
 			{
 				PaintTextItem(g, tItem);
 			}
+			if(QslCard.QsosBox != null)
+			{
+				PaintQsosBox(g, QslCard.QsosBox);
+			}
 		}
 		
 		/// <summary>
@@ -240,7 +255,7 @@ namespace hamqsler
 		/// Paint the text item on the card.
 		/// </summary>
 		/// <param name="g">Graphics object on which to do the drawing</param>
-		/// <param name="image">TextWFItem object to draw</param>
+		/// <param name="tItem">TextWFItem object to draw</param>
 		private void PaintTextItem(Graphics g, TextWFItem tItem)
 		{
 			FontStyle style = FontStyle.Regular;
@@ -254,7 +269,6 @@ namespace hamqsler
 			}
 			Font font = new Font(new FontFamily(tItem.TextFontFace), tItem.FontSize,
 				         style, GraphicsUnit.Point);
-			g.TextRenderingHint = TextRenderingHint.AntiAlias;
 			int startTextX = CardLocation.X + tItem.X + tItem.Height + 4;
 			g.DrawString(tItem.Text.GetText(QslCard, null, QslCard.IsInDesignMode),
 			             font, tItem.TextBrush, startTextX, CardLocation.Y + tItem.Y);
@@ -292,6 +306,322 @@ namespace hamqsler
 						tItem.Width, tItem.Height));
 				}
 			}
+		}
+		
+		/// <summary>
+		/// Paint the qsos box on the card.
+		/// </summary>
+		/// <param name="g">Graphics object on which to do the drawing</param>
+		/// <param name="qBox">QsosWFBox object to draw</param>
+		private void PaintQsosBox(Graphics g, QsosWFBox qBox)
+		{
+			Pen pen = new Pen(qBox.LineTextBrush, 1);
+			g.SmoothingMode = SmoothingMode.AntiAlias;
+			
+			Font font = new Font(new System.Drawing.FontFamily(
+				qBox.FontName), qBox.FontSize, FontStyle.Regular, GraphicsUnit.Point);
+			List<string> colHeaders = CreateColumnHeaders(qBox);
+			List<float> colWidths = CreateColumnWidths(font, colHeaders, qBox);
+			GraphicsPath path = CreateOutsideBoxPath(qBox);
+			FillQsosBoxBackground(g, path, qBox);
+			CreateInsideBoxPath(ref path, font, colHeaders, colWidths, qBox);
+			g.DrawPath(pen, path);
+			DrawConfirmingText(g, font, qBox);
+			DrawHeaders(g, font, colHeaders, colWidths, qBox);
+			pen.Dispose();
+			if(QslCard.IsInDesignMode)
+			{
+				if(qBox.IsHighlighted)
+				{
+					g.DrawRectangle(highlighedPen, new Rectangle(
+						CardLocation.X + qBox.X, CardLocation.Y + qBox.Y, 
+						qBox.Width, qBox.Height));
+				}
+				else if(qBox.IsSelected)
+				{
+					g.DrawRectangle(selectedPen, new Rectangle(
+						CardLocation.X + qBox.X, CardLocation.Y + qBox.Y, 
+						qBox.Width, qBox.Height));
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Create a Graphics path object for the outside of the QSOs Box
+		/// </summary>
+		/// <param name="box">Qsos Box that we are drawing</param>
+		/// <returns>GraphicsPath object describing the outside of the Qsos Box</returns>
+		private GraphicsPath CreateOutsideBoxPath(QsosWFBox box)
+		{
+			GraphicsPath path = new GraphicsPath();
+			int left = CardLocation.X + box.X;
+			int top = CardLocation.Y + box.Y;
+			int right = left + box.Width;
+			int bottom = top + box.Height;
+			path.AddArc(left, top, 2 * boxRoundX, 2 * boxRoundY, 180, 90);
+			path.AddLine(left + boxRoundX, top, right - boxRoundX, top);
+			path.AddArc(right - 2 * boxRoundX, top, 2 * boxRoundX, 2 * boxRoundY, -90, 90);
+			path.AddLine(right, top + boxRoundY, right, bottom -boxRoundY);
+			path.AddArc(right - 2 * boxRoundX, bottom - 2 * boxRoundY, 2 * boxRoundX,
+			            2 * boxRoundY, 0, 90);
+			path.AddLine(right - boxRoundX, bottom, left + boxRoundX, bottom);
+			path.AddArc(left , bottom - 2 * boxRoundY, 2 * boxRoundX,
+			            2 * boxRoundY, 90, 90);
+			path.AddLine(left, bottom - boxRoundY, left, top + boxRoundY);
+			return path;
+		}
+		
+		/// <summary>
+		/// Fill the Qsos Box background with QsosBox.BackgroundBrush at the
+		/// opacity of QsosBox.BackgroundOpacity
+		/// </summary>
+		/// <param name="g">Graphics object on which to draw the background</param>
+		/// <param name="boxOutline">GraphicsPath object describing the outline
+		/// of the Qsos box</param>
+		/// <param name="box">Qsos box object </param>
+		private void FillQsosBoxBackground(Graphics g, GraphicsPath boxOutline, 
+		                                   QsosWFBox box)
+		{
+			// To set the opacity, we must first create a bitmap containing the
+			// background at 100% opacity, then draw that on the final Graphics object
+			// at the required opacity.
+			Bitmap bitmap = new Bitmap(CardLocation.X + box.X + box.Width, 
+			                           CardLocation.Y + box.Y + box.Height);
+			Graphics bGraphics = Graphics.FromImage(bitmap);
+			bGraphics.FillPath(box.BackgroundBrush, boxOutline);
+		    // Create a color matrix that is partially opaque
+		    float[][] matrixItems ={ 
+		                               new float[] {1, 0, 0, 0, 0},
+		                               new float[] {0, 1, 0, 0, 0},
+		                               new float[] {0, 0, 1, 0, 0},
+		                               new float[] {0, 0, 0, (float)box.BackgroundOpacity, 0},
+		                               new float[] {0, 0, 0, 0, 1}}; 
+		    ColorMatrix colorMatrix = new ColorMatrix(matrixItems);
+		    // Create an ImageAttributes object and set its color matrix.
+		    ImageAttributes imageAttrs = new ImageAttributes();
+		    imageAttrs.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default,
+		        ColorAdjustType.Bitmap);
+			g.DrawImage(bitmap, new Rectangle(CardLocation.X + box.X,
+			                                  CardLocation.Y + box.Y,
+			                                  box.Width, box.Height),
+			                                  CardLocation.X + box.X,
+			                                  CardLocation.Y + box.Y,
+			                                  box.Width, box.Height,
+			                                  GraphicsUnit.Pixel, imageAttrs);
+			bGraphics.Dispose();
+			bitmap.Dispose();
+		}
+		
+		/// <summary>
+		/// Add the row and column lines to the already created outline of the Qsos box
+		/// </summary>
+		/// <param name="path">Graphics path containing the outline of the Qsos box</param>
+		/// <param name="font">Font that text in the Qsos box is drawn in</param>
+		/// <param name="colHeaders">Header text for the columns in the Qsos box</param>
+		/// <param name="colWidths">Width of each column in the Qsos box</param>
+		/// <param name="box">Qsos box being dreawn</param>
+		private void CreateInsideBoxPath(ref GraphicsPath path, Font font, 
+		                                 List<string> colHeaders,
+		                                 List<float> colWidths, QsosWFBox box)
+		{
+			int left = CardLocation.X + box.X;
+			int top = CardLocation.Y + box.Y;
+			int right = left + box.Width;
+			int bottom = top + box.Height;
+			System.Drawing.Size size = System.Windows.Forms.TextRenderer.MeasureText(
+				"SampleText", font);
+			int lineY = top + size.Height + 4;
+			while(lineY < bottom)
+			{
+				path.AddLine(left, lineY, right, lineY);
+				// the following line is needed to prevent diagonal lines between the end
+				// of the line just drawn and the start of the next line (if any)
+				path.AddLine(right, lineY, left, lineY);
+				lineY += size.Height + 4;
+			}
+			int lineX = left;
+			int topY = top + size.Height + 4;
+			path.AddLine(left, bottom - size.Height + 4, left, topY);
+			for(int col = 0; col < colWidths.Count - 1; col++)
+			{
+				if(col != colWidths.Count - 2 || box.ShowPseTnx)
+				{
+					lineX += (int)colWidths[col];
+					path.AddLine(lineX, topY, lineX, bottom);
+					// the following line is needed to prevent diagonal lines between the end
+					// of the line just drawn and the strt of the next line (if any);
+					path.AddLine(lineX, bottom, lineX, topY);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Create a list of Qsos box headers
+		/// </summary>
+		/// <param name="box">Qsos box for which we are creating the headers</param>
+		/// <returns>List of column leaders</returns>
+		protected List<string> CreateColumnHeaders(QsosWFBox box)
+		{
+			List<string> headers = new List<string>();
+			switch(box.DateFormat)
+			{
+				case "YYYY-MM-DD":
+					headers.Add(box.YYYYMMDDText);
+					break;
+				case "DD-MMM-YY":
+					headers.Add(box.DDMMMYYText);
+					break;
+				case "DD-MM-YY":
+					headers.Add(box.DDMMYYText);
+					break;
+			}
+			headers.Add(box.TimeText);
+			headers.Add(box.BandText);
+			headers.Add(box.FreqText);
+			headers.Add(box.ModeText);
+			headers.Add(box.RSTText);
+			headers.Add(box.QSLText);
+			return headers;
+		}
+		
+		/// <summary>
+		/// Create list of column widths
+		/// </summary>
+		/// <param name="font">Font in which text in the Qsos Box will be displayed</param>
+		/// <param name="headers">List of column headers</param>
+		/// <param name="box">Qsos box for which the column widths are being created</param>
+		/// <returns>List of column widths</returns>
+		protected List<float> CreateColumnWidths(Font font, List<string> headers, QsosWFBox box)
+		{
+			List<float> colWidths = new List<float>();
+			int width = 0;
+			// date column width
+			int dateLen = headers[0].Length;
+			string dateMeasure = "--";
+			for(int i = 0; i < dateLen - 2; i++)
+			{
+				dateMeasure += "M";
+			}
+			Size size = TextRenderer.MeasureText(dateMeasure, font);
+			colWidths.Add(size.Width);
+			// time column width
+			size = TextRenderer.MeasureText("000000", font);
+			width = size.Width;
+			size = TextRenderer.MeasureText(headers[1], font);
+			colWidths.Add(width >= size.Width ? width : size.Width);
+			if(box.ShowFrequency)
+			{
+				colWidths.Add(0);		// band column width
+				// assuming frequency limited to 8 characters
+				size = TextRenderer.MeasureText("241000.0", font);
+				width = size.Width;
+				size = TextRenderer.MeasureText(headers[3], font);
+				colWidths.Add(width >= size.Width ? width : size.Width);
+			}
+			else
+			{
+				// assuming 2190m is the largest band width
+				size = TextRenderer.MeasureText("2190m", font);
+				width = size.Width;
+				size = TextRenderer.MeasureText(headers[2], font);
+				colWidths.Add(width >= size.Width ? width : size.Width);
+				colWidths.Add(0);			// frequency column width
+			}
+			// mode column width
+			// assuming mode is limited to 13 characters (e.g. OLIVIA-BEACON)
+			size = TextRenderer.MeasureText("MMMMMMMMMMMMM", font);
+			colWidths.Add(size.Width);
+			// rst column width
+			// assuming signal report limited to 3 chars
+			size = TextRenderer.MeasureText("599", font);
+			width = size.Width;
+			size = TextRenderer.MeasureText(headers[4], font);
+			colWidths.Add(width >= size.Width ? width : size.Width);
+			// qsl column width
+			if(box.ShowPseTnx)
+			{
+				// take largest width of header text, Pse text and Tnx text
+				size = TextRenderer.MeasureText(headers[5], font);
+				width = size.Width;
+				size = TextRenderer.MeasureText(box.PseText, font);
+				width = width >= size.Width ? width : size.Width;
+				size = TextRenderer.MeasureText(box.TnxText, font);
+				colWidths.Add(width >= size.Width ? width : size.Width);
+			}
+			else
+			{
+				colWidths.Add(0);
+			}
+			float totalColWidths = 0;
+			for(int col = 0; col < colWidths.Count; col++)
+			{
+				totalColWidths += colWidths[col];
+			}
+			BoxMinimumWidth = (int)(totalColWidths + 5);
+			float colExpansion = (box.Width - totalColWidths) / (box.ShowPseTnx ? 6: 5);
+			for(int col = 0; col < colWidths.Count; col++)
+			{
+				if(colWidths[col] != 0)
+				{
+					colWidths[col] += colExpansion;
+				}
+			}
+			return colWidths;
+		}
+		
+		/// <summary>
+		/// Draw the header text for the Qsos box
+		/// </summary>
+		/// <param name="g">Graphics object on which to draw the text</param>
+		/// <param name="font">Font to draw the text in</param>
+		/// <param name="colHeaders">List of headers to draw</param>
+		/// <param name="colWidths">List of widths for the columns</param>
+		/// <param name="box">Qsos box object which is being drawn</param>
+		private void DrawHeaders(Graphics g, Font font, List<string> colHeaders, 
+		                         List<float> colWidths, QsosWFBox box)
+		{
+			Size size = TextRenderer.MeasureText(colHeaders[0], font);
+			float colPosition = CardLocation.X + box.X;
+			float textY = (float)(CardLocation.Y + box.Y + size.Height + 4 + 2);
+			for(int col = 0; col < colWidths.Count; col++)
+			{
+				if(colWidths[col] > 0)
+				{
+					size = TextRenderer.MeasureText(colHeaders[col], font);
+					float startX = colPosition + (colWidths[col] - size.Width) / 2;
+					g.DrawString(colHeaders[col], font, box.LineTextBrush,
+					             startX, textY);
+				}
+				colPosition += colWidths[col];
+			}
+		}
+		
+		/// <summary>
+		/// Draw Qsos box confirming text
+		/// </summary>
+		/// <param name="g">Graphics object of which to draw the text</param>
+		/// <param name="font">Font in which to draw the text</param>
+		/// <param name="box">Qsos box being drawn</param>
+		private void DrawConfirmingText(Graphics g, Font font, QsosWFBox box)
+		{
+			int startX = CardLocation.X + box.X + 5;
+			int y = CardLocation.Y + box.Y + 2;
+			string confText = box.ConfirmingText.GetText(QslCard, null, QslCard.IsInDesignMode);
+			g.DrawString(confText, font, box.LineTextBrush, startX, y);
+			Size size = TextRenderer.MeasureText(confText, font);
+			startX += size.Width;
+			Font callFont = new Font(box.FontName, box.FontSize,FontStyle.Bold);
+			string call = "XXXXXX";
+			g.DrawString(call, callFont, box.CallsignBrush, startX, y);
+			if(box.ShowManager)
+			{
+				size = TextRenderer.MeasureText(call, callFont);
+				startX += size.Width;
+				string mgr = "ZZZZZZ";
+				g.DrawString(box.ViaText + " " + mgr, callFont, box.ManagerBrush, 
+				             startX, y);
+			}
+				
 		}
 		
 		/// <summary>
@@ -380,6 +710,10 @@ namespace hamqsler
 		/// </summary>
 		protected void ClearHighlights()
 		{
+			if(QslCard.QsosBox != null)
+			{
+				QslCard.QsosBox.IsHighlighted = false;
+			}
 			foreach(TextWFItem tItem in QslCard.TextItems)
 			{
 				tItem.IsHighlighted = false;
@@ -515,16 +849,12 @@ namespace hamqsler
 			switch(cardItem.GetRelativeLocation(x, y))
 			{
 				case CardWFItem.RelativeLocations.NW:
+				case CardWFItem.RelativeLocations.SE:
 					cursor = Cursors.SizeNWSE;
 					break;
 				case CardWFItem.RelativeLocations.NE:
-					cursor = Cursors.SizeNESW;
-					break;
 				case CardWFItem.RelativeLocations.SW:
 					cursor = Cursors.SizeNESW;
-					break;
-				case CardWFItem.RelativeLocations.SE:
-					cursor = Cursors.SizeNWSE;
 					break;
 				case CardWFItem.RelativeLocations.W:
 				case CardWFItem.RelativeLocations.E:
@@ -548,6 +878,14 @@ namespace hamqsler
 		private void HighlightCardItem(int x, int y)
 		{
 			ClearHighlights();
+			if(QslCard.QsosBox != null)
+			{
+				if(QslCard.QsosBox.Contains(x, y))
+				{
+					QslCard.QsosBox.IsHighlighted = true;
+					return;
+				}
+			}
 			Array revText = QslCard.TextItems.ToArray();
 			for(int index = revText.Length - 1; index >= 0; index--)
 			{
@@ -619,6 +957,17 @@ namespace hamqsler
 					cardItem.Width = (width > minWidth) ? width : minWidth;
 					cardItem.Height = (int)(cardItem.Width / ratio);
 					break;
+				case CardWFItem.RelativeLocations.E:
+					width = originalItemRectangle.Width - cursorDownLocation.X + x;
+					cardItem.Width = width > BoxMinimumWidth ? width : BoxMinimumWidth;
+					break;
+				case CardWFItem.RelativeLocations.W:
+					width = originalItemRectangle.Width + cursorDownLocation.X - x;
+					cardItem.Width = width > BoxMinimumWidth ? width : BoxMinimumWidth;
+					cardItem.X = originalItemRectangle.X + originalItemRectangle.Width -
+						cardItem.Width;
+					break;
+					
 			}
 			this.Invalidate();
 		}

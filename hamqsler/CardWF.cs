@@ -55,7 +55,7 @@ namespace hamqsler
 			set {SetValue(FileNameProperty, value);}
 		}
 		
-		private BackgroundWFImage backgroundImage = null;
+		private BackgroundWFImage backgroundImage = new BackgroundWFImage();
 		public BackgroundWFImage BackgroundImage
 		{
 			get {return backgroundImage;}
@@ -72,6 +72,13 @@ namespace hamqsler
 		public List<TextWFItem> TextItems
 		{
 			get {return textItems;}
+		}
+		
+		private QsosWFBox qsosBox = new QsosWFBox();
+		public QsosWFBox QsosBox
+		{
+			get {return qsosBox;}
+			set {qsosBox = value;}
 		}
 		
 		private static readonly DependencyProperty CardPrintPropertiesProperty =
@@ -119,7 +126,6 @@ namespace hamqsler
 			IsInDesignMode = isInDesignMode;
 			ItemSize = new System.Drawing.Size(width, height);
 			// background image
-			BackgroundImage = new BackgroundWFImage();
 			BackgroundImage.QslCard = this;
 			BackgroundImage.ImageFileName = @"$hamqslerFolder$\Samples\sample.jpg";
 			// call text item
@@ -134,11 +140,8 @@ namespace hamqsler
 			call.FontSize = 48.0F;
 			call.X = -70;
 			call.Y = 0;
-			call.CheckboxAfter = true;
-			call.CheckboxBefore = true;
-			call.CheckBoxRelativeSize = 0.75F;
-			call.CheckboxLineThickness = 10;
 			TextItems.Add(call);
+			QsosBox.QslCard = this;
 		}
 		
 		/// <summary>
@@ -170,6 +173,10 @@ namespace hamqsler
 		/// <returns>Selected card item, if any, or null if none selected</returns>
 		public CardWFItem GetSelectedItem()
 		{
+			if(QsosBox != null && QsosBox.IsSelected)
+			{
+				return QsosBox;
+			}
 			foreach(TextWFItem tItem in TextItems)
 			{
 				if(tItem.IsSelected)
@@ -197,6 +204,10 @@ namespace hamqsler
 		/// <returns>Highlighted card item, if any, or null if none highlighted</returns>
 		public CardWFItem GetHighlightedItem()
 		{
+			if(QsosBox != null && QsosBox.IsHighlighted)
+			{
+				return QsosBox;
+			}
 			foreach(TextWFItem tItem in TextItems)
 			{
 				if(tItem.IsHighlighted)

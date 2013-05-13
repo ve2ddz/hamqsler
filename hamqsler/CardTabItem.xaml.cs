@@ -59,6 +59,7 @@ namespace hamqsler
 			foreach(System.Drawing.FontFamily family in fontCol.Families)
 			{
 				FontFaceComboBox.Items.Add(family.Name);
+				QsosBoxFontFaceComboBox.Items.Add(family.Name);
 			}
 
 /*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
@@ -123,11 +124,11 @@ namespace hamqsler
 						Text.Text = sText.Text;
 					}
 				}
-/*				else if(ci.GetType() == typeof(QsosBox))
+				else if(ci.GetType() == typeof(QsosWFBox))
 				{
 					qsosBoxProperties.Visibility = Visibility.Visible;
 					qsosBoxProperties.DataContext = ci;
-				}*/
+				}
 			}
 			else
 			{

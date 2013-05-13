@@ -39,7 +39,9 @@ namespace hamqsler
 		/// <returns></returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return ((float)value) * 100;
+			float pc = (float)value * 100 + 0.5F;
+			int intPC = (int)pc;
+			return (float)intPC;
 		}
 		
 		/// <summary>
