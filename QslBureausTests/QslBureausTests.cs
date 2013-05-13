@@ -127,7 +127,7 @@ namespace QslBureausTests
 		[Test]
 		public void TestBureauAH8XC()
 		{
-			Assert.AreEqual("W9H8", QslBureaus.QslBureaus.Bureau("AH8XC"));
+			Assert.AreEqual("ZZZZ", QslBureaus.QslBureaus.Bureau("AH8XC"));
 		}
 		
 		// test Bureau for AL0PM - should be W9L0
