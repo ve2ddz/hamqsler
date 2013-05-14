@@ -165,7 +165,7 @@ namespace hamqsler
 				System.Drawing.Size size = TextRenderer.MeasureText(this.Text.GetText(
 					QslCard, null, QslCard.IsInDesignMode), font);
 				this.Height = size.Height;
-				this.Width = size.Width + size.Height * 2;
+				this.Width = size.Width + size.Height * 2 + 8;
 			}
 		}
 		
