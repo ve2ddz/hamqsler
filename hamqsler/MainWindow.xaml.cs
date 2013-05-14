@@ -322,15 +322,15 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void AddQsosBoxCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
 				return;
 			}
-			Card card = ti.cardCanvas.QslCard;
-			CardItem ci = card.GetSelected();
-			e.CanExecute = ci == null && card.QsosBox == null;*/
+			CardWF card = ti.cardPanel.QslCard;
+			CardWFItem ci = card.GetSelectedItem();
+			e.CanExecute = ci == null && card.QsosBox == null;
 		}
 		
 		/// <summary>
@@ -340,14 +340,14 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void DeleteItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-/*			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
 			if(ti == null)
 			{
 				e.CanExecute = false;
 				return;
 			}
-			CardItem ci = ti.cardCanvas.QslCard.GetSelected();
-			e.CanExecute = ci != null && ci.GetType() != typeof(BackgroundImage);*/
+			CardWFItem ci = ti.cardPanel.QslCard.GetSelectedItem();
+			e.CanExecute = ci != null && ci.GetType() != typeof(BackgroundWFImage);
 		}
 		
 		/// <summary>
@@ -1240,13 +1240,14 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void AddQsosBoxCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		internal void AddQsosBoxCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				cti.cardCanvas.AddQsosBoxCommand_Executed(sender, e);
-			}*/
+				QsosWFBox box = cti.cardPanel.AddQsosBox();
+				cti.SetPropertiesVisibility(box);
+			}
 		}
 		
 		/// <summary>
@@ -1254,13 +1255,14 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		internal void DeleteItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				cti.cardCanvas.DeleteItemCommand_Executed(sender, e);
-			}*/
+				cti.cardPanel.DeleteItem();
+				cti.SetPropertiesVisibility(null);
+			}
 		}
 		
 		/// <summary>

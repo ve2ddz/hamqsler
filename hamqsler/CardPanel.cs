@@ -112,5 +112,26 @@ namespace hamqsler
 			QslCard.TextItems.Add(tItem);
 			return tItem;
 		}
+		
+		/// <summary>
+		/// Add a QsosWFBox to the card
+		/// </summary>
+		/// <returns>QsosWFBox that was added</returns>
+		public QsosWFBox AddQsosBox()
+		{
+			QsosWFBox box = new QsosWFBox();
+			box.QslCard = QslCard;
+			box.IsSelected = true;
+			QslCard.QsosBox = box;
+			return box;
+		}
+		
+		/// <summary>
+		/// Delete the selected card item from the card
+		/// </summary>
+		public void DeleteItem()
+		{
+			QslCard.DeleteSelectedItem();			
+		}
 	}
 }

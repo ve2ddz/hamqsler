@@ -244,5 +244,30 @@ namespace hamqsler
 			}
 			return location;
 		}
+		
+		/// <summary>
+		/// Delete the selected card item
+		/// </summary>
+		public void DeleteSelectedItem()
+		{
+			CardWFItem ci = GetSelectedItem();
+			if(ci != null)
+			{
+				if(ci.GetType() == typeof(SecondaryWFImage))
+				{
+					SecondaryImages.Remove((SecondaryWFImage)ci);
+				}
+				else if(ci.GetType() == typeof(TextWFItem))
+				{
+					TextItems.Remove((TextWFItem)ci);
+				}
+				else if(ci.GetType() == typeof(QsosWFBox))
+				{
+					QsosBox = null;
+				}
+				IsDirty = true;
+				RaiseDispPropertyChangedEvent();
+			}
+		}
 	}
 }

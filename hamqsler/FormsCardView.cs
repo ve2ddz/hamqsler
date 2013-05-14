@@ -761,7 +761,21 @@ namespace hamqsler
 			addText.Click += OnAddTextClicked;
 			contextMenu.Items.Add(addText);
 			
+			System.Windows.Controls.MenuItem addQsosBox = 
+				new System.Windows.Controls.MenuItem();
+			addQsosBox.Header = "Add Qsos Box";
+			addQsosBox.Name = "AddQsosBox";
+			addQsosBox.Click += OnAddQsosBoxClicked;
+			contextMenu.Items.Add(addQsosBox);
+			
 			contextMenu.Items.Add(new System.Windows.Controls.Separator());
+			
+			System.Windows.Controls.MenuItem deleteItem =
+				new System.Windows.Controls.MenuItem();
+			deleteItem.Header = "Delete Item";
+			deleteItem.Name = "DeleteItem";
+			deleteItem.Click += OnDeleteItemClicked;
+			contextMenu.Items.Add(deleteItem);
 
 			System.Windows.Controls.MenuItem clearBackground =
 				new System.Windows.Controls.MenuItem();
@@ -805,6 +819,15 @@ namespace hamqsler
 							break;
 						case "AddText":
 							mi.IsEnabled = selectedCardItem == null;
+							break;
+						case "AddQsosBox":
+							mi.IsEnabled = selectedCardItem == null &&
+								QslCard.QsosBox == null;
+							break;
+						case "DeleteItem":
+							mi.IsEnabled = selectedCardItem != null &&
+								selectedCardItem.GetType() !=
+								typeof(BackgroundWFImage);
 							break;
 					}
 				}
@@ -854,7 +877,7 @@ namespace hamqsler
 		/// <param name="e">RoutedEventArgs object</param>
 		private void OnAddImageClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
-			// pass processing to MainWindow.ClearBackgroundCommand_Executed
+			// pass processing to MainWindow.AddImageCommand_Executed
 			((MainWindow)App.Current.MainWindow).AddImageCommand_Executed(
 				sender, null);
 		}
@@ -866,8 +889,32 @@ namespace hamqsler
 		/// <param name="e">RoutedEventArgs object</param>
 		private void OnAddTextClicked(object sender, System.Windows.RoutedEventArgs e)
 		{
-			// pass processing to MainWindow.ClearBackgroundCommand_Executed
+			// pass processing to MainWindow.AddTextCommand_Executed
 			((MainWindow)App.Current.MainWindow).AddTextCommand_Executed(
+				sender, null);
+		}
+		
+		/// <summary>
+		/// Handler for context menu's Add Qsos Box menu item clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked (Add Qsos Box)</param>
+		/// <param name="e">>RoutedEventArgs object</param>
+		private void OnAddQsosBoxClicked(object sender, System.Windows.RoutedEventArgs e)
+		{
+			// pass processing to MainWindow.AddQsosBoxCommand_Executed
+			((MainWindow)App.Current.MainWindow).AddQsosBoxCommand_Executed(
+				sender, null);
+		}
+		
+		/// <summary>
+		/// Handler for context menu's Delete Item menu item clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked (Delete Item)</param>
+		/// <param name="e">>RoutedEventArgs object</param>
+		private void OnDeleteItemClicked(object sender, System.Windows.RoutedEventArgs e)
+		{
+			// pass processing to MainWindow.DeleteItemCommand_Executed
+			((MainWindow)App.Current.MainWindow).DeleteItemCommand_Executed(
 				sender, null);
 		}
 		
