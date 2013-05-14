@@ -81,7 +81,6 @@ namespace hamqsler
 		/// <param name="e">DispatcherUnhandledExceptionEventArgs object</param>
 		private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
 		{
-			// TODO: Inplement DispatcherUnhandledException using ExceptionLogger
 			if(logger != null)
 			{
 				logger.Log(e.Exception, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
