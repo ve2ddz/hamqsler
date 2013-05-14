@@ -158,25 +158,9 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LoadBackgroundImage_Click(object sender, RoutedEventArgs e)
 		{
-			// create and open OpenFileDialog
-			OpenFileDialog oDialog = new OpenFileDialog();
-			oDialog.Title = "Select Background Image";
-			oDialog.InitialDirectory = ((App)Application.Current).UserPreferences.DefaultImagesFolder;
-			oDialog.Filter = "Image Files (*.BMP, *.JPG, *.GIF, *.PNG)|*.BMP;*.JPG;*.GIF;*.PNG";
-			oDialog.CheckFileExists = true;
-			oDialog.Multiselect = false;
-			if(oDialog.ShowDialog() == true)
+			string fileName = GetImageFileNameForLoading();
+			if(fileName != null)
 			{
-				// file has been selected, so see if it is in hamqsler folder or child folder
-				// and modify the filename appropriately.
-				// This helps support moving the hamqsler folder from one computer to another
-				// or one user to another.
-				string hamQSLerFolder = ((App)Application.Current).HamqslerFolder;
-				string fileName = oDialog.FileName;
-				if(fileName.StartsWith(hamQSLerFolder))
-				{
-					fileName = "$hamqslerFolder$\\" + fileName.Substring(hamQSLerFolder.Length);
-				}
 				// if previous image, this will force new image to be centred on
 				// the card, even if reloading the same image.
 				cardPanel.QslCard.BackgroundImage.ImageFileName = string.Empty;
@@ -194,11 +178,35 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LoadSecondaryImage_Click(object sender, RoutedEventArgs e)
 		{
+			string fileName = GetImageFileNameForLoading();
+			if(fileName != null)
+			{
+				// if previous image, this will force new image to be centred on
+				// the card, even if reloading the same image.
+				SecondaryWFImage si = cardPanel.QslCard.GetSelectedItem() as SecondaryWFImage;
+				if(si != null)
+				{
+					si.ImageFileName = string.Empty;
+					// set the file name and show in secondaryImageFileNameTextBox
+					si.ImageFileName = fileName;
+					secondaryImageFileNameTextBox.Text = fileName;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Open an OpenFileDialog to retrieve an image file name for loading
+		/// </summary>
+		/// <returns>file name, or null if user clicks the Cancel button or otherwise
+		/// closes the dialog</returns>
+		private string GetImageFileNameForLoading()
+		{
 			// create and open OpenFileDialog
 			OpenFileDialog oDialog = new OpenFileDialog();
 			oDialog.Title = "Select Secondary Image";
 			oDialog.InitialDirectory = ((App)Application.Current).UserPreferences.DefaultImagesFolder;
-			oDialog.Filter = "Image Files (*.BMP, *.JPG, *.GIF, *.PNG)|*.BMP;*.JPG;*.GIF;*.PNG";
+			oDialog.Filter = "Image Files (*.BMP, *.JPG, *.GIF, *.PNG, *.TIF, *.TIFF)|" +
+				"*.BMP;*.JPG;*.GIF;*.PNG;*.TIF;*.TIFF";
 			oDialog.CheckFileExists = true;
 			oDialog.Multiselect = false;
 			if(oDialog.ShowDialog() == true)
@@ -213,16 +221,11 @@ namespace hamqsler
 				{
 					fileName = "$hamqslerFolder$\\" + fileName.Substring(hamQSLerFolder.Length);
 				}
-				// if previous image, this will force new image to be centred on
-				// the card, even if reloading the same image.
-				SecondaryWFImage si = cardPanel.QslCard.GetSelectedItem() as SecondaryWFImage;
-				if(si != null)
-				{
-					si.ImageFileName = string.Empty;
-					// set the file name and show in secondaryImageFileNameTextBox
-					si.ImageFileName = fileName;
-					secondaryImageFileNameTextBox.Text = fileName;
-				}
+				return fileName;
+			}
+			else
+			{
+				return null;
 			}
 		}
 		
