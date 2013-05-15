@@ -195,6 +195,7 @@ namespace hamqsler
 				for(int vCards = 0; vCards < cardsHigh; vCards++)
 				{
 					CardWF card = QslCard.Clone();
+					card.CardPrintProperties = this.PrintProperties;
 					FormsCardView view = new FormsCardView(card);
 					System.Drawing.Drawing2D.GraphicsState gState = g.Save();
 					float x = leftOffset + hCards * card.Width - hardX;
