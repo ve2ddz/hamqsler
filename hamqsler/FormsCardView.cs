@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.Drawing.Text;
 using System.Windows.Forms;
 
@@ -146,6 +147,25 @@ namespace hamqsler
 			GraphicsState state;
 			g.FillRectangle(Brushes.White, new Rectangle(
 				CardLocation.X, CardLocation.Y, QslCard.Width, QslCard.Height));
+			float cardX = CardLocation.X;
+			float cardY = CardLocation.Y;
+			float cardWidth = QslCard.Width;
+			float cardHeight = QslCard.Height;
+			if(QslCard.CardPrintProperties.SetCardMargins)
+			{
+				PrinterSettings settings = new PrinterSettings();
+				settings.PrinterName = QslCard.CardPrintProperties.PrinterName;
+				RectangleF area = settings.DefaultPageSettings.PrintableArea;
+				PaperSize paperSize = settings.DefaultPageSettings.PaperSize;
+				float margin = Math.Max(area.Left, area.Top);
+				margin = Math.Max(margin, paperSize.Width - area.Right);
+				margin = Math.Max(margin, paperSize.Height - area.Bottom);
+				cardX += margin;
+				cardY += margin;
+				cardWidth -= 2 * margin;
+				cardHeight -= 2 * margin;
+			}
+			RectangleF clipRect = new RectangleF(cardX, cardY, cardWidth, cardHeight);
 			if(QslCard.IsInDesignMode)
 			{
 				// Create a bitmap containing the card and its items.
@@ -159,8 +179,7 @@ namespace hamqsler
 				GraphicsPath path = new GraphicsPath();
 				path.AddRectangle(new RectangleF(this.Location.X, this.Location.Y, 
 				                                 this.Width, this.Height));
-				path.AddRectangle(new RectangleF(CardLocation.X, CardLocation.Y,
-				                                 QslCard.Width, QslCard.Height));
+				path.AddRectangle(clipRect);
 				state = g.Save();
 				g.Clip = new Region(path);
 				g.DrawImage(designSurface, 
@@ -173,17 +192,15 @@ namespace hamqsler
 			}
 			// now draw the card items on the card.
 			state = g.Save();
-			RectangleF clipRect = new RectangleF(CardLocation.X, CardLocation.Y, 
-			                                     QslCard.Width, QslCard.Height);
 			g.Clip = new Region(clipRect);
 			PaintCardItems(g);
+			g.Restore(state);
 			// paint the card outline if requested
 			if(QslCard.CardPrintProperties.PrintCardOutlines)
 			{
 				g.DrawRectangle(Pens.Black, new Rectangle(
 					CardLocation.X, CardLocation.Y, QslCard.Width - 1, QslCard.Height - 1));
 			}
-			g.Restore(state);
 
 		}
 		

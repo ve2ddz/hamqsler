@@ -124,6 +124,10 @@ namespace hamqsler
 						   App.Logger.DebugPrinting);
 			CardPrintProperties = new PrintProperties();
 			IsInDesignMode = isInDesignMode;
+			if(IsInDesignMode)
+			{
+				CardPrintProperties.PrintPropertiesChanged += OnPrintPropertiesChanged;
+			}
 			ItemSize = new System.Drawing.Size(width, height);
 			// background image
 			BackgroundImage.QslCard = this;
@@ -282,6 +286,16 @@ namespace hamqsler
 				IsDirty = true;
 				RaiseDispPropertyChangedEvent();
 			}
+		}
+		
+		/// <summary>
+		/// Handler for CardPrintProperties.PrintPropertiesChanged event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnPrintPropertiesChanged(object sender, EventArgs e)
+		{
+			RaiseDispPropertyChangedEvent();
 		}
 	}
 }

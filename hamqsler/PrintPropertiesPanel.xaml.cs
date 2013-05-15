@@ -188,11 +188,56 @@ namespace hamqsler
 			base.OnPropertyChanged(e);
 			if(e.Property == PrinterNameProperty)
 			{
-				insideMarginsButton.IsEnabled = true;
-				PrinterSettings settings = new PrinterSettings();
+				settings = new PrinterSettings();
 				settings.PrinterName = PrinterName;
 				SetPaperSizes(settings);
 				SetResolutions(settings);
+				settings.DefaultPageSettings.PaperSize = PrinterPaperSize;
+				settings.DefaultPageSettings.PrinterResolution = Resolution;
+				insideMarginsButton.IsEnabled = true;
+				setCardMarginsButton.IsEnabled = true;
+				// if the page margins are greater than ¼ inch, then force InsideMargins
+				// to be set and set card margins to be cleared
+				RectangleF area = settings.DefaultPageSettings.PrintableArea;
+				bool insideMargins = InsideMargins;
+				if(App.Logger.DebugPrinting)
+				{
+					string info = 
+						string.Format("PrintPropertiesPanel.SetCardsLayouts:" +
+					              Environment.NewLine +
+					              "\tPapersize = {0} x {1}" +
+					              Environment.NewLine +
+					              "\tPrintableArea = {2}, {3}: {4} x {5}" +
+					              Environment.NewLine +
+					              "\tInsideMargins original value = {6}" +
+					              Environment.NewLine,
+					              PrinterPaperSize.Width,
+					              PrinterPaperSize.Height,
+					              area.Left, area.Top, area.Width, area.Height,
+					             insideMargins);
+					App.Logger.Log(info);
+				}
+				InsideMargins = InsideMargins ||
+				area.X > MAXMARGIN ||
+				settings.DefaultPageSettings.PaperSize.Width - area.X -
+				area.Width > MAXMARGIN ||
+				area.Y > MAXMARGIN ||
+				settings.DefaultPageSettings.PaperSize.Height - area.Y -
+				area.Height > MAXMARGIN;
+				if(insideMargins != InsideMargins)
+				{
+					insideMarginsButton.IsEnabled = false;
+					setCardMarginsButton.IsChecked = false;
+					setCardMarginsButton.IsEnabled = false;
+					if(App.Logger.DebugPrinting)
+					{
+						App.Logger.Log(string.Format("PrintPropertiesPanel.SetCardsLayouts:" +
+						              Environment.NewLine +
+						              "\tInsideMargins changed to {0}" +
+						              Environment.NewLine,
+						              InsideMargins));
+					}
+				}
 			}
 			else if(e.Property == PrinterPaperSizeProperty)
 			{
@@ -395,50 +440,6 @@ namespace hamqsler
 			if(PrinterPaperSize != null && CardWidth != 1 && CardHeight != 1)
 			{
 				CalculateScaledPaperAndCardSizes();
-				settings = new PrinterSettings();
-				settings.PrinterName = PrinterName;
-				settings.DefaultPageSettings.PaperSize = PrinterPaperSize;
-				settings.DefaultPageSettings.PrinterResolution = Resolution;
-				// if the page margins are greater than ¼ inch, then force InsideMargins
-				// to be set
-				RectangleF area = settings.DefaultPageSettings.PrintableArea;
-				bool insideMargins = InsideMargins;
-				if(App.Logger.DebugPrinting)
-				{
-					string info = 
-						string.Format("CardAlignmentGroupBox.SetCardsLayouts:" +
-					              Environment.NewLine +
-					              "\tPapersize = {0} x {1}" +
-					              Environment.NewLine +
-					              "\tPrintableArea = {2}, {3}: {4} x {5}" +
-					              Environment.NewLine +
-					              "\tInsideMargins original value = {6}" +
-					              Environment.NewLine,
-					              PrinterPaperSize.Width,
-					              PrinterPaperSize.Height,
-					              area.Left, area.Top, area.Width, area.Height,
-					             insideMargins);
-					App.Logger.Log(info);
-				}
-				InsideMargins = InsideMargins ||
-				area.X > MAXMARGIN ||
-				settings.DefaultPageSettings.PaperSize.Width - area.X -
-				area.Width > MAXMARGIN ||
-				area.Y > MAXMARGIN ||
-				settings.DefaultPageSettings.PaperSize.Height - area.Y -
-				area.Height > MAXMARGIN;
-				if(insideMargins != InsideMargins)
-				{
-					insideMarginsButton.IsEnabled = false;
-					if(App.Logger.DebugPrinting)
-					{
-						App.Logger.Log(string.Format("CardAlignmentGroupBox.SetCardsLayouts:" +
-						              Environment.NewLine +
-						              "\tInsideMargins changed to {0}" +
-						              Environment.NewLine,
-						              InsideMargins));
-					}
-				}
 				// determine the number of cards that can be printed on portrait
 				// and landscape pages
 				CalculateCardsPerPortraitPage();
@@ -465,7 +466,7 @@ namespace hamqsler
 			if(App.Logger.DebugPrinting)
 			{
 				string info =
-					string.Format("CardAlignmentGroupBox.CalculateScaledPaperAndCardSizes:" +
+					string.Format("PrintPropertiesPanel.CalculateScaledPaperAndCardSizes:" +
 					              Environment.NewLine +
 					              "\tscaledPage size = {0} x {1}" +
 					              Environment.NewLine +
@@ -498,7 +499,7 @@ namespace hamqsler
 			if(App.Logger.DebugPrinting)
 			{
 				string info = 
-					string.Format("CardAlignmentGroupBox.CalculateCardsPerPortraitPage:" +
+					string.Format("PrintPropertiesPanel.CalculateCardsPerPortraitPage:" +
 					              Environment.NewLine +
 					              "\tInside Margins = {6}" +
 					              Environment.NewLine +
@@ -536,7 +537,7 @@ namespace hamqsler
 			if(App.Logger.DebugPrinting)
 			{
 				string info = 
-					string.Format("CardAlignmentGroupBox.CalculateCardsPerLandscapePage:" +
+					string.Format("PrintPropertiesPanel.CalculateCardsPerLandscapePage:" +
 					              Environment.NewLine +
 					              "\tInside Margins = {6}" +
 					              Environment.NewLine +

@@ -120,6 +120,10 @@ namespace hamqsler
 			set {SetValue(LayoutProperty, value);}
 		}
 		
+		public delegate void PrintPropertiesChangedEventHandler(
+			object sender, EventArgs e);
+		public event PrintPropertiesChangedEventHandler PrintPropertiesChanged;
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -191,6 +195,23 @@ namespace hamqsler
 				              InsideMargins, PrintCardOutlines,
 				              FillLastPage, SetCardMargins, Layout,
 				              PrinterPaperSize.Width, PrinterPaperSize.Height);
+		}
+		
+		/// <summary>
+		/// Handler for Property Changed event
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == PrintCardOutlinesProperty ||
+			   e.Property == SetCardMarginsProperty)
+			{
+				if(PrintPropertiesChanged != null)
+				{
+					PrintPropertiesChanged(this, new EventArgs());
+				}
+			}
 		}
 
 	}
