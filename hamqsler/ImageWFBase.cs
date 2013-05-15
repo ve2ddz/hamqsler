@@ -163,5 +163,16 @@ namespace hamqsler
 			}
 			return location;
 		}
+		
+		/// <summary>
+		/// Copy the ImageWFBase properties
+		/// </summary>
+		/// <param name="image">ImageWFBase object whose properties are to be copied</param>
+		public void CopyImageBaseProperties(ImageWFBase image)
+		{
+			CopyBaseProperties(image);
+			ImageFileName = image.ImageFileName;
+		}
+			
 	}
 }

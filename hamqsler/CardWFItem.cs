@@ -220,5 +220,16 @@ namespace hamqsler
 			Rectangle contents = new Rectangle(this.X, this.Y, this.Width, this.Height);
 			return contents.Contains(x, y);
 		}
+		
+		/// <summary>
+		/// Copy the CardWFItem properties from one CardWFItem to this one.
+		/// </summary>
+		/// <param name="cItem">CardWFItem object whose properties are to be copied</param>
+		protected void CopyBaseProperties(CardWFItem cItem)
+		{
+			ItemSize = new System.Drawing.Size(cItem.Width, cItem.Height);
+			Location = new System.Drawing.Point(cItem.X, cItem.Y);
+
+		}
 	}
 }

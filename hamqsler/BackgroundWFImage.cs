@@ -84,5 +84,16 @@ namespace hamqsler
 			this.Width = QslCard.Width;
 			this.Height = QslCard.Height;
 		}
+		
+		/// <summary>
+		/// Make a deep copy of this BackgroundWFImage object
+		/// </summary>
+		/// <returns>BackgroundWFImage object that is a deep copy of this one</returns>
+		public BackgroundWFImage Clone()
+		{
+			BackgroundWFImage image = new BackgroundWFImage();
+			image.CopyImageBaseProperties(this);
+			return image;
+		}
 	}
 }

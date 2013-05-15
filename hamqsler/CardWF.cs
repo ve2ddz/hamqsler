@@ -151,8 +151,22 @@ namespace hamqsler
 		public CardWF Clone()
 		{
 			CardWF card = new CardWF();
-			card.ItemSize = new System.Drawing.Size(this.Width, this.Height);
-			card.Location = new System.Drawing.Point(this.X, this.Y);
+			card.CopyBaseProperties(this);
+			card.BackgroundImage = BackgroundImage.Clone();
+			foreach(SecondaryWFImage sImage in SecondaryImages)
+			{
+				card.SecondaryImages.Add(sImage.Clone());
+			}
+			foreach(TextWFItem tItem in TextItems)
+			{
+				card.TextItems.Add(tItem.Clone());
+			}
+			card.QsosBox = null;
+			if(this.QsosBox != null)
+			{
+				card.QsosBox = QsosBox.Clone();
+			}
+			card.CardPrintProperties = new PrintProperties(this.CardPrintProperties);
 			return card;
 		}
 		

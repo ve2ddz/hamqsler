@@ -77,5 +77,16 @@ namespace hamqsler
 			this.Width = initialSize;
 			this.Height = initialSize;
 		}
+
+		/// <summary>
+		/// Make a deep copy of this SecondaryWFImage object
+		/// </summary>
+		/// <returns>SecondaryWFImage object that is a deep copy of this one</returns>
+		public SecondaryWFImage Clone()
+		{
+			SecondaryWFImage image = new SecondaryWFImage();
+			image.CopyImageBaseProperties(this);
+			return image;
+		}
 	}
 }

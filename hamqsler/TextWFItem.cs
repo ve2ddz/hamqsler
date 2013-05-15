@@ -147,6 +147,9 @@ namespace hamqsler
 			return location;
 		}
 		
+		/// <summary>
+		/// Calculate the size of this TextWFItem based on its various properties
+		/// </summary>
 		public void CalculateRectangle()
 		{
 			if(QslCard != null)
@@ -169,6 +172,10 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handler for PropertyChanged event
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object</param>
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
@@ -188,6 +195,31 @@ namespace hamqsler
 			{
 				QslCard.RaiseDispPropertyChangedEvent();
 			}
+		}
+		
+		/// <summary>
+		/// Create a TextWFItem object that is a deep copy of this one
+		/// </summary>
+		/// <returns>TextWFItem object that is a deep copy of this one</returns>
+		public TextWFItem Clone()
+		{
+			TextWFItem tItem = new TextWFItem();
+			tItem.CopyBaseProperties(this);
+			tItem.TextFontFace = this.TextFontFace;
+			tItem.IsBold = this.IsBold;
+			tItem.IsItalic = this.IsItalic;
+			tItem.FontSize = this.FontSize;
+			tItem.TextBrush = this.TextBrush;
+			tItem.Text.Clear();
+			foreach(TextPart part in this.Text)
+			{
+				tItem.Text.Add(part.Clone());
+			}
+			tItem.CheckboxBefore = this.CheckboxBefore;
+			tItem.CheckboxAfter = this.CheckboxAfter;
+			tItem.CheckboxLineThickness = this.CheckboxLineThickness;
+			tItem.CheckBoxRelativeSize = this.CheckBoxRelativeSize;
+			return tItem;
 		}
 				
 	}

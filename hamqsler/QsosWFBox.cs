@@ -152,7 +152,7 @@ namespace hamqsler
 			set { SetValue(BackgroundOpacityProperty, value); }
 		}
 
-		// Text for confirming QSO string for single QSO
+		// Text for confirming QSO string
 		private static readonly DependencyPropertyKey ConfirmingTextPropertyKey =
 			DependencyProperty.RegisterReadOnly("ConfirmingText", typeof(TextParts),
 			                            typeof(QsosWFBox), new PropertyMetadata(null));
@@ -440,5 +440,44 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Create a QsosWFBox that is a deep copy of this one
+		/// </summary>
+		/// <returns>QsosWFBox object that is a deep copy of this one</returns>
+		public QsosWFBox Clone()
+		{
+			QsosWFBox box = new QsosWFBox();
+			box.CopyBaseProperties(this);
+			box.ShowManager = this.ShowManager;
+			box.ShowFrequency = this.ShowFrequency;
+			box.ShowPseTnx = this.ShowPseTnx;
+			box.MaximumQsos = this.MaximumQsos;
+			box.DateFormat = this.DateFormat;
+			box.LineTextBrush = this.LineTextBrush;
+			box.CallsignBrush =  this.CallsignBrush;
+			box.ManagerBrush = this.ManagerBrush;
+			box.FontSize = this.FontSize;
+			box.FontName = this.FontName;
+			box.BackgroundBrush = this.BackgroundBrush;
+			box.BackgroundOpacity = this.BackgroundOpacity;
+			box.ConfirmingText.Clear();
+			foreach(TextPart part in this.ConfirmingText)
+			{
+				box.ConfirmingText.Add(part.Clone());
+			}
+			box.ViaText = this.ViaText;
+			box.YYYYMMDDText = this.YYYYMMDDText;
+			box.DDMMMYYText = this.DDMMMYYText;
+			box.DDMMYYText = this.DDMMYYText;
+			box.TimeText = this.TimeText;
+			box.ModeText = this.ModeText;
+			box.BandText = this.BandText;
+			box.FreqText = this.FreqText;
+			box.RSTText = this.RSTText;
+			box.QSLText = this.QSLText;
+			box.PseText = this.PseText;
+			box.TnxText = this.TnxText;
+			return box;
+		}
 	}
 }
