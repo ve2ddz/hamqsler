@@ -85,7 +85,6 @@
   <QslBureau Bureau="EP00" Regex="^E[PQ].*|^9[B-D].*"/>
   <QslBureau Bureau="ER00" Regex="^ER.*"/>
   <QslBureau Bureau="ES00" Regex="^ES.*"/>
-  <QslBureau Bureau="ET00" Regex="^ET.*|^9[EF].*"/>
   <QslBureau Bureau="EU00" Regex="^E[U-W]"/>
   <QslBureau Bureau="EX00" Regex="^EX.*"/>
   <QslBureau Bureau="EY00" Regex="^EY.*"/>
@@ -174,7 +173,6 @@
   <QslBureau Bureau="VP50" Regex="^VP5.*"/>
   <QslBureau Bureau="VP80" Regex="^VP8.*"/>
   <QslBureau Bureau="VP90" Regex="^VP9.*"/>
-  <QslBureau Bureau="VQ90" Regex="^VQ9.*"/>
   <QslBureau Bureau="VR20" Regex="^VR[0-57-9].*|^VS[69].*"/>
   <QslBureau Bureau="VU00" Regex="^[AV][T-W].*|^8[T-Y].*"/>
   <QslBureau Bureau="W100" Regex="^[KNW]1.*|^A[A-K]1.*|^[KNW][A-GI-KM-Z]1.*"/>

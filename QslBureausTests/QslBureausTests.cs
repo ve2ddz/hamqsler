@@ -192,7 +192,20 @@ namespace QslBureausTests
 		{
 			Assert.AreEqual("ZZZZ", QslBureaus.QslBureaus.Bureau("ZA3MM"));
 		}
-			
+		
+		// test Bureau for ET3XI - should be NoBureau
+		[Test]
+		public void testBureauET3XI()
+		{
+			Assert.AreEqual("ZZZZ", QslBureaus.QslBureaus.Bureau("ET3XI"));
+		}
+		
+		// test Bureau for VQ9MT - should be NoBureau
+		[Test]
+		public void testBureauVQ9MT()
+		{
+			Assert.AreEqual("ZZZZ", QslBureaus.QslBureaus.Bureau("VQ9MT"));
+		}
 	}
 }
 
