@@ -157,7 +157,7 @@ namespace hamqsler
 		/// </param>
 		public override string GetText(CardWF card, List<DispQso> qsos, bool screen)
 		{
-/*			if(screen)
+			if(screen)
 			{
 				return DesignText.GetText(card, qsos, screen);
 			}
@@ -194,9 +194,9 @@ namespace hamqsler
 					FalseText.GetText(card, qsos, screen);	
 			}
 			else
-			{*/
+			{
 				return string.Empty;
-//			}
+			}
 		}
 		
 		/// <summary>
