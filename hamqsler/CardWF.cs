@@ -156,19 +156,28 @@ namespace hamqsler
 		{
 			CardWF card = new CardWF();
 			card.CopyBaseProperties(this);
+			card.QslCard = card;
 			card.BackgroundImage = BackgroundImage.Clone();
+			card.backgroundImage.QslCard = card;
 			foreach(SecondaryWFImage sImage in SecondaryImages)
 			{
-				card.SecondaryImages.Add(sImage.Clone());
+				SecondaryWFImage si = sImage.Clone();
+				si.QslCard = card;
+				card.SecondaryImages.Add(si);
+				
 			}
 			foreach(TextWFItem tItem in TextItems)
 			{
-				card.TextItems.Add(tItem.Clone());
+				TextWFItem ti = tItem.Clone();
+				ti.QslCard = card;
+				card.TextItems.Add(ti);
 			}
 			card.QsosBox = null;
 			if(this.QsosBox != null)
 			{
-				card.QsosBox = QsosBox.Clone();
+				QsosWFBox box = QsosBox.Clone();
+				box.QslCard = card;
+				card.QsosBox = box;
 			}
 			card.CardPrintProperties = new PrintProperties(this.CardPrintProperties);
 			return card;

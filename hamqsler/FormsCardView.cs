@@ -35,6 +35,60 @@ namespace hamqsler
 	/// </summary>
 	public class FormsCardView : Panel
 	{
+		/// <summary>
+		/// Callsign property (displayed as part of ConfirmingText message)
+		/// </summary>
+		private string callsign = "XXXXXX";
+		public string Callsign
+		{
+			get {return callsign;}
+			set {callsign = value;}
+		}
+		
+		/// <summary>
+		/// Manager property (displayed as part of ConfirmingText message)
+		/// </summary>
+		private string manager = "ZZZZZZ";
+		public string Manager
+		{
+			get {return manager;}
+			set {manager = value;}
+		}
+		
+		/// <summary>
+		/// List of the DispQsos objects containing the data to display in the QsosBox
+		/// </summary>
+		private List<DispQso> qsos = new List<DispQso>();
+		public List<DispQso> Qsos
+		{
+			get {return qsos;}
+			set
+			{
+				Qsos.Clear();
+				if(value != null)
+				{
+					foreach(DispQso q in value)
+					{
+						Qsos.Add(q);
+					}
+					if(Qsos.Count > 0)
+					{
+						if(QslCard.IsInDesignMode)
+						{
+							Manager = "ZZZZZZ";
+							Callsign = "XXXXXX";
+						}
+						else
+						{
+							Manager = Qsos[0].Manager;
+							Callsign = Qsos[0].Callsign;
+						}
+					}
+				}
+				QslCard.QsosBox.CalculateRectangle(Qsos.Count);
+			}
+		}
+		
 		// Reference to the CardWF that this view displays
 		private CardWF qslCard = null;
 		public CardWF QslCard
@@ -67,6 +121,60 @@ namespace hamqsler
 		private System.Windows.Controls.ContextMenu contextMenu = 
 			new System.Windows.Controls.ContextMenu();
 		private CardWFItem highlightedCardItem;
+		
+		private static Dictionary<string, string> months = new Dictionary<string, string>();
+		private static Dictionary<string, string> bandFreqs = new Dictionary<string, string>();
+
+		/// <summary>
+		/// Static constructor - initializes the months and bandFreqs dictionaries
+		/// </summary>
+		static FormsCardView()
+		{
+			UserPreferences prefs = ((App)App.Current).UserPreferences;
+			months["01"] = prefs.JanuaryText;
+			months["02"] = prefs.FebruaryText;
+			months["03"] = prefs.MarchText;
+			months["04"] = prefs.AprilText;
+			months["05"] = prefs.MayText;
+			months["06"] = prefs.JuneText;
+			months["07"] = prefs.JulyText;
+			months["08"] = prefs.AugustText;
+			months["09"] = prefs.SeptemberText;
+			months["10"] = prefs.OctoberText;
+			months["11"] = prefs.NovemberText;
+			months["12"] = prefs.DecemberText;
+
+			bandFreqs.Add("2190m", prefs.Frequency2190m);
+			bandFreqs.Add("560m", prefs.Frequency560m);
+			bandFreqs.Add("160m", prefs.Frequency160m);
+			bandFreqs.Add("80m", prefs.Frequency80m);
+			bandFreqs.Add("60m", prefs.Frequency60m);
+			bandFreqs.Add("40m", prefs.Frequency40m);
+			bandFreqs.Add("30m", prefs.Frequency30m);
+			bandFreqs.Add("20m", prefs.Frequency20m);
+			bandFreqs.Add("17m", prefs.Frequency17m);
+			bandFreqs.Add("15m", prefs.Frequency15m);
+			bandFreqs.Add("12m", prefs.Frequency12m);
+			bandFreqs.Add("10m", prefs.Frequency10m);
+			bandFreqs.Add("6m", prefs.Frequency6m);
+			bandFreqs.Add("4m", prefs.Frequency4m);
+			bandFreqs.Add("2m", prefs.Frequency2m);
+			bandFreqs.Add("1.25m", prefs.Frequency1p25m);
+			bandFreqs.Add("70cm", prefs.Frequency70cm);
+			bandFreqs.Add("33cm", prefs.Frequency33cm);
+			bandFreqs.Add("23cm", prefs.Frequency23cm);
+			bandFreqs.Add("13cm", prefs.Frequency13cm);
+			bandFreqs.Add("9cm", prefs.Frequency9cm);
+			bandFreqs.Add("6cm", prefs.Frequency6cm);
+			bandFreqs.Add("3cm", prefs.Frequency3cm);
+			bandFreqs.Add("1.25cm", prefs.Frequency1p25cm);
+			bandFreqs.Add("6mm", prefs.Frequency6mm);
+			bandFreqs.Add("4mm", prefs.Frequency4mm);
+			bandFreqs.Add("2.5mm", prefs.Frequency2p5mm);
+			bandFreqs.Add("2mm", prefs.Frequency2mm);
+			bandFreqs.Add("1mm", prefs.Frequency1mm);
+		}
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -103,7 +211,7 @@ namespace hamqsler
 		
 		private CardWFItem.RelativeLocations relativeLocation = 
 			CardWFItem.RelativeLocations.Outside;
-		private Point cursorDownLocation = new Point(0, 0);
+		private System.Drawing.Point cursorDownLocation = new Point(0, 0);
 		private Rectangle originalItemRectangle;
 		
 		/// <summary>
@@ -134,15 +242,17 @@ namespace hamqsler
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
-			PaintCard(e.Graphics);
+			PaintCard(e.Graphics, null);
 		}
 		
 		/// <summary>
 		/// Draw the card and its constituent items
 		/// </summary>
 		/// <param name="g">Graphics object on which to draw the card</param>
-		public void PaintCard(Graphics g)
+		/// <param name="qsos">List of QSOs to paint on the card</param>
+		public void PaintCard(Graphics g, List<DispQso> dQsos)
 		{
+			Qsos = dQsos;
 			g.TextRenderingHint = TextRenderingHint.AntiAlias;
 			GraphicsState state;
 			g.FillRectangle(Brushes.White, new Rectangle(
@@ -174,7 +284,7 @@ namespace hamqsler
 				// only be done with Graphics.DrawImage, not Graphics.DrawString, etc.
 				Bitmap designSurface = new Bitmap(this.Width, this.Height);
 				Graphics bGraphics = Graphics.FromImage(designSurface);
-				PaintCardItems(bGraphics);
+				PaintCardItems(bGraphics, qsos);
 				// create a graphics path that excludes the card itself
 				GraphicsPath path = new GraphicsPath();
 				path.AddRectangle(new RectangleF(this.Location.X, this.Location.Y, 
@@ -193,7 +303,7 @@ namespace hamqsler
 			// now draw the card items on the card.
 			state = g.Save();
 			g.Clip = new Region(clipRect);
-			PaintCardItems(g);
+			PaintCardItems(g, qsos);
 			g.Restore(state);
 			// paint the card outline if requested
 			if(QslCard.CardPrintProperties.PrintCardOutlines)
@@ -204,8 +314,12 @@ namespace hamqsler
 
 		}
 		
-		// Helper method that paints each card item on the card
-		private void PaintCardItems(Graphics g)
+		/// <summary>
+		/// Helper method that paints each card item on the card
+		/// </summary>
+		/// <param name="g">Graphics obejct on which to paint the card</param>
+		/// <param name="qsos">List of QSOs to paint on the card</param>
+		private void PaintCardItems(Graphics g, List<DispQso> qsos)
 		{
 			// paint the background image
 			PaintImage(g, QslCard.BackgroundImage);
@@ -221,7 +335,7 @@ namespace hamqsler
 			}
 			if(QslCard.QsosBox != null)
 			{
-				PaintQsosBox(g, QslCard.QsosBox);
+				PaintQsosBox(g, qsos, QslCard.QsosBox);
 			}
 		}
 		
@@ -329,12 +443,13 @@ namespace hamqsler
 		/// Paint the qsos box on the card.
 		/// </summary>
 		/// <param name="g">Graphics object on which to do the drawing</param>
+		/// <param name="qsos">List of QSOs to paint on the card</param>
 		/// <param name="qBox">QsosWFBox object to draw</param>
-		private void PaintQsosBox(Graphics g, QsosWFBox qBox)
+		private void PaintQsosBox(Graphics g, List<DispQso> qsos, QsosWFBox qBox)
 		{
 			Pen pen = new Pen(qBox.LineTextBrush, 1);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
-			
+			qBox.CalculateRectangle(qsos.Count);
 			Font font = new Font(new System.Drawing.FontFamily(
 				qBox.FontName), qBox.FontSize, FontStyle.Regular, GraphicsUnit.Point);
 			List<string> colHeaders = CreateColumnHeaders(qBox);
@@ -343,8 +458,9 @@ namespace hamqsler
 			FillQsosBoxBackground(g, path, qBox);
 			CreateInsideBoxPath(ref path, font, colHeaders, colWidths, qBox);
 			g.DrawPath(pen, path);
-			DrawConfirmingText(g, font, qBox);
+			DrawConfirmingText(g, font, qsos, qBox);
 			DrawHeaders(g, font, colHeaders, colWidths, qBox);
+			DrawQsos(g, qsos, font, colWidths, qBox);
 			pen.Dispose();
 			if(QslCard.IsInDesignMode)
 			{
@@ -545,8 +661,8 @@ namespace hamqsler
 				colWidths.Add(0);			// frequency column width
 			}
 			// mode column width
-			// assuming mode is limited to 13 characters (e.g. OLIVIA-BEACON)
-			size = TextRenderer.MeasureText("MMMMMMMMMMMMM", font);
+			// assuming mode is limited to 12 characters (e.g. OLIVIA-BEACON)
+			size = TextRenderer.MeasureText("MMMMMMMMMMMM", font);
 			colWidths.Add(size.Width);
 			// rst column width
 			// assuming signal report limited to 3 chars
@@ -619,26 +735,128 @@ namespace hamqsler
 		/// <param name="g">Graphics object of which to draw the text</param>
 		/// <param name="font">Font in which to draw the text</param>
 		/// <param name="box">Qsos box being drawn</param>
-		private void DrawConfirmingText(Graphics g, Font font, QsosWFBox box)
+		private void DrawConfirmingText(Graphics g, Font font, List<DispQso> qsos,
+		                                QsosWFBox box)
 		{
 			int startX = CardLocation.X + box.X + 5;
 			int y = CardLocation.Y + box.Y + 2;
-			string confText = box.ConfirmingText.GetText(QslCard, null, QslCard.IsInDesignMode);
+			string confText = box.ConfirmingText.GetText(QslCard, qsos, QslCard.IsInDesignMode);
 			g.DrawString(confText, font, box.LineTextBrush, startX, y);
 			Size size = TextRenderer.MeasureText(confText, font);
 			startX += size.Width;
 			Font callFont = new Font(box.FontName, box.FontSize,FontStyle.Bold);
-			string call = "XXXXXX";
-			g.DrawString(call, callFont, box.CallsignBrush, startX, y);
-			if(box.ShowManager)
+			g.DrawString(Callsign, callFont, box.CallsignBrush, startX, y);
+			if(box.ShowManager && !Manager.Equals(string.Empty))
 			{
-				size = TextRenderer.MeasureText(call, callFont);
+				size = TextRenderer.MeasureText(Callsign, callFont);
 				startX += size.Width;
-				string mgr = "ZZZZZZ";
-				g.DrawString(box.ViaText + " " + mgr, callFont, box.ManagerBrush, 
+				g.DrawString(box.ViaText + " " + Manager, callFont, box.ManagerBrush, 
 				             startX, y);
 			}
-				
+		}
+		
+		/// <summary>
+		/// Draw the QSO information onto the Qsos Box
+		/// </summary>
+		/// <param name="g">Graphics object on which to draw the QSO information</param>
+		/// <param name="qsos">QSOs to draw</param>
+		/// <param name="font">Font to use to draw the QSO information</param>
+		/// <param name="colWidths">List of column widths in the QSOs Box</param>
+		/// <param name="box">QsosWFBox object that is being drawn</param>
+		private void DrawQsos(Graphics g, List<DispQso> qsos, Font font, 
+		                         List<float> colWidths, QsosWFBox box)
+		{
+			if(qsos != null)
+			{
+				Size size = TextRenderer.MeasureText("X", font);
+				float y = CardLocation.Y + box.Y + 2 * (size.Height + 4) + 2;
+				foreach(DispQso qso in qsos)
+				{
+					float xStart = CardLocation.X + box.X;
+					string date = GenerateDateText(qso.Date, box.DateFormat);
+					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
+						g, date, font, box.LineTextBrush, colWidths[0], xStart, y);
+					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
+						g, qso.Time, font, box.LineTextBrush, colWidths[1], xStart, y);
+					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
+						g, qso.Band, font, box.LineTextBrush, colWidths[2], xStart, y);
+					string freq = qso.Frequency != string.Empty ?
+						qso.Frequency : bandFreqs[qso.Band];
+					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
+						g, freq, font, box.LineTextBrush, colWidths[3], xStart, y);
+					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
+						g, qso.Mode, font, box.LineTextBrush, colWidths[4], xStart, y);
+					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
+						g, qso.RST, font, box.LineTextBrush, colWidths[5], xStart, y);
+					string qsl = string.Empty;
+					if(qso.Qsl.Equals("No") || qso.Qsl.Equals("Requested"))
+					{
+						qsl = box.PseText;
+					}
+					else
+					{
+						qsl = box.TnxText;
+					}
+					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
+						g, qsl, font, box.LineTextBrush, colWidths[6], xStart, y);
+					y += size.Height + 4;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Generate formatted date text
+		/// </summary>
+		/// <param name="qsoDate">ADIF style date to format for printing</param>
+		/// <param name="dateFormat">Format for the date</param>
+		/// <returns>formatted date</returns>
+		private string GenerateDateText(string qsoDate, string dateFormat)
+		{
+			string date = string.Empty;
+			if(qsoDate != string.Empty)
+			{
+				switch (dateFormat) 
+				{
+					case "YYYY-MM-DD":
+						date = qsoDate.Substring(0, 4) + "-" + qsoDate.Substring(4, 2) + "-" 
+							+ qsoDate.Substring(6, 2);
+						break;
+					case "DD-MMM-YY":
+						date = qsoDate.Substring(6, 2) + "-" + 
+							months[qsoDate.Substring(4, 2)] + "-" + 
+							qsoDate.Substring(2, 2);
+						break;
+					case "DD-MM-YY":
+						date = qsoDate.Substring(6, 2) + "-" + qsoDate.Substring(4, 2) + "-" 
+							+ qsoDate.Substring(2, 2);
+						break;
+				}
+			}
+			return date;
+		}
+
+		/// <summary>
+		/// Print QSO data in specified column
+		/// </summary>
+		/// <param name="g">Graphics object on which to print the data</param>
+		/// <param name="text">Text to print</param>
+		/// <param name="font">Font in which to print the text</param>
+		/// <param name="brush">Brush to use when painting the text</param>
+		/// <param name="colWidth">Column width</param>
+		/// <param name="y">Y position for the text</param>
+		/// <returns>X position of the start of the next column</returns>
+		private float PrintQsoDataColumnAndAdjustToNextStartColumn(
+			Graphics g, string text, Font font, Brush brush, float colWidth, 
+			float xStart, float y)
+		{
+			if (text != string.Empty && colWidth != 0)
+			{
+				Size size = TextRenderer.MeasureText(text, font);
+				float x = xStart + (colWidth - size.Width) / 2;
+				g.DrawString(text, font, brush, x, y);
+			}
+			xStart += colWidth;
+			return xStart;
 		}
 		
 		/// <summary>

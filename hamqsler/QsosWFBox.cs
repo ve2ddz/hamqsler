@@ -312,7 +312,7 @@ namespace hamqsler
 		public QsosWFBox()
 		{
 			InitializeDisplayProperties();
-			CalculateRectangle();
+			CalculateRectangle(MaximumQsos);
 		}
 		
 		/// <summary>
@@ -342,7 +342,8 @@ namespace hamqsler
 		/// <summary>
 		/// Calculate the size of the QsosBox based on text size and number of QSOs
 		/// </summary>
-		public void CalculateRectangle()
+		/// <param name="qsosCount">Number of QSOs to be displayed</param>
+		public void CalculateRectangle(int qsosCount)
 		{
 			if(QslCard != null)
 			{
@@ -359,12 +360,11 @@ namespace hamqsler
 			        	System.Drawing.GraphicsUnit.Point);
 				System.Drawing.Size size = System.Windows.Forms.TextRenderer.MeasureText(
 					"SampleText", font);
-				int qCount = MaximumQsos;
-				if(!QslCard.IsInDesignMode)
+				if(qsosCount == 0)
 				{
-//					qCount = ((QsosBoxView)CardItemView).Qsos.Count;
+					qsosCount = MaximumQsos;
 				}
-				this.Height = (size.Height + 4) * (2 + qCount);
+				this.Height = (size.Height + 4) * (2 + qsosCount);
 			}
 		}
 		
@@ -416,7 +416,7 @@ namespace hamqsler
 				   e.Property == ShowPseTnxProperty ||
 				   e.Property == MaximumQsosProperty)
 				{
-					CalculateRectangle();
+					CalculateRectangle(MaximumQsos);
 				}
 				// FontName and ShowPseTnx changes do not necessarily generate a change in the
 				// size of the QsosBox, so we must raise the DispPropertyChanged event

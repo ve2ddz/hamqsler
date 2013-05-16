@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows;
@@ -47,12 +48,17 @@ namespace hamqsler
 		private int cardsHigh = 0;
 		private float leftOffset = 0;
 		private float topOffset = 0;
+		private int cardsPrinted = 0;
+		
+		private DisplayQsos qsos = null;
+		private List<List<DispQso>> dispQsos;
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public CardPrintDocument()
+		public CardPrintDocument(DisplayQsos dQsos)
 		{
+			qsos = dQsos;
 		}
 		
 		/// <summary>
@@ -62,6 +68,8 @@ namespace hamqsler
 		protected override void OnBeginPrint(PrintEventArgs e)
 		{
 			base.OnBeginPrint(e);
+			cardsPrinted = 0;
+			dispQsos = qsos.GetDispQsosList(QslCard);
 			if(PrinterSettings == null || QslCard == null)
 			{
 				App.Logger.Log("Programming error: Attempting to print cards before " +
@@ -190,27 +198,37 @@ namespace hamqsler
 			Graphics g = e.Graphics;
 			float hardX = this.PrinterSettings.DefaultPageSettings.HardMarginX;
 			float hardY = this.PrinterSettings.DefaultPageSettings.HardMarginY;
-				for(int hCards = 0; hCards < cardsWide; hCards++)
+			int cardsPerPage = cardsWide * cardsHigh;
+			for(int hCards = 0; hCards < cardsWide; hCards++)
 			{
 				for(int vCards = 0; vCards < cardsHigh; vCards++)
 				{
-					CardWF card = QslCard.Clone();
-					card.CardPrintProperties = this.PrintProperties;
-					FormsCardView view = new FormsCardView(card);
-					System.Drawing.Drawing2D.GraphicsState gState = g.Save();
-					float x = leftOffset + hCards * card.Width - hardX;
-					float y = topOffset + vCards * card.Height - hardY;
-					if(App.Logger.DebugPrinting)
+					if(cardsPrinted < dispQsos.Count || PrintProperties.FillLastPage)
 					{
-						App.Logger.Log("Printing card at " + x + ", " + y +
-						               Environment.NewLine);
+						CardWF card = QslCard.Clone();
+						card.CardPrintProperties = this.PrintProperties;
+						FormsCardView view = new FormsCardView(card);
+						System.Drawing.Drawing2D.GraphicsState gState = g.Save();
+						float x = leftOffset + hCards * card.Width - hardX;
+						float y = topOffset + vCards * card.Height - hardY;
+						if(App.Logger.DebugPrinting)
+						{
+							App.Logger.Log("Printing card at " + x + ", " + y +
+							               Environment.NewLine);
+						}
+						g.TranslateTransform(x, y);
+						List<DispQso> qs = null;
+						if(cardsPrinted < dispQsos.Count)
+						{
+							qs = dispQsos[cardsPrinted];
+						}
+						view.PaintCard(g, qs);
+						g.Restore(gState);
+						cardsPrinted++;
 					}
-					g.TranslateTransform(x, y);
-					view.PaintCard(g);
-					g.Restore(gState);
 				}
 			}
-			e.HasMorePages = false;
+			e.HasMorePages = cardsPrinted < dispQsos.Count;
 		}
 	}
 }

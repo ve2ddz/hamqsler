@@ -1001,11 +1001,12 @@ namespace hamqsler
 					               Environment.NewLine +
 					               props.ToString());
 				}
+				CardPrintDocument document = 
+					new CardPrintDocument(qsosView.DisplayQsos);
+				document.PrintProperties = props;
+				document.QslCard = cti.cardPanel.QslCard;
 				if(printDialog.Preview)
 				{
-					CardPrintDocument document = new CardPrintDocument();
-					document.PrintProperties = props;
-					document.QslCard = cti.cardPanel.QslCard;
 					System.Windows.Forms.PrintPreviewDialog ppDialog = 
 						new System.Windows.Forms.PrintPreviewDialog();
 					ppDialog.Document = document;
@@ -1013,11 +1014,7 @@ namespace hamqsler
 				}
 				else
 				{
-					CardPrintDocument document = new CardPrintDocument();
-					document.PrintProperties = props;
-					document.QslCard = cti.cardPanel.QslCard;
 					document.Print();
-					
 				}
 			}
 			else
