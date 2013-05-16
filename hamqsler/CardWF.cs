@@ -145,6 +145,32 @@ namespace hamqsler
 			call.X = -70;
 			call.Y = 0;
 			TextItems.Add(call);
+			// name and Qth text item
+			TextWFItem nameQth = new TextWFItem();
+			nameQth.QslCard = this;
+			foreach(TextPart part in prefs.NameQth)
+			{
+				nameQth.Text.Add(part);
+			}
+			nameQth.TextFontFace = prefs.DefaultTextItemsFontFace;
+			nameQth.IsBold = false;
+			nameQth.FontSize = 10.0F;
+			nameQth.X = this.Width / 2;
+			nameQth.Y = this.Height / 20;
+			TextItems.Add(nameQth);
+			// salutation text item
+			TextWFItem salutation = new TextWFItem();
+			salutation.QslCard = this;
+			foreach(TextPart part in prefs.Salutation)
+			{
+				salutation.Text.Add(part);
+			}
+			salutation.TextFontFace = prefs.DefaultTextItemsFontFace;
+			salutation.FontSize = 10.0F;
+			salutation.X = this.Width / 75;
+			salutation.Y = (int)((float)this.Height * 9F / 10F);
+			TextItems.Add(salutation);
+			// QsosBox
 			QsosBox.QslCard = this;
 		}
 		
