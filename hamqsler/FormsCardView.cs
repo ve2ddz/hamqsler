@@ -331,7 +331,7 @@ namespace hamqsler
 			// paint text items
 			foreach(TextWFItem tItem in QslCard.TextItems)
 			{
-				PaintTextItem(g, tItem);
+				PaintTextItem(g, qsos, tItem);
 			}
 			if(QslCard.QsosBox != null)
 			{
@@ -386,8 +386,9 @@ namespace hamqsler
 		/// Paint the text item on the card.
 		/// </summary>
 		/// <param name="g">Graphics object on which to do the drawing</param>
+		/// <param name="qsos">List of QSOs that will be printed in the QSOsBox</param>
 		/// <param name="tItem">TextWFItem object to draw</param>
-		private void PaintTextItem(Graphics g, TextWFItem tItem)
+		private void PaintTextItem(Graphics g, List<DispQso> qsos, TextWFItem tItem)
 		{
 			FontStyle style = FontStyle.Regular;
 			if(tItem.IsBold)
@@ -401,7 +402,7 @@ namespace hamqsler
 			Font font = new Font(new FontFamily(tItem.TextFontFace), tItem.FontSize,
 				         style, GraphicsUnit.Point);
 			int startTextX = CardLocation.X + tItem.X + tItem.Height + 4;
-			g.DrawString(tItem.Text.GetText(QslCard, null, QslCard.IsInDesignMode),
+			g.DrawString(tItem.Text.GetText(QslCard, qsos, QslCard.IsInDesignMode),
 			             font, tItem.TextBrush, startTextX, CardLocation.Y + tItem.Y);
 			float checkBoxSize = (float)tItem.Height * tItem.CheckBoxRelativeSize;
 			float margin = (tItem.Height - checkBoxSize) / 2 + 2;
