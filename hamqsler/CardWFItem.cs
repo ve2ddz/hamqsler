@@ -20,17 +20,20 @@
 using System;
 using System.Drawing;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
 	/// <summary>
 	/// CardWFItem is the base class for all Card Items in a CardWF object.
 	/// </summary>
+	[Serializable]
 	public abstract class CardWFItem : DependencyObject
 	{
 		protected static readonly DependencyProperty QslCardProperty =
 			DependencyProperty.Register("QslCard", typeof(CardWF), typeof(CardWFItem),
 			                            new PropertyMetadata(null));
+		[XmlIgnore]
 		public CardWF QslCard
 		{
 			get {return GetValue(QslCardProperty) as CardWF;}
@@ -47,6 +50,7 @@ namespace hamqsler
 			set {SetValue(LocationProperty, value);}
 		}
 		
+		[XmlIgnore]
 		public int X
 		{
 			get{return Location.X;}
@@ -56,6 +60,7 @@ namespace hamqsler
 			}
 		}
 		
+		[XmlIgnore]
 		public int Y
 		{
 			get {return Location.Y;}
@@ -75,6 +80,7 @@ namespace hamqsler
 			set {SetValue(ItemSizeProperty, value);}
 		}
 		
+		[XmlIgnore]
 		public int Width
 		{
 			get {return ItemSize.Width;}
@@ -84,6 +90,7 @@ namespace hamqsler
 			}
 		}
 			
+		[XmlIgnore]
 		public int Height
 		{
 			get {return ItemSize.Height;}
@@ -96,6 +103,7 @@ namespace hamqsler
 		private static readonly DependencyProperty IsSelectedProperty =
 			DependencyProperty.Register("IsSelected", typeof(bool), typeof(CardWFItem),
 			                            new PropertyMetadata(false));
+		[XmlIgnore]
 		public bool IsSelected
 		{
 			get {return (bool)GetValue(IsSelectedProperty);}
@@ -105,6 +113,7 @@ namespace hamqsler
 		private static readonly DependencyProperty IsHighlightedProperty =
 			DependencyProperty.Register("IsHighlighed", typeof(bool), typeof(CardWFItem),
 			                            new PropertyMetadata(false));
+		[XmlIgnore]
 		public bool IsHighlighted
 		{
 			get {return (bool)GetValue(IsHighlightedProperty);}
@@ -125,12 +134,14 @@ namespace hamqsler
 		};
 		
 		private RelativeLocations relativeLocation = RelativeLocations.Inside;
+		[XmlIgnore]
 		public RelativeLocations RelativeLocation
 		{
 			get {return relativeLocation;}
 			set {relativeLocation = value;}
 		}
 		
+		[XmlIgnore]
 		public Rectangle NW
 		{
 			get {return new Rectangle(this.X - SENSITIVESIZE / 2,
@@ -138,6 +149,7 @@ namespace hamqsler
 			                          SENSITIVESIZE, SENSITIVESIZE);}
 		}
 		
+		[XmlIgnore]
 		public Rectangle NE
 		{
 			get {return new Rectangle(this.X + this.Width - SENSITIVESIZE / 2,
@@ -145,6 +157,7 @@ namespace hamqsler
 			                          SENSITIVESIZE, SENSITIVESIZE);}
 		}
 		
+		[XmlIgnore]
 		public Rectangle SW
 		{
 			get {return new Rectangle(this.X - SENSITIVESIZE / 2,
@@ -152,6 +165,7 @@ namespace hamqsler
 			                          SENSITIVESIZE, SENSITIVESIZE);}
 		}
 		
+		[XmlIgnore]
 		public Rectangle SE
 		{
 			get {return new Rectangle(this.X + this.Width - SENSITIVESIZE / 2,
@@ -159,12 +173,14 @@ namespace hamqsler
 			                          SENSITIVESIZE, SENSITIVESIZE);}
 		}
 		
+		[XmlIgnore]
 		public Rectangle W
 		{
 			get {return new Rectangle(this.X - SENSITIVESIZE / 2,
 			                          this.Y, SENSITIVESIZE, this.Height);}
 		}
 		
+		[XmlIgnore]
 		public Rectangle E
 		{
 			get {return new Rectangle(this.X + this.Width - SENSITIVESIZE / 2,
@@ -172,6 +188,7 @@ namespace hamqsler
 		}
 		
 		public abstract RelativeLocations GetRelativeLocation(int x, int y);
+		[XmlIgnore]
 		public static int MinimumSize = 25;
 
 		

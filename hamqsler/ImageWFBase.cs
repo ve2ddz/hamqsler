@@ -28,6 +28,7 @@ namespace hamqsler
 	/// <summary>
 	/// Description of ImageWFBase.
 	/// </summary>
+	[Serializable]
 	public abstract class ImageWFBase : CardWFItem
 	{
 		private static readonly DependencyProperty ImageFileNameProperty =

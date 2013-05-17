@@ -67,13 +67,19 @@ namespace hamqsler
 			set {SetValue(FontSizeProperty, value);}
 		}
 		
-		private static readonly DependencyProperty TextBrushProperty =
-			DependencyProperty.Register("TextBrush", typeof(Brush), typeof(TextWFItem),
-			                            new PropertyMetadata(Brushes.Black));
+		private static readonly DependencyProperty TextColorProperty =
+			DependencyProperty.Register("TextColor", typeof(Color), typeof(TextWFItem),
+			                            new PropertyMetadata(Color.Black));
+		public Color TextColor
+		{
+			get {return (Color)GetValue(TextColorProperty);}
+			set {SetValue(TextColorProperty, value);}
+		}
+		
+		[XmlIgnore]
 		public Brush TextBrush
 		{
-			get {return (Brush)GetValue(TextBrushProperty);}
-			set {SetValue(TextBrushProperty, value);}
+			get {return new SolidBrush(TextColor);}
 		}
 		
 		private static readonly DependencyPropertyKey TextPropertyKey =
@@ -187,7 +193,7 @@ namespace hamqsler
 			{
 				CalculateRectangle();
 			}
-			else if(e.Property == TextBrushProperty ||
+			else if(e.Property == TextColorProperty ||
 			        e.Property == CheckboxBeforeProperty ||
 			     	e.Property == CheckboxAfterProperty ||
 			     	e.Property == CheckboxLineThicknessProperty ||
@@ -209,7 +215,7 @@ namespace hamqsler
 			tItem.IsBold = this.IsBold;
 			tItem.IsItalic = this.IsItalic;
 			tItem.FontSize = this.FontSize;
-			tItem.TextBrush = this.TextBrush;
+			tItem.TextColor = this.TextColor;
 			tItem.Text.Clear();
 			foreach(TextPart part in this.Text)
 			{

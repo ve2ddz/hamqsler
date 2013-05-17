@@ -1598,7 +1598,7 @@ namespace hamqsler
 		/// </summary>
 		private void SaveCard()
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			CardWF qslCard = cti.cardPanel.QslCard;
 			if(qslCard.FileName != null)
 			{
@@ -1613,7 +1613,7 @@ namespace hamqsler
 			else
 			{
 				SaveCardAs();
-			}*/
+			}
 
 		}
 		
@@ -1622,11 +1622,11 @@ namespace hamqsler
 		/// </summary>
 		private void SaveCardAs()
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			Card qslCard = cti.cardCanvas.QslCard;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardWF qslCard = cti.cardPanel.QslCard;
 			string fileName = qslCard.FileName;
 			SaveFileDialog sDialog = new SaveFileDialog();
-			sDialog.Filter = "QSL Card(*.qslx)|*.qslx";
+			sDialog.Filter = "QSL Card(*.xq1)|*.xq1";
 			sDialog.InitialDirectory = ((App)Application.Current).HamqslerFolder;
 			if(fileName != null)
 			{
@@ -1651,7 +1651,7 @@ namespace hamqsler
 				// color of the button will cycle from 0 to 100% opacity. By moving focus to a
 				// different control, this will not happen
 				cti.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-			}*/
+			}
 		}
 
 		/// <summary>

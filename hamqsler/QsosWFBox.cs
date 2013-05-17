@@ -19,12 +19,14 @@
  */
 using System;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
 	/// <summary>
 	/// Description of QsosWFBox.
 	/// </summary>
+	[Serializable]
 	public class QsosWFBox : CardWFItem
 	{
 		// determines whether to show Manager ("via (Manager)")
@@ -78,36 +80,54 @@ namespace hamqsler
 		}
 
 		// Line and text brush for QSO box
-		private static readonly DependencyProperty LineTextBrushProperty =
-			DependencyProperty.Register("LineTextBrush", typeof(System.Drawing.Brush),
+		private static readonly DependencyProperty LineTextColorProperty =
+			DependencyProperty.Register("LineTextColor", typeof(System.Drawing.Color),
 			                            typeof(QsosWFBox), 
-			                            new PropertyMetadata(System.Drawing.Brushes.Black));
+			                            new PropertyMetadata(System.Drawing.Color.Black));
+		public System.Drawing.Color LineTextColor
+		{
+			get { return (System.Drawing.Color)GetValue(LineTextColorProperty); }
+			set { SetValue(LineTextColorProperty, value); }
+		}
+		
+		[XmlIgnore]
 		public System.Drawing.Brush LineTextBrush
 		{
-			get { return (System.Drawing.Brush)GetValue(LineTextBrushProperty); }
-			set { SetValue(LineTextBrushProperty, value); }
+			get {return new System.Drawing.SolidBrush(LineTextColor);}
 		}
 
 		// Callsign brush for QSO box
-		private static readonly DependencyProperty CallsignBrushProperty =
-			DependencyProperty.Register("CallsignBrush", typeof(System.Drawing.Brush),
+		private static readonly DependencyProperty CallsignColorProperty =
+			DependencyProperty.Register("CallsignColor", typeof(System.Drawing.Color),
 			                            typeof(QsosWFBox), 
-			                            new PropertyMetadata(System.Drawing.Brushes.Red));
+			                            new PropertyMetadata(System.Drawing.Color.Red));
+		public System.Drawing.Color CallsignColor
+		{
+			get { return (System.Drawing.Color)GetValue(CallsignColorProperty); }
+			set { SetValue(CallsignColorProperty, value); }
+		}
+		
+		[XmlIgnore]
 		public System.Drawing.Brush CallsignBrush
 		{
-			get { return (System.Drawing.Brush)GetValue(CallsignBrushProperty); }
-			set { SetValue(CallsignBrushProperty, value); }
+			get {return new System.Drawing.SolidBrush(CallsignColor);}
 		}
 
 		// Manager brush for QSO box
-		private static readonly DependencyProperty ManagerBrushProperty =
-			DependencyProperty.Register("ManagerBrush", typeof(System.Drawing.Brush),
+		private static readonly DependencyProperty ManagerColorProperty =
+			DependencyProperty.Register("ManagerColor", typeof(System.Drawing.Color),
 			                            typeof(QsosWFBox), 
-			                            new PropertyMetadata(System.Drawing.Brushes.Gray));
-		public System.Drawing.Brush ManagerBrush
+			                            new PropertyMetadata(System.Drawing.Color.Gray));
+		public System.Drawing.Color ManagerColor
 		{
-			get { return (System.Drawing.Brush)GetValue(ManagerBrushProperty); }
-			set { SetValue(ManagerBrushProperty, value); }
+			get { return (System.Drawing.Color)GetValue(ManagerColorProperty); }
+			set { SetValue(ManagerColorProperty, value); }
+		}
+		
+		[XmlIgnore]
+		public System.Drawing.SolidBrush ManagerBrush
+		{
+			get {return new System.Drawing.SolidBrush(ManagerColor);}
 		}
 		
 		// QsosBox text font size
@@ -132,14 +152,20 @@ namespace hamqsler
 
 
 		// Background brush for QSO box
-		private static readonly DependencyProperty BackgroundBrushProperty =
-			DependencyProperty.Register("BackgroundBrush", typeof(System.Drawing.Brush),
+		private static readonly DependencyProperty BackgroundColorProperty =
+			DependencyProperty.Register("BackgroundColor", typeof(System.Drawing.Color),
 			                            typeof(QsosWFBox),
-			                            new PropertyMetadata(System.Drawing.Brushes.White));
+			                            new PropertyMetadata(System.Drawing.Color.White));
+		public System.Drawing.Color BackgroundColor
+		{
+			get { return (System.Drawing.Color)GetValue(BackgroundColorProperty); }
+			set { SetValue(BackgroundColorProperty, value); }
+		}
+		
+		[XmlIgnore]
 		public System.Drawing.Brush BackgroundBrush
 		{
-			get { return (System.Drawing.Brush)GetValue(BackgroundBrushProperty); }
-			set { SetValue(BackgroundBrushProperty, value); }
+			get {return new System.Drawing.SolidBrush(BackgroundColor);}
 		}
 
 		// Background opacity for QSO box
@@ -426,10 +452,10 @@ namespace hamqsler
 				   e.Property == ShowManagerProperty ||
 		           e.Property == ShowFrequencyProperty ||
 		           e.Property == DateFormatProperty ||
-		           e.Property == LineTextBrushProperty ||
-		           e.Property == CallsignBrushProperty ||
-		           e.Property == ManagerBrushProperty ||
-		           e.Property == BackgroundBrushProperty ||
+		           e.Property == LineTextColorProperty ||
+		           e.Property == CallsignColorProperty ||
+		           e.Property == ManagerColorProperty ||
+		           e.Property == BackgroundColorProperty ||
 		           e.Property == BackgroundOpacityProperty)
 				{
 					if(QslCard != null)
@@ -453,12 +479,12 @@ namespace hamqsler
 			box.ShowPseTnx = this.ShowPseTnx;
 			box.MaximumQsos = this.MaximumQsos;
 			box.DateFormat = this.DateFormat;
-			box.LineTextBrush = this.LineTextBrush;
-			box.CallsignBrush =  this.CallsignBrush;
-			box.ManagerBrush = this.ManagerBrush;
+			box.LineTextColor = this.LineTextColor;
+			box.CallsignColor =  this.CallsignColor;
+			box.ManagerColor = this.ManagerColor;
 			box.FontSize = this.FontSize;
 			box.FontName = this.FontName;
-			box.BackgroundBrush = this.BackgroundBrush;
+			box.BackgroundColor = this.BackgroundColor;
 			box.BackgroundOpacity = this.BackgroundOpacity;
 			box.ConfirmingText.Clear();
 			foreach(TextPart part in this.ConfirmingText)

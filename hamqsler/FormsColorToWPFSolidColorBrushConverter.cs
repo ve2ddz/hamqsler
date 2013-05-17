@@ -29,21 +29,20 @@ namespace hamqsler
 	/// FormsBrushToWPFSolidColorBrushConverter converts between System.Drawing.Brush and
 	/// System.Windows.Media.SolidColorBrush.
 	/// </summary>
-	[ValueConversion(typeof(System.Drawing.Brush), typeof(System.Windows.Media.SolidColorBrush))]
-	public class FormsBrushToWPFSolidColorBrushConverter : IValueConverter
+	[ValueConversion(typeof(System.Drawing.Color), typeof(System.Windows.Media.SolidColorBrush))]
+	public class FormsColorToWPFSolidColorBrushConverter : IValueConverter
 	{
 		/// <summary>
-		/// Convert a System.Drawing.Brush value to System.Windows.Media.SolidColorBrush.
+		/// Convert a System.Drawing.Color value to System.Windows.Media.SolidColorBrush.
 		/// </summary>
-		/// <param name="value">Brushto convert</param>
+		/// <param name="value">Color to convert</param>
 		/// <param name="targetType">not used</param>
 		/// <param name="parameter">not used</param>
 		/// <param name="culture">not used</param>
 		/// <returns>System.Windows.Media.SolidColorBrush object</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			System.Drawing.SolidBrush winFormsBrush = value as System.Drawing.SolidBrush;
-			System.Drawing.Color color = winFormsBrush.Color;
+			System.Drawing.Color color = (System.Drawing.Color)value;
 			System.Windows.Media.SolidColorBrush brush = 
 				new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(
 					color.A, color.R, color.G, color.B));
@@ -51,7 +50,7 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Converts string representation of FontSize back into a double. 
+		/// Converts a Syastem.Windows.Media.SolidColorBrush to a System.Drawing.Color
 		/// </summary>
 		/// <param name="value">string to convert</param>
 		/// <param name="targetType">not used</param>
@@ -63,8 +62,8 @@ namespace hamqsler
 			System.Windows.Media.SolidColorBrush wpfBrush = 
 				value as System.Windows.Media.SolidColorBrush;
 			System.Windows.Media.Color wpfColor = wpfBrush.Color;
-			return new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(
-				255, wpfColor.R, wpfColor.G, wpfColor.B));
+			return System.Drawing.Color.FromArgb(255, wpfColor.R,
+			                                     wpfColor.G, wpfColor.B);
 		}
 
 	}

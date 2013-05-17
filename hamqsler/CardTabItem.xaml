@@ -26,7 +26,7 @@
 	<local:FontWeightConverter x:Key="FontWeightConverter"/>
 	<local:FloatToPercentConverter x:Key="FloatToPercentConverter"/>
 	<local:FontSizeConverter x:Key="=FontSizeConverter"/>
-	<local:FormsBrushToWPFSolidColorBrushConverter x:Key="FormsBrushToWPFSolidColorBrushConverter"/>
+	<local:FormsColorToWPFSolidColorBrushConverter x:Key="FormsBrushToWPFSolidColorBrushConverter"/>
 	<Style TargetType="Button">
 		<Setter Property="Width" Value="50"/>
 		<Setter Property="Height" Value="20"/>
@@ -166,9 +166,9 @@
 											ToolTip="Select the color to display the text in"
 											Click="TextColorButton_Clicked" Name="TextColorButton">
 										<Button.Background>
-											<Binding Path="TextBrush" Mode="TwoWay">
+											<Binding Path="TextColor" Mode="TwoWay">
 												<Binding.Converter>
-													<local:FormsBrushToWPFSolidColorBrushConverter/>
+													<local:FormsColorToWPFSolidColorBrushConverter/>
 												</Binding.Converter>
 											</Binding>
 										</Button.Background>
@@ -345,9 +345,9 @@ this card">
 										ToolTip="Click to set the color of the lines and text in the QsosBox"
 										Click="LineTextColorButton_Clicked">
 									<Button.Background>
-											<Binding Path="LineTextBrush" Mode="TwoWay">
+											<Binding Path="LineTextColor" Mode="TwoWay">
 												<Binding.Converter>
-													<local:FormsBrushToWPFSolidColorBrushConverter/>
+													<local:FormsColorToWPFSolidColorBrushConverter/>
 												</Binding.Converter>
 											</Binding>
 										</Button.Background>
@@ -360,9 +360,9 @@ this card">
 										ToolTip="Click to set the color of the Callsign text"
 										Click="CallsignColorButton_Clicked">
 									<Button.Background>
-											<Binding Path="CallsignBrush" Mode="TwoWay">
+											<Binding Path="CallsignColor" Mode="TwoWay">
 												<Binding.Converter>
-													<local:FormsBrushToWPFSolidColorBrushConverter/>
+													<local:FormsColorToWPFSolidColorBrushConverter/>
 												</Binding.Converter>
 											</Binding>
 										</Button.Background>
@@ -374,9 +374,9 @@ this card">
 										ToolTip="Click to set the color of the 'via (Manager)' text"
 										Click="ManagerColorButton_Clicked">
 									<Button.Background>
-											<Binding Path="ManagerBrush" Mode="TwoWay">
+											<Binding Path="ManagerColor" Mode="TwoWay">
 												<Binding.Converter>
-													<local:FormsBrushToWPFSolidColorBrushConverter/>
+													<local:FormsColorToWPFSolidColorBrushConverter/>
 												</Binding.Converter>
 											</Binding>
 										</Button.Background>
@@ -430,9 +430,9 @@ this card">
 										ToolTip="Click to select the color of the QsosBox background"
 										Click="BackgroundColorButton_Clicked">
 									<Button.Background>
-										<Binding Path="BackgroundBrush" Mode="TwoWay">
+										<Binding Path="BackgroundColor" Mode="TwoWay">
 											<Binding.Converter>
-												<local:FormsBrushToWPFSolidColorBrushConverter/>
+												<local:FormsColorToWPFSolidColorBrushConverter/>
 											</Binding.Converter>
 										</Binding>
 									</Button.Background>

@@ -18,12 +18,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
 	/// <summary>
 	/// SecondaryWFImage class - describes secondary images.
 	/// </summary>
+	[Serializable]
 	public class SecondaryWFImage : ImageWFBase
 	{
 		private int initialSize = 100;

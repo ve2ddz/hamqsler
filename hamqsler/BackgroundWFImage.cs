@@ -18,12 +18,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
 	/// <summary>
 	/// Description of BackgroundWFImage.
 	/// </summary>
+	[Serializable]
 	public class BackgroundWFImage : ImageWFBase
 	{
 		public BackgroundWFImage()

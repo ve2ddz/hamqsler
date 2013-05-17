@@ -19,27 +19,33 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
 	/// <summary>
 	/// CardWF describes the QslCard.
 	/// </summary>
+	[Serializable]
 	public class CardWF : CardWFItem
 	{
 		private static readonly DependencyProperty IsDirtyProperty =
 			DependencyProperty.Register("IsDirty", typeof(bool),
 			                            typeof(CardWF), new PropertyMetadata(false));
+		[XmlIgnore]
 		public bool IsDirty
 		{
 			get {return (bool)GetValue(IsDirtyProperty);}
 			set {SetValue(IsDirtyProperty, value);}
 		}
-
-		private static readonly DependencyProperty IsInDesignModeProperty =
-			DependencyProperty.Register("IsInDesignMode", typeof(bool),
+		
+		private static readonly DependencyProperty IsInDesignModeProperty =		
+		DependencyProperty.Register("IsInDesignMode", typeof(bool),
 			                            typeof(CardWF), new PropertyMetadata(false));
+		[XmlIgnore]
 		public bool IsInDesignMode
 		{
 			get {return (bool)GetValue(IsInDesignModeProperty);}
@@ -49,6 +55,7 @@ namespace hamqsler
 		private static readonly DependencyProperty FileNameProperty =
 			DependencyProperty.Register("FileName", typeof(string),
 			                            typeof(CardWF), new PropertyMetadata(null));
+		[XmlIgnore]
 		public string FileName
 		{
 			get {return GetValue(FileNameProperty) as string;}
@@ -332,5 +339,34 @@ namespace hamqsler
 		{
 			RaiseDispPropertyChangedEvent();
 		}
+
+		/// <summary>
+		/// Save this card as an XML file
+		/// </summary>
+		/// <param name="fileName">Path to the file to save the XML text in</param>
+		public void SaveAsXml(string fileName)
+		{
+			XmlSerializer xmlFormat = new XmlSerializer(typeof(CardWF),
+			                                            new Type[]{typeof(BackgroundWFImage),
+			                                            	typeof(SecondaryWFImage),
+			                                            	typeof(ImageWFBase),
+			                                            	typeof(TextWFItem),
+			                                            	typeof(QsosWFBox),
+			                                            	typeof(TextParts),
+			                                            	typeof(StaticText),
+			                                            	typeof(AdifMacro),
+			                                            	typeof(AdifExistsMacro),
+			                                            	typeof(CountMacro),
+			                                            	typeof(ManagerMacro),
+			                                            	typeof(ManagerExistsMacro)});
+			using (Stream fStream = new FileStream(fileName, FileMode.Create,
+			                                       FileAccess.Write, FileShare.Read))
+			{
+				xmlFormat.Serialize(fStream, this);
+				this.FileName = fileName;
+				this.IsDirty = false;
+			}
+		}
+		
 	}
 }
