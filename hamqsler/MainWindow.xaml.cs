@@ -548,7 +548,6 @@ namespace hamqsler
 						return;
 					}
 					card.FileName = fileName;
-					card.IsDirty = false;
 					UserPreferences prefs = ((App)App.Current).UserPreferences;
 					if(prefs.CardsReloadOnStartup)
 					{
@@ -581,7 +580,16 @@ namespace hamqsler
 				// save IsDirty and restore its value afterwards
 				CardTabItem cti = new CardTabItem(card);
 				card.IsInDesignMode = true;
-				card.IsDirty = false;
+				// if background or secondary image fileName changed, mark
+				// card as dirty
+				bool dirty = card.BackgroundImage.ModifiedDuringLoad;
+				foreach(SecondaryWFImage image in card.SecondaryImages)
+				{
+					dirty = dirty || image.ModifiedDuringLoad;
+				}
+				card.IsDirty = dirty;
+				// add the CardTabItem to the mainTabControl and set title and
+				// tab label
 				mainTabControl.Items.Add(cti);
 				cti.IsSelected = true;		// select the new tab
 				cti.SetTabLabel();

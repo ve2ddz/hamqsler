@@ -83,10 +83,13 @@ namespace hamqsler
 		/// </summary>
 		protected override void ResetRectangle()
 		{
-			this.X = 0;
-			this.Y = 0;
-			this.Width = QslCard.Width;
-			this.Height = QslCard.Height;
+			if(QslCard != null)
+			{
+				this.X = 0;
+				this.Y = 0;
+				this.Width = QslCard.Width;
+				this.Height = QslCard.Height;
+			}
 		}
 		
 		/// <summary>

@@ -51,6 +51,14 @@ namespace hamqsler
 			set {SetValue(ImageProperty, value);}
 		}
 		
+		private bool modifiedDuringLoad = false;
+		[XmlIgnore]
+		public bool ModifiedDuringLoad
+		{
+			get {return modifiedDuringLoad;}
+			set {modifiedDuringLoad = value;}
+		}
+		
 		/// <summary>
 		/// Default constructor
 		/// </summary>
@@ -106,19 +114,53 @@ namespace hamqsler
 					}
 					else
 					{
+						// image file does not exist
+						// warn user and give him a chance to look for it
 						string msg = string.Format("Image file '{0}' does not exist and cannot be loaded.",
 						                             fName);
 						App.Logger.Log(msg);
-						MessageBox.Show(msg, "Image File Error", MessageBoxButton.OK,
-						                MessageBoxImage.Warning);
-						Exception ex = new Exception(msg);
-						throw ex;
+						msg += Environment.NewLine +
+	                           "Do you want to search for the file?" +
+							   Environment.NewLine +
+	                           "Click OK to search, Cancel to delete the image.";
+						MessageBoxResult result = MessageBox.Show(msg, "Image File Error", 
+								                                  MessageBoxButton.OKCancel,
+							                					  MessageBoxImage.Warning);
+						if(result == MessageBoxResult.Cancel)
+						{
+							// does not want to replace file
+                            ModifiedDuringLoad = true;
+							ImageFileName = string.Empty;
+							return;
+						}
+						else
+						{
+							// wants to replace file, so let him search for it
+                            Microsoft.Win32.OpenFileDialog oFile = new Microsoft.Win32.OpenFileDialog();
+	                        oFile.Filter = "Image Files (*.BMP, *.JPG, *.GIF, *.PNG. *.TIF, *.TIFF)" +
+	                        	"|*.BMP;*.JPG;*.GIF;*.PNG;*.TIF;*.TIFF";
+	                        oFile.CheckFileExists = true;
+	                        oFile.Multiselect = false;
+                            if (oFile.ShowDialog() == true)
+                            {
+                            	// new image file found
+                            	ModifiedDuringLoad = true;
+                            	ImageFileName = oFile.FileName;							
+                            }
+                            else
+                            {
+                            	// image file not found
+                            	ModifiedDuringLoad = true;
+                            	ImageFileName = string.Empty;
+                            	return;
+                            }
+						}
 					}
 					CalculateRectangle();
 				}
 				else
 				{
-					// reset bImage
+					// reset Image
 					Image = EmptyImage;
 					ResetRectangle();
 				}
