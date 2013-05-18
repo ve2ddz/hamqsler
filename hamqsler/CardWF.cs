@@ -44,7 +44,7 @@ namespace hamqsler
 		
 		private static readonly DependencyProperty IsInDesignModeProperty =		
 		DependencyProperty.Register("IsInDesignMode", typeof(bool),
-			                            typeof(CardWF), new PropertyMetadata(false));
+			                            typeof(CardWF), new PropertyMetadata(null));
 		[XmlIgnore]
 		public bool IsInDesignMode
 		{
@@ -81,7 +81,7 @@ namespace hamqsler
 			get {return textItems;}
 		}
 		
-		private QsosWFBox qsosBox = new QsosWFBox();
+		private QsosWFBox qsosBox = new QsosWFBox(true);
 		public QsosWFBox QsosBox
 		{
 			get {return qsosBox;}
@@ -113,7 +113,6 @@ namespace hamqsler
 			QslCard = this;
 			App.Logger.Log("In CardWF default constructor:" + Environment.NewLine,
 						   App.Logger.DebugPrinting);
-			CardPrintProperties = new PrintProperties();
 		}
 		
 		/// <summary>
@@ -131,10 +130,10 @@ namespace hamqsler
 						   App.Logger.DebugPrinting);
 			CardPrintProperties = new PrintProperties();
 			IsInDesignMode = isInDesignMode;
-			if(IsInDesignMode)
+/*			if(IsInDesignMode)
 			{
 				CardPrintProperties.PrintPropertiesChanged += OnPrintPropertiesChanged;
-			}
+			}*/
 			ItemSize = new System.Drawing.Size(width, height);
 			// background image
 			BackgroundImage.QslCard = this;
@@ -365,6 +364,63 @@ namespace hamqsler
 				xmlFormat.Serialize(fStream, this);
 				this.FileName = fileName;
 				this.IsDirty = false;
+			}
+		}
+		
+		/// <summary>
+		/// Deserialize a Qsl Card saved as XML
+		/// </summary>
+		/// <param name="fileName">Name of XML file containing card description</param>
+		/// <returns>Card object described by the XML file</returns>
+		public static CardWF DeserializeCard(string fileName)
+		{
+			XmlSerializer serializer = new XmlSerializer(typeof(CardWF));
+			FileStream fs = new FileStream(fileName, FileMode.Open);
+			XmlReader reader = XmlReader.Create(fs);
+			
+			CardWF card = (CardWF)serializer.Deserialize(reader);
+			fs.Close();
+			// set QslCard for each CardItem in card to this card
+			card.BackgroundImage.QslCard = card;
+			foreach(SecondaryWFImage si in card.SecondaryImages)
+			{
+				si.QslCard = card;
+			}
+			foreach(TextWFItem ti in card.TextItems)
+			{
+				ti.QslCard = card;
+				foreach(TextPart part in ti.Text)
+				{
+					part.RemoveExtraneousStaticTextMacros();
+				}
+			}
+			if(card.QsosBox != null)
+			{
+				card.QsosBox.QslCard = card;
+				foreach(TextPart part in card.QsosBox.ConfirmingText)
+				{
+					part.RemoveExtraneousStaticTextMacros();
+				}
+			}
+			return card;
+		}
+		
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == IsInDesignModeProperty)
+			{
+				if((bool)e.NewValue == true)
+				{
+					if(IsInDesignMode)
+					{
+						CardPrintProperties.PrintPropertiesChanged += OnPrintPropertiesChanged;
+					}
+					else
+					{
+						CardPrintProperties.PrintPropertiesChanged -= OnPrintPropertiesChanged;
+					}
+				}
 			}
 		}
 		

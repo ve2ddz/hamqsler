@@ -20,12 +20,14 @@
 using System;
 using System.Drawing.Printing;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace hamqsler
 {
 	/// <summary>
 	/// PrintProperties class - holder for print and printer related properties
 	/// </summary>
+	[Serializable]
 	public class PrintProperties : DependencyObject
 	{
 		public enum CardLayouts

@@ -119,7 +119,7 @@ namespace hamqsler
 		/// <returns>QsosWFBox that was added</returns>
 		public QsosWFBox AddQsosBox()
 		{
-			QsosWFBox box = new QsosWFBox();
+			QsosWFBox box = new QsosWFBox(true);
 			box.QslCard = QslCard;
 			box.IsSelected = true;
 			QslCard.QsosBox = box;

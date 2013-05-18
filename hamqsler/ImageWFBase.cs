@@ -129,7 +129,10 @@ namespace hamqsler
 			}
 			else if(e.Property == QslCardProperty)
 			{
-				ResetRectangle();
+				if(Image == EmptyImage)
+				{
+					ResetRectangle();
+				}
 			}
 		}
 		

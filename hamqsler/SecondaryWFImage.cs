@@ -35,6 +35,7 @@ namespace hamqsler
 		/// </summary>
 		public SecondaryWFImage()
 		{
+			CalculateRectangle();
 		}
 		
 		/// <summary>

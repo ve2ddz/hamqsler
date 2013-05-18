@@ -84,10 +84,36 @@ namespace hamqsler
 			DependencyProperty.Register("LineTextColor", typeof(System.Drawing.Color),
 			                            typeof(QsosWFBox), 
 			                            new PropertyMetadata(System.Drawing.Color.Black));
+		[XmlIgnore]
 		public System.Drawing.Color LineTextColor
 		{
 			get { return (System.Drawing.Color)GetValue(LineTextColorProperty); }
 			set { SetValue(LineTextColorProperty, value); }
+		}
+		
+		// the following 3 accessors are required for saving QsoWFBox in XML
+		public int LineTextColorRed
+		{
+			get {return LineTextColor.R;}
+			set {LineTextColor = System.Drawing.Color.FromArgb(255, value,
+			                                                   LineTextColor.G,
+			                                                   LineTextColor.B);}
+		}
+		
+		public int LineTextColorGreen
+		{
+			get {return LineTextColor.G;}
+			set {LineTextColor = System.Drawing.Color.FromArgb(255, LineTextColor.R,
+			                                                   value,
+			                                                   LineTextColor.B);}
+		}
+		
+		public int LineTextColorBlue
+		{
+			get {return LineTextColor.B;}
+			set {LineTextColor = System.Drawing.Color.FromArgb(255, LineTextColor.R,
+			                                                   LineTextColor.G,
+			                                                   value);}
 		}
 		
 		[XmlIgnore]
@@ -101,10 +127,36 @@ namespace hamqsler
 			DependencyProperty.Register("CallsignColor", typeof(System.Drawing.Color),
 			                            typeof(QsosWFBox), 
 			                            new PropertyMetadata(System.Drawing.Color.Red));
+		[XmlIgnore]
 		public System.Drawing.Color CallsignColor
 		{
 			get { return (System.Drawing.Color)GetValue(CallsignColorProperty); }
 			set { SetValue(CallsignColorProperty, value); }
+		}
+		
+		// the following 3 accessors are required for saving QsoWFBox in XML
+		public int CallsignColorRed
+		{
+			get {return CallsignColor.R;}
+			set {CallsignColor = System.Drawing.Color.FromArgb(255, value,
+			                                                   CallsignColor.G,
+			                                                   CallsignColor.B);}
+		}
+		
+		public int CallsignColorGreen
+		{
+			get {return CallsignColor.G;}
+			set {CallsignColor = System.Drawing.Color.FromArgb(255, CallsignColor.R,
+			                                                   value,
+			                                                   CallsignColor.B);}
+		}
+		
+		public int CallsignColorBlue
+		{
+			get {return CallsignColor.B;}
+			set {CallsignColor = System.Drawing.Color.FromArgb(255, CallsignColor.R,
+			                                                   CallsignColor.G,
+			                                                   value);}
 		}
 		
 		[XmlIgnore]
@@ -118,10 +170,36 @@ namespace hamqsler
 			DependencyProperty.Register("ManagerColor", typeof(System.Drawing.Color),
 			                            typeof(QsosWFBox), 
 			                            new PropertyMetadata(System.Drawing.Color.Gray));
+		[XmlIgnore]
 		public System.Drawing.Color ManagerColor
 		{
 			get { return (System.Drawing.Color)GetValue(ManagerColorProperty); }
 			set { SetValue(ManagerColorProperty, value); }
+		}
+		
+		// the following 3 accessors are required for saving QsoWFBox in XML
+		public int ManagerColorRed
+		{
+			get {return ManagerColor.R;}
+			set {ManagerColor = System.Drawing.Color.FromArgb(255, value,
+			                                                  ManagerColor.G,
+			                                                  ManagerColor.B);}
+		}
+		
+		public int ManagerColorGreen
+		{
+			get {return ManagerColor.G;}
+			set {ManagerColor = System.Drawing.Color.FromArgb(255, ManagerColor.R,
+			                                                  value,
+			                                                  ManagerColor.B);}
+		}
+		
+		public int ManagerColorBlue
+		{
+			get {return ManagerColor.B;}
+			set {ManagerColor = System.Drawing.Color.FromArgb(255, ManagerColor.R,
+			                                                  ManagerColor.G,
+			                                                  value);}
 		}
 		
 		[XmlIgnore]
@@ -156,10 +234,36 @@ namespace hamqsler
 			DependencyProperty.Register("BackgroundColor", typeof(System.Drawing.Color),
 			                            typeof(QsosWFBox),
 			                            new PropertyMetadata(System.Drawing.Color.White));
+		[XmlIgnore]
 		public System.Drawing.Color BackgroundColor
 		{
 			get { return (System.Drawing.Color)GetValue(BackgroundColorProperty); }
 			set { SetValue(BackgroundColorProperty, value); }
+		}
+		
+		// the following 3 accessors are required for saving QsoWFBox in XML
+		public int BackgroundColorRed
+		{
+			get {return BackgroundColor.R;}
+			set {BackgroundColor = System.Drawing.Color.FromArgb(255, value,
+			                                                     BackgroundColor.G,
+			                                                     BackgroundColor.B);}
+		}
+		
+		public int BackgroundColorGreen
+		{
+			get {return BackgroundColor.G;}
+			set {BackgroundColor = System.Drawing.Color.FromArgb(255, BackgroundColor.R,
+			                                                     value,
+			                                                     BackgroundColor.B);}
+		}
+		
+		public int BackgroundColorBlue
+		{
+			get {return BackgroundColor.B;}
+			set {BackgroundColor = System.Drawing.Color.FromArgb(255, BackgroundColor.R,
+			                                                     BackgroundColor.G,
+			                                                     value);}
 		}
 		
 		[XmlIgnore]
@@ -333,9 +437,22 @@ namespace hamqsler
 		}
 		
         /// <summary>
-        /// Default constructor
+        /// Default constructor - should not be called directly, only when deserializing a
+        /// card when opening it.
         /// </summary>
 		public QsosWFBox()
+		{
+			InitializeDisplayProperties();
+			this.ConfirmingText.Clear();
+			CalculateRectangle(MaximumQsos);
+		}
+		
+		/// <summary>
+		/// Constructor to use exept when deserializing a card
+		/// </summary>
+		/// <param name="isCreating">used only to distinguish between constructors. Set
+		/// this value to true.</param>
+		public QsosWFBox(bool isCreating)
 		{
 			InitializeDisplayProperties();
 			CalculateRectangle(MaximumQsos);
@@ -472,7 +589,7 @@ namespace hamqsler
 		/// <returns>QsosWFBox object that is a deep copy of this one</returns>
 		public QsosWFBox Clone()
 		{
-			QsosWFBox box = new QsosWFBox();
+			QsosWFBox box = new QsosWFBox(true);
 			box.CopyBaseProperties(this);
 			box.ShowManager = this.ShowManager;
 			box.ShowFrequency = this.ShowFrequency;

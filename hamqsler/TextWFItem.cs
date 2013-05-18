@@ -70,10 +70,30 @@ namespace hamqsler
 		private static readonly DependencyProperty TextColorProperty =
 			DependencyProperty.Register("TextColor", typeof(Color), typeof(TextWFItem),
 			                            new PropertyMetadata(Color.Black));
+		[XmlIgnore]
 		public Color TextColor
 		{
 			get {return (Color)GetValue(TextColorProperty);}
 			set {SetValue(TextColorProperty, value);}
+		}
+		
+		// the following 3 accessors are required for saving TextWFItem in XML
+		public int TextColorRed
+		{
+			get {return TextColor.R;}
+			set {TextColor = Color.FromArgb(255, value, TextColor.G, TextColor.B);}
+		}
+		
+		public int TextColorGreen
+		{
+			get {return TextColor.G;}
+			set {TextColor = Color.FromArgb(255, TextColor.R, value, TextColor.B);}
+		}
+		
+		public int TextColorBlue
+		{
+			get {return TextColor.B;}
+			set {TextColor = Color.FromArgb(255, TextColor.R, TextColor.G, value);}
 		}
 		
 		[XmlIgnore]
@@ -199,7 +219,10 @@ namespace hamqsler
 			     	e.Property == CheckboxLineThicknessProperty ||
 			     	e.Property == CheckBoxRelativeSizeProperty)
 			{
-				QslCard.RaiseDispPropertyChangedEvent();
+				if(QslCard != null)
+				{
+					QslCard.RaiseDispPropertyChangedEvent();
+				}
 			}
 		}
 		

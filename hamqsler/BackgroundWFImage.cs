@@ -31,6 +31,7 @@ namespace hamqsler
 	{
 		public BackgroundWFImage()
 		{
+			CalculateRectangle();
 		}
 
 		/// <summary>

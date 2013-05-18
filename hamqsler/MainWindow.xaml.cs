@@ -517,19 +517,19 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void CardOpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-/*			OpenFileDialog oDialog = new OpenFileDialog();
-			oDialog.Filter = "QSL Card(*.qslx)|*.qslx|QslDnP Card(*xqsl)|*.xqsl";
+			OpenFileDialog oDialog = new OpenFileDialog();
+			oDialog.Filter = "QSL Card(*.xq1)|*.xq1";
 			oDialog.InitialDirectory = ((App)Application.Current).HamqslerFolder;
 			if(oDialog.ShowDialog(this) == true)
 			{
 				string fileName = oDialog.FileName;
 				string fileExt = fileName.Substring(fileName.Length - 4);
 				CardWF card = null;
-				if(fileExt.Equals("qslx"))		// HamQSLer card file
+				if(fileExt.Equals(".xq1"))		// HamQSLer card file
 				{
 					try
 					{
-						card = Card.DeserializeCard(fileName);
+						card = CardWF.DeserializeCard(fileName);
 					}
 					catch(InvalidOperationException ioe)
 					{
@@ -556,7 +556,7 @@ namespace hamqsler
 						prefs.SerializeAsXml();
 					}
 				}
-				else if(fileExt.Equals("xqsl"))  // QslDnP card file
+/*				else if(fileExt.Equals("xqsl"))  // QslDnP card file
 				{
 					try
 					{
@@ -572,22 +572,22 @@ namespace hamqsler
 					}
 					card.FileName = fileName.Substring(0, fileName.Length - 4) + "qslx";
 					card.IsDirty = true;
-				}
+				}*/
 				else			// neither file type - this really is a programming error
 				{
 					return;
 				}
 				// Card.IsDirty is set to true in CardTabItem constructor so we must
 				// save IsDirty and restore its value afterwards
-				bool isDirty = card.IsDirty;
 				CardTabItem cti = new CardTabItem(card);
-				card.IsDirty = isDirty;
+				card.IsInDesignMode = true;
+				card.IsDirty = false;
 				mainTabControl.Items.Add(cti);
 				cti.IsSelected = true;		// select the new tab
 				cti.SetTabLabel();
 				// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
 				SetTitle(card.FileName, card.IsDirty);
-			}*/
+			}
 				
 		}
 		

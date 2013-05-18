@@ -49,10 +49,10 @@ namespace hamqsler
 		{
 			InitializeComponent();
 			// create a card and position it in the middle of the CardCanvas
-			cardPanel.CreateCard(cardWidth, cardHeight);
+			CardWF card = new CardWF(cardWidth, cardHeight, true);
+			cardPanel.AddCard(card);
 			cardProperties.Visibility = Visibility.Visible;
 			cardProperties.QslCard = cardPanel.QslCard;
-			this.DataContext = cardPanel.QslCard;
 			// load list of font names that are available to Windows Forms
 			System.Drawing.Text.InstalledFontCollection fontCol =
 				new System.Drawing.Text.InstalledFontCollection();
@@ -80,7 +80,16 @@ namespace hamqsler
 		{
 			InitializeComponent();
 			cardPanel.AddCard(card);
-			this.DataContext = cardPanel.QslCard;
+			cardProperties.Visibility = Visibility.Visible;
+			cardProperties.QslCard = cardPanel.QslCard;
+			// load list of font names that are available to Windows Forms
+			System.Drawing.Text.InstalledFontCollection fontCol =
+				new System.Drawing.Text.InstalledFontCollection();
+			foreach(System.Drawing.FontFamily family in fontCol.Families)
+			{
+				FontFaceComboBox.Items.Add(family.Name);
+				QsosBoxFontFaceComboBox.Items.Add(family.Name);
+			}
 			
 /*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
 			{
