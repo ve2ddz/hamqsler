@@ -137,7 +137,6 @@ namespace hamqsler
 			ItemSize = new System.Drawing.Size(width, height);
 			// background image
 			BackgroundImage.QslCard = this;
-			BackgroundImage.ImageFileName = @"$hamqslerFolder$\Samples\sample.jpg";
 			// call text item
 			TextWFItem call = new TextWFItem();
 			call.QslCard = this;
