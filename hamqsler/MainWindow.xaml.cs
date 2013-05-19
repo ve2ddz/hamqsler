@@ -650,6 +650,8 @@ namespace hamqsler
 					{
 						// save card as JPEG
 						SaveCardAsJpeg(fileName, jpD.Resolution, jpD.Quality, jpD.ShowQsos);
+						// tell user that file has been saved
+						StatusText.Text = "Card image has been saved to " + fileName;
 					}
 					catch(Exception ex)
 					{
