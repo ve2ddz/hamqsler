@@ -887,19 +887,20 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void CalculateCardsToBePrintedCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				
 				List<List<DispQso>> qList = qsosView.DisplayQsos.GetDispQsosList(
-						cti.cardCanvas.QslCard);
+						cti.cardPanel.QslCard);
 				int cards = qList.Count;
 				MessageBox.Show("Given the currently loaded and included QSOs, and the selected card,\r\n"
                                  + cards + " cards will be printed.",
                                  " Number of Cards to be Printed", MessageBoxButton.OK,
                                  MessageBoxImage.Information);
-			}*/
+			}
 		}
+		
 		/// <summary>
 		/// Handler for Print Cards menu item Executed event
 		/// </summary>
