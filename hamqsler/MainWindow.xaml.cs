@@ -829,6 +829,8 @@ namespace hamqsler
                     {
                         // save the card as a JPEG
                         Save4UpAsJpeg(fileName, p4D.Resolution, p4D.IncludeCardOutlines);
+		                // tell user that the file has been created
+		                StatusText.Text = "File " + fileName + " has been created.";
                     }
                     catch (Exception ex)
                     {
