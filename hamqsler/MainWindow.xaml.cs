@@ -764,48 +764,37 @@ namespace hamqsler
 		/// <exception>Several others that definitely should never occur.</exception>
 		private void SaveCardsAsJpegsForPrinting(int startNumber, string directoryName)
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
 				//create a list of QSOs for each card
-				List<List<DispQso>> qsos = qsosView.DisplayQsos.GetDispQsosList(cti.cardCanvas.QslCard);
+				List<List<DispQso>> qsos = qsosView.DisplayQsos.GetDispQsosList(cti.cardPanel.QslCard);
 				// now create file for each card
 				for(int cardNum = 0; cardNum < qsos.Count; cardNum++)
 				{
-					Card card = cti.cardCanvas.QslCard.Clone();
+					CardWF card = cti.cardPanel.QslCard.Clone();
 					card.IsInDesignMode = false;
-					CardView cView = new CardView(card);
+					FormsCardView cView = new FormsCardView(card);
 					// inform user of progress
 					StatusText.Text = "Creating card " + (cardNum+1) + " of " + qsos.Count;
 					StatusText.InvalidateVisual();
 					ForceUIUpdate();
 					// create the card and render it
-					DrawingVisual visual = new DrawingVisual();
-					DrawingContext drawingContext = visual.RenderOpen();
-					// always make image 4 by 6 inches
-					drawingContext.DrawRectangle(Brushes.White, new Pen(Brushes.White, 0),
-					                             new Rect(0, 0, 6 * 96, 4 * 96));
-					if(card.QsosBox != null)
-					{
-						List<List<DispQso>> dispQsos = qsosView.DisplayQsos.GetDispQsosList(card);
-						((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[cardNum];
-					}
-					cView.Render(drawingContext);
-					drawingContext.Close();
-					// render image as a bitmap
-					RenderTargetBitmap rtb = new RenderTargetBitmap(1800, 1200, 300, 300, PixelFormats.Default);
-					rtb.Clear();
-					rtb.Render(visual);
-	
-					// save the image as a JPEG
-					JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-					encoder.QualityLevel = 95;
-					encoder.Frames.Add(BitmapFrame.Create(rtb));
-					FileStream jpgFile = new FileStream(directoryName + "\\Qsl" + 
-					                                    (startNumber + cardNum + 1) + ".jpg", 
-					                                    FileMode.Create);
-					encoder.Save(jpgFile);
-					jpgFile.Close();
+					float scale = (float)300F / 100.0F;
+					int bitmapWidth = (int)((float)card.Width * scale);
+					int bitmapHeight = (int)((float)card.Height * scale);
+					System.Drawing.Bitmap bitmap = 
+						new System.Drawing.Bitmap(bitmapWidth, bitmapHeight);
+					bitmap.SetResolution(300F, 300F);
+					System.Drawing.Graphics graphics = 
+						System.Drawing.Graphics.FromImage(bitmap);
+					graphics.ScaleTransform(scale, scale);
+					cView.PaintCard(graphics, qsos[cardNum]);
+					graphics.Dispose();
+					string fileName = directoryName + "\\Qsl" + 
+						(startNumber + cardNum + 1) + ".jpg";
+					bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+					bitmap.Dispose();
 					
 					// force garbage collection to prevent Out of Memory exception
 					if(cardNum % 50 == 0)
@@ -817,7 +806,7 @@ namespace hamqsler
 				// tell user that all cards are created
 				StatusText.Text = qsos.Count + " of " + qsos.Count + " cards created in directory: "
 					+ directoryName;
-			}*/
+			}
 		}
 
 		/// <summary>
