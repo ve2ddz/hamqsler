@@ -637,8 +637,6 @@ namespace hamqsler
 		/// <param name="e">ExecutedRoutedEventArgs object</param>
 		private void SaveCardAsJpegCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			Card card = cti.cardCanvas.QslCard;
 			JpegPropsDialog jpD = new JpegPropsDialog();
 			if(jpD.ShowDialog() == true)
 			{
@@ -659,7 +657,7 @@ namespace hamqsler
 					}
 				}
 					
-			}*/
+			}
 		}
 		
 		/// <summary>
@@ -673,54 +671,36 @@ namespace hamqsler
 		                            bool showQsos)
 		{
 			// create visual of the card
-/*			DrawingVisual visual = new DrawingVisual();
-			DrawingContext drawingContext = visual.RenderOpen();
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
-				Card card = cti.cardCanvas.QslCard.Clone();
+				CardWF card = cti.cardPanel.QslCard.Clone();
 				card.IsInDesignMode = false;
-				CardView cView = new CardView(card);
+				FormsCardView cView = new FormsCardView(card);
+				List<List<DispQso>> dispQsos = new List<List<DispQso>>();
 				if(card.QsosBox != null)
 				{
-					if(showQsos)
+					if(qsosView.DisplayQsos.Count > 0 && showQsos)
 					{
-						List<List<DispQso>> dispQsos = qsosView.DisplayQsos.GetDispQsosList(card);
-						((QsosBoxView)card.QsosBox.CardItemView).Qsos = dispQsos[0];
-					}
-					else
-					{
-						((QsosBoxView)card.QsosBox.CardItemView).BuildQsos();
-					}
-					// update texts based on number of QSOs.
-					foreach (FrameworkElement elt in cView.CardItems) 
-					{
-						TextItemView tiv = elt as TextItemView;
-						if (tiv != null) 
-						{
-							tiv.SetDisplayText(((QsosBoxView)card.QsosBox.CardItemView).Qsos);
-						}
+						dispQsos = qsosView.DisplayQsos.GetDispQsosList(card);
 					}
 				}
 	
-				cView.Render(drawingContext);
-				drawingContext.Close();
-				// render visual as a bitmap
-				RenderTargetBitmap rtb = new RenderTargetBitmap((int)card.DisplayWidth, 
-				                                                (int)card.DisplayHeight,
-				                                                resolution, resolution, 
-				                                                PixelFormats.Default);
-				rtb.Clear();
-				rtb.Render(visual);
+				float scale = (float)resolution / 100.0F;
+				int bitmapWidth = (int)((float)card.Width * scale);
+				int bitmapHeight = (int)((float)card.Height * scale);
+				System.Drawing.Bitmap bitmap = 
+					new System.Drawing.Bitmap(bitmapWidth, bitmapHeight);
+				bitmap.SetResolution(resolution, resolution);
+				System.Drawing.Graphics graphics = 
+					System.Drawing.Graphics.FromImage(bitmap);
+				graphics.ScaleTransform(scale, scale);
+				cView.PaintCard(graphics, dispQsos.Count > 0 ? dispQsos[0] : null);
+				graphics.Dispose();
 				
-				// encode as a JPEG and save the file
-				JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-				encoder.QualityLevel = quality;
-				encoder.Frames.Add(BitmapFrame.Create(rtb));
-				FileStream jpgFile = new FileStream(fileName, FileMode.OpenOrCreate);
-				encoder.Save(jpgFile);
-				jpgFile.Close();
-			}*/
+				bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+				bitmap.Dispose();
+			}
 		}
 
 		/// <summary>

@@ -284,7 +284,7 @@ namespace hamqsler
 				// only be done with Graphics.DrawImage, not Graphics.DrawString, etc.
 				Bitmap designSurface = new Bitmap(this.Width, this.Height);
 				Graphics bGraphics = Graphics.FromImage(designSurface);
-				PaintCardItems(bGraphics, qsos);
+				PaintCardItems(bGraphics, Qsos);
 				// create a graphics path that excludes the card itself
 				GraphicsPath path = new GraphicsPath();
 				path.AddRectangle(new RectangleF(this.Location.X, this.Location.Y, 
@@ -303,7 +303,7 @@ namespace hamqsler
 			// now draw the card items on the card.
 			state = g.Save();
 			g.Clip = new Region(clipRect);
-			PaintCardItems(g, qsos);
+			PaintCardItems(g, Qsos);
 			g.Restore(state);
 			// paint the card outline if requested
 			if(QslCard.CardPrintProperties.PrintCardOutlines)
@@ -399,8 +399,9 @@ namespace hamqsler
 			{
 				style |= FontStyle.Italic;
 			}
-			Font font = new Font(new FontFamily(tItem.TextFontFace), tItem.FontSize,
-				         style, GraphicsUnit.Point);
+			float fontSize = tItem.FontSize * 100F / 72F;
+			Font font = new Font(new FontFamily(tItem.TextFontFace), fontSize,
+				         style, GraphicsUnit.Pixel);
 			int startTextX = CardLocation.X + tItem.X + tItem.Height + 4;
 			g.DrawString(tItem.Text.GetText(QslCard, qsos, QslCard.IsInDesignMode),
 			             font, tItem.TextBrush, startTextX, CardLocation.Y + tItem.Y);
@@ -451,8 +452,9 @@ namespace hamqsler
 			Pen pen = new Pen(qBox.LineTextBrush, 1);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			qBox.CalculateRectangle(qsos.Count);
+			float fontSize = qBox.FontSize * 100F / 72F;
 			Font font = new Font(new System.Drawing.FontFamily(
-				qBox.FontName), qBox.FontSize, FontStyle.Regular, GraphicsUnit.Point);
+				qBox.FontName), fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
 			List<string> colHeaders = CreateColumnHeaders(qBox);
 			List<float> colWidths = CreateColumnWidths(font, colHeaders, qBox);
 			GraphicsPath path = CreateOutsideBoxPath(qBox);
@@ -743,16 +745,20 @@ namespace hamqsler
 			int y = CardLocation.Y + box.Y + 2;
 			string confText = box.ConfirmingText.GetText(QslCard, qsos, QslCard.IsInDesignMode);
 			g.DrawString(confText, font, box.LineTextBrush, startX, y);
-			Size size = TextRenderer.MeasureText(confText, font);
-			startX += size.Width;
-			Font callFont = new Font(box.FontName, box.FontSize,FontStyle.Bold);
-			g.DrawString(Callsign, callFont, box.CallsignBrush, startX, y);
-			if(box.ShowManager && !Manager.Equals(string.Empty))
+			if(box.QslCard.IsInDesignMode || qsos.Count != 0)
 			{
-				size = TextRenderer.MeasureText(Callsign, callFont);
+				Size size = TextRenderer.MeasureText(confText, font);
 				startX += size.Width;
-				g.DrawString(box.ViaText + " " + Manager, callFont, box.ManagerBrush, 
-				             startX, y);
+				float fontSize = box.FontSize * 100F / 72F;
+				Font callFont = new Font(box.FontName, fontSize, FontStyle.Bold, GraphicsUnit.Pixel);
+				g.DrawString(Callsign, callFont, box.CallsignBrush, startX, y);
+				if(box.ShowManager && !Manager.Equals(string.Empty))
+				{
+					size = TextRenderer.MeasureText(Callsign, callFont);
+					startX += size.Width;
+					g.DrawString(box.ViaText + " " + Manager, callFont, box.ManagerBrush, 
+					             startX, y);
+				}
 			}
 		}
 		
