@@ -1291,8 +1291,8 @@ namespace hamqsler
 			{
 				BuildBackgroundMenuItem();
 				BuildSecondaryImagesMenuItems();
-/*				BuildTextItemsMenuItems();
-				BuildQsosBoxMenuItem();*/
+				BuildTextItemsMenuItems();
+				BuildQsosBoxMenuItem();
 				SelectMenu.Items.Add(new Separator());
 				BuildNoneMenuItem();
 			}
@@ -1352,8 +1352,8 @@ namespace hamqsler
 		/// </summary>
 		private void BuildTextItemsMenuItems()
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			foreach(TextItem ti in cti.cardCanvas.QslCard.TextItems)
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			foreach(TextWFItem ti in cti.cardPanel.QslCard.TextItems)
 			{
 				MenuItem mi = new MenuItem();
 				TextParts parts = ti.Text;
@@ -1364,7 +1364,7 @@ namespace hamqsler
 				mi.Command = SelectItemCommand;
 				mi.Tag = ti;
 				SelectMenu.Items.Add(mi);
-			}*/
+			}
 		}
 		
 		/// <summary>
@@ -1372,16 +1372,16 @@ namespace hamqsler
 		/// </summary>
 		private void BuildQsosBoxMenuItem()
 		{
-/*			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			if(cti.cardCanvas.QslCard.QsosBox != null)
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			if(cti.cardPanel.QslCard.QsosBox != null)
 			{
 				MenuItem mi = new MenuItem();
 				mi.Header = "Qsos Box";
 				mi.Click += OnSelectItem_Clicked;
 				mi.Command = SelectItemCommand;
-				mi.Tag = cti.cardCanvas.QslCard.QsosBox;
+				mi.Tag = cti.cardPanel.QslCard.QsosBox;
 				SelectMenu.Items.Add(mi);
-			}*/
+			}
 		}
 		
 		/// <summary>
