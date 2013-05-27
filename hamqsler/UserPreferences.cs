@@ -1291,7 +1291,7 @@ namespace hamqsler
             	CountMacro macro = new CountMacro();
             	macro.CountEquals = true;
             	macro.Count = 1;
-				((StaticText)macro.DesignText[0]).Text = "<S>";
+				((StaticText)macro.DesignText[0]).Text = "$";
 				((StaticText)macro.TrueText[0]).Text = string.Empty;
 				((StaticText)macro.FalseText[0]).Text = "s";
             	prefs.Salutation.Add(macro);
@@ -1314,7 +1314,7 @@ namespace hamqsler
             	CountMacro macro = new CountMacro();
             	macro.CountEquals = true;
             	macro.Count = 1;
-            	((StaticText)macro.DesignText[0]).Text = "<S>";
+            	((StaticText)macro.DesignText[0]).Text = "$";
             	((StaticText)macro.TrueText[0]).Text = string.Empty;
             	((StaticText)macro.FalseText[0]).Text = "s";
             	prefs.ConfirmingText.Add(macro);
