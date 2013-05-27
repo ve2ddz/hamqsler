@@ -211,7 +211,7 @@ namespace hamqsler
 		// QsosBox text font size
 		private static readonly DependencyProperty FontSizeProperty =
 			DependencyProperty.Register("FontSize", typeof(float), typeof(QsosWFBox),
-			                            new PropertyMetadata(10.0F));
+			                            new PropertyMetadata(9.0F));
 		public float FontSize
 		{
 			get {return (float)GetValue(FontSizeProperty);}
@@ -494,8 +494,8 @@ namespace hamqsler
 				{
 					this.X = QslCard.Width / 20;
 					this.Y = QslCard.Height / 2;
+					this.Width = QslCard.Width * 18 / 20;
 				}
-				this.Width = QslCard.Width * 18 / 20;
 				System.Drawing.Font font = 
 					new System.Drawing.Font(new System.Drawing.FontFamily(
 						this.FontName), this.FontSize,
@@ -507,7 +507,7 @@ namespace hamqsler
 				{
 					qsosCount = MaximumQsos;
 				}
-				this.Height = (size.Height + 4) * (2 + qsosCount);
+				this.Height = (size.Height + 2) * (2 + qsosCount) + qsosCount + 2;
 			}
 		}
 		

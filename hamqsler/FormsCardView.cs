@@ -455,9 +455,8 @@ namespace hamqsler
 			Pen pen = new Pen(qBox.LineTextBrush, 1);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			qBox.CalculateRectangle(qsos.Count);
-			float fontSize = qBox.FontSize * 100F / 72F;
 			Font font = new Font(new System.Drawing.FontFamily(
-				qBox.FontName), fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
+				qBox.FontName), qBox.FontSize, FontStyle.Regular, GraphicsUnit.Point);
 			List<string> colHeaders = CreateColumnHeaders(qBox);
 			List<float> colWidths = CreateColumnWidths(font, colHeaders, qBox);
 			GraphicsPath path = CreateOutsideBoxPath(qBox);
@@ -569,18 +568,18 @@ namespace hamqsler
 			int bottom = top + box.Height;
 			System.Drawing.Size size = System.Windows.Forms.TextRenderer.MeasureText(
 				"SampleText", font);
-			int lineY = top + size.Height + 4;
+			int lineY = top + size.Height + 3;
 			while(lineY < bottom)
 			{
 				path.AddLine(left, lineY, right, lineY);
 				// the following line is needed to prevent diagonal lines between the end
 				// of the line just drawn and the start of the next line (if any)
 				path.AddLine(right, lineY, left, lineY);
-				lineY += size.Height + 4;
+				lineY += size.Height + 3;
 			}
 			int lineX = left;
-			int topY = top + size.Height + 4;
-			path.AddLine(left, bottom - size.Height + 4, left, topY);
+			int topY = top + size.Height + 3;
+			path.AddLine(left, bottom - size.Height + 3, left, topY);
 			for(int col = 0; col < colWidths.Count - 1; col++)
 			{
 				if(col != colWidths.Count - 2 || box.ShowPseTnx)
@@ -721,7 +720,7 @@ namespace hamqsler
 		{
 			Size size = TextRenderer.MeasureText(colHeaders[0], font);
 			float colPosition = CardLocation.X + box.X;
-			float textY = (float)(CardLocation.Y + box.Y + size.Height + 4 + 2);
+			float textY = (float)(CardLocation.Y + box.Y + size.Height + 3 + 3);
 			for(int col = 0; col < colWidths.Count; col++)
 			{
 				if(colWidths[col] > 0)
@@ -745,15 +744,15 @@ namespace hamqsler
 		                                QsosWFBox box)
 		{
 			int startX = CardLocation.X + box.X + 5;
-			int y = CardLocation.Y + box.Y + 2;
+			int y = CardLocation.Y + box.Y + 1;
 			string confText = box.ConfirmingText.GetText(QslCard, qsos, QslCard.IsInDesignMode);
 			g.DrawString(confText, font, box.LineTextBrush, startX, y);
 			if(box.QslCard.IsInDesignMode || qsos.Count != 0)
 			{
 				Size size = TextRenderer.MeasureText(confText, font);
 				startX += size.Width;
-				float fontSize = box.FontSize * 100F / 72F;
-				Font callFont = new Font(box.FontName, fontSize, FontStyle.Bold, GraphicsUnit.Pixel);
+				float fontSize = box.FontSize;
+				Font callFont = new Font(box.FontName, fontSize, FontStyle.Bold, GraphicsUnit.Point);
 				g.DrawString(Callsign, callFont, box.CallsignBrush, startX, y);
 				if(box.ShowManager && !Manager.Equals(string.Empty))
 				{
@@ -779,7 +778,7 @@ namespace hamqsler
 			if(qsos != null)
 			{
 				Size size = TextRenderer.MeasureText("X", font);
-				float y = CardLocation.Y + box.Y + 2 * (size.Height + 4) + 2;
+				float y = CardLocation.Y + box.Y + 2 * (size.Height + 3) + 3;
 				foreach(DispQso qso in qsos)
 				{
 					float xStart = CardLocation.X + box.X;
@@ -809,7 +808,7 @@ namespace hamqsler
 					}
 					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
 						g, qsl, font, box.LineTextBrush, colWidths[6], xStart, y);
-					y += size.Height + 4;
+					y += size.Height + 3;
 				}
 			}
 		}
