@@ -213,11 +213,15 @@ namespace hamqsler
 			{
 				CalculateRectangle();
 			}
-			else if(e.Property == TextColorProperty ||
-			        e.Property == CheckboxBeforeProperty ||
-			     	e.Property == CheckboxAfterProperty ||
-			     	e.Property == CheckboxLineThicknessProperty ||
-			     	e.Property == CheckBoxRelativeSizeProperty)
+			if(e.Property == TextColorProperty ||
+	           e.Property == CheckboxBeforeProperty ||
+	     	   e.Property == CheckboxAfterProperty ||
+	     	   e.Property == CheckboxLineThicknessProperty ||
+	     	   e.Property == CheckBoxRelativeSizeProperty ||
+	     	   e.Property == IsItalicProperty ||
+	     	   e.Property == IsBoldProperty ||
+	     	   e.Property == TextProperty ||
+	     	   e.Property == TextFontFaceProperty)
 			{
 				if(QslCard != null)
 				{
