@@ -579,7 +579,12 @@ namespace hamqsler
 						cMacro.DesignText.Clear();
 						cMacro.DesignText.Add(designText);
 						StaticText falseText = new StaticText();
-						falseText.Text = text.Value;
+						string fText = text.Value;
+						if(!fText.EndsWith("  "))
+						{
+							fText += "  ";
+						}
+						falseText.Text = fText;
 						cMacro.FalseText.Clear();
 						cMacro.FalseText.Add(falseText);
 						qBox.ConfirmingText.Clear();
@@ -590,7 +595,12 @@ namespace hamqsler
 												// xqsl file. This matches the save order in
 												// QslDesignAndPrint.
 						StaticText trueText = new StaticText();
-						trueText.Text = text.Value;
+						string tText = text.Value;
+						if(!tText.EndsWith("  "))
+						{
+							tText += "  ";
+						}
+						trueText.Text = tText;
 						CountMacro countMacro = qBox.ConfirmingText[0] as CountMacro;
 						countMacro.TrueText.Clear();
 						countMacro.TrueText.Add(trueText);
