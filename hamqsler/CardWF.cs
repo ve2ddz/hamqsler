@@ -110,6 +110,7 @@ namespace hamqsler
 		/// </summary>
 		public CardWF() : base()
 		{
+			QsosBox = null;
 			QslCard = this;
 			App.Logger.Log("In CardWF default constructor:" + Environment.NewLine,
 						   App.Logger.DebugPrinting);

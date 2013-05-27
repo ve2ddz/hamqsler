@@ -1705,5 +1705,33 @@ namespace hamqsler
 			}
 			
 		}
+		
+		/// <summary>
+		/// Move files from QslDnP folder to hamqsler folder and convert
+		/// QslDnP card files to hamqsler card files.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void ImportQslDnP_Click(object sender, RoutedEventArgs e)
+		{
+			string qsldnpDir = Environment.GetFolderPath(
+			Environment.SpecialFolder.MyDocuments) + "\\QslDnP";
+			DirectoryInfo qslInfo = new DirectoryInfo(qsldnpDir);
+			if(!qslInfo.Exists)
+			{
+				MessageBox.Show("The QslDnP folder does not exist, so no files can be copied.",
+				           "Import Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+			QslDnPTasks.MoveFiles(qsldnpDir);
+			if(QslDnPTasks.CopyError)
+			{
+				MessageBox.Show("One or more files could not be copied from your QslDnP folder" +
+				                Environment.NewLine +
+				                "to your hamqsler folder. See the log file for information.",
+				                "File Copy Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+			}
+			QslDnPTasks.ConvertCardFiles(qsldnpDir);
+			StatusText.Text = "QslDnP files have been copied and card files converted.";
+		}
 	}
 }

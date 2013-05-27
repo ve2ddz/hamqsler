@@ -85,7 +85,10 @@ namespace hamqsler
 						}
 					}
 				}
-				QslCard.QsosBox.CalculateRectangle(Qsos.Count);
+				if(QslCard.QsosBox != null)
+				{
+					QslCard.QsosBox.CalculateRectangle(Qsos.Count);
+				}
 			}
 		}
 		

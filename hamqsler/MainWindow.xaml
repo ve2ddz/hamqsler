@@ -242,6 +242,11 @@
 					  Command="{x:Static local:MainWindow.SelectCommand}">
 				<Separator/>
 			</MenuItem>
+			<MenuItem Header="Tools">
+				<MenuItem Header="Import QslDesignAndPrint Files" x:Name="importQslDnP"
+						  ToolTip="Convert QslDnP card files, and copy image files to hamqsler folder"
+						  Click="ImportQslDnP_Click"/>
+			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="HamQSLer Help..." InputGestureText="F1"
 						  Command="{x:Static local:MainWindow.HelpCommand}"

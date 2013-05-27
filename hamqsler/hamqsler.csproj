@@ -164,6 +164,7 @@
       <DependentUpon>PrintPropertiesPanel.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="QslDnPTasks.cs" />
     <Compile Include="QslRcvdToPseTnxConverter.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">

@@ -85,11 +85,11 @@ namespace hamqsler
         }
 
         /// <summary>
-        /// Converts the input XmlNode to a System.Windows.SolidColorBrush
+        /// Converts the input XmlNode to a System.Drawing.Color object
         /// </summary>
-        /// <param name="node">The XmlNode containing the brush information</param>
+        /// <param name="node">The XmlNode containing the color information</param>
         /// <returns>
-        /// SolidColorBrush object corresponding to the XML
+        /// Color object corresponding to the XML
         /// </returns>
         /// <exception>
         /// XmlException if the Xml does not contain brush properties
@@ -100,41 +100,49 @@ namespace hamqsler
         /// <exception>
         /// XmlException if the Xml does not contain Color information
         /// </exception>
-        public static Brush ConvertXmlToBrush(XmlNode node, CultureInfo cardCulture)
+        public static System.Drawing.Color ConvertXmlToColor(
+        	XmlNode node, CultureInfo cardCulture)
         {
-            XmlNode cNode = XmlProcs.GetFirstChildElement(node);
-            if (cNode == null)
+            XmlNode bNode = XmlProcs.GetFirstChildElement(node);
+            if (bNode == null)
                 throw new XmlException("Programming Error: Brush has no XML properties");
-            switch (cNode.Name)
+            switch (bNode.Name)
             {
-                case "Color":
-                    XmlNode chanNode = XmlProcs.GetFirstChildElement(cNode);
-                    byte a = 0, r = 0, g = 0, b = 0;
-                    while (chanNode != null)
-                    {
-                        XmlText text = XmlProcs.GetTextNode(chanNode);
-                        switch (chanNode.Name)
-                        {
-                            case "A":
-                                a = Byte.Parse(text.Value, cardCulture);
-                                break;
-                            case "R":
-                                r = Byte.Parse(text.Value, cardCulture);
-                                break;
-                            case "G":
-                                g = Byte.Parse(text.Value, cardCulture);
-                                break;
-                            case "B":
-                                b = Byte.Parse(text.Value, cardCulture);
-                                break;
-                            default:
-                                throw new XmlException("Invalid SolidColorBrush color");
-                        }
-                        chanNode = XmlProcs.GetNextSiblingElement(chanNode);
-                    }
-                    return new SolidColorBrush(Color.FromArgb(a, r, g, b));
-                default:
-                    throw new XmlException("Invalid color type");
+            	case "System.Windows.Media.SolidColorBrush":
+            		XmlNode cNode = XmlProcs.GetFirstChildElement(bNode);
+            		switch(cNode.Name)
+            		{
+		                case "Color":
+		                    XmlNode chanNode = XmlProcs.GetFirstChildElement(cNode);
+		                    byte a = 0, r = 0, g = 0, b = 0;
+		                    while (chanNode != null)
+		                    {
+		                        XmlText text = XmlProcs.GetTextNode(chanNode);
+		                        switch (chanNode.Name)
+		                        {
+		                            case "A":
+		                                a = Byte.Parse(text.Value, cardCulture);
+		                                break;
+		                            case "R":
+		                                r = Byte.Parse(text.Value, cardCulture);
+		                                break;
+		                            case "G":
+		                                g = Byte.Parse(text.Value, cardCulture);
+		                                break;
+		                            case "B":
+		                                b = Byte.Parse(text.Value, cardCulture);
+		                                break;
+		                            default:
+		                                throw new XmlException("Invalid SolidColorBrush color");
+		                        }
+		                        chanNode = XmlProcs.GetNextSiblingElement(chanNode);
+		                    }
+		                    return System.Drawing.Color.FromArgb(a, r, g, b);
+		                default:
+		                    throw new XmlException("Invalid color type");
+            		}
+            	default:
+            		throw new XmlException("Color not specified properly in card file");
             }
         }
 
