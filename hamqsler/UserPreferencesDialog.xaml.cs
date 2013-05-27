@@ -98,6 +98,15 @@ namespace hamqsler
 			{
 				ConfirmingTextBox.Visibility = Visibility.Collapsed;
 			}
+			// load list of font names that are available to Windows Forms
+			System.Drawing.Text.InstalledFontCollection fontCol =
+				new System.Drawing.Text.InstalledFontCollection();
+			foreach(System.Drawing.FontFamily family in fontCol.Families)
+			{
+				DefaultTextItemsFontFaceComboBox.Items.Add(family.Name);
+				DefaultQsosBoxFontFaceComboBox.Items.Add(family.Name);
+			}
+
 		}
 		
 		/// <summary>

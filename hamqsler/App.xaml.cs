@@ -222,7 +222,7 @@ namespace hamqsler
 		internal void GetUserPreferences(
 				out bool userPrefsIntialized, out bool userPrefsError)
 		{
-			userPrefs = UserPreferences.CreateUserPreferences(logger, false, out userPrefsIntialized,
+			userPrefs = UserPreferences.CreateUserPreferences(false, out userPrefsIntialized,
 			                                                  out userPrefsError);
 		}
 		

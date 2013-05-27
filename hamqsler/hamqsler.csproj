@@ -127,7 +127,6 @@
     <Compile Include="DispQso.cs" />
     <Compile Include="FloatToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
-    <Compile Include="FontWeightConverter.cs" />
     <Compile Include="FormsColorToWPFSolidColorBrushConverter.cs" />
     <Compile Include="FormsCardView.cs" />
     <Compile Include="HamQSLerPrintDialog.xaml.cs">

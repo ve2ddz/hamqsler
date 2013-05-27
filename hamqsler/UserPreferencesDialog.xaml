@@ -19,11 +19,6 @@
 				</Trigger>
 			</Style.Triggers>
 		</Style>
-		<CollectionViewSource Source="{x:Static Fonts.SystemFontFamilies}" x:Key="fontCVS">
-			<CollectionViewSource.SortDescriptions>
-				<scm:SortDescription PropertyName="Source"/>
-			</CollectionViewSource.SortDescriptions>
-		</CollectionViewSource>
 	</Window.Resources>
 	<Window.CommandBindings>
 		<CommandBinding Command="{x:Static local:UserPreferencesDialog.ApplyButtonCommand}"
@@ -206,7 +201,7 @@
 				</Grid.Visibility>
 				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						>Default Text FontFace:</TextBlock>
-				<ComboBox ItemsSource="{Binding Source={StaticResource fontCVS}}"
+				<ComboBox x:Name="DefaultTextItemsFontFaceComboBox"
 						  Text="{Binding DefaultTextItemsFontFace, Mode=TwoWay}" 
 				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
@@ -301,7 +296,7 @@
 				</Grid.Visibility>
 				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						>Default QSOs Box FontFace:</TextBlock>
-				<ComboBox ItemsSource="{Binding Source={StaticResource fontCVS}}"
+				<ComboBox x:Name="DefaultQsosBoxFontFaceComboBox"
 						  Text="{Binding DefaultQsosBoxFontFace, Mode=TwoWay}" 
 				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
