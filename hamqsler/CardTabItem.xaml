@@ -23,7 +23,6 @@
 	xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"        
     xmlns:local="clr-namespace:hamqsler">
 <TabItem.Resources>
-	<local:FontWeightConverter x:Key="FontWeightConverter"/>
 	<local:FloatToPercentConverter x:Key="FloatToPercentConverter"/>
 	<local:FontSizeConverter x:Key="=FontSizeConverter"/>
 	<local:FormsColorToWPFSolidColorBrushConverter x:Key="FormsBrushToWPFSolidColorBrushConverter"/>
