@@ -369,6 +369,7 @@ namespace hamqsler
 			UserPrefs.DefaultPrinterName = printPropertiesPanel.PrinterName;
 			UserPrefs.DefaultPaperSize = printPropertiesPanel.PrinterPaperSize;
 			UserPrefs.DefaultPrinterResolution = printPropertiesPanel.Resolution;
+			UserPrefs.DefaultPaperSource = printPropertiesPanel.Source;
 			UserPrefs.InsideMargins = printPropertiesPanel.InsideMargins;
 			UserPrefs.PrintCardOutlines = printPropertiesPanel.PrintCardOutlines;
 			UserPrefs.FillLastPage = printPropertiesPanel.FillLastPage;
@@ -389,6 +390,7 @@ namespace hamqsler
 				printPropertiesPanel.PrinterName = prefs.DefaultPrinterName;
 				printPropertiesPanel.PrinterPaperSize = prefs.DefaultPaperSize;
 				printPropertiesPanel.Resolution = prefs.DefaultPrinterResolution;
+				printPropertiesPanel.Source = prefs.DefaultPaperSource;
 				printPropertiesPanel.InsideMargins = prefs.InsideMargins;
 				printPropertiesPanel.PrintCardOutlines = prefs.PrintCardOutlines;
 				printPropertiesPanel.FillLastPage = prefs.FillLastPage;

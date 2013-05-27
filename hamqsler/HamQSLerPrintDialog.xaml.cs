@@ -59,6 +59,12 @@ namespace hamqsler
 			set {printPropsPanel.Resolution = value;}
 		}
 		
+		public PaperSource Source
+		{
+			get {return printPropsPanel.Source;}
+			set {printPropsPanel.Source = value;}
+		}
+		
 		public bool InsideMargins
 		{
 			get {return printPropsPanel.InsideMargins;}

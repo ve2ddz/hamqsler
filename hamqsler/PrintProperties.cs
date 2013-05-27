@@ -72,6 +72,16 @@ namespace hamqsler
 			set {SetValue(PrinterResolutionProperty, value);}
 		}
 		
+		private static readonly DependencyProperty PaperSourceProperty =
+			DependencyProperty.Register("Source", typeof(PaperSource),
+			                            typeof(PrintProperties),
+			                            new PropertyMetadata(null));
+		public PaperSource Source
+		{
+			get {return GetValue(PaperSourceProperty) as PaperSource;}
+			set {SetValue(PaperSourceProperty, value);}
+		}
+		
 		private static readonly DependencyProperty InsideMarginsProperty =
 			DependencyProperty.Register("InsideMargins", typeof(bool),
 			                            typeof(PrintProperties),
@@ -140,6 +150,7 @@ namespace hamqsler
 			Resolution.Kind = prefs.DefaultPrinterResolution.Kind;
             Resolution.X = prefs.DefaultPrinterResolution.X;
             Resolution.Y = prefs.DefaultPrinterResolution.Y;
+            Source = prefs.DefaultPaperSource;
 			InsideMargins = prefs.InsideMargins;
 			PrintCardOutlines = prefs.PrintCardOutlines;
 			FillLastPage = prefs.FillLastPage;
@@ -168,6 +179,7 @@ namespace hamqsler
 			this.Resolution.Kind = props.Resolution.Kind;
 			this.Resolution.X = props.Resolution.X;
 			this.Resolution.Y = props.Resolution.Y;
+			this.Source = props.Source;
 			
 			this.InsideMargins = props.InsideMargins;
 			this.PrintCardOutlines = props.PrintCardOutlines;
@@ -187,6 +199,7 @@ namespace hamqsler
 				              "\tPrinter Name: {0}" + newLine +
 				              "\tPaperSize: {1} {10} x {11}" + newLine +
 				              "\tResolution: {2} {3} x {4}" + newLine +
+				              "\tPaperSource: {10}" + newLine +
 				              "\tInsideMargins: {5}" + newLine +
 				              "\tPrintCardOutlines: {6}" + newLine +
 				              "\tFillLastPage: {7}" + newLine +
@@ -196,7 +209,8 @@ namespace hamqsler
 				              Resolution.Kind, Resolution.X, Resolution.Y, 
 				              InsideMargins, PrintCardOutlines,
 				              FillLastPage, SetCardMargins, Layout,
-				              PrinterPaperSize.Width, PrinterPaperSize.Height);
+				              PrinterPaperSize.Width, PrinterPaperSize.Height,
+				              Source.SourceName);
 		}
 		
 		/// <summary>

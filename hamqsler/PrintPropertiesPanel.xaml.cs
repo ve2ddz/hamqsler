@@ -67,6 +67,16 @@ namespace hamqsler
 			set {SetValue(PrinterResolutionProperty, value);}
 		}
 		
+		private static readonly DependencyProperty PaperSourceProperty =
+			DependencyProperty.Register("Source", typeof(PaperSource),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(null));
+		public PaperSource Source
+		{
+			get {return GetValue(PaperSourceProperty) as PaperSource;}
+			set {SetValue(PaperSourceProperty, value);}
+		}
+		
 		private static readonly DependencyProperty InsideMarginsProperty =
 			DependencyProperty.Register("InsideMargins", typeof(bool),
 			                            typeof(PrintPropertiesPanel),
@@ -192,6 +202,7 @@ namespace hamqsler
 				settings.PrinterName = PrinterName;
 				SetPaperSizes(settings);
 				SetResolutions(settings);
+				SetPaperSources(settings);
 				settings.DefaultPageSettings.PaperSize = PrinterPaperSize;
 				settings.DefaultPageSettings.PrinterResolution = Resolution;
 				insideMarginsButton.IsEnabled = true;
@@ -259,6 +270,14 @@ namespace hamqsler
 						ResolutionString(settings.DefaultPageSettings.PrinterResolution);
 				}
 			}
+			else if(e.Property == PaperSourceProperty)
+			{
+				paperSourceComboBox.SelectedItem = Source.SourceName;
+				if(paperSourceComboBox.SelectedIndex == -1)
+				{
+					paperSourceComboBox.SelectedItem = settings.DefaultPageSettings.PaperSource;
+				}
+			}
 			else if(e.Property == InsideMarginsProperty)
 			{
 				SetCardsLayouts();
@@ -278,6 +297,7 @@ namespace hamqsler
 			if(e.Property == PrinterNameProperty ||
 			   e.Property == PrinterPaperSizeProperty ||
 			   e.Property == PrinterResolutionProperty ||
+			   e.Property == PaperSourceProperty ||
 			   e.Property == InsideMarginsProperty ||
 			   e.Property == PrintCardOutlinesProperty ||
 			   e.Property == FillLastPageProperty ||
@@ -380,6 +400,30 @@ namespace hamqsler
 				resolution = string.Format("{0} ({1} x {2})", res.Kind, res.X, res.Y);
 			}
 			return resolution;
+		}
+		
+		/// <summary>
+		/// Populate the paper source combobox with list of sources that are valid
+		/// for the selected printer
+		/// </summary>
+		/// <param name="settings">PrintSettings object for the selected printer</param>
+		private void SetPaperSources(PrinterSettings settings)
+		{
+			paperSourceComboBox.Items.Clear();
+			foreach(PaperSource source in settings.PaperSources)
+			{
+				paperSourceComboBox.Items.Add(source.SourceName);
+			}
+			if(Source != null)
+			{
+				paperSourceComboBox.SelectedItem = Source.SourceName;
+			}
+			if(paperSourceComboBox.SelectedIndex == -1)
+			{
+				paperSourceComboBox.SelectedItem =
+					settings.DefaultPageSettings.PaperSource.SourceName;
+			}
+			paperSourceComboBox.IsEnabled = paperSourceComboBox.Items.Count > 1;
 		}
 		
 		/// <summary>
@@ -800,6 +844,35 @@ namespace hamqsler
 			{
 				App.Logger.Log("Cards layout set to LandscapeCenter" +
 				               Environment.NewLine);
+			}
+		}
+		
+		/// <summary>
+		/// Handler for PaperSourceComboBox selection changed event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">SelectionChangedEventArgs object for the event</param>
+		void PaperSourceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			PrinterSettings settings = new PrinterSettings();
+			settings.PrinterName = PrinterName;
+			if(e.AddedItems.Count > 0)
+			{
+				foreach(PaperSource source in settings.PaperSources)
+				{
+					if(e.AddedItems[0].Equals(source.SourceName))
+					{
+						Source = source;
+						if(App.Logger.DebugPrinting)
+						{
+							App.Logger.Log("PaperSourceComboBox_SelectionChanged:" +
+							               Environment.NewLine +
+							               "PaperSource changed to " + source.SourceName +
+							               Environment.NewLine);
+						}
+						break;
+					}
+				}
 			}
 		}
 		

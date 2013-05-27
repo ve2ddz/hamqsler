@@ -72,6 +72,7 @@ namespace hamqsler
 				printPropsPanel.PrinterName = QslCard.CardPrintProperties.PrinterName;
 				printPropsPanel.PrinterPaperSize = QslCard.CardPrintProperties.PrinterPaperSize;
 				printPropsPanel.Resolution = QslCard.CardPrintProperties.Resolution;
+				printPropsPanel.Source = QslCard.CardPrintProperties.Source;
 				printPropsPanel.InsideMargins = QslCard.CardPrintProperties.InsideMargins;
 				printPropsPanel.PrintCardOutlines = QslCard.CardPrintProperties.PrintCardOutlines;
 				printPropsPanel.FillLastPage = QslCard.CardPrintProperties.FillLastPage;
@@ -95,6 +96,7 @@ namespace hamqsler
 				QslCard.CardPrintProperties.PrinterName = printPropsPanel.PrinterName;
 				QslCard.CardPrintProperties.PrinterPaperSize = printPropsPanel.PrinterPaperSize;
 				QslCard.CardPrintProperties.Resolution = printPropsPanel.Resolution;
+				QslCard.CardPrintProperties.Source = printPropsPanel.Source;
 				QslCard.CardPrintProperties.InsideMargins = printPropsPanel.InsideMargins;
 				QslCard.CardPrintProperties.PrintCardOutlines = printPropsPanel.PrintCardOutlines;
 				QslCard.CardPrintProperties.FillLastPage = printPropsPanel.FillLastPage;

@@ -928,6 +928,7 @@ namespace hamqsler
 			printDialog.PrinterName = props.PrinterName;
 			printDialog.PrinterPaperSize = props.PrinterPaperSize;
 			printDialog.Resolution = props.Resolution;
+			printDialog.Source = props.Source;
 			printDialog.InsideMargins = props.InsideMargins;
 			printDialog.PrintCardOutlines = props.PrintCardOutlines;
 			printDialog.FillLastPage = props.FillLastPage;
@@ -940,6 +941,7 @@ namespace hamqsler
 				props.PrinterName = printDialog.PrinterName;
 				props.PrinterPaperSize = printDialog.PrinterPaperSize;
 				props.Resolution = printDialog.Resolution;
+				props.Source = printDialog.Source;
 				props.InsideMargins = printDialog.InsideMargins;
 				props.PrintCardOutlines = printDialog.PrintCardOutlines;
 				props.FillLastPage = printDialog.FillLastPage;

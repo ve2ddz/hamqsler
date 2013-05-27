@@ -32,6 +32,7 @@
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Column="0" Grid.Row="0"
 								Margin="3,5,3,3" Text="Printer:"
@@ -51,6 +52,12 @@
 					<ComboBox x:Name="qualityComboBox" Grid.Column="1"
 								Grid.Row="2" Margin="3,5,3,3"
 								SelectionChanged="QualityComboBox_SelectionChanged"/>
+					<TextBlock Grid.Column="0" Grid.Row="3"
+								Text="Paper Source:" Margin="3,5,3,3"
+								HorizontalAlignment="Right"/>
+					<ComboBox x:Name="paperSourceComboBox" Grid.Column="1"
+								Grid.Row="3" Margin="3,5,3,3"
+								SelectionChanged="PaperSourceComboBox_SelectionChanged"/>
 				</Grid>
 			</GroupBox>
 			<GroupBox Header="Print Properties" x:Name="printPropertiesGroupBox">

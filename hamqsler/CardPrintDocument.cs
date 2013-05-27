@@ -86,6 +86,7 @@ namespace hamqsler
 			settings.PrinterName = PrintProperties.PrinterName;
 			settings.DefaultPageSettings.PaperSize = PrintProperties.PrinterPaperSize;
 			settings.DefaultPageSettings.PrinterResolution = PrintProperties.Resolution;
+			settings.DefaultPageSettings.PaperSource = PrintProperties.Source;
 			if(PrintProperties.Layout == PrintProperties.CardLayouts.LandscapeTopLeft ||
 			   PrintProperties.Layout == PrintProperties.CardLayouts.LandscapeTopCenter ||
 			   PrintProperties.Layout == PrintProperties.CardLayouts.LandscapeCenter)

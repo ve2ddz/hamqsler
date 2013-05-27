@@ -177,6 +177,16 @@ namespace hamqsler
 			set {SetValue(DefaultPrinterResolutionProperty, value);}
 		}
 		
+		private static readonly DependencyProperty DefaultPaperSourceProperty =
+			DependencyProperty.Register("DefaultPaperSource", typeof(PaperSource),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(null));
+		public PaperSource DefaultPaperSource
+		{
+			get {return GetValue(DefaultPaperSourceProperty) as PaperSource;}
+			set {SetValue(DefaultPaperSourceProperty, value);}
+		}
+		
 		private static readonly DependencyProperty InsideMarginsProperty =
 			DependencyProperty.Register("InsideMargins", typeof(bool),
 			                            typeof(UserPreferences),
@@ -887,6 +897,7 @@ namespace hamqsler
 				DefaultPrinterName = settings.PrinterName;
 				DefaultPaperSize = settings.DefaultPageSettings.PaperSize;
 				DefaultPrinterResolution = settings.DefaultPageSettings.PrinterResolution;
+				DefaultPaperSource = settings.DefaultPageSettings.PaperSource;
 			}
 		}
 		
@@ -977,6 +988,7 @@ namespace hamqsler
 			DefaultPrinterName = prefs.DefaultPrinterName;
 			DefaultPaperSize = prefs.DefaultPaperSize;
 			DefaultPrinterResolution = prefs.DefaultPrinterResolution;
+			DefaultPaperSource = prefs.DefaultPaperSource;
 			InsideMargins = prefs.InsideMargins;
 			PrintCardOutlines = prefs.PrintCardOutlines;
 			FillLastPage = prefs.FillLastPage;
