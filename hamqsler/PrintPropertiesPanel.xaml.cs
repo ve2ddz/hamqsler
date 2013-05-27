@@ -136,7 +136,7 @@ namespace hamqsler
 			get {return (int)GetValue(CardHeightProperty);}
 			set {SetValue(CardHeightProperty, value);}
 		}
-
+		
 		private const int MAXMARGIN = 25;
 		// size of the paper in the radio button images is SCALEFACTOR/SCALEDPAGESZIE
 		private const int SCALEFACTOR = 10000;
@@ -447,6 +447,37 @@ namespace hamqsler
 				// create the images
 				CreatePortraitButtonImages();
 				CreateLandscapeButtonImages();
+				bool portraitButtonsVisible = portraitCardsWide > 0 && portraitCardsHigh > 0;
+				bool landscapeButtonsVisible = landscapeCardsWide > 0 && landscapeCardsHigh > 0;
+				if(!portraitButtonsVisible)
+				{
+					switch(Layout)
+					{
+						case PrintProperties.CardLayouts.PortraitTopLeft:
+						case PrintProperties.CardLayouts.PortraitTopCenter:
+						case PrintProperties.CardLayouts.PortraitCenter:
+							Layout = PrintProperties.CardLayouts.LandscapeTopLeft;
+							break;
+					}
+				}
+				if(!landscapeButtonsVisible)
+				{
+					switch(Layout)
+					{
+						case PrintProperties.CardLayouts.LandscapeTopLeft:
+						case PrintProperties.CardLayouts.LandscapeTopCenter:
+						case PrintProperties.CardLayouts.LandscapeCenter:
+							if(portraitButtonsVisible)
+							{
+								Layout = PrintProperties.CardLayouts.PortraitTopLeft;
+							}
+							else
+							{
+								Layout = PrintProperties.CardLayouts.None;
+							}
+							break;
+					}
+				}
 			}
 		}
 		
@@ -490,6 +521,7 @@ namespace hamqsler
 			int pageHeight = PrinterPaperSize.Height;
 			if(InsideMargins)
 			{
+				settings.DefaultPageSettings.PaperSize = PrinterPaperSize;
 				RectangleF area = settings.DefaultPageSettings.PrintableArea;
 				pageWidth = (int)(area.Width - area.Left);
 				pageHeight = (int)(area.Height - area.Top);
@@ -561,32 +593,40 @@ namespace hamqsler
 		/// </summary>
 		private void CreatePortraitButtonImages()
 		{
-			RectangleF area = settings.DefaultPageSettings.PrintableArea;
-			int leftOffset = 0;
-			int topOffset = 0;
-			if(InsideMargins)
+			Visibility buttonsVisibility = portraitCardsWide > 0 && portraitCardsHigh > 0 ?
+				Visibility.Visible : Visibility.Collapsed;
+			portraitTopLeftButton.Visibility = buttonsVisibility;
+			portraitTopCenterButton.Visibility = buttonsVisibility;
+			portraitCenterButton.Visibility = buttonsVisibility;
+			if(buttonsVisibility == Visibility.Visible)
 			{
-				leftOffset = (int)area.Left / scaleFactor;
-				topOffset = (int)area.Top / scaleFactor;				
+				RectangleF area = settings.DefaultPageSettings.PrintableArea;
+				int leftOffset = 0;
+				int topOffset = 0;
+				if(InsideMargins)
+				{
+					leftOffset = (int)area.Left / scaleFactor;
+					topOffset = (int)area.Top / scaleFactor;				
+				}
+				CreateButtonImage(portraitTopLeftButtonCanvas, scaledPageWidth, scaledPageHeight,
+			 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
+				leftOffset = (scaledPageWidth - scaledCardWidth * portraitCardsWide) / 2;
+				if(InsideMargins &&
+				   leftOffset < (MAXMARGIN / scaleFactor))
+				{
+					leftOffset = (MAXMARGIN / scaleFactor);
+				}
+				CreateButtonImage(portraitTopCenterButtonCanvas, scaledPageWidth, scaledPageHeight,
+			 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
+				topOffset = (scaledPageHeight - scaledCardHeight * portraitCardsHigh) / 2;
+				if(InsideMargins &&
+				   topOffset < (MAXMARGIN / scaleFactor))
+				{
+					topOffset = (MAXMARGIN / scaleFactor);
+				}
+				CreateButtonImage(portraitCenterButtonCanvas, scaledPageWidth, scaledPageHeight,
+			 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
 			}
-			CreateButtonImage(portraitTopLeftButtonCanvas, scaledPageWidth, scaledPageHeight,
-		 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
-			leftOffset = (scaledPageWidth - scaledCardWidth * portraitCardsWide) / 2;
-			if(InsideMargins &&
-			   leftOffset < (MAXMARGIN / scaleFactor))
-			{
-				leftOffset = (MAXMARGIN / scaleFactor);
-			}
-			CreateButtonImage(portraitTopCenterButtonCanvas, scaledPageWidth, scaledPageHeight,
-		 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
-			topOffset = (scaledPageHeight - scaledCardHeight * portraitCardsHigh) / 2;
-			if(InsideMargins &&
-			   topOffset < (MAXMARGIN / scaleFactor))
-			{
-				topOffset = (MAXMARGIN / scaleFactor);
-			}
-			CreateButtonImage(portraitCenterButtonCanvas, scaledPageWidth, scaledPageHeight,
-		 	                  leftOffset, topOffset, portraitCardsWide, portraitCardsHigh);
 		}
 		
 		/// <summary>
@@ -594,32 +634,40 @@ namespace hamqsler
 		/// </summary>
 		private void CreateLandscapeButtonImages()
 		{
-			RectangleF area = settings.DefaultPageSettings.PrintableArea;
-			int leftOffset = 0;
-			int topOffset = 0;
-			if(InsideMargins)
+			Visibility buttonsVisibility = landscapeCardsWide > 0 && landscapeCardsHigh > 0
+				? Visibility.Visible : Visibility.Collapsed;
+			landscapeTopLeftButton.Visibility = buttonsVisibility;
+			landscapeTopCenterButton.Visibility = buttonsVisibility;
+			landscapeCenterButton.Visibility = buttonsVisibility;
+			if(buttonsVisibility == Visibility.Visible)
 			{
-				leftOffset = (int)area.Top / scaleFactor;
-				topOffset = (int)area.Left / scaleFactor;
+				RectangleF area = settings.DefaultPageSettings.PrintableArea;
+				int leftOffset = 0;
+				int topOffset = 0;
+				if(InsideMargins)
+				{
+					leftOffset = (int)area.Top / scaleFactor;
+					topOffset = (int)area.Left / scaleFactor;
+				}
+				CreateButtonImage(landscapeTopLeftButtonCanvas, scaledPageHeight, scaledPageWidth,
+			 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
+				leftOffset = (scaledPageHeight - scaledCardWidth * landscapeCardsWide) / 2;
+				if(InsideMargins &&
+				   leftOffset < MAXMARGIN / scaleFactor)
+				{
+					leftOffset = MAXMARGIN / scaleFactor;
+				}
+				CreateButtonImage(landscapeTopCenterButtonCanvas, scaledPageHeight, scaledPageWidth,
+			 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
+				topOffset = (scaledPageWidth - scaledCardHeight * landscapeCardsHigh) / 2;
+				if(InsideMargins &&
+				   topOffset < MAXMARGIN / scaleFactor)
+				{
+					topOffset = MAXMARGIN / scaleFactor;
+				}
+				CreateButtonImage(landscapeCenterButtonCanvas, scaledPageHeight, scaledPageWidth,
+			 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
 			}
-			CreateButtonImage(landscapeTopLeftButtonCanvas, scaledPageHeight, scaledPageWidth,
-		 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
-			leftOffset = (scaledPageHeight - scaledCardWidth * landscapeCardsWide) / 2;
-			if(InsideMargins &&
-			   leftOffset < MAXMARGIN / scaleFactor)
-			{
-				leftOffset = MAXMARGIN / scaleFactor;
-			}
-			CreateButtonImage(landscapeTopCenterButtonCanvas, scaledPageHeight, scaledPageWidth,
-		 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
-			topOffset = (scaledPageWidth - scaledCardHeight * landscapeCardsHigh) / 2;
-			if(InsideMargins &&
-			   topOffset < MAXMARGIN / scaleFactor)
-			{
-				topOffset = MAXMARGIN / scaleFactor;
-			}
-			CreateButtonImage(landscapeCenterButtonCanvas, scaledPageHeight, scaledPageWidth,
-		 	                  leftOffset, topOffset, landscapeCardsWide, landscapeCardsHigh);
 		}
 		
 		/// <summary>
