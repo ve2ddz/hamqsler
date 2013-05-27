@@ -479,7 +479,7 @@ namespace hamqsler
 				}
 			}
 			// load card files
-/*			if(prefs.CardsReloadOnStartup)
+			if(prefs.CardsReloadOnStartup)
 			{
 				string[] fileNames = prefs.CardFiles.ToArray();
 				prefs.CardFiles.Clear();
@@ -488,7 +488,7 @@ namespace hamqsler
 				{
 					try
 					{
-						card = Card.DeserializeCard(fileName);
+						card = CardWF.DeserializeCard(fileName);
 					}
 					catch(Exception ex)
 					{
@@ -507,7 +507,7 @@ namespace hamqsler
 				}
 				((App)Application.Current).UserPreferences = prefs;
 				((App)Application.Current).UserPreferences.SerializeAsXml();
-			}*/
+			}
 		}
 		
 		/// <summary>
