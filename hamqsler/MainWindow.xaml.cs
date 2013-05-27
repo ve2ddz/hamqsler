@@ -963,6 +963,7 @@ namespace hamqsler
 					System.Windows.Forms.PrintPreviewDialog ppDialog = 
 						new System.Windows.Forms.PrintPreviewDialog();
 					ppDialog.Document = document;
+					ppDialog.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 					ppDialog.ShowDialog();
 				}
 				else
