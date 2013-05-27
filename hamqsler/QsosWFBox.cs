@@ -490,11 +490,12 @@ namespace hamqsler
 		{
 			if(QslCard != null)
 			{
+				int width = this.Width;
 				if(this.X == 0 && this.Y == 0 && this.Width == 0 && this.Height == 0)
 				{
-					this.X = QslCard.Width / 20;
-					this.Y = QslCard.Height / 2;
-					this.Width = QslCard.Width * 18 / 20;
+					this.Location = new System.Drawing.Point(
+						QslCard.Width / 20, QslCard.Height / 2);
+					width = QslCard.Width * 18 / 20;
 				}
 				System.Drawing.Font font = 
 					new System.Drawing.Font(new System.Drawing.FontFamily(
@@ -507,7 +508,8 @@ namespace hamqsler
 				{
 					qsosCount = MaximumQsos;
 				}
-				this.Height = (size.Height + 2) * (2 + qsosCount) + qsosCount + 2;
+				this.ItemSize = new System.Drawing.Size(width,
+				                                        (size.Height + 2) * (2 + qsosCount) + qsosCount + 2);
 			}
 		}
 		
@@ -565,6 +567,7 @@ namespace hamqsler
 				// size of the QsosBox, so we must raise the DispPropertyChanged event
 				// to be sure that the font on the display changes.
 				if(e.Property == FontNameProperty ||
+				   e.Property == FontSizeProperty ||
 		           e.Property == ShowPseTnxProperty |
 				   e.Property == ShowManagerProperty ||
 		           e.Property == ShowFrequencyProperty ||

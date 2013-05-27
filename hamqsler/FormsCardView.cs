@@ -696,6 +696,10 @@ namespace hamqsler
 				totalColWidths += colWidths[col];
 			}
 			BoxMinimumWidth = (int)(totalColWidths + 5);
+			if(box.Width < BoxMinimumWidth)
+			{
+				box.ItemSize = new Size(BoxMinimumWidth, box.Height);
+			}
 			float colExpansion = (box.Width - totalColWidths) / (box.ShowPseTnx ? 6: 5);
 			for(int col = 0; col < colWidths.Count; col++)
 			{
