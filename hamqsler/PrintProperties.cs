@@ -144,7 +144,7 @@ namespace hamqsler
 			PrintCardOutlines = prefs.PrintCardOutlines;
 			FillLastPage = prefs.FillLastPage;
 			SetCardMargins = prefs.SetCardMargins;
-			Layout = prefs.CardsLayout;
+			Layout = PrintProperties.CardLayouts.PortraitTopLeft;
 			if(App.Logger.DebugPrinting)
 			{
 				string debugMsg = "In PrintProperties constructor:" + 

@@ -44,43 +44,55 @@ namespace hamqsler
 		private static int BEEPFREQUENCY = 800;		// Hz
 		private static int BEEPDURATION = 200;		// ms
 
-		private UserPreferences userPrefs;
+		private static readonly DependencyProperty UserPrefsProperty =
+			DependencyProperty.Register("UserPrefs", typeof(UserPreferences),
+			                                typeof(UserPreferencesDialog),
+			                                new PropertyMetadata(null));
+		private UserPreferences UserPrefs
+		{
+			get {return GetValue(UserPrefsProperty) as UserPreferences;}
+			set {SetValue(UserPrefsProperty, value);}
+		}
 		
 		public UserPreferencesDialog()
 		{
 			InitializeComponent();
+			printPropertiesPanel.printerPropertiesGroupBox.Header = "Default Printer Properties";
+			printPropertiesPanel.printPropertiesGroupBox.Header = "Default Print Properties";
+			printPropertiesPanel.cardsLayoutGroupBox.Visibility = Visibility.Collapsed;
+			printPropertiesPanel.PrintPropertiesChanged += OnPrintPropertiesChanged;
 			Mouse.OverrideCursor = Cursors.Arrow;
 			// create a clone of the UserPreferences object
-			userPrefs = new UserPreferences(((App)Application.Current).UserPreferences);
-			propertiesDisplay.DataContext = userPrefs;
-			if(userPrefs.Callsign.Count == 1 && userPrefs.Callsign[0].GetType() == typeof(StaticText))
+			UserPrefs = new UserPreferences(((App)Application.Current).UserPreferences);
+			propertiesDisplay.DataContext = UserPrefs;
+			if(UserPrefs.Callsign.Count == 1 && UserPrefs.Callsign[0].GetType() == typeof(StaticText))
 			{
-				CallsignTextBox.DataContext = (StaticText)userPrefs.Callsign[0];
+				CallsignTextBox.DataContext = (StaticText)UserPrefs.Callsign[0];
 			}
 			else
 			{
 				CallsignTextBox.Visibility = Visibility.Collapsed;
 			}
-			if(userPrefs.NameQth.Count == 1 && userPrefs.NameQth[0].GetType() == typeof(StaticText))
+			if(UserPrefs.NameQth.Count == 1 && UserPrefs.NameQth[0].GetType() == typeof(StaticText))
 			{
-				NameQthTextBox.DataContext = (StaticText)userPrefs.NameQth[0];
+				NameQthTextBox.DataContext = (StaticText)UserPrefs.NameQth[0];
 			}
 			else
 			{
 				NameQthTextBox.Visibility = Visibility.Collapsed;
 			}
-			if(userPrefs.Salutation.Count == 1 && userPrefs.Salutation[0].GetType() == typeof(StaticText))
+			if(UserPrefs.Salutation.Count == 1 && UserPrefs.Salutation[0].GetType() == typeof(StaticText))
 			{
-				SalutationTextBox.DataContext = (StaticText)userPrefs.Salutation[0];
+				SalutationTextBox.DataContext = (StaticText)UserPrefs.Salutation[0];
 			}
 			else
 			{
 				SalutationTextBox.Visibility = Visibility.Collapsed;
 			}
-			if(userPrefs.ConfirmingText.Count == 1 && 
-			   userPrefs.ConfirmingText[0].GetType() == typeof(StaticText))
+			if(UserPrefs.ConfirmingText.Count == 1 && 
+			   UserPrefs.ConfirmingText[0].GetType() == typeof(StaticText))
 			{
-				ConfirmingTextBox.DataContext = (StaticText)userPrefs.ConfirmingText[0];
+				ConfirmingTextBox.DataContext = (StaticText)UserPrefs.ConfirmingText[0];
 			}
 			else
 			{
@@ -137,8 +149,8 @@ namespace hamqsler
 		/// <param name="e">ExecutedRoutedEventArgs object</param>
 		private void OkAndApplyButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			userPrefs.SerializeAsXml();
-			((App)Application.Current).UserPreferences = userPrefs;
+			UserPrefs.SerializeAsXml();
+			((App)Application.Current).UserPreferences = UserPrefs;
 			e.Handled = true;
 			Button button = e.OriginalSource as Button;
 			if(button != null && button.Name == "okButton")
@@ -169,13 +181,13 @@ namespace hamqsler
 			System.Windows.Forms.FolderBrowserDialog folderDialog = 
 					new System.Windows.Forms.FolderBrowserDialog();
 			folderDialog.Description = "Select the default folder for ADIF files";
-			folderDialog.SelectedPath = userPrefs.DefaultAdifFilesFolder;
+			folderDialog.SelectedPath = UserPrefs.DefaultAdifFilesFolder;
 			
 			System.Windows.Forms.DialogResult res = folderDialog.ShowDialog();
 			if(res == System.Windows.Forms.DialogResult.OK)
 			{
 				// new folder selected, so update UserPreferences object
-				userPrefs.DefaultAdifFilesFolder = folderDialog.SelectedPath;
+				UserPrefs.DefaultAdifFilesFolder = folderDialog.SelectedPath;
 			}
 			e.Handled = true;
 		}
@@ -192,13 +204,13 @@ namespace hamqsler
 			System.Windows.Forms.FolderBrowserDialog folderDialog = 
 					new System.Windows.Forms.FolderBrowserDialog();
 			folderDialog.Description = "Select the default folder for card files";
-			folderDialog.SelectedPath = userPrefs.DefaultCardFilesFolder;
+			folderDialog.SelectedPath = UserPrefs.DefaultCardFilesFolder;
 			
 			System.Windows.Forms.DialogResult res = folderDialog.ShowDialog();
 			if(res == System.Windows.Forms.DialogResult.OK)
 			{
 				// new folder selected, so update UserPreferences object
-				userPrefs.DefaultCardFilesFolder = folderDialog.SelectedPath;
+				UserPrefs.DefaultCardFilesFolder = folderDialog.SelectedPath;
 			}
 			e.Handled = true;
 		}
@@ -215,13 +227,13 @@ namespace hamqsler
 			System.Windows.Forms.FolderBrowserDialog folderDialog = 
 					new System.Windows.Forms.FolderBrowserDialog();
 			folderDialog.Description = "Select the default folder for image files";
-			folderDialog.SelectedPath = userPrefs.DefaultImagesFolder;
+			folderDialog.SelectedPath = UserPrefs.DefaultImagesFolder;
 			
 			System.Windows.Forms.DialogResult res = folderDialog.ShowDialog();
 			if(res == System.Windows.Forms.DialogResult.OK)
 			{
 				// new folder selected, so update UserPreferences object
-				userPrefs.DefaultImagesFolder = folderDialog.SelectedPath;
+				UserPrefs.DefaultImagesFolder = folderDialog.SelectedPath;
 			}
 			e.Handled = true;
 		}
@@ -270,13 +282,13 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void CallsignMacroButton_Click(object sender, RoutedEventArgs e)
 		{
-			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.Callsign);
+			TextMacrosDialog dialog = new TextMacrosDialog(UserPrefs.Callsign);
 			dialog.ShowDialog();
-			if(userPrefs.Callsign.Count == 1 && 
-			   (userPrefs.Callsign[0].GetType() == typeof(StaticText)))
+			if(UserPrefs.Callsign.Count == 1 && 
+			   (UserPrefs.Callsign[0].GetType() == typeof(StaticText)))
 			{
 				CallsignTextBox.Visibility = Visibility.Visible;
-				CallsignTextBox.Text = ((StaticText)userPrefs.Callsign[0]).Text;
+				CallsignTextBox.Text = ((StaticText)UserPrefs.Callsign[0]).Text;
 			}
 			else
 			{
@@ -291,13 +303,13 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void NameQTHMacroButton_Click(object sender, RoutedEventArgs e)
 		{
-			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.NameQth);
+			TextMacrosDialog dialog = new TextMacrosDialog(UserPrefs.NameQth);
 			dialog.ShowDialog();
-			if(userPrefs.NameQth.Count == 1 &&
-			   (userPrefs.NameQth[0].GetType() == typeof(StaticText)))
+			if(UserPrefs.NameQth.Count == 1 &&
+			   (UserPrefs.NameQth[0].GetType() == typeof(StaticText)))
 			{
 				NameQthTextBox.Visibility = Visibility.Visible;
-				NameQthTextBox.Text = ((StaticText)userPrefs.NameQth[0]).Text;
+				NameQthTextBox.Text = ((StaticText)UserPrefs.NameQth[0]).Text;
 			}
 			else
 			{
@@ -312,13 +324,13 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void SalutationMacroButton_Click(object sender, RoutedEventArgs e)
 		{
-			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.Salutation);
+			TextMacrosDialog dialog = new TextMacrosDialog(UserPrefs.Salutation);
 			dialog.ShowDialog();
-			if(userPrefs.Salutation.Count == 1 &&
-			   (userPrefs.Salutation[0].GetType() == typeof(StaticText)))
+			if(UserPrefs.Salutation.Count == 1 &&
+			   (UserPrefs.Salutation[0].GetType() == typeof(StaticText)))
  		    {
 		   		SalutationTextBox.Visibility = Visibility.Visible;
-		   		SalutationTextBox.Text = ((StaticText)userPrefs.Salutation[0]).Text;
+		   		SalutationTextBox.Text = ((StaticText)UserPrefs.Salutation[0]).Text;
 		    }
 			else
 			{
@@ -333,18 +345,56 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void ConfirmingTextMacroButton_Click(object sender, RoutedEventArgs e)
 		{
-			TextMacrosDialog dialog = new TextMacrosDialog(userPrefs.ConfirmingText);
+			TextMacrosDialog dialog = new TextMacrosDialog(UserPrefs.ConfirmingText);
 			dialog.ShowDialog();
-			if(userPrefs.ConfirmingText.Count == 1 &&
-			   userPrefs.ConfirmingText[0].GetType() == typeof(StaticText))
+			if(UserPrefs.ConfirmingText.Count == 1 &&
+			   UserPrefs.ConfirmingText[0].GetType() == typeof(StaticText))
 			{
 				ConfirmingTextBox.Visibility = Visibility.Visible;
-				ConfirmingTextBox.Text = ((StaticText)userPrefs.ConfirmingText[0]).Text;
+				ConfirmingTextBox.Text = ((StaticText)UserPrefs.ConfirmingText[0]).Text;
 			}
 			else
 			{
 				ConfirmingTextBox.Visibility = Visibility.Collapsed;
 			}
 		}
+		
+		/// <summary>
+		/// Handler for printPropertiesPanel PrintProperties changed event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void OnPrintPropertiesChanged(object sender, EventArgs e)
+		{
+			UserPrefs.DefaultPrinterName = printPropertiesPanel.PrinterName;
+			UserPrefs.DefaultPaperSize = printPropertiesPanel.PrinterPaperSize;
+			UserPrefs.DefaultPrinterResolution = printPropertiesPanel.Resolution;
+			UserPrefs.InsideMargins = printPropertiesPanel.InsideMargins;
+			UserPrefs.PrintCardOutlines = printPropertiesPanel.PrintCardOutlines;
+			UserPrefs.FillLastPage = printPropertiesPanel.FillLastPage;
+			UserPrefs.SetCardMargins = printPropertiesPanel.SetCardMargins;
+		}
+		
+		/// <summary>
+		/// Event handler for DependencyProperty Changed event
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property ==UserPrefsProperty)
+			{
+				// pass the print properties on to printPropertiesPanel
+				UserPreferences prefs = new UserPreferences(UserPrefs);
+				printPropertiesPanel.PrinterName = prefs.DefaultPrinterName;
+				printPropertiesPanel.PrinterPaperSize = prefs.DefaultPaperSize;
+				printPropertiesPanel.Resolution = prefs.DefaultPrinterResolution;
+				printPropertiesPanel.InsideMargins = prefs.InsideMargins;
+				printPropertiesPanel.PrintCardOutlines = prefs.PrintCardOutlines;
+				printPropertiesPanel.FillLastPage = prefs.FillLastPage;
+				printPropertiesPanel.SetCardMargins = prefs.SetCardMargins;
+			}
+		}
+		
 	}
 }

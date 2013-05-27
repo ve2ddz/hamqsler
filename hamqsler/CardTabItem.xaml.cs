@@ -52,6 +52,8 @@ namespace hamqsler
 			CardWF card = new CardWF(cardWidth, cardHeight, true);
 			cardPanel.AddCard(card);
 			cardProperties.Visibility = Visibility.Visible;
+			cardProperties.printPropsPanel.cardsLayoutGroupBox.Visibility = 
+				Visibility.Collapsed;
 			cardProperties.QslCard = cardPanel.QslCard;
 			// load list of font names that are available to Windows Forms
 			System.Drawing.Text.InstalledFontCollection fontCol =
@@ -81,6 +83,8 @@ namespace hamqsler
 			InitializeComponent();
 			cardPanel.AddCard(card);
 			cardProperties.Visibility = Visibility.Visible;
+			cardProperties.printPropsPanel.cardsLayoutGroupBox.Visibility = 
+				Visibility.Collapsed;
 			cardProperties.QslCard = cardPanel.QslCard;
 			// load list of font names that are available to Windows Forms
 			System.Drawing.Text.InstalledFontCollection fontCol =

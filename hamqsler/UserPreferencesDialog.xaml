@@ -979,7 +979,8 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 					<Binding ElementName="PrintOptions" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<local:PrintPropertiesPanel x:Name="printPropertiesPanel"/>
+<!-- 				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 							HorizontalAlignment="Right">Set Card Margins to Printer Page Margins:</TextBlock>
 				<CheckBox Grid.Row="0" Grid.Column="1" Margin="5" 
 				          IsChecked="{Binding Path=SetCardMarginsToPrinterPageMargins, Mode=TwoWay}"/>
@@ -990,7 +991,7 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 							HorizontalAlignment="Right">Print Card Outlines:</TextBlock>
 				<CheckBox Grid.Row="2" Grid.Column="1" Margin="5" 
-				          IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"/>
+				          IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"/> -->
 			</Grid>
 		</StackPanel>
 		<Separator Grid.Row="1" Grid.ColumnSpan="2"/>

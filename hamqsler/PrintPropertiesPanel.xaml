@@ -37,7 +37,7 @@
 								Margin="3,5,3,3" Text="Printer:"
 								HorizontalAlignment="Right"/>
 					<ComboBox x:Name="printerComboBox" Grid.Column="1" 
-							  Grid.Row="0" Margin="3,5,3,3"
+							  Grid.Row="0" Margin="3,5,3,3" MaxWidth="180"
 							  SelectedItem="{Binding Path=PrinterName, Mode=TwoWay}"/>
 					<TextBlock Grid.Column="0" Grid.Row="1"
 								Text="Paper Size:" Margin="3,5,3,3"

@@ -217,16 +217,6 @@ namespace hamqsler
 			set {SetValue(SetCardMarginsProperty, value);}
 		}
 		
-		private static readonly DependencyProperty CardsLayoutProperty =
-			DependencyProperty.Register("CardsLayout", typeof(PrintProperties.CardLayouts),
-			                            typeof(UserPreferences),
-			                            new PropertyMetadata(PrintProperties.CardLayouts.LandscapeCenter));
-		public PrintProperties.CardLayouts CardsLayout
-		{
-			get {return (PrintProperties.CardLayouts)GetValue(CardsLayoutProperty);}
-			set {SetValue(CardsLayoutProperty, value);}
-		}
-		
 		// Default font face to display text items in
 		private static readonly DependencyProperty DefaultTextItemsFontFaceProperty =
 			DependencyProperty.Register("DefaultTextItemsFontFace", typeof(string),
@@ -983,6 +973,7 @@ namespace hamqsler
 			CardsReloadOnStartup = prefs.CardsReloadOnStartup;
 			CardFiles = prefs.CardFiles;
 			DefaultCardFilesFolder = prefs.DefaultCardFilesFolder;
+			
 			DefaultPrinterName = prefs.DefaultPrinterName;
 			DefaultPaperSize = prefs.DefaultPaperSize;
 			DefaultPrinterResolution = prefs.DefaultPrinterResolution;
@@ -990,7 +981,6 @@ namespace hamqsler
 			PrintCardOutlines = prefs.PrintCardOutlines;
 			FillLastPage = prefs.FillLastPage;
 			SetCardMargins = prefs.SetCardMargins;
-			CardsLayout = prefs.CardsLayout;
 
 			DefaultTextItemsFontFace = prefs.DefaultTextItemsFontFace;
 			SetValue(CallsignPropertyKey, new TextParts());
