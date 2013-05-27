@@ -74,6 +74,9 @@
 			<TreeViewItem Header="Print Settings">
 				<TreeViewItem Name="PrintOptions" Header="Print Options"/>
 			</TreeViewItem>
+			<TreeViewItem Header="Debugging"> 
+				<TreeViewItem Name="DebugOptions" Header="Debug Options"/>
+			</TreeViewItem>
 		</TreeView>
 		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="420">
 			<StackPanel Orientation="Horizontal">
@@ -980,18 +983,41 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</Grid.Visibility>
 				<local:PrintPropertiesPanel x:Name="printPropertiesPanel"/>
-<!-- 				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-							HorizontalAlignment="Right">Set Card Margins to Printer Page Margins:</TextBlock>
-				<CheckBox Grid.Row="0" Grid.Column="1" Margin="5" 
-				          IsChecked="{Binding Path=SetCardMarginsToPrinterPageMargins, Mode=TwoWay}"/>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-							HorizontalAlignment="Right">Fill Last Page With Blank Cards:</TextBlock>
-				<CheckBox Grid.Row="1" Grid.Column="1" Margin="5" 
-				          IsChecked="{Binding Path=FillLastPageWithBlankCards, Mode=TwoWay}"/>
-				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-							HorizontalAlignment="Right">Print Card Outlines:</TextBlock>
-				<CheckBox Grid.Row="2" Grid.Column="1" Margin="5" 
-				          IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"/> -->
+			</Grid>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
+					<Binding ElementName="DebugOptions" Path="IsSelected"
+							 Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</Grid.Visibility>
+				<CheckBox Grid.Column="0" Grid.Row="0" Margin="5"
+						  Content="Debug Logging"
+						  IsChecked="{Binding Path=DebugLogging, Mode=TwoWay}">
+					<CheckBox.ToolTip>
+						<TextBlock>
+							Turn on Logging debugging.<LineBreak/>
+							Warning: May write a lot of output to the log file.
+						</TextBlock>
+					</CheckBox.ToolTip>
+				</CheckBox>
+				<CheckBox Grid.Column="0" Grid.Row="1" Margin="5" 
+						  Content="Debug Printing" 
+						  IsChecked="{Binding Path=DebugPrinting, Mode=TwoWay}">
+					<CheckBox.ToolTip>
+						<TextBlock>
+							Turn on print debugging.<LineBreak/>
+							Warning: This may write a lot of output to the<LineBreak/>
+							log file and slow down program execution,<LineBreak/>
+							especially when printing.
+						</TextBlock>
+					</CheckBox.ToolTip>
+				</CheckBox>
 			</Grid>
 		</StackPanel>
 		<Separator Grid.Row="1" Grid.ColumnSpan="2"/>
