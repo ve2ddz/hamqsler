@@ -574,7 +574,8 @@ namespace hamqsler
 					case "ConfirmingMultiText":
 						CountMacro cMacro = new CountMacro();
 						StaticText designText = new StaticText();
-						designText.Text = "Confirming 2-Way QSO$ With";
+						designText.Text = ((App)App.Current).UserPreferences.
+							ConfirmingText.GetText(card, null, true);
 						cMacro.DesignText.Clear();
 						cMacro.DesignText.Add(designText);
 						StaticText falseText = new StaticText();
