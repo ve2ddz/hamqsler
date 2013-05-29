@@ -17,6 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Qsos;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -78,7 +79,14 @@ namespace hamqsler
 		public override void GetAdifFieldsForSorting(ref HashSet<string>fields, 
 												 ref HashSet<string> existFields)
 		{
-			throw new NotImplementedException();
+			foreach(TextPart part in DesignText)
+			{
+				part.GetAdifFieldsForSorting(ref fields, ref existFields);
+			}
+			foreach(TextPart part in NoManagerText)
+			{
+				part.GetAdifFieldsForSorting(ref fields, ref existFields);
+			}
 		}
 		
 		/// <summary>
@@ -98,9 +106,21 @@ namespace hamqsler
 			{
 				return DesignText.GetText(card, qsos, screen);
 			}
+			else if(qsos != null && qsos.Count != 0)
+			{
+				string manager = qsos[0].Manager;
+				if(CallSign.IsValid(manager))
+				{
+					return manager;
+				}
+				else
+				{
+					return NoManagerText.GetText(card, qsos, screen);
+				}
+			}
 			else
 			{
-				throw new NotImplementedException();
+				return NoManagerText.GetText(card, qsos, screen);
 			}
 		}
 		
