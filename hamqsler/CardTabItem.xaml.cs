@@ -129,12 +129,15 @@ namespace hamqsler
 					TextWFItem ti = (TextWFItem)ci;
 					textItemProperties.Visibility = Visibility.Visible;
 					textItemProperties.DataContext = ti;
-					Text.Visibility = ti.Text.Count == 1 ? Visibility.Visible :
-							Visibility.Collapsed;
 					if(ti.Text.Count == 1 && ti.Text[0].GetType() == typeof(StaticText))
 					{
+						Text.Visibility = Visibility.Visible;
 						StaticText sText = (StaticText)ti.Text[0];
 						Text.Text = sText.Text;
+					}
+					else
+					{
+						Text.Visibility = Visibility.Collapsed;
 					}
 				}
 				else if(ci.GetType() == typeof(QsosWFBox))
