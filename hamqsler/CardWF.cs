@@ -44,7 +44,7 @@ namespace hamqsler
 		
 		private static readonly DependencyProperty IsInDesignModeProperty =		
 		DependencyProperty.Register("IsInDesignMode", typeof(bool),
-			                            typeof(CardWF), new PropertyMetadata(null));
+			                            typeof(CardWF), new PropertyMetadata(true));
 		[XmlIgnore]
 		public bool IsInDesignMode
 		{
