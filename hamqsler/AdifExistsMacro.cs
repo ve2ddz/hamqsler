@@ -112,7 +112,18 @@ namespace hamqsler
 		public override void GetAdifFieldsForSorting(ref HashSet<string>fields, 
 												 ref HashSet<string> existFields)
 		{
-			throw new NotImplementedException();
+			if(SeparateCardsByField)
+			{
+				existFields.Add(AdifField.Text);
+			}
+			foreach(TextPart part in ExistsText)
+			{
+				part.GetAdifFieldsForSorting(ref fields, ref existFields);
+			}
+			foreach(TextPart part in DoesntExistText)
+			{
+				part.GetAdifFieldsForSorting(ref fields, ref existFields);
+			}
 		}
 		
 		/// <summary>
@@ -132,9 +143,22 @@ namespace hamqsler
 			{
 				return DesignText.GetText(card, qsos, screen);
 			}
+			else if(qsos != null && qsos.Count != 0)
+			{
+				string val = qsos[0].Qso.getValue(AdifField.GetText(
+					card, qsos, screen), null);
+				if(val != null && val != string.Empty)
+				{
+					return ExistsText.GetText(card, qsos, screen);
+				}
+				else
+				{
+					return DoesntExistText.GetText(card, qsos, screen);
+				}
+			}
 			else
 			{
-				throw new NotImplementedException();
+				return DoesntExistText.GetText(card, qsos, screen);
 			}
 		}
 		

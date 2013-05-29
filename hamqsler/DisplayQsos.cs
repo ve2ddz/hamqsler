@@ -627,14 +627,14 @@ namespace hamqsler
 		{
 			foreach(string field in fields)
 			{
-				if(q1.Qso.ContainsKey(field))
+				if(q1.Qso.ContainsKey(field.ToLower()))
 				{
-					if(!q2.Qso.ContainsKey(field))
+					if(!q2.Qso.ContainsKey(field.ToLower()))
 					{
 						return false;
 					}
 				}
-				else if(q2.Qso.ContainsKey(field))
+				else if(q2.Qso.ContainsKey(field.ToLower()))
 				{
 					return false;
 				}
