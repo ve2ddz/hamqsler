@@ -756,6 +756,7 @@ namespace hamqsler
 				Size size = TextRenderer.MeasureText(confText, font);
 				startX += size.Width;
 				float fontSize = box.FontSize;
+				y++; // compensate for bold
 				Font callFont = new Font(box.FontName, fontSize, FontStyle.Bold, GraphicsUnit.Point);
 				g.DrawString(Callsign, callFont, box.CallsignBrush, startX, y);
 				if(box.ShowManager && !Manager.Equals(string.Empty))
