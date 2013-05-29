@@ -1736,5 +1736,19 @@ namespace hamqsler
 			QslDnPTasks.ConvertCardFiles(qsldnpDir);
 			StatusText.Text = "QslDnP files have been copied and card files converted.";
 		}
+		
+		/// <summary>
+		/// Display dialog to select a printer and show its minumum margins
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void ShowPrinterMargins_Click(object sender, RoutedEventArgs e)
+		{
+			PrinterMarginsDialog marginsDialog = new PrinterMarginsDialog();
+			marginsDialog.WindowStartupLocation = 
+				WindowStartupLocation.CenterOwner;
+			marginsDialog.Owner = this;
+			marginsDialog.ShowDialog();
+		}
 	}
 }

@@ -246,6 +246,10 @@
 				<MenuItem Header="Import QslDesignAndPrint Files" x:Name="importQslDnP"
 						  ToolTip="Convert QslDnP card files, and copy image files to hamqsler folder"
 						  Click="ImportQslDnP_Click"/>
+				<Separator/>
+				<MenuItem Header="Show Printer Margins" x:Name="showPrinterMargins"
+						  ToolTip="Display minimum printer margins for a printer"
+						  Click="ShowPrinterMargins_Click"/>
 			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="HamQSLer Help..." InputGestureText="F1"

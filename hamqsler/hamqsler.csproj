@@ -154,6 +154,10 @@
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PrinterMarginsDialog.xaml.cs">
+      <DependentUpon>PrinterMarginsDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PrintImageableAreaErrorDialog.xaml.cs">
       <DependentUpon>PrintImageableAreaErrorDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -225,6 +229,7 @@
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
     <Page Include="ManagerMacroGroupBox.xaml" />
     <Page Include="Print4UpDialog.xaml" />
+    <Page Include="PrinterMarginsDialog.xaml" />
     <Page Include="PrintImageableAreaErrorDialog.xaml" />
     <Page Include="PrintPropertiesPanel.xaml" />
     <Page Include="QsoInputDialog.xaml" />
