@@ -405,6 +405,11 @@ namespace hamqsler
 			return card;
 		}
 		
+		/// <summary>
+		/// Handler for property changed event
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object describing
+		/// the change</param>
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
@@ -424,5 +429,33 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Gets a HashSet of strings containing the adifField names that Qsos should be sorted on
+		/// </summary>
+		/// <param name='fields'>
+		/// HashSet of strings containing adifField names retrieved from AdifMacros with 
+		/// SeparateCardsByField set.
+		/// </param>
+		/// <param name='existFields'>
+		/// HashSet of strings containing adifField names retrieved from AdifExistsMacros with
+		/// SeparateCardsByField set.
+		/// </param>
+		public void GetAdifFieldsForSorting(ref HashSet<string>fields, ref HashSet<string>existFields)
+		{
+			foreach(TextWFItem ti in TextItems)
+			{
+				foreach(TextPart part in ti.Text)
+				{
+					part.GetAdifFieldsForSorting(ref fields, ref existFields);
+				}
+			}
+			if(QsosBox != null)
+			{
+				foreach(TextPart part in QsosBox.ConfirmingText)
+				{
+					part.GetAdifFieldsForSorting(ref fields, ref existFields);
+				}
+			}
+		}
 	}
 }

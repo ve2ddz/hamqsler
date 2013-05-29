@@ -549,6 +549,7 @@ namespace hamqsler
 			int qsosCount = 0;
 			HashSet<string> fields = new HashSet<string>();
 			HashSet<string> existFields = new HashSet<string>();
+			card.GetAdifFieldsForSorting(ref fields, ref existFields);
 			foreach(QsoWithInclude qwi in this)
 			{
 				string manager = qwi.Manager;
@@ -562,7 +563,6 @@ namespace hamqsler
 					if(managerCall == thisManagerCall &&
 					   qsosCount < card.QsosBox.MaximumQsos &&
 					   card.QsosBox != null &&
-					   qsosCount < card.QsosBox.MaximumQsos && 
 					   AdifFieldsEqual(fields, qwi, thisQso) &&
 					   AdifFieldsExist(existFields, qwi, thisQso))
 					{
@@ -596,18 +596,18 @@ namespace hamqsler
 		{
 			foreach(string field in fields)
 			{
-				if(q1.Qso.ContainsKey(field))
+				if(q1.Qso.ContainsKey(field.ToLower()))
 				{
-					if(!q2.Qso.ContainsKey(field))
+					if(!q2.Qso.ContainsKey(field.ToLower()))
 					{
 						return false;
 					}
-					else if(q1.Qso.getValue(field) != q2.Qso.getValue(field))
+					else if(q1.Qso.getValue(field.ToLower()) != q2.Qso.getValue(field.ToLower()))
 					{
 						return false;
 					}
 				}
-				else if(q2.Qso.ContainsKey(field))
+				else if(q2.Qso.ContainsKey(field.ToLower()))
 				{
 					return false;
 				}
