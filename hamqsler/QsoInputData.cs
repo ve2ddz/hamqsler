@@ -276,7 +276,8 @@ namespace hamqsler
 			if(Frequency != string.Empty)
 			{
 				float freq;
-				float.TryParse(Frequency, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out freq);
+				string frequency = Frequency.Replace(",", ".");
+				float.TryParse(frequency, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out freq);
 				HamBand hb;
 				try
 				{
@@ -287,7 +288,7 @@ namespace hamqsler
 					return "Frequency is not within an enumerated ham band and therefore cannot " +
 						"be validated against this Band setting";
 				}
-				if(Band != hb.Band)
+				if(!Band.Equals(string.Empty) && Band != hb.Band)
 				{
 					return "Band does not contain the specified frequency";
 				}
@@ -306,7 +307,8 @@ namespace hamqsler
 				return null;
 			}
 			float freq;
-			float.TryParse(Frequency, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out freq);
+			string frequency = Frequency.Replace(",", ".");
+			float.TryParse(frequency, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out freq);
 			HamBand hb;
 			try
 			{

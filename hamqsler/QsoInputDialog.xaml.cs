@@ -64,10 +64,12 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void AddButtonCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute =  (QsoData["Callsign"] == null && QsoData["Manager"] == null &&
+			e.CanExecute =  QsoData["Callsign"] == null && QsoData["Manager"] == null &&
 			                 QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
-			                 QsoData.Mode != string.Empty &&
-			                 (QsoData.Band != string.Empty || QsoData.Frequency != string.Empty));
+			                 !QsoData.Mode.Equals(string.Empty) &&
+			                 QsoData["Band"] == null && QsoData["Frequency"] == null &&
+							 (!QsoData.Band.Equals(string.Empty) ||
+				              !QsoData.Frequency.Equals(string.Empty));
 		}
 		
 		/// <summary>
@@ -77,10 +79,12 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void OkButtonCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = (QsoData["Callsign"] == null && QsoData["Manager"] == null &&
-			                QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
-			                QsoData.Mode != string.Empty &&
-			                (QsoData.Band != string.Empty || QsoData.Frequency != string.Empty));
+			e.CanExecute =  QsoData["Callsign"] == null && QsoData["Manager"] == null &&
+			                 QsoData["StartDate"] == null && QsoData["StartTime"] == null &&
+			                 !QsoData.Mode.Equals(string.Empty) &&
+			                 QsoData["Band"] == null && QsoData["Frequency"] == null &&
+							 (!QsoData.Band.Equals(string.Empty) ||
+				              !QsoData.Frequency.Equals(string.Empty));
 		}
 		
 		/// <summary>
@@ -159,7 +163,7 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Preview text input to FrequencyBox and consume any non-valid characters.
-		/// Note that only 0-9 and '.' are allowed in frequencies.
+		/// Note that only 0-9, ',', and '.' are allowed in frequencies.
 		/// Frequencies are validated when keyboard focus leaves the TextBox.
 		/// </summary>
 		/// <param name="sender">not used</param>
@@ -167,7 +171,7 @@ namespace hamqsler
 		/// property that contains the character that was entered.</param>
 		void FrequencyBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
-			Regex freqReg = new Regex("[0-9\\.]");
+			Regex freqReg = new Regex("[0-9,\\.]");
 			if(!freqReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid
@@ -249,6 +253,7 @@ namespace hamqsler
 			qso.setField("time_on", QsoData.StartTime);
 			qso.setField("mode", QsoData.Mode);
 			qso.setField("rst_sent", QsoData.RST);
+			QsoData.Frequency = QsoData.Frequency.Replace(",", ".");
 			if(QsoData.Band != string.Empty)
 			{
 				qso.setField("band", QsoData.Band);
