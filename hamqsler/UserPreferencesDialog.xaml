@@ -74,17 +74,22 @@
 			</TreeViewItem>
 		</TreeView>
 		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="420">
-			<StackPanel Orientation="Horizontal">
+			<StackPanel Orientation="Vertical">
 				<StackPanel.Visibility>
 					<Binding ElementName="VersionCheck" Path="IsSelected"
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
-				<TextBlock Margin="5">Check for Program and Data File Updates:</TextBlock>
 				<CheckBox Name="programUpdatesCheckBox" Margin="5"
 				          ToolTip="Check this if you want program to check website
 				          for updates to program and associated data files"
 				          IsChecked="{Binding Path=CheckForNewVersions, Mode=TwoWay}"
-				/>
+						  Content="Check for Program and Data File Updates"/>
+				<CheckBox Name="developmentUpdatesCheckBox" Margin="20,5,5,5"
+							ToolTip="Check this if you want to be informed of new stable and development releases"
+							Content="Stable and Development Program Releases"
+							IsChecked="{Binding Path=CheckForDevelopmentVersions, Mode=TwoWay}"
+							IsEnabled="{Binding ElementName=programUpdatesCheckBox, Path=IsChecked}"/>
+							
 			</StackPanel>
 			<Grid>
 				<Grid.ColumnDefinitions>

@@ -95,34 +95,41 @@ namespace hamqsler
 			GetUserPreferences();
 			// check for new program version and data file updates
 			bool webError = false;
-			bool newHamQslerVersion = false;
+			bool newStableVersion = false;
+			bool newDevelopmentVersion = false;
 			ShowCheckingForUpdatesLabel();
 			// updates will contain program and file names with most recent versions available for download
 			// cannot proceed until UserPreferences have been created.
 			if(((App)Application.Current).UserPreferences.CheckForNewVersions)
 			{
 				((App)Application.Current).GetProgramVersions(out webError,
-					                  						  out newHamQslerVersion);
+					                  						  out newStableVersion,
+					                  						  out newDevelopmentVersion);
 				if(webError)		// error retrieving file containing version info
 				{
 					ShowWebErrorLabel();
 				}
 				else
 				{			
-					if(newHamQslerVersion)
+					if(newStableVersion)
 					{
-						ShowNewHamQslerVersionLabel();
+						ShowNewStableVersionLabel();
+					}
+					if(((App)Application.Current).UserPreferences.CheckForDevelopmentVersions &&
+					   newDevelopmentVersion)
+					{
+						ShowNewDevelopmentVersionLabel();
 					}
 				}
 				HideCheckingForUpdatesLabel();
 			}
 			
-			if(directoriesError || newHamQslerVersion)		// terminate class error
+			if(directoriesError || newStableVersion || newDevelopmentVersion)		// terminate class error
 			{
 				ShowTerminateButton();
 			}
 			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
-						directoriesError || newHamQslerVersion)
+						directoriesError || newStableVersion || newDevelopmentVersion)
 			{
 				ShowContinueButton();
 			}
@@ -228,11 +235,20 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Shows the newHamQslerVersionLabel.
+		/// Shows the newStableVersionLabel.
 		/// </summary>
-		public void ShowNewHamQslerVersionLabel()
+		public void ShowNewStableVersionLabel()
 		{
-			newHamQslerVersionLabel.Visibility = Visibility.Visible;
+			newStableVersionLabel.Visibility = Visibility.Visible;
+			UpdateUI();
+		}
+		
+		/// <summary>
+		/// Shows the newDevelopmentVersionLabel.
+		/// </summary>
+		public void ShowNewDevelopmentVersionLabel()
+		{
+			newDevelopmentVersionLabel.Visibility = Visibility.Visible;
 			UpdateUI();
 		}
 		

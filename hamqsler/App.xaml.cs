@@ -233,12 +233,16 @@ namespace hamqsler
 		/// <param name='webError'>
 		/// Boolean indicating if an error was encountered while attempting to retrieve the version info
 		/// </param>
-		/// <param name="newHamQSLerVersion">
-		/// Boolean indicating if a new version of HamQSLer is available for download</param>
-		internal void GetProgramVersions(out bool webError, out bool newHamQslerVersion)
+		/// <param name="newStableVersion">
+		/// Boolean indicating if a new stable version of HamQSLer is available for download</param>
+		/// <param name="newDevelopmentVersion">
+		/// Boolean indicating if a new development version of HamQSLer is available for download</param>
+		internal void GetProgramVersions(out bool webError, out bool newStableVersion,
+		                                out bool newDevelopmentVersion)
         {
 			webError = false;
-			newHamQslerVersion = false;
+			newStableVersion = false;
+			newDevelopmentVersion = false;
 			Dictionary<string, string> versions = new Dictionary<string, string>();
             // create request for website
             HttpWebRequest httpRequest = null;
@@ -319,9 +323,12 @@ namespace hamqsler
 				{
 					switch(key)
 					{
-					case "HamQsler":
-							newHamQslerVersion = CheckHamQslerVersion(versions[key]);
-						break;
+						case "stable":
+							newStableVersion = CheckHamQslerVersion(versions[key]);
+							break;
+						case "development":
+							newDevelopmentVersion = CheckHamQslerVersion(versions[key]);
+							break;
 					}
 				}
             }

@@ -56,6 +56,15 @@ namespace hamqsler
 			get {return (bool)GetValue(CheckForNewVersionsProperty);}
 			set {SetValue(CheckForNewVersionsProperty, value);}
 		}
+		// check for new development versions on startup?
+		private static readonly DependencyProperty CheckForDevelopmentVersionsProperty =
+			DependencyProperty.Register("CheckForDevelopmentVersions", typeof(bool),
+			                            typeof(UserPreferences), new PropertyMetadata(false));
+		public bool CheckForDevelopmentVersions
+		{
+			get {return (bool)GetValue(CheckForDevelopmentVersionsProperty);}
+			set {SetValue(CheckForDevelopmentVersionsProperty, value);}
+		}
 		// HTTP proxy server
 		private static readonly DependencyProperty HttpProxyServerProperty =
 			DependencyProperty.Register("HttpProxyServer", typeof(string),
@@ -968,6 +977,7 @@ namespace hamqsler
 		public UserPreferences(UserPreferences prefs)
 		{
 			CheckForNewVersions = prefs.CheckForNewVersions;
+			CheckForDevelopmentVersions = prefs.CheckForDevelopmentVersions;
 			HttpProxyServer = prefs.HttpProxyServer;
 			HttpProxyServerPortNumber = prefs.HttpProxyServerPortNumber;
 			DefaultAdifFilesFolder = prefs.DefaultAdifFilesFolder;
