@@ -540,24 +540,7 @@ namespace hamqsler
 						prefs.SerializeAsXml();
 					}
 				}
-/*				else if(fileExt.Equals("xqsl"))  // QslDnP card file
-				{
-					try
-					{
-						card = Card.DeserializeQslDnPCard(fileName);
-					}
-					catch(XmlException)
-					{
-	            		string msg = string.Format("The file '{0}' does not contain a valid QslDnP card description.",
-	            		                           fileName);
-	            		MessageBox.Show(msg, "File Content Error", MessageBoxButton.OK,
-	            		                MessageBoxImage.Error);
-						return;						
-					}
-					card.FileName = fileName.Substring(0, fileName.Length - 4) + "qslx";
-					card.IsDirty = true;
-				}*/
-				else			// neither file type - this really is a programming error
+				else			// bad file type - this really is a programming error
 				{
 					return;
 				}
@@ -1461,9 +1444,9 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="card">the card to save</param>
 		/// <param name="fileName">name of file to save the card in</param>
-		private void SaveCard(CardWF card, string fileName)
+/*		private void SaveCard(CardWF card, string fileName)
 		{
-/*			XmlSerializer xmlFormat = new XmlSerializer(typeof(CardWF),
+			XmlSerializer xmlFormat = new XmlSerializer(typeof(CardWF),
 			                                            new Type[]{typeof(BackgroundImage),
 			                                            	typeof(SecondaryImage),
 			                                            	typeof(CardImageBase),
@@ -1485,8 +1468,8 @@ namespace hamqsler
 				card.FileName = fileName;
 				card.IsDirty = false;
 				SetTitle(fileName, card.IsDirty);
-			}*/
-		}
+			}
+		}*/
 		
 		/// <summary>
 		/// Set tab text and window title

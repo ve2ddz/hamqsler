@@ -60,15 +60,6 @@ namespace hamqsler
 				FontFaceComboBox.Items.Add(family.Name);
 				QsosBoxFontFaceComboBox.Items.Add(family.Name);
 			}
-
-/*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
-			{
-				TextItemView ti = elt as TextItemView;
-				if(ti != null && cardCanvas.QslCard.QsosBox != null)
-				{
-					ti.SetDisplayText(((QsosBoxView)cardCanvas.QslCard.QsosBox.CardItemView).Qsos);
-				}
-			}*/
 		}
 		
 		/// <summary>
@@ -91,15 +82,6 @@ namespace hamqsler
 				FontFaceComboBox.Items.Add(family.Name);
 				QsosBoxFontFaceComboBox.Items.Add(family.Name);
 			}
-			
-/*			foreach(FrameworkElement elt in ((CardView)cardCanvas.Children[0]).CardItems)
-			{
-				TextItemView ti = elt as TextItemView;
-				if(ti != null && cardCanvas.QslCard.QsosBox != null)
-				{
-					ti.SetDisplayText(((QsosBoxView)cardCanvas.QslCard.QsosBox.CardItemView).Qsos);
-				}
-			}*/
 		}
 		
 		/// <summary>

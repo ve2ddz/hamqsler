@@ -131,10 +131,6 @@ namespace hamqsler
 						   App.Logger.DebugPrinting);
 			CardPrintProperties = new PrintProperties();
 			IsInDesignMode = isInDesignMode;
-/*			if(IsInDesignMode)
-			{
-				CardPrintProperties.PrintPropertiesChanged += OnPrintPropertiesChanged;
-			}*/
 			ItemSize = new System.Drawing.Size(width, height);
 			// background image
 			BackgroundImage.QslCard = this;
