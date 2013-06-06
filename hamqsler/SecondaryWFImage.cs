@@ -40,7 +40,6 @@ namespace hamqsler
 		/// <summary>
 		/// Calculate the DisplayRectangle for this SecondaryImage
 		/// </summary>
-
 		protected override void CalculateRectangle()
 		{
 			double x = this.X;

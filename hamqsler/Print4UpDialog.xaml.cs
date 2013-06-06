@@ -47,11 +47,19 @@ namespace hamqsler
     		set {SetValue(ResolutionProperty, value);}
     	}
     	
+    	/// <summary>
+    	/// Constructor
+    	/// </summary>
         public Print4UpDialog()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handler for OK button click event
+        /// </summary>
+        /// <param name="sender">not used</param>
+        /// <param name="e">not used</param>
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;

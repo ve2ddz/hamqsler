@@ -37,11 +37,19 @@ namespace hamqsler
 			set {SetValue(DoNotShowForThisPrinterProperty, value);}
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public PrinterImageableAreaErrorDialog()
 		{
 			InitializeComponent();
 		}
 		
+		/// <summary>
+		/// Handler for OK button click event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		void OkButton_Click(object sender, RoutedEventArgs e)
 		{
 			DialogResult = true;

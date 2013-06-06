@@ -1440,38 +1440,6 @@ namespace hamqsler
 		}
 
 		/// <summary>
-		/// Save card as XML
-		/// </summary>
-		/// <param name="card">the card to save</param>
-		/// <param name="fileName">name of file to save the card in</param>
-/*		private void SaveCard(CardWF card, string fileName)
-		{
-			XmlSerializer xmlFormat = new XmlSerializer(typeof(CardWF),
-			                                            new Type[]{typeof(BackgroundImage),
-			                                            	typeof(SecondaryImage),
-			                                            	typeof(CardImageBase),
-			                                            	typeof(TextItem),
-			                                            	typeof(QsosBox),
-			                                            	typeof(TextParts),
-			                                            	typeof(StaticText),
-			                                            	typeof(AdifMacro),
-			                                            	typeof(AdifExistsMacro),
-			                                            	typeof(CountMacro),
-			                                            	typeof(ManagerMacro),
-			                                            	typeof(ManagerExistsMacro),
-			                                            	typeof(SolidColorBrush),
-			                                            	typeof(MatrixTransform)});
-			using (Stream fStream = new FileStream(fileName, FileMode.Create,
-			                                       FileAccess.Write, FileShare.Read))
-			{
-				xmlFormat.Serialize(fStream, card);
-				card.FileName = fileName;
-				card.IsDirty = false;
-				SetTitle(fileName, card.IsDirty);
-			}
-		}*/
-		
-		/// <summary>
 		/// Set tab text and window title
 		/// </summary>
 		/// <param name="fileName">name of the card file</param>

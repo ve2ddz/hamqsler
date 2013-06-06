@@ -1178,7 +1178,7 @@ namespace hamqsler
                     + userPreferencesFilename + "\r\n"
                     + "Please do the following when you have finished using HamQSLer:\r\n"
                     + "1. Make a copy of the log file.\r\n"
-                    + "2. Post a bug report on the HamQSLer website forum including the content of this message/r/n"
+                    + "2. Post a bug report, including the content of this message./r/n"
                     + "Preferences will be initialized. You may continue to use the program.",
                     e);
                 App.Logger.Log(ex);
@@ -1314,8 +1314,7 @@ namespace hamqsler
                     + "\r\nUnable to save preferences file."
                     + "\r\n\r\nPlease do the following:\r\n"
                     + "1. Terminate this program.\r\n"
-                    + "2. Post a bug report on the HamQSLer website and include the\r\n" 
-                    + "contents of the log file.", e);
+                    + "2. Post a bug report and include the contents of the log file.", e);
                 App.Logger.Log(ex);
             }
             catch (ArgumentNullException e)
@@ -1326,8 +1325,7 @@ namespace hamqsler
                     + "\r\nUnable to save preferences file."
                     + "\r\n\r\nPlease do the following:\r\n"
                     + "1. Terminate this program.\r\n"
-                    + "2. Post a bug report on the HamQSLer web site and include a copy" +
-                    "\r\nof the log file.", e);
+                    + "2. Post a bug report and include the contents of the log file.", e);
                 App.Logger.Log(ex);
             }
             catch (ArgumentException e)
@@ -1339,8 +1337,7 @@ namespace hamqsler
                     + "\r\nUnable to save preferences file."
                     + "\r\n\r\nPlease do the following:\r\n"
                     + "1. Terminate this program.\r\n"
-                    + "2. Post a bug report on the HamQSLer web site and include a copy" +
-                    "\r\nof the log file.", e);
+                    + "2. Post a bug report and include the contents of the log file.", e);
                 App.Logger.Log(ex);
             }
             catch (NotSupportedException e)
@@ -1352,8 +1349,7 @@ namespace hamqsler
                     + "\r\nUnable to save preferences file."
                     + "\r\n\r\nPlease do the following:\r\n"
                     + "1. Terminate this program.\r\n"
-                    + "2. Post a bug report on the HamQSLer web site and include a copy" +
-                    "\r\nof the log file."
+                    + "2. Post a bug report and include the contents of the log file."
                     + "3. Restart HamQSLer and proceed without modifying preferences.",
                     e);
                 App.Logger.Log(ex);
@@ -1393,7 +1389,7 @@ namespace hamqsler
             {
                 // wrap in another exception and log it
                 Exception ex = new Exception("Write access to the Preferences File is not allowed by the operating system.\r\n"
-                    + "Check to see if the hamqsler directory or .hamqsler is set to read-only.",
+                    + "Check to see if the hamqsler directory or .hamqsler file is set to read-only.",
                     e);
                 App.Logger.Log(ex);
             }
