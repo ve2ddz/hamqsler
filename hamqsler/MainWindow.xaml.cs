@@ -700,9 +700,38 @@ namespace hamqsler
 				cView.PaintCard(graphics, dispQsos.Count > 0 ? dispQsos[0] : null);
 				graphics.Dispose();
 				
-				bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+				System.Drawing.Imaging.ImageCodecInfo jpgEncoder = 
+					GetEncoder(System.Drawing.Imaging.ImageFormat.Jpeg);
+				System.Drawing.Imaging.Encoder qualityEncoder = System.Drawing.Imaging.Encoder.Quality;
+				System.Drawing.Imaging.EncoderParameter encoderParameter =
+					new System.Drawing.Imaging.EncoderParameter(qualityEncoder, quality);
+				System.Drawing.Imaging.EncoderParameters encoderParams =
+					new System.Drawing.Imaging.EncoderParameters(1);
+				encoderParams.Param[0] = encoderParameter;
+				bitmap.Save(fileName, jpgEncoder, encoderParams);
 				bitmap.Dispose();
 			}
+		}
+
+		/// <summary>
+		/// Helper method to get the image encoder for the specified format
+		/// </summary>
+		/// <param name="format">ImageFormat for the encoder</param>
+		/// <returns>Encoder for the specified image format</returns>
+		private System.Drawing.Imaging.ImageCodecInfo GetEncoder(System.Drawing.Imaging.ImageFormat format)
+		{
+		
+		    System.Drawing.Imaging.ImageCodecInfo[] codecs = 
+		    	System.Drawing.Imaging.ImageCodecInfo.GetImageDecoders();
+		
+		    foreach (System.Drawing.Imaging.ImageCodecInfo codec in codecs)
+		    {
+		        if (codec.FormatID == format.Guid)
+		        {
+		            return codec;
+		        }
+		    }
+		    return null;
 		}
 
 		/// <summary>
