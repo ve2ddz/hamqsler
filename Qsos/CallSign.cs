@@ -2,9 +2,10 @@
 //  CallSign.cs
 //  
 //  Author:
-//       Jim <jim@va3hj.ca>
+//       Jim <jimorcheson@gmail.com>
 // 
 //  Copyright (c) 2011 VA3HJ Software
+//  Copyright (c) 2013 Jim Orcheson
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,14 +18,11 @@
 //  GNU General Public License for more details.
 // 
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.using System;
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml;
 
 namespace Qsos
 {

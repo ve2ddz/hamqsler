@@ -20,7 +20,6 @@
 using System;
 using System.Drawing.Printing;
 using System.Windows;
-using System.Xml.Serialization;
 
 namespace hamqsler
 {

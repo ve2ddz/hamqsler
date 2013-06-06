@@ -17,31 +17,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-using Microsoft.Win32;
-using Qsos;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
 using System.IO;
-using System.IO.Packaging;
-using System.Printing;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Windows.Xps;
-using System.Windows.Xps.Packaging;
-using System.Windows.Xps.Serialization;
-using System.Xml;
-using System.Xml.Serialization;
+
+using Microsoft.Win32;
 
 namespace hamqsler
 {

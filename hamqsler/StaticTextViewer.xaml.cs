@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012 Jim Orcheson
+ *  Copyright (c) 2012, 2013 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,14 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace hamqsler
 {
