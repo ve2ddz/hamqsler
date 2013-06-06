@@ -39,44 +39,63 @@
 								HorizontalAlignment="Right"/>
 					<ComboBox x:Name="printerComboBox" Grid.Column="1" 
 							  Grid.Row="0" Margin="3,5,3,3" MaxWidth="180"
-							  SelectedItem="{Binding Path=PrinterName, Mode=TwoWay}"/>
+							  SelectedItem="{Binding Path=PrinterName, Mode=TwoWay}"
+							  ToolTip="Select printer to use for printing cards"/>
 					<TextBlock Grid.Column="0" Grid.Row="1"
 								Text="Paper Size:" Margin="3,5,3,3"
 								HorizontalAlignment="Right"/>
 					<ComboBox x:Name="paperSizeComboBox" Grid.Column="1"
 								Grid.Row="1" Margin="3,5,3,3"
-								SelectionChanged="PaperSizeComboBox_SelectionChanged"/>
+								SelectionChanged="PaperSizeComboBox_SelectionChanged"
+								ToolTip="Select paper size for card stock"/>
 					<TextBlock Grid.Column="0" Grid.Row="2"
 								Text="Quality:" Margin="3,5,3,3"
 								HorizontalAlignment="Right"/>
 					<ComboBox x:Name="qualityComboBox" Grid.Column="1"
 								Grid.Row="2" Margin="3,5,3,3"
-								SelectionChanged="QualityComboBox_SelectionChanged"/>
+								SelectionChanged="QualityComboBox_SelectionChanged"
+								ToolTip="Select print quality for the cards"/>
 					<TextBlock Grid.Column="0" Grid.Row="3"
 								Text="Paper Source:" Margin="3,5,3,3"
 								HorizontalAlignment="Right"/>
 					<ComboBox x:Name="paperSourceComboBox" Grid.Column="1"
 								Grid.Row="3" Margin="3,5,3,3"
-								SelectionChanged="PaperSourceComboBox_SelectionChanged"/>
+								SelectionChanged="PaperSourceComboBox_SelectionChanged"
+								ToolTip="Select paper tray containing the card stock"/>
 				</Grid>
 			</GroupBox>
 			<GroupBox Header="Print Properties" x:Name="printPropertiesGroupBox">
 				<StackPanel>
 					<CheckBox x:Name="insideMarginsButton" Content="Print Inside Printer Margins"
 							Margin="5" 
-					        IsChecked="{Binding Path=InsideMargins, Mode=TwoWay}"/>
+					        IsChecked="{Binding Path=InsideMargins, Mode=TwoWay}"
+							ToolTip="Print cards inside page margins"/>
 					<CheckBox x:Name="printCardOutlinesButton"
 							Content="Print Card Outlines" Margin="5"
-							IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"/>
+							IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"
+							ToolTip="Print outline around each card for easier cutting"/>
 					<CheckBox x:Name="fillLastPageButton"
 							Content="Fill Last Page With Blank Cards"
 							Margin="5" 
-							 IsChecked="{Binding Path=FillLastPage, Mode=TwoWay}"/>
+							IsChecked="{Binding Path=FillLastPage, Mode=TwoWay}">
+						<CheckBox.ToolTip>
+							<TextBlock>
+								Fill last page with blank cards if the last page<LineBreak/>
+								would not otherwise be filled with cards
+							</TextBlock>
+						</CheckBox.ToolTip>
+					</CheckBox>
 					<CheckBox x:Name="setCardMarginsButton" Height="32"
 							Margin="5"
 							IsChecked="{Binding Path=SetCardMargins, Mode=TwoWay}">
 						<TextBlock Text="Set Card Margins to Printer Margins"
 							TextWrapping="Wrap"/>
+						<CheckBox.ToolTip>
+							<TextBlock>
+								Check to include a margin inside each card equal to the<LineBreak/>
+								largest page margin
+							</TextBlock>
+						</CheckBox.ToolTip>
 					</CheckBox>
 				</StackPanel>
 			</GroupBox>
@@ -85,37 +104,43 @@
 			<WrapPanel>
 				<RadioButton x:Name="portraitTopLeftButton" Margin="15,5,5,5"
 				             GroupName="alignmentGroup" Height="100" Width="115"
-							 Checked="PortraitTopLeftButton_Checked">
+							 Checked="PortraitTopLeftButton_Checked"
+							 ToolTip="Portrait Top Left">
 					<Canvas Width="100" Height="100"
 					        x:Name="portraitTopLeftButtonCanvas"/>
 				</RadioButton>
 				<RadioButton x:Name="portraitTopCenterButton" Margin="15,5,5,5"
 				             GroupName="alignmentGroup" Height="100" Width="115"
-							 Checked="PortraitTopCenterButton_Checked">
+							 Checked="PortraitTopCenterButton_Checked"
+							 ToolTip="Portrait Top Center">
 					<Canvas Width="100" Height="100"
 							x:Name="portraitTopCenterButtonCanvas"/>
 				</RadioButton>
 				<RadioButton x:Name="portraitCenterButton" Margin="15,5,5,5"
 							 GroupName="alignmentGroup" Height="100" Width="115"
-							 Checked="PortraitCenterButton_Checked">
+							 Checked="PortraitCenterButton_Checked"
+							 ToolTip="Portrait Center">
 					<Canvas Width="100" Height="100"
 							x:Name="portraitCenterButtonCanvas"/>
 				</RadioButton>
 				<RadioButton x:Name="landscapeTopLeftButton" Margin="15,5,5,5"
 							 GroupName="alignmentGroup" Height="100" Width="115"
-							 Checked="LandscapeTopLeftButton_Checked">
+							 Checked="LandscapeTopLeftButton_Checked"
+							 ToolTip="Landscape Top Left">
 					<Canvas Width="100" Height="100"
 							x:Name="landscapeTopLeftButtonCanvas"/>				
 				</RadioButton>
 				<RadioButton x:Name="landscapeTopCenterButton" Margin="15,5,5,5"
 							 GroupName="alignmentGroup" Height="100" Width="115"
-							 Checked="LandscapeTopCenterButton_Checked">
+							 Checked="LandscapeTopCenterButton_Checked"
+							 ToolTip="Landscape Top Center">
 					<Canvas Width="100" Height="100"
 							x:Name="landscapeTopCenterButtonCanvas"/>				
 				</RadioButton>
 				<RadioButton x:Name="landscapeCenterButton" Margin="15,5,5,5"
 							 GroupName="alignmentGroup" Height="100" Width="115"
-							 Checked="LandscapeCenterButton_Checked">
+							 Checked="LandscapeCenterButton_Checked"
+							 ToolTip="Landscape Center">
 					<Canvas Width="100" Height="100"
 							x:Name="landscapeCenterButtonCanvas"/>				
 				</RadioButton>

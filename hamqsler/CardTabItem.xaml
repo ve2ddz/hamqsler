@@ -112,7 +112,7 @@
 									<CheckBox Name="BoldCheckBox" Margin="5" Grid.Row="0"
 											Grid.Column="1" IsChecked="{Binding IsBold,
 											Mode=TwoWay}"
-											ToolTip="Display the text using an Italic style"/>
+											ToolTip="Display the text using an Bold style"/>
 									<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
 											VerticalAlignment="Center" HorizontalAlignment="Right"
 											>Italic:</TextBlock>
@@ -125,7 +125,7 @@
 											>Font Size:</TextBlock>
 									<ComboBox Grid.Row="2" Grid.Column="1" Width="50" Name="FontSizeComboBox"
 											HorizontalAlignment="Left" Margin="5" IsEditable="True"
-											ToolTip="Size of the font in device independent units" 
+											ToolTip="Size of the font in points" 
 									        PreviewTextInput="FontSizeComboBox_PreviewTextInput">
 										<ComboBox.Text>
 											<Binding Path="FontSize" Mode="TwoWay" 
@@ -182,7 +182,8 @@
 										ToolTip="Text that is displayed"/>
 								<Button Margin="3" Content="Macros" Width="75" 
 								        HorizontalAlignment="Center"
-										Click="OnMacrosButtonClicked"/>
+										Click="OnMacrosButtonClicked"
+										ToolTip="Click to edit macros for this item"/>
 							</StackPanel>
 						</GroupBox>
 						<GroupBox Header="Check Boxes">
@@ -402,7 +403,7 @@ this card">
 								<GroupBox Header="Font" Grid.Row="4" Grid.ColumnSpan="2">
 									<ComboBox Name="QsosBoxFontFaceComboBox"  Margin="3"
 						  					Text="{Binding FontName, Mode=TwoWay}"
-											ToolTip="Select the font to display QSOs Box text in"/>
+											ToolTip="Size of the text in QSOs Box in points"/>
 								</GroupBox>
 							</Grid>
 						</GroupBox>

@@ -18,11 +18,19 @@
                        Grid.Column="0" Grid.Row="0" Margin="5"/>
             <CheckBox Name="QsosCheckbox" Grid.Column="1" Grid.Row="0"
                       VerticalAlignment="Center" Margin="5"
-        			  IsChecked="{Binding Path=ShowQsos, Mode=TwoWay}"/>
+        			  IsChecked="{Binding Path=ShowQsos, Mode=TwoWay}"
+        			  ToolTip="Include QSOs in the image"/>
             <TextBlock Text="Resolution (DPI):" HorizontalAlignment="Right"  VerticalAlignment="Center"
                        Grid.Column="0" Grid.Row="1" Margin="5"/>
             <ComboBox Name="ResolutionCombo" IsEditable="True" 
                       Grid.Column="1" Grid.Row="1" Margin="5,5,25,5">
+            	<ComboBox.ToolTip>
+            		<TextBlock>
+            			Resolution of the image.<LineBreak/>
+						Use 96 for display on web page,<LineBreak/>
+						300 or 600 for printing.
+            		</TextBlock>
+            	</ComboBox.ToolTip>
             	<ComboBox.Text>
             		<Binding Path="Resolution" Mode="TwoWay"/>
             	</ComboBox.Text>
@@ -34,6 +42,13 @@
                        Grid.Column="0" Grid.Row="2" Margin="5"/>
             <ComboBox Name="QualityCombo" IsEditable="True" 
                       Grid.Column="1" Grid.Row="2" Margin="5,5,25,5">
+				<ComboBox.ToolTip>
+					<TextBlock>
+						Compression factor for the image.<LineBreak/>
+						85 is the best compromise between<LineBreak/>
+						image quality and file size.
+					</TextBlock>
+				</ComboBox.ToolTip>
 				<ComboBox.Text>
 					<Binding Path="Quality" Mode="TwoWay"/>
 				</ComboBox.Text>

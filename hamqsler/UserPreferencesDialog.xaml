@@ -131,9 +131,14 @@
 					>Reload ADIF Files on Startup:</TextBlock>
 				<CheckBox Name="reloadAdifCheckButton" Margin="5"
 				          Grid.Row="0" Grid.Column="1"
-				          ToolTip="Check this if you want program to reload your ADIF
-				          files when you restart HamQSLer"
-				          IsChecked="{Binding Path=AdifReloadOnStartup, Mode=TwoWay}"/>
+				          IsChecked="{Binding Path=AdifReloadOnStartup, Mode=TwoWay}">
+					<CheckBox.ToolTip>
+						<TextBlock>
+							Check this if you want program to reload your ADIF<LineBreak/>
+					          files when you restart HamQSLer
+						</TextBlock>
+					</CheckBox.ToolTip>
+				</CheckBox>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
 					>Default ADIF Files Folder:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
@@ -160,9 +165,14 @@
 					>Reload Card Files on Startup:</TextBlock>
 				<CheckBox Name="reloadCardFilesCheckButton" Margin="5"
 				          Grid.Row="0" Grid.Column="1"
-				          ToolTip="Check this if you want program to reload your cards
-				          when you restart HamQSLer"
-				          IsChecked="{Binding Path=CardsReloadOnStartup, Mode=TwoWay}"/>
+				          IsChecked="{Binding Path=CardsReloadOnStartup, Mode=TwoWay}">
+					<CheckBox.ToolTip>
+						<TextBlock>
+							Check this if you want program to reload your cards<LineBreak/>
+				          when you restart HamQSLer
+						</TextBlock>
+					</CheckBox.ToolTip>
+				</CheckBox>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
 					>Default Card Files Folder:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
@@ -208,7 +218,8 @@
 						>Default Text FontFace:</TextBlock>
 				<ComboBox x:Name="DefaultTextItemsFontFaceComboBox"
 						  Text="{Binding DefaultTextItemsFontFace, Mode=TwoWay}" 
-				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"/>
+				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"
+						  ToolTip="Select the default font face for text items"/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">Sample:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" FontSize="36"
@@ -230,7 +241,8 @@
 						         CharacterCasing="Upper" FontSize="36"
 						         VerticalAlignment="Stretch"
 								FontFamily="{Binding DefaultTextItemsFontFace}"
-								FontWeight="Bold" PreviewTextInput="CallsignBox_PreviewTextInput" >
+								FontWeight="Bold" PreviewTextInput="CallsignBox_PreviewTextInput"
+								ToolTip="Enter default callsign">
 							<TextBox.Text>
 								<Binding Path="Text"
 										UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
@@ -241,7 +253,8 @@
 							</TextBox.Text>
 						</TextBox>
 						<Button x:Name="CallsignMacroButton" Margin="3" HorizontalAlignment="Center"
-								Width="75" Content="Macros" Click="CallsignMacroButton_Click"/>
+								Width="75" Content="Macros" Click="CallsignMacroButton_Click"
+								ToolTip="Click to edit default callsign macros"/>
 					</StackPanel>						
 				</GroupBox>
 			</Grid>
@@ -260,9 +273,10 @@
 								FontFamily="{Binding DefaultTextItemsFontFace}"
 								Text="{Binding Path=Text, Mode=TwoWay}"
 								AcceptsReturn="True" VerticalAlignment="Stretch"
-								ToolTip="Your name and address"/>
+								ToolTip="Enter your name and address"/>
 						<Button x:Name="NameQTHMacroButton" Margin="3" HorizontalAlignment="Center"
-								Width="75" Content="Macros" Click="NameQTHMacroButton_Click"/>
+								Width="75" Content="Macros" Click="NameQTHMacroButton_Click"
+								ToolTip="Click to edit default name and QTH macros"/>
 					</StackPanel>
 				</GroupBox>
 			</Grid>
@@ -282,7 +296,8 @@
 						ToolTip="Salutation to be printed on the card (e.g. 'Thanks for the QSO. 73, ')"
 						Text="{Binding Path=Text, Mode=TwoWay}"/>
 						<Button x:Name="SalutationMacroButton" Margin="3" HorizontalAlignment="Center"
-								Width="75" Content="Macros" Click="SalutationMacroButton_Click"/>					
+								Width="75" Content="Macros" Click="SalutationMacroButton_Click"
+								ToolTip="Click to edit default salutation macros"/>
 					</StackPanel>
 				</GroupBox>
 			</Grid>
@@ -303,7 +318,8 @@
 						>Default QSOs Box FontFace:</TextBlock>
 				<ComboBox x:Name="DefaultQsosBoxFontFaceComboBox"
 						  Text="{Binding DefaultQsosBoxFontFace, Mode=TwoWay}" 
-				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"/>
+				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"
+						  ToolTip="Select default font face for QSOs Box text"/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">Sample:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" FontSize="36"
@@ -328,7 +344,8 @@
 								/>
 						<Button x:Name="ConfirmingTextMacroButton" Margin="3" 
 						        HorizontalAlignment="Center"
-								Width="75" Content="Macros" Click="ConfirmingTextMacroButton_Click"/>
+								Width="75" Content="Macros" Click="ConfirmingTextMacroButton_Click"
+								ToolTip="Click to edit Confirming Text macros"/>
 					</StackPanel>
 				</GroupBox>
 			</Grid>
