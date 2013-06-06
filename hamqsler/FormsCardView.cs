@@ -402,9 +402,8 @@ namespace hamqsler
 			{
 				style |= FontStyle.Italic;
 			}
-			float fontSize = tItem.FontSize * 100F / 72F;
-			Font font = new Font(new FontFamily(tItem.TextFontFace), fontSize,
-				         style, GraphicsUnit.Pixel);
+			Font font = new Font(new FontFamily(tItem.TextFontFace), tItem.FontSize,
+				         style, GraphicsUnit.Point);
 			int startTextX = CardLocation.X + tItem.X + tItem.Height + 4;
 			g.DrawString(tItem.Text.GetText(QslCard, qsos, QslCard.IsInDesignMode),
 			             font, tItem.TextBrush, startTextX, CardLocation.Y + tItem.Y);
