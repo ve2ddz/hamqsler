@@ -88,7 +88,7 @@ namespace hamqsler
 		public static RoutedCommand SelectItemCommand = new RoutedCommand();
 		public static RoutedCommand NoneCommand = new RoutedCommand();
 		
-		public static RoutedCommand HelpCommand = new RoutedCommand();
+		public static RoutedCommand UserManualCommand = new RoutedCommand();
 		public static RoutedCommand AboutCommand = new RoutedCommand();
 		public static RoutedCommand WebsiteCommand = new RoutedCommand();
 		public static RoutedCommand ViewLogFileCommand = new RoutedCommand();
@@ -1631,19 +1631,42 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void HelpCommand_Executed(object sender, RoutedEventArgs e)
+		private void UserManualCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			string path = null;
 			try
 			{
 				string baseDir = System.IO.Path.GetDirectoryName(this.GetType().Assembly.CodeBase);
-				path = System.IO.Path.Combine(baseDir, "help/index.html");
-				System.Diagnostics.Process.Start(path);
+				MenuItem mItem = e.OriginalSource as MenuItem;
+				if(mItem != null)
+				{
+					string userManual = null;
+					if(mItem.Tag.Equals("A4"))
+					{
+						userManual = "pdf/hamqsler-A4.pdf";
+					}
+					else if(mItem.Tag.Equals("Letter"))
+					{
+						userManual = "pdf/hamqsler-letter.pdf";
+					}
+					else
+					{
+						Exception ex = 
+							new Exception("Programming Error: Invalid Menu Item");
+						ex.Data.Add("Menu Item", mItem.Header);
+						throw ex;
+					}
+					path = System.IO.Path.Combine(baseDir, userManual);
+					System.Diagnostics.Process.Start(path);
+				}
 			}
 			catch (Exception ex)
 			{
 				// wrap the exception inside another with an appropriate message
-				Exception exc = new Exception("Error encountered while trying to display Help File", ex);
+				Exception exc = new Exception("Error encountered while trying to display User Manual" +
+				                              Environment.NewLine +
+				                              "Please report this error on the bug list " +
+				                              " and include the contents of the log file", ex);
 				exc.Data.Add("Path:", path);
 				// now throw the exception inside a try/catch so we can log with the message
 				try

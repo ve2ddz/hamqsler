@@ -105,8 +105,8 @@
 		<CommandBinding Command="{x:Static local:MainWindow.NoneCommand}"
 						CanExecute="NoneCommand_CanExecute"/>
 	
-		<CommandBinding Command="{x:Static local:MainWindow.HelpCommand}"
-						Executed="HelpCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.UserManualCommand}"
+						Executed="UserManualCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.AboutCommand}"
 						Executed="AboutCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.WebsiteCommand}"
@@ -138,8 +138,6 @@
 		                Command="{x:Static local:MainWindow.DeleteItemCommand}"/>
 			<KeyBinding Key="Delete" Modifiers="Control"
 		                Command="{x:Static local:MainWindow.ClearBackgroundCommand}"/>
-			<KeyBinding Key="F1"
-		                Command="{x:Static local:MainWindow.HelpCommand}"/>
 		</Window.InputBindings>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
@@ -252,9 +250,12 @@
 						  Click="ShowPrinterMargins_Click"/>
 			</MenuItem>
 			<MenuItem Header="Help">
-				<MenuItem Header="HamQSLer Help..." InputGestureText="F1"
-						  Command="{x:Static local:MainWindow.HelpCommand}"
-						  ToolTip="Display HamQSLer's help files"/>
+				<MenuItem Header="User Manual - A4"
+						  Command="{x:Static local:MainWindow.UserManualCommand}"
+						  ToolTip="Open User Manual (A4 Size)" Tag="A4"/>
+				<MenuItem Header="User Manual - US Letter"
+						  Command="{x:Static local:MainWindow.UserManualCommand}"
+						  ToolTip="Open User Manual (US Letter Size)" Tag="Letter"/>
 				<MenuItem Header="About..."
 						  Command="{x:Static local:MainWindow.AboutCommand}"
 						  ToolTip="Show the About dialog"/>
