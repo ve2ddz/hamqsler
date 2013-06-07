@@ -44,7 +44,7 @@ namespace hamqsler
 		
 		private static readonly DependencyProperty IsInDesignModeProperty =		
 		DependencyProperty.Register("IsInDesignMode", typeof(bool),
-			                            typeof(CardWF), new PropertyMetadata(true));
+			                            typeof(CardWF), new PropertyMetadata(null));
 		[XmlIgnore]
 		public bool IsInDesignMode
 		{
@@ -332,6 +332,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void OnPrintPropertiesChanged(object sender, EventArgs e)
 		{
+			this.IsDirty = true;
 			RaiseDispPropertyChangedEvent();
 		}
 
@@ -422,6 +423,10 @@ namespace hamqsler
 						CardPrintProperties.PrintPropertiesChanged -= OnPrintPropertiesChanged;
 					}
 				}
+			}
+			else if(e.Property == IsDirtyProperty)
+			{
+//				RaiseDispPropertyChangedEvent();
 			}
 		}
 		

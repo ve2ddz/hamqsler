@@ -572,6 +572,7 @@ namespace hamqsler
 				   e.Property == ShowManagerProperty ||
 		           e.Property == ShowFrequencyProperty ||
 		           e.Property == DateFormatProperty ||
+				   e.Property == MaximumQsosProperty ||
 		           e.Property == LineTextColorProperty ||
 		           e.Property == CallsignColorProperty ||
 		           e.Property == ManagerColorProperty ||
@@ -580,6 +581,7 @@ namespace hamqsler
 				{
 					if(QslCard != null)
 					{
+						QslCard.IsDirty = true;
 						QslCard.RaiseDispPropertyChangedEvent();
 					}
 				}

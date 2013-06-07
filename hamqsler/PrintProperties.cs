@@ -219,8 +219,15 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property == PrintCardOutlinesProperty ||
-			   e.Property == SetCardMarginsProperty)
+			if(e.Property == PrinterNameProperty ||
+				e.Property == PrinterPaperSizeProperty ||
+				e.Property == PrinterResolutionProperty ||
+				e.Property == PaperSourceProperty ||
+				e.Property == InsideMarginsProperty ||
+				e.Property == PrintCardOutlinesProperty ||
+				e.Property == FillLastPageProperty ||
+			    e.Property == SetCardMarginsProperty ||
+			    e.Property == LayoutProperty)
 			{
 				if(PrintPropertiesChanged != null)
 				{

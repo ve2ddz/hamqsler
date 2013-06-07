@@ -52,6 +52,7 @@ namespace hamqsler
 			cardProperties.printPropsPanel.cardsLayoutGroupBox.Visibility = 
 				Visibility.Collapsed;
 			cardProperties.QslCard = cardPanel.QslCard;
+			cardPanel.QslCard.DispPropertyChanged += OnQslCardDispPropertyChanged;
 			// load list of font names that are available to Windows Forms
 			System.Drawing.Text.InstalledFontCollection fontCol =
 				new System.Drawing.Text.InstalledFontCollection();
@@ -74,6 +75,7 @@ namespace hamqsler
 			cardProperties.printPropsPanel.cardsLayoutGroupBox.Visibility = 
 				Visibility.Collapsed;
 			cardProperties.QslCard = cardPanel.QslCard;
+			cardPanel.QslCard.DispPropertyChanged += OnQslCardDispPropertyChanged;
 			// load list of font names that are available to Windows Forms
 			System.Drawing.Text.InstalledFontCollection fontCol =
 				new System.Drawing.Text.InstalledFontCollection();
@@ -407,6 +409,13 @@ namespace hamqsler
 			{
 				HeaderText.Text += "New Card";
 			}
+		}
+		
+		private void OnQslCardDispPropertyChanged(object sender, EventArgs e)
+		{
+			SetTabLabel();
+			((MainWindow)App.Current.MainWindow).SetTitle(cardPanel.QslCard.FileName, 
+			                                              cardPanel.QslCard.IsDirty);
 		}
 	}
 }

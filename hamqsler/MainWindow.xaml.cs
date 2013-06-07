@@ -1475,6 +1475,7 @@ namespace hamqsler
 			if(ti != null)
 			{
 				SetTitle(ti.cardPanel.QslCard.FileName, ti.cardPanel.QslCard.IsDirty);
+				ti.SetTabLabel();
 			}
 			else
 			{
