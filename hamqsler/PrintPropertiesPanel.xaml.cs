@@ -247,10 +247,27 @@ namespace hamqsler
 			}
 			else if(e.Property == PrinterPaperSizeProperty)
 			{
-				paperSizeComboBox.SelectedItem = PrinterPaperSize.PaperName;
+				PaperSize paperSize = e.NewValue as PaperSize;
+				if(((App)App.Current).UserPreferences.DebugPrinting)
+				{
+					App.Logger.Log(string.Format("PrintPropertiesPanel.OnPropertiesChanged:" +
+					                              Environment.NewLine +
+					                              "\tSetting PrinterPaperSize to {0}" +
+					                              Environment.NewLine, 
+					                              paperSize.PaperName));
+				}
+				paperSizeComboBox.SelectedItem = paperSize.PaperName;
 				if(paperSizeComboBox.SelectedIndex == -1)
 				{
 					paperSizeComboBox.SelectedItem = settings.DefaultPageSettings.PaperSize.PaperName;
+				}
+				if(((App)App.Current).UserPreferences.DebugPrinting)
+				{
+					App.Logger.Log(string.Format("PrintPropertiesPanel.OnPropertiesChanged:" +
+					                              Environment.NewLine +
+					                              "\tPrinterPaperSize was set to {0}" +
+					                              Environment.NewLine,
+					                             paperSizeComboBox.SelectedItem));
 				}
 				SetCardsLayouts();
 			}
