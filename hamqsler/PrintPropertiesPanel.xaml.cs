@@ -493,7 +493,8 @@ namespace hamqsler
 		/// </summary>
 		public void SetCardsLayouts()
 		{
-			if(PrinterPaperSize != null && CardWidth != 1 && CardHeight != 1)
+			if(cardsLayoutGroupBox.Visibility == Visibility.Visible &&
+			   PrinterPaperSize != null && CardWidth != 1 && CardHeight != 1)
 			{
 				CalculateScaledPaperAndCardSizes();
 				// determine the number of cards that can be printed on portrait
