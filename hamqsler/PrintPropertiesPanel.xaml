@@ -144,6 +144,10 @@
 					<Canvas Width="100" Height="100"
 							x:Name="landscapeCenterButtonCanvas"/>				
 				</RadioButton>
+				<TextBlock x:Name="noLayoutsTextBlock" Margin="5" Foreground="Red">
+					The selected paper size is smaller than the card size.<LineBreak/>
+					No cards can be printed.
+				</TextBlock>		
 			</WrapPanel>
 		</GroupBox>
 	</WrapPanel>

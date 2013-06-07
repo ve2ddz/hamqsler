@@ -20,6 +20,7 @@
 using System;
 using System.Drawing.Printing;
 using System.Windows;
+using System.Windows.Input;
 
 namespace hamqsler
 {
@@ -28,6 +29,8 @@ namespace hamqsler
 	/// </summary>
 	public partial class HamQSLerPrintDialog : Window
 	{
+		public static RoutedCommand PrintPreviewCommand = new RoutedCommand();
+		public static RoutedCommand PrintCommand = new RoutedCommand();
 		private bool preview = true;
 		public bool Preview
 		{
@@ -109,13 +112,44 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Handler for PreviewButton Clicked event
+		/// Handler for PreviewButton CanExecute event
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void PreviewButton_Click(object sender, RoutedEventArgs e)
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void PrintPreviewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = printPropsPanel != null && printPropsPanel.LayoutsVisible;
+		}
+		
+		/// <summary>
+		/// Handler for PreviewButton Executed event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void PrintPreviewCommand_Executed(object sender, RoutedEventArgs e)
 		{
 			preview = true;
+			this.DialogResult = true;
+		}
+		
+		/// <summary>
+		/// Handler for PrintButton CanExecute event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object for this event</param>
+		private void PrintCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = printPropsPanel != null && printPropsPanel.LayoutsVisible;
+		}
+		
+		/// <summary>
+		/// Handler for PrintButton Executed event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void PrintCommand_Executed(object sender, RoutedEventArgs e)
+		{
+			preview = false;
 			this.DialogResult = true;
 		}
 		
@@ -127,17 +161,6 @@ namespace hamqsler
 		void CancelButton_Click(object sender, RoutedEventArgs e)
 		{
 			this.DialogResult = false;
-		}
-		
-		/// <summary>
-		/// Handler for PrintButton Clicked event
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void PrintButton_Click(object sender, RoutedEventArgs e)
-		{
-			preview = false;
-			this.DialogResult = true;
 		}
 	}
 }

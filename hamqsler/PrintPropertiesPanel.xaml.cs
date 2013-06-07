@@ -142,6 +142,12 @@ namespace hamqsler
 			set {SetValue(CardHeightProperty, value);}
 		}
 		
+		public bool LayoutsVisible
+		{
+			get {return (portraitCardsWide > 0 && portraitCardsHigh > 0) ||
+					(landscapeCardsWide > 0 && landscapeCardsHigh > 0);}
+		}
+		
 		private const int MAXMARGIN = 25;
 		// size of the paper in the radio button images is SCALEFACTOR/SCALEDPAGESZIE
 		private const int SCALEFACTOR = 10000;
@@ -534,6 +540,14 @@ namespace hamqsler
 							}
 							break;
 					}
+				}
+				if(portraitButtonsVisible || landscapeButtonsVisible)
+				{
+					noLayoutsTextBlock.Visibility = Visibility.Collapsed;
+				}
+				else
+				{
+					noLayoutsTextBlock.Visibility = Visibility.Visible;
 				}
 			}
 		}

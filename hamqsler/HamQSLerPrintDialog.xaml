@@ -25,6 +25,14 @@
 	xmlns:local="clr-namespace:hamqsler"
 	SizeToContent="WidthAndHeight" ResizeMode="NoResize"
 	Title="Print Cards Dialog">
+	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:HamQSLerPrintDialog.PrintPreviewCommand}"
+		                CanExecute="PrintPreviewCommand_CanExecute"
+						Executed="PrintPreviewCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:HamQSLerPrintDialog.PrintCommand}"
+		                CanExecute="PrintCommand_CanExecute"
+						Executed="PrintCommand_Executed"/>
+	</Window.CommandBindings>
 	<DockPanel>
 		<StackPanel
 			Orientation="Vertical"
@@ -42,12 +50,12 @@
 					Content="Print" IsDefault="True"
 					Width="75"
 					Name="PrintButton"
-					Click="PrintButton_Click" />
+					Command="{x:Static local:HamQSLerPrintDialog.PrintCommand}" />
 				<Button Grid.Column="2" Margin="5,3,10,5"
 					Content="Preview"
 					Width="75"
 					Name="PreviewButton"
-					Click="PreviewButton_Click" />
+					Command="{x:Static local:HamQSLerPrintDialog.PrintPreviewCommand}" />
 				<Button Grid.Column="3" Margin="5,3,15,5"
 					Content="Cancel"
 					Width="75" IsCancel="True"
