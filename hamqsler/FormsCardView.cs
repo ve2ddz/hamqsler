@@ -1299,6 +1299,10 @@ namespace hamqsler
 					break;
 					
 			}
+			if(relativeLocation != CardWFItem.RelativeLocations.Outside)
+			{
+				QslCard.IsDirty = true;
+			}
 			this.Invalidate();
 		}
 		
