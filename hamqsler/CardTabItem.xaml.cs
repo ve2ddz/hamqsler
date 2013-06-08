@@ -155,7 +155,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LoadBackgroundImage_Click(object sender, RoutedEventArgs e)
 		{
-			string fileName = GetImageFileNameForLoading();
+			string fileName = GetImageFileNameForLoading("Select Background Image");
 			if(fileName != null)
 			{
 				// if previous image, this will force new image to be centred on
@@ -175,7 +175,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		void LoadSecondaryImage_Click(object sender, RoutedEventArgs e)
 		{
-			string fileName = GetImageFileNameForLoading();
+			string fileName = GetImageFileNameForLoading("Select Secondary Image");
 			if(fileName != null)
 			{
 				// if previous image, this will force new image to be centred on
@@ -196,11 +196,11 @@ namespace hamqsler
 		/// </summary>
 		/// <returns>file name, or null if user clicks the Cancel button or otherwise
 		/// closes the dialog</returns>
-		private string GetImageFileNameForLoading()
+		private string GetImageFileNameForLoading(string title)
 		{
 			// create and open OpenFileDialog
 			OpenFileDialog oDialog = new OpenFileDialog();
-			oDialog.Title = "Select Secondary Image";
+			oDialog.Title = title;
 			oDialog.InitialDirectory = ((App)Application.Current).UserPreferences.DefaultImagesFolder;
 			oDialog.Filter = "Image Files (*.BMP, *.JPG, *.GIF, *.PNG, *.TIF, *.TIFF)|" +
 				"*.BMP;*.JPG;*.GIF;*.PNG;*.TIF;*.TIFF";
