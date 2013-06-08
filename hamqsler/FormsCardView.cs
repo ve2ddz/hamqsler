@@ -979,7 +979,7 @@ namespace hamqsler
 			contextMenu.Opened += OnContextMenuOpen;
 			System.Windows.Controls.MenuItem select = 
 				new System.Windows.Controls.MenuItem();
-			select.Header = "Select Item";
+			select.Header = "Select Highlighted Item";
 			select.Name = "SelectItem";
 			select.Click += OnSelectItemClicked;
 			contextMenu.Items.Add(select);
@@ -996,6 +996,7 @@ namespace hamqsler
 			System.Windows.Controls.MenuItem addImage =
 				new System.Windows.Controls.MenuItem();
 			addImage.Header = "Add Image";
+			addImage.InputGestureText = "Ctrl-I";
 			addImage.Name = "AddImage";
 			addImage.Click += OnAddImageClicked;
 			contextMenu.Items.Add(addImage);
@@ -1003,6 +1004,7 @@ namespace hamqsler
 			System.Windows.Controls.MenuItem addText =
 				new System.Windows.Controls.MenuItem();
 			addText.Header = "Add Text Item";
+			addText.InputGestureText = "Ctrl-T";
 			addText.Name = "AddText";
 			addText.Click += OnAddTextClicked;
 			contextMenu.Items.Add(addText);
@@ -1018,7 +1020,8 @@ namespace hamqsler
 			
 			System.Windows.Controls.MenuItem deleteItem =
 				new System.Windows.Controls.MenuItem();
-			deleteItem.Header = "Delete Item";
+			deleteItem.Header = "Delete Selected Item";
+			deleteItem.InputGestureText = "Delete";
 			deleteItem.Name = "DeleteItem";
 			deleteItem.Click += OnDeleteItemClicked;
 			contextMenu.Items.Add(deleteItem);
@@ -1026,6 +1029,7 @@ namespace hamqsler
 			System.Windows.Controls.MenuItem clearBackground =
 				new System.Windows.Controls.MenuItem();
 			clearBackground.Header = "Clear Background Image";
+			clearBackground.InputGestureText = "Ctrl-Delete";
 			clearBackground.Name = "ClearBackgroundItem";
 			clearBackground.Click += OnClearBackgroundClicked;
 			contextMenu.Items.Add(clearBackground);
