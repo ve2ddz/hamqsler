@@ -61,8 +61,7 @@
 			static text item, only next to macros.</member>
 		</simplelist>
 		<para>The image below shows the dialog after a Manager Macro has
-		been inserted after the static text item, and all expanders have
-		been expanded.</para>
+		been inserted after the static text item.</para>
 		<figure xml:id="managermacroafter">
 			<title>Static Text and Manager Macro in Text and Macros Dialog</title>
 			<mediaobject>
@@ -73,7 +72,7 @@
 		</figure>
 		<para>Every macro has a section called "Design Text". This is
 		the text that is displayed on the card in design mode. In the
-		Getting Started Tutorial, this is the "&lt;S&gt;" in both the confirming
+		Getting Started Tutorial, this is the "$" in both the confirming
 		text in the QSOs Box and in the salutation text item. Other sections
 		are specific to the macros. At print time, the Manager Macro
 		will place the contents of the Manager field for the QSO on the
@@ -206,7 +205,7 @@
 		is not met. When a card with QSOs in the QSOs Box is printed,
 		the condition is tested against the number of QSOs being  printed
 		in the QSOs Box. If a blank card (i.e. a card without QSOs) is
-		printed, the condition is tested against the max QSOs count for
+		printed, the condition is tested against the maximum QSOs count for
 		the QSOs Box. This matches the number of blank rows printed on
 		the card.</para>
 		<para>The image below shows a view of the Count Macro. This image 
@@ -230,13 +229,13 @@
 		</simplelist>
 		<para>The Condition Value is the number of QSOs or the max QSOs
 		value for the QSOs Box. This value may be set to any value between
-		1 and 15, and matches the range of values allowed for max QSOs.</para>
+		1 and 15, and matches the range of values allowed for maximum QSOs.</para>
 		<para>Enter the text you want to be displayed on the card in
-		design mode in the Design Text section.</para>
-		<para>Enter the text that is to be printed when the condition
-		is met in the True Text section. This is the "&lt;S&gt;" text that is
+		design mode in the Design Text section. This is the "$" text that is
 		displayed in the confirming text and the salutation text as set
 		in the original user preferences.</para>
+		<para>Enter the text that is to be printed when the condition
+		is met in the True Text section.</para>
 		<para>Enter the text that is to be printed when the condition
 		is not met in the False Text section.</para>
 		<para>You may reverse conditions by reversing the True Text and
@@ -245,7 +244,7 @@
 			<para>The confirming text in the QSOs Box and the salutation
 			text defined in the original user preferences (set when you
 			start HamQSLer for the first time) each contain a Count Macro.
-			As used there, the design text is "&lt;S&gt;", "s" is printed when
+			As used there, the design text is "$", "s" is printed when
 			the number of QSOs (or the max QSOs count for blank cards)
 			is greater than 1 and no text is printed when the number of
 			QSOs is 1.</para>

@@ -10,10 +10,10 @@
 		Cards->File Save As... menu items. File Save is only available if the
 		card has previously been saved because the program must know the
 		directory in which you want to save the card.</para>
-		<para>When you select the Card Save As... menu item, the File Save
+		<para>When you select the Card Save As... menu item, the File Save As
 		dialog, shown below, is displayed.</para>
 		<figure xml:id="savecarddialog2">
-			<title>File Save Dialog</title>
+			<title>File Save As Dialog</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/savecarddialog.png" />
@@ -22,6 +22,7 @@
 		</figure>
 		<para>The dialog opens with the default directory set to your hamqsler
 		folder. Navigate to the folder where you want to save the card file,
+		enter the name you want to save the file as, and
 		then click on the Save button. The card file will be saved and the
 		dialog will close.</para>
 	</section>
@@ -39,9 +40,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>The dropdown box circled in red near the bottom right of the
-		dialog lets you select the type of card to open. It defaults to
-		HamQSLer cards, which have an extension of ".qslx".</para>
+		
 		<para>Navigate to the directory containing the card file you want
 		to open, and either click on the file and then the Open button,
 		or double-click on the file.</para>
@@ -65,28 +64,90 @@
 		</tip>
 	</section>
 	<section>
-		<title>Loading QslDesignAndPrint Card Files</title>
-		<para>Card files that were created with QslDesignAndPrint may be
-		loaded into HamQSLer. To do this, select the Cards->Open Card...
-		menu item. Then select the QslDnP Card type from the dropdown
-		box circled in red in the figure above.</para>
-		<para>Navigate to the directory containing the card file you want
-		to open, and either click on the file and then the Open button,
-		or double-click on the file.</para>
+		<title>Moving and Converting QslDesignAndPrint Files</title>
+		<para>QslDesignAndPrint card files are normally stored in the
+		<emphasis>QslDnP</emphasis> subdirectory of your My Documents directory. 
+		You may also
+		have stored other related files such as images, logos, and
+		possibly ADIF files in <emphasis>QslDnP</emphasis>.</para>
+		<para> 
+		HamQSLer uses the <emphasis>hamqsler</emphasis> subdirectory in
+		My Documents. To ease the transition from QslDesignAndPrint to
+		HamQSLer, a move and convert tool has been included in HamQSLer. This
+		tool may be executed by selecting the "Import QslDesignAndPrint Files" 
+		menu item in the Tools dropdown menu.This tool performs two tasks:</para>
+		<orderedlist>
+			<listitem>
+				<para>All files except log files, card files, and the user preferences
+				file are copied from
+				QslDnP to hamqsler. The contents of all subdirectories except
+				Logs and Samples are also copied. The user preferences file is not
+				copied because there are many differences between QslDesignAndPrint
+				user preferences and HamQSLer user preferences.</para>
+			</listitem>
+			<listitem>
+				<para>Card files are converted from QslDesignAndPrint format to
+				HamQSLer format and copied to the 
+				<emphasis></emphasis> directory and its subdirectores. 
+				Again the contents of the
+				Logs and Samples subdirectories are ignored.</para>
+			</listitem>
+		</orderedlist>
+		<para>If one or more errors occur when copying files from QslDnP to hamqsler,
+		the following message box will be displayed, and as noted, the file or files
+		that could not be copied are listed in the log file along with the reason why.</para>
+		<figure xml:id="qsldnpfilecopyerrorbox">
+			<title>Copy Error Message Box</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/qsldnpcopyerrorbox.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>If an image in a QslDesignAndPrint card file references an image
+		file in <emphasis>QslDnP</emphasis>, then the location of the image
+		file is changed from <emphasis>QslDnP</emphasis> to 
+		<emphasis>hamqsler</emphasis>. If any image file cannot be located, then
+		the message box shown below is displayed, and you are given the choice
+		between trying to locate the file yourself or deleting the image.</para>
+		<figure xml:id="imagefilenotfoundbox">
+			<title>Image File Not Found Message Box</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/imagefilenotfoundbox.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>When all files have been moved and all card files have been converted,
+		the text "QslDnP files have been copied and card files converted." is
+		displayed in the status bar at the bottom of HamQSLer's main window.</para>
 		<caution>
-			<para>This feature is deprecated and will be removed in the
-			future. Load all of your QslDesignAndPrint cards
-			into HamQSLer and then save them using the Cards->Save As...
-			menu item. Be sure to save the new cards in the hamqsler folder.</para>
+			<para>HamQSLer uses a different graphical user interface than 
+			QslDesignAndPrint to draw cards. In some cases, font face names are
+			different; if your card file references one of these font face names,
+			then the card will not display text in your selected font. While the card
+			files are being converted, no attempt is made to ensure that the font face
+			name is valid. You may of course change the
+			font face at any time while the card is in design mode.
+			</para>
 		</caution>
 		<caution>
-			<para>When you load a QslDesignAndPrint card into HamQSLer,
-			the program marks the card as modified. If you attempt to close
-			the program before you have saved the card, you will get a
-			message asking if you want to save the file. If you answer
-			Yes, then the file is saved in the same directory as the card
-			file was loaded from. You are not given the option of saving
-			the file in a different directory.</para>
+			<para>QslDesignAndPrint supports three font weights: 
+			<emphasis>normal</emphasis>, <emphasis>bold</emphasis>, 
+			and <emphasis>black</emphasis>.
+			HamQSLer only supports <emphasis>normal</emphasis> and 
+			<emphasis>bold</emphasis>. For most font faces used in
+			QslDesignAndPrint, <emphasis>black</emphasis> is simply displayed as 
+			<emphasis>bold</emphasis>. The one obvious
+			font face for which there is a <emphasis>black</emphasis> font weight is Arial.
+			</para>
+			<para>An Arial Black font is available on the Internet, but it does not
+			look like Arial with a font weight of black. An alternative to Arial Black
+			is Helvetica Black.  You may purchase Helvetica fonts, but they
+			are not available free of charge, and will only be available on your
+			computer if another application has loaded them.</para>
+			<para>An alternative font face with thicker characters is Verdana, although
+			character shapes are different from Arial.</para>
 		</caution>
 	</section>
 </chapter>

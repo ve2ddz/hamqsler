@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+﻿<?xml version='1.0' encoding='UTF-8'?>
 <chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
 		  xmlns:xlink="http://www.w3.org/1999/xlink" 
 		  xml:id="gettingstarted">
@@ -78,7 +78,7 @@
 		<para>The function tabs select the view that is displayed in 
 		the Work Area. The QSOs tab shows the loaded QSOs for which 
 		cards may be printed. The QSOs panel, shown in the image below, 
-		contains 5 QSOs that have been loaded from an ADIF file, the 
+		contains 6 QSOs that have been loaded from an ADIF file, the 
 		Sort Cards Panel, and the QSOs filters tabs. The Sort Cards 
 		Panel allows you to sort the cards by date and time, by callsign, 
 		or by a 
@@ -102,7 +102,8 @@
 		<para>The image below shows the card design panel and card
 		properties panel. The image shows the design panel immediately
 		after a new card has been created. Note the tab label of
-		"New Card". This label changes to the name of the card file
+		"New Card" and the window title contains this text as well.
+		This label and window title change to the name of the card file
 		when the card is saved. The X button on the tab can be used
 		to close the tab.</para>
 		<figure xml:id="cardpanel">
@@ -114,11 +115,11 @@
 			</mediaobject>
 		</figure>
 		<para>With no card item (text, background or other image,
-		or the QSOs Box) selected, the properties panel is empty. 
+		or the QSOs Box) selected, the properties panel contains default
+		print properties for the card. The image above shows this. We
+		will discuss printing and this panel later in this tutorial.
 		When a card item is selected, the properties
-		panel shows the properties for that card item. In the image above,
-		The callsign text item is selected, so the properties panel
-		contains the corresponding text item properties panel.</para>
+		panel changes to show the properties for that card item. </para>
 	</section>
 	<section xml:id="setfewuserprefs">
 		<title>Setting a Few User Preferences</title>
@@ -260,7 +261,8 @@
 				</keycombo>.
 			</para>
 			<para>The image below shows the main window when you have
-			performed this action. Note that the properties panel is empty.
+			performed this action. Note that the properties panel contains
+			Default Printer Properties and Default Print Properties.
 			</para>
 			<figure xml:id="newcard">
 				<title>New Card When First Created</title>
@@ -298,7 +300,7 @@
 			to indicate that the card (actually the Background Image) 
 			item is selected, and the properties
 			panel changes to contain the properties associated with the
-			Background Item.</para>
+			Background Image.</para>
 			<para>Now click the 
 				<keycombo action="click">
 					<mousebutton>right mouse button</mousebutton>
@@ -315,9 +317,9 @@
 			been specified, there is a menu item that
 			contains the name of the image file, and for Image items for
 			which a filename has not been specified, 
-			the menu items are labeled "Image 1", "Image 2", and so
-			forth. The menu items for text items are labeled with the
-			first ten characters or the text. There is also a menu item
+			the menu items are labeled "Image". 
+			The menu items for text items are labeled with the
+			first ten characters of the text. There is also a menu item
 			with the label "Qsos Box" to allow selection of the QSOs
 			Box.</para>
 			<para>The final menu item in the Select dropdown menu,
@@ -367,7 +369,7 @@
 			<link linkend="settinguserprefs">User Preferences chapter</link> for more 
 			information.</para>
 			<para>Navigate to the Samples directory and select the
-			samples.jpg file. The program's main window will now look
+			sample.jpg file. The program's main window will now look
 			like this:</para>
 			<figure xml:id="backgroundimageoncard">
 				<title>Main Window With Background Image Added to Card</title>
@@ -394,7 +396,7 @@
 			you are using a custom set of mouse cursors). This is the
 			move cursor. Press and hold the left mouse button and drag
 			the mouse around the screen to move background image.</para>
-			<para>To change the size of the size of the image, release the
+			<para>To change the size of the image, release the
 			mouse button, then move the mouse cursor to one of the four
 			corners of the image. The cursor will change to either
 			<inlinemediaobject>
@@ -441,21 +443,20 @@
 			font. The callsign on the card is now displayed in that
 			font. Notice that only this text changed font, not the other
 			text items.</para>
-			<para>The text may be displayed in Black, Bold, or Normal 
-			weight by selecting the weight from the Font Weight combo box.
+			<para>The text may be displayed in Bold or Normal 
+			weight by checking or unchecking the Bold checkbutton.
 			Italic or Normal style may be selected by checking and 
 			unchecking the
 			Italic checkbutton. Try this. For the callsign
-			text, the default is normal style and Black weight.</para>
+			text, the default is normal style and Bold.</para>
 			<para>The size dropdown box contains a number of predefined
-			font sizes (in device independent units which are equal
-			to ¾ of a point). 72 is the default value for callsigns.
+			font sizes (in points). 48 is the default value for callsigns.
 			You can select any of the sizes
 			directly from the list, or edit the size box to enter any
 			size that you want. When editing the value, use "." 
 			as the decimal separator. Try entering a character other than
 			a number or ".". Note the beep emitted by your computer to
-			indicate that you entered an invalid character.Now select 
+			indicate that you entered an invalid character. Now select 
 			the font size that you want.</para>
 			<para>The color button (the button with the black rectangle)
 			shows the color that the text is displayed in. Click on this
@@ -515,8 +516,8 @@
 			so that it is to the right of the callsign.Deselect the 
 			text item.</para>
 			<para>Now look at the salutation text on the card. Note
-			the text is "Thanks for the QSO$. 73, ". The "&lt;S&gt;" characters
-			are a placeholder for a Count Macro. We will look at this
+			the text is "Thanks for the QSO$. 73, ". The "$" character
+			is a placeholder for a Count Macro. We will look at this
 			macro in a moment.</para>
 			<para>Select the salutation text item. In the text item
 			properties panel, note that Text group box contains only 
@@ -548,7 +549,7 @@
 			macro is set up to print "s" when the QSOs count is greater
 			than one, print nothing when the QSOs count is 1, and to
 			display
-			"&lt;S&gt;" on the card in design mode. Each of these values, and
+			"$" on the card in design mode. Each of these values, and
 			the condition may be modified. See the 
 			<link linkend="macros">Macros chapter</link> for
 			more information. We will not make any changes to the
@@ -605,12 +606,12 @@
 				printed. Check this checkbox as we will be using it later.</para>
 				<para>Below the Show Manager checkbox are two radio buttons,
 				one labeled "Show Band Column" and the other labeled 
-				"Show Frequency Column". When
+				"Show Freq Column". When
 				you create a card, the "Show Band Column" radio button 
 				is selected by
 				default. These two radio buttons determine whether the 
 				Qsos Box displays a band column or a frequency column. Click
-				the "Show Frequency Column" button. 
+				the "Show Freq Column" button. 
 				Note that the Band column header
 				has changed to MHz and that the size of the various columns
 				have adjusted themselves.</para>
@@ -655,10 +656,8 @@
 				the Qsos Box. Finally, set this value to YYYY-MM-DD for this
 				tutorial.</para>
 				<para>The Max Qsos control specifies the maximum number of
-				QSOs that may be printed on the card. The control is an
-				editable spinner; you may change values by clicking on the
-				up or down triangles on the right side of the control, or
-				you may directly edit the value. Valid values are between
+				QSOs that may be printed on the card. The control is a
+				dropdown box; you may select any value between
 				1 and 15. Try multiple values to see how the Qsos Box changes.
 				</para>
 				<para>The default value when you create a new card is 4.
@@ -677,9 +676,9 @@
 				blue=0). The orange text is a bit hard to read but we will
 				fix that in a moment.</para>
 				<para>The Font Size dropdown box contains values between
-				8.0 and 14.0. This sets the size of the font in the QSOs
+				5.0 and 9.0. This sets the size of the font in the QSOs
 				Box. Try different values. For the 2 QSOs that we have set
-				as the maximum, a value of 12.0 points is good. Smaller 
+				as the maximum, a value of 9.0 points is good. Smaller 
 				values will
 				be needed when you select a large Max QSOs value; otherwise
 				the box would not fit on the card.</para>
@@ -701,8 +700,8 @@
 				Box.</para>
 				<para>Click on the Color button to display the color picker
 				dialog. This dialog may be used to change the color of the
-				background of the Qsos Box. Note that any change you make
-				is not visible. We will correct that in a moment.</para>
+				background of the Qsos Box. Note that the background color
+				of the QSOs Box is now your selected color.</para>
 				<para>The opacity slider adjusts the opacity 
 				(1 - transparency) of the background. Adjust the slider to
 				select values between 0 and 100% to see the effect on the
@@ -719,15 +718,28 @@
 				will change to 
 				<inlinemediaobject>
 					<imageobject>
-						<imagedata fileref="images/updown.png" valign="middle" />
+						<imagedata fileref="images/movecursor.png" valign="middle" />
 					</imageobject>
 				</inlinemediaobject>
-				. This cursor indicates that you can only adjust the Qsos Box
-				vertically and not horizontally. Press the left mouse button
+				. Press the left mouse button
 				and drag the Qsos Box. When you are done, release the mouse
 				button. For this card, positioning the Qsos Box anywhere that
 				is not over a text item will work.</para>
-				<para>Deselect the Qsos Box. Your card should look similar
+				<para>Move the mouse cursor over the left or right edge of
+				the QSOs Box. The cursor will change to
+				<inlinemediaobject>
+					<imageobject>
+						<imagedata fileref="images/ewcursor.png" valign="middle" />
+					</imageobject>
+				</inlinemediaobject>
+				. This indicates that you can move that edge of the QSOs Box either
+				left or right to change the width of the box. As you shrink the width
+				of the QSOs Box, it will reach its minimum width based on the columns
+				and font size selected, and will not shrink any more. The minimum width
+				is determined by the width required to print the contents of all
+				columns without the contents overlapping to other columns.</para>
+				<para>Resize the QSOs Box to approximately the width it was before.
+				Deselect the Qsos Box. Your card should look similar
 				to the image below:</para>
 				<figure xml:id="samplecard">
 					<title>Card After Design Complete</title>
@@ -755,9 +767,9 @@
 				Select the Samples directory; enter the file name
 				"sample" in the Name edit box near the top of the dialog,
 				and click the Save button. The card will be saved with
-				the name "sample.qslx".</para>
+				the name "sample.xq1".</para>
 				<para>The text on the tab will in the main window will
-				change from "New Card*" to "sample.qslx".</para>
+				change from "New Card*" to "sample.xq1".</para>
 				<para>In the future, this card may be opened using the
 				Open Card... menu item in the Cards dropdown menu.</para>
 				<para>We are now done designing the card, so let's load
@@ -945,8 +957,79 @@
 		<title>Printing the Cards</title>
 		<section>
 			<title>Default Printer and Print Options Properties</title>
-			<para>Click on the tab labeled "sample.qslx" to redisplay the
+			<para>Click on the tab labeled "sample.xq1" to redisplay the
 			card that you designed earlier.</para>
+			<para>With no card items selected, the card properties panel
+			contains printer properties and print properties. The default
+			values are the values that are set in User Preferences. Because
+			we did not change these values earlier, the printer is set
+			to the computer system's default printer. The paper size,
+			quality, and paper source are set to the default values
+			for this printer.</para>
+			<para>The print properties are also set to the defaults set in
+			User Preferences. These values control how the cards are printed.
+			If the Print Inside Printer Margins checkbox is checked and
+			disabled, and the Set Card Margins to Printer Margins checkbox
+			is unchecked and disabled, then the minimum printer margins for
+			the selected printer has one or more margins that exceeds ¼ inch
+			or 6.35 mm. Printer margins and the reasons for forcing printing
+			inside the printer margins are discussed in the 
+			<link linkend="outputtingcards">Outputting Cards</link> chapter</para>
+			<para>There are two checkboxes that affect the card in display mode as
+			well as print mode:</para>
+			<itemizedlist>
+				<listitem>
+					<para>Print Card Outlines checkbox determines whether a black line
+					is drawn around the outside of the card. This helps to determine
+					where the card edges are when you cut the cards out of the
+					cardstock. Check this box; note that a line is drawn around
+					the card in the Card Design Panel.
+					</para>
+				</listitem>
+				<listitem>
+					<para>Set Card Margins to Printer Margins checkbox determines
+					whether card contents are printed with a margin inside the card
+					edges or card contents are printed to the edges of each card.
+					If you select a card layout on your cardstock such that one or
+					more cards abut the edges of the cardstock, then the edges of
+					those cards abutting the cardstock edges will have a margin
+					on them when printed. This occurs because printers do not normally print
+					to the edges of paper. In order to look better, checking the Set Card
+					Margins to Printer Margins checkbox will provide a margin
+					around all edges of every card equal to the widest minimum
+					margin for your printer. Check this checkbox now if the checkbox
+					is not disabled. Notice that
+					there is now a margin inside the edges of the card in the
+					Card Design Panel.
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>The other two checkboxes only affect the card when printed:</para>
+			<itemizedlist>
+				<listitem>
+					<para>Print Inside Card Margins checkbox determines whether you
+					can place cards up to the edges of your cardstock. When this
+					checkbox is checked, the cards are placed to ensure that their
+					edges are inside the printer's page margins; when not checked,
+					cards may be placed at the edges of the cardstock.
+					</para>
+				</listitem>
+				<listitem>
+					<para>Fill Last Page With Blank Cards checkbox determines if the
+					last card will be filled with cards with no QSO information
+					printed in the QSOs Box. In many cases, the number of cards
+					being printed is not evenly divisible by the number of cards
+					that are printed on each page. This wastes cardstock. In
+					order to maximize the use of the cardstock, you can print
+					blank cards on the last page in order to fill the cardstock.
+					You may use these cards at a later time to write QSO information
+					on them rather than print new cards.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</section>
+		<section>
+			<title>Printing Cards</title>
 			<para>Select the Print Cards... menu item from the Cards
 			dropdown menu. This opens the Print dialog shown below.</para>
 			<figure xml:id="printdialog">
@@ -957,66 +1040,24 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>Select the printer you would use for printing the cards,
-			and then click the "Preferences" button to set printing preferences
-			such as print quality and paper size. For now, select a paper
-			size of either letter or A4. Do not set Portrait or
-			Landscape mode because this setting is overridden later. Now click the
-			OK button to close the Printing Preferences dialog.</para>
-			<para>Click the "Print" button to close the Print dialog and
-			open the Print Settings dialog, shown below.</para>
-			<figure xml:id="printsettingsdialog">
-				<title>Print Settings Dialog</title>
-				<mediaobject>
-					<imageobject>
-						<imagedata fileref="images/printsettingsdialog.png" />
-					</imageobject>
-				</mediaobject>
-			</figure>
-			<para>The card layout group box on the left of the dialog allows
-			you to select how the cards are printed on the page. Depending
-			on the size of the paper you selected in the Printing Preferences
-			dialog and the size of the cards you will be printing, there
-			will be up to six choices. The layouts shown in the figure above
-			are for bureau sized cards on letter sized (8½ by 11 inch) paper.
-			The cards are shown in white with a blue edge and the paper
-			or cardstock is shown in light pink so you can see how the cards
-			are layed out. For this tutorial, select the layout at the top
-			left.</para>
-			<para>The Options group box on the right of the Print Settings
-			dialog controls certain print options:</para>
-			<para>The Print Card Outlines checkbox controls whether a black
-			line is printed around the edges of each card. Printing the card
-			outline makes it easier to cut the cards out of the cardstock.</para>
-			<para>If the number of cards to be printed does not exactly
-			equal the number of pages to be printed multiplied by the number
-			of cards per page, then a portion of the last page would be
-			wasted. In this tutorial for example, four cards would be printed
-			at three cards per page. In order not to waste a portion of the
-			cardstock, you may print "blank" cards to fill the rest of the
-			page. These blank cards contain no QSO information; you may enter
-			this information using a pen at a later time. Printing or not
-			printing these blank cards is controlled by the Fill Last Page
-			With Blank Cards checkbox.</para>
-			<para>Unless you selected a borderless page size, then your printer
-			will not print to the edge of the cardstock, but will leave margins
-			of different sizes around the edges of the cardstock when you
-			print the cards. Because you will be printing multiple cards
-			per page, the cards would have unequal, unprinted margins along one or
-			more sides of each card. To create equal sized margins around the
-			edges of each card, check the Set Card Margins to Printer Page
-			Margins checkbox. Depending on card layout that you choose, this
-			checkbox may be checked or unchecked. For this tutorial, make
-			sure that this checkbox is checked.</para>
-			<para>Please note: if you are using a printer that does not
-			provide its margin information, this checkbox will be unchecked
-			and disabled, so you will not be able to check it. After you
-			clicked the "Print" button on the Print dialog, a message dialog
-			will have been displayed to inform you of this.</para>
-			<para>To print the cards you would click the "Print" button.
-			Since you probably do not want to waste the paper and ink
-			on this first card, click the "Preview" button. This
-			opens the print preview dialog.</para>
+			<para>As you can see, the printer properties and print properties are
+			displayed again. The settings in this dialog match the settings for
+			the card. This is your last chance to make changes before printing.</para>
+			<para>Check the Print Card Outlines and Fill Last Page With Blank Cards
+			checkboxes.</para>
+			<para>The third group box on the dialog is the cards layout group box.
+			This box shows various card layouts on the cardstock. The white rectangles
+			surrounded by blue lines represent the cards, with the cardstock
+			shown in pink. If you change paper size and check or uncheck the 
+			Print Inside Printer Margins checkbox, the cars layouts will change.
+			In some cases these changes are subtle and in other cases the number
+			of cards that can be printed per page changes.</para>
+			<para>For this tutorial, make sure that the paper size is set to either
+			Letter or A4 size. The Print Card Outlines and Fill Last Page With
+			Blank Cards checkboxes should also be checked. Click on the radio button at
+			the right of the first row of card layouts. Now click on the Preview
+			button at the bottom of the dialog. This will create a print preview
+			of the cards as shown in the image below.</para>
 			<figure xml:id="printpreview">
 				<title>Print Preview Dialog</title>
 				<mediaobject>
@@ -1025,13 +1066,33 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>There is a toolbar at the top of the dialog. The buttons
-			on this toolbar allow you to control the magnification of each page
-			and to specify whether you want to display one or two pages at 
-			a time. A scrollbar on the right side of the dialog allows
-			you to scroll through the various pages to be printed.</para>
+			<para>There is a toolbar at the top of the dialog shown in the image below.</para>
+			<figure xml:id="printpreviewtoolbar">
+				<title>Print Preview Toolbar</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printpreviewtoolbar.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The buttons
+			on this toolbar from left to right are as follows:</para>
+			<simplelist>
+				<member>Print the pages.</member>
+				<member>Set zoom factor.</member>
+				<member>Display one page.</member>
+				<member>Display two pages.</member>
+				<member>Display three pages.</member>
+				<member>Display four pages.</member>
+				<member>Display six pages.</member>
+				<member>Close the dialog.</member>
+			</simplelist>
+			<para>There is a spin box at the top right of the dialog that allows
+			you to scroll through the various pages.</para>
+			<para>Press the Display two pages button so that the dialog looks
+			like the image above.</para>
 			<para>On the first page, the first card contains the two QSOs
-			to VA3JNO with VA3HJ as the manager. The second card contains
+			with VA3JNO, with VA3HJ as the manager. The second card contains
 			a single QSO with VA3JNO, and the third card contains a single
 			QSO with 5C5CW. If the maximum number of QSOs on a card
 			had been set to 1, only a single QSO would have been printed
@@ -1050,15 +1111,19 @@
 			you checked the "Fill Last Page With Blank Cards" checkbox.</para>
 			<para>Every card is surrounded by a black line on all sides
 			because you checked the "Print Card Outlines" checkbox.</para>
+			<para>You will probably notice that the cards are not centered
+			on the cardstock even though we selected the card layout that
+			should have centered the cards. In fact, the cards are shifted left
+			and up by the size of the left and top margins for your printer.
+			Don't worry about this. If you were to click the print button, the
+			cards would be printed in the middle of the cardstock; the offset
+			in Print Preview is caused by the print processing in .Net.
+			More information about printing is included in the 
+			<link linkend="outputtingcards">Outputting
+			Cards</link> chapter.</para>
 			<para>Close the print preview dialog. Go back and try the
 			various print options settings combinations to see the effect
 			that each setting has.</para>
-			<para>If, after viewing the pages to be printed in the Print
-			Preview dialog, you want to print the pages, you must close
-			the dialog and restart the print process, clicking the Print
-			button on the Print Settings dialog. It is not possible to
-			print from the Print Preview dialog.
-			</para>
 		</section>
 		<section>
 			<title>Concluding the Tutorial</title>

@@ -7,7 +7,7 @@
 		<!ENTITY settinguserprefs SYSTEM "settinguserprefs.xml">
 		<!ENTITY workingwithqsos SYSTEM "workingwithqsos.xml">
 		<!ENTITY workingwithcards SYSTEM "workingwithcards.xml">
-		<!ENTITY printingcards SYSTEM "printingcards.xml">
+		<!ENTITY outputtingcards SYSTEM "outputtingcards.xml">
 		<!ENTITY doclicense SYSTEM "doclicense.xml">
 		<!ENTITY gpl SYSTEM "gpl.xml">
 	]
@@ -43,7 +43,7 @@ Free Documentation License".
 	&settinguserprefs;
 	&workingwithqsos;
 	&workingwithcards;
-	&printingcards;
+	&outputtingcards;
 	&doclicense;
 	&gpl;
 </book>
