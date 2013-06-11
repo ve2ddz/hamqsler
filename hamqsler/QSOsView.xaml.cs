@@ -244,6 +244,8 @@ namespace hamqsler
 			                                 out endDate, out endTime);
 			startEndDateTime.StartDate = startDate;
 			startEndDateTime.StartTime = startTime;
+			// must set EndTime before EndDate or will get message about end date/time
+			// before start date/time
 			startEndDateTime.EndTime = endTime;
 			startEndDateTime.EndDate = endDate;
 		}
