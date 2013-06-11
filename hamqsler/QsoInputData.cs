@@ -250,7 +250,7 @@ namespace hamqsler
 		{
 			if(!DateTimeValidator.TimeIsValid(StartTime))
 			{
-				return "Time is not valid must be between 000000 and 235959, or 0000 and 2359";
+				return "Time is not valid. Must be between 000000 and 235959, or 0000 and 2359";
 			}
 			return null;
 		}
