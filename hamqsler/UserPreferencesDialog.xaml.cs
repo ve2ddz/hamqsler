@@ -252,6 +252,13 @@ namespace hamqsler
 		private void BandFrequency_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			Regex freqReg = new Regex("[0-9\\.]");
+			TextBox box = sender as TextBox;
+			if(box != null && box.Text.Length >= box.MaxLength)
+			{
+				// too long
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed				
+			}
 			if(!freqReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid
@@ -270,6 +277,12 @@ namespace hamqsler
 		void CallsignBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			Regex callReg = new Regex("[A-Za-z0-9/]");
+			if(CallsignTextBox.Text.Length >= CallsignTextBox.MaxLength)
+			{
+				// too long
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed				
+			}
 			if(!callReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid
@@ -399,6 +412,20 @@ namespace hamqsler
 				printPropertiesPanel.FillLastPage = prefs.FillLastPage;
 				printPropertiesPanel.SetCardMargins = prefs.SetCardMargins;
 			}
+		}
+		
+		private void CheckLength(object sender, TextCompositionEventArgs e)
+		{
+			TextBox box = sender as TextBox;
+			if(box != null)
+			{
+				if(box.Text.Length >= box.MaxLength)
+				{
+					Console.Beep(BEEPFREQUENCY, BEEPDURATION);
+					e.Handled = true;
+				}
+			}
+			
 		}
 		
 	}

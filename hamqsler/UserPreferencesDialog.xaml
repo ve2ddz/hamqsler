@@ -130,7 +130,7 @@
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5">Proxy Server Port:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" MaxLength="6" Margin="5"
 				         Text="{Binding Path=HttpProxyServerPortNumber, Mode=TwoWay}"
-				/>
+						 PreviewTextInput="CheckLength"/>
 			</Grid>
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -388,12 +388,14 @@
 							>YYYY-MM-DD Text:</TextBlock>
 				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding YYYYMMDDText,
 							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+				         	PreviewTextInput="CheckLength"
 							ToolTip="Text that is displayed in the header of the date column
 in the QSOs Box when the selected date format is 'YYYY-MM-DD'."/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 							>DD-MMM-YY Text:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding DDMMMYYText,
 							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+				         	PreviewTextInput="CheckLength"
 				         	ToolTip="Text that is displayed in the header of the date column
 in the QSOs Box when the selected date format is 'DD-MMM-YY'."/>
 
@@ -401,6 +403,7 @@ in the QSOs Box when the selected date format is 'DD-MMM-YY'."/>
 							>DD-MM-YY Text:</TextBlock>
 				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding  DDMMYYText,
 							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+				         	PreviewTextInput="CheckLength"
 				         	ToolTip="Text that is displayed in the header of the date column
 in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 
@@ -435,26 +438,31 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						>Time Header Text:</TextBlock>
 				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
 						Text="{Binding TimeText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text printed in Time column header in QSOs Box."/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						>Mode Header Text:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
 						Text="{Binding ModeText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text printed in Mode column header in QSOs Box."/>
 				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						>Band Header Text:</TextBlock>
 				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
 						Text="{Binding BandText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text printed in Band header in QSOs Box."/>
 				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						>Frequency Header Text:</TextBlock>
 				<TextBox Grid.Row="3" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
 						 Text="{Binding FrequencyText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text printed in Frequency header in QSOs Box."/>
 				<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						>RST Header Text:</TextBlock>
 				<TextBox Grid.Row="4" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
 						Text="{Binding RSTText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text printed in RST header in QSOs Box."/>
 			</Grid>
 			<Grid>
@@ -476,16 +484,19 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						>QSL Header Text:</TextBlock>
 				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
 						Text="{Binding QSLText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text displayed as header in the QSL column in QSOs Box."/>
 				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						>QSL Please Text:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
 						Text="{Binding PseText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text printed in QSL column for each QSO when 'QSL_RCVD' value is anything other than 'Yes'."/>
 				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						>QSL Thanks Text:</TextBlock>
 				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
 						Text="{Binding TnxText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text printed in QSL column for each QSO when 'QSL_RCVD' value is 'Yes'.}"/>
 			</Grid>
 			<Grid>
@@ -518,72 +529,84 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						>January:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding JanuaryText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for January"/>
 				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>February:</TextBlock>
 				<TextBox Grid.Row="2" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding FebruaryText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for February"/>
 				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>March:</TextBlock>
 				<TextBox Grid.Row="3" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding MarchText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for March"/>
 				<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>April:</TextBlock>
 				<TextBox Grid.Row="4" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding AprilText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for April"/>
 				<TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>May:</TextBlock>
 				<TextBox Grid.Row="5" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding MayText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for May"/>
 				<TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>June:</TextBlock>
 				<TextBox Grid.Row="6" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding JuneText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for June"/>
 				<TextBlock Grid.Row="1" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>July:</TextBlock>
 				<TextBox Grid.Row="1" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding JulyText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for July"/>
 				<TextBlock Grid.Row="2" Grid.Column="3" Margin="3" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>August:</TextBlock>
 				<TextBox Grid.Row="2" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding AugustText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for August"/>
 				<TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>September:</TextBlock>
 				<TextBox Grid.Row="3" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding SeptemberText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for September"/>
 				<TextBlock Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>October:</TextBlock>
 				<TextBox Grid.Row="4" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding OctoberText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for October"/>
 				<TextBlock Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>November:</TextBlock>
 				<TextBox Grid.Row="5" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding NovemberText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for November"/>
 				<TextBlock Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right"
 						>December:</TextBlock>
 				<TextBox Grid.Row="6" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
 						Text="{Binding DecemberText, Mode=TwoWay}"
+				        PreviewTextInput="CheckLength"
 						ToolTip="Text for December"/>
 			</Grid>
 			<Grid>
