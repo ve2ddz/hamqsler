@@ -1,0 +1,119 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
+		 xmlns:xlink="http://www.w3.org/1999/xlink"
+		 xml:id="errorhandlingandlogging">
+	<title>Input Validation, Logging, and Error Handling</title>
+	<simplelist>
+		<member>input validation - red rectangle</member>
+		<member>input validation - individual characters</member>
+		<member>input validation - field validation</member>
+		<member>input validation - multiple fields</member>
+		<member>log file</member>
+		<member>message boxes</member>
+		<member>status bar</member>
+		<member>reporting errors</member>
+	</simplelist>
+	<para>HamQSLer performs checks on user inputs, reports and recovers from error conditions
+	where possible, and provides a logging facility to assist both the user and the
+	developers in determining what caused a specific error condition. This chapter discusses
+	each of these topics. Additionally, a section is included on what the user should do to
+	report a bug.</para>
+	<section>
+		<title>Input Validation</title>
+		<para>HamQSLer performs many checks on user input, from validating individual characters,
+		to validating the contents of input fields, and to validating multiple fields and the
+		entire user input. In order to aid in a discussion of these topics, we will use
+		the input QSOs dialog as an example. This discussion applies equally well everywhere
+		that users provide manual input.</para>
+		<para>Here is an image of the Input QSOs dialog.</para>
+		<figure xml:id="inputqsosdialog">
+			<title>Input QSOs Dialog Used as Validation Example</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/inputqsosdialog.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Some of the fields should contain a limited selection of characters.
+		For example, the Callsign field should only accept letters, digits, and "/".
+		Similarly, the start date and start time fields should only accept digits.
+		When the user attempts to input an invalid character into a field, 
+		HamQSLer causes the computer to
+		emit a short beep to indicate the error. The character is not added to
+		the field.</para>
+		<para>You will note that some of the input fields are outlined in red.
+		This indicates that the contents are invalid; for example, the callsign
+		field does not contain a valid callsign. As soon as the user enters enough
+		characters to represent a valid callsign, the red border will disappear.</para>
+		<para>As each character is entered in a field, the entire field is checked
+		for validity. The start date field is validated to ensure that it contains
+		exactly 8 digits and that the date entered is between 19451101 and today. If
+		a date outside this range is entered, the red border remains visible to
+		indicate that the entered date is invalid.</para>
+		<para>The reason that the field has been marked as invalid may be
+		determined by moving the mouse cursor over the field. A tooltip describing
+		the cause will be displayed. For some fields, such as the callsign, the
+		tooltip may be generic ("Not a valid callsign"). For other fields where
+		more specific information can be given, it is provided. For example, the
+		tooltip for the start time field is "Time is not valid. Must be between
+		000000 and 235959 or 0000 and 2359". When correct input is entered, the
+		tooltip is not displayed.</para>
+		<para>Some text fields are limited in the number of characters that they
+		can accept. For example, the start date must contain exactly 8 digits. If
+		the user attempts to add more digits, the computer emits a short beep, and
+		the characters are not added. No other indication of an error is provided.</para>
+		<para>In some cases, one of a set of fields must be entered. For example,
+		each QSO must contain either a band field, a frequency field, or both.
+		In the Input QSO dialog, the user can specify the band by selecting one
+		of the items from the band dropdown list. The frequency may be specified
+		by entering the frequency in the frequency text box. As each character is
+		entered into the frequency text box, the entered value is checked to
+		determine if the entered value is within one of the enumerated amateur
+		radio bands. If not, the red rectangle is displayed indicating that the
+		value is in error.</para>
+		<para>So the user can enter either a band, or a valid frequency without
+		problems. What happens is the user selects a band and then enters
+		a frequency that is within a different band, or enters a valid frequency
+		and then selects a different band? The field that was last changed will
+		be outlined in red. The user must move the mouse cursor over that field
+		to determine the cause of the problem.</para>
+		<para>So why are not both the band and frequency fields outlined
+		in red to indicate an error until at least one is selected? The validation
+		mechanism provided in .Net (actually Windows Presentation Foundation in
+		.Net) can validate only one field at a time; it is not possible to show
+		an error in a different field than the one that is accepting input. So,
+		if the user is entering a frequency that is not within the band that he
+		has already specified, the frequency field can be marked as invalid, but
+		the band field cannot. Similarly, if a frequency is entered first and then
+		a different band is selected, the band field can be marked as invalid,
+		but the frequency field cannot. If the program checked both fields for
+		input and marked both as invalid, then when the user entered valid input
+		for one of the fields, the other field would still be marked as invalid
+		until a valid value was entered in that field. Because only one of band
+		and frequency is required for a valid QSO, the user is not required to enter
+		the second value, and the field would remain marked as invalid even
+		though no value is required.</para>
+		<para>You will note that the Add+ and OK buttons are disabled in the image
+		above. For a QSO to be valid, it must contain a valid callsign, start date 
+		and time, mode, and either band or frequency or both. As soon as these fields
+		have been specified and there are no validation errors for any field, these
+		buttons will be enabled to allow the user to add the QSO to the list in the
+		QSOs view.</para>
+		<para>A different way of handling invalid values is shown in the QSOs View.
+		The Manager field must either be empty or contain a valid callsign. The contents
+		of the field is obtained from the ADIF QSL_VIA field which may contain any text.
+		HamQSLer requires that this field contain either a valid callsign or no text.
+		Therefore, the field may be marked as invalid as discussed above. However,
+		HamQSLer does not require that this field be valid before the program will
+		print QSL cards. Instead HamQSLer simply treats the Manager field
+		as empty if it does not contain only a valid callsign.</para>
+	</section>
+	<section>
+		<title>Status Bar, Message Boxes, and the Log File</title>
+	<para>To be written.</para>
+	</section>
+	<section>
+		<title>Reporting Bugs</title>
+		<para>To be written.</para>
+	</section>
+</chapter>

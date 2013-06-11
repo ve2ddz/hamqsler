@@ -2,6 +2,7 @@
 <!DOCTYPE book
 	[	<!ENTITY intro SYSTEM "intro.xml">
 		<!ENTITY gettingstarted SYSTEM "gettingstarted.xml">
+		<!ENTITY errorhandlingandlogging SYSTEM "errorhandling.xml">
 		<!ENTITY programinit SYSTEM "programinit.xml">
 		<!ENTITY macros SYSTEM "macros.xml">
 		<!ENTITY settinguserprefs SYSTEM "settinguserprefs.xml">
@@ -38,6 +39,7 @@ Free Documentation License".
 	</info>
 	&intro;
 	&gettingstarted;
+	&errorhandlingandlogging;
 	&programinit;
 	&macros;
 	&settinguserprefs;
