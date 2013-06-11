@@ -269,7 +269,7 @@ namespace hamqsler
 		/// <param name="e"></param>
 		private void FontSizeComboBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
-			Regex sizeReg = new Regex("^\\d*\\.{0,1}\\d{0,1}$");
+			Regex sizeReg = new Regex("^\\d*[\\.,]{0,1}\\d{0,1}$");
 			if(!sizeReg.IsMatch(e.Text))
 			{
 				// not valid

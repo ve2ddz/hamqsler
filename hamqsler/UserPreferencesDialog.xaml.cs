@@ -251,7 +251,7 @@ namespace hamqsler
 		/// property that contains the character that was entered.</param>
 		private void BandFrequency_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
-			Regex freqReg = new Regex("[0-9\\.]");
+			Regex freqReg = new Regex("[0-9\\.,]");
 			TextBox box = sender as TextBox;
 			if(box != null && box.Text.Length >= box.MaxLength)
 			{

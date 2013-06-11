@@ -918,8 +918,8 @@ namespace hamqsler
 				}
 				else		// a frequency*/
 				{
-					Regex regexData = new Regex("^[0-9\\.]*$");
-					Regex regexDecimalSep = new Regex("[\\.][0-9]*[\\.]");
+					Regex regexData = new Regex("^[0-9\\.,]*$");
+					Regex regexDecimalSep = new Regex("[\\.,][0-9]*[\\.,]");
 					HamBand band = null;
 					string strFreq = GetBandProperties(propertyName, out band);
 					if(strFreq != null)
@@ -934,7 +934,8 @@ namespace hamqsler
 							result = "Only numbers and a single decimal separator are allowed.";
 							return result;
 						}
-						float freq = float.Parse(strFreq, NumberStyles.AllowDecimalPoint,
+						string f = strFreq.Replace(",", ".");
+						float freq = float.Parse(f, NumberStyles.AllowDecimalPoint,
 						                    CultureInfo.InvariantCulture);
 						if(freq < band.LowerEdge || freq > band.UpperEdge)
 							result = string.Format("String must be between {0} and {1} MHz", 

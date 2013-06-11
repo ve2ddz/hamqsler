@@ -648,7 +648,7 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						>but no frequency is specified. Values must be in MHz and within band limits.</TextBlock>
 				<TextBlock Grid.Row="2" Grid.ColumnSpan="8" Margin="5,2,5,5" HorizontalAlignment="Center"
 						Foreground="Blue"
-						>Use '.' as decimal separator (to match ADIF standard)</TextBlock>
+						>Use '.' or ',' as decimal separator.</TextBlock>
 				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">2190m:</TextBlock>
 				<TextBox Grid.Row="3" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"

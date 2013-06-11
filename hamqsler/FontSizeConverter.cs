@@ -54,6 +54,7 @@ namespace hamqsler
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			string size = (string)value;
+			size = size.Replace(",", ".");
 			if(value.Equals(string.Empty))
 			{
 				return 1;
