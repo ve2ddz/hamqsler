@@ -244,8 +244,8 @@ namespace hamqsler
 			                                 out endDate, out endTime);
 			startEndDateTime.StartDate = startDate;
 			startEndDateTime.StartTime = startTime;
-			startEndDateTime.EndDate = endDate;
 			startEndDateTime.EndTime = endTime;
+			startEndDateTime.EndDate = endDate;
 		}
 		
 		/// <summary>
