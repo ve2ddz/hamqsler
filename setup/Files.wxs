@@ -64,17 +64,6 @@
 								<File Id="ch02s07s02.html" Name="ch02s07s02.html" Source="..\documentation\html-docs\ch02s07s02.html" />
 								<File Id="ch03.html" Name="ch03.html" Source="..\documentation\html-docs\ch03.html" />
 								<File Id="ch04.html" Name="ch04.html" Source="..\documentation\html-docs\ch04.html" />
-								<File Id="ch04s02.html" Name="ch04s02.html" Source="..\documentation\html-docs\ch04s02.html" />
-								<File Id="ch04s03.html" Name="ch04s03.html" Source="..\documentation\html-docs\ch04s03.html" />
-								<File Id="ch04s04.html" Name="ch04s04.html" Source="..\documentation\html-docs\ch04s04.html" />
-								<File Id="ch04s05.html" Name="ch04s05.html" Source="..\documentation\html-docs\ch04s05.html" />
-								<File Id="ch04s06.html" Name="ch04s06.html" Source="..\documentation\html-docs\ch04s06.html" />
-								<File Id="ch05.html" Name="ch05.html" Source="..\documentation\html-docs\ch05.html" />
-								<File Id="ch06.html" Name="ch06.html" Source="..\documentation\html-docs\ch06.html" />
-								<File Id="ch07.html" Name="ch07.html" Source="..\documentation\html-docs\ch07.html" />
-								<File Id="ch07s02.html" Name="ch07s02.html" Source="..\documentation\html-docs\ch07s02.html" />
-								<File Id="ch07s03.html" Name="ch07s03.html" Source="..\documentation\html-docs\ch07s03.html" />
-								<File Id="ch08.html" Name="ch08.html" Source="..\documentation\html-docs\ch08.html" />
 								<File Id="index.html" Name="index.html" Source="..\documentation\html-docs\index.html" />
 							</Component>
 							<Directory Id="HtmlImages" Name="images">

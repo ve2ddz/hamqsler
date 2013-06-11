@@ -92,6 +92,12 @@ namespace hamqsler
 		void CallsignBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			Regex callReg = new Regex("[A-Za-z0-9/]");
+			if(CallsignBox.Text.Length >= CallsignBox.MaxLength)
+			{
+				// too long
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
 			if(!callReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid
@@ -110,6 +116,12 @@ namespace hamqsler
 		void ManagerBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			Regex mgrReg = new Regex("[A-Za-z0-9]");
+			if(ManagerBox.Text.Length >= ManagerBox.MaxLength)
+			{
+				// too long
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
 			if(!mgrReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid
@@ -129,6 +141,12 @@ namespace hamqsler
 		void StartDateBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			Regex dateReg = new Regex("[0-9]");
+			if(StartDateBox.Text.Length >= StartDateBox.MaxLength)
+			{
+				// too much input
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);
+				e.Handled = true;
+			}
 			if(!dateReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid
@@ -148,6 +166,12 @@ namespace hamqsler
 		void StartTimeBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			Regex timeReg = new Regex("[0-9]");
+			if(StartTimeBox.Text.Length >= StartTimeBox.MaxLength)
+			{
+				// too long
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}
 			if(!timeReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid
@@ -167,6 +191,12 @@ namespace hamqsler
 		void FrequencyBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			Regex freqReg = new Regex("[0-9,\\.]");
+			if(FrequencyBox.Text.Length >= FrequencyBox.MaxLength)
+			{
+				// too long
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);		// alert user
+				e.Handled = true;			// consume the event so that the character is not processed
+			}				
 			if(!freqReg.IsMatch(e.Text))	// check valid character
 			{
 				// not valid
@@ -279,6 +309,21 @@ namespace hamqsler
 				qso.setField("qsl_sent_via", QsoData.SentVia.Substring(0,1));
 			}
 			return qso;
+		}
+		
+		/// <summary>
+		/// Handler for RstBox PreviewTextInput event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void RstBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			if(RstBox.Text.Length >= RstBox.MaxLength)
+			{
+				// too long
+				Console.Beep(BEEPFREQUENCY, BEEPDURATION);
+				e.Handled = true;
+			}
 		}
 		
 	}
