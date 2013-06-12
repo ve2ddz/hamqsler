@@ -3,16 +3,6 @@
 		 xmlns:xlink="http://www.w3.org/1999/xlink"
 		 xml:id="errorhandlingandlogging">
 	<title>Input Validation, Logging, and Error Handling</title>
-	<simplelist>
-		<member>input validation - red rectangle</member>
-		<member>input validation - individual characters</member>
-		<member>input validation - field validation</member>
-		<member>input validation - multiple fields</member>
-		<member>log file</member>
-		<member>message boxes</member>
-		<member>status bar</member>
-		<member>reporting errors</member>
-	</simplelist>
 	<para>HamQSLer performs checks on user inputs, reports and recovers from error conditions
 	where possible, and provides a logging facility to assist both the user and the
 	developers in determining what caused a specific error condition. This chapter discusses
@@ -109,11 +99,151 @@
 		as empty if it does not contain only a valid callsign.</para>
 	</section>
 	<section>
-		<title>Status Bar, Message Boxes, and the Log File</title>
-	<para>To be written.</para>
+		<title>Log File, Exceptions, Message Boxes, and Status Bar</title>
+		<section>
+			<title>Log File</title>
+			<para>HamQSLer uses a log file to save information about the program
+			and its execution. When HamQSLer starts, it logs program and data file version 
+			information, the .Net version, operating system version, the number of processors
+			on your computer and other information that may be useful in case a problem
+			occurs that causes the program to malfunction. Here is an example of this
+			information:</para>
+			<programlisting>
+			2013-06-11 11:32:19 HamQSLer started
+			                    HamQSLer version: 0.7.0.16516
+			                    QsosLibrary version: 2.0.0.0
+			                    QslBureaus version: 2.0.0.0
+			                    CLR version: 4.0.30319.296
+			                    OS: Microsoft Windows NT 6.1.7601 Service Pack 1
+			                    Processors: 2
+			                    Culture: en-US
+			</programlisting>
+			<para>Whenever an error occurs as the
+			result of a user action or data input, error information is written to the
+			log file so that the user can determine and fix the cause of the error.
+			Information about program exceptions is also normally written to the
+			log file.</para>
+			<para>Certain functionality in the program has debug code in it. The debug
+			code writes information to the log file when a debug setting is checked
+			in user preferences. It is important that you do not turn debugging on
+			except when requested to do so by a developer who is attempting to debug
+			a problem that you are having. Turning on debugging can cause a large
+			amount of text to be written to the log file, and slows program execution
+			considerably. More information is provided in the 
+			<link linkend="settinguserprefs">User Preferences</link> chapter.</para>
+			<para>A new log file is generated each time HamQSLer begins execution. The log
+			file is located in the <emphasis>hamqsler\Logs</emphasis> subdirectory of the
+			user's <emphasis>My Documents</emphasis> directory. This is a simple text file
+			that can be opened with a text editor, or when the program is running, by
+			selecting the Help->View Log File... menu item.</para>
+		</section>
+		<section>
+			<title>Message Boxes</title>
+			<para>A message box is displayed whenever there is information that the
+			user must act on before the program can continue. For example, if, when
+			loading a card file, an image file referenced in the file cannot be found, 
+			a message box is displayed informing the user of the problem, and asking
+			him if he wants to search for the image, or delete the image from the card.
+			One of these actions must be chosen before the card can be loaded and
+			displayed.
+			If an exception occurs that causes the program to abort, a message box
+			is displayed to inform the user and to ask him to report a bug in the
+			program.</para>
+			<para>Messages in message boxes may state that more information is
+			available in the log file. The user should look there to help determine
+			the cause of the problem. For example, if there is a bad field in a QSO
+			record in an ADIF file that is being imported, the message box would state
+			that there is a problem with one or more records and
+			state that more information about the causes may be found in the log file.
+			This specific situation is discussed in more detail in Exceptions, below.</para>
+		</section>
+		<section>
+			<title>Exceptions</title>
+			<para>An exception is an error in the program that causes execution of the
+			current code path to be interrupted and shunted off to another location in
+			the program to handle the error condition. Exceptions range from minor
+			annoyances because of bad data in a file being imported by the user,
+			to conditions that cause the program to abort.</para>
+			<para>The following list contains some examples of where exceptions are
+			generated and their effects on the program and user:</para>
+			<itemizedlist>
+				<listitem>
+					<para>An invalid field in a QSO record in an ADIF file generates
+					an exception. In this case, information about the invalid field
+					is written to the log file, the QSO record is not loaded, and processing
+					continues with the next record. Once all records have been processed,
+					a message box is displayed informing the user of the problem and 
+					directing the user to look in the log file for more information. The
+					user may continue to use HamQSLer and the loaded QSOs.</para>
+				</listitem>
+				<listitem>
+					<para>If a card file contains an invalid field, a message box will
+					be displayed to inform the user of the problem and redirects the
+					user to the log file for more information. If the user did not edit
+					the card file using a text editor, he may not be able to determine
+					the actual cause of the problem or fix it. In that case, the user
+					would have to file a bug report. Bug reports are discussed in a section
+					below.</para>
+				</listitem>
+				<listitem>
+					<para>A programming error or an bug in .Net may cause an unhandled
+					exception to be thrown. In this case, the error information is
+					written to the log file and a message box is displayed to alert
+					the user that the program is about to terminate because of the
+					exception. The only action the user can take is to file a bug 
+					report.</para>
+				</listitem>
+			</itemizedlist>
+		</section>
+		<section>
+			<title>Status Bar</title>
+			<para>The status bar is located at the bottom of the main window of the
+			program. Information messages may be displayed here. Very few messages are
+			actually displayed; they are used mainly to inform the user when a potentially
+			long lasting process has completed. For example, after the user imports
+			QslDnP files into the <emphasis>hamqsler</emphasis> directory, the status
+			message "QslDnP files have been copied and card files converted." is
+			displayed.</para>
+		</section>
 	</section>
 	<section>
 		<title>Reporting Bugs</title>
-		<para>To be written.</para>
+		<para>To help with debugging problems, please include the following
+		information when reporting a bug in HamQSLer:</para>
+		<orderedlist>
+			<listitem>
+				<para>A description of the bug, including any error messages that
+				are displayed.</para>
+			</listitem>
+			<listitem>
+				<para>A description of what you were doing at the time that the
+				problem happened, including any steps that can be used to replicate
+				the problem.</para>
+			</listitem>
+			<listitem>
+				<para>Contents of the log file. The log file is
+				overwritten when you start HamQSLer, so if the program aborts, do
+				not restart the program to view the log file; the log file is
+				located at <emphasis>...\My Documents\hamqsler\Logs\hamqsler.log</emphasis>
+				</para>
+			</listitem>
+			<listitem>
+				<para>If the problem is with a card file, include the card file
+				and the files containing any images that are included on the card.</para>
+			</listitem>
+			<listitem>
+				<para>For printer problems, include the make and model of the printer.
+				Does the problem occur when doing a print preview, or only when 
+				printing?</para>
+			</listitem>
+			<listitem>
+				<para>Any additional information that you can provide. It is always
+				better to include too much information than not enough information because
+				if not enough information is provided, then time is wasted asking for the
+				information.</para>
+			</listitem>
+		</orderedlist>
+		<para>For this alpha release only, please report all bugs to
+		qsl@va3hj.ca. </para>
 	</section>
 </chapter>
