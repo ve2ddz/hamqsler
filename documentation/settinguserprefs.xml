@@ -3,5 +3,91 @@
 		 xmlns:xlink="http://www.w3.org/1999/xlink"
 		 xml:id="settinguserprefs">
 	<title>Setting User Preferences</title>
-	<para>To be written.</para>
+	<para>User preferences control a number of aspects of program execution and contain many text
+	and QSOs Box related properties. Depending on some of the user preferences settings,
+	HamQSLer may save additional information in the user preferences file. For example, if the setting
+	for restoring ADIF files is set, then the paths to all ADIF files that were loaded would be saved
+	with the user preferences so that HamQSLer could load these files when the program starts.</para>
+	<para>User preferences are written to a text file called <emphasis>.hamqsler</emphasis> and
+	stored in the <emphasis>hamqsler</emphasis> directory. This file is loaded during program
+	initialization. See the <link linkend="programinit">Program Initialization and the Splash
+	Screen</link> chapter for more information.</para>
+	<para>Users edit user preferences settings by using the User Preferences dialog. This dialog
+	is displayed by selecting the Edit->User Preferences menu item on the main window. When first
+	opened, the dialog looks like the image below.</para>
+	<figure xml:id="userprefsdialog2">
+		<title>User Preferences Dialog When First Opened</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/userprefsdialog.png" />
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<para>User preferences are arranged in a set of topics. For example, Program contains settings
+	that affect how HamQSLer executes, and TextItems contains settings related to text items. The
+	default font face for text items and the default callsign, name and QTH, and salutation that
+	are placed on a card when it is first created are examples of texit item settings.</para>
+	<para>The box on the left of the dialog contains the set of topics in expander controls. To open
+	an expander, either click on the arrowhead to the left of the topic, or double-click on the topic
+	name. The image below shows the topics with all expanders opened.</para>
+	<figure xml:id="userprefstopics">
+		<title>User Preferences Topics</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/userprefstopics.png" />
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<para>Clicking on any of the subtopics displays a panel of controls on the right side of the
+	dialog. These controls may be set by the user to changed the corresponding user preference.</para>
+	<para>Each of the topics and settings is discussed in the sections that follow.</para>
+	<section>
+		<title>Program Settings</title>
+		<para>Program settings affect the execution of HamQSLer during program initialization.</para>
+		<section>
+			<title>Program Version Check</title>
+			<para>The image below shows the user preferences dialog with the Program
+			Version Check subtopic selected. There are only two settings, one for
+			checking for new versions of the program and data files, and one for
+			also checking for new development releases.</para>
+			<figure xml:id="programversioncheck">
+				<title>Program Version Check Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/programversioncheck.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The Check for Program and Data File Updates checkbox controls whether HamQSLer
+			checks for new program and data file versions during initialization. With the
+			checkbox checked, the program checks for new versions, and with the checkbox
+			unchecked, the program does not check for new versions. The
+			default value (the value set when the user preferences file is first created)
+			is to check for new versions.</para>
+			<para>The Stable and Development Program Releases checkbox determines whether
+			HamQSLer should check only for data file updates and stable program
+			updates, or if it should also check for development updates. if this checkbox
+			is checked, then HamQSLer checks for both stable and development new
+			releases during program initialization. If unchecked, HamQSLer checks only 
+			for new stable releases. The default value is to not check for development
+			versions.</para>
+			<para>Development
+			versions of HamQSLer are provided to allow users access to new features as they
+			are developed rather than waiting for a stable release. You can think of
+			development releases as beta releases of the program.</para>
+			<para>This checkbox can only be checked or unchecked if the Check for Program
+			and Data File Updates checkbox is checked.</para>
+			<tip>
+				<para>Development releases give users access to new features as they
+				are being developed rather than waiting for the final release.</para>
+			</tip>
+			<caution>
+				<para>Development releases have not necessarily been tested as
+				thoroughly as stable releases, so more bugs may be encountered in
+				a development release that its subsequent stable release. Of course,
+				if no one uses the development release, then the bugs won't be found
+				until the stable release.</para>
+			</caution>
+		</section>
+	</section>
 </chapter>
