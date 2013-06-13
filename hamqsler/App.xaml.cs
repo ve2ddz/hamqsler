@@ -180,7 +180,11 @@ namespace hamqsler
 			return showHamqslerCreatedLabel;
 		}
 
-			
+		/// <summary>
+		/// Create the exception logger
+		/// </summary>
+		/// <param name="securityException">security exception indicator</param>
+		/// <param name="accessException">access exception indicator</param>
 		internal void CreateExceptionLogger(out bool securityException, out bool accessException)
 		{
 			logger = new ExceptionLogger(Environment.GetFolderPath(
