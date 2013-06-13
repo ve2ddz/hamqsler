@@ -88,6 +88,35 @@
 				if no one uses the development release, then the bugs won't be found
 				until the stable release.</para>
 			</caution>
+			<section>
+				<title>HTTP Proxy Settings</title>
+				<para>The image below shows the user preferences dialog with the HTTP Proxy
+				Settings subtopic selected. These controls configure HamQSLer to use an
+				HTTP proxy. Most users do not need to modify the default settings.</para>
+				<figure xml:id="httpproxysettings">
+					<title>Proxy Settings Preferences</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/httpproxysettings.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>The proxy server control is used to specify the name or IP address
+				of the HTTP proxy server. The default value is no server.</para>
+				<para>The proxy server port is the port number for the HTTP proxy server.
+				The default value is 80, which is the standard port number for HTTP servers.
+				Other typical port numbers are 8000, 8080, and 8888.</para>
+				<caution>
+					<para>Change these settings only if HamQSLer cannot retrieve the versions
+					file during program initialization. Internet service providers typically
+					do not require you to configure proxy servers on their networks, so
+					proxy server settings are only required if your network has one installed.
+					This is not something that is typically done on a home network.</para>
+					<para>Even if a proxy server is installed on your network, it would
+					normally be configured in Control Panel->Internet Options, so there
+					would be no need to configure the server here.</para>
+				</caution>
+			</section>
 		</section>
 	</section>
 </chapter>
