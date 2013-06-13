@@ -80,7 +80,17 @@ namespace hamqsler
 				ShowHamQslerCreatedLabel();
 			}
 			// create ExceptionLogger
-			((App)Application.Current).CreateExceptionLogger();
+			bool securityException = false;
+			bool accessException = false;
+			((App)Application.Current).CreateExceptionLogger(out securityException, out accessException);
+			if(securityException)
+			{
+				ShowLogPermissionErrorLabel();
+			}
+			else if(accessException)
+			{
+				ShowLogAccessErrorLabel();
+			}
 			((App)Application.Current).LogRuntimeInfo();		// output run start info
 			// load existing UserPreferences file, or create new one
 			// it is necessary to run this on the UI thread because UserPreferences is a
@@ -117,12 +127,14 @@ namespace hamqsler
 				HideCheckingForUpdatesLabel();
 			}
 			
-			if(directoriesError || newStableVersion || newDevelopmentVersion)		// terminate class error
+			if(directoriesError || newStableVersion || newDevelopmentVersion ||
+			   securityException || accessException)		// terminate class error
 			{
 				ShowTerminateButton();
 			}
 			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
-						directoriesError || newStableVersion || newDevelopmentVersion)
+						directoriesError || newStableVersion || newDevelopmentVersion ||
+						securityException || accessException)
 			{
 				ShowContinueButton();
 			}
@@ -260,6 +272,21 @@ namespace hamqsler
 		public void HideCheckingForUpdatesLabel()
 		{
 			checkingForUpdatesLabel.Visibility = Visibility.Collapsed;
+			UpdateUI();
+		}
+		
+		/// <summary>
+		/// Show the logPermissionErrorLabel
+		/// </summary>
+		private void ShowLogPermissionErrorLabel()
+		{
+			logPermissionErrorLabel.Visibility = Visibility.Visible;
+			UpdateUI();
+		}
+		
+		private void ShowLogAccessErrorLabel()
+		{
+			logAccessErrorLabel.Visibility = Visibility.Visible;
 			UpdateUI();
 		}
 		

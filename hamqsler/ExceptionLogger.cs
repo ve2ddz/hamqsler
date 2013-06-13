@@ -52,41 +52,43 @@ namespace hamqsler
         }
 
         /// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="logFileName">Name of the file to log messages to.</param>
-        public ExceptionLogger(string logFileName)
+        /// Constructor
+        /// </summary>
+        /// <param name="logFileName">Path of the file to log messages to</param>
+        /// <param name="securityException">security exception indicator</param>
+        /// <param name="accessException">access exception indicator</param>
+        public ExceptionLogger(string logFileName, out bool securityException, out bool accessException)
         {
+        	securityException = false;
+        	accessException = false;
             try
             {
                 logInfo = new FileInfo(logFileName);
+	            FileStream fS = logInfo.Create();
+	            // call to Create opens the filestream, so it must be closed
+	            // to prevent IO error later
+	            fS.Close();
             }
             catch(SecurityException)
             {
-                 ShowMessage("Security Exception: You do not have the required permission to access the log file.\r\n"
-                            + "You may continue to use hamqsler, but no logging will be done");
+                 securityException = true;
                 noWrite = true;
                 return;
             }
             catch(UnauthorizedAccessException)
             {
-                ShowMessage("Access Exception: Access to the log file is denied.\r\n"
-                            + "You may continue to use hamqsler, but no logging will be done");
+                accessException = true;
                 noWrite = true;
                 return;
             }
             catch(Exception e)
             {
-                ShowMessage("Programming Error. Please contact the author with the contents of this message:\r\n"
+                ShowMessage("Programming Error. Please submit a bug report with the contents of this message:\r\n"
                         + e.Message + "\r\n"
                         + "You may continue to use hamqsler, but no logging will be done");
                 noWrite = true;
                 return;
             }
-            FileStream fS = logInfo.Create();
-            // call to Create opens the filestream, so it must be closed
-            // to prevent IO error later
-            fS.Close();
         }
 
         /// <summary>

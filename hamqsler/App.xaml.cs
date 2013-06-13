@@ -179,14 +179,13 @@ namespace hamqsler
 			}
 			return showHamqslerCreatedLabel;
 		}
-		
-		/// <summary>
-		/// Create the ExceptionLogger
-		/// </summary>
-		internal void CreateExceptionLogger()
+
+			
+		internal void CreateExceptionLogger(out bool securityException, out bool accessException)
 		{
 			logger = new ExceptionLogger(Environment.GetFolderPath(
-					Environment.SpecialFolder.MyDocuments) + "/hamqsler/Logs/hamqsler.log");
+					Environment.SpecialFolder.MyDocuments) + "/hamqsler/Logs/hamqsler.log",
+					out securityException, out accessException);
 		}
 		
 		/// <summary>

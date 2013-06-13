@@ -74,6 +74,18 @@
 			<Label Name="hamqslerCreatedProblemLabel" Visibility="Collapsed"
 							>Problem creating hamqsler directories or copying 
 							files to your 'Documents' directory</Label>
+			<TextBlock Name="logPermissionErrorLabel" Visibility="Collapsed" TextWrapping="Wrap"
+						Margin="5,2,2,2">
+				<TextBlock.Text>
+					You do not have the required permission to access log file.
+					You may continue to use HamQSLer but no logging will be done.
+				</TextBlock.Text>
+			</TextBlock>
+			<TextBlock Name="logAccessErrorLabel" Visibility="Collapsed" TextWrapping="Wrap"
+				Margin="5,2,2,2">
+				You cannot access the log file. You may continue to use HamQSLer
+				but no logging will be done.
+			</TextBlock>
 			<Label Name="userPrefsErrorLabel" Visibility="Collapsed"
 							>Error occurred while attempting to access user
 							preferences file. Preferences have been created.</Label>
