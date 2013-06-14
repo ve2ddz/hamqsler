@@ -241,4 +241,35 @@
 			Browser dialog from which the user may select a new directory.</para>
 		</section>
 	</section>
+	<section>
+		<title>Text Items Preferences</title>
+		<para>The text items topic contains user preferences that are related to
+		text items in general and the default callsign, name and QTH, and salutation
+		texts that are added to a new card when it is created.</para>
+		<section>
+			<title>Default Text Font Preference</title>
+			<para>The default text font is the font that text items are displayed in
+			when a new card is created. All text items are displayed in this font on
+			the new card. However, the user may later select a different font for each
+			text item on the card. See the <link linkend="carddesign">Working With
+			Cards</link> chapter for more information.</para>
+			<para>The user preferences dialog with the default font face subtopic
+			selected is shown in the image below. The only preference available
+			in this panel is the Default Text FontFace. A list of all fonts
+			registered on the computer is provided in a dropdown box. When HamQSLer
+			is executed for the first time, the default text font face is set to
+			Arial.</para>
+			<figure xml:id="defaulttextfont2">
+				<title>Default Text Font Preference</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaulttextfont.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Select the font you want as the default from the dropdown box. A
+			sample of text in that font is displayed in the box below the
+			dropdown box.</para>
+		</section>
+	</section>
 </chapter>
