@@ -182,5 +182,45 @@
 			located to the right of the folder name. This opens a Folder Browser
 			dialog from which the user may select a new directory.</para>
 		</section>
+		<section>
+			<title>Cards Files and Folder Preferences</title>
+			<para>This subtopic contains preferences specifying whether HamQSLer should
+			reload card files when the program starts, and the directory that the
+			file open dialog should open in when handling the Open Card... 
+			menu item processing. The image below shows the user preferences dialog
+			with the Card Files and Folder subtopic selected.</para>
+			<figure xml:id="cardfilesandfolder">
+				<title>Cards Files and Folder Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/cardfilesandfolder.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The Reload Card Files on Startup checkbox setting determines whether card
+			files are reloaded or not when HamQSLer starts up. With the checkbox checked,
+			the files are loaded; with the checkbox unchecked, the files are not
+			loaded.</para>
+			<para>The files that are reloaded are determined by the card files that are
+			open when HamQSLer is terminated. New cards that have not been saved are
+			not reloaded.</para>
+			<para>The card files list is stored in the user preferences file but there
+			is no way for the user to see the list except by opening the user
+			preferences file in a text editor.</para>
+			<caution>
+				<para>If you open the user preferences file in a text editor, 
+				be certain not to make any changes to the file; in other words,
+				if a change is made accidentally, do not save the file.
+				Editing the user preferences file could result in HamQSLer aborting
+				or otherwise malfunctioning.</para>
+			</caution>
+			<para>The Default Card Files Folder is the directory that HamQSLer opens
+			in a File Open dialog when the user selects the OpenCard
+			menu item. The user should set this value to the directory in which
+			he stores ADIF files.</para>
+			<para>To change the folder, click on the button labeled "..." that is
+			located to the right of the folder name. This opens a Folder Browser
+			dialog from which the user may select a new directory.</para>
+		</section>
 	</section>
 </chapter>
