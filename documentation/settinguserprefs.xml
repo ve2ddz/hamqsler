@@ -222,5 +222,23 @@
 			located to the right of the folder name. This opens a Folder Browser
 			dialog from which the user may select a new directory.</para>
 		</section>
+		<section>
+			<title>Images Folder Preferences</title>
+			<para>This subtopic contains a single preference, the default images folder.
+			This specifies the directory that the file open dialog is opened in when the
+			user adds a background or secondary image to the card in design mode.</para>
+			<figure xml:id="imagesfolder">
+				<title>Images Folder Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/imagefilesfolder.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The image above shows the user preferences dialog with the Images
+			Folder subtopic selected. To change the directory, click on the button
+			labeled ... to the right of the folder name. This opens the Folder
+			Browser dialog from which the user may select a new directory.</para>
+		</section>
 	</section>
 </chapter>
