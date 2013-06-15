@@ -327,10 +327,90 @@
 			<tip>
 				<para>If you operate from different locations such as at home, at your
 				cottage, and as a rover during contests, add a new text item to the card
-				and place the location in it. See <link linkend="carddesign">Working
+				and place the operating location in it. See <link linkend="carddesign">Working
 				With Cards</link> for information about adding text items to a
 				card.</para>
 			</tip>
+		</section>
+		<section>
+			<title>Default Salutation Text Preference</title>
+			<para>The default salutation text is placed on a new card when it is first
+			created. The first image below shows the user preferences dialog with the
+			Salutation Text subtopic selected. Note that there is no text box, just a
+			Macros button. This is what you would see the first time that you select this
+			subtopic. There is no text box because the default salutation text contains
+			macros, and therefore you must open the Static Text and Macros dialog by clicking
+			on the Macros button to edit
+			the salutation.</para>
+			<figure xml:id="salutatoin">
+				<title>Default Salutation Text Preference</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultsalutationtext.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The image that follows shows the Static Text and Macros dialog box as
+			it would appear if you have not edited the salutation before. Note that there
+			is a Static Text group box with a text box containing the text "Thanks for the
+			QSO" in it, a Count Macro group box, and finally, another Static Text group
+			box with the text ". 73," in it. The count macro is discussed in the
+			<link linkend="macros">Macros</link> chapter, so it will not be discussed in
+			detail here.</para>
+			<para>As currently set up, the salutation text that is displayed on a new
+			card in design mode is "Thanks for the QSO$. 73,". When you print cards, if
+			you set the maximum number of QSOs that can be printed on a card to 1, or the
+			maximum number of QSOs is set to greater than 1, but only one QSO is being
+			printed on the card, then the salutation text that is printed is "Thanks for
+			the QSO. 73,". If the maximum number of QSOs is set to greater than 1 and no
+			QSOs are being printed or there is more than 1 QSO being printed on the card,
+			then the salutation text printed on that card would be "Thanks for the QSOs.
+			73,".</para>
+			<figure xml:id="defaultsalutation2">
+				<title>Default Salutation Text Macros</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultsalutation.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<tip>
+				<para>If you make changes to the count macro for this salutation,
+				you may want to make similar changes to the confirming text preference
+				in the QSOs Box Preferences, which are discussed below.</para>
+			</tip>
+		</section>
+	</section>
+	<section>
+		<title>QSOs Box Preferences</title>
+		<para>The QSOs Box preferences topic contains user preferences that are related
+		to the display of text items in the QSOs Box, such as the font face that all
+		text in the QSOs Box is displayed in, the contents of the headers in each
+		column of the box, and the frequency values printed for QSOs whose records contain
+		a band field but no frequency field.</para>
+		<section>
+			<title>Default QSOs Box Font Preference</title>
+			<para>The default QSOs Box font is the font that all text in the QSOs Box
+			is displayed in when a new card is created. While designing a card, the user 
+			may select a different font. See the <link linkend="carddesign">Working With
+			Cards</link> chapter for more information.</para>
+			<para>The user preferences dialog with the default QSOs Box font face subtopic
+			selected is shown in the image below. The only preference available
+			in this panel is the Default QSOs Box FontFace. A list of all fonts
+			registered on the computer is provided in a dropdown box. When HamQSLer
+			is executed for the first time, the default QSOs Box font face is set to
+			Arial.</para>
+			<figure xml:id="defaultqsosboxfont">
+				<title>Default QSOs Box Font Preference</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultqsosboxfont.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Select the font you want as the default from the dropdown box. A
+			sample of text in that font is displayed in the box below the
+			dropdown box.</para>
 		</section>
 	</section>
 </chapter>
