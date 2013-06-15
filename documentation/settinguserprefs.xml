@@ -271,5 +271,37 @@
 			sample of text in that font is displayed in the box below the
 			dropdown box.</para>
 		</section>
+		<section>
+			<title>Default Callsign Text Preference</title>
+			<para>The default callsign text is the callsign that is placed on a new card
+			when it is first created. The image below shows the user preferences dialog with
+			the Callsign Text subtopic selected. In this image, there is a text box with the
+			text "MyCall" in it, and a Macros button below it. When the user preferences file is
+			created, either the first time that HamQSLer is started, or if HamQSLer cannot locate
+			the user preferences files and creates a new one, the default callsign is set to "MyCall".
+			</para>
+			<figure xml:id="callsigntext2">
+				<title>Default Callsign Text Preference</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultcallsign2.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>You may either edit the callsign text, or click on the Macros button to set the
+			default callsign to a set of macros. See the <link linkend="macros">Macros</link>
+			chapter for more information.</para>
+			<tip>
+				<para>If you always use the same callsign, change "MyCall" to that callsign. If you
+				followed the <link linkend="gettingstarted">Getting Started</link> tutorial,
+				then you have already performed this step.</para>
+			</tip>
+			<tip>
+				<para>If you use a number of different callsigns and the callsign that is used for each
+				QSO is stored in your QSO database and exported to an ADIF file, then you should
+				follow one of more of the tips in the AdifMacro and AdifExistsMacro sections of the
+				<link linkend="macros">Macros</link> chapter.</para>
+			</tip>
+		</section>
 	</section>
 </chapter>
