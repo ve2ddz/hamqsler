@@ -300,7 +300,36 @@
 				<para>If you use a number of different callsigns and the callsign that is used for each
 				QSO is stored in your QSO database and exported to an ADIF file, then you should
 				follow one of more of the tips in the AdifMacro and AdifExistsMacro sections of the
-				<link linkend="macros">Macros</link> chapter.</para>
+				<link linkend="macros">Macros</link> chapter. See the documentation for your
+				logging program to determine the ADIF fields that the logging program uses.</para>
+			</tip>
+		</section>
+		<section>
+			<title>Default Name and QTH Text Preference</title>
+			<para>The default name and QTH text is placed on a new card when it is first
+			created. The image that follows this paragraph shows the user preferences
+			dialog with the Name and QTH Text subtopic chosen. In this image, there is a
+			text box with the text "MyQth" in it and a Macros button below it. When the user
+			preferences file is first created, the default text is set to "MyQth".</para>
+			<figure xml:id="nameQth2">
+				<title>Default Name and QTH Text Preference</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultnameQth2.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Change "MyQth" to your name and address. Use the Enter key to separate lines
+			of text.</para>
+			<para>As an alternative, you could create a set of macros by clicking the Macros
+			button, although it is unlikely to be very useful. Why would you want QSL cards
+			sent to different addresses?</para>
+			<tip>
+				<para>If you operate from different locations such as at home, at your
+				cottage, and as a rover during contests, add a new text item to the card
+				and place the location in it. See <link linkend="carddesign">Working
+				With Cards</link> for information about adding text items to a
+				card.</para>
 			</tip>
 		</section>
 	</section>
