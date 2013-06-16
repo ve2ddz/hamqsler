@@ -601,21 +601,24 @@ namespace hamqsler
 			switch(box.DateFormat)
 			{
 				case "YYYY-MM-DD":
-					headers.Add(box.YYYYMMDDText);
+					headers.Add(box.YYYYMMDDText.Equals(string.Empty) ? "YYYY-MM-DD" :
+					            box.YYYYMMDDText);
 					break;
 				case "DD-MMM-YY":
-					headers.Add(box.DDMMMYYText);
+					headers.Add(box.DDMMMYYText.Equals(string.Empty) ? "DD-MMM-YY" :
+					            box.DDMMMYYText);
 					break;
 				case "DD-MM-YY":
-					headers.Add(box.DDMMYYText);
+					headers.Add(box.DDMMYYText.Equals(string.Empty) ? "DD-MM-YY" :
+					            box.DDMMYYText);
 					break;
 			}
-			headers.Add(box.TimeText);
-			headers.Add(box.BandText);
-			headers.Add(box.FreqText);
-			headers.Add(box.ModeText);
-			headers.Add(box.RSTText);
-			headers.Add(box.QSLText);
+			headers.Add(box.TimeText.Equals(string.Empty) ? "Time" : box.TimeText);
+			headers.Add(box.BandText.Equals(string.Empty) ? "Band" : box.BandText);
+			headers.Add(box.FreqText.Equals(string.Empty) ? "MHz" : box.FreqText);
+			headers.Add(box.ModeText.Equals(string.Empty) ? "Mode" : box.ModeText);
+			headers.Add(box.RSTText.Equals(string.Empty) ? "RST" : box.RSTText);
+			headers.Add(box.QSLText.Equals(string.Empty) ? "QSL" : box.QSLText);
 			return headers;
 		}
 		
@@ -631,9 +634,9 @@ namespace hamqsler
 			List<float> colWidths = new List<float>();
 			int width = 0;
 			// date column width
-			int dateLen = headers[0].Length;
-			string dateMeasure = "--";
-			for(int i = 0; i < dateLen - 2; i++)
+			int dateLen = box.DateFormat.Length;
+			string dateMeasure = string.Empty;
+			for(int i = 0; i < dateLen; i++)
 			{
 				dateMeasure += "M";
 			}
