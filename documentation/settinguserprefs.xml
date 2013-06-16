@@ -555,15 +555,15 @@
 		</section>
 		<section>
 			<title>Month Abreviations Preferences</title>
+			<para>This subtopic allows the user to change the three character
+			text representing the months that are printed in the date column of
+			the QSOs Box when "DD-MMM-YY" is selected as the date format.</para>
+			<para>The image below shows the user preferences dialog with the
+			month abreviations subtopic selected. There is a text box for each month.
+			These values are set when a new card is created and cannot be changed
+			for that card.</para>
 			<figure xml:id="monthabreviations">
 				<title>Month Abreviations Preferences</title>
-				<para>This subtopic allows the user to change the three character
-				text representing the months that are printed in the date column of
-				the QSOs Box when "DD-MMM-YY" is selected as the date format.</para>
-				<para>The image below shows the user preferences dialog with the
-				month abreviations subtopic selected. There is a text box for each month.
-				These values are set when a new card is created and cannot be changed
-				for that card.</para>
 				<mediaobject>
 					<imageobject>
 						<imagedata fileref="images/monthabreviations.png" />
@@ -578,6 +578,33 @@
 				your mind at a later time, and there is no way to change the months
 				texts on an existing card.</para>
 			</caution>
+		</section>
+		<section>
+			<title>Bands / Frequencies Preferences</title>
+			<para>For an ADIF QSO record to be valid, it must contain either a band field,
+			a frequency field, or both. What happens if you want to print cards with
+			a frequency column rather than a band column, but the records only contain
+			a band field? HamQSLer uses the frequency values specified in the bands /
+			frequencies preferences.</para>
+			<para>The image below shows the user preferences dialog with the bands /
+			frequencies subtopic selected. As you can see, there is a text box for
+			each band to allow you to set a frequency to substitute for each band.
+			The frequencies that are displayed in the image are the default values that
+			are set when the user preferences file is first created. In almost all
+			cases, the frequencies are set to the lower band edges.</para>
+			<figure xml:id="bandsfreqs">
+				<title>Bands / Frequencies Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/bandfreqs.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Edit each text box to contain the frequency that you want printed for
+			that band. Frequencies are limited to 8 characters and must be within the
+			ADIF specified band limits. Input validation, as discussed in
+			the <link linkend="errorhandlingandlogging">Error Handling and Logging</link>
+			chapter, is performed.</para>
 		</section>
 	</section>
 </chapter>
