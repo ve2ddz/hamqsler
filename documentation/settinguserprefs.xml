@@ -377,7 +377,7 @@
 			<tip>
 				<para>If you make changes to the count macro for this salutation,
 				you may want to make similar changes to the confirming text preference
-				in the QSOs Box Preferences, which are discussed below.</para>
+				in the QSOs Box Preferences, which is discussed below.</para>
 			</tip>
 		</section>
 	</section>
@@ -411,6 +411,100 @@
 			<para>Select the font you want as the default from the dropdown box. A
 			sample of text in that font is displayed in the box below the
 			dropdown box.</para>
+		</section>
+		<section>
+			<title>Confirming Text Preference</title>
+			<para>The confirming text is placed on the first line of the QSOs box of a
+			card. The first image below shows the user preferences dialog with the
+			Confirming Text subtopic selected. Note that there is no text box, just a
+			Macros button. This is what you would see the first time that you select this
+			subtopic. There is no text box because the default confirming text contains
+			macros, and therefore you must open the Static Text and Macros dialog by clicking
+			on the Macros button to edit
+			the text.</para>
+			<figure xml:id="confirmingtext">
+				<title>Default Confirming Text Preference</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/confirmingtext.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The image that follows shows the Static Text and Macros dialog box as
+			it would appear if you have not edited the confirming text before. Note that there
+			is a Static Text group box with a text box containing the text "Confirming 2-Way
+			QSO" in it, a Count Macro group box, and finally, another Static Text group
+			box with the text "with" in it. The count macro is discussed in the
+			<link linkend="macros">Macros</link> chapter, so it will not be discussed in
+			detail here.</para>
+			<para>As currently set up, the confirming text that is displayed on a 
+			card in design mode is "Confirming 2-Way QSO$ with". When you print cards, if
+			you set the maximum number of QSOs that can be printed on a card to 1, or the
+			maximum number of QSOs is set to greater than 1, but only one QSO is being
+			printed on the card, then the confiming text that is printed is "Confirming
+			2-Way QSO with". If the maximum number of QSOs is set to greater than 1 and no
+			QSOs are being printed, or there is more than 1 QSO being printed on the card,
+			then the salutation text printed on that card would be "Confirming
+			2-Way QSOs with".</para>
+			<figure xml:id="defaultconfirmingtext">
+				<title>Default Confirming Text Macros</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/defaultconfirmingtext.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<tip>
+				<para>If you make changes to the count macro for this confirming text,
+				you may want to make similar changes to the salutation text preference
+				in the Text Items Preferences, which is discussed above.</para>
+			</tip>
+		</section>
+		<section>
+			<title>Date Formats Preferences</title>
+			<para>These preferences refer to the format that dates should be printed
+			in, and the header text for the date column in the QSOs Box.</para>
+			<figure xml:id="dateheaders">
+				<title>Date Formats Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/dateheaders.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The image above shows the user preferences dialog with the Date Formats
+			subtopic selected. The dropdown box at the bottom of the panel contains all of
+			the formats that the dates may be printed in. Currently the choices are:</para>
+			<orderedlist>
+				<listitem>
+				<para>YYYY-MM-DD. This is the date in ISO 8601 format.</para>
+				</listitem>
+				<listitem>
+					<para>DD-MMM-YY.</para>
+				</listitem>
+				<listitem>
+					<para>DD-MM-YY.</para>
+				</listitem>
+			</orderedlist>
+			<para>Select the date format that you want to be the default date format when
+			a new card is created. This may be changed to a different format when designing
+			a card.</para>
+			<para>The choice of format determines the header text that is displayed in the
+			date column in the QSOs Box. Edit the header text for each
+			date format using the text boxes above the dropdown box.</para>
+			<tip>
+				<para>What does 02-04-03 mean? It depends on the country you live in, among
+				other things. For the answer to this question and a discussion of 
+				meaningful date formats, see
+				<link xlink:href="www.w3.org/QA/Tips/iso-date">Use international
+				date format</link>.</para>
+			</tip>
+			<caution>
+				<para>As noted in the tip above, 02-04-03 can mean different dates in
+				different countries. If you do use DD-MM-YY as the date format on
+				your card, do not change the header text to something like "Date" as
+				this may bring back the confusion as to what the date actually is.</para>
+			</caution>
 		</section>
 	</section>
 </chapter>
