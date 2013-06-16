@@ -506,5 +506,34 @@
 				this may bring back the confusion as to what the date actually is.</para>
 			</caution>
 		</section>
+		<section>
+			<title>Header Text Preferences</title>
+			<para>This subtopic allows the user to set the header text for
+			the Time, Band, Frequency, Mode, and RST columns.</para>
+			<para>The image below shows the user preferences dialog with the Header
+			Text subtopic selected. There is one text box for each of the five
+			headers.</para>
+			<para>Modify the header text to the text that you want for each column. The
+			text may be a maximum of 6 characters. The header text for the QSOs Box
+			on a card is fixed to these values when a card is creating. In other words,
+			changing the preferences only affects new cards that the user creates.</para>
+			<figure xml:id="headertext">
+				<title>Header Text Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/headertexts.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<caution>
+				<para>The values that are printed in the frequency column are in MHz,
+				so don't change the header to indicate kHz.</para>
+			</caution>
+			<caution>
+				<para>If you delete all text from one of the text boxes, the default
+				text will be used when printing the card. In other words, column headers
+				in the QSOs Box are never blank when designing and printing a card.</para>
+			</caution>
+		</section>
 	</section>
 </chapter>
