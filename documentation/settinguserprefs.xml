@@ -535,5 +535,49 @@
 				in the QSOs Box are never blank when designing and printing a card.</para>
 			</caution>
 		</section>
+		<section>
+			<title>QSL Text Preferences</title>
+			<para>The QSL text subtopic allows the user to change the text that is printed
+			in the QSL column header and the text printed in the QSL column for each
+			QSO.</para>
+			<figure xml:id="qsltext">
+				<title>QSL Text Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/qsltext.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>This image shows the user preferences dialog with the QSL Text
+			subtopic selected.</para>
+			<para>Use the text boxes to modify the text. A maximum of three characters
+			is allowed in each box.</para>
+		</section>
+		<section>
+			<title>Month Abreviations Preferences</title>
+			<figure xml:id="monthabreviations">
+				<title>Month Abreviations Preferences</title>
+				<para>This subtopic allows the user to change the three character
+				text representing the months that are printed in the date column of
+				the QSOs Box when "DD-MMM-YY" is selected as the date format.</para>
+				<para>The image below shows the user preferences dialog with the
+				month abreviations subtopic selected. There is a text box for each month.
+				These values are set when a new card is created and cannot be changed
+				for that card.</para>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/monthabreviations.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Change the month texts to the text you want displayed on a new card.
+			Month abreviations are limited to three characters.</para>
+			<caution>
+				<para>Do not delete all text from these text boxes, even if you
+				never intend to select the "DD-MMM-YY" date format. You may change
+				your mind at a later time, and there is no way to change the months
+				texts on an existing card.</para>
+			</caution>
+		</section>
 	</section>
 </chapter>
