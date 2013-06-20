@@ -4,4 +4,537 @@
 		 xml:id="outputtingcards">
 	<title>Outputting Cards</title>
 	<para>To be written.</para>
+	<section>
+		<title>Printing Cards</title>
+		<section>
+			<title>Print Modes and Printer Margins</title>
+			<para>Most printers support two modes of printing: borderless and bordered printing.
+			Borderless printing is normally used for printing photographs. The printer increases
+			the image size by a few percent to ensure that the image is larger than the paper
+			size so that the image being printed completely covers the paper. A small portion
+			of the edges of the image are outside the boundaries of the paper. This is
+			usually not noticed when you print a photograph, but will be noticeable if
+			you print multiple QSL cards in borderless mode, especially if you select a
+			cards layout on the page where the one or more cards is positioned at the edges
+			of the page. Here is an example of four bureau sized cards printed along
+			the top edge of a sheet of letter sized paper in borderless mode.</para>
+			<figure xml:id="borderlessprint">
+				<title>Borderless Print</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/borderlessprint.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Compare the left sides of the cards on the left with the left sides
+			of the cards on the right. Notice that the left edge of the cards
+			on the left have been clipped. Similarly, the right side of the cards on the
+			right have been clipped. Now compare the top edge of the cards at the top with
+			the cards on the row below. Again, the top of the cards at the top have been
+			clipped. You should only select a borderless paper size if you are centering
+			the cards on the page, or are printing on a paper size that is the same size
+			as the cards being printed.</para>
+			<para>Now, let's look at bordered printing. In this mode, every printer has
+			a minimum margin along each edge of the paper. These minimum margins vary from
+			printer model to printer model and may not be the same size on each side.
+			For example, the HP Officejet 6500 printer has margins of 0.125 inch (3.175 mm)
+			on every side; the HP Photosmart 7960 series printers have minimum margins of
+			0.125, 0.07, 0.135, and 0.583 inch or 3.175, 1.778, 3.429, and 14.817 mm.
+			How do you determine the minimum margins for you printers? HamQSLer
+			includes a tool for that. See <link linkend="minimummargins">
+			Determining Printer Minimum Margins</link> below.</para>
+			<para>Obviously mimimum margins would lead to a problem if you attempted to 
+			print cards	using a cards layout that positioned the cards on one or more edges 
+			of the page. The edges of the cards that are positioned at the edges of the page
+			are clipped, producing a white margin on those edges. Provided the minimum margins are less than
+			0.25 inch or 6.35 mm, HamQSLer has a setting that allows you to clip the printing
+			around the edges of each card to match the largest minimum margin for the
+			printer. See <link linkend="printerprops">Printer Properties and
+			Print Properties</link>, below for more information.</para>
+		</section>
+		<section xml:id="minimummargins">
+			<title>Determining Printer Minimum Margins</title>
+			<para>As discussed above, printer minimum margins determine where on a page you
+			can actually print. HamQSLer provides a tool to enumerate these margins. To open
+			the tool, select the Tools -> Show Printer Margins.</para>
+			<para>The printer minimum margins dialog opens. The printer dropdown box
+			lists all of the printers installed on the user's computer, with the default
+			printer selected, and the margins listed below the dropdown. The image below
+			shows the result on my computer.</para>
+			<figure xml:id="margins6500">
+				<title>Printer Minimum Margins Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/margins6500.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The margins are displayed in a dark green color, and as you can see,
+			all margins are the same size.</para>
+			<figure xml:id="margins7960">
+				<title>Printer Minimum Margins Dialog - Uneven Margins</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/margins7960.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para> The image above shows the printer minimum
+			margins with the HP Photosmart 7960 series printer selected. The margins are
+			all different sizes, and the bottom margin is greater than 0.25 inch or 6.35 mm.
+			The value for this margin is displayed in red, and a warning message is shown
+			below the margins. The meaning of the message is discussed in the next section.
+			</para>
+			<para>The minimum printer margins are a physical property of each printer,
+			are set by the printer manufacturer, and are not user changeable.</para>
+		</section>
+		<section xml:id="printerprops">
+			<title>Printer Properties and Print Properties</title>
+			<para>Printer settings and print settings may be set in three locations:</para>
+			<orderedlist>
+				<listitem>
+					<para>The settings in user preferences are program default settings.
+					These settings are transferred to the card file when a new card is
+					created.</para>
+				</listitem>
+				<listitem>
+					<para>Each card has a set of card specific default settings. The card
+					specific default printer and print settings should be set to values
+					that the user would normally use when printing that card.</para>
+				</listitem>
+				<listitem>
+					<para>Finally, when the user selects the Print Cards... menu item,
+					the card specific print and printer settings are copied to the
+					print dialog, where the user can modify them for that specific
+					print job.</para>
+				</listitem>
+			</orderedlist>
+			<para>The image below shows the printer properties and print properties
+			in the card properties panel. The same properties are displayed in the
+			user preferences dialog; these properties are also displayed in the
+			print dialog when printing cards.</para>
+			<figure xml:id="printerproperties">
+				<title>Printer and Print Options Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printerprops.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<section>
+				<title>Printer Properties</title>
+				<para>The printer dropdown box contains a list of all of the printers
+				that are installed on the computer. The paper size dropdown box lists all
+				of the paper sizes for the selected printer, and the quality dropdown box lists
+				all of the print resolution values for the selected printer. Finally, the paper
+				source dropdown lists all of the papersources or trays for the selected
+				printer. If there is only one paper source, this dropdown box is disabled.
+				</para>
+				<para>When the user selects a different printer, the paper size, quality,
+				and paper source dropdowns are reloaded with the lists that are valid
+				for the newly selected printer. An attempt is then made to set the
+				selected values to the previously selected values. For example, if the
+				paper size for the first printer was selected to be A4, then when a new
+				printer is selected, an attempt is make to select A4 as the paper size.
+				Similarly, an attempt is made to select the previous quality and paper
+				source values. If these values cannot be found in the list, then the
+				default paper size, quality, and paper source values for the newly selected
+				printer are selected.</para>
+				<caution>
+					<para>Even though the same paper sizes may exist on multiple printers,
+					the name given to these paper sizes may be different. As a result,
+					the printer's default paper size would be selected. For example,
+					the name for the A4 paper size on the HP OfficeJet 6500 is
+					<emphasis>A4 210x297mm</emphasis> and the name on the HP Photosmart
+					7960 series of printers is <emphasis>A4</emphasis>. So, even though
+					the paper size is A4 in both cases, the names are different, and
+					when the user switches between these printers, the default paper
+					size would be selected in the paper size dropdown box.</para>
+					<para>Similarly, the quality and paper source selected values
+					may be set to the newly selected printer's default values.</para>
+				</caution>
+				<tip>
+					<para>The default printer and its default properties may be set in the
+					Devices and Printers section of the Control Panel.</para>
+				</tip>
+				<para>The default printer, paper size, quality, and paper source in the
+				user preferences are set to the default computer values when the user
+				preference file is created. Any changes made by the user in the user
+				preferences dialog are saved to the user preferences file.</para>
+				<caution>
+					<para>If the printer that is set in user preferences is uninstalled,
+					the printer and printer properties will be reset to those for the
+					new default printer on the computer.</para>
+				</caution>
+				<para>When a card is created, the printer and printer properties that
+				are stored in user preferences are used to initialize the same values
+				for the card.</para>
+				<caution>
+					<para>If the printer that is set for the card is uninstalled,
+					then the printer and printer properties for the card will be reset 
+					to those for the new default printer on the computer.</para>
+				</caution>
+				<para>Finally, when the print dialog is opened during printing, 
+				the printer and printer properties in the
+				print dialog are set to the values set for the card.</para>
+				<para>Set the user preferences printer properties to the values that
+				you would normally use for printing QSL cards. There may be instances
+				where, for a specific QSL card, you would want to normally print them
+				on a different printer or with different printer properties. For example,
+				you may have a number of bureau sized QSL cards designed that you would
+				print on one printer using either letter or A4 sized cardstock, but also 
+				have a 4 inch by 6 inch card that you
+				would want to print on a photo printer using 4 inch by 6 inch photo paper
+				instead. For this, you would set
+				the user preferences to the printer and properties that you will be using
+				for most cards, and set the card specific printer and properties of the
+				larger card to those for your photo printer.</para>
+				<para>Finally, when you print the cards, you can change the printer
+				and printer settings again for that specific printer job. One place
+				you may want to do this is if you are not at your normal workplace or
+				home and want to print some cards using someone else's printer.</para>
+			</section>
+			<section>
+				<title>Print Properties</title>
+				<para>There are four print properties, two of which are related to
+				printer margins, and two which are not. We will first look at the two
+				that are not affected by print margins.</para>
+				<para>The Print Card Outlines checkbox determines whether a black line
+				is printed around the edge of the cards. This outline is useful for
+				cutting the cards from the cardstock after printing. If the checkbox
+				is checked, the outline is printed; if the checkbox is not checked,
+				the outline is not printed.</para>
+				<para>If this checkbox is checked in the card properties panel, the
+				outline is also displayed on the card in design mode.</para>
+				<para>When printing a number of cards on cardstock, the total number
+				of cards being printed may not be evenly divisible by the number of
+				cards per page. If they are not, then the last page being printed would
+				contain less than a full page of cards. This is wasteful of cardstock.
+				The user may print additional cards with no QSOs printed in the
+				QSOs Box on the last page and fill in the QSO data by hand at a later
+				time. Filling the last page is accomplished using the Fill Last Page
+				With Blank Cards checkbox. With the checkbox checked, the blank cards
+				will be printed; with the checkbox unchecked, no blank cards are printed.
+				</para>
+				<para>Printer margins were discussed in the Print Modes and Printer
+				Margins section, above. As mentioned, the printer margins determine how
+				close to the edge of a page the printer will print. The first print
+				property that is affected by the printer margins is the Set Card
+				Margins to Printer Margins checkbox. Checking this checkbox leaves
+				a margin around the inside of each card equal to the size of the widest
+				margin for the selected printer. With the checkbox unchecked, the contents
+				of the card are printed to all edges of the card. This checkbox also
+				has an effect in card design mode; if the checkbox is checked, the margin
+				is displayed on the card. The image below shows the card created in
+				the Getting Started chapter with the Set Card Margins to Printer
+				Margins checkbox checked. The Print Card Outlines checkbox was also
+				checked to better show the card edges. As you can see, there is a
+				clean margin around the inside edges of the card. This margin allows
+				the user to print cards out to the edges of the cardstock without
+				only one or two edges having margins and without uneven margins.</para>
+				<figure xml:id="cardmargins1">
+					<title>Card With Printer Margins</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/cardmargins1.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>If you want to print cards without a margin, you cannot print to
+				the edges of the page. The Print Inside Printer Margins checkbox determines
+				whether the cards can be printed to the edges of the cardstock or must
+				be printed inside the printer margins. Checking the checkbox forces the
+				cards to be printed inside the printer margins; unchecking the checkbox
+				allows cards to be printed up to the edges of the cardstock. As you will
+				learn in the Print Cards section which follows, unchecking this checkbox
+				does not force cards to be printed on the edges of the cardstock. There
+				are a number of ways to layout the cards on the cardstock; this setting
+				simply allows the user to select a cards layout that prints cards out
+				to the edges of the cardstock.</para>
+				<para>What happens if the maximum printer margin is large. Have a look at
+				the following image.</para>
+				<figure xml:id="cardmargins2">
+					<title>Card With Large Printer Margins</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/cardmargins2.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>In this image, the margins are 14.8 mm or 0.58 inch. As you can see,
+				this does not look good at all and there is little space for actual card
+				content. For this reason, if the largest printer margin is greater than
+				0.25 inch or 6.35 mm, the Print Inside Printer Margins checkbox is checked,
+				the Set Card Margins to Printer Margins checkbox is unchecked, and both
+				checkboxes are disabled so that the user cannot change their settings.
+				This forces cards to be printed with no margins and inside the printer
+				margins for the cardstock.</para>
+			</section>
+		</section>
+		<section>
+			<title>Printing Cards</title>
+			<para>HamQSLer prints cards with QSO information in the QSOs Box on each card.
+			If no QSOs are loaded or selected for printing, then a single page of cards
+			with no QSO information in the QSOs Box is printed.</para>
+			<caution>
+				<para>The cards are printed with QSOs in the order that they are sorted
+				in the QSOs tab. Be sure to sort the cards in the order you want them
+				printed.</para>
+			</caution>
+			<para>To print cards, the card must be loaded into the program, and the card's
+			tab must be selected. That is, the card must be displayed in the program's
+			main window.</para>
+			<para>Select the Cards -> Print Cards... menu item. This will open the
+			print cards dialog which is shown in the image below.</para>
+			<figure xml:id="printdialog2">
+				<title>Print Cards Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printdialog.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The printer properties and print properties group boxes are the same
+			as in the user preferences dialog and the card properties panel. The values
+			in the controls in these group boxes are loaded with same values as the controls
+			in the card properties panel. This is the user's last chance to make
+			changes to these properties before the cards are printed. Any changes made
+			only affect this print job; the card properties are not modified by changes
+			made in the print cards dialog.</para>
+			<para>There is one additional group box in the dialog: the cards layout
+			group box. The radio buttons displayed in this box show how the cards will
+			be laid out on the cardstock when they are printed. For each layout, the
+			cards are displayed in white with a blue line around them. The area in
+			light pink shows the cardstock on which the cards will be printed. In each
+			row of layouts, the cards are laid out as follows: top left card is positioned
+			at the top left corner of the cardstock, top left card is centered left to
+			right and positioned at the top of the cardstock, and finally, the cards are
+			printed to be centered on the cardstock. In the image above, the first row
+			shows the layouts for cards printed on cardstock in portrait orientation, and
+			the second row shows the layouts in landscape orientation.</para>
+			<para>If cards cannot be printed on the cardstock in one of the orientations,
+			then that row of layouts is not displayed in the dialog. For example, the
+			image below shows the cards layout group box for bureau sized cards on
+			4 by 6 inch paper. Because the card width is greater than the 4 inches,
+			cards cannot be printed on the paper in portrait orientation, so the
+			portrait layouts are not shown.</para>
+			<figure xml:id="cardslayoutlandscapeonly">
+				<title>Cards Layout Landscape Only</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/cardslayoutlandscapeonly.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>If the paper size selected is smaller than the size of the cards
+			to be printed, then only a warning message is shown. See the image below for
+			an example.</para>
+			<figure xml:id="nocardlayouts">
+				<title>Print Cards Dialog With Paper Size Too Small</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/nocardlayouts.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The message "The selected paper size is smaller than the card size. No cards
+			can be printed." is displayed in red in the cards layout group box and the Print
+			and Preview buttons are disabled.</para>
+			<para>As mentioned previously, checking the Print Inside printer Margins checkbox
+			affects the layout of cards on the cardstock. The cards are printed so that
+			the edges of the cards are at or inside the printer margins. The image below
+			shows the layouts for bureau sized cards on letter sized cardstock. It is
+			not easy to see, but in portrait mode, the cards in the first two layouts have
+			been moved to the left and down.</para>
+			<para>There is a much greater effect on the layouts
+			in landscape mode. Bureau cards are 5.5 inches wide and letter sized paper is
+			11 inches wide in landscape mode. So, two cards can just be printed across
+			the paper in landscape mode. However, if the cards are to be printed inside the
+			printer margins, then only one card wide can be printed. Compare this image
+			to the image in Figure 9.7. The only difference in settings is that the
+			Print Inside Printer Margins is checked for Figure 9.10.</para>
+			<figure xml:id="cardsinsidemargins">
+				<title>Cards Layouts Inside Margins</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/cardsinsidemargins.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<tip>
+				<para>There are three manufacturers of cardstock that is micro-perforated
+				for printing of bureau sized cards. In all cases, the cardstock is letter
+				sized (8 1/2 by 11 inches). The QSLKit provides cardstock for printing four
+				cards per page using the top left or top center landscape layout.
+				QslPaper.com provides cardstock for printing four cards per
+				page using the center landscape layout. Yourofficestop.com provides
+				3UPPCSTOCK cardstock for printing 3 cards per page using the center
+				portrait layout.</para>
+				<para>Avery provides a number of letter sized, micro-perforated 
+				cardstocks for printing four 4.25 by 5.5 inch cards per page.</para>
+			</tip>
+			<para>The print cards dialog contains three buttons: Print, Preview, and Cancel.
+			These buttons perform the expected functions.</para>
+			<para>Selecting the Print button prints the cards. A message box, like the one
+			in the image below is displayed and updated for each page of cards as
+			they are printed. When the last past page is printed, the message
+			box disappears.</para>
+			<figure xml:id="printing">
+				<title>Printing Message Box</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printing.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Printing is an asynchronous operation. As a print job is performed, the
+			output is queued to the printer queue, and control returns to the program.
+			Only then will the printer start printing the cards. This has a number of
+			advantages:</para>
+			<itemizedlist>
+				<listitem>
+					<para>The program does not have to wait for the printer to finish
+					printing before it regains control.</para>
+				</listitem>
+				<listitem>
+					<para>Print jobs may be queued to the printer so that the user
+					does not have to wait for a print job from another program to
+					finish before he can print cards.</para>
+				</listitem>
+				<listitem>
+					<para>Print jobs may be queued to printers that are offline
+					(disconnected, powered down, etc.) and the print jobs will remain
+					in the queue until the printer is brought online.</para>
+				</listitem>
+			</itemizedlist>
+			<para>Selecting the Preview button displays the print preview dialog and
+			the message box shown in the image above is displayed until the last page
+			of cards is processed. The first page of cards is displayed in the print
+			preview dialog. For example, the image below shows the print preview dialog
+			as displayed if you followed the <link linkend="gettingstarted">Getting 
+			Started tutorial</link>.</para>
+			<figure xml:id="printpreview1">
+				<title>Print Preview Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printpreview1.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The first thing to notice is that the cards as displayed on the
+			page in the dialog are shifted up and to the left by an amount equal to the
+			minimum left and top printer margins. This is an artefact of the print
+			preview processing. If these cards are printed, they will be positioned
+			properly on the cardstock and not as shown in the print preview.</para>
+			<para>There are a number of buttons and other controls on the toolbar at the
+			top of the dialog. The following table describes what each button and control
+			does.</para>
+			<table frame='all'>
+				<title>Print Preview Toolbar Controls and What They Do</title>
+				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+					<colspec colname="Control"/>
+					<colspec colname="Description"/>
+					<thead>
+						<row>
+							<entry namest='Control'>Control</entry>
+							<entry namest='Description'>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/previewprint.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Print the cards. This is equivalent to clicking the
+								Print button in the print dialog.</entry>
+						</row>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/previewzoom.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Adjust magnification of the preview</entry>
+						</row>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/preview1.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Display one page</entry>
+						</row>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/preview2.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Display two pages</entry>
+						</row>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/preview3.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Display three pages</entry>
+						</row>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/preview4.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Display four pages</entry>
+						</row>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/preview6.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Display six pages</entry>
+						</row>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/previewclose.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Close preview dialog</entry>
+						</row>
+						<row>
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata fileref="images/previewpage.png"/>
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+							<entry>Show this page number</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+	</section>
 </chapter>

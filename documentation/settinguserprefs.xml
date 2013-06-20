@@ -607,4 +607,43 @@
 			chapter, is performed.</para>
 		</section>
 	</section>
+	<section>
+		<title>Print Settings Preferences</title>
+		<para>All print settings preferences are contained in the print options subtopic.
+		</para>
+		<section>
+			<title>Print Options Preferences</title>
+			<para>Printer and print properties may be set and modified in three locations:
+			</para>
+			<orderedlist>
+				<listitem>
+					<para>In the user preferences dialog where these properties are
+					set program wide.</para>
+				</listitem>
+				<listitem>
+					<para>In the card properties panel, where initial values are
+					obtained from the user preferences file when a card is created.</para>
+				</listitem>
+				<listitem>
+					<para>In the print dialog when printing cards.</para>
+				</listitem>
+			</orderedlist>
+			<para>The image below shows the user preferences dialog with the print
+			options subtopic selected. Note that there are two group boxes, one
+			for printer properties and one for print properties.</para>
+			<figure xml:id="printoptionsprefs">
+				<title>Print Options Preferences</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/printoptionsprefs.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Understanding printer and print properties requires an understanding
+			of printer margins. Rather than duplicate that explanation here and because
+			the same properties appear three times, a discussion of print options is
+			deferred to the <link linkend="outputtingcards">Outputting Cards</link>
+			chapter.</para>
+		</section>
+	</section>
 </chapter>
