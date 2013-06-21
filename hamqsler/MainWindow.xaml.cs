@@ -140,7 +140,7 @@ namespace hamqsler
 		{
 			bool canExecute = false;
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
-			if(cti != null)
+			if(cti != null && qsosView.DisplayQsos.Count > 0)
 			{
 				CardWF card = cti.cardPanel.QslCard;
 				if(card.Width <= 6 * PIXELSPERINCH && card.Height <= 4 * PIXELSPERINCH)
