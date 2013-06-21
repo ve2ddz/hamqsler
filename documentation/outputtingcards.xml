@@ -537,4 +537,94 @@
 			</table>
 		</section>
 	</section>
+	<section>
+		<title>Save Card As JPEG</title>
+		<para>A card, with or without QSO data, may be saved as a JPEG file for display
+		on a website or for sending over the Internet. To do this, select the Cards ->
+		Save Card as Jpeg... menu item. This opens the JPEG Image Properties dialog
+		which is shown below.</para>
+		<figure xml:id="saveasjpeg">
+			<title>JPEG Images Properties Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/saveasjpeg.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The various controls in this dialog set properties of the
+		image. If you want to include QSO data in the image, then check the Show QSOs
+		checkbox. The card in the image will contain the QSOs that would appear on the 
+		first card if you were printing cards.</para>
+		<para>The resolution dropdown box contains three commonly used values; 96 DPI
+		is the value to use for displaying cards on a computer, such as from a website.
+		This corresponds approximately to the typical resolution of a computer monitor,
+		so the cards will appear about lifesize on the monitor.
+		300 and 600 DPI are good values for printing or for sending to a QSL card printer.
+		The dropdown box value is also editable so you can enter any value you want.</para>
+		<para>JPEG files use a lossy compression when they are saved, so when a file is
+		saved, its quality will decrease somewhat. The quality dropdown box contains a number
+		of values that control the amount of compression that is applied when the card
+		is saved. Quality values vary between 0 and 100, with 100 being the best
+		quality. Even at 100, there is some compression applied.</para>
+		<para>There is a link between quality and the size of the image file; the
+		higher the quality setting, the larger the file size. For example, take the sample
+		card that was created in the <link linkend="gettingstarted">Getting
+		Started tutorial</link>. The table below shows the size of the file that
+		is created at each of four quality values, with the resolution set to 300 DPI.</para>
+		<table frame='all'>
+			<title>JPEG Quality Versus File Size</title>
+			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+				<colspec colname="Quality"/>
+				<colspec colname="FileSize"/>
+				<thead>
+					<row>
+						<entry namest='Quality'>Quality</entry>
+						<entry namest='FileSize'>File Size</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>75</entry>
+						<entry>193 kB</entry>
+					</row>
+					<row>
+						<entry>85</entry>
+						<entry>245 kB</entry>
+					</row>
+					<row>
+						<entry>95</entry>
+						<entry>357 kB</entry>
+					</row>
+					<row>
+						<entry>100</entry>
+						<entry>804 kB</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+		<tip>
+			<para>There is no discernable difference in quality of the image between 95 and
+			100, yet the file size for an image saved at 100 is more than twice the size
+			of the same image saved at 95. The best compromise between image quality and
+			file size is 85. The card images that are displayed on the website are saved
+			at 85. Some images have been saved two or three times at this quality setting.
+			</para>
+		</tip>
+		<caution>
+			<para>If an image is saved as a JPEG, and then loaded into an image editing
+			program and resaved multiple times, the quality of the image will gradually
+			decrease. However, even with a quality of 85, an image may be resaved a
+			few times before there is any discernable loss of quality when the image
+			is displayed.</para>
+		</caution>
+		<tip>
+			<para>If you want to have your QSL card added to the sample cards on the website,
+			please use the following settings: Show QSOs checked, resolution of 96 DPI,
+			quality of 85.  Because of the use of macros in the card, QSOs should be
+			printed on the card. You can use the QSOs that are included in the sample.adi 
+			file
+			in the Samples directory. I promise not to claim credit for any QSOs that are
+			included on the card.</para>
+		</tip>
+	</section>
 </chapter>
