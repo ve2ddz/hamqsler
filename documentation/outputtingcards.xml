@@ -3,7 +3,34 @@
 		 xmlns:xlink="http://www.w3.org/1999/xlink"
 		 xml:id="outputtingcards">
 	<title>Outputting Cards</title>
-	<para>To be written.</para>
+	<para>Cards can be output in a number of different ways, including printing on a
+	printer, and saving images of the cards as JPEG files. Each of these methods
+	is described in the sections below, but first, how do you determine the number
+	of cards that will be printed?</para>
+	<section>
+		<title>Determining the Number of Cards That Will Be Printed</title>
+		<para>The number of cards that will be printed is determined by the
+		total number of QSOs selected, and the maximum number of QSOs that can
+		printed on a card. Other factors are the order that the QSOs are sorted,
+		and any macros containing ADIF fields that are used on the card.</para>
+		<para>To determine the number of cards that will be printed, select the
+		Cards -> Calculate Number of Cards to be Printed... menu item. This opens
+		the dialog shown in the image below. The number of cards shown in the
+		dialog corresponds to the QSOs that were loaded, selected and sorted in
+		the <link linkend="gettingstarted">Get Started tutorial</link>, and the
+		card that was designed in that tutorial.</para>
+		<para>To determine the number of sheets of cardstock that are needed, divide
+		the number of cards by the number of cards that will be printed per page,
+		and round up.</para>
+		<figure xml:id="numberofcards">
+			<title>Number of Cards to be Printed Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/numberofcards.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
 	<section>
 		<title>Printing Cards</title>
 		<section>
@@ -538,7 +565,7 @@
 		</section>
 	</section>
 	<section>
-		<title>Save Card As JPEG</title>
+		<title>Saving Card as a JPEG</title>
 		<para>A card, with or without QSO data, may be saved as a JPEG file for display
 		on a website or for sending over the Internet. To do this, select the Cards ->
 		Save Card as Jpeg... menu item. This opens the JPEG Image Properties dialog
@@ -602,6 +629,9 @@
 				</tbody>
 			</tgroup>
 		</table>
+		<para>When the user clicks the OK button, a Save As dialog opens so that
+		a file name for the image file may be entered, and a directory may be selected
+		to save the file in.</para>
 		<tip>
 			<para>There is no discernable difference in quality of the image between 95 and
 			100, yet the file size for an image saved at 100 is more than twice the size
@@ -626,5 +656,79 @@
 			in the Samples directory. I promise not to claim credit for any QSOs that are
 			included on the card.</para>
 		</tip>
+	</section>
+	<section>
+		<title>Saving 4-Up Bureau Cards For Printing</title>
+		<para>HamQSLer allows the user to save a set of four blank bureau-sized cards
+		as a JPEG file for sending to a print shop or a QSL card printer for
+		printing large quantities of the the cards. To save the blank cards, select
+		the Cards -> Save 4-Up Cards For Printing... menu item. This action opens the
+		dialog shown in the image below.</para>
+		<figure xml:id="fourupcards">
+			<title>JPEG Image Properties for 4 Up Blank Bureau Cards Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/4upcards.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>There are only two options available: the Include Card Outlines checkbox
+		controls whether a black line is included around the outside of the card or not,
+		and the resolution dropdown box controls the resolution that the image is saved at.
+		There are only two values provided in this dropdown box: 300 DPI and 600 DPI. These
+		are standard values that are used when printing. The dropdown box is also editable,
+		so you can enter any value that you wish.</para>
+		<para>When the OK button is clicked a Save As dialog box opens to allow the user
+		to enter a name for the file, and to select a directory to save the file in. When
+		the image has been saved, the message "Card image has been saved to 
+		<emphasis>(filename)</emphasis> is displayed in the status bar of the main
+		window.</para>
+		<para>The cards are saved in a two by two array. The image is 7 by 11 inches in
+		size, so the image may be printed lifesize on either letter or A4 sized cardstock.
+		</para>
+		<caution>
+			<para>Only bureau sized cards may be saved as a set of 4-up cards.</para>
+		</caution>
+	</section>
+	<section>
+		<title>Saving Cards For Printing</title>
+		<para>Instead of printing cards with QSO data on them, the cards may be saved in
+		a set of JPEG files for sending or taking to a photo print shop. To create these
+		image files, the user must select the Cards -> Save Cards For Printing... menu
+		item. When this is done, the browse for folder dialog box, shown below, is
+		displayed.</para>
+		<figure xml:id="cardsforprinting">
+			<title>Browse For Folder Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/cardsforprinting.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The user must select a directory to save the image files in. Once
+		the directory has been selected and the OK button is clicked, the card images
+		are generated and saved in the selected directory. The files are saved with
+		filenames <emphasis>qslXXX.jpg</emphasis>, where XXX is a number that is
+		incremented for each card.</para>
+		<para>Filenames start at qsl1.jpg. If the selected directory already contains
+		files named qslXXX.jpg, then the number in the filename of the first file saved
+		is set to one more than the highest value of XXX. That is, if there is a file 
+		called qsl25.jpg in the directory,
+		the first file saved will be qsl26.jpg.</para>
+		<para>As the files are being created, the text "Creating card X of Y cards" where
+		X is the number of the card being created and Y is the total number of cards
+		being created is displayed in the status bar of the main window. When all of the
+		files have been created, the text "Y of Y cards created in directory:
+		<emphasis>(directory)</emphasis>" is displayed in the status bar.</para>
+		<tip>
+			<para>Create a subdirectory in the hamqsler directory to contain the card
+			images. Name the file <emphasis>Printing</emphasis> or something similar so
+			that you know what the directory contains.</para>
+		</tip>
+		<caution>
+			<para>The card images are placed in an image that is 4 by 6 inches (10 by
+			15 cm) in size. Because of this, only bureau cards and 4 by 6 inch cards may be
+			saved for printing.</para>
+		</caution>
 	</section>
 </chapter>
