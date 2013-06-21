@@ -605,7 +605,14 @@ namespace hamqsler
 		/// <param name="e">ExecutedRoutedEventArgs object</param>
 		private void SaveCardAsJpegCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			JpegPropsDialog jpD = new JpegPropsDialog();
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			List<List<DispQso>> qList = null;
+			if(cti != null)
+			{
+				qList = qsosView.DisplayQsos.GetDispQsosList(
+						cti.cardPanel.QslCard);
+			}
+			JpegPropsDialog jpD = new JpegPropsDialog(qList != null && qList.Count > 0);
 			if(jpD.ShowDialog() == true)
 			{
 				SaveFileDialog saveDialog = new SaveFileDialog();

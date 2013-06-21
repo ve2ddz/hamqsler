@@ -58,9 +58,12 @@ namespace hamqsler
     	/// <summary>
     	/// Constructor
     	/// </summary>
-        public JpegPropsDialog()
+    	/// <param name="enableShowQSOs">Boolean indicating if the Show QSOs checkbox
+    	/// should be enabled</param>
+        public JpegPropsDialog(bool enableShowQSOs)
         {
             InitializeComponent();
+            QsosCheckbox.IsEnabled = enableShowQSOs;
         }
 
         /// <summary>
