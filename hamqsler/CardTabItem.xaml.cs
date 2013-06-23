@@ -218,6 +218,12 @@ namespace hamqsler
 				{
 					fileName = "$hamqslerFolder$\\" + fileName.Substring(hamQSLerFolder.Length);
 				}
+				else if(fileName.StartsWith(Environment.GetFolderPath(
+					Environment.SpecialFolder.MyDocuments)))
+				{
+					fileName = "$MyDocs$\\" + fileName.Substring(Environment.GetFolderPath(
+						Environment.SpecialFolder.MyDocuments).Length);
+				}
 				return fileName;
 			}
 			else

@@ -330,24 +330,25 @@ namespace hamqsler
 							string myDocs = Environment.GetFolderPath(
 								Environment.SpecialFolder.MyDocuments);
 							string qslDir = myDocs + "\\QslDnP";
+							string hamQSLerFolder = ((App)Application.Current).HamqslerFolder;
 							string fileName = text.Value;
-							if(fileName.StartsWith("$MyDocs$"))
+							if(fileName.StartsWith(myDocs))
 							{
-								fileName = myDocs +
-									fileName.Substring("$MyDocs$".Length);
+								fileName = "$MyDocs$" + fileName.Substring(myDocs.Length);
 							}
-							if(fileName.StartsWith(qslDir))
+							// if(fileName.StartsWith(qslDir))
+							
+							if(fileName.StartsWith("$MyDocs$\\QslDnP"))
 							{
-								fileName = fileName.Substring(
-									0, myDocs.Length) + "\\hamqsler"
-									+ fileName.Substring(qslDir.Length);
+								fileName = "$hamqslerFolder$" + 
+									fileName.Substring("$MyDocs$\\QslDnP".Length);
 							}
 							((ImageWFBase)cItem).ImageFileName = fileName;
 						}
-							break;
-						case "CardItem":
-							GetCardItemData(cItem, cibNode, culture);
-							break;
+						break;
+					case "CardItem":
+						GetCardItemData(cItem, cibNode, culture);
+						break;
 				}
 				cibNode = XmlProcs.GetNextSiblingElement(cibNode);
 			}

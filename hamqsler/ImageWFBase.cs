@@ -85,14 +85,19 @@ namespace hamqsler
 			base.OnPropertyChanged(e);
 			if(e.Property == ImageFileNameProperty)
 			{
+				string hamqslerFolder = ((App)Application.Current).HamqslerFolder;
 				string fName = e.NewValue as string;
 				if(fName != null && fName != string.Empty)
 				{
-					string hamqslerFolder = ((App)Application.Current).HamqslerFolder;
 					// expand file name if using relative path
 					if(fName.StartsWith(@"$hamqslerFolder$\"))
 					{
 						fName = hamqslerFolder + fName.Substring(@"$hamqslerFolder$\".Length);
+					}
+					else if(fName.StartsWith(@"$MyDocs$"))
+					{
+						fName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + 
+							fName.Substring(@"$MyDocs$".Length);
 					}
 					FileInfo fInfo = new FileInfo(fName);
 					if(fInfo.Exists)
@@ -145,7 +150,20 @@ namespace hamqsler
                             {
                             	// new image file found
                             	ModifiedDuringLoad = true;
-                            	ImageFileName = oFile.FileName;							
+                            	string file = oFile.FileName;
+								if(file.StartsWith(hamqslerFolder))
+								{
+									file = "$hamqslerFolder$\\" + 
+										file.Substring(hamqslerFolder.Length);
+								}
+								else if(file.StartsWith(Environment.GetFolderPath(
+									Environment.SpecialFolder.MyDocuments)))
+								{
+									file = "$MyDocs$\\" + fName.Substring(
+										Environment.GetFolderPath(
+										Environment.SpecialFolder.MyDocuments).Length);
+								}
+				                ImageFileName =file;							
                             }
                             else
                             {
