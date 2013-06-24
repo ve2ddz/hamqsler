@@ -35,7 +35,7 @@
 		<TextBox IsReadOnly="True" Height="Auto" TextWrapping="Wrap" Width="350"
 				 Margin="5,5,5,15" BorderBrush="Transparent" Foreground="DarkBlue">
 		HamQSLer is an open source project with source code maintained
-		at https://www.github.com/hamqsler and executable, help, and data files
+		at https://www.github.com/jimva3hj/hamqsler and executable, help, and data files
 		files located at http://www.va3hj.ca.
 		</TextBox>
 		<Grid>
