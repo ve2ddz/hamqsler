@@ -249,13 +249,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="help" />
     <Folder Include="Samples" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="help\index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Samples\sample.adi">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

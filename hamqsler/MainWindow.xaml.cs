@@ -1622,11 +1622,11 @@ namespace hamqsler
 					string userManual = null;
 					if(mItem.Tag.Equals("A4"))
 					{
-						userManual = "pdf/hamqsler-A4.pdf";
+						userManual = "help\\pdf\\hamqsler-A4.pdf";
 					}
 					else if(mItem.Tag.Equals("Letter"))
 					{
-						userManual = "pdf/hamqsler-letter.pdf";
+						userManual = "help\\pdf\\hamqsler-letter.pdf";
 					}
 					else
 					{

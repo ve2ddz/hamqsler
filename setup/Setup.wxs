@@ -24,7 +24,7 @@
 		Language="1033"
 		Version="0.8.0"
 		UpgradeCode="A01D591C-91AC-4F1F-AD08-041A0500C1CA"
-		Manufacturer="Jim Orcheson">
+		Manufacturer="VA3HJ Software">
 		<Package Description="HamQSLer Installer Package"
 			InstallerVersion="200"
 			Compressed="yes"/>
@@ -68,8 +68,6 @@
 		         Level="1">
 			<ComponentRef Id="HamqslerEXE"/>
 			<ComponentRef Id="SampleFiles"/>
-			<ComponentRef Id="HtmlHelp"/>
-			<ComponentRef Id="HelpImages"/>
 			<ComponentRef Id="PdfHelp"/>
 			<ComponentRef Id="HamQSLerShortcuts"/>
 		</Feature>

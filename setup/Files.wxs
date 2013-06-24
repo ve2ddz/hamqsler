@@ -35,92 +35,9 @@
 						</Component>
 					</Directory>
 					<Directory Id="HelpDir" Name="help">
-						<Directory Id="HtmlHelp" Name="html">
-							<Component Id="HtmlHelp" Guid="D1FE8EEF-3062-4264-961F-7F3FAAC2996F" DiskId="1">
-								<File Id="apa.html" Name="apa.html" Source="..\documentation\html-docs\apa.html" />
-								<File Id="ch01.html" Name="ch01.html" Source="..\documentation\html-docs\ch01.html" />
-								<File Id="ch01s02.html" Name="ch01s02.html" Source="..\documentation\html-docs\ch01s02.html" />
-								<File Id="ch01s03.html" Name="ch01s03.html" Source="..\documentation\html-docs\ch01s03.html" />
-								<File Id="ch02.html" Name="ch02.html" Source="..\documentation\html-docs\ch02.html" />
-								<File Id="ch02s02.html" Name="ch02s02.html" Source="..\documentation\html-docs\ch02s02.html" />
-								<File Id="ch02s03.html" Name="ch02s03.html" Source="..\documentation\html-docs\ch02s03.html" />
-								<File Id="ch02s04.html" Name="ch02s04.html" Source="..\documentation\html-docs\ch02s04.html" />
-								<File Id="ch02s04s02.html" Name="ch02s04s02.html" Source="..\documentation\html-docs\ch02s04s02.html" />
-								<File Id="ch02s04s03.html" Name="ch02s04s03.html" Source="..\documentation\html-docs\ch02s04s03.html" />
-								<File Id="ch02s04s04.html" Name="ch02s04s04.html" Source="..\documentation\html-docs\ch02s04s04.html" />
-								<File Id="ch02s04s05.html" Name="ch02s04s05.html" Source="..\documentation\html-docs\ch02s04s05.html" />
-								<File Id="ch02s05.html" Name="ch02s05.html" Source="..\documentation\html-docs\ch02s05.html" />
-								<File Id="ch02s05s02.html" Name="ch02s05s02.html" Source="..\documentation\html-docs\ch02s05s02.html" />
-								<File Id="ch02s05s03.html" Name="ch02s05s03.html" Source="..\documentation\html-docs\ch02s05s03.html" />
-								<File Id="ch02s05s04.html" Name="ch02s05s04.html" Source="..\documentation\html-docs\ch02s05s04.html" />
-								<File Id="ch02s05s05.html" Name="ch02s05s05.html" Source="..\documentation\html-docs\ch02s05s05.html" />
-								<File Id="ch02s06.html" Name="ch02s06.html" Source="..\documentation\html-docs\ch02s06.html" />
-								<File Id="ch02s06s02.html" Name="ch02s06s02.html" Source="..\documentation\html-docs\ch02s06s02.html" />
-								<File Id="ch02s06s03.html" Name="ch02s06s03.html" Source="..\documentation\html-docs\ch02s06s03.html" />
-								<File Id="ch02s06s04.html" Name="ch02s06s04.html" Source="..\documentation\html-docs\ch02s06s04.html" />
-								<File Id="ch02s06s05.html" Name="ch02s06s05.html" Source="..\documentation\html-docs\ch02s06s05.html" />
-								<File Id="ch02s06s06.html" Name="ch02s06s06.html" Source="..\documentation\html-docs\ch02s06s06.html" />
-								<File Id="ch02s07.html" Name="ch02s07.html" Source="..\documentation\html-docs\ch02s07.html" />
-								<File Id="ch02s07s02.html" Name="ch02s07s02.html" Source="..\documentation\html-docs\ch02s07s02.html" />
-								<File Id="ch03.html" Name="ch03.html" Source="..\documentation\html-docs\ch03.html" />
-								<File Id="ch04.html" Name="ch04.html" Source="..\documentation\html-docs\ch04.html" />
-								<File Id="index.html" Name="index.html" Source="..\documentation\html-docs\index.html" />
-							</Component>
-							<Directory Id="HtmlImages" Name="images">
-								<Component Id="HelpImages" Guid="3B9EEF47-06D9-4B72-8343-512934A1522B" DiskId="1">
-									<File Id="adifexistsmacro.png" Name="adifexistsmacro.png" Source="..\documentation\html-docs\images\adifexistsmacro.png" />
-									<File Id="adifmacro.png" Name="adifmacro.png" Source="..\documentation\html-docs\images\adifmacro.png" />
-									<File Id="backgroundimageoncard.png" Name="backgroundimageoncard.png" Source="..\documentation\html-docs\images\backgroundimageoncard.png" />
-									<File Id="backgroundimageproperties.png" Name="backgroundimageproperties.png" Source="..\documentation\html-docs\images\backgroundimageproperties.png" />
-									<File Id="bandproperties.png" Name="bandproperties.png" Source="..\documentation\html-docs\images\bandproperties.png" />
-									<File Id="cardaftertextitemschanged.png" Name="cardaftertextitemschanged.png" Source="..\documentation\html-docs\images\cardaftertextitemschanged.png" />
-									<File Id="cardopendialog.png" Name="cardopendialog.png" Source="..\documentation\html-docs\images\cardopendialog.png" />
-									<File Id="cardpanel.png" Name="cardpanel.png" Source="..\documentation\html-docs\images\cardpanel.png" />
-									<File Id="colorpicker.png" Name="colorpicker.png" Source="..\documentation\html-docs\images\colorpicker.png" />
-									<File Id="countmacro.png" Name="countmacro.png" Source="..\documentation\html-docs\images\countmacro.png" />
-									<File Id="datetimeproperties.png" Name="datetimeproperties.png" Source="..\documentation\html-docs\images\datetimeproperties.png" />
-									<File Id="defaultcallsign.png" Name="defaultcallsign.png" Source="..\documentation\html-docs\images\defaultcallsign.png" />
-									<File Id="defaultnameQth.png" Name="defaultnameQth.png" Source="..\documentation\html-docs\images\defaultnameQth.png" />
-									<File Id="defaultpagelayout.png" Name="defaultpagelayout.png" Source="..\documentation\html-docs\images\defaultpagelayout.png" />
-									<File Id="defaultprinter.png" Name="defaultprinter.png" Source="..\documentation\html-docs\images\defaultprinter.png" />
-									<File Id="defaultsalutation.png" Name="defaultsalutation.png" Source="..\documentation\html-docs\images\defaultsalutation.png" />
-									<File Id="defaulttextfont.png" Name="defaulttextfont.png" Source="..\documentation\html-docs\images\defaulttextfont.png" />
-									<File Id="fileopendialog.png" Name="fileopendialog.png" Source="..\documentation\html-docs\images\fileopendialog.png" />
-									<File Id="firstsplashscreen.png" Name="firstsplashscreen.png" Source="..\documentation\html-docs\images\firstsplashscreen.png" />
-									<File Id="macroscontextmenu.png" Name="macroscontextmenu.png" Source="..\documentation\html-docs\images\macroscontextmenu.png" />
-									<File Id="mainwindow.png" Name="mainwindow.png" Source="..\documentation\html-docs\images\mainwindow.png" />
-									<File Id="managerexistsmacro.png" Name="managerexistsmacro.png" Source="..\documentation\html-docs\images\managerexistsmacro.png" />
-									<File Id="managermacro.png" Name="managermacro.png" Source="..\documentation\html-docs\images\managermacro.png" />
-									<File Id="managermacroafter.png" Name="managermacroafter.png" Source="..\documentation\html-docs\images\managermacroafter.png" />
-									<File Id="modeproperties.png" Name="modeproperties.png" Source="..\documentation\html-docs\images\modeproperties.png" />
-									<File Id="movecursor.png" Name="movecursor.png" Source="..\documentation\html-docs\images\movecursor.png" />
-									<File Id="nesw.png" Name="nesw.png" Source="..\documentation\html-docs\images\nesw.png" />
-									<File Id="newcard.png" Name="newcard.png" Source="..\documentation\html-docs\images\newcard.png" />
-									<File Id="nwse.png" Name="nwse.png" Source="..\documentation\html-docs\images\nwse.png" />
-									<File Id="printdialog.png" Name="printdialog.png" Source="..\documentation\html-docs\images\printdialog.png" />
-									<File Id="printpreview.png" Name="printpreview.png" Source="..\documentation\html-docs\images\printpreview.png" />
-									<File Id="printsettingsdialog.png" Name="printsettingsdialog.png" Source="..\documentation\html-docs\images\printsettingsdialog.png" />
-									<File Id="qslstatusproperties.png" Name="qslstatusproperties.png" Source="..\documentation\html-docs\images\qslstatusproperties.png" />
-									<File Id="qsos.png" Name="qsos.png" Source="..\documentation\html-docs\images\qsos.png" />
-									<File Id="qsosboxprops.png" Name="qsosboxprops.png" Source="..\documentation\html-docs\images\qsosboxprops.png" />
-									<File Id="qsospropspanel.png" Name="qsospropspanel.png" Source="..\documentation\html-docs\images\qsospropspanel.png" />
-									<File Id="salutationtextandmacros.png" Name="salutationtextandmacros.png" Source="..\documentation\html-docs\images\salutationtextandmacros.png" />
-									<File Id="samplecard.png" Name="samplecard.png" Source="..\documentation\html-docs\images\samplecard.png" />
-									<File Id="sampleqsosloaded.png" Name="sampleqsosloaded.png" Source="..\documentation\html-docs\images\sampleqsosloaded.png" />
-									<File Id="savecarddialog.png" Name="savecarddialog.png" Source="..\documentation\html-docs\images\savecarddialog.png" />
-									<File Id="selectcontextmenu.png" Name="selectcontextmenu.png" Source="..\documentation\html-docs\images\selectcontextmenu.png" />
-									<File Id="selectmenu.png" Name="selectmenu.png" Source="..\documentation\html-docs\images\selectmenu.png" />
-									<File Id="statictextonly.png" Name="statictextonly.png" Source="..\documentation\html-docs\images\statictextonly.png" />
-									<File Id="textitemproperties.png" Name="textitemproperties.png" Source="..\documentation\html-docs\images\textitemproperties.png" />
-									<File Id="textonlymacrosdialog.png" Name="textonlymacrosdialog.png" Source="..\documentation\html-docs\images\textonlymacrosdialog.png" />
-									<File Id="updown.png" Name="updown.png" Source="..\documentation\html-docs\images\updown.png" />
-									<File Id="userprefsdialog.png" Name="userprefsdialog.png" Source="..\documentation\html-docs\images\userprefsdialog.png" />
-								</Component>
-							</Directory>
-						</Directory>
 						<Directory Id="PDFDir" Name="pdf">
 							<Component Id="PdfHelp" Guid="67457C0A-9BBD-454E-93B6-C6B10F8AF59D" DiskId="1">
-								<File Id="hamqsler_A4.pdf" Name="hamqlser-A4.pdf" Source="..\documentation\pdf-docs\hamqsler-A4.pdf" />
+								<File Id="hamqsler_A4.pdf" Name="hamqsler-A4.pdf" Source="..\documentation\pdf-docs\hamqsler-A4.pdf" />
 								<File Id="hamqsler_letter.pdf" Name="hamqsler-letter.pdf" Source="..\documentation\pdf-docs\hamqsler-letter.pdf" />
 							</Component>
 						</Directory>
