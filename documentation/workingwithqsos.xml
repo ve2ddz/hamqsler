@@ -391,7 +391,53 @@
 		</section>
 		<section>
 			<title>Reloading ADIF Files on Program Startup</title>
-			<para></para>
+			<para>The Reload ADIF File on Startup setting in user preferences determines whether
+			the ADIF files that were loaded at the time that HamQSLer was last terminated are
+			reloaded when the program is restarted. See <link linkend="settinguserprefs">Setting
+			User Preferences</link> or more information on this setting. The list of ADIF files to be
+			reloaded is maintained in the user preferences file.</para>
+			<para>The following table describes what ADIF files are saved to be reloaded based
+			on the actions related to ADIF files.</para>
+			<table frame='all'>
+				<title>ADIF File List For Reloading - Menu Items and Actions</title>
+				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+					<colspec colname='MenuItem' />
+					<colspec colname='Action'/>
+					<thead>
+					<row>
+						<entry namest='MenuItem'>Menu Item</entry>
+						<entry namest='Action'>Action</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Import QSOs...</entry>
+							<entry>The reload list is cleared, and the name of the ADIF file being
+							imported is added to the list.</entry>
+						</row>
+						<row>
+							<entry>Add QSOs...</entry>
+							<entry>The name of the ADIF file being added is added to the list.</entry>
+						</row>
+						<row>
+							<entry>Clear QSOs</entry>
+							<entry>The reload list is cleared.</entry>
+						</row>
+						<row>
+							<entry>Export QSOs...</entry>
+							<entry>The reload list is cleared and the name of the ADIF file that is
+							saved is added to the list.</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			<caution>
+				<para>The list of files to be reloaded is initialized to an empty list when the
+				Reload ADIF Files on Startup setting is changed. Therefore, only the actions performed
+				after the setting is set are valid. For example, if you set the Reload ADIF Files
+				on Startup setting after loading an ADIF file, that file will not be reloaded the
+				next time the program starts.</para>
+			</caution>
 		</section>
 	</section>
 </chapter>
