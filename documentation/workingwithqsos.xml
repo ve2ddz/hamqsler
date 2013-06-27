@@ -37,4 +37,361 @@
 	used in addition to loading QSO data from ADIF files.</para>
 	<para>This chapter discusses importing QSO data from ADIF files, inputting QSOs using the input
 	dialog, sorting the QSOs and selecting QSOs to be printed on QSL cards.</para>
+	<section>
+		<title>Loading and Saving QSOs</title>
+		<para>In order to work with QSOs, including loading and saving them, the QSOs tab in the
+		main window of the program must be selected. When the QSOs tab is selected, the QSOs dropdown
+		menu becomes active, along with the menu items that are valid at that time. The menu items
+		are:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Input QSOs... - this opens an input QSO dialog for entering QSOs manually.</para>
+			</listitem>
+			<listitem>
+				<para>Import QSOs... - this opens an Open File dialog to select an ADIF file to import
+				QSOs from. Any QSOs which may have already been loaded into HamQSLer are removed
+				before the new QSOs are loaded.</para>
+			</listitem>
+			<listitem>
+				<para>Add QSOs... - this opens an Open File dialog to select an ADIF file to import
+				QSOs from. These QSOs are added to any QSOs that may already be loaded into the
+				program.</para>
+			</listitem>
+			<listitem>
+				<para>Clear QSOs - this deletes any QSOs that are loaded into the program.</para>
+			</listitem>
+			<listitem>
+				<para>Export QSOs... - this opens a File Save dialog to save the loaded QSOs to an
+				ADIF file.</para>
+			</listitem>
+		</itemizedlist>
+		<para>Each of these menu items is discussed below.</para>
+		<section>
+			<title>Inputting QSOs</title>
+			<para>QSOs may be input manually by selecting the Input QSOs... menu item. Selecting
+			this menu item opens the Input QSO dialog as shown in the image below.</para>
+			<figure xml:id="inputqsosdialog2">
+				<title>Input QSO Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/inputqsosdialog.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The dialog contains a number of text boxes and dropdown boxes that allow the
+			user to enter data about a QSO. This dialog allows entry of only those fields that
+			are used normally by HamQSLer.</para>
+			<tip>
+				<para>If additional QSO fields are required, then the user
+				should use an appropriate QSO logging program, then export the QSOs to an ADIF file,
+				and import that file into HamQSLer.</para>
+			</tip>
+			<para>As a minimum, the callsign, start date, start time, mode, and band or frequency
+			values must be entered in this dialog. Once valid values have been entered in these boxes,
+			the Add+ and OK buttons are enabled to allow the QSO to be stored in the QSOs view.</para>
+			<para>The Add+ button validates the contents of the QSO fields, then adds the QSO to the 
+			list of QSOs in the QSOs view, and deletes the
+			contents of all boxes in the dialog to prepare for entry of the next QSO. The OK button
+			validates the contents of the QSO fields, then adds the QSO to the list of QSOs in the 
+			QSOs view and closes the Input QSO dialog. The
+			Cancel button closes the dialog without adding an entered QSO into the QSOs view.</para>
+			<section>
+				<title>Validating a QSO Input via the Input QSO Dialog</title>
+				<para>In the image, several of the text boxes are outlined in red. See
+				<link linkend="errorhandlingandlogging">Error Handling and Logging</link> for a discussion
+				of input validation and the reason that these text boxes are outlined.</para>
+				<para>The value entered into the callsign text box must be a valid callsign. A callsign
+				is determined to be valid if it matches one of the following:</para>
+				<itemizedlist>
+					<listitem>
+						<para>One or two letters followed by one or more numbers followed by
+						one or more letters.</para>
+					</listitem>
+					<listitem>
+						<para>A single number followed by one or two letters followed by one or
+						more numbers followed by one or more letters.</para>
+					</listitem>
+					<listitem>
+						<para>A callsign that do not match the formats listed above. A list of valid
+						non-standard callsigns is maintained and read by the program. A non-standard
+						callsign must be in the list to be considered valid. Some examples of valid
+						non-standard callsigns are BX100, LM9L40Y, and OEH20.</para>
+						<para>Any non-standard callsign that is shown in the ARRL DX bulletin,
+						issued weekly, is added to the list. HamQSLer users may request that a
+						callsign be added to the list by filing an enhancement issue. See the website
+						for instructions.</para>
+					</listitem>
+				</itemizedlist>
+				<para>The callsign may have a leading qualifier followed by "/" or one or more
+				trailing qualifiers, with each trailing qualifier preceeded by "/".
+				A leading qualifier is
+				always a country or territory identifier. The trailing qualifier is typically
+				an indicator about the operation, such as /M for mobile, /MM of maritime mobile,
+				/AM for aeronautical mobile, /P for portable, /QRP for QRP, and so forth. For
+				United States / Canada reciprocal operations, the country/territory identifier
+				is appended to the callsign and placed before other trailing qualifiers.
+				HamQSLer only checks the callsign for validity, and not
+				the leading or trailing qualifiers.</para>
+				<para>The manager text box must either be empty, or contain a valid callsign with
+				no leading or trailing qualifiers.</para>
+				<para>The start date must be exactly 8 digits long, be of the format YYYYMMDD and
+				be a date between 19451101 and today.</para>
+				<para>The start time must be either 4 digits of the format HHMM, or 6 digits of the
+				form HHMMSS. The time must be between 0000 and 2359 or between 000000 and 235959.</para>
+				<para>Modes are selected from the mode dropdown box. A mode may be selected by:</para>
+				<itemizedlist>
+					<listitem>
+						<para>Clicking the the dropdown box. This opens
+						the list of modes; a mode may be selected by clicking on it, or by pressing
+						the up and down arrow keys to highlight a mode, and then pressing the
+						Enter key. Instead of selecting a mode with the mouse or the up and down
+						arrow keys, you may enter the mode using the alphabetic and numeric keys
+						on the keyboard. You should continue to enter keys until the desired mode is
+						highlighted, then press Enter to select the mode. As an alternative to
+						entering the mode by spelling it out, the user may press the first letter
+						of the mode multiple times. This will cycle through all modes that begin
+						with that letter. </para>
+					</listitem>
+					<listitem>
+						<para>Moving focus to the dropdown box by tabbing
+						to it, then using the up and down arrow keys on the keyboard to highlight the
+						mode, and pressing the Enter key to select it. The dropdown box does not open,
+						but the selected mode changes with each press of the up or down arrow keys.
+						Instead of moving through the modes using the arrow keys, you may enter
+						the mode using the alphabetic and numeric keys on the keyboard. As each key is
+						pressed, the mode that most closely matches the entered keys is selected.
+						For example, pressing "C" will select the first mode beginning with "C". 
+						If you then
+						press "L", CLO is selected because it is the first mode that begins with
+						"CL". If you press the same letter several times, then the selection will
+						cycle through all of the modes that begin with that letter.</para>
+					</listitem>
+				</itemizedlist>
+				<para>The signal report field accepts any text up to three characters in length. The
+				normal values here are RS for analog voice modes, RST for CW and similar modes,
+				RSQ for most digital modes, and dB for JT65 and similar modes.</para>
+				<caution>
+					<para>No validation is performed on the signal report. If you enter text that
+					is not representative of "standard" values, the report may not be understood
+					by your card's recipient.</para>
+				</caution>
+				<para>The band and frequency boxes work together, and at least one of these boxes must
+				contain a value.</para>
+				<para>The band dropdown box contains a list of all ADIF defined amateur
+				radio bands. A band may be selected by:</para>
+				<itemizedlist>
+					<listitem>
+						<para>Clicking on the band dropdown box to open it, and then clicking on the
+						desired band. Alternatively, once the dropdown box is open, you can press the
+						up or down arrow keys
+						to highlight a band and then press the Enter key to select it. The third option
+						is to enter text to highlight the band. Once the correct band has been highlighted,
+						press the Enter key to select it.</para>
+					</listitem>
+					<listitem>
+						<para>Moving focus to the dropdown box by tabbing to it, then using the
+						up and down arrow keys to select the desired band. Instead of moving through
+						the bands, you may use the keyboard to enter the band. When the first key is
+						pressed the first band in the list that contains that character as the first
+						character is selected. As you enter more characters, the first band in the
+						list that contains those characters is selected. To cycle through all of the
+						bands that start with a character, press that character multiple times. For
+						example, the first time you press "1", 160m is selected; the second time you
+						press "1", 17m is selected, and so on.</para>
+					</listitem>
+				</itemizedlist>
+				<para>A frequency may be entered into the frequency text box. The frequency must be
+				entered in MHz, and must be within the frequency limits of an ADIF defined band.</para>
+				<para>If a band is selected and then a frequency is entered, the frequency is checked
+				to ensure that it is within the limits of the selected band. If a frequency is entered first and
+				then a band is selected, the band is checked to ensure that the frequency is within that
+				band. If the frequency is not within the selected band, then the second value entered
+				is shown as being in error.</para>
+				<para>The QSL Rcvd, Sent, and Sent Via fields are optional, with values contained in
+				dropdown lists. You may select any of the values in the dropdown boxes using the 
+				instructions
+				provided for selecting a band, above. Because the fields are optional, no validity
+				checking is performed on any of the fields.</para>
+				<para>The values in the dropdown boxes have the following meanings (defined in
+				ADIF).</para>
+				<table frame='all'>
+				<title>QSL Rcvd Values and Meaning</title>
+				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+					<colspec colname='Values' />
+					<colspec colname='ADIFValues'/>
+					<colspec colname='Meanings' />
+					<thead>
+					<row>
+						<entry namest='Values'>Value</entry>
+						<entry namest='ADIFValues'>ADIF QSL_RCVD Field Value</entry>
+						<entry namest='Meanings'>Meaning</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Yes</entry>
+							<entry>Y</entry>
+							<entry>An incoming QSL card has been received, or the QSO has been
+							confirmed by an online service.</entry>
+						</row>
+						<row>
+							<entry>No</entry>
+							<entry>N</entry>
+							<entry>An incoming QSL card has not been received, or the QSO has not
+							been confirmed by an online service.</entry>
+						</row>
+						<row>
+							<entry>Requested</entry>
+							<entry>R</entry>
+							<entry>The logging station (you) has requested a QSL card, or the logging
+							station has requested that the QSO be uploaded to an online service.</entry>
+						</row>
+						<row>
+							<entry>Ignore</entry>
+							<entry>I</entry>
+							<entry>Ignore this QSO.</entry>
+						</row>
+						<row>
+							<entry>Verified</entry>
+							<entry>V</entry>
+							<entry>DXCC award credit has been granted for this QSL card, or via
+							LotW.</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			<table frame='all'>
+				<title>QSL Sent Values and Meaning</title>
+				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+					<colspec colname='Values' />
+					<colspec colname='ADIFValues'/>
+					<colspec colname='Meanings' />
+					<thead>
+					<row>
+						<entry namest='Values'>Value</entry>
+						<entry namest='ADIFValues'>ADIF QSL_SENT Field Value</entry>
+						<entry namest='Meanings'>Meaning</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Yes</entry>
+							<entry>Y</entry>
+							<entry>An outgoing QSL card has been sent, or the QSO has been
+							uploaded to and accepted by an online service.</entry>
+						</row>
+						<row>
+							<entry>No</entry>
+							<entry>N</entry>
+							<entry>Do not send an outgoing QSL card, or do not upload the QSO to
+							an online service.</entry>
+						</row>
+						<row>
+							<entry>Requested</entry>
+							<entry>R</entry>
+							<entry>The contacted station has requested a QSL card, or the contacted
+							station has requested that the QSO be uploaded to an online service.</entry>
+						</row>
+						<row>
+							<entry>Queued</entry>
+							<entry>Q</entry>
+							<entry>An outgoing QSL card has been selected to be sent, or uploaded
+							to an online service.</entry>
+						</row>
+						<row>
+							<entry>Ignore</entry>
+							<entry>I</entry>
+							<entry>Ignore this QSO.</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			<table frame='all'>
+				<title>QSL Sent Via Values and Meaning</title>
+				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+					<colspec colname='Values' />
+					<colspec colname='ADIFValues'/>
+					<colspec colname='Meanings' />
+					<thead>
+					<row>
+						<entry namest='Values'>Value</entry>
+						<entry namest='ADIFValues'>ADIF QSL_SENT_VIA Field Value</entry>
+						<entry namest='Meanings'>Meaning</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Bureau</entry>
+							<entry>B</entry>
+							<entry>An outgoing QSL card should be, or has been, sent via the bureau.</entry>
+						</row>
+						<row>
+							<entry>Direct</entry>
+							<entry>D</entry>
+							<entry>An outgoing QSL card shoul be, or has been, sent direct to the
+							contacted station or his manager.</entry>
+						</row>
+						<row>
+							<entry>Electronic</entry>
+							<entry>E</entry>
+							<entry>The QSO should be, or has been, uploaded to an online service.</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+		</section>
+		<section>
+			<title>Importing QSOs</title>
+			<para>The Import QSOs... menu item opens the default ADIF files folder in a File Open 
+			dialog to allow the user to select an ADIF file to load QSOs from. The default ADIF files
+			folder is set in user preferences. See the
+			<link linkend="settinguserprefs">Setting User Preferences</link> chapter for more
+			information on setting this default folder.</para>
+			<para>ADIF files have the file
+			extension <emphasis>.adi</emphasis>. Opening a file deletes any QSOs that had
+			previously been loaded and loads the QSOs contained in the file
+			into HamQSLer. The QSOs are then displayed in the QSOs View in the QSOs tab. The image below
+			shows the main window and QSOs tab when the sample.adi file, located in the Samples
+			subdirectory, is loaded.</para>
+			<figure xml:id="sampleqsosloaded2">
+				<title>Main Program Window With Sample QSOs loaded</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/sampleqsosloaded.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The contents of the QSOs View, the sort panel and the selection panel are discussed
+			in another section below.</para>
+		</section>
+		<section>
+			<title>Adding QSOs</title>
+			<para>The Add QSOs... menu item opens the default ADIF files folder in a File Open dialog 
+			to allow
+			the user to select an ADIF file to load QSOs from. The default ADIF files folder is set
+			in the user preferences. See the <link linkend="settinguserprefs">Setting User
+			Preferences</link> chapter for more information on this option.</para>
+			<para>The QSOs in the ADIF file are added
+			to any QSOs that were previously loaded into the program. Once the QSOs have been loaded,
+			any duplicated QSOs are deleted, and then the QSOs are sorted according the sort order
+			selected in the sort panel.</para>
+		</section>
+		<section>
+			<title>Clear QSOs</title>
+			<para>The Clear QSOs menu item deletes all QSOs that were loaded into HamQSLer.</para>
+		</section>
+		<section>
+			<title>Exporting QSOs</title>
+			<para>The Export QSOs... menu item opens the default ADIf files folder in a File Save 
+			dialog. This
+			allows the user to save any QSOs that are loaded in the program to an ADIF file. Normally
+			the user would only want to do this if he input one or more QSOs using the QSO input
+			dialog, or if he changed the manager field in the QSOs view.</para>
+		</section>
+		<section>
+			<title>Reloading ADIF Files on Program Startup</title>
+			<para></para>
+		</section>
+	</section>
 </chapter>
