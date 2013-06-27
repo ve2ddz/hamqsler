@@ -325,7 +325,6 @@
 					<ComboBoxItem>Bureau</ComboBoxItem>
 					<ComboBoxItem>Direct</ComboBoxItem>
 					<ComboBoxItem>Electronic</ComboBoxItem>
-					<ComboBoxItem>Manager</ComboBoxItem>
 				</ComboBox>
 			</Grid>
 		</GroupBox>
