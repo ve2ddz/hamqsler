@@ -73,7 +73,8 @@ namespace hamqsler
 		public static RoutedCommand SelectItemCommand = new RoutedCommand();
 		public static RoutedCommand NoneCommand = new RoutedCommand();
 		
-		public static RoutedCommand UserManualCommand = new RoutedCommand();
+		public static RoutedCommand UserManualA4Command = new RoutedCommand();
+		public static RoutedCommand UserManualLetterCommand = new RoutedCommand();
 		public static RoutedCommand AboutCommand = new RoutedCommand();
 		public static RoutedCommand WebsiteCommand = new RoutedCommand();
 		public static RoutedCommand ViewLogFileCommand = new RoutedCommand();
@@ -1605,39 +1606,38 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Handler for Help->HamQSLer Help... menu item
-		/// Displays the first page of the help files
+		/// Handler for Help->User Manual - A4... menu item selected event
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
-		private void UserManualCommand_Executed(object sender, RoutedEventArgs e)
+		private void UserManualA4Command_Executed(object sender, RoutedEventArgs e)
+		{
+			OpenUserManual("hamqsler-A4.pdf");
+		}
+		
+		/// <summary>
+		/// Handler for Help->User Manual - US Letter... menu item selected event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		private void UserManualLetterCommand_Executed(object sender, RoutedEventArgs e)
+		{
+			OpenUserManual("hamqsler-letter.pdf");
+		}
+		
+		/// <summary>
+		/// Open the user manual
+		/// </summary>
+		/// <param name="fileName">Name of the user manual file</param>
+		private void OpenUserManual(string fileName)
 		{
 			string path = null;
 			try
 			{
 				string baseDir = System.IO.Path.GetDirectoryName(this.GetType().Assembly.CodeBase);
-				MenuItem mItem = e.OriginalSource as MenuItem;
-				if(mItem != null)
-				{
-					string userManual = null;
-					if(mItem.Tag.Equals("A4"))
-					{
-						userManual = "help\\pdf\\hamqsler-A4.pdf";
-					}
-					else if(mItem.Tag.Equals("Letter"))
-					{
-						userManual = "help\\pdf\\hamqsler-letter.pdf";
-					}
-					else
-					{
-						Exception ex = 
-							new Exception("Programming Error: Invalid Menu Item");
-						ex.Data.Add("Menu Item", mItem.Header);
-						throw ex;
-					}
-					path = System.IO.Path.Combine(baseDir, userManual);
-					System.Diagnostics.Process.Start(path);
-				}
+				string userManual = "help\\pdf\\" + fileName;
+				path = System.IO.Path.Combine(baseDir, userManual);
+				System.Diagnostics.Process.Start(path);
 			}
 			catch (Exception ex)
 			{

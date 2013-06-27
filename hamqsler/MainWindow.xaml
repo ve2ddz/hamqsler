@@ -103,8 +103,10 @@
 		<CommandBinding Command="{x:Static local:MainWindow.NoneCommand}"
 						CanExecute="NoneCommand_CanExecute"/>
 	
-		<CommandBinding Command="{x:Static local:MainWindow.UserManualCommand}"
-						Executed="UserManualCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.UserManualA4Command}"
+						Executed="UserManualA4Command_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.UserManualLetterCommand}"
+						Executed="UserManualLetterCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.AboutCommand}"
 						Executed="AboutCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.WebsiteCommand}"
@@ -249,10 +251,10 @@
 			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="User Manual - A4"
-						  Command="{x:Static local:MainWindow.UserManualCommand}"
+						  Command="{x:Static local:MainWindow.UserManualA4Command}"
 						  ToolTip="Open User Manual (A4 Size)" Tag="A4"/>
 				<MenuItem Header="User Manual - US Letter"
-						  Command="{x:Static local:MainWindow.UserManualCommand}"
+						  Command="{x:Static local:MainWindow.UserManualLetterCommand}"
 						  ToolTip="Open User Manual (US Letter Size)" Tag="Letter"/>
 				<MenuItem Header="About..."
 						  Command="{x:Static local:MainWindow.AboutCommand}"
