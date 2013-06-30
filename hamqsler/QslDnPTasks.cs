@@ -175,6 +175,7 @@ namespace hamqsler
 					card = new CardWF(600, 400, false);
 					break;
 				case "LandscapeCard55x35":
+				case "LandscapeCard":
 					card = new CardWF(550, 350, false);
 					break;
 				default:
