@@ -219,7 +219,10 @@ namespace hamqsler
 						break;
 					case "SecondaryImage":
 						SecondaryWFImage sImage = CreateSecondaryImage(card, node, culture);
-						card.SecondaryImages.Add(sImage);
+						if(sImage != null)
+						{
+							card.SecondaryImages.Add(sImage);
+						}
 						break;
 					case "TextItem":
 						TextWFItem tItem = CreateTextItem(card, node, culture);
@@ -362,7 +365,7 @@ namespace hamqsler
 		/// <param name="node">XmlNode containing the SecondaryImage data</param>
 		/// <param name="culture">CultureInfo object that describes the culture
 		/// that the XQSL file was saved with</param>
-		/// <returns>The created SecondaryWFImage object</returns>
+		/// <returns>The created SecondaryWFImage object or null if ImageFileName is empty string</returns>
 		private static SecondaryWFImage CreateSecondaryImage(CardWF card, XmlNode node,
 		                                                     CultureInfo culture)
 		{

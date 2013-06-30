@@ -180,7 +180,10 @@ namespace hamqsler
 				{
 					// reset Image
 					Image = EmptyImage;
-					ResetRectangle();
+					if(QslCard != null)
+					{
+						ResetRectangle();
+					}
 				}
 				if(QslCard != null)
 				{
