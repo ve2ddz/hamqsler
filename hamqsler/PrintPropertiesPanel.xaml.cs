@@ -200,7 +200,19 @@ namespace hamqsler
 			if(e.Property == PrinterNameProperty)
 			{
 				settings = new PrinterSettings();
-				settings.PrinterName = PrinterName;
+				string printerName = settings.PrinterName;
+				// must check that card's default printer is installed on
+				// this system. If not replace with system default printer.
+				foreach(string printer in PrinterSettings.InstalledPrinters)
+				{
+					if(printer == PrinterName)
+					{
+						settings.PrinterName = PrinterName;
+						printerName = PrinterName;
+						break;
+					}
+				}
+				PrinterName = printerName;
 				SetPaperSizes(settings);
 				SetResolutions(settings);
 				SetPaperSources(settings);
