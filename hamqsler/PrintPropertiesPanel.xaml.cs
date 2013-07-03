@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows;
@@ -162,6 +163,7 @@ namespace hamqsler
 		private int landscapeCardsWide = 0;
 		private int landscapeCardsHigh = 0;
 		private int scaleFactor = 0;
+		private List<PaperSize> customPaperSizes = ((App)App.Current).UserPreferences.CustomPaperSizes;
 		
 		private PrinterSettings settings;		// delegate and event handler for Properties changed
 		public delegate void PrintPropertiesChangedEventHandler(
@@ -354,6 +356,10 @@ namespace hamqsler
 			{
 				paperSizeComboBox.Items.Add(size.PaperName);
 			}
+			foreach(PaperSize paperSize in customPaperSizes)
+			{
+				paperSizeComboBox.Items.Add(paperSize.PaperName);
+			}
 			if(PrinterPaperSize != null)
 			{
 				paperSizeComboBox.SelectedItem = PrinterPaperSize.PaperName;
@@ -373,22 +379,35 @@ namespace hamqsler
 		{
 			PrinterSettings settings = new PrinterSettings();
 			settings.PrinterName = PrinterName;
+			bool customPaper = false;
 			if(e.AddedItems.Count > 0)
 			{
-				foreach(PaperSize size in settings.PaperSizes)
+				foreach(PaperSize size in customPaperSizes)
 				{
 					if(size.PaperName.Equals(e.AddedItems[0]))
 					{
 						PrinterPaperSize = size;
-						if(App.Logger.DebugPrinting)
-						{
-							App.Logger.Log("PaperSizeComboBox_SelectionChanged:" +
-							               Environment.NewLine +
-							               "PaperSize changed to " + PrinterPaperSize +
-							               Environment.NewLine);
-						}
+						customPaper = true;
 						break;
 					}
+				}
+				if(!customPaper)
+				{
+					foreach(PaperSize size in settings.PaperSizes)
+					{
+						if(size.PaperName.Equals(e.AddedItems[0]))
+						{
+							PrinterPaperSize = size;
+							break;
+						}
+					}
+				}
+				if(App.Logger.DebugPrinting)
+				{
+					App.Logger.Log("PaperSizeComboBox_SelectionChanged:" +
+					               Environment.NewLine +
+					               "PaperSize changed to " + PrinterPaperSize +
+					               Environment.NewLine);
 				}
 			}
 		}
