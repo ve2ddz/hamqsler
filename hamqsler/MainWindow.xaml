@@ -248,6 +248,9 @@
 				<MenuItem Header="Show Printer Margins" x:Name="showPrinterMargins"
 						  ToolTip="Display minimum printer margins for a printer"
 						  Click="ShowPrinterMargins_Click"/>
+				<MenuItem Header="Define Custom Paper Sizes" x:Name="defineCustomPaperSizes"
+						  ToolTip="Use only if your printer does not support saving custom paper sizes"
+						  Click="DefineCustomPaperSizes_Click"/>
 			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="User Manual - A4"

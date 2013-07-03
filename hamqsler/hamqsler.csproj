@@ -122,6 +122,10 @@
       <DependentUpon>CountMacroGroupBox.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CustomPaperSizesDialog.xaml.cs">
+      <DependentUpon>CustomPaperSizesDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="DispQso.cs" />
@@ -150,6 +154,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MarginConverter.cs" />
+    <Compile Include="MinMaxPaperSizes.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -221,6 +226,7 @@
     <Page Include="CardPropertiesGroupBox.xaml" />
     <Page Include="CardTabItem.xaml" />
     <Page Include="CountMacroGroupBox.xaml" />
+    <Page Include="CustomPaperSizesDialog.xaml" />
     <Page Include="HamQSLerPrintDialog.xaml" />
     <Page Include="JpegPropsDialog.xaml" />
     <Page Include="MainWindow.xaml" />

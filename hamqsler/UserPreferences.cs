@@ -236,6 +236,17 @@ namespace hamqsler
 			set {SetValue(SetCardMarginsProperty, value);}
 		}
 		
+		private static readonly DependencyProperty CustomPaperSizesProperty =
+			DependencyProperty.Register("CustomPaperSizes", 
+			                            typeof(List<System.Drawing.Printing.PaperSize>),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(new List<System.Drawing.Printing.PaperSize>()
+			                                                ));
+		public List<System.Drawing.Printing.PaperSize> CustomPaperSizes
+		{
+			get {return (List<System.Drawing.Printing.PaperSize>)GetValue(CustomPaperSizesProperty);}
+		}
+		
 		// Default font face to display text items in
 		private static readonly DependencyProperty DefaultTextItemsFontFaceProperty =
 			DependencyProperty.Register("DefaultTextItemsFontFace", typeof(string),

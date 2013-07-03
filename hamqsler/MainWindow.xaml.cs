@@ -1752,5 +1752,16 @@ namespace hamqsler
 			marginsDialog.Owner = this;
 			marginsDialog.ShowDialog();
 		}
+		
+		/// <summary>
+		/// Handler for defineCustomPaperSizes menu item click event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void DefineCustomPaperSizes_Click(object sender, RoutedEventArgs e)
+		{
+			CustomPaperSizesDialog psDialog = new CustomPaperSizesDialog();
+			psDialog.ShowDialog();
+		}
 	}
 }
