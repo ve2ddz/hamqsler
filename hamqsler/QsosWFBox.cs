@@ -444,7 +444,6 @@ namespace hamqsler
 		{
 			InitializeDisplayProperties();
 			this.ConfirmingText.Clear();
-			CalculateRectangle(MaximumQsos);
 		}
 		
 		/// <summary>
@@ -455,7 +454,6 @@ namespace hamqsler
 		public QsosWFBox(bool isCreating)
 		{
 			InitializeDisplayProperties();
-			CalculateRectangle(MaximumQsos);
 		}
 		
 		/// <summary>
@@ -485,8 +483,9 @@ namespace hamqsler
 		/// <summary>
 		/// Calculate the size of the QsosBox based on text size and number of QSOs
 		/// </summary>
+		/// <param name="g">Graphics object the card is being drawn on</param>
 		/// <param name="qsosCount">Number of QSOs to be displayed</param>
-		public void CalculateRectangle(int qsosCount)
+		public void CalculateRectangle(System.Drawing.Graphics g, int qsosCount)
 		{
 			if(QslCard != null)
 			{
@@ -502,14 +501,13 @@ namespace hamqsler
 						this.FontName), this.FontSize,
 			        	System.Drawing.FontStyle.Regular, 
 			        	System.Drawing.GraphicsUnit.Point);
-				System.Drawing.Size size = System.Windows.Forms.TextRenderer.MeasureText(
-					"SampleText", font);
+				System.Drawing.SizeF size =g.MeasureString("SampleText", font);
 				if(qsosCount == 0)
 				{
 					qsosCount = MaximumQsos;
 				}
 				this.ItemSize = new System.Drawing.Size(width,
-				                                        (size.Height + 2) * (2 + qsosCount) + qsosCount + 2);
+				                                        ((int)size.Height + 2) * (2 + qsosCount) + qsosCount + 2);
 			}
 		}
 		
@@ -553,20 +551,9 @@ namespace hamqsler
 			base.OnPropertyChanged(e);
 			if(QslCard != null)
 			{
+
 				if(e.Property == QslCardProperty ||
 				   e.Property == FontNameProperty ||
-				   e.Property == FontSizeProperty ||
-		           e.Property == DateFormatProperty ||
-				   e.Property == ShowFrequencyProperty ||
-				   e.Property == ShowPseTnxProperty ||
-				   e.Property == MaximumQsosProperty)
-				{
-					CalculateRectangle(MaximumQsos);
-				}
-				// FontName and ShowPseTnx changes do not necessarily generate a change in the
-				// size of the QsosBox, so we must raise the DispPropertyChanged event
-				// to be sure that the font on the display changes.
-				if(e.Property == FontNameProperty ||
 				   e.Property == FontSizeProperty ||
 		           e.Property == ShowPseTnxProperty |
 				   e.Property == ShowManagerProperty ||

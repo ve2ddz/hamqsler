@@ -492,9 +492,9 @@ namespace hamqsler
 					CardTabItem cti = new CardTabItem(card);
 					mainTabControl.Items.Add(cti);
 					cti.IsSelected = true;		// select the new tab
+					card.IsDirty = false;
 					cti.SetTabLabel();
 					// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
-					card.IsDirty = false;
 					SetTitle(card.FileName, card.IsDirty);
 					prefs.CardFiles.Add(fileName);
 				}

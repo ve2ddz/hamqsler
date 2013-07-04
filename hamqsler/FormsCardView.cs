@@ -83,10 +83,6 @@ namespace hamqsler
 						}
 					}
 				}
-				if(QslCard.QsosBox != null)
-				{
-					QslCard.QsosBox.CalculateRectangle(Qsos.Count);
-				}
 			}
 		}
 		
@@ -318,7 +314,7 @@ namespace hamqsler
 		/// <summary>
 		/// Helper method that paints each card item on the card
 		/// </summary>
-		/// <param name="g">Graphics obejct on which to paint the card</param>
+		/// <param name="g">Graphics object on which to paint the card</param>
 		/// <param name="qsos">List of QSOs to paint on the card</param>
 		private void PaintCardItems(Graphics g, List<DispQso> qsos)
 		{
@@ -332,10 +328,12 @@ namespace hamqsler
 			// paint text items
 			foreach(TextWFItem tItem in QslCard.TextItems)
 			{
+				tItem.CalculateRectangle(g);
 				PaintTextItem(g, qsos, tItem);
 			}
 			if(QslCard.QsosBox != null)
 			{
+				QslCard.QsosBox.CalculateRectangle(g, qsos.Count);
 				PaintQsosBox(g, qsos, QslCard.QsosBox);
 			}
 		}
@@ -451,14 +449,13 @@ namespace hamqsler
 		{
 			Pen pen = new Pen(qBox.LineTextBrush, 1);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
-			qBox.CalculateRectangle(qsos.Count);
 			Font font = new Font(new System.Drawing.FontFamily(
 				qBox.FontName), qBox.FontSize, FontStyle.Regular, GraphicsUnit.Point);
 			List<string> colHeaders = CreateColumnHeaders(qBox);
-			List<float> colWidths = CreateColumnWidths(font, colHeaders, qBox);
+			List<float> colWidths = CreateColumnWidths(g, font, colHeaders, qBox);
 			GraphicsPath path = CreateOutsideBoxPath(qBox);
 			FillQsosBoxBackground(g, path, qBox);
-			CreateInsideBoxPath(ref path, font, colHeaders, colWidths, qBox);
+			CreateInsideBoxPath(g, ref path, font, colHeaders, colWidths, qBox);
 			g.DrawPath(pen, path);
 			DrawConfirmingText(g, font, qsos, qBox);
 			DrawHeaders(g, font, colHeaders, colWidths, qBox);
@@ -550,12 +547,13 @@ namespace hamqsler
 		/// <summary>
 		/// Add the row and column lines to the already created outline of the Qsos box
 		/// </summary>
+		/// <param name="g">Graphics object that the card is being drawn on</param>
 		/// <param name="path">Graphics path containing the outline of the Qsos box</param>
 		/// <param name="font">Font that text in the Qsos box is drawn in</param>
 		/// <param name="colHeaders">Header text for the columns in the Qsos box</param>
 		/// <param name="colWidths">Width of each column in the Qsos box</param>
 		/// <param name="box">Qsos box being dreawn</param>
-		private void CreateInsideBoxPath(ref GraphicsPath path, Font font, 
+		private void CreateInsideBoxPath(Graphics g, ref GraphicsPath path, Font font, 
 		                                 List<string> colHeaders,
 		                                 List<float> colWidths, QsosWFBox box)
 		{
@@ -563,20 +561,19 @@ namespace hamqsler
 			int top = CardLocation.Y + box.Y;
 			int right = left + box.Width;
 			int bottom = top + box.Height;
-			System.Drawing.Size size = System.Windows.Forms.TextRenderer.MeasureText(
-				"SampleText", font);
-			int lineY = top + size.Height + 3;
+			System.Drawing.SizeF size = g.MeasureString("SampleText", font);
+			int lineY = top + (int)size.Height + 3;
 			while(lineY < bottom)
 			{
 				path.AddLine(left, lineY, right, lineY);
 				// the following line is needed to prevent diagonal lines between the end
 				// of the line just drawn and the start of the next line (if any)
 				path.AddLine(right, lineY, left, lineY);
-				lineY += size.Height + 3;
+				lineY += (int)size.Height + 3;
 			}
 			int lineX = left;
-			int topY = top + size.Height + 3;
-			path.AddLine(left, bottom - size.Height + 3, left, topY);
+			int topY = top + (int)size.Height + 3;
+			path.AddLine(left, bottom - (int)size.Height + 3, left, topY);
 			for(int col = 0; col < colWidths.Count - 1; col++)
 			{
 				if(col != colWidths.Count - 2 || box.ShowPseTnx)
@@ -625,11 +622,13 @@ namespace hamqsler
 		/// <summary>
 		/// Create list of column widths
 		/// </summary>
+		/// <param name="g">Graphics object the card is being drawn on</param>
 		/// <param name="font">Font in which text in the Qsos Box will be displayed</param>
 		/// <param name="headers">List of column headers</param>
 		/// <param name="box">Qsos box for which the column widths are being created</param>
 		/// <returns>List of column widths</returns>
-		protected List<float> CreateColumnWidths(Font font, List<string> headers, QsosWFBox box)
+		protected List<float> CreateColumnWidths(Graphics g, Font font, List<string> headers, 
+		                                         QsosWFBox box)
 		{
 			List<float> colWidths = new List<float>();
 			int width = 0;
@@ -640,51 +639,51 @@ namespace hamqsler
 			{
 				dateMeasure += "M";
 			}
-			Size size = TextRenderer.MeasureText(dateMeasure, font);
-			colWidths.Add(size.Width);
+			SizeF size =g.MeasureString(dateMeasure, font);
+			colWidths.Add((int)size.Width);
 			// time column width
-			size = TextRenderer.MeasureText("000000", font);
-			width = size.Width;
-			size = TextRenderer.MeasureText(headers[1], font);
-			colWidths.Add(width >= size.Width ? width : size.Width);
+			size = g.MeasureString("000000", font);
+			width = (int)size.Width;
+			size = g.MeasureString(headers[1], font);
+			colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
 			if(box.ShowFrequency)
 			{
 				colWidths.Add(0);		// band column width
 				// assuming frequency limited to 8 characters
-				size = TextRenderer.MeasureText("241000.0", font);
-				width = size.Width;
-				size = TextRenderer.MeasureText(headers[3], font);
-				colWidths.Add(width >= size.Width ? width : size.Width);
+				size = g.MeasureString("241000.0", font);
+				width = (int)size.Width;
+				size = g.MeasureString(headers[3], font);
+				colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
 			}
 			else
 			{
 				// assuming 2190m is the largest band width
-				size = TextRenderer.MeasureText("2190m", font);
-				width = size.Width;
-				size = TextRenderer.MeasureText(headers[2], font);
-				colWidths.Add(width >= size.Width ? width : size.Width);
+				size = g.MeasureString("2190m", font);
+				width = (int)size.Width;
+				size = g.MeasureString(headers[2], font);
+				colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
 				colWidths.Add(0);			// frequency column width
 			}
 			// mode column width
 			// assuming mode is limited to 12 characters (e.g. OLIVIA-BEACON)
-			size = TextRenderer.MeasureText("MMMMMMMMMMMM", font);
-			colWidths.Add(size.Width);
+			size = g.MeasureString("MMMMMMMMMMMM", font);
+			colWidths.Add((int)size.Width);
 			// rst column width
 			// assuming signal report limited to 3 chars
-			size = TextRenderer.MeasureText("599", font);
-			width = size.Width;
-			size = TextRenderer.MeasureText(headers[4], font);
-			colWidths.Add(width >= size.Width ? width : size.Width);
+			size = g.MeasureString("599", font);
+			width = (int)size.Width;
+			size = g.MeasureString(headers[4], font);
+			colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
 			// qsl column width
 			if(box.ShowPseTnx)
 			{
 				// take largest width of header text, Pse text and Tnx text
-				size = TextRenderer.MeasureText(headers[5], font);
-				width = size.Width;
-				size = TextRenderer.MeasureText(box.PseText, font);
-				width = width >= size.Width ? width : size.Width;
-				size = TextRenderer.MeasureText(box.TnxText, font);
-				colWidths.Add(width >= size.Width ? width : size.Width);
+				size = g.MeasureString(headers[5], font);
+				width = (int)size.Width;
+				size = g.MeasureString(box.PseText, font);
+				width = width >= (int)size.Width ? width : (int)size.Width;
+				size = g.MeasureString(box.TnxText, font);
+				colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
 			}
 			else
 			{
@@ -722,14 +721,14 @@ namespace hamqsler
 		private void DrawHeaders(Graphics g, Font font, List<string> colHeaders, 
 		                         List<float> colWidths, QsosWFBox box)
 		{
-			Size size = TextRenderer.MeasureText(colHeaders[0], font);
+			SizeF size = g.MeasureString(colHeaders[0], font);
 			float colPosition = CardLocation.X + box.X;
-			float textY = (float)(CardLocation.Y + box.Y + size.Height + 3 + 3);
+			float textY = (float)(CardLocation.Y + box.Y + size.Height + 3 + 2);
 			for(int col = 0; col < colWidths.Count; col++)
 			{
 				if(colWidths[col] > 0)
 				{
-					size = TextRenderer.MeasureText(colHeaders[col], font);
+					size = g.MeasureString(colHeaders[col], font);
 					float startX = colPosition + (colWidths[col] - size.Width) / 2;
 					g.DrawString(colHeaders[col], font, box.LineTextBrush,
 					             startX, textY);
@@ -753,16 +752,16 @@ namespace hamqsler
 			g.DrawString(confText, font, box.LineTextBrush, startX, y);
 			if(box.QslCard.IsInDesignMode || qsos.Count != 0)
 			{
-				Size size = TextRenderer.MeasureText(confText, font);
-				startX += size.Width;
+				SizeF size = g.MeasureString(confText, font);
+				startX += (int)size.Width + 2;
 				float fontSize = box.FontSize;
 				y++; // compensate for bold
 				Font callFont = new Font(box.FontName, fontSize, FontStyle.Bold, GraphicsUnit.Point);
 				g.DrawString(Callsign, callFont, box.CallsignBrush, startX, y);
 				if(box.ShowManager && !Manager.Equals(string.Empty))
 				{
-					size = TextRenderer.MeasureText(Callsign, callFont);
-					startX += size.Width;
+					size = g.MeasureString(Callsign, callFont);
+					startX += (int)size.Width;
 					g.DrawString(box.ViaText + " " + Manager, callFont, box.ManagerBrush, 
 					             startX, y);
 				}
@@ -782,8 +781,8 @@ namespace hamqsler
 		{
 			if(qsos != null)
 			{
-				Size size = TextRenderer.MeasureText("X", font);
-				float y = CardLocation.Y + box.Y + 2 * (size.Height + 3) + 3;
+				SizeF size = g.MeasureString("X", font);
+				float y = CardLocation.Y + box.Y + 2 * (size.Height + 3) + 1;
 				foreach(DispQso qso in qsos)
 				{
 					float xStart = CardLocation.X + box.X;
@@ -813,7 +812,7 @@ namespace hamqsler
 					}
 					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
 						g, qsl, font, box.LineTextBrush, colWidths[6], xStart, y);
-					y += size.Height + 3;
+					y += (int)size.Height + 3;
 				}
 			}
 		}
@@ -865,7 +864,7 @@ namespace hamqsler
 		{
 			if (text != string.Empty && colWidth != 0)
 			{
-				Size size = TextRenderer.MeasureText(text, font);
+				SizeF size = g.MeasureString(text, font);
 				float x = xStart + (colWidth - size.Width) / 2;
 				g.DrawString(text, font, brush, x, y);
 			}

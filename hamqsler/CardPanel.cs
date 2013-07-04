@@ -105,7 +105,6 @@ namespace hamqsler
 			StaticText sText = new StaticText();
 			sText.Text = "Text Item";
 			tItem.Text.Add(sText);
-			tItem.CalculateRectangle();
 			tItem.X = (QslCard.Width - tItem.Width) / 2;
 			tItem.Y = (QslCard.Height - tItem.Height) / 2;
 			QslCard.TextItems.Add(tItem);

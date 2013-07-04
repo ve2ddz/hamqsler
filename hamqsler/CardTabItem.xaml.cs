@@ -355,7 +355,6 @@ namespace hamqsler
 				part.RemoveExtraneousStaticTextMacros();
 			}
 			ti.Text.RemoveExtraneousStaticText();
-			ti.CalculateRectangle();
 			cardPanel.QslCard.RaiseDispPropertyChangedEvent();
 			// must set IsDirty because changing contents of TextParts does not trigger
 			// Card PropertyChanged event
@@ -379,7 +378,6 @@ namespace hamqsler
 				if(sText != null)
 				{
 					sText.Text = Text.Text;
-					ti.CalculateRectangle();
 					cardPanel.QslCard.RaiseDispPropertyChangedEvent();
 				// must set IsDirty because changing contents of StaticText object does not trigger
 				// Card PropertyChanged event

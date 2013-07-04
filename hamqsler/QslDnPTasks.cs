@@ -503,7 +503,6 @@ namespace hamqsler
 				}
 				tiNode = XmlProcs.GetNextSiblingElement(tiNode);
 			}
-			tItem.CalculateRectangle();
 			return tItem;
 		}
 		
@@ -714,7 +713,6 @@ namespace hamqsler
 				}
 				qNode = XmlProcs.GetNextSiblingElement(qNode);
 			}
-			qBox.CalculateRectangle(qBox.MaximumQsos);
 			return qBox;
 		}
 		

@@ -176,7 +176,7 @@ namespace hamqsler
 		/// <summary>
 		/// Calculate the size of this TextWFItem based on its various properties
 		/// </summary>
-		public void CalculateRectangle()
+		public void CalculateRectangle(System.Drawing.Graphics g)
 		{
 			if(QslCard != null)
 			{
@@ -191,10 +191,10 @@ namespace hamqsler
 				}
 				Font font = new Font(new FontFamily(this.TextFontFace), this.FontSize,
 					         style, GraphicsUnit.Point);
-				System.Drawing.Size size = TextRenderer.MeasureText(this.Text.GetText(
+				System.Drawing.SizeF size = g.MeasureString(this.Text.GetText(
 					QslCard, null, QslCard.IsInDesignMode), font);
-				this.Height = size.Height;
-				this.Width = size.Width + size.Height * 2 + 8;
+				this.Height = (int)size.Height;
+				this.Width = (int)size.Width + (int)size.Height * 2 + 8;
 			}
 		}
 		
@@ -205,15 +205,17 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property == TextFontFaceProperty ||
+/*			if(e.Property == TextFontFaceProperty ||
 			   e.Property == IsBoldProperty ||
 			   e.Property == IsItalicProperty ||
 			   e.Property == FontSizeProperty ||
 			   e.Property == TextProperty)
 			{
 				CalculateRectangle();
-			}
-			if(e.Property == TextColorProperty ||
+			}*/
+			if(e.Property == TextFontFaceProperty ||
+			   e.Property == FontSizeProperty ||
+			   e.Property == TextColorProperty ||
 	           e.Property == CheckboxBeforeProperty ||
 	     	   e.Property == CheckboxAfterProperty ||
 	     	   e.Property == CheckboxLineThicknessProperty ||
