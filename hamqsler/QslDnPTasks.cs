@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -31,7 +32,7 @@ namespace hamqsler
 	public static class QslDnPTasks
 	{
 		/// <summary>
-		/// Move image and other files from QslDnP folder to hamqsler folder
+		/// Move image and other files from one folder to another folder
 		/// </summary>
 		/// 
 		private static bool copyError = false;
@@ -40,25 +41,35 @@ namespace hamqsler
 			get {return copyError;}
 		}
 		
+		private static List<string> fontNames = new List<string>();
+		
 		// scale factor used to adjust card item dimensions from WPF to Windows Forms
 		private const float WPFToWFScale = 100F/96F;
 		// scale factor used to adjust font sizes from WPF to Windows Forms
 		private const float FontScaleFactor = 0.75F;
 		
+		/// <summary>
+		/// Static constructor
+		/// </summary>
+		static QslDnPTasks()
+		{
+			System.Drawing.Text.InstalledFontCollection fontCol =
+				new System.Drawing.Text.InstalledFontCollection();
+			foreach(System.Drawing.FontFamily family in fontCol.Families)
+			{
+				fontNames.Add(family.Name);
+			}
+
+		}
 		/// Move image and other files from QslDnp to hamqsler
 		/// </summary>
-		/// <param name="qslDir">Name of the directory to copy</param>
-		public static void MoveFiles(string qslDir)
+		/// <param name="fromFolder">Name of the directory to copy files from</param>
+		/// <param name="toFolder">Name of the directory to copy files to</param>
+		public static void MoveFiles(string fromFolder, string toFolder)
 		{
 			try
 			{
-				DirectoryInfo qslInfo = new DirectoryInfo(qslDir);
-				string qsldnpDir = Environment.GetFolderPath(
-					Environment.SpecialFolder.MyDocuments) + "\\QslDnP";
-				string hamqsler = ((App)App.Current).HamqslerFolder;
-				hamqsler = hamqsler.Substring(0, hamqsler.Length - 1);
-				DirectoryInfo hamInfo = new DirectoryInfo(hamqsler);
-				foreach(string file in Directory.EnumerateFiles(qslDir))
+				foreach(string file in Directory.EnumerateFiles(fromFolder))
 				{
 					// do not copy xqsl or xml files
 					if(!file.EndsWith(".xqsl") && !file.EndsWith(".xml"))
@@ -66,8 +77,7 @@ namespace hamqsler
 						FileInfo fInfo = new FileInfo(file);
 						try
 						{
-							string toFile = hamqsler + fInfo.FullName.Substring( 
-								qsldnpDir.Length);
+							string toFile = toFolder + "\\" + fInfo.Name;
 							// if directory does not exist in hamqsler, then create it
 							FileInfo hFile = new FileInfo(toFile);
 							DirectoryInfo dInfo = new DirectoryInfo(hFile.DirectoryName);
@@ -88,12 +98,13 @@ namespace hamqsler
 					}
 				}
 				// now process every subdirectory in this folder
-				foreach(string dir in Directory.EnumerateDirectories(qslDir))
+				foreach(string dir in Directory.EnumerateDirectories(fromFolder))
 				{
 					// do not copy files from Logs and Samples subdirectories
 					if(!dir.EndsWith("Logs") && !dir.EndsWith("Samples"))
 					{
-						MoveFiles(dir);
+						string toDir = toFolder + dir.Substring(fromFolder.Length);
+						MoveFiles(dir, toDir);
 					}
 				}
 			}
@@ -110,15 +121,11 @@ namespace hamqsler
 		/// <summary>
 		/// Convert QslDnP card files to hamqsler card files
 		/// </summary>
-		public static void ConvertCardFiles(string qslDir)
+		/// <param name="fromFolder">name of the source directory of the card files to convert</param>
+		/// <param name="toFolder">name of the directory to save the converted card files in</param>
+		public static void ConvertCardFiles(string fromFolder, string toFolder)
 		{
-			DirectoryInfo qslInfo = new DirectoryInfo(qslDir);
-			string qsldnpDir = Environment.GetFolderPath(
-				Environment.SpecialFolder.MyDocuments) + "\\QslDnP";
-			string hamqsler = ((App)App.Current).HamqslerFolder;
-			hamqsler = hamqsler.Substring(0, hamqsler.Length - 1);
-			DirectoryInfo hamInfo = new DirectoryInfo(hamqsler);
-			foreach(string file in Directory.EnumerateFiles(qslDir))
+			foreach(string file in Directory.EnumerateFiles(fromFolder))
 			{
 				if(file.EndsWith(".xqsl"))
 				{
@@ -126,8 +133,7 @@ namespace hamqsler
 					{
 						CardWF card = QslDnPTasks.ConvertFromXQSL(file);
 						FileInfo fInfo = new FileInfo(file);
-						string toFile = hamqsler + fInfo.FullName.Substring( 
-							qsldnpDir.Length);
+						string toFile = toFolder + "\\" + fInfo.Name;
 						// if directory does not exist in hamqsler, then create it
 						toFile = toFile.Substring(0, toFile.IndexOf(".xqsl")) +
 							".xq1";
@@ -406,7 +412,8 @@ namespace hamqsler
 						GetCardItemData(tItem, tiNode, culture);
 						break;
 					case "FaceName":
-						tItem.TextFontFace = text.Value;
+						
+						tItem.TextFontFace = GetValidFont(text.Value);
 						break;
 					case "TextFontWeight":
 						tItem.IsBold = false;
@@ -546,7 +553,7 @@ namespace hamqsler
 					case "FaceName":
 						if(text != null)
 						{
-							qBox.FontName = text.Value;
+							qBox.FontName = GetValidFont(text.Value);
 						}
 						break;
 					case "BackgroundBrush":
@@ -686,6 +693,26 @@ namespace hamqsler
 			}
 			qBox.CalculateRectangle(qBox.MaximumQsos);
 			return qBox;
+		}
+		
+		/// <summary>
+		/// Validate the font.
+		/// </summary>
+		/// <param name="font">Font to validate</param>
+		/// <returns>input font if installed on system, or the first font in the installed fonts
+		/// list if not</returns>
+		private static string GetValidFont(string font)
+		{
+			string fName = fontNames[0];
+			foreach(string fontName in fontNames)
+			{
+				if(fontName.Equals(font))
+				{
+					fName = font;
+					break;
+				}
+			}
+			return fName;
 		}
 	}
 }

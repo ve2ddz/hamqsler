@@ -1719,24 +1719,32 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void ImportQslDnP_Click(object sender, RoutedEventArgs e)
 		{
-			string qsldnpDir = Environment.GetFolderPath(
-			Environment.SpecialFolder.MyDocuments) + "\\QslDnP";
-			DirectoryInfo qslInfo = new DirectoryInfo(qsldnpDir);
-			if(!qslInfo.Exists)
+			System.Windows.Forms.FolderBrowserDialog folderDialog =
+				new System.Windows.Forms.FolderBrowserDialog();
+			folderDialog.RootFolder = Environment.SpecialFolder.MyComputer;
+			folderDialog.Description = "Select the directory to copy and convert files from:";
+			System.Windows.Forms.DialogResult res = folderDialog.ShowDialog();
+			if(res == System.Windows.Forms.DialogResult.OK)
 			{
-				MessageBox.Show("The QslDnP folder does not exist, so no files can be copied.",
-				           "Import Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				string fromFolder = folderDialog.SelectedPath;
+				folderDialog.Description = "Select the directory to copy files to. Do not select " +
+					"the source directory";
+				res = folderDialog.ShowDialog();
+				if(res == System.Windows.Forms.DialogResult.OK)
+				{
+					string toFolder = folderDialog.SelectedPath;
+					QslDnPTasks.MoveFiles(fromFolder, toFolder);
+					if(QslDnPTasks.CopyError)
+					{
+						MessageBox.Show("One or more files could not be copied from your selected folder" +
+						                Environment.NewLine +
+						                "to your hamqsler folder. See the log file for information.",
+						                "File Copy Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+					}
+					QslDnPTasks.ConvertCardFiles(fromFolder, toFolder);
+					StatusText.Text = "Files have been copied and card files converted.";
+				}
 			}
-			QslDnPTasks.MoveFiles(qsldnpDir);
-			if(QslDnPTasks.CopyError)
-			{
-				MessageBox.Show("One or more files could not be copied from your QslDnP folder" +
-				                Environment.NewLine +
-				                "to your hamqsler folder. See the log file for information.",
-				                "File Copy Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-			}
-			QslDnPTasks.ConvertCardFiles(qsldnpDir);
-			StatusText.Text = "QslDnP files have been copied and card files converted.";
 		}
 		
 		/// <summary>
