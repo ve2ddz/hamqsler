@@ -163,7 +163,8 @@ namespace hamqsler
 										Environment.GetFolderPath(
 										Environment.SpecialFolder.MyDocuments).Length);
 								}
-				                ImageFileName =file;							
+				                ImageFileName =file;
+				                App.Logger.Log("Image file replaced by " + file);
                             }
                             else
                             {

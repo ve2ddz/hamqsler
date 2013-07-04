@@ -1742,7 +1742,8 @@ namespace hamqsler
 						                "File Copy Error", MessageBoxButton.OK, MessageBoxImage.Warning);
 					}
 					QslDnPTasks.ConvertCardFiles(fromFolder, toFolder);
-					StatusText.Text = "Files have been copied and card files converted.";
+					StatusText.Text = "Files have been copied and card files converted. " +
+						"See log file for details.";
 				}
 			}
 		}

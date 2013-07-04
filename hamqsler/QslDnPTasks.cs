@@ -87,6 +87,8 @@ namespace hamqsler
 							}
 							// copy file to hamqsler folder/subfolder
 							File.Copy(file, toFile);
+							string fromTo = string.Format("File: {0} copied to {1}", file, toFile);
+							App.Logger.Log(fromTo);
 						}
 						catch(IOException ioe)
 						{
@@ -144,6 +146,9 @@ namespace hamqsler
 							Directory.CreateDirectory(hFile.DirectoryName);
 						}
 						card.SaveAsXml(hFile.FullName);
+						string fromTo = string.Format("Card file: {0} converted to {1}",
+						                              file, toFile);
+						App.Logger.Log(fromTo);
 					}
 					catch(XmlException xe)
 					{
