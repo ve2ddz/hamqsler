@@ -34,6 +34,165 @@
 	<section>
 		<title>Printing Cards</title>
 		<section>
+			<title>Defining Custom Paper Sizes</title>
+			<para>There are 118 standard paper sizes defined in the Windows operating system. These
+			sizes are defined for paper and envelopes. Some paper sizes cannot be supported on some
+			printer models because these paper sizes are larger than the largest paper size that the
+			printer can handle. For example, A3 paper is 297 by 420 mm (approximately 11.7 by
+			16.5 inches). This paper cannot be inserted into a printer whose width is limited to
+			US letter (8 1/2 inches or 216 mm wide) or A4 (210 mm or 8.3 inches wide) paper. In
+			some other cases, the printer manufacturer may decide not to support a printer size
+			because it is a size that is rarely used.</para>
+			<para>Most printers support defining custom paper sizes, either on a system wide
+			basis, or for a single print job. In the former case, the paper size is defined once
+			for the printer and it becomes available to all programs that allow the user to
+			select the paper size. In the latter case, the custom paper size is available only
+			for one print job; if the paper size is needed again, it must be defined in the next
+			print job.</para>
+			<para>The following two subsections show how to define a system wide custom paper size for
+			printers that support it, and a tool for defining a custom paper size in HamQSLer that
+			is saved so that it may be reused in future card print jobs. In both subsections, a
+			custom paper size for bureau cards will be created.</para>
+			<section>
+				<title>Defining a System Wide Custom Paper Size</title>
+				<para>As mentioned above, this method only works if your printer supports it.</para>
+				<para>Open the Devices and Printers dialog, available from the Start menu and from
+				the Control Panel. The dialog is called Printers and Faxes in Windows XP. This dialog
+				looks similar to the image below.</para>
+				<figure xml:id="devicesandprinters">
+					<title>Devices and Printers Dialog</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/devicesandprinters.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>This image shows the Devices and Printers dialog on my computer which runs
+				Windows 7. The printers and faxes are listed in the second section of the dialog.
+				To define a custom paper size, move the mouse cursor over the printer you want to
+				define the paper size for, and click the right mouse button to bring up the context
+				menu. Select the Printing preferences menu item. This will display the printing
+				preferences dialog, which probably contains a number of tabs with labels such as
+				Printing Shortcuts, Features, and Advanced. Select the Features tab. You should then see
+				a panel similar to the image below, which is what is displayed on Windows 7 for HP
+				printers.</para>
+				<figure xml:id="featurestab">
+					<title>Features Panel on Printing Preferences Dialog</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/featurestab.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>The size dropdown box, highlighted above, shows the default paper size for the
+				printer. Click on the dropdown box to open it. The contents will look similar to the
+				image below.</para>
+				<figure xml:id="papersizesdropdown">
+					<title>Features Panel on Printing Preferences Dialog</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/papersizesdropdown.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>The dropdown contains one or more standard paper sizes, and may contain custom
+				paper sizes that you defined in the past. If you select the More... item, a dialog
+				is opened that allows you to change the default paper size for your printer. Any custom
+				paper sizes that you define are probably listed at the bottom. Since we are not
+				interested in changing the default paper size, you can ignore this menu item.</para>
+				<para>The last menu item is Custom... If this item is present, you can define
+				custom paper sizes; if it is not present,
+				then you must set your custom paper sizes using the method
+				in the section below. Click on the Custom... item to open the custom paper size
+				dialog, shown in the following image. If your printer is not manufactured by HP, or you
+				are not running Windows 7, then
+				the dialog will not look exactly like this.</para>
+				<figure xml:id="hpcustompapersizedialog">
+					<title>Custom Paper Size Dialog</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/hpcustompapersizedialog.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>To define a custom paper size for bureau cards, enter a Width of 3.5 inches or
+				88.9 mm, and enter a Length of 5.5 inches or 139.7 mm. Change the name to
+				<emphasis>Bureau Card</emphasis> or whatever else you want to call your card. When
+				you change the paper size name, the Save button becomes active. Click this button
+				to save the new custom paper size, then click the OK button to close the dialog. Your new
+				custom paper size will be available from the standard print dialog that is displayed
+				when you print from most programs. This paper size will also be available from the
+				print dialog in HamQSLer. Printing cards in HamQSLer is discussed below.</para>
+				<tip>
+					<para>Always set the width in the custom paper size dialog to the smaller dimension
+					of your custom paper size, and the length to the larger dimension. HamQSLer assumes
+					that the paper sizes are set for Portrait mode.</para>
+				</tip>
+				<caution>
+					<para>Your printer may limit the number of custom paper sizes that you
+					can define. If you need to define additional paper sizes for use
+					with HamQSLer, use the method described in the following section.</para>
+				</caution>
+			</section>
+			<section>
+				<title>Defining a Custom Paper Size for HamQSLer Only</title>
+				<para>If your printer does not support setting system wide custom paper sizes, you
+				may use the method described here to create a custom size that can be used only
+				within HamQSLer.</para>
+				<para>To define a custom paper size, select the Tools -> Define Custom
+				Paper Sizes menu item. This opens the custom paper sizes dialog shown in
+				the image below.</para>
+				<figure xml:id="custompapersizes">
+					<title>Custom Paper Size Dialog</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/custompapersizes.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>The Name dropdown box contains the names of all custom paper sizes
+				you have already defined in HamQSLer and the word
+				<emphasis>Custom</emphasis>. To make changes to any of the paper sizes
+				you have defined, select that paper size name. Otherwise, select
+				<emphasis>Custom</emphasis>. Note that <emphasis>Custom</emphasis>
+				is the default value when you open this dialog.</para>
+				<para>The text box below the dropdown contains the name of the custom
+				paper size you are working with. When you select a paper size from the
+				dropdown, the text in this text box is automatically set to the name
+				you selected.</para>
+				<para>To define a new bureau card paper size, select
+				<emphasis>Custom</emphasis>. The paper size that is displayed is the
+				default paper size on the default printer on your
+				computer system. Enter a width of
+				3.5 inches or 88.9 mm and a height of 5.5 inches or 139.7 mm. Change
+				the name from <emphasis>Custom</emphasis> to <emphasis>Bureau
+				Card</emphasis> or similar. When you change the name from 
+				<emphasis>Custom</emphasis> to
+				another value, the Save button is enabled. Click this button to save the
+				new paper size, then click the Close button to close the dialog.</para>
+				<para>This new paper size will be displayed at the end of the
+				paper sizes in the paper size dropdown
+				in the print dialog for HamQSLer.</para>
+				<tip>
+					<para>Always enter the smaller paper dimension in the width field
+					and the larger dimension in the height field. HamQSLer assumes the
+					paper sizes are defined in Portrait mode.</para>
+				</tip>
+				<caution>
+					<para>Only use this method to define custom paper sizes if you cannot
+					define a system wide custom paper size for your printer. Defining
+					a custom paper size using the instructions in this section means
+					that the paper size is available in HamQSLer only.</para>
+				</caution>
+				<caution>
+					<para>The custom paper sizes created using this method are stored
+					in the user preferences file. If you delete, move, or lose this file,
+					the custom paper sizes are lost along with all other user preferences
+					settings. You will then have to redefine your custom paper sizes.</para>
+				</caution>
+			</section>
+		</section>
+		<section>
 			<title>Print Modes and Printer Margins</title>
 			<para>Most printers support two modes of printing: borderless and bordered printing.
 			Borderless printing is normally used for printing photographs. The printer increases
