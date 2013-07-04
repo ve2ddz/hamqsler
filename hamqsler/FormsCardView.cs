@@ -418,8 +418,8 @@ namespace hamqsler
 			if(tItem.CheckboxAfter)
 			{
 				Pen pen = new Pen(tItem.TextBrush, tItem.CheckboxLineThickness);
-				g.DrawRectangle(pen, CardLocation.X + tItem.X + tItem.Width - 
-				                tItem.Height + 4,
+				g.DrawRectangle(pen, CardLocation.X + tItem.X + tItem.Width -
+				                tItem.Height + margin - 2,
 				                 CardLocation.Y + tItem.Y + (tItem.Height - checkBoxSize) / 2,
 				                checkBoxSize, checkBoxSize);
 				pen.Dispose();
