@@ -176,6 +176,7 @@ namespace hamqsler
 		/// <summary>
 		/// Calculate the size of this TextWFItem based on its various properties
 		/// </summary>
+		/// <param name="g">Graphics object the card is being drawn on</param>
 		public void CalculateRectangle(System.Drawing.Graphics g)
 		{
 			if(QslCard != null)
@@ -205,14 +206,6 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-/*			if(e.Property == TextFontFaceProperty ||
-			   e.Property == IsBoldProperty ||
-			   e.Property == IsItalicProperty ||
-			   e.Property == FontSizeProperty ||
-			   e.Property == TextProperty)
-			{
-				CalculateRectangle();
-			}*/
 			if(e.Property == TextFontFaceProperty ||
 			   e.Property == FontSizeProperty ||
 			   e.Property == TextColorProperty ||
