@@ -225,6 +225,7 @@ namespace hamqsler
 			{
 				if(QslCard != null)
 				{
+					QslCard.IsDirty = true;
 					QslCard.RaiseDispPropertyChangedEvent();
 				}
 			}

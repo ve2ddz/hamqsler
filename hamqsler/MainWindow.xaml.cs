@@ -1422,6 +1422,7 @@ namespace hamqsler
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
+				bool cardIsDirty = cti.cardPanel.QslCard.IsDirty;
 				MenuItem mi = (MenuItem) sender;
 				if(mi != null)
 				{
@@ -1432,6 +1433,7 @@ namespace hamqsler
 						cti.SetPropertiesVisibility(ci);
 					}
 				}
+				cti.cardPanel.QslCard.IsDirty = cardIsDirty;
 			}
 		}
 		
