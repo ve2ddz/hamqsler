@@ -488,6 +488,7 @@ namespace hamqsler
 						continue;
 					}
 					card.FileName = fileName;
+					card.IsInDesignMode = true;
 					CardTabItem cti = new CardTabItem(card);
 					mainTabControl.Items.Add(cti);
 					cti.IsSelected = true;		// select the new tab
