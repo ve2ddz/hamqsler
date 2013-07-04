@@ -72,8 +72,12 @@ namespace hamqsler
 			{
 				foreach(string file in Directory.EnumerateFiles(fromFolder))
 				{
-					// do not copy xqsl or xml files
-					if(!file.EndsWith(".xqsl") && !file.EndsWith(".xml"))
+					// do not copy xqsl, xml or log files, or files used in the QslDesignAndPrint
+					// getting started tutorial
+					if((!file.EndsWith(".xqsl") && !file.EndsWith(".xml") && 
+					    !file.EndsWith(".log") && !file.EndsWith(".log-old")) &&
+					   (!fromFolder.EndsWith("Samples") || (!file.EndsWith("test2.adi") &&
+					                                        !file.EndsWith("moonbasin.jpg"))))
 					{
 						FileInfo fInfo = new FileInfo(file);
 						try
@@ -86,7 +90,7 @@ namespace hamqsler
 							{
 								Directory.CreateDirectory(hFile.DirectoryName);
 							}
-							// copy file to hamqsler folder/subfolder
+							// copy file to desination folder/subfolder
 							File.Copy(file, toFile);
 							copyCount++;
 							string fromTo = string.Format("File: {0} copied to {1}", file, toFile);
@@ -104,12 +108,8 @@ namespace hamqsler
 				// now process every subdirectory in this folder
 				foreach(string dir in Directory.EnumerateDirectories(fromFolder))
 				{
-					// do not copy files from Logs and Samples subdirectories
-					if(!dir.EndsWith("Logs") && !dir.EndsWith("Samples"))
-					{
-						string toDir = toFolder + dir.Substring(fromFolder.Length);
-						copyCount += MoveFiles(dir, toDir);
-					}
+					string toDir = toFolder + dir.Substring(fromFolder.Length);
+					copyCount += MoveFiles(dir, toDir);
 				}
 			}
 			catch(ArgumentException ae)
@@ -137,32 +137,28 @@ namespace hamqsler
 				{
 					try
 					{
-						CardWF card = QslDnPTasks.ConvertFromXQSL(file);
-						FileInfo fInfo = new FileInfo(file);
-						string toFile = toFolder + "\\" + fInfo.Name;
-						// if directory does not exist in hamqsler, then create it
-						toFile = toFile.Substring(0, toFile.IndexOf(".xqsl")) +
-							".xq1";
-						FileInfo hFile = new FileInfo(toFile);
-						DirectoryInfo dInfo = new DirectoryInfo(hFile.DirectoryName);
-						if(!dInfo.Exists)
+						// do not copy ...\Samples\sample.xqsl because this would overwrite
+						// the file created in the getting started tutorial
+						if(!fromFolder.EndsWith("Samples") ||
+						   (fromFolder.EndsWith("Samples") && !file.EndsWith("sample.xqsl")))
 						{
-							Directory.CreateDirectory(hFile.DirectoryName);
-						}
-						card.SaveAsXml(hFile.FullName);
-						convertCount++;
-						string fromTo = string.Format("Card file: {0} converted to {1}",
-						                              file, toFile);
-						App.Logger.Log(fromTo);
-						// now process every subdirectory in this folder
-						foreach(string dir in Directory.EnumerateDirectories(fromFolder))
-						{
-							// do not copy files from Logs and Samples subdirectories
-							if(!dir.EndsWith("Logs") && !dir.EndsWith("Samples"))
+							CardWF card = QslDnPTasks.ConvertFromXQSL(file);
+							FileInfo fInfo = new FileInfo(file);
+							string toFile = toFolder + "\\" + fInfo.Name;
+							// if directory does not exist in hamqsler, then create it
+							toFile = toFile.Substring(0, toFile.IndexOf(".xqsl")) +
+								".xq1";
+							FileInfo hFile = new FileInfo(toFile);
+							DirectoryInfo dInfo = new DirectoryInfo(hFile.DirectoryName);
+							if(!dInfo.Exists)
 							{
-								string toDir = toFolder + dir.Substring(fromFolder.Length);
-								convertCount += ConvertCardFiles(dir, toDir);
+								Directory.CreateDirectory(hFile.DirectoryName);
 							}
+							card.SaveAsXml(hFile.FullName);
+							convertCount++;
+							string fromTo = string.Format("Card file: {0} converted to {1}",
+							                              file, toFile);
+							App.Logger.Log(fromTo);
 						}
 					}
 					catch(XmlException xe)
@@ -175,6 +171,12 @@ namespace hamqsler
 						                "for more information.", "Card Conversion Error",
 						                MessageBoxButton.OK, MessageBoxImage.Warning);
 					}
+				}
+				// now process every subdirectory in this folder
+				foreach(string dir in Directory.EnumerateDirectories(fromFolder))
+				{
+					string toDir = toFolder + dir.Substring(fromFolder.Length);
+					convertCount += ConvertCardFiles(dir, toDir);
 				}
 			}
 			return convertCount;
