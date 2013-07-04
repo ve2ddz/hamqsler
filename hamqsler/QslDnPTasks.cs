@@ -65,8 +65,9 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="fromFolder">Name of the directory to copy files from</param>
 		/// <param name="toFolder">Name of the directory to copy files to</param>
-		public static void MoveFiles(string fromFolder, string toFolder)
+		public static int MoveFiles(string fromFolder, string toFolder)
 		{
+			int copyCount = 0;
 			try
 			{
 				foreach(string file in Directory.EnumerateFiles(fromFolder))
@@ -87,6 +88,7 @@ namespace hamqsler
 							}
 							// copy file to hamqsler folder/subfolder
 							File.Copy(file, toFile);
+							copyCount++;
 							string fromTo = string.Format("File: {0} copied to {1}", file, toFile);
 							App.Logger.Log(fromTo);
 						}
@@ -106,7 +108,7 @@ namespace hamqsler
 					if(!dir.EndsWith("Logs") && !dir.EndsWith("Samples"))
 					{
 						string toDir = toFolder + dir.Substring(fromFolder.Length);
-						MoveFiles(dir, toDir);
+						copyCount += MoveFiles(dir, toDir);
 					}
 				}
 			}
@@ -118,6 +120,7 @@ namespace hamqsler
 			{
 				App.Logger.Log(pe);
 			}
+			return copyCount;
 		}
 		
 		/// <summary>
@@ -125,8 +128,9 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="fromFolder">name of the source directory of the card files to convert</param>
 		/// <param name="toFolder">name of the directory to save the converted card files in</param>
-		public static void ConvertCardFiles(string fromFolder, string toFolder)
+		public static int ConvertCardFiles(string fromFolder, string toFolder)
 		{
+			int convertCount = 0;
 			foreach(string file in Directory.EnumerateFiles(fromFolder))
 			{
 				if(file.EndsWith(".xqsl"))
@@ -146,9 +150,20 @@ namespace hamqsler
 							Directory.CreateDirectory(hFile.DirectoryName);
 						}
 						card.SaveAsXml(hFile.FullName);
+						convertCount++;
 						string fromTo = string.Format("Card file: {0} converted to {1}",
 						                              file, toFile);
 						App.Logger.Log(fromTo);
+						// now process every subdirectory in this folder
+						foreach(string dir in Directory.EnumerateDirectories(fromFolder))
+						{
+							// do not copy files from Logs and Samples subdirectories
+							if(!dir.EndsWith("Logs") && !dir.EndsWith("Samples"))
+							{
+								string toDir = toFolder + dir.Substring(fromFolder.Length);
+								convertCount += ConvertCardFiles(dir, toDir);
+							}
+						}
 					}
 					catch(XmlException xe)
 					{
@@ -162,6 +177,7 @@ namespace hamqsler
 					}
 				}
 			}
+			return convertCount;
 		}
 		
 		/// <summary>
@@ -713,10 +729,10 @@ namespace hamqsler
 			{
 				if(fontName.Equals(font))
 				{
-					fName = font;
-					break;
+					return font;
 				}
 			}
+			App.Logger.Log("Font: " + font + " not found. Replaced with " + fName);
 			return fName;
 		}
 	}

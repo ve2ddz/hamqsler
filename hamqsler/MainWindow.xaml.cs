@@ -1733,7 +1733,7 @@ namespace hamqsler
 				if(res == System.Windows.Forms.DialogResult.OK)
 				{
 					string toFolder = folderDialog.SelectedPath;
-					QslDnPTasks.MoveFiles(fromFolder, toFolder);
+					int copyCount = QslDnPTasks.MoveFiles(fromFolder, toFolder);
 					if(QslDnPTasks.CopyError)
 					{
 						MessageBox.Show("One or more files could not be copied from your selected folder" +
@@ -1741,9 +1741,26 @@ namespace hamqsler
 						                "to your hamqsler folder. See the log file for information.",
 						                "File Copy Error", MessageBoxButton.OK, MessageBoxImage.Warning);
 					}
-					QslDnPTasks.ConvertCardFiles(fromFolder, toFolder);
-					StatusText.Text = "Files have been copied and card files converted. " +
-						"See log file for details.";
+					if(copyCount < 1)
+					{
+						MessageBox.Show("No files were copied.", "Copy Error", MessageBoxButton.OK,
+						                MessageBoxImage.Warning);
+					}
+					int convertCount = QslDnPTasks.ConvertCardFiles(fromFolder, toFolder);
+					if(convertCount < 1)
+					{
+						MessageBox.Show("No card files were converted.", "Convert Error",
+						                MessageBoxButton.OK, MessageBoxImage.Warning);
+					}
+					if(copyCount > 0 || convertCount > 0)
+					{
+						StatusText.Text = "Files have been copied and card files converted. " +
+							"See log file for details.";
+					}
+					else
+					{
+						StatusText.Text = "No files were copied or card files converted.";
+					}
 				}
 			}
 		}
