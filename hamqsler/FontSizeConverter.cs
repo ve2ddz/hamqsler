@@ -63,7 +63,14 @@ namespace hamqsler
 			if(Single.TryParse(size, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,
 			                   out val))
 			{
-				return val;
+			if(val > 0)
+				{
+					return val;
+				}
+				else
+				{
+					return 1;
+				}
 			}
 			else
 			{
