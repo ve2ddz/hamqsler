@@ -73,27 +73,33 @@
 		<para> 
 		HamQSLer uses the <emphasis>hamqsler</emphasis> subdirectory in
 		My Documents. To ease the transition from QslDesignAndPrint to
-		HamQSLer, a move and convert tool has been included in HamQSLer. This
-		tool may be executed by selecting the "Import QslDesignAndPrint Files" 
-		menu item in the Tools dropdown menu.This tool performs two tasks:</para>
+		HamQSLer, a move and convert tool has been included in HamQSLer. 
+		This tool performs two tasks:</para>
 		<orderedlist>
 			<listitem>
 				<para>All files except log files, card files, and the user preferences
 				file are copied from
-				QslDnP to hamqsler. The contents of all subdirectories except
-				Logs and Samples are also copied. The user preferences file is not
-				copied because there are many differences between QslDesignAndPrint
-				user preferences and HamQSLer user preferences.</para>
+				a user selected source directory to a user specified destination directory. 
+				These files have the extensions .xqsl, .xml, .log, and .log-old.</para>
 			</listitem>
 			<listitem>
 				<para>Card files are converted from QslDesignAndPrint format to
 				HamQSLer format and copied to the 
-				<emphasis></emphasis> directory and its subdirectores. 
-				Again the contents of the
-				Logs and Samples subdirectories are ignored.</para>
+				destination directory and its subdirectories.</para>
 			</listitem>
 		</orderedlist>
-		<para>If one or more errors occur when copying files from QslDnP to hamqsler,
+		<para>The following files are not copied or converted: ...\Samples\text2.adi,
+		...\Samples\moonbasin.jpg, and ...\Samples\sample.xqsl. These three files are
+		used in the QslDesignAndPrint getting started tutorial; a different set of
+		files is used in the HamQSLer getting started tutorial.</para>
+		<para>To copy and convert your QslDesignAndPrint related files, select
+		the Tools -> Import QslDesignAndPrint Files menu item. This opens a Browse For
+		Folder dialog. Select the directory containing the files you want to copy and
+		convert, then click the OK button. Another Browse For Folder dialog will open;
+		use this dialog to select the destination directory, and click the OK button.
+		Copying and conversion will begin.</para>
+		<para>If one or more errors occur when copying files from the source directory
+		to the destination directory,
 		the following message box will be displayed, and as noted, the file or files
 		that could not be copied are listed in the log file along with the reason why.</para>
 		<figure xml:id="qsldnpfilecopyerrorbox">
@@ -104,11 +110,32 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<para>If no files were copied, either because the source directory was empty,
+		or because the files in the directory had already been copied to the destination
+		directory, the message box shown below is displayed.</para>
+		<figure xml:id="nofilescopied">
+			<title>No Files Copied Message Box</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/nofilescopied.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>If the source directory contains no card files, or if there were errors
+		detected while converting every card file, then the following message box is
+		displayed as a warning.</para>
+		<figure xml:id="nocardscoverted">
+			<title>No Cards Converted Message Box</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/nocardsconverted.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
 		<para>If an image in a QslDesignAndPrint card file references an image
-		file in <emphasis>QslDnP</emphasis>, then the location of the image
-		file is changed from <emphasis>QslDnP</emphasis> to 
-		<emphasis>hamqsler</emphasis>. If any image file cannot be located, then
-		the message box shown below is displayed, and you are given the choice
+		file in the source directory, then the location of the image
+		file is changed to the destination directory. If any image file cannot be located, 
+		then the message box shown below is displayed, and you are given the choice
 		between trying to locate the file yourself or deleting the image.</para>
 		<figure xml:id="imagefilenotfoundbox">
 			<title>Image File Not Found Message Box</title>
@@ -118,18 +145,41 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<para>If a font cannot be located, it is replaced by the first font in the
+		installed fonts list. See the caution below related to fonts.</para>
 		<para>When all files have been moved and all card files have been converted,
-		the text "QslDnP files have been copied and card files converted." is
-		displayed in the status bar at the bottom of HamQSLer's main window.</para>
+		the text "Files have been copied and card files converted. See log file for
+		details." is
+		displayed in the status bar at the bottom of HamQSLer's main window. The log
+		file contains a message for every file copied, every card file converted, every
+		image replaced, every font that could not be found, and every error that was
+		detected during the copy and conversion tasks.</para>
 		<caution>
 			<para>HamQSLer uses a different graphical user interface than 
 			QslDesignAndPrint to draw cards. In some cases, font face names are
 			different; if your card file references one of these font face names,
-			then the card will not display text in your selected font. While the card
-			files are being converted, no attempt is made to ensure that the font face
-			name is valid. You may of course change the
-			font face at any time while the card is in design mode.
-			</para>
+			then the card will not display text in your selected font. The font will
+			be replaced by the first font in the installed fonts list. You may of course 
+			change the font face at any time while the card is in design mode.</para>
+			<para>QslDesignAndPrint used Windows Presentation Foundation (WPF) to
+			print and display cards. HamQSLer uses Windows Forms libraries for
+			printing and displaying cards. There are two potential differences between
+			these libraries as related to fonts:</para>
+			<orderedlist>
+				<listitem>
+					<para>WPF enumerates all fonts that are installed on your computer.
+					Windows forms only enumerates installed fonts that are located in
+					your Fonts directory.</para>
+				</listitem>
+				<listitem>
+					<para>There may be small differences in names between the list of
+					installed fonts returned by WPF and by Windows Forms. This only
+					affects a few font names.</para>
+				</listitem>
+			</orderedlist>
+			<para>For these reasons, one or more of the fonts on your QslDesignAndPrint
+			cards may be replaced by the first font in the Windows Forms installed fonts
+			list during the conversion process.</para>
 		</caution>
 		<caution>
 			<para>QslDesignAndPrint supports three font weights: 
