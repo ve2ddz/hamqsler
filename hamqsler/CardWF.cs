@@ -386,6 +386,19 @@ namespace hamqsler
 			foreach(TextWFItem ti in card.TextItems)
 			{
 				ti.QslCard = card;
+				System.Drawing.Text.InstalledFontCollection fontCol =
+					new System.Drawing.Text.InstalledFontCollection();
+				// Must ensure that the font is installed. Otherwise card not displayed.
+				string fontName = fontCol.Families[0].Name;
+				foreach(System.Drawing.FontFamily family in fontCol.Families)
+				{
+					if(family.Name == ti.TextFontFace)
+					{
+						fontName = ti.TextFontFace;
+						break;
+					}
+				}
+				ti.TextFontFace = fontName;
 				foreach(TextPart part in ti.Text)
 				{
 					part.RemoveExtraneousStaticTextMacros();
@@ -412,7 +425,7 @@ namespace hamqsler
 			base.OnPropertyChanged(e);
 			if(e.Property == IsInDesignModeProperty)
 			{
-				if((bool)e.NewValue == true)
+				if((bool)e.NewValue == true && CardPrintProperties != null)
 				{
 					if(IsInDesignMode)
 					{
