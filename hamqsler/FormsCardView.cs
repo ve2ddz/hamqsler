@@ -328,7 +328,7 @@ namespace hamqsler
 			// paint text items
 			foreach(TextWFItem tItem in QslCard.TextItems)
 			{
-				tItem.CalculateRectangle(g);
+				tItem.CalculateRectangle(g, qsos);
 				PaintTextItem(g, qsos, tItem);
 			}
 			if(QslCard.QsosBox != null)

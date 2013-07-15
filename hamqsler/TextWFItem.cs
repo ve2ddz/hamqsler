@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
@@ -177,7 +178,7 @@ namespace hamqsler
 		/// Calculate the size of this TextWFItem based on its various properties
 		/// </summary>
 		/// <param name="g">Graphics object the card is being drawn on</param>
-		public void CalculateRectangle(System.Drawing.Graphics g)
+		public void CalculateRectangle(System.Drawing.Graphics g, List<DispQso> qsos)
 		{
 			if(QslCard != null)
 			{
@@ -193,7 +194,7 @@ namespace hamqsler
 				Font font = new Font(new FontFamily(this.TextFontFace), this.FontSize,
 					         style, GraphicsUnit.Point);
 				System.Drawing.SizeF size = g.MeasureString(this.Text.GetText(
-					QslCard, null, QslCard.IsInDesignMode), font);
+					QslCard, qsos, QslCard.IsInDesignMode), font);
 				this.Height = (int)size.Height;
 				this.Width = (int)size.Width + (int)size.Height * 2 + 8;
 			}
