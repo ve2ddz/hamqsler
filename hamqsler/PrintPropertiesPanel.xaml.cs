@@ -276,10 +276,10 @@ namespace hamqsler
 					                              Environment.NewLine, 
 					                              paperSize.PaperName));
 				}
-				paperSizeComboBox.SelectedItem = paperSize.PaperName;
+				paperSizeComboBox.SelectedValue = paperSize.PaperName;
 				if(paperSizeComboBox.SelectedIndex == -1)
 				{
-					paperSizeComboBox.SelectedItem = settings.DefaultPageSettings.PaperSize.PaperName;
+					paperSizeComboBox.SelectedValue = settings.DefaultPageSettings.PaperSize.PaperName;
 				}
 				if(((App)App.Current).UserPreferences.DebugPrinting)
 				{
@@ -293,21 +293,22 @@ namespace hamqsler
 			}
 			else if(e.Property == PrinterResolutionProperty)
 			{
-				qualityComboBox.SelectedItem = ResolutionString(Resolution);
+				qualityComboBox.SelectedValue = ResolutionString(Resolution);
 				if(qualityComboBox.SelectedIndex == -1)
 				{
 					PrinterSettings settings = new PrinterSettings();
 					settings.PrinterName = PrinterName;
-					qualityComboBox.SelectedItem = 
+					qualityComboBox.SelectedValue = 
 						ResolutionString(settings.DefaultPageSettings.PrinterResolution);
 				}
 			}
 			else if(e.Property == PaperSourceProperty)
 			{
-				paperSourceComboBox.SelectedItem = Source.SourceName;
+				paperSourceComboBox.SelectedValue = Source.SourceName;
 				if(paperSourceComboBox.SelectedIndex == -1)
 				{
-					paperSourceComboBox.SelectedItem = settings.DefaultPageSettings.PaperSource;
+					paperSourceComboBox.SelectedValue = 
+						settings.DefaultPageSettings.PaperSource.SourceName;
 				}
 			}
 			else if(e.Property == InsideMarginsProperty)
@@ -362,11 +363,11 @@ namespace hamqsler
 			}
 			if(PrinterPaperSize != null)
 			{
-				paperSizeComboBox.SelectedItem = PrinterPaperSize.PaperName;
+				paperSizeComboBox.SelectedValue = PrinterPaperSize.PaperName;
 			}
 			if(paperSizeComboBox.SelectedIndex == -1)
 			{
-				paperSizeComboBox.SelectedItem = settings.DefaultPageSettings.PaperSize.PaperName;
+				paperSizeComboBox.SelectedValue = settings.DefaultPageSettings.PaperSize.PaperName;
 			}
 		}
 		
@@ -427,11 +428,11 @@ namespace hamqsler
 			}
 			if(Resolution != null)
 			{
-				qualityComboBox.SelectedItem = ResolutionString(Resolution);
+				qualityComboBox.SelectedValue = ResolutionString(Resolution);
 			}
 			if(qualityComboBox.SelectedIndex == -1)
 			{
-				qualityComboBox.SelectedItem = 
+				qualityComboBox.SelectedValue = 
 					ResolutionString(settings.DefaultPageSettings.PrinterResolution);
 			}
 		}
@@ -465,11 +466,11 @@ namespace hamqsler
 			}
 			if(Source != null)
 			{
-				paperSourceComboBox.SelectedItem = Source.SourceName;
+				paperSourceComboBox.SelectedValue = Source.SourceName;
 			}
 			if(paperSourceComboBox.SelectedIndex == -1)
 			{
-				paperSourceComboBox.SelectedItem =
+				paperSourceComboBox.SelectedValue =
 					settings.DefaultPageSettings.PaperSource.SourceName;
 			}
 			paperSourceComboBox.IsEnabled = paperSourceComboBox.Items.Count > 1;
