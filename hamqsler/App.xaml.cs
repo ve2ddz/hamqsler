@@ -48,6 +48,8 @@ namespace hamqsler
 			get {return logger;}
 		}
 		
+		string created = string.Empty;
+		
 		/// <summary>
 		/// UserPreferences object. Stored in App because it is created before MainWindow is 
 		/// created.
@@ -135,6 +137,7 @@ namespace hamqsler
 				if (!qslsInfo.Exists)
 				{
 					qslsInfo.Create();
+					created = "hamqsler directory created" + Environment.NewLine;
 					showHamqslerCreatedLabel = true;
 				}
 				// check if Printing subdirectory exists and create it if it doesn't
@@ -142,6 +145,7 @@ namespace hamqsler
 				if(!printingDirInfo.Exists)
 				{
 					printingDirInfo.Create();
+					created += "hamqsler/Printing directory created" + Environment.NewLine;
 					showHamqslerCreatedLabel = true;
 				}
 				// check if Logs subdirectory exists and create it if it doesn't
@@ -149,6 +153,7 @@ namespace hamqsler
 				if(!logsDirInfo.Exists)
 				{
 					logsDirInfo.Create();
+					created += "hamqsler/Logs directory created" + Environment.NewLine;
 					showHamqslerCreatedLabel = true;
 				}
 				// check if Samples directory exists and create it if it doesn't
@@ -156,6 +161,7 @@ namespace hamqsler
 				if (!samplesDirInfo.Exists)
 				{
 					samplesDirInfo.Create();
+					created += "hamqsler/Samples directory created" + Environment.NewLine;
 					showHamqslerCreatedLabel = true;
 				}
 				// copy Samples files if they don't exist
@@ -174,6 +180,7 @@ namespace hamqsler
 					if (!fInfo.Exists)
 					{
 						file.CopyTo(fInfo.FullName);
+						created += fInfo.Name + " copied" + Environment.NewLine;
 						showHamqslerCreatedLabel = true;
 					}
 				}
@@ -240,6 +247,10 @@ namespace hamqsler
 			                         aName.Version.ToString(),
 			                         aName2.Version.ToString()
 			                ));
+			if(!created.Equals(string.Empty))
+			{
+				logger.Log(created);
+			}
 			
 		}
 
