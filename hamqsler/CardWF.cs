@@ -412,6 +412,21 @@ namespace hamqsler
 					part.RemoveExtraneousStaticTextMacros();
 				}
 			}
+			// Must set default printer for card to system default printer if default
+			// printer for card is not installed on computer. Otherwise, the card
+			// will not display.
+			System.Drawing.Printing.PrinterSettings settings = new
+				System.Drawing.Printing.PrinterSettings();
+			string printerName = settings.PrinterName;
+			foreach(string printer in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+			{
+				if(printer.Equals(card.CardPrintProperties.PrinterName))
+				{
+					printerName = card.CardPrintProperties.PrinterName;
+					break;
+				}
+			}
+			card.CardPrintProperties.PrinterName = printerName;
 			return card;
 		}
 		
