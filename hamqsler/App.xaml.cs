@@ -101,6 +101,18 @@ namespace hamqsler
 			{
 				logger.Log(e.Exception, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
 			}
+			MessageBox.Show("HamQSLer must terminate because of an unhandled exception." +
+			                Environment.NewLine +
+			                "Information about the exception is provided in the log file." +
+			                Environment	.NewLine +
+			                "Please log a bug report by following the instructions on the website" +
+			                Environment.NewLine +
+			                "and include the log file." +
+			                Environment.NewLine +
+			                "Do not restart the program before doing this because this will" +
+			                Environment.NewLine +
+			                "cause the log file to be overwritten.",
+			                "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
 			this.Shutdown();
 		}
 
