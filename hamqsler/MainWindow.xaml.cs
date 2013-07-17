@@ -1619,7 +1619,8 @@ namespace hamqsler
 			string fileName = qslCard.FileName;
 			SaveFileDialog sDialog = new SaveFileDialog();
 			sDialog.Filter = "QSL Card(*.xq1)|*.xq1";
-			sDialog.InitialDirectory = ((App)Application.Current).HamqslerFolder;
+			sDialog.InitialDirectory = 
+				((App)Application.Current).UserPreferences.DefaultCardFilesFolder;
 			if(fileName != null)
 			{
 				sDialog.FileName = fileName;
