@@ -526,7 +526,8 @@
 			</table>
 			<para>Values in only the Include and Manager columns are editable. Including
 			QSOs when printing cards is discussed in the 
-			<link linkend="includingQSOs">Including QSOs</link> section. The Manager field are
+			<link linkend="includingQSOs">Selecting QSOs for Printing</link> section. 
+			The Manager fields are
 			standard text box fields. All of the standard text editing features are included.</para>
 			<para>The QSOs are sorted in one of three ways. This is discussed in the 
 			<link linkend='sortingQSOs'>Sorting QSOs</link> section.</para>
@@ -562,8 +563,192 @@
 			properly sort the QSOs in that case.</para>
 		</section>
 		<section xml:id='includingQSOs'>
-			<title>Including QSOs for Printing</title>
-			<para></para>
+			<title>Selecting QSOs for Printing</title>
+			<para>When you first input, import, or add QSOs, all QSOs are selected.
+			There are many ways to select QSOs for printing:</para>
+			<itemizedlist>
+				<listitem>
+					<para>Using filters contained in the filter tabs. You may select QSOs by band,
+					mode, QSL statuses and by date and time ranges.</para>
+				</listitem>
+				<listitem>
+					<para>Selecting and deselecting individual QSOs in the QSOs panel.</para>
+				</listitem>
+				<listitem>
+					<para>Selecting and deselecting multiple QSOs in the QSOs panel.</para>
+				</listitem>
+				<listitem>
+					<para>Selecting and deselecting all QSOs.</para>
+				</listitem>
+			</itemizedlist>
+			<para>Each of these methods is discussed in the subsections below.</para>
+			<section>
+				<title>Filtering QSOs for Printing</title>
+				<para>QSOs may be filtered by band, mode, QSL statuses, and
+				by date and time range using the filters in the filters tabs. The image below shows
+				the filters tabs with the band tab selected. Each of the filters is discussed in
+				the subsections which follow.</para>
+				<figure xml:id="qsosfiltertabs">
+					<title>Band Filter Tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/bandfilter.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<caution>
+					<para>The settings in the four filter tabs
+					work together to determine whether a QSO will be included
+					for printing or not. Even though the individual filter sections state that
+					you can include all QSOs that match a particular filter by checking that filter,
+					some QSOs may not be included because other filters that affect these QSOs
+					may be unchecked.</para>
+				</caution>
+				<section>
+					<title>Filtering QSOs by Band</title>
+					<para>The Band filter tab contains a checkbox for each band that is included
+					in at least one of the QSOs that is loaded. The image above shows the Band
+					tab as it would be with the sample.adi file in the Samples directory loaded.</para>
+					<para>Check a band checkbox to include all QSOs made in that band when printing
+					cards. Uncheck a band checkbox to not include those QSOs.</para>
+					<tip>
+						<para>You may override the Include checkbox for individual QSOs after this
+						filter has been set. See the 
+						<link linkend="manuallyselectingqsos">Selecting Individual QSOs</link>
+						section for more information.</para>
+					</tip>
+				</section>
+				<section>
+					<title>Filtering QSOs by Mode</title>
+					<para>The Mode filter tab contains a checkbox for each mode that is included
+					in at least one of the QSOs that is loaded. The image below shows the Mode
+					tab as it would be with the sample.adi file in the Samples directory loaded.</para>
+					<figure xml:id="modefilter">
+						<title>Mode Filter Tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/modefilter.png" />
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>Check a mode checkbox to include all QSOs made in that mode when printing
+					cards. Uncheck a mode checkbox to not include those QSOs.</para>
+					<tip>
+						<para>You may override the Include checkbox for individual QSOs after this
+						filter has been set. See the 
+						<link linkend="manuallyselectingqsos">Manually Selecting QSOs</link>
+						section for more information.</para>
+					</tip>
+				</section>
+				<section>
+					<title>Filtering QSOs by QSL Statuses</title>
+					<para>The QSL Status filter tab contains panels for QSL received status,
+					QSL sent status and Send Via status. Each panel contains a checkbox for each
+					status that is included in at least one loaded QSO. The image below shows
+					the QSL Status tab as it would be with the sample.adi file in the Samples
+					directory loaded.</para>
+					<figure xml:id="qslstatusfilter">
+						<title>QSL Status Filter Tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/qslstatusfilter.png" />
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>Check a status checkbox to include all QSOs containing that status
+					when printing cards. Uncheck a status checkbox to not include those QSOs.</para>
+					<tip>
+						<para>You may override the Include checkbox for individual QSOs after this
+						filter has been set. See the 
+						<link linkend="manuallyselectingqsos">Manually Selecting QSOs</link>
+						section for more information.</para>
+					</tip>
+				</section>
+				<section>
+					<title>Filtering QSOs by Date and Time</title>
+					<para>The Date/Time filter tab contains a start date and time and an end date
+					and time as well as a Reset button. The image below shows the Date/Time filter
+					tab as it would be immediately after loading the sample.adi file located in
+					the Samples directory.</para>
+					<figure xml:id="datetimefilter">
+						<title>Date/Time Filter Tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/datetimefilter.png" />
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>When QSOs are first loaded, the values in the start date and time 
+					text boxes correspond to date and time of the earliest QSO that is loaded.
+					The values in the end date and time text boxes correspond to the date and
+					time of the latest QSO that is loaded.</para>
+					<para>To select QSOs over a narrower date and time range, change the dates and
+					times to the range that you want. The Include checkbox for all QSOs that are 
+					outside this range will be unchecked.</para>
+					<para>Click the Reset button to reset the start and end dates and times to the
+					earliest and latest dates and times for the loaded QSOs.</para>
+					<caution>
+						<para>The entered dates and times must be between 19451101 and the current
+						date and time.</para>
+					</caution>
+					<tip>
+						<para>You may override the Include checkbox for individual QSOs after this
+						filter has been set. See the 
+						<link linkend="manuallyselectingqsos">Manually Selecting QSOs</link>
+						section for more information.</para>
+					</tip>
+				</section>
+			</section>
+			<section xml:id='manuallyselectingqsos'>
+				<title>Manually Selecting QSOs For Printing</title>
+				<para>Individual QSOs may be selected or deselected for printing by checking or
+				unchecking the checkbox in the Include column corresponding to the QSO that you
+				want to include or not include.</para>
+				<para>The Include status of multiple QSOs may be set by first selecting all of the
+				QSOs whose status you want to change, and then checking or unchecking the Include
+				checkbox for one of the selected QSOs. To select a number of QSOs, you must start by
+				selecting one QSO. Do this by clicking anywhere in the QSO in the QSOs panel except
+				in the Include checkbox or the Manager text box. The QSO will be highlighted. The
+				image below shows the QSO with CG3JNO selected.</para>
+				<figure xml:id="qsoselected">
+					<title>QSO With CG3JNO Selected</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/qsoselected.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>To select additional QSOs, press and hold the Ctrl key, then click on each
+				QSO that you want to select. Each selected QSO will be highlighted. When you have
+				selected all of the wanted QSOs, release the Ctrl button.</para>
+				<para>To select a range of QSOs, select the first QSO in the range. Press the Shift
+				key and click on the last QSO in the range that you want to select, then release the
+				Shift key. All QSOs in the range will be highlighted. You may then select additional
+				QSOs by pressing the Ctrl key before clicking on those QSOs.</para>
+				<para>To change the Include checkboxes for all selected QSOs, check or uncheck
+				the Include checkbox for one of the selected QSOs. The Include checkboxes for all
+				selected QSOs will be changed to match the new state and the QSOs will be 
+				deselected.</para>
+				<caution>
+					<para>If the Include checkboxes for some of the selected QSOs are checked and
+					some are unchecked, the final state will match the toggled state of the checkbox
+					that you click. That is, if the checkbox that you clicked was checked when
+					you clicked it, then the checkboxes for all selected QSOs will be unchecked.</para>
+				</caution>
+				<para>You may select all QSOs by first clicking anywhere within the QSOs panel and
+				then pressing the Ctrl and A keys on the keyboard or by selecting the Select
+				All QSOs menu item in the Select dropdown menu. You may deselect any selected
+				QSOs by selecting the Deselect All QSOs menu item in the Select dropdown 
+				menu.</para>
+				<para>And lastly, you may check all Include checkboxes by selecting the
+				Include All QSOs menu item in the QSOs dropdown menu, and you may uncheck
+				all Include checkboxes by selecting the Exclude All QSOs menu item in the
+				QSOs dropdown menu.</para>
+				<caution>
+					<para>If you change any of the filters after you have manually selected QSOs,
+					all of your manual selections are lost. You will have to set them again.</para>
+				</caution>
+			</section>
 		</section>
 	</section>
 </chapter>
