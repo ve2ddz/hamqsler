@@ -547,5 +547,25 @@ namespace hamqsler
 			System.Collections.IList list = qsosListView.SelectedItems;
 			DisplayQsos.SetIncludesChecked(list, (bool)cb.IsChecked);
 		}
+		
+		/// <summary>
+		/// Select all loaded QSOs
+		/// </summary>
+		public void SelectAllQsos()
+		{
+			qsosListView.SelectedItems.Clear();
+			foreach(object o in qsosListView.Items)
+			{
+				qsosListView.SelectedItems.Add(o);
+			}
+		}
+		
+		/// <summary>
+		/// Deselect all loaded QSOs
+		/// </summary>
+		public void DeselectAllQsos()
+		{
+			qsosListView.SelectedItems.Clear();
+		}
 	}
 }

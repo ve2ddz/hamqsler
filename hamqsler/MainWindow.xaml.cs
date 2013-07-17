@@ -369,8 +369,10 @@ namespace hamqsler
 		{
 			if(this.mainTabControl != null)
 			{
-				CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
-				e.CanExecute = ti != null;
+				TabItem ti = this.mainTabControl.SelectedItem as TabItem;
+				CardTabItem cti = this.mainTabControl.SelectedItem as CardTabItem;
+				e.CanExecute = cti != null || (ti.Header.Equals("QSOs") &&
+				                               qsosView.qsosListView.Items.Count != 0);
 			}
 			else
 			{
@@ -385,8 +387,8 @@ namespace hamqsler
 		/// <param name="e">CanExecuteRoutedEventArgs object</param>
 		private void SelectItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			CardTabItem ti = this.mainTabControl.SelectedItem as CardTabItem;
-			e.CanExecute = ti != null && ti.cardPanel.QslCard.GetSelectedItem() == null;
+			CardTabItem cti = this.mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = cti != null && cti.cardPanel.QslCard.GetSelectedItem() == null;
 		}
 		
 		/// <summary>
@@ -1294,13 +1296,15 @@ namespace hamqsler
 		}
 
 		/// <summary>
-		/// Creates the Select menu MenuItems based on the CardItems in QslCard
+		/// Creates the Select menu MenuItems based on the CardItems in QslCard if a card
+		/// tab item is selected, or the select, deselect menu items if the QSOs tab is selected.
 		/// </summary>
 		/// <param name="sender">not used</param>
 		/// <param name="e">not used</param>
 		void SelectMenu_SubmenuOpened(object sender, RoutedEventArgs e)
 		{
 			SelectMenu.Items.Clear();
+			TabItem ti = mainTabControl.SelectedItem  as TabItem;
 			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			if(cti != null)
 			{
@@ -1310,6 +1314,11 @@ namespace hamqsler
 				BuildQsosBoxMenuItem();
 				SelectMenu.Items.Add(new Separator());
 				BuildNoneMenuItem();
+			}
+			else if(ti.Header.Equals("QSOs"))
+			{
+				BuildSelectAllQsosMenuItem();
+				BuildDeselectAllQsosMenuItem();
 			}
 		}
 		
@@ -1413,6 +1422,30 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Helper method that builds the Select All QSOs menu item
+		/// </summary>
+		private void BuildSelectAllQsosMenuItem()
+		{
+			MenuItem selectAll = new MenuItem();
+			selectAll.Header = "Select All QSOs";
+			selectAll.Click += OnSelectAllQsos_Clicked;
+			selectAll.ToolTip = "Select all loaded QSOs";
+			SelectMenu.Items.Add(selectAll);
+		}
+		
+		/// <summary>
+		/// Helper method that builds the Deselect All QSOs menu item
+		/// </summary>
+		private void BuildDeselectAllQsosMenuItem()
+		{
+			MenuItem deselectAll = new MenuItem();
+			deselectAll.Header = "Deselect All QSOs";
+			deselectAll.Click += OnDeselectAllQsos_Clicked;
+			deselectAll.ToolTip = "Deselect all loaded QSOs";
+			SelectMenu.Items.Add(deselectAll);
+		}
+		
+		/// <summary>
 		/// Handler for SelectItems clicked event
 		/// </summary>
 		/// <param name="sender">menu item that was clicked</param>
@@ -1454,6 +1487,26 @@ namespace hamqsler
 					cti.SetPropertiesVisibility(null);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Handler for the Select All QSOs menu item clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		internal void OnSelectAllQsos_Clicked(object sender, RoutedEventArgs e)
+		{
+			qsosView.SelectAllQsos();
+		}
+
+		/// <summary>
+		/// Handler for the Select All QSOs menu item clicked event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		internal void OnDeselectAllQsos_Clicked(object sender, RoutedEventArgs e)
+		{
+			qsosView.DeselectAllQsos();
 		}
 
 		/// <summary>
