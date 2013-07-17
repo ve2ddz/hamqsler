@@ -134,14 +134,14 @@
 				the leading or trailing qualifiers.</para>
 				<para>The manager text box must either be empty, or contain a valid callsign with
 				no leading or trailing qualifiers.</para>
-				<para>The start date must be exactly 8 digits long, be of the format YYYYMMDD and
+				<para>The start date must be exactly 8 digits long, be of the form YYYYMMDD and
 				be a date between 19451101 and today.</para>
-				<para>The start time must be either 4 digits of the format HHMM, or 6 digits of the
+				<para>The start time must be either 4 digits of the form HHMM, or 6 digits of the
 				form HHMMSS. The time must be between 0000 and 2359 or between 000000 and 235959.</para>
 				<para>Modes are selected from the mode dropdown box. A mode may be selected by:</para>
 				<itemizedlist>
 					<listitem>
-						<para>Clicking the the dropdown box. This opens
+						<para>Clicking the dropdown box. This opens
 						the list of modes; a mode may be selected by clicking on it, or by pressing
 						the up and down arrow keys to highlight a mode, and then pressing the
 						Enter key. Instead of selecting a mode with the mouse or the up and down
@@ -192,7 +192,7 @@
 						<para>Moving focus to the dropdown box by tabbing to it, then using the
 						up and down arrow keys to select the desired band. Instead of moving through
 						the bands, you may use the keyboard to enter the band. When the first key is
-						pressed the first band in the list that contains that character as the first
+						pressed, the first band in the list that contains that character as the first
 						character is selected. As you enter more characters, the first band in the
 						list that contains those characters is selected. To cycle through all of the
 						bands that start with a character, press that character multiple times. For
@@ -231,20 +231,17 @@
 						<row>
 							<entry>Yes</entry>
 							<entry>Y</entry>
-							<entry>An incoming QSL card has been received, or the QSO has been
-							confirmed by an online service.</entry>
+							<entry>An incoming QSL card has been received.</entry>
 						</row>
 						<row>
 							<entry>No</entry>
 							<entry>N</entry>
-							<entry>An incoming QSL card has not been received, or the QSO has not
-							been confirmed by an online service.</entry>
+							<entry>An incoming QSL card has not been received.</entry>
 						</row>
 						<row>
 							<entry>Requested</entry>
 							<entry>R</entry>
-							<entry>The logging station (you) has requested a QSL card, or the logging
-							station has requested that the QSO be uploaded to an online service.</entry>
+							<entry>The logging station (you) has requested a QSL card.</entry>
 						</row>
 						<row>
 							<entry>Ignore</entry>
@@ -254,8 +251,9 @@
 						<row>
 							<entry>Verified</entry>
 							<entry>V</entry>
-							<entry>DXCC award credit has been granted for this QSL card, or via
-							LotW.</entry>
+							<entry>DXCC award credit has been granted for this QSO because you
+							submitted a card to the ARRL for this QSO and that card has been
+							verified by the ARRL.</entry>
 						</row>
 					</tbody>
 				</tgroup>
@@ -277,26 +275,22 @@
 						<row>
 							<entry>Yes</entry>
 							<entry>Y</entry>
-							<entry>An outgoing QSL card has been sent, or the QSO has been
-							uploaded to and accepted by an online service.</entry>
+							<entry>An outgoing QSL card has been sent.</entry>
 						</row>
 						<row>
 							<entry>No</entry>
 							<entry>N</entry>
-							<entry>Do not send an outgoing QSL card, or do not upload the QSO to
-							an online service.</entry>
+							<entry>Do not send an outgoing QSL card.</entry>
 						</row>
 						<row>
 							<entry>Requested</entry>
 							<entry>R</entry>
-							<entry>The contacted station has requested a QSL card, or the contacted
-							station has requested that the QSO be uploaded to an online service.</entry>
+							<entry>The contacted station has requested a QSL card.</entry>
 						</row>
 						<row>
 							<entry>Queued</entry>
 							<entry>Q</entry>
-							<entry>An outgoing QSL card has been selected to be sent, or uploaded
-							to an online service.</entry>
+							<entry>An outgoing QSL card has been selected to be sent.</entry>
 						</row>
 						<row>
 							<entry>Ignore</entry>
@@ -328,7 +322,7 @@
 						<row>
 							<entry>Direct</entry>
 							<entry>D</entry>
-							<entry>An outgoing QSL card shoul be, or has been, sent direct to the
+							<entry>An outgoing QSL card should be, or has been, sent direct to the
 							contacted station or his manager.</entry>
 						</row>
 						<row>
@@ -383,7 +377,7 @@
 		</section>
 		<section>
 			<title>Exporting QSOs</title>
-			<para>The Export QSOs... menu item opens the default ADIf files folder in a File Save 
+			<para>The Export QSOs... menu item opens the default ADID files folder in a File Save 
 			dialog. This
 			allows the user to save any QSOs that are loaded in the program to an ADIF file. Normally
 			the user would only want to do this if he input one or more QSOs using the QSO input
@@ -392,9 +386,9 @@
 		<section>
 			<title>Reloading ADIF Files on Program Startup</title>
 			<para>The Reload ADIF File on Startup setting in user preferences determines whether
-			the ADIF files that were loaded at the time that HamQSLer was last terminated are
-			reloaded when the program is restarted. See <link linkend="settinguserprefs">Setting
-			User Preferences</link> or more information on this setting. The list of ADIF files to be
+			the ADIF files that were loaded before HamQSLer was last terminated are
+			reloaded when the program restarts. See <link linkend="settinguserprefs">Setting
+			User Preferences</link> for more information on this setting. The list of ADIF files to be
 			reloaded is maintained in the user preferences file.</para>
 			<para>The following table describes what ADIF files are saved to be reloaded based
 			on the actions related to ADIF files.</para>
