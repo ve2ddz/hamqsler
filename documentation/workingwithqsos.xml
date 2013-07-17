@@ -214,8 +214,8 @@
 				checking is performed on any of the fields.</para>
 				<para>The values in the dropdown boxes have the following meanings (defined in
 				ADIF).</para>
-				<table frame='all'>
-				<title>QSL Rcvd Values and Meaning</title>
+				<table frame='all' xml:id='QslRcvd'>
+				<title>QSL Rcvd Values and Meanings</title>
 				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
 					<colspec colname='Values' />
 					<colspec colname='ADIFValues'/>
@@ -258,8 +258,8 @@
 					</tbody>
 				</tgroup>
 			</table>
-			<table frame='all'>
-				<title>QSL Sent Values and Meaning</title>
+			<table frame='all' xml:id='QslSent'>
+				<title>QSL Sent Values and Meanings</title>
 				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
 					<colspec colname='Values' />
 					<colspec colname='ADIFValues'/>
@@ -300,8 +300,8 @@
 					</tbody>
 				</tgroup>
 			</table>
-			<table frame='all'>
-				<title>QSL Sent Via Values and Meaning</title>
+			<table frame='all' xml:id='QslSentVia'>
+				<title>QSL Sent Via Values and Meanings</title>
 				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
 					<colspec colname='Values' />
 					<colspec colname='ADIFValues'/>
@@ -432,6 +432,138 @@
 				on Startup setting after loading an ADIF file, that file will not be reloaded the
 				next time the program starts.</para>
 			</caution>
+		</section>
+	</section>
+	<section>
+		<title>Sorting and Selecting QSOs</title>
+		<section>
+			<title>The QSOs Panel</title>
+			<figure xml:id="sampleqsosloaded3">
+				<title>Main Program Window With Sample QSOs loaded</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/sampleqsosloaded.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The image above shows the main program window with the QSOs tab selected immediately
+			after the sample QSOs are loaded. The panel on the left is the QSOs panel, which contains
+			a table of some of the fields for each QSO. The following table contains a list of the
+			columns in the panel and their contents or meaning.</para>
+			<table frame='all'>
+				<title>QSOs Panel Columns</title>
+				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+					<colspec colname='ColumnHeading' />
+					<colspec colname='ContentsOrMeaning'/>
+					<thead>
+					<row>
+						<entry namest='ColumnHeading'>Column Heading</entry>
+						<entry namest='ContentsOrMeaning'>Contents or Meaning</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Include</entry>
+							<entry>A checkbox indicating whether this QSO will be included when
+							cards are printed.</entry>
+						</row>
+						<row>
+							<entry>Call</entry>
+							<entry>The other station's call sign.</entry>
+						</row>
+						<row>
+							<entry>Manager</entry>
+							<entry>The call sign of the other station's QSL manager.</entry>
+						</row>
+						<row>
+							<entry>Date</entry>
+							<entry>The start date of the QSO (or the end date if the start date is
+							not specified).</entry>
+						</row>
+						<row>
+							<entry>Time</entry>
+							<entry>The start time of the QSO (or the end time if the start time is
+							not specified).</entry>
+						</row>
+						<row>
+							<entry>Band</entry>
+							<entry>The band that the QSO occurred on, or the band that the other
+							station transmitted on.</entry>
+						</row>
+						<row>
+							<entry>Freq</entry>
+							<entry>The frequency that the other station used for the QSO.</entry>
+						</row>
+						<row>
+							<entry>Mode</entry>
+							<entry>The mode used for the QSO.</entry>
+						</row>
+						<row>
+							<entry>RST</entry>
+							<entry>The signal report you sent to the other station.</entry>
+						</row>
+						<row>
+							<entry>Sent</entry>
+							<entry>Value corresponding to the ADIF QSL_SENT field. See the 
+							<link linkend="QslSent">QSL Sent Values and Meanings</link>
+							table in the Inputting QSOs section, above.</entry>
+						</row>
+						<row>
+							<entry>Rcvd</entry>
+							<entry>Value corresponding to the ADIF QSL_RCVD field. See the
+							<link linkend="QslRcvd">QSL Rcvd Values and Meanings</link>
+							table in the Input QSOs section, above.</entry>
+						</row>
+						<row>
+							<entry>Send Via</entry>
+							<entry>Value indicates whether the QSL card containing this QSO should
+							be sent via the Bureau or Direct. See the
+							<link linkend="QslSentVia">QSL Sent Via Values and Meanings</link>
+							table in the Input QSOs section, above.</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			<para>Values in only the Include and Manager columns are editable. Including
+			QSOs when printing cards is discussed in the 
+			<link linkend="includingQSOs">Including QSOs</link> section. The Manager field are
+			standard text box fields. All of the standard text editing features are included.</para>
+			<para>The QSOs are sorted in one of three ways. This is discussed in the 
+			<link linkend='sortingQSOs'>Sorting QSOs</link> section.</para>
+		</section>
+		<section xml:id='sortingQSOs'>
+			<title>Sorting QSOs</title>
+			 <para>The image below provides a larger view of the Sort panel
+			in the QSOs properties panel.</para>
+			<figure xml:id="sort">
+				<title>Sort Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/sort.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>With the Date/Time radio button selected, the QSOs are sorted by date and then
+			by time. This is the default sort order (the order in which the QSOs are sorted when QSOs
+			are first loaded).</para>
+			<para>Selecting the Call radio button sorts the QSOs by Manager call sign if one is included
+			in the QSO,
+			then by the other station's call sign, and then by date and time.</para>
+			<para>Selecting the Bureau radio button sorts the QSOs by the bureau for the Manager if
+			a Manager is included in the QSO or the bureau for the other station if a Manager is not
+			included, then by the Manager callsign, the other station's callsign, and then by
+			date and time. The QSOs whose Manager (or call sign field) has a valid bureau are sorted
+			first in the list, then the QSOs for which there is no bureau are placed after the bureau
+			QSOs. QSOs whose QSL_SENT_VIA ADIF field is set to D (Direct) also have their Send Via
+			value set to Direct and are therefore sorted with other Direct QSOs.</para>
+			<para>The QSOs are sorted as soon as a radio button is selected. The Sort button is enabled
+			only when a new QSO is input using the Input QSOs dialog box. When entering QSOs manually,
+			the QSOs are added the bottom of the displayed QSOs. The Sort button must be clicked to
+			properly sort the QSOs in that case.</para>
+		</section>
+		<section xml:id='includingQSOs'>
+			<title>Including QSOs for Printing</title>
+			<para></para>
 		</section>
 	</section>
 </chapter>
