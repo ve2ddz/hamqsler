@@ -86,6 +86,8 @@
 					to appear the first time that you start HamQSLer. If it appears later than
 					the first execution of the program, then one or more of the files or directories
 					was deleted prior to starting HamQSLer.</para>
+					<para>The list of directories created and files copied is placed in the log file.
+					</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
