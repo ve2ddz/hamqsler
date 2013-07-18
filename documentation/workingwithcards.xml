@@ -20,8 +20,10 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>The dialog opens with the default directory set to your hamqsler
-		folder. Navigate to the folder where you want to save the card file,
+		<para>The dialog opens in the default card files folder. This folder can
+		be set in user preferences. See <link linkend='settinguserprefs'>Setting
+		User Preferences</link> for setting this value. 
+		Navigate to the folder where you want to save the card file,
 		enter the name you want to save the file as, and
 		then click on the Save button. The card file will be saved and the
 		dialog will close.</para>
@@ -30,7 +32,7 @@
 		<title>Loading HamQSLer Card Files</title>
 		<para>Once a card has been saved, it can be loaded at a later time
 		by selecting the Cards->Open Card... menu item. This displays the
-		File Open dialog with the default directory set to your hamqsler
+		File Open dialog with the default directory set to the default card files
 		folder. See the image below:</para>
 		<figure xml:id="cardopendialog">
 			<title>File Open Dialog</title>
@@ -199,5 +201,384 @@
 			<para>An alternative font face with thicker characters is Verdana, although
 			character shapes are different from Arial.</para>
 		</caution>
+	</section>
+	<section>
+		<title>Creating a New Card</title>
+		<para>A new card may be created by selecting the Cards -> New menu item. This
+		opens another submenu from which to select the card size and orientation that
+		you want. At this time, there are three card sizes available:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Bureau sized card in landscape mode (5.5 inches wide by 3.5 inches high,
+				or 139.7 mm wide by 88.9 mm high). This is the standard size for QSL cards
+				and is the size preferred by all QSL bureaus. There are three known suppliers
+				of perforated cardstock for this size of card. See the
+				<link linkend='outputtingcards'>Outputting Cards</link> chapter for more
+				information.</para>
+			</listitem>
+			<listitem>
+				<para>5.5 inches wide by 4.25 inches wide in landscape mode (139.7 mm wide by
+				107.95 mm high). Four of these cards may be printed in a two by two layout
+				on US Letter sized card stock. A number of micro-perforated cardstocks are
+				available in this size. See the
+				<link linkend='outputtingcards'>Outputting Cards</link> chapter for more
+				information.</para>
+			</listitem>
+			<listitem>
+				<para>6 inches wide by 4 inches high in landscape mode (152.4 mm wide by
+				101.6 mm high). This corresponds to standard 4 inch by 6 inch or 10 cm by
+				15 cm photopaper.</para>
+			</listitem>
+		</itemizedlist>
+		<para>Select the card size that you want. The new card will be displayed in a new
+		tab in the main window; this tab displays the card in design mode in the panel
+		on the left, and a properties panel on the right. If you set up the various text 
+		items properties in User Preferences, as outlined in the 
+		<link linkend='settinguserprefs'>Setting User Preferences</link> chapter,
+		then a card similar to the image below will be displayed. The card in this image is
+		bureau sized. If you select a different size card, then that size of card is
+		displayed.</para>
+		<figure xml:id="newcard2">
+			<title>New Bureau Sized Card When First Created</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newcard.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The tab header contains the text "New Card" and the window title is "HamQSLer -
+		New Card. Once you have changed one of the card properties, the tab header will change
+		to *New Card, and the window title will change to "HamQSLer - New Card - Modified"
+		to show that one or more changes have been made to the card. When you save the card,
+		the tab header will contain the name of the file that you saved the card to, and the
+		window title will contain "HamQSLer - <emphasis>full path to card file</emphasis>.</para>
+		<para>Again when you modify the card further, an asterisk ("*") will be prepended to the 
+		tab header, and " - Modified" will be appended to the window title.</para>
+		<para>The properties panel on the right side of the card tab contains default printer and
+		print properties for the card, or card item specific properties when a card item is
+		selected. Card default printer and print properties are discussed in the
+		<link linkend='outputtingcards'>Outputting Cards</link> chapter and therefore
+		will not be mentioned further here.</para>
+		<para>Cards that are designed using HamQSLer may contain:</para>
+		<itemizedlist>
+			<listitem>
+				<para>A background image.</para>
+			</listitem>
+			<listitem>
+				<para>Any number of secondary images.</para>
+			</listitem>
+			<listitem>
+				<para>Any number of text items.</para>
+			</listitem>
+			<listitem>
+				<para>Zero or one QSOs Box which contains QSO information.</para>
+			</listitem>
+		</itemizedlist>
+		<para>A new card contains no background or secondary images; three text items:
+		callsign, name and QTH, and a salutation; and a QSOs Box. Any item on a card may be
+		deleted from the card, and any item may be added to the card. Background image is a
+		special case. The actual image may be cleared, but the background image item is still
+		maintained as an item on the card. The QSOs Box is also a special case. Only one
+		QSOs Box is permitted on a card, so it is only possible to add a QSOs Box if the
+		original QSOs Box has been deleted.</para>
+		<para>The following sections deal with the properties of each card item type, but
+		first we will discuss card design related menu items and then highlighting and 
+		selecting card items.</para>
+	</section>
+	<section>
+		<title>Card Design Related Menus and Menu Items</title>
+		<section>
+			<title>Card Design Context Menu</title>
+			<para>The card design context menu, shown below, is displayed by clicking the right
+			mouse button anywhere within the card design panel. The menu items that are enabled
+			and disabled are determined by the placement of the cursor when the mouse button
+			was clicked and on a number of design conditions. For example, the Clear Background
+			Image menu item is only enabled if there is a background image.</para>
+			<figure xml:id="carddesigncontextmenu">
+				<title>Card Design Context Menu</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/carddesigncontextmenu.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>This table shows the menu items and their actions.</para>
+			<table frame='all'>
+				<title>Card Design Context Menu Items and Actions</title>
+				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+					<colspec colname='MenuItem' />
+					<colspec colname='Action'/>
+					<thead>
+					<row>
+						<entry namest='MenuItem'>Menu Item</entry>
+						<entry namest='Action'>Action</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Select Highlighted Item</entry>
+							<entry>Selects the highlighted card item to allow editing of the
+							item's properties. See 
+							<link linkend='highlightingitems'>Highlighting and Selecting Card
+							Items</link> for more information.</entry>
+						</row>
+						<row>
+							<entry>Deselect Item</entry>
+							<entry>Deselects the selected card item. See 
+							<link linkend='highlightingitems'>Highlighting and Selecting Card
+							Items</link> for more information.</entry>
+						</row>
+						<row>
+							<entry>Add Image</entry>
+							<entry>Adds a new secondary image to the card and selects it
+							for editing. See <link linkend='addingimages'>Adding Secondary
+							Images</link> for more information.</entry>
+						</row>
+						<row>
+							<entry>Add Text Item</entry>
+							<entry>Adds a new text item to the card. See
+							<link linkend='addingtextitems'>Add New Text Items</link> for
+							more information.</entry>
+						</row>
+						<row>
+							<entry>Add Qsos Box</entry>
+							<entry>Adds a new Qsos Box to the card. See
+							<link linkend='addingqsosbox'>Adding a Qsos Box</link> for
+							more information.</entry>
+						</row>
+						<row>
+							<entry>Delete Selected Item</entry>
+							<entry>Deletes the selected card item from the card. See
+							<link linkend='deletingitem'>Deleting a Card Item</link>
+							for more information.</entry>
+						</row>
+						<row>
+							<entry>Clear Background Image</entry>
+							<entry>Clears the background image. See
+							<link linkend='clearbackground'>Clearing the Background
+							Image</link> for more information</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+		<section>
+			<title>Edit Dropdown Menu</title>
+			<figure xml:id="editmenu">
+				<title>Edit Dropdown Menu</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/editmenu.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The image above shows the open Edit dropdown menu. The table shows the 
+			card design related menu items and their actions.</para>
+			<table frame='all'>
+				<title>Card Design Related Edit Dropdown Menu Items and Actions</title>
+				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+					<colspec colname='MenuItem' />
+					<colspec colname='Action'/>
+					<thead>
+					<row>
+						<entry namest='MenuItem'>Menu Item</entry>
+						<entry namest='Action'>Action</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Add Image</entry>
+							<entry>Adds a new secondary image to the card and selects it
+							for editing. See <link linkend='addingimages'>Adding Secondary
+							Images</link> for more information.</entry>
+						</row>
+						<row>
+							<entry>Add Text Item</entry>
+							<entry>Adds a new text item to the card. See
+							<link linkend='addingtextitems'>Add New Text Items</link> for
+							more information.</entry>
+						</row>
+						<row>
+							<entry>Add Qsos Box</entry>
+							<entry>Adds a new Qsos Box to the card. See
+							<link linkend='addingqsosbox'>Adding a Qsos Box</link> for
+							more information.</entry>
+						</row>
+						<row>
+							<entry>Delete Selected Item</entry>
+							<entry>Deletes the selected card item from the card. See
+							<link linkend='deletingitem'>Deleting a Card Item</link>
+							for more information.</entry>
+						</row>
+						<row>
+							<entry>Clear Background Image</entry>
+							<entry>Clears the background image. See
+							<link linkend='clearbackground'>Clearing the Background
+							Image</link> for more information</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+		<section xml:id='selectmenu2'>
+			<title>Select Dropdown Menu</title>
+			<para>The image below shows a sample dropdown menu. The contents of the menu
+			above the separator (the line) changes depending on image and text item properties.
+			For example, the first item in the menu is "Background" if there
+			is no background image, and the file name of the background image if there is
+			one. Similarly, each secondary image has a menu item: "Image" if
+			there is no image loaded, and the file name of the image if there is one loaded.
+			Menu items for each text item contains the first 10 characters of the design text
+			for the text item.</para>
+			<figure xml:id="sampleselectmenu">
+				<title>Sample Select Dropdown Menu</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/sampleselectmenu.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The following table shows the menu items and their actions. See
+			<link linkend='highlightingitems'>Highlighting and Selecting Card Items</link>
+			for more information on selecting card items.</para>
+			<table frame='all'>
+				<title>Card Design Related Select Dropdown Menu Items and Actions</title>
+				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+					<colspec colname='MenuItem' />
+					<colspec colname='Action'/>
+					<thead>
+					<row>
+						<entry namest='MenuItem'>Menu Item</entry>
+						<entry namest='Action'>Action</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Background</entry>
+							<entry>Selects the background image. This menu item only
+							appears when there is no image specified for the background.</entry>
+						</row>
+						<row>
+							<entry>Image</entry>
+							<entry>Selects the secondary image. This menu item only
+							appears for secondary images that do not have an image file
+							specified.</entry>
+						</row>
+						<row>
+							<entry><emphasis>image file name</emphasis></entry>
+							<entry>Selects the background or secondary image item that
+							has this file name specified.</entry>
+						</row>
+						<row>
+							<entry><emphasis>text</emphasis></entry>
+							<entry>Selects the text item whose design text starts with
+							this text.</entry>
+						</row>
+						<row>
+							<entry>Qsos Box</entry>
+							<entry>Selects the Qsos Box card item. This menu item only appears
+							if there is a Qsos Box on the card.</entry>
+						</row>
+						<row>
+							<entry>None</entry>
+							<entry>Deselects the selected card item.</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+	</section>
+	<section xml:id='highlightingitems'>
+		<title>Highlighting and Selecting Card Items</title>
+		<para>When you move the mouse cursor over any card item on the card, that card item
+		is highlighted or outlined with an orange dashed line. For example, the image below
+		shows the salutation text item highlighted because the mouse cursor is over it.</para>
+		<figure xml:id="highlighteditem">
+			<title>Salutation Text Item Highlighted</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/highlighteditem.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>As mentioned earlier, the background image is a special card item. If there
+		is a background image on the card, that image is highlighted when the cursor moves
+		over it; if there is no background image present, then the card is outlined. This is
+		done so that you know there is no background image for the card and so that the
+		background may be selected.</para>
+		<para>Card items may overlap. When you move the mouse cursor over the area where these
+		card items overlap, the card item with higher precedence is highlighted. The list below
+		shows the precedence of card items from highest to lowest:</para>
+		<simplelist>
+			<member>Qsos Box.</member>
+			<member>Text items in the reverse of the order that they were created in.</member>
+			<member>Secondary images in the reverse of the order that they were created in.
+			</member>
+			<member>Background.</member>
+		</simplelist>
+		<para>A card item may be selected in one of two ways:</para>
+		<orderedlist>
+			<listitem>
+				<para>Move the cursor over the card item to highlight it, then click the right
+				mouse button to open the card item context menu. Select the "Select Highlighted
+				Item" menu item from the context menu. The contents of this context menu is
+				discussed in the <link linkend='carddesigncontextmenu'>Card Design
+				Context Menu</link> section, above.</para>
+			</listitem>
+			<listitem>
+				<para>Select the card item from the Select dropdown menu. More information
+				about this menu is provided in the <link linkend='selectmenu2'>Select Dropdown
+				Menu</link> section, above.</para>
+			</listitem>
+		</orderedlist>
+		<para>When a card item has been selected, the card item is outlined by a dark blue
+		dashed outline, and the properties for the card item are displayed in the card
+		properties panel. Editing of card item properties is discussed in a number of sections
+		that follow.</para>
+		<para>The image below shows the salutation text item that was highlighted in the image
+		above once the item has been selected.</para>
+		<figure xml:id="selecteditem">
+			<title>Salutation Text Item Selected</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/selecteditem.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+	<section>
+		<title>Deselecting Selected Card Items</title>
+		<para>A card item may be deselected in either of the following ways:</para>
+		<orderedlist>
+			<listitem>
+				<para>Open the card item context menu and select the "Deselect Item"
+				menu item.</para>
+			</listitem>
+			<listitem>
+				<para>Select the "None" menu item from the Select dropdown menu.</para>
+			</listitem>
+		</orderedlist>
+		<para>When the card item is deselected, it is no longer highlighted by a dark
+		blue dashed line.</para>
+	</section>
+	<section xml:id='addingimages'>
+		<title>Adding Secondary Images</title>
+		<para>To be written.</para>
+	</section>
+	<section xml:id='addingtextitems'>
+		<title>Adding New Text Items</title>
+		<para>To be written.</para>
+	</section>
+	<section xml:id='addingqsosbox'>
+		<title>Adding a Qsos Box</title>
+		<para>To be written.</para>
+	</section>
+	<section xml:id='deletingitem'>
+		<title>Deleting a Card Item</title>
+		<para>To be written.</para>
+	</section>
+	<section xml:id='clearbackground'>
+		<title>Clearing the Background Image</title>
+		<para>To be written.</para>
 	</section>
 </chapter>
