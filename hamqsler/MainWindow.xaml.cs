@@ -514,7 +514,8 @@ namespace hamqsler
 		{
 			OpenFileDialog oDialog = new OpenFileDialog();
 			oDialog.Filter = "QSL Card(*.xq1)|*.xq1";
-			oDialog.InitialDirectory = ((App)Application.Current).HamqslerFolder;
+			oDialog.InitialDirectory = 
+				((App)Application.Current).UserPreferences.DefaultCardFilesFolder;
 			if(oDialog.ShowDialog(this) == true)
 			{
 				string fileName = oDialog.FileName;
