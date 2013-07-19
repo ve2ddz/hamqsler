@@ -701,6 +701,106 @@
 	</section>
 	<section xml:id='movingcarditem'>
 		<title>Moving and Resizing Card Items</title>
-		<para>Once a card item has been selected, it may be moved or resized.</para>
+		<para>Once a card item has been selected, it may be moved or resized. All card items
+		may be moved using the mouse cursor. Images may also be
+		resized using the mouse cursor. Text items may only be resized by changing the text,
+		font, font size, and bold and italic properties of the text items. The width of the
+		Qsos Box may be changed using the mouse, but its height and its minimum width are
+		determined by a number of Qsos Box properties including the font, the font size,
+		the columns shown, the column headers, the date format selected, and the maximum
+		number of Qsos that may be printed on the card.  See the 
+		<link linkend='qsosboxprops'>Setting Qsos Box Properties</link> section for information 
+		on changing these properties.</para>
+		<para>When the mouse cursor is moved over a selected card item, the cursor will change
+		to one of the cursors shown in the table below. The cursor that is displayed is
+		determined by the position of the cursor in the card item and the type of card item
+		that is selected. To move or resize a card item, press and hold the left mouse button 
+		and drag
+		the mouse to move the cursor to a new location. Release the mouse button to complete
+		the operation. The card item will move or be resized
+		as the the mouse is dragged.</para>
+		<table frame='all'>
+			<title>Move and Resize Mouse Cursors</title>
+			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+				<colspec colwidth='50' align='center' colname='Cursor' />
+				<colspec colname='Action'/>
+				<thead>
+				<row>
+					<entry namest='Cursor'>Cursor</entry>
+					<entry namest='Action'>Action</entry>
+				</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/movecursor.png" align="center" />
+								</imageobject>
+							</inlinemediaobject>
+						</entry>
+						<entry>This is the move cursor. It is displayed for all card items
+						when the mouse cursor is inside the selected card item. Press and hold
+						the left
+						mouse button and drag the mouse to move the card item. The card item
+						moves in the direction and the amount that the mouse cursor is 
+						dragged. Release the left mouse button when the card item is positioned
+						where you want it.</entry>
+					</row>
+					<row>
+						<entry>
+							<inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/nwse.png" align="center" />
+								</imageobject>
+							</inlinemediaobject>
+						</entry>
+						<entry>This cursor is only displayed when the mouse cursor is moved over
+						the top left or bottom right corners of a selected background or
+						secondary image. Press and hold the left mouse button and drag the mouse
+						towards the center of the image to reduce the size of the image. To enlarge
+						the image, press the left mouse button and drag the mouse away from
+						the center of the image. Release the left mouse button when the
+						resize operation is completed. The
+						opposite corner of the image remains in a fixed position. The aspect
+						ratio (the ratio of image width to image height) of the image
+						is not changed.</entry>
+					</row>
+					<row>
+						<entry>
+							<inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/nesw.png" align="center" />
+								</imageobject>
+							</inlinemediaobject>
+						</entry>
+						<entry>This cursor is only displayed when the mouse cursor is moved
+						over the top right or bottom left corner of a selected background
+						or secondary image. Press and hold the left mouse button and drag the
+						cursor towards the center of the image to decrease the size of the
+						image. Move the mouse cursor away from the center of the image to
+						enlarge the image. Release the left mouse button when the
+						resize operation is complete. The opposite corner of the image 
+						remains fixed. The aspect ratio of the image is not changed.</entry>
+					</row>
+					<row>
+						<entry>
+							<inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/ewcursor.png" align="center" />
+								</imageobject>
+							</inlinemediaobject>
+						</entry>
+						<entry>This cursor is only displayed when the mouse cursor is moved
+						over the left or right edges of the Qsos Box. Press and hold the left
+						mouse button and drag the mouse to the left or right to change the
+						width of the Qsos Box. Release the left mouse button when the Qsos Box
+						resize operation is complete. The Qsos Box width may be reduced until
+						it reaches its minimum size after which further mouse movements are
+						ignored.</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
 	</section>
 </chapter>
