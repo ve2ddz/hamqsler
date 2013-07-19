@@ -803,4 +803,80 @@
 			</tgroup>
 		</table>
 	</section>
+	<section>
+		<title>Setting Background Image Properties</title>
+		<para>The image below shows the background image properties panel. This panel is
+		displayed in the card items properties panel when the background image item is
+		selected.</para>
+		<figure xml:id="backgroundimageproperties2">
+			<title>Background Image Properties</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/backgroundimageproperties.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>This image shows the background image properties panel when there is no
+		image. To load a background image, click the button labeled "...". This displays
+		the File Open dialog in the default images folder. Navigate to the directory containing
+		the image that you want to use as the card background and select the image. The
+		dialog will close and the image will display centered on the card. The image will be
+		sized to completely cover the card; If the aspect ratio of the image is different from
+		the aspect ratio of the card, then the image will extend either to the left and right
+		of the card or the top and bottom of the card. You saw this in the
+		<link linkend="gettingstarted">Getting Started</link> tutorial.</para>
+		<para>You may move and resize the image by following the instructions in the
+		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section of this
+		chapter.</para>
+		<para>When you load a background image, the path to the image file is displayed in the
+		text box below the "..." button in the background image properties panel.
+		The image below shows the background image properties
+		panel after the background image used in the Getting Started tutorial has been
+		loaded.</para>
+		<figure xml:id="backgroundimageproperties3">
+			<title>Background Image Properties With Sample Image Loaded</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/samplebackgroundimageproperties.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>There are
+		two relative path specifiers: "$MyDocs$" is a reference to the current user's 
+		"My Documents" directory; "$hamqslerFolder$" is a references to the hamqsler directory
+		in the current user's "My Documents" directory. If the image file is located anywhere
+		other than in "My Documents", "hamqsler", or a subdirectory of these directories, then
+		the full path name is specified. The path in the image above specifies that the image
+		file is located at "...\My Documents\hamqsler\Samples\sample.jpg".</para>
+		<tip>
+			<para>When releasing a new version of the Windows operating system, Microsoft may
+			change the location of the "My Documents" directory. For example, this occurred when
+			Windows Vista was released. If only absolute paths were specified for image file
+			locations, then you would have to specify the location of the image file for every
+			image on every card after you upgraded your computer and operating system. The use
+			of relative paths removes this requirement.</para>
+			<para>If you use the program on more than one computer, your user name may
+			be different on the two computers. Relative paths allow you to move the files
+			and directories between the two systems seamlessly.</para>
+		</tip>
+	</section>
+	<section>
+		<title>Setting Secondary Image Properties</title>
+		<para>This image shows the secondary image properties panel which is displayed when
+		a secondary image is selected. The image file "radio_tower-1.gif" has been loaded.</para>
+		<figure xml:id="secondaryimageproperties">
+			<title>Secondary Image Properties With Image Loaded</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/secondaryimageproperties.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The instructions for loading a secondary image file are the same as for loading
+		a background image. When the image is first displayed, it is centered on the card, and
+		the shorter of the width and height dimensions of the image is set to 1 inch or 25.4 mm.
+		You may move and resize the image using the instructions in the
+		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section in this
+		chapter.</para>
+	</section>
 </chapter>
