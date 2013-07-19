@@ -561,24 +561,146 @@
 		<para>When the card item is deselected, it is no longer highlighted by a dark
 		blue dashed line.</para>
 	</section>
+	<section xml:id='deletingitem'>
+		<title>Deleting a Card Item</title>
+		<para>A card item must be selected before it can be deleted. There are two ways to delete
+		a card item:</para>
+		<orderedlist>
+			<listitem>
+				<para>Select the "Delete Selected Item" menu item from the card items context
+				menu.</para>
+				<para>Select "Delete Selected Item" from the Edit dropdown menu.</para>
+			</listitem>
+		</orderedlist>
+		<caution>
+			<para>Once a card item has been deleted, it cannot be restored; your only option is
+			to add a card item (secondary image, text item, or Qsos Box) to the card and modify
+			its properties to match the old card item.</para>
+		</caution>
+	</section>
 	<section xml:id='addingimages'>
 		<title>Adding Secondary Images</title>
-		<para>To be written.</para>
+		<para>A secondary image may be added to a card in either of the following ways:</para>
+		<orderedlist>
+			<listitem>
+				<para>Select "Add Image" from the card items context menu.</para>
+			</listitem>
+			<listitem>
+				<para>Select "Add Image" from the Edit dropdown menu.</para>
+			</listitem>
+		</orderedlist>
+		<para>The new secondary image item is initially created as a 1 inch by 1 inch (25.4 mm
+		by 25.4 mm) square that is centered on the card. This card item is selected, and
+		the secondary image properties panel is displayed in the card properties panel to the
+		right of the card design panel. This card item may be moved and resized at any time.
+		 See the
+		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section below.</para>
+		<tip>
+			<para>If your card does not contain a background image, use the background image
+			item for the first image on your card. This reduces the size of the card file
+			and improves program performance during display and printing operations.</para>
+		</tip>
+		<caution>
+			<para>As stated, when a new secondary image is added to a card, it is centered on
+			the card. Because of the order in which card items are drawn (see the precedence
+			order in <link linkend='highlightingitems'>Highlighting and Selecting Card
+			Items</link>, above), the image may not be visible. Move any other images, text
+			items, and the Qsos Box to see the image.</para>
+		</caution>
 	</section>
 	<section xml:id='addingtextitems'>
 		<title>Adding New Text Items</title>
-		<para>To be written.</para>
+		<para>A new text item may be added to a card in the following ways:</para>
+		<orderedlist>
+			<listitem>
+				<para>Select "Add Text Item" from the card item context menu.</para>
+			</listitem>
+			<listitem>
+				<para>Select "Add Text Item" from the Edit dropdown menu.</para>
+			</listitem>
+		</orderedlist>
+		<para>The new text item is initially positioned with the top left corner of the card
+		item located at the center of the card. The text item has the following properties
+		when it is created:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Text is "Text Item".</para>
+			</listitem>
+			<listitem>
+				<para>Font face is the default text font face that was defined when the
+				card was first created. See the <link linkend='settinguserprefs'>Setting
+				User Preferences</link> chapter for information on setting this default
+				property.</para>
+			</listitem>
+			<listitem>
+				<para>The font size is 12 points.</para>
+			</listitem>
+		</itemizedlist>
+		<para>The text item may be moved at any time. See the
+		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section below.</para>
+		<para>When the text item is created, it is automatically selected and the text item
+		properties panel is displayed in the card items properties panel.</para>
+		<caution>
+			<para>As stated, when a new text item is added to a card, it is positioned at the
+			center of
+			the card. Because of the order in which card items are drawn (see the precedence
+			order in <link linkend='highlightingitems'>Highlighting and Selecting Card
+			Items</link>, above), the text item may not be visible. Move any text
+			items and the Qsos Box to see the new text item.</para>
+		</caution>
 	</section>
 	<section xml:id='addingqsosbox'>
 		<title>Adding a Qsos Box</title>
-		<para>To be written.</para>
-	</section>
-	<section xml:id='deletingitem'>
-		<title>Deleting a Card Item</title>
-		<para>To be written.</para>
+		<para>A Qsos Box can be added to a card if the original Qsos Box was deleted. There
+		are two ways to add a Qsos Box to a card:</para>
+		<orderedlist>
+			<listitem>
+				<para>Select "Add Qsos Box" from the card items context menu.</para>
+			</listitem>
+			<listitem>
+				<para>Select "Add Qsos Box" from the Edit dropdown menu.</para>
+			</listitem>
+		</orderedlist>
+		<para>The Qsos Box is initially positioned with its upper edge at the center of the
+		card. The box width is set at 90% of the width of the card, and the box is positioned
+		horizontally at the center of the card. The Qsos Box may be moved and resized at any
+		time. See the
+		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section below.</para>
+		<para>When the Qsos Box is added to the card, it is selected and the Qsos Box
+		properties panel is displayed in the card items properties panel.</para>
+		<tip>
+			<para>Text in the Qsos Box is intially displayed in the Qsos Box default font
+			face. See the <link linkend='settinguserprefs'>Setting User Preferences</link>
+			chapter for information on changing this property.</para>
+		</tip>
+		<tip>
+			<para>Text that is displayed in the Qsos Box (confirming text, column headers, and
+			the text printed in the QSL column) is defined in the user preferences.See the
+			<link linkend='settinguserprefs'>Setting User Preferences</link>
+			chapter for information on setting these text values.</para>
+		</tip>
+		<caution>
+			<para>When a new card is created, the confirming text, column headers, and
+			the text that is printed in the QSL column, are copied from the user preferences
+			file to the card file. This text remains fixed for this card.</para>
+		</caution>
 	</section>
 	<section xml:id='clearbackground'>
 		<title>Clearing the Background Image</title>
-		<para>To be written.</para>
+		<para>The background image may be cleared in one of two ways:</para>
+		<orderedlist>
+			<listitem>
+				<para>Select "Clear Background Image" from the card items context menu.</para>
+			</listitem>
+			<listitem>
+				<para>Select "Clear Background Image" from the Edit dropdown menu.</para>
+			</listitem>
+		</orderedlist>
+		<para>If the background image item was selected before the image was cleared, the item
+		remains selected; otherwise it remains unselected.</para>
+	</section>
+	<section xml:id='movingcarditem'>
+		<title>Moving and Resizing Card Items</title>
+		<para>Once a card item has been selected, it may be moved or resized.</para>
 	</section>
 </chapter>
