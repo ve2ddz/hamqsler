@@ -19,10 +19,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="83B090B9-EF3A-4BBB-B70D-52AB192E9F9D"
+	<!-- 83B090B9-EF3A-4BBB-B70D-52AB192E9F9D" -->
+	<Product Id="F509845A-3329-422C-89EA-C0EDD45FD4EF"
 		Name="HamQSLer"
 		Language="1033"
-		Version="0.8.2"
+		Version="0.8.3"
 		UpgradeCode="B4FB1901-CFD5-4CDD-B80F-DECBCE9717B7"
 		Manufacturer="VA3HJ Software">
 		<Package Description="HamQSLer Installer Package"
@@ -31,7 +32,7 @@
 		<Upgrade Id="B4FB1901-CFD5-4CDD-B80F-DECBCE9717B7">
 			<UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND"
 					Minimum="0.1.0" IncludeMinimum="yes"
-					Maximum="0.8.2" IncludeMaximum="no" />
+					Maximum="0.8.3" IncludeMaximum="no" />
 		</Upgrade>
 		<CustomAction Id='NoDowngrade' Error='A later version of HamQSLer is already installed.' />
 		
@@ -72,6 +73,8 @@
 			<ComponentRef Id="HamQSLerShortcuts"/>
 		</Feature>
 		
+		<Property Id="ApplicationFolderName" Value="HmaQSLer" />
+		<Property Id="WixAppFolder" Value="WixPerMachineFolder" />
 		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch HamQSLer" />
 		<Property Id="WixShellExecTarget" Value="[#hamqsler.exe]" />
 		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
@@ -84,7 +87,7 @@
 			WixUI_Minimal is appropriate when your product has no optional 
 			features.
  		-->
-		<UIRef Id="WixUI_Minimal" />
+		<UIRef Id="WixUI_Advanced" />
 		<UI>
 			<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
 		</UI>

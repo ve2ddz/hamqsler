@@ -21,7 +21,7 @@
 	<Fragment>
 		<DirectoryRef Id="TARGETDIR">
 			<Directory Id="ProgramFilesFolder" Name="PFiles">
-				<Directory Id="INSTALLDIR" Name="HamQSLer">
+				<Directory Id="APPLICATIONFOLDER" Name="HamQSLer">
 					<Component Id="HamqslerEXE" Guid="6CAA5943-D261-49A0-8585-F8752D374D94" DiskId="1">
 						<File Id="hamqsler.exe" Name="hamqsler.exe" Source="..\hamqsler\bin\Release\hamqsler.exe" />
 						<File Id="QslBureaus.dll" Name="QslBureaus.dll" Source="..\hamqsler\bin\Release\QslBureaus.dll" />
