@@ -104,9 +104,11 @@
 						CanExecute="NoneCommand_CanExecute"/>
 	
 		<CommandBinding Command="{x:Static local:MainWindow.UserManualA4Command}"
-						Executed="UserManualA4Command_Executed"/>
+						Executed="UserManualA4Command_Executed"
+						CanExecute="UserManualA4Command_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.UserManualLetterCommand}"
-						Executed="UserManualLetterCommand_Executed"/>
+						Executed="UserManualLetterCommand_Executed"
+						CanExecute="UserManualLetterCommand_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.AboutCommand}"
 						Executed="AboutCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.WebsiteCommand}"

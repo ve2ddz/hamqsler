@@ -403,6 +403,28 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// CanExecute handler for User Manual - A4 menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void UserManualA4Command_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			FileInfo fi = new FileInfo("help\\pdf\\hamqsler-A4.pdf");
+			e.CanExecute = fi.Exists;
+		}
+		
+		/// <summary>
+		/// CanExecute handler for User Manual - US Letter menu item
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void UserManualLetterCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			FileInfo fi = new FileInfo("help\\pdf\\hamqsler-letter.pdf");
+			e.CanExecute = fi.Exists;
+		}
+		
+		/// <summary>
 		/// Handler for Window Closing event.
 		/// Check each Card to see if it should be saved.
 		/// </summary>

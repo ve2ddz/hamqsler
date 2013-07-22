@@ -53,7 +53,7 @@
 		<Condition Message="This application requires .NET Framework 4.0. Please install Microsoft .NET 4.0, then run this installer again.">
  			(NETFRAMEWORK40CLIENT)
 		</Condition>
-		<Icon Id="HamQSLerIcon" SourceFile="..\hamqsler\hamqsler.ico" />
+		<Icon Id="HamQSLerIcon.exe" SourceFile="..\hamqsler\hamqsler.ico" />
 		<!--
 			Source media for the installation. 
  			Specifies a single cab file to be embedded in the installer's .msi. 
@@ -61,20 +61,35 @@
 		<Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high"/>
 		
 		<!-- Installation directory and files are defined in Files.wxs -->
-		<Directory Id="TARGETDIR" Name="SourceDir">
-		</Directory>		
 		<Feature Id="HamQSLer"
-		         Title="HamQSLer"
-		         Description="All of HamQSLer"
+		         Title="HamQSLer Executable"
+		         Description="HamQSLer Executables"
 		         Level="1">
 			<ComponentRef Id="HamqslerEXE"/>
 			<ComponentRef Id="SampleFiles"/>
-			<ComponentRef Id="PdfHelp"/>
-			<ComponentRef Id="HamQSLerShortcuts"/>
+			<ComponentRef Id="HamQSLerShortcut"/>
+		</Feature>
+		<Feature Id="A4"
+				 Title="User Manual - A4"
+				 Description="A4-sized User Manual"
+				 Level="1">
+			<ComponentRef Id="A4"/>
+			<ComponentRef Id="A4HelpShortCut"/>
+		</Feature>
+		<Feature Id="Letter"
+				 Title="User Manual - US Letter"
+				 Description="US Letter-sized User Manual"
+				 Level="1">
+			<ComponentRef Id="Letter"/>
+			<ComponentRef Id="LetterHelpShortCut"/>
+		</Feature>
+		<Feature Id="DesktopShortCut"
+				 Title="Desktop Shortcut"
+				 Description="Shortcut to HamQSLer program on desktop"
+				 Level="1">
+			<ComponentRef Id="DesktopShortCut"/>
 		</Feature>
 		
-		<Property Id="ApplicationFolderName" Value="HmaQSLer" />
-		<Property Id="WixAppFolder" Value="WixPerMachineFolder" />
 		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch HamQSLer" />
 		<Property Id="WixShellExecTarget" Value="[#hamqsler.exe]" />
 		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
@@ -87,7 +102,7 @@
 			WixUI_Minimal is appropriate when your product has no optional 
 			features.
  		-->
-		<UIRef Id="WixUI_Advanced" />
+		<UIRef Id="WixUI_FeatureTree" />
 		<UI>
 			<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
 		</UI>

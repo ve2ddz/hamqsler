@@ -19,11 +19,12 @@
   -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Fragment>
-		<DirectoryRef Id="TARGETDIR">
+		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder" Name="PFiles">
 				<Directory Id="APPLICATIONFOLDER" Name="HamQSLer">
 					<Component Id="HamqslerEXE" Guid="6CAA5943-D261-49A0-8585-F8752D374D94" DiskId="1">
-						<File Id="hamqsler.exe" Name="hamqsler.exe" Source="..\hamqsler\bin\Release\hamqsler.exe" />
+						<File Id="hamqsler.exe" Name="hamqsler.exe" Source="..\hamqsler\bin\Release\hamqsler.exe">
+						</File>
 						<File Id="QslBureaus.dll" Name="QslBureaus.dll" Source="..\hamqsler\bin\Release\QslBureaus.dll" />
 						<File Id="Qsos.dll" Name="Qsos.dll" Source="..\hamqsler\bin\Release\Qsos.dll" />
 						<File Id="license.rtf" Name="license.rtf" Source="license.rtf" />
@@ -36,8 +37,10 @@
 					</Directory>
 					<Directory Id="HelpDir" Name="help">
 						<Directory Id="PDFDir" Name="pdf">
-							<Component Id="PdfHelp" Guid="67457C0A-9BBD-454E-93B6-C6B10F8AF59D" DiskId="1">
+							<Component Id="A4" Guid="67457C0A-9BBD-454E-93B6-C6B10F8AF59D" DiskId="1">
 								<File Id="hamqsler_A4.pdf" Name="hamqsler-A4.pdf" Source="..\documentation\pdf-docs\hamqsler-A4.pdf" />
+							</Component>
+							<Component Id="Letter" Guid="EC219F19-DFE0-4274-8D1B-0F45429689EC">
 								<File Id="hamqsler_letter.pdf" Name="hamqsler-letter.pdf" Source="..\documentation\pdf-docs\hamqsler-letter.pdf" />
 							</Component>
 						</Directory>
@@ -46,15 +49,28 @@
 			</Directory>
 			<Directory Id="ProgramMenuFolder">
 				<Directory Id="ApplicationProgramsFolder" Name="HamQSLer">
-					<Component Id="HamQSLerShortcuts" Guid="00AAF0E8-FB8F-4B5F-8B4A-D41A4DC84F2E">
-						<Shortcut Id="HamQSLerShortcut" Name="HamQSLer" Description="Program to design and print QSL cards" Target="[INSTALLDIR]hamqsler.exe" WorkingDirectory="INSTALLDIR" Icon="HamQSLerIcon" />
-						<Shortcut Id="HelpPdfA4" Name="PDF Help (A4)" Description="PDF Help in A4 page size" Target="[INSTALLDIR]help\pdf\hamqsler-A4.pdf" WorkingDirectory="INSTALLDIR" />
-						<Shortcut Id="HelpPdfLetter" Name="PDF Help (Letter)" Description="PDF Help in USLetter page size" Target="[INSTALLDIR]help\pdf\hamqsler-letter.pdf" WorkingDirectory="INSTALLDIR" />
-						<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+					<Component Id="HamQSLerShortcut" Guid="00AAF0E8-FB8F-4B5F-8B4A-D41A4DC84F2E">
+						<Shortcut Id="HamQSLerShortcut" Name="HamQSLer" Description="Program to design and print QSL cards" Target="[APPLICATIONFOLDER]hamqsler.exe" WorkingDirectory="APPLICATIONFOLDER" Icon="HamQSLerIcon.exe"/>
+						<Shortcut Id="UninstallHamQSLer" Name="Uninstall HamQSLer" Target="[SysstemFolder]msiexec.exe" Arguments="/x [ProductCode]" Description="Uninstalls HamQSLer"/>
 						<RegistryValue Root="HKCU" Key="Software\Microsoft\HamQSLer" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+						<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+					</Component>
+					<Component Id="A4HelpShortCut" Guid="7CFDD091-46FD-4EEA-84B0-1352FFBC7841">
+						<Shortcut Id="HelpPdfA4" Name="PDF Help (A4)" Description="PDF Help in A4 page size" Target="[APPLICATIONFOLDER]help\pdf\hamqsler-A4.pdf" WorkingDirectory="APPLICATIONFOLDER" />
+						<RegistryValue Root="HKCU" Key="Software\Microsoft\HamQSLerA4Manual" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+					</Component>
+					<Component Id="LetterHelpShortCut" Guid="8A01ED16-2275-47B7-A001-B57CB87D290A">
+						<Shortcut Id="HelpPdfLetter" Name="PDF Help (Letter)" Description="PDF Help in USLetter page size" Target="[APPLICATIONFOLDER]help\pdf\hamqsler-letter.pdf" WorkingDirectory="APPLICATIONFOLDER" />
+						<RegistryValue Root="HKCU" Key="Software\Microsoft\HamQSLerLetterManual" Name="installed" Type="integer" Value="1" KeyPath="yes" />
 					</Component>
 				</Directory>
 			</Directory>
-		</DirectoryRef>
+			<Directory Id="DesktopFolder">
+				<Component Id="DesktopShortCut" Guid="24F6722E-C625-4B29-AE14-91F6911AA9E9">
+					<Shortcut Id="DesktopShortCut" Name="HamQSLer" Description="Program to design and print QSL cards" Target="[APPLICATIONFOLDER]hamqsler.exe" WorkingDirectory="APPLICATIONFOLDER" Icon="HamQSLerIcon.exe"/>
+					<RegistryValue Root="HKCU" Key="Software\Microsoft\HamQSLerDesktopShortcut" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+				</Component>
+			</Directory>
+		</Directory>		
 	</Fragment>
 </Wix>
