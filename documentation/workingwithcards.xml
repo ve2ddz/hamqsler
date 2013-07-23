@@ -863,7 +863,7 @@
 				the full path name is specified. The path in the image above specifies that the image
 				file is located at "...\My Documents\hamqsler\Samples\sample.jpg".</para>
 			</section>
-			<section>
+			<section xml:id='settingcolors'>
 				<title>Setting Colors</title>
 				<para>The color of text in text items as well as the color of text and lines
 				in the Qsos Box may be changed. The current color of an item is shown in a button
@@ -934,7 +934,7 @@
 					luminance values or the red, green, and blue values.</para>
 				</caution>
 			</section>
-			<section>
+			<section xml:id='settingdropdownboxvalues'>
 				<title>Setting Dropdown Box Values</title>
 				<para>In a dropdown box, the list of acceptable values is listed when you click
 				on the dropdown box. There are several ways to select a value:</para>
@@ -974,7 +974,7 @@
 					</listitem>
 				</orderedlist>
 			</section>
-			<section>
+			<section xml:id='settingcomboboxvalues'>
 				<title>Setting Combobox Values</title>
 				<para>A combobox is a combination of a dropdown box and a text box. A set
 				of values is displayed in a dropdown box, and values not in the dropdown
@@ -1010,7 +1010,175 @@
 		</section>
 		<section>
 			<title>Setting Text Item Properties</title>
+			<para>When a text item is selected, the text item properties panel is displayed
+			in the card items properties panel. The image below shows the text item
+			properties panel when the callsign text item is selected.</para>
+			<figure xml:id="textitemproperties2">
+				<title>Text Item Properties Panel for Callsign Text Item</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/textitemproperties.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The font used to display the text item is selected using the font
+			dropdown box. See <link linkend='settingdropdownboxvalues'>Setting Dropdown
+			Box Values</link>, above for methods to select a font from this dropdown box.</para>
+			<tip>
+				<para>Choose a font that is easy to read.
+				In general, proportionally spaced fonts are easier to read than
+				fixed-width fonts. Also, choose a standard serif or sans-serif font; do
+				not use a script or abstract font. As you can see from the table below,
+				Verdana, a proportionally spaced, sans-serif font, and Times New
+				Roman, a proportionally spaced, serif font, are easy to read.
+				Edwardian Script ITC, a script font, and Blackadder ITC, an abstract font, 
+				are difficult to read.</para>
+				<table frame='all'>
+					<title>Font Examples</title>
+					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+						<colspec align='center'/>
+						<colspec align='center'/>
+						<tbody>
+							<row>
+								<entry>
+									<inlinemediaobject>
+										<imageobject>
+											<imagedata fileref="images/verdana.png" align="center" />
+										</imageobject>
+									</inlinemediaobject>
+								</entry>
+								<entry>
+									<inlinemediaobject>
+										<imageobject>
+											<imagedata fileref="images/timesnewroman.png" align="center" />
+										</imageobject>
+									</inlinemediaobject>
+								</entry>
+							</row>
+							<row>
+								<entry>Verdana</entry>
+								<entry>Times New Roman</entry>
+							</row>
+							<row>
+								<entry></entry>
+								<entry></entry>
+							</row>
+							<row>
+								<entry>
+									<inlinemediaobject>
+										<imageobject>
+											<imagedata fileref="images/edwardianscriptitc.png" align="center" />
+										</imageobject>
+									</inlinemediaobject>
+								</entry>
+								<entry>
+									<inlinemediaobject>
+										<imageobject>
+											<imagedata fileref="images/blackadderitc.png" align="center" />
+										</imageobject>
+									</inlinemediaobject>
+								</entry>
+							</row>
+							<row>
+								<entry>Edwardian Script ITC</entry>
+								<entry>Blackadder ITC</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</tip>
+			<tip>
+				<para>Use only one or two font faces per card. You can distinguish different
+				text items by position, font weight, font style, font size, or color.</para>
+			</tip>
+			<para>Checking and unchecking the Bold checkbox switches between bold and normal
+			font weights.</para>
+			<para>Checking and unchecking the Italic checkbox switches between italic and
+			normal font styles.</para>
+			<caution>
+				<para>Not all font faces support the italic style. In such cases, the
+				text remains displayed in the normal style.</para>
+			</caution>
+			<para>The font size (in points) may be set using the font size combobox. 
+			You may either select
+			a predefined value, or enter a different value. The value entered must be greater
+			than 0; if 0 is entered, the value 1 is actually used. See 
+			<link linkend='settingcomboboxvalues'>Setting Combobox Values</link> above
+			for information on using this combobox.</para>
+			<para>Click on the text color button to open the color picker dialog to select
+			a color for the text. See <link linkend='settingcolors'>Setting Colors</link>
+			above for selecting a color using the color picker dialog.</para>
+			<para>In the image above, the Text groupbox contains a static text box with the
+			text "VA3HJ" and a Macros button. See the <link linkend='macros'>Macros</link>
+			chapter for information on using macros.</para>
+			<para>The Check Boxes group box contains a number of properties related to
+			the display of check boxes before and after the text in a text item.</para>
+			<para>To place a checkbox before the text, check the Before Text checkbox. To
+			place a checkbox after the text, check the After Text checkbox.</para>
+			<para>To set the thickness of the checkboxes, adjust the Line Thickness
+			slider. The value displayed is in hundredths of an inch.</para>
+			<para>To change the size of the checkboxes, adjust the Check Box Ratio slider.
+			The value that is displayed is the ratio of the height and width of the checkboxes
+			to the total height of the text item.</para>
+		</section>
+		<section xml:id='settingqsosboxproperties'>
+			<title>Setting Qsos Box Properties</title>
 			<para>To be written.</para>
+		</section>
+		<section>
+			<title>Ideas For Handling Multiple Choices</title>
+			<para>The following subsections discuss different ways that you can handle
+			multiple items. For example, you may have multiple callsigns, operate from
+			multiple QTHs, and may want to QSL a number of QSOs with the same station, some
+			of which you have received QSL cards for and some for which you have not received
+			QSL cards.</para>
+			<section xml:id='multiplecallsigns'>
+				<title>Handling Multiple Callsigns</title>
+				<para>To be written.</para>
+			</section>
+			<section xml:id='multipleqths'>
+				<title>Handling Multiple QTHs</title>
+				<para>To be written.</para>
+			</section>
+			<section xml:id='pseqsltnx'>
+				<title>Please QSL Thanks</title>
+				<para>Every QSL card should contain either a request for a QSL card from 
+				the other station, or a thanks for the card that the other station sent you. 
+				HamQSLer provides a number of ways of accomplishing this:</para>
+				<orderedlist>
+					<listitem>
+						<para>If you only send QSL cards in response to a received card, then 
+						<link linkend='addingtextitems'>add a text item</link> containing the 
+						text "Thanks QSL" somewhere on the card.</para>
+					</listitem>
+					<listitem>
+						<para><link linkend='addingtextitems'>Add a text item</link> 
+						containing the text "Please QSL Thanks" or "Pse QSL Tnx" on the card 
+						and use a pen to strike out the "Please" or "Thanks" as 
+						appropriate.</para>
+					</listitem>
+					<listitem>
+						<para><link linkend='addingtextitems'>Add a text item</link>
+						containing the text "Please QSL Thanks" or "Pse QSL Tnx" with a 
+						checkbox at each end. Use a pen to check the box that is 
+						appropriate.</para>
+					</listitem>
+					<listitem>
+						<para>An alternative to the item above is to add two text items
+						to the card with a checkbox before each text item. The text for the
+						two text items would be "Pse QSL" and "Tnx QSL" or similar. Use a
+						pen to check the appropriate checkbox.</para>
+					</listitem>
+					<listitem>
+						<para>What if you are QSLing a number of QSOs, some that received a
+						QSL card for, and some that you did not receive a QSL card for? An
+						optional QSL column may be added to the Qsos Box with "Pse" or "Tnx"
+						printed as appropriate for each QSO. See
+						<link linkend='settingqsosboxproperties'>Setting Qsos Box
+						Properties</link> for more information.</para>
+					</listitem>
+				</orderedlist>
+			</section>
 		</section>
 	</section>
 </chapter>
