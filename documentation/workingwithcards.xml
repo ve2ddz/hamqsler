@@ -804,79 +804,213 @@
 		</table>
 	</section>
 	<section>
-		<title>Setting Background Image Properties</title>
-		<para>The image below shows the background image properties panel. This panel is
-		displayed in the card items properties panel when the background image item is
-		selected.</para>
-		<figure xml:id="backgroundimageproperties2">
-			<title>Background Image Properties</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/backgroundimageproperties.png" />
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>This image shows the background image properties panel when there is no
-		image. To load a background image, click the button labeled "...". This displays
-		the File Open dialog in the default images folder. Navigate to the directory containing
-		the image that you want to use as the card background and select the image. The
-		dialog will close and the image will display centered on the card. The image will be
-		sized to completely cover the card; If the aspect ratio of the image is different from
-		the aspect ratio of the card, then the image will extend either to the left and right
-		of the card or the top and bottom of the card. You saw this in the
-		<link linkend="gettingstarted">Getting Started</link> tutorial.</para>
-		<para>You may move and resize the image by following the instructions in the
-		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section of this
-		chapter.</para>
-		<para>When you load a background image, the path to the image file is displayed in the
-		text box below the "..." button in the background image properties panel.
-		The image below shows the background image properties
-		panel after the background image used in the Getting Started tutorial has been
-		loaded.</para>
-		<figure xml:id="backgroundimageproperties3">
-			<title>Background Image Properties With Sample Image Loaded</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/samplebackgroundimageproperties.png" />
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>There are
-		two relative path specifiers: "$MyDocs$" is a reference to the current user's 
-		"My Documents" directory; "$hamqslerFolder$" is a references to the hamqsler directory
-		in the current user's "My Documents" directory. If the image file is located anywhere
-		other than in "My Documents", "hamqsler", or a subdirectory of these directories, then
-		the full path name is specified. The path in the image above specifies that the image
-		file is located at "...\My Documents\hamqsler\Samples\sample.jpg".</para>
-		<tip>
-			<para>When releasing a new version of the Windows operating system, Microsoft may
-			change the location of the "My Documents" directory. For example, this occurred when
-			Windows Vista was released. If only absolute paths were specified for image file
-			locations, then you would have to specify the location of the image file for every
-			image on every card after you upgraded your computer and operating system. The use
-			of relative paths removes this requirement.</para>
-			<para>If you use the program on more than one computer, your user name may
-			be different on the two computers. Relative paths allow you to move the files
-			and directories between the two systems seamlessly.</para>
-		</tip>
-	</section>
-	<section>
-		<title>Setting Secondary Image Properties</title>
-		<para>This image shows the secondary image properties panel which is displayed when
-		a secondary image is selected. The image file "radio_tower-1.gif" has been loaded.</para>
-		<figure xml:id="secondaryimageproperties">
-			<title>Secondary Image Properties With Image Loaded</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/secondaryimageproperties.png" />
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>The instructions for loading a secondary image file are the same as for loading
-		a background image. When the image is first displayed, it is centered on the card, and
-		the shorter of the width and height dimensions of the image is set to 1 inch or 25.4 mm.
-		You may move and resize the image using the instructions in the
-		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section in this
-		chapter.</para>
+		<title>Setting Card Item Properties</title>
+		<para>The methods for setting some card item properties are common between two or
+		more card item types. For example, the method used to specify the image file to
+		load for background and secondary images is the same. Similarly, the method for setting
+		the color of a text item is the same as setting the color of the Qsos Box. These
+		common methods are discussed here before the setting of specific card item properties
+		is discussed.</para>
+		<section>
+			<title>Common Properties Methods</title>
+			<section xml:id='imagefilename'>
+				<title>Setting an Image File Name</title>
+				<para>This method is common between background images and secondary images.
+				Setting the image file name for the background image of a card will be
+				used as the example here.</para>
+				<para>The image below shows the background image properties panel. This panel is
+				displayed in the card items properties panel when the background image item is
+				selected.</para>
+				<figure xml:id="backgroundimageproperties2">
+					<title>Background Image Properties</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/backgroundimageproperties.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>This image shows the background image properties panel when there is no
+				image. To load an image, click the button labeled "...". This displays
+				the File Open dialog in the default images folder. Navigate to the directory containing
+				the image that you want to use as the card background and select the image. The
+				dialog will close and the image will display centered on the card. The initial size
+				and position of the image depends on whether you are loading a background image
+				or a secondary image. The location and size of the image is specified in the 
+				appropriate section below. </para>
+				<tip>
+					<para>The default images folder is maintained in the user preferences file. See
+					the <link linkend='settinguserprefs'>Setting User Preferences</link>
+					chapter for information on setting this value.</para>
+				</tip>
+				<para>When you load an image, the path to the image file is displayed in the
+				text box below the "..." button in the image properties panel.
+				The image below shows the background image properties
+				panel after the background image used in the Getting Started tutorial has been
+				loaded.</para>
+				<figure xml:id="backgroundimageproperties3">
+					<title>Background Image Properties With Sample Image Loaded</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/samplebackgroundimageproperties.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>There are
+				two relative path specifiers: "$MyDocs$" is a reference to the current user's 
+				"My Documents" directory; "$hamqslerFolder$" is a references to the hamqsler directory
+				in the current user's "My Documents" directory. If the image file is located anywhere
+				other than in "My Documents", "hamqsler", or a subdirectory of these directories, then
+				the full path name is specified. The path in the image above specifies that the image
+				file is located at "...\My Documents\hamqsler\Samples\sample.jpg".</para>
+			</section>
+			<section>
+				<title>Setting Colors</title>
+				<para>The color of text in text items as well as the color of text and lines
+				in the Qsos Box may be changed. The current color of an item is shown in a button
+				in the card item's properties panel. For example, the image below shows the
+				text color label and button on the text item properties panel.</para>
+				<figure xml:id="textcolor">
+					<title>Text Color Label and Button</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/textcolor.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>In this case, the text in the text item is black as shown inside the
+				button. Clicking on the button opens the color picker dialog which is shown
+				in the following image. The image shows the color picker as it would be if
+				you had clicked the text color button above. Note that the black color
+				swatch in the Basic colors section is selected, matching the color in the
+				text color button. If the previously set color does not exactly match
+				one of the colors in the Basic color swatches, then the first color
+				swatch is highlighted, even though that color does not match.</para>
+				<figure xml:id="colorpicker2">
+					<title>Color Picker Dialog</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/colorpicker.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>There are several ways to select a color:</para>
+				<orderedlist>
+					<listitem>
+						<para>Click on a color swatch in the Basic colors section. Note the
+						ColorSolid swatch, and the settings of the Hue, Saturation and 
+						Luminance text boxes, and the
+						Red, Green, and Blue boxes. The displayed values match the selected
+						color.</para>
+					</listitem>
+					<listitem>
+						<para>Click on a location in the color rainbow, then move the
+						slider located to the right of the rainbow to adjust the selected
+						color from black through the selected color to white. Note that the
+						Hue, Saturation, and Luminance values, as well as the Red, Green,
+						and Blue values, change to match the color. The ColorSolid swatch
+						also changes to match.</para>
+					</listitem>
+					<listitem>
+						<para>Adjust the Hue, Saturation, and Luminance values directly. Valid
+						values are from 0 to 240.</para>
+					</listitem>
+					<listitem>
+						<para>Adjust the Red, Green, and Blue values directly. Valid values
+						range from 0 to 255. You are probably much more familiar with this
+						method of specifying a color than using hue, saturation, and
+						luminance.</para>
+					</listitem>
+				</orderedlist>
+				<para>Once you have chosen the color you want, click the OK button to select it.
+				The color picker dialog will close, the color of the button will change to match
+				the chosen color, and the corresponding card item property will change to 
+				that color.</para>
+				<caution>
+					<para>In the color picker dialog, there is an "Add to Custom Colors" button.
+					If you click on that button, the chosen color will be added to the Custom
+					colors swatches. The custom colors are not saved, so the next time you
+					open the color picker dialog, the custom colors are not displayed. To
+					retrieve the same color again, remember the hue, saturation, and
+					luminance values or the red, green, and blue values.</para>
+				</caution>
+			</section>
+			<section>
+				<title>Setting Dropdown Box Values</title>
+				<para>In a dropdown box, the list of acceptable values is listed when you click
+				on the dropdown box. There are several ways to select a value:</para>
+				<orderedlist>
+					<listitem>
+						<para>Click anywhere in the dropdown box to open it. Select the value
+						you want by clicking on it. The dropdown list closes and the selected
+						value is displayed in the box.</para>
+						<para>If the list is long, it will not all be displayed in the dropdown.
+						To scroll to up the list, place the mouse cursor at the top of the
+						dropdown; to scroll down the list, place the mouse cursor at the bottom
+						of the dropdown. Alternatively, you may scroll using the mouse
+						wheel.</para>
+					</listitem>
+					<listitem>
+						<para>Using the keyboard, tab until the dropdown box is selected. This is
+						indicated by a dashed line around the text in the dropdown box. Use
+						the up and down arrow keys, or the left and right arrow keys,
+						to move to the previous and next values in
+						the list.</para>
+					</listitem>
+					<listitem>
+						<para>Using the keyboard, tab until the dropdown box is selected. Press
+						the keys matching the first few letters of the value you want to select.
+						As you press the keys, the first item in the dropdown list that matches
+						that set of keys is selected. Keep pressing keys until the value you
+						want is selected.</para>
+					</listitem>
+					<listitem>
+						<para>Using the keyboard, tab until the dropdown box is selected.
+						Press the first character of the value you want to select. The first
+						value in the list that starts with that character is selected. Pressing
+						the same key will select the second value that starts with that
+						character. Keep pressing the key until the value you want is selected.
+						Note: you must not pause between keypresses or the first value
+						in the list will be selected again.</para>
+					</listitem>
+				</orderedlist>
+			</section>
+			<section>
+				<title>Setting Combobox Values</title>
+				<para>A combobox is a combination of a dropdown box and a text box. A set
+				of values is displayed in a dropdown box, and values not in the dropdown
+				may be entered.</para>
+				<para>Because a combobox is a dropdown box, all of the methods described in
+				the section above may be used to select a predefined value. You may also
+				enter a value as you would in a text box, using the keyboard.</para>
+			</section>
+		</section>
+		<section>
+			<title>Setting Background Image Properties</title>
+			<para>The only property for a background image is the image file name. The method for
+			setting this property is described in the
+			<link linkend='imagefilename'>Setting an Image File Name</link> section, above.</para>
+			<para>When you set the image file name for a background image, the image will be
+			sized to completely cover the card; if the aspect ratio of the image is different from
+			the aspect ratio of the card, then the image will extend either to the left and right
+			of the card or the top and bottom of the card. You saw this in the
+			<link linkend="gettingstarted">Getting Started</link> tutorial.</para>
+			<para>You may move and resize the image by following the instructions in the
+			<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section of this
+			chapter.</para>
+		</section>
+		<section>
+			<title>Setting Secondary Image Properties</title>
+			<para>The method for specifying the image file name for a secondary image is
+			described in the <link linkend='imagefilename'>Setting an Image File Name</link>
+			section above. When the image is displayed for the first time, it is centered on the
+			card, and the shorter of the width and height dimensions of the image is set to 1 inch
+			or 25.4 mm. You may move and resize the image using the instructions in the
+			<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section in this
+			chapter.</para>
+		</section>
+		<section>
+			<title>Setting Text Item Properties</title>
+			<para>To be written.</para>
+		</section>
 	</section>
 </chapter>
