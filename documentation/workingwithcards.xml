@@ -1366,4 +1366,27 @@
 			</section>
 		</section>
 	</section>
+	<section>
+		<title>Two-Sided Cards</title>
+		<para>HamQSLer does not directly support the design and printing of two-sided cards.
+		You could use the following method to create a two-sided card:</para>
+		<orderedlist>
+			<listitem>
+				<para>Design a QSL card that will serve as the front of your card. Include
+				one or more images, your callsign, and possibly a greeting or your city,
+				etc. Delete other text and the Qsos Box from the card so that they will not
+				be printed.</para>
+			</listitem>
+			<listitem>
+				<para>Design another card that will serve as the back of your card. Include
+				additional images if you wish, your callsign, all other text, and the
+				Qsos Box.</para>
+			</listitem>
+			<listitem>
+				<para>When you print the cards, first print the front of the cards, then
+				reload the cardstock in your printer so that the backside will be printed. 
+				Print the back of the card.</para>
+			</listitem>
+		</orderedlist>
+	</section>
 </chapter>
