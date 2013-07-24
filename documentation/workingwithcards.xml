@@ -1123,7 +1123,153 @@
 		</section>
 		<section xml:id='settingqsosboxproperties'>
 			<title>Setting Qsos Box Properties</title>
-			<para>To be written.</para>
+			<para>The Qsos Box properties panel, shown in the image below, is displayed in the 
+			card items properties panel when the Qsos Box is selected.</para>
+			<figure xml:id="qsosboxproperties2">
+				<title>Qsos Box Properties Panel</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/qsosboxprops.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The default confirming text, that is, the confirming text that is displayed
+			if you have not changed it in user preferences, is "Confirming Two-Way QSOs With
+			<emphasis>callsign</emphasis> via <emphasis>manager</emphasis>". The state of
+			the Show Manager checkbox determines whether the text 
+			"via <emphasis>manager</emphasis>" is printed on the card. If the checkbox is
+			checked and the QSOs printed on the card contain a manager field, then the text
+			is printed; if the checkbox is unchecked, then the text is not printed.</para>
+			<tip>
+				<para>The confirming text is stored in the user preferences file. See the
+				<link linkend='settinguserprefs'>Setting User Preferences</link>
+				chapter for information on changing this text.</para>
+			</tip>
+			<caution>
+				<para>The confirming text is saved with the card file when the card is created.
+				The only way to change this text is to create a new card.</para>
+			</caution>
+			<para>The Qsos Box may contain either a band or a frequency column. The column
+			that is printed on the card is controlled by the Show Band Column and Show
+			Freq Column radio buttons. Set the Show Band Column radio button to show a
+			Band column, or set the Show Frequency Column radio button to show a Frequency
+			column.</para>
+			<para>If, when a QSO is loaded or input, it includes a frequency field and not
+			a band field, a band field that corresponds to the frequency is added to the 
+			QSO. If a band field is included in the QSO when loaded or input, but no
+			frequency field is included and the Show Freq Column checkbox is checked,
+			then when the card containing the QSO is printed, a frequency value based on
+			the band field is substituted.</para>
+			<tip>
+				<para>The frequency value that is substituted is determined by values stored
+				in the user preferences file. See the
+				<link linkend='settinguserprefs'>Setting User Preferences</link> chapter
+				for information on changing the values that are substituted.</para>
+			</tip>
+			<para>The Qsos Box may contain an optional QSL column containing text such as
+			"Pse" or "Tnx" for each QSO. Check the Show QSL Column checkbox to include the
+			column; uncheck the checkbox to not include the column. The width of each
+			column in the Qsos Box is adjusted based on the state of this checkbox.</para>
+			<tip>
+				<para>The QSL column header text and the text printed for each QSO is set
+				in the user preferences file. See the 
+				<link linkend='settinguserprefs'>Setting User Preferences</link> chapter
+				for information on changing the text.</para>
+			</tip>
+			<caution>
+				<para>The text values are saved in the card file when the card is created
+				and are therefore fixed for the card. A new card must be created if you
+				want to change the text.</para>
+			</caution>
+			<para>The Date Format dropdown box contains a selection of formats used to
+			print the dates in the date column on the card. The setting also determines the
+			header that is printed for the date column. Select the date format you want from
+			the dropdown box. Methods for selecting a value are discussed in the
+			<link linkend='settingdropdownboxvalues'>Setting Dropdown Box Values</link>
+			section.</para>
+			<para>The following date formats are available:</para>
+			<orderedlist>
+				<listitem>
+					<para>YYYY-MM-DD. This is one of the ISO 8601 date formats.</para>
+				</listitem>
+				<listitem>
+					<para>DD-MMM-YY. A three character month value is substituted for "MMM"
+					when the date is printed.</para>
+				</listitem>
+				<listitem>
+					<para>DD-MM-YY.</para>
+				</listitem>
+			</orderedlist>
+			<tip>
+				<para>The header text that is printed or displayed in the date column is
+				determined by the date format selected. The header text for each format
+				may be set in the user preferences file. See the
+				<link linkend='settinguserprefs'>Setting User Preferences</link>
+				chapter for more information.</para>
+			</tip>
+			<tip>
+				<para>The default date format is also set in the user preferences file.
+				See the <link linkend='settinguserprefs'>Setting User Preferences</link>
+				chapter for information on how to set this default value.</para>
+			</tip>
+			<tip>
+				<para>The three character month abreviations are saved in the user
+				preferences file. See the 
+					<link linkend='settinguserprefs'>Setting User Preferences</link>
+				chapter for information on how to change these values.</para>
+			</tip>
+			<caution>
+				<para>The header text for each date format is saved 
+				in the card file when the card is created. The only way to change these
+				values is to create a new card.</para>
+			</caution>
+			<para>The value selected in the Max QSOs dropdown box determines the maximum
+			number or QSOs that can be printed on a card. This is also the number of lines
+			for QSOs that are displayed in design mode. The actual number of lines printed
+			in the Qsos Box matches the number of QSOs being printed on the card. If
+			no QSOs are being printed on the card, the QSOs Box that is printed contains
+			an empty line for each of the maximum number of QSOs.</para>
+			<para>Click the Line and Text Color button to change the color that the Qsos Box
+			lines and text are printed in. This opens a Color Picker dialog to allow selection
+			of a color. See the <link linkend='settingcolors'>Setting Colors</link>
+			section for information on how to select a color.</para>
+			<para>Click the Callsign Color button to set the color that the callsign
+			in the confirming text is printed in. This opens a Color Picker dialog to allow
+			the selection of a color.</para>
+			<para>Click the Manager Color button to set the color that the "via
+			<emphasis>manager</emphasis>" text in the confirming text is printed in. This
+			opens a Color Picker dialog to allow the selection of the color.</para>
+			<para>The Font Size dropdown box contains a list of font sizes (in points) that
+			the text in the Qsos Box can be printed in. Select a value using one of the
+			methods described in the <link linkend='settingdropdownboxvalues'>Setting Dropdown
+			Box Values</link> section.</para>
+			<tip>
+				<para>As described in the <link linkend='movingcarditem'>Moving and Resizing
+				Card Items</link> section in this chapter, the width of the Qsos Box may be
+				resized. The minimum width for the Qsos Box is determined by the width
+				of the text displayed in each column. The width of the text is determined
+				by the font size that the text is displayed or printed in. Select a smaller
+				font size to reduce the minimum width for the Qsos Box.</para>
+			</tip>
+			<para>The selected value in the Font dropdown box determines the font face that
+			the text in the Qsos Box is displayed or printed in. Select the font you want
+			to use. The dropdown box contains all of the fonts located in the Fonts
+			system directory that are registered on your computer.</para>
+			<tip>
+				<para>A card that uses too many different font faces looks busy and amaterish.
+				Use only one or two font faces on your card. Use different font sizes,
+				font weights, font styles, and colors for text items rather than different
+				font faces to distinguish among the various pieces of information on the
+				card.</para>
+			</tip>
+			<para>The Qsos Box background has two properties: color and opacity. Click the
+			Background Color button to set the background color. This opens a Color Picker
+			dialog that allows you to select a color. See the
+			<link linkend='settingcolors'>Setting Colors</link> section, above, for
+			information on how to select a color.</para>
+			<para>Once the background color has been set, adjust the Background Opacity
+			slider to set the opacity (reverse of transparency) of the Qsos Box. The lower
+			the opacity value, the more any card items behind the text box show through.</para>
 		</section>
 		<section>
 			<title>Ideas For Handling Multiple Choices</title>
