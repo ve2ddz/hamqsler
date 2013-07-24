@@ -1280,11 +1280,50 @@
 			QSL cards.</para>
 			<section xml:id='multiplecallsigns'>
 				<title>Handling Multiple Callsigns</title>
-				<para>To be written.</para>
+				<para>There are several ways that you can handle multiple callsigns:</para>
+				<orderedlist>
+					<listitem>
+						<para>Create a different card for each callsign.</para>
+					</listitem>
+					<listitem>
+						<para>Have a text item with a checkbox for each callsign. Use a pen
+						to check the box for the appropriate callsign. You would have to
+						select only those QSOS for one callsign to use this method, or 
+						save your logs for each callsign in a different log file.</para>
+					</listitem>
+					<listitem>
+						<para>For your callsign text item, use an AdifMacro to retrieve the
+						STATION_CALLSIGN field from the QSOs. If your logging program does
+						not log STATION_CALLSIGN, use the OPERATOR field instead. Finally,
+						if the OPERATOR field is no logged, check for the OWNER_CALLSIGN
+						field. Be sure to check the Separate Cards by ADIF Field checkbox
+						for the macro. See the <link linkend='macros'>Macros</link>
+						chapter for information on the AdifMacro.</para>
+					</listitem>
+				</orderedlist>
 			</section>
 			<section xml:id='multipleqths'>
 				<title>Handling Multiple QTHs</title>
-				<para>To be written.</para>
+				<para>There are also several ways to handle multiple QTHs:</para>
+				<orderedlist>
+					<listitem>
+						<para>Create a different card for each QTH. You would want to use
+						this method if you use different images for each QTH.</para>
+					</listitem>
+					<listitem>
+						<para>Have a text item with a checkbox for each QTH. Use a pen
+						to check the appropriate QTH. You would have to select only those
+						QSOs for one QTH to use this method.</para>
+					</listitem>
+					<listitem>
+						<para>If your logging program uses an application specific
+						field to specify unique QTHs that you operate from, use an
+						AdifMacro in a text item to specify the QTH. Check the Separate
+						Cards by ADIF Field checkbox for the macro. See the
+						<link linkend='macros'>Macros</link>
+						chapter for information on the AdifMacro.</para>
+					</listitem>
+				</orderedlist>
 			</section>
 			<section xml:id='pseqsltnx'>
 				<title>Please QSL Thanks</title>
