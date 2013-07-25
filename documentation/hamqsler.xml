@@ -11,6 +11,7 @@
 		<!ENTITY outputtingcards SYSTEM "outputtingcards.xml">
 		<!ENTITY doclicense SYSTEM "doclicense.xml">
 		<!ENTITY gpl SYSTEM "gpl.xml">
+		<!ENTITY nonkeyboardchars SYSTEM "nkeychars.xml">
 	]
 >
 <book xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
@@ -48,4 +49,5 @@ Free Documentation License".
 	&outputtingcards;
 	&doclicense;
 	&gpl;
+	&nonkeyboardchars;
 </book>

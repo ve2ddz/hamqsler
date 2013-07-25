@@ -1,0 +1,385 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<appendix xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
+		  xmlns:xlink="http://www.w3.org/1999/xlink" 
+		  xml:id="nonkeyboardchars">
+	<title>Non-Keyboard Characters</title>
+	<para>There are three ways to add characters that are not on your keyboard to static text
+	fields:</para>
+	<orderedlist>
+		<listitem>
+			<para>Keyboard entry of extended ASCII codes.</para>
+		</listitem>
+		<listitem>
+			<para>Selecting characters using the Character Map utility.</para>
+		</listitem>
+		<listitem>
+			<para>Using the AllChars program to enter characters.</para>
+		</listitem>
+	</orderedlist>
+	<para>Each of these methods is discussed below.</para>
+	<section>
+		<title>Keyboard Entry of Extended ASCII Characters</title>
+		<para>This method only works if your keyboard has a numeric keypad.
+		To enter a character press and hold one of the Alt keys and enter
+		the three digit code for the character using the number pad. Once the
+		code has been entered, release the Alt key. The characters
+		and their corresponding codes are listed in the table below.</para>
+		<table frame='all'>
+			<title>Card Design Context Menu Items and Actions</title>
+			<tgroup cols='11' align='left' colsep='1' rowsep='1'>
+				<colspec colname='Char1'/>
+				<colspec colname='Code1' />
+				<colspec colname='Empty1' colwidth='3pt'/>
+				<colspec colname='Char2'/>
+				<colspec colname='Code2' />
+				<colspec colname='Empty2' colwidth='3pt'/>
+				<colspec colname='Char3'/>
+				<colspec colname='Code3' />
+				<colspec colname='Empty3' colwidth='3pt'/>
+				<colspec colname='Char4'/>
+				<colspec colname='Code4' />
+				<thead>
+				<row>
+					<entry namest='Char1'>Char</entry>
+					<entry namest='Code1'>Code</entry>
+					<entry namest='Empty1'></entry>
+					<entry namest='Char2'>Char</entry>
+					<entry namest='Code2'>Code</entry>
+					<entry namest='Empty2'></entry>
+					<entry namest='Char3'>Char</entry>
+					<entry namest='Code3'>Code</entry>
+					<entry namest='Empty3'></entry>
+					<entry namest='Char4'>Char</entry>
+					<entry namest='Code4'>Code</entry>
+				</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>â</entry>
+						<entry>131</entry>
+						<entry></entry>
+						<entry>ä</entry>
+						<entry>132</entry>
+						<entry></entry>
+						<entry>à</entry>
+						<entry>133</entry>
+						<entry></entry>
+						<entry>å</entry>
+						<entry>134</entry>
+					</row>
+					<row>
+						<entry>á</entry>
+						<entry>160</entry>
+						<entry></entry>
+						<entry>ã</entry>
+						<entry>198</entry>
+						<entry></entry>
+						<entry>Ä</entry>
+						<entry>142</entry>
+						<entry></entry>
+						<entry>Å</entry>
+						<entry>143</entry>
+					</row>
+					<row>
+						<entry>Á</entry>
+						<entry>181</entry>
+						<entry></entry>
+						<entry>Â</entry>
+						<entry>182</entry>
+						<entry></entry>
+						<entry>À</entry>
+						<entry>183</entry>
+						<entry></entry>
+						<entry>Ã</entry>
+						<entry>199</entry>
+					</row>
+					<row>
+						<entry>ç</entry>
+						<entry>135</entry>
+						<entry></entry>
+						<entry>Ç</entry>
+						<entry>128</entry>
+						<entry></entry>
+						<entry>ð</entry>
+						<entry>208</entry>
+						<entry></entry>
+						<entry>Ð</entry>
+						<entry>209</entry>
+					</row>
+					<row>
+						<entry>é</entry>
+						<entry>130</entry>
+						<entry></entry>
+						<entry>ê</entry>
+						<entry>136</entry>
+						<entry></entry>
+						<entry>ë</entry>
+						<entry>137</entry>
+						<entry></entry>
+						<entry>è</entry>
+						<entry>138</entry>
+					</row>
+					<row>
+						<entry>É</entry>
+						<entry>144</entry>
+						<entry></entry>
+						<entry>Ê</entry>
+						<entry>210</entry>
+						<entry></entry>
+						<entry>Ë</entry>
+						<entry>211</entry>
+						<entry></entry>
+						<entry>È</entry>
+						<entry>212</entry>
+					</row>
+					<row>
+						<entry>ï</entry>
+						<entry>139</entry>
+						<entry></entry>
+						<entry>î</entry>
+						<entry>140</entry>
+						<entry></entry>
+						<entry>ì</entry>
+						<entry>141</entry>
+						<entry></entry>
+						<entry>í</entry>
+						<entry>161</entry>
+					</row>
+					<row>
+						<entry>Í</entry>
+						<entry>214</entry>
+						<entry></entry>
+						<entry>Î</entry>
+						<entry>215</entry>
+						<entry></entry>
+						<entry>Ï</entry>
+						<entry>216</entry>
+						<entry></entry>
+						<entry>Ì</entry>
+						<entry>222</entry>
+					</row>
+					<row>
+						<entry>ñ</entry>
+						<entry>164</entry>
+						<entry></entry>
+						<entry>Ñ</entry>
+						<entry>165</entry>
+						<entry></entry>
+						<entry>ô</entry>
+						<entry>147</entry>
+						<entry></entry>
+						<entry>ö</entry>
+						<entry>148</entry>
+					</row>
+					<row>
+						<entry>ò</entry>
+						<entry>149</entry>
+						<entry></entry>
+						<entry>ó</entry>
+						<entry>162</entry>
+						<entry></entry>
+						<entry>õ</entry>
+						<entry>228</entry>
+						<entry></entry>
+						<entry>ø</entry>
+						<entry>155</entry>
+					</row>
+					<row>
+						<entry>Ö</entry>
+						<entry>153</entry>
+						<entry></entry>
+						<entry>Ó</entry>
+						<entry>224</entry>
+						<entry></entry>
+						<entry>Ô</entry>
+						<entry>226</entry>
+						<entry></entry>
+						<entry>Ò</entry>
+						<entry>227</entry>
+					</row>
+					<row>
+						<entry>Õ</entry>
+						<entry>229</entry>
+						<entry></entry>
+						<entry>Ø</entry>
+						<entry>157</entry>
+						<entry></entry>
+						<entry>ü</entry>
+						<entry>129</entry>
+						<entry></entry>
+						<entry>û</entry>
+						<entry>150</entry>
+					</row>
+					<row>
+						<entry>ù</entry>
+						<entry>151</entry>
+						<entry></entry>
+						<entry>ú</entry>
+						<entry>163</entry>
+						<entry></entry>
+						<entry>Ü</entry>
+						<entry>154</entry>
+						<entry></entry>
+						<entry>Ú</entry>
+						<entry>233</entry>
+					</row>
+					<row>
+						<entry>Û</entry>
+						<entry>234</entry>
+						<entry></entry>
+						<entry>Ù</entry>
+						<entry>235</entry>
+						<entry></entry>
+						<entry>ÿ</entry>
+						<entry>152</entry>
+						<entry></entry>
+						<entry>ý</entry>
+						<entry>236</entry>
+					</row>
+					<row>
+						<entry>Ý</entry>
+						<entry>237</entry>
+						<entry></entry>
+						<entry>æ</entry>
+						<entry>145</entry>
+						<entry></entry>
+						<entry>Æ</entry>
+						<entry>146</entry>
+						<entry></entry>
+						<entry>ß</entry>
+						<entry>225</entry>
+					</row>
+					<row>
+						<entry>µ</entry>
+						<entry>230</entry>
+						<entry></entry>
+						<entry>þ</entry>
+						<entry>231</entry>
+						<entry></entry>
+						<entry>Þ</entry>
+						<entry>232</entry>
+						<entry></entry>
+						<entry>£</entry>
+						<entry>156</entry>
+					</row>
+					<row>
+						<entry>ƒ</entry>
+						<entry>159</entry>
+						<entry></entry>
+						<entry>¢</entry>
+						<entry>189</entry>
+						<entry></entry>
+						<entry>¥</entry>
+						<entry>190</entry>
+						<entry></entry>
+						<entry>©</entry>
+						<entry>184­­</entry>
+					</row>
+					<row>
+						<entry>®</entry>
+						<entry>169</entry>
+						<entry></entry>
+						<entry>×</entry>
+						<entry>158</entry>
+						<entry></entry>
+						<entry>¿</entry>
+						<entry>168</entry>
+						<entry></entry>
+						<entry>¬</entry>
+						<entry>170</entry>
+					</row>
+					<row>
+						<entry>¡</entry>
+						<entry>173</entry>
+						<entry></entry>
+						<entry>«</entry>
+						<entry>174</entry>
+						<entry></entry>
+						<entry>»</entry>
+						<entry>175</entry>
+						<entry></entry>
+						<entry>¤</entry>
+						<entry>207</entry>
+					</row>
+					<row>
+						<entry>¦</entry>
+						<entry>221</entry>
+						<entry></entry>
+						<entry>¯</entry>
+						<entry>238</entry>
+						<entry></entry>
+						<entry>´</entry>
+						<entry>239</entry>
+						<entry></entry>
+						<entry>±</entry>
+						<entry>241</entry>
+					</row>
+					<row>
+						<entry>¶</entry>
+						<entry>244</entry>
+						<entry></entry>
+						<entry>§</entry>
+						<entry>245</entry>
+						<entry></entry>
+						<entry>÷</entry>
+						<entry>246</entry>
+						<entry></entry>
+						<entry>¸</entry>
+						<entry>247</entry>
+					</row>
+					<row>
+						<entry>¨</entry>
+						<entry>249</entry>
+						<entry></entry>
+						<entry>·</entry>
+						<entry>250</entry>
+						<entry></entry>
+						<entry>°</entry>
+						<entry>248</entry>
+						<entry></entry>
+						<entry>¹</entry>
+						<entry>251</entry>
+					</row>
+					<row>
+						<entry>²</entry>
+						<entry>253</entry>
+						<entry></entry>
+						<entry>³</entry>
+						<entry>252</entry>
+						<entry></entry>
+						<entry>½</entry>
+						<entry>171</entry>
+						<entry></entry>
+						<entry>¼</entry>
+						<entry>172</entry>
+					</row>
+					<row>
+						<entry>¾</entry>
+						<entry>243</entry>
+						<entry></entry>
+						<entry>ª</entry>
+						<entry>166</entry>
+						<entry></entry>
+						<entry>º</entry>
+						<entry>167</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+	<section>
+		<title>Keyboard Entry of Unicode Characters</title>
+		<para>This method also works only if your keyboard has a numeric keypad.</para>
+		<para>A registry setting is required. If you do not know what the registry is, or
+		don't feel comforable making registry changes, then don't use this method.</para>
+		<para>Start regedit or regedt32. Under HKEY_Current_User/Control Panel/Input Method,
+		set EnableHexNumPad to "1". If you must add this entry, set the type to "REG_SZ".
+		Restart your computer.</para>
+		<para>To enter characters, press and hold the Alt key, then press the "+" key on the
+		numeric keypad, enter the Unicode character's hex code, then release the Alt key.
+		The character is displayed after you release the Alt key. For example, the code
+		"00bf" results in the character "¿". See 
+		<link xlink:href='http://unicode.org/charts/'>Unicode Map</link> for a map of all Unicode
+		characters and their codes.</para>
+	</section>
+</appendix>
