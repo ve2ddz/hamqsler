@@ -25,7 +25,7 @@
 		code has been entered, release the Alt key. The characters
 		and their corresponding codes are listed in the table below.</para>
 		<table frame='all'>
-			<title>Card Design Context Menu Items and Actions</title>
+			<title>Extended ASCII Characters and Their Codes</title>
 			<tgroup cols='11' align='left' colsep='1' rowsep='1'>
 				<colspec colname='Char1'/>
 				<colspec colname='Code1' />
@@ -375,11 +375,39 @@
 		<para>Start regedit or regedt32. Under HKEY_Current_User/Control Panel/Input Method,
 		set EnableHexNumPad to "1". If you must add this entry, set the type to "REG_SZ".
 		Restart your computer.</para>
-		<para>To enter characters, press and hold the Alt key, then press the "+" key on the
+		<para>To enter characters, press and hold the Alt key, press the "+" key on the
 		numeric keypad, enter the Unicode character's hex code, then release the Alt key.
 		The character is displayed after you release the Alt key. For example, the code
 		"00bf" results in the character "¿". See 
-		<link xlink:href='http://unicode.org/charts/'>Unicode Map</link> for a map of all Unicode
+		[<link xlink:href='http://unicode.org/charts/'></link>] for a map of all Unicode
 		characters and their codes.</para>
+	</section>
+	<section>
+		<title>Character Map Utility</title>
+		<para>Microsoft Windows comes with a utility called Character Map that allows
+		the user to select characters that are not available directly from the keyboard.
+		Character Map may be started from All Programs -> Accessories -> System Tools -> 
+		Character Map in the Start Menu.
+		See [<link xlink:href='http://symbolcodes.tlt.psu.edu/accents/charmap.html'></link>]
+		for information on how to use Character Map.</para>
+		<caution>
+			<para>If you use Character Map to input a character that is not in the same
+			font face as the text you are entering the character into, then a different or
+			no character may be displayed.</para>
+		</caution>
+		<caution>
+			<para>If you enter a special character into a text item and then change the
+			font face for the text item, a different character may be displayed.</para>
+		</caution>
+	</section>
+	<section>
+		<title>Other Utilities</title>
+		<para>Links to other free character utilities are provided below.</para>
+		<itemizedlist>
+			<listitem>
+				<para><link xlink:href='http://sourceforge.net/projects/allchars/'>AllChars</link>
+				</para>
+			</listitem>
+		</itemizedlist>
 	</section>
 </appendix>
