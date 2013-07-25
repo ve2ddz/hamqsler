@@ -618,7 +618,7 @@
 			<table frame='all'>
 				<title>Print Preview Toolbar Controls and What They Do</title>
 				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
-					<colspec colname="Control"/>
+					<colspec colname="Control" colwidth='70pt'/>
 					<colspec colname="Description"/>
 					<thead>
 						<row>
@@ -760,8 +760,8 @@
 		<table frame='all'>
 			<title>JPEG Quality Versus File Size</title>
 			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
-				<colspec colname="Quality"/>
-				<colspec colname="FileSize"/>
+				<colspec colname="Quality" colwidth='75pt'/>
+				<colspec colname="FileSize" colwidth='75pt'/>
 				<thead>
 					<row>
 						<entry namest='Quality'>Quality</entry>

@@ -817,8 +817,8 @@
 			<table frame='all'>
 				<title>Send Via Column Values</title>
 				<tgroup cols='2' align='center' colsep='1' rowsep='1'>
-					<colspec colname='QSL_SENT_VIA' />
-					<colspec colname='Send Via Value' />
+					<colspec colname='QSL_SENT_VIA' colwidth='100 pt'/>
+					<colspec colname='Send Via Value' colwidth='100 pt'/>
 					<thead>
 					<row>
 						<entry namest='QSL_SENT_VIA'>QSL_SENT_VIA</entry>

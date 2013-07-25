@@ -217,8 +217,8 @@
 				<table frame='all' xml:id='QslRcvd'>
 				<title>QSL Rcvd Values and Meanings</title>
 				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
-					<colspec colname='Values' />
-					<colspec colname='ADIFValues'/>
+					<colspec colname='Values' colwidth='60'/>
+					<colspec colname='ADIFValues' colwidth='150'/>
 					<colspec colname='Meanings' />
 					<thead>
 					<row>
@@ -261,8 +261,8 @@
 			<table frame='all' xml:id='QslSent'>
 				<title>QSL Sent Values and Meanings</title>
 				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
-					<colspec colname='Values' />
-					<colspec colname='ADIFValues'/>
+					<colspec colname='Values' colwidth='60'/>
+					<colspec colname='ADIFValues' colwidth='150'/>
 					<colspec colname='Meanings' />
 					<thead>
 					<row>
@@ -303,8 +303,8 @@
 			<table frame='all' xml:id='QslSentVia'>
 				<title>QSL Sent Via Values and Meanings</title>
 				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
-					<colspec colname='Values' />
-					<colspec colname='ADIFValues'/>
+					<colspec colname='Values' colwidth='60'/>
+					<colspec colname='ADIFValues' colwidth='160'/>
 					<colspec colname='Meanings' />
 					<thead>
 					<row>
@@ -395,7 +395,7 @@
 			<table frame='all'>
 				<title>ADIF File List For Reloading - Menu Items and Actions</title>
 				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
-					<colspec colname='MenuItem' />
+					<colspec colname='MenuItem' colwidth='70pt'/>
 					<colspec colname='Action'/>
 					<thead>
 					<row>
@@ -453,7 +453,7 @@
 			<table frame='all'>
 				<title>QSOs Panel Columns</title>
 				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
-					<colspec colname='ColumnHeading' />
+					<colspec colname='ColumnHeading' colwidth='85pt'/>
 					<colspec colname='ContentsOrMeaning'/>
 					<thead>
 					<row>

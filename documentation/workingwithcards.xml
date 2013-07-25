@@ -306,7 +306,7 @@
 			<table frame='all'>
 				<title>Card Design Context Menu Items and Actions</title>
 				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
-					<colspec colname='MenuItem' />
+					<colspec colname='MenuItem' colwidth='125pt'/>
 					<colspec colname='Action'/>
 					<thead>
 					<row>
@@ -377,7 +377,7 @@
 			<table frame='all'>
 				<title>Card Design Related Edit Dropdown Menu Items and Actions</title>
 				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
-					<colspec colname='MenuItem' />
+					<colspec colname='MenuItem' colwidth='125pt'/>
 					<colspec colname='Action'/>
 					<thead>
 					<row>
@@ -444,7 +444,7 @@
 			<table frame='all'>
 				<title>Card Design Related Select Dropdown Menu Items and Actions</title>
 				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
-					<colspec colname='MenuItem' />
+					<colspec colname='MenuItem' colwidth='125pt'/>
 					<colspec colname='Action'/>
 					<thead>
 					<row>
