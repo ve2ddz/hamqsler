@@ -34,6 +34,8 @@ namespace hamqsler
 	/// </summary>
 	public partial class CardTabItem : TabItem
 	{
+		System.Windows.Forms.ColorDialog cDialog = new System.Windows.Forms.ColorDialog();
+		
 		private static int BEEPFREQUENCY = 800;		// Hz
 		private static int BEEPDURATION = 200;		// ms
 		
@@ -251,7 +253,6 @@ namespace hamqsler
 		private Color GetColorFromColorDialog(SolidColorBrush brush)
 		{
 			// create and display a ColorDialog
-			System.Windows.Forms.ColorDialog cDialog = new System.Windows.Forms.ColorDialog();
 			cDialog.Color = System.Drawing.Color.FromArgb(brush.Color.A, brush.Color.R,
 			                                              brush.Color.G, brush.Color.B);
 			Color c = brush.Color;
