@@ -18,15 +18,15 @@
 	</section>
 	<section xml:id="splashscreen">
 		<title>The HamQSLer Splash Screen</title>
-		<para>When the HamQSLer program starts, it performs a number
+		<para>When <literal>HamQSLer</literal> starts, it performs a number
 		of functions:</para>
-		<orderedlist numeration="arabic">
+		<orderedlist spacing='compact' numeration="arabic">
 			<listitem>
 				<para>Displays the splash screen;</para>
 				</listitem>
 			<listitem>
 				<para>Performs a number of initialization steps
-			including initializing the HamQSLer directory and its
+			including initializing the <literal>HamQSLer</literal> directory and its
 			contents, creating the user preferences if it doesn't 
 			exist, and checking if a new version of the program or
 			data files are available.</para>
@@ -36,7 +36,7 @@
 				program window.</para>
 			</listitem>
 		</orderedlist>
-		<para>The first time that you execute HamQSLer, the splash
+		<para>The first time that you execute <literal>HamQSLer</literal>, the splash
 		screen will look similar to this:</para>
 		<figure xml:id="firstsplashscreen">
 			<title>Splash Screen First Time HamQSLer Started</title>
@@ -49,13 +49,14 @@
 		<para>There may be one or more additional messages, but as long
 		as the Continue button is displayed you may click that to
 		continue on to see what the <link linkend="mainprogramwindow">
-		main program window</link> looks like.</para>
+		<emphasis role='underline'>main program window</emphasis></link> looks like.</para>
 		<para>If only a Terminate button is visible, a non-recoverable
 		error has occurred and this must be corrected before you can
 		go any further. If you cannot determine the cause or solution
 		of the problem from the messages displayed on the splash
 		screen, see the <link linkend="programinit">
-		Program Initialization and the Splash Screen</link> chapter.</para>
+		<emphasis role='underline'>Program Initialization and the Splash 
+		Screen</emphasis></link> chapter.</para>
 	</section>
 	<section xml:id="mainprogramwindow">
 		<title>HamQSLer Main Program Window</title>
@@ -70,7 +71,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>The first time that you start HamQSLer, only the QSOs 
+		<para>The first time that you start <literal>HamQSLer</literal>, only the QSOs 
 		function tab
 		will be shown. After you have created one or more cards, and
 		depending on certain user preferences, there may be an additional
@@ -85,12 +86,20 @@
 		combination of QSL bureau and manager or callsign. There are
 		four QSOs filters tab, each of which contain filters
 		for selecting QSOs. The four filters are:</para>
-		<simplelist>
-			<member>mode</member>
-			<member>band</member>
-			<member>date and time</member>
-			<member>QSL statuses</member>
-		</simplelist>
+		<itemizedlist spacing='compact'>
+			<listitem>
+				<para>mode</para>
+			</listitem>
+			<listitem>
+				<para>band</para>
+			</listitem>
+			<listitem>
+				<para>date and time</para>
+			</listitem>
+			<listitem>
+				<para>QSL statuses</para>
+			</listitem>
+		</itemizedlist>
 		<figure xml:id="qsospanel">
 			<title>QSOs Panel</title>
 			<mediaobject>
@@ -142,7 +151,7 @@
 			<title>Select the Default Text Font</title>
 			<para>Click on the triangle to the left of "TextItems", or
 			double-click on the "TextItems" text 
-			to open the expander. Now click on "Default Text Font to
+			to open the expander. Now click on "Default Text Font" to
 			display the Default Text Font panel.
 			See the image below.</para>
 			<figure xml:id="defaulttextfont">
@@ -188,10 +197,9 @@
 		<section>
 			<title>Set Your Name and QTH</title>
 			<para>Click on "Name and QTH Text" under the Text Items
-			expander to display the Name and QTH item panel. In that
-			panel, click on My Name and QTH to open that expander. The
-			expander contains a text editing field containing the text
-			"My Name and QTH". Change this text to your name and mailing
+			expander to display the Name and QTH item panel. The
+			panel contains a text editing field containing the text
+			"MyQth". Change this text to your name and mailing
 			address, using the Return key at the end of all except the
 			last line. Again, do not click the Macros button.</para>
 			<para>The image below shows what you would see at this
@@ -207,8 +215,8 @@
 		</section>
 		<section>
 			<title>Set Salutation</title>
-			<para>Click on the Salutation Text item under the TextItems
-			expander to display the Salution panel. This panel contains
+			<para>Click on the "Salutation Text" item under the TextItems
+			expander to display the Salutation panel. This panel contains
 			only the Macros button. Click on this button to open the 
 			Text and Macros dialog. The dialog should
 			look like this:</para>
@@ -230,7 +238,8 @@
 			here because we will discuss it later while we design
 			a sample card. Click the Close button to close the dialog.</para>
 			<para>Macros are discussed in the 
-			<link linkend="macros">Macros</link> chapter.</para>
+			<link linkend="macros"><emphasis role='underline'>Macros</emphasis></link>
+			chapter.</para>
 		</section>
 		<section>
 			<title>Select the Default QSOs Box Font</title>
@@ -240,8 +249,10 @@
 			Select the font to display QSO information in; this font
 			may be the same or different than the default text font.</para>
 			<para>All user preferences are discussed in the 
-			<link linkend="settinguserprefs">Setting
-			User Preferences</link> chapter.</para>
+			<link linkend="settinguserprefs"><emphasis role='underline'>Setting
+			User Preferences</emphasis></link> chapter.</para>
+			<para>Click on the OK button to save the changes and to close
+			the dialog.</para>
 			<para>Now that we have set a number of user preferences, it
 			is time to design your first card.</para>
 		</section>
@@ -279,7 +290,7 @@
 			text items and QSOs Box. Each item in turn is surrounded
 			by an orange dashed rectangle. This indicates the card item
 			that can be selected. With the mouse cursor over the card and
-			not one of the text items or QSOs Box, click the 
+			not one of the text items or Qsos Box, click the 
 			<keycombo action="click">
 				<mousebutton>right mouse button</mousebutton>
 			</keycombo> 
@@ -320,7 +331,7 @@
 			the menu items are labeled "Image". 
 			The menu items for text items are labeled with the
 			first ten characters of the text. There is also a menu item
-			with the label "Qsos Box" to allow selection of the QSOs
+			with the label "Qsos Box" to allow selection of the Qsos
 			Box.</para>
 			<para>The final menu item in the Select dropdown menu,
 			labeled "None" is used to deselect the selected card item.</para>
@@ -363,13 +374,17 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>The dialog opens in the hamqsler directory in your
-			documents directory ("My Documents"). The actual directory
+			<para>The dialog opens in the <filename class='directory'>hamqsler</filename>
+			directory in your
+			documents directory (<filename class='directory'>My Documents</filename>). 
+			The actual directory
 			is determined by a user preferences setting; see the 
-			<link linkend="settinguserprefs">User Preferences chapter</link> for more 
+			<link linkend="settinguserprefs"><emphasis role='underline'>User 
+			Preferences</emphasis></link> chapter for more 
 			information.</para>
-			<para>Navigate to the Samples directory and select the
-			sample.jpg file. The program's main window will now look
+			<para>Navigate to the <filename role='directory'>Samples</filename> directory 
+			and select the <filename>sample.jpg</filename>
+			file. The program's main window will now look
 			like this:</para>
 			<figure xml:id="backgroundimageoncard">
 				<title>Main Window With Background Image Added to Card</title>
@@ -393,7 +408,7 @@
 				</imageobject>
 			</inlinemediaobject>
 			unless
-			you are using a custom set of mouse cursors). This is the
+			you are using a custom set of mouse cursors. This is the
 			move cursor. Press and hold the left mouse button and drag
 			the mouse around the screen to move background image.</para>
 			<para>To change the size of the image, release the
@@ -422,7 +437,7 @@
 		</section>
 		<section>
 			<title>Setting Text Items</title>
-			<para>Deselect the background image using either the deselect
+			<para>Deselect the background image using either the
 			context menu or Select dropdown menu. Select the callsign
 			text item. The text item properties panel, shown below,
 			 will now be displayed in the properties panel.</para>
@@ -453,9 +468,8 @@
 			font sizes (in points). 48 is the default value for callsigns.
 			You can select any of the sizes
 			directly from the list, or edit the size box to enter any
-			size that you want. When editing the value, use "." 
-			as the decimal separator. Try entering a character other than
-			a number or ".". Note the beep emitted by your computer to
+			size that you want. Try entering a character other than
+			a number, ".", or ",". Note the beep emitted by your computer to
 			indicate that you entered an invalid character. Now select 
 			the font size that you want.</para>
 			<para>The color button (the button with the black rectangle)
@@ -510,10 +524,10 @@
 			button.</para>
 			<para>Deselect the callsign text and select the text with
 			your name and QTH. Change the color of the text to the same
-			orange color as the callsign. Adjust the postion of the
+			orange color as the callsign. Adjust the position of the
 			text so that the top of the top line of the text is in
 			line with the top of the callsign text. Position the text
-			so that it is to the right of the callsign.Deselect the 
+			so that it is to the right of the callsign. Deselect the 
 			text item.</para>
 			<para>Now look at the salutation text on the card. Note
 			the text is "Thanks for the QSO$. 73, ". The "$" character
@@ -551,9 +565,11 @@
 			display
 			"$" on the card in design mode. Each of these values, and
 			the condition may be modified. See the 
-			<link linkend="macros">Macros chapter</link> for
+			<link linkend="macros"><emphasis role='underline'>Macros</emphasis></link>
+			chapter for
 			more information. We will not make any changes to the
-			count macro or its text in this tutorial.</para>
+			count macro or its text in this tutorial, so click the Close button to
+			close the dialog.</para>
 			<para>Change the color of the text to the same orange color
 			as the other text items, and make any adjustments to the
 			position of the text that you would like. Deselect the salutation
@@ -591,8 +607,8 @@
 			each column header, and the text that is displayed in the 
 			QSL column, not yet shown on the card) is determined by 
 			user preferences and is fixed when the card is first created.
-			See the <link linkend="settinguserprefs">User 
-			Preferences</link> chapter for details on setting these
+			See the <link linkend="settinguserprefs"><emphasis role='underline'>User 
+			Preferences</emphasis></link> chapter for details on setting these
 			values.</para>
 			<section>
 				<title>Setting QSOs and Fields Properties</title>
@@ -613,7 +629,7 @@
 				Qsos Box displays a band column or a frequency column. Click
 				the "Show Freq Column" button. 
 				Note that the Band column header
-				has changed to MHz and that the size of the various columns
+				has changed to "MHz" and that the size of the various columns
 				have adjusted themselves.</para>
 				<para>What happens if you select the Band radio button but
 				your logging program only logs frequency? When the ADIF file
@@ -645,13 +661,19 @@
 				with this tutorial.</para>
 				<para>The Date Format dropdown box contains three values:
 				</para>
-				<simplelist type="vert">
-					<member>YYYY-MM-DD</member>
-					<member>DD-MMM-YY</member>
-					<member>DD-MM-YY</member>
-				</simplelist>
+				<itemizedlist spacing='compact'>
+					<listitem>
+						<para>YYYY-MM-DD</para>
+					</listitem>
+					<listitem>
+						<para>DD-MMM-YY</para>
+					</listitem>
+					<listitem>
+						<para>DD-MM-YY</para>
+					</listitem>
+				</itemizedlist>
 				<para>The value selected determines both the text that is
-				displayed in the date column, and the format of the date printed
+				displayed in the date column header, and the format of the date printed
 				for each QSO. Change to a different value to see the effect on
 				the Qsos Box. Finally, set this value to YYYY-MM-DD for this
 				tutorial.</para>
@@ -673,8 +695,7 @@
 				the color of the manager in the confirming text. Set the
 				line and text color to orange (red=255, green=128, blue=0),
 				and set the manager color to green (red=0, green=255,
-				blue=0). The orange text is a bit hard to read but we will
-				fix that in a moment.</para>
+				blue=0).</para>
 				<para>The Font Size dropdown box contains values between
 				5.0 and 9.0. This sets the size of the font in the QSOs
 				Box. Try different values. For the 2 QSOs that we have set
@@ -685,7 +706,7 @@
 				<para>The Font dropdown box allows you to select the font
 				that the text in the Qsos Box is displayed and printed in.
 				The initial font selected in the dropdown box is the font
-				that you specified as the default QSOs Box font in the
+				that you specified as the default Qsos Box font in the
 				User Preferences earlier.
 				Select a few different fonts and notice how the height of
 				the Qsos Box changes. The actual height of a line of text
@@ -703,13 +724,12 @@
 				background of the Qsos Box. Note that the background color
 				of the QSOs Box is now your selected color.</para>
 				<para>The opacity slider adjusts the opacity 
-				(1 - transparency) of the background. Adjust the slider to
+				of the background. Adjust the slider to
 				select values between 0 and 100% to see the effect on the
 				Qsos Box.</para>
 				<para>When you have finished playing, set the color to black
 				(red=0, green=0, blue=0), and set the opacity to 30%. Note
-				that the orange text in the Qsos Box is now much more visible,
-				and that a considerable amount of the detail in the 
+				that a considerable amount of the detail in the 
 				background image shows through.</para>
 			</section>
 			<section>
@@ -763,12 +783,15 @@
 						</imageobject>
 					</mediaobject>
 				</figure>
-				<para>Note that the dialog opens in the hamqsler directory.
-				Select the Samples directory; enter the file name
-				"sample" in the Name edit box near the top of the dialog,
+				<para>Note that the dialog opens in the 
+				<filename class='directory'>hamqsler</filename>
+				directory.
+				Select the <filename class='directory'>Samples</filename>
+				directory; enter the file name
+				<filename>sample</filename> in the Name edit box near the top of the dialog,
 				and click the Save button. The card will be saved with
-				the name "sample.xq1".</para>
-				<para>The text on the tab will in the main window will
+				the name <filename>sample.xq1</filename>.</para>
+				<para>The text on the tab in the main window will
 				change from "New Card*" to "sample.xq1".</para>
 				<para>In the future, this card may be opened using the
 				Open Card... menu item in the Cards dropdown menu.</para>
@@ -781,8 +804,9 @@
 		<title>Selecting QSOs to Print on the Card</title>
 		<para>Click on the QSOs tab. Select Import QSOs... from the 
 		QSOs dropdown menu. This opens the File Open dialog in the
-		hamqsler directory. Select the Samples directory, and open
-		the file "sample.adi". The program main window should look
+		<filename class='directory'>hamqsler</filename> directory. 
+		Select the <filename class='directory'>Samples</filename> directory, and open
+		the file <filename>sample.adi</filename>. The program main window should look
 		like this:</para>
 		<figure xml:id="sampleqsosloaded">
 			<title>Sample QSOs Loaded</title>
@@ -892,10 +916,10 @@
 				</mediaobject>
 			</figure>
 			
-			<para>Deselect the CW checkbox. All QSOs in the CW mode are
+			<para>Uncheck the CW checkbox. All QSOs in the CW mode are
 			deselected. Reselect the CW mode checkbox. Again all QSOs
 			except the QSO on 40m are selected.</para>
-			<para>Leave all modes selected.</para>
+			<para>Leave all modes checked.</para>
 		</section>
 		<section>
 			<title>Selecting QSOs by Date and Time</title>
@@ -913,9 +937,9 @@
 			time of the earliest QSO in the QSOs panel. The end date
 			and time correspond to the date and time of the latest QSO.
 			Change the start date to "20021201". Note that the QSOs whose
-			start date occur before this date are now deselected. Similarly, 
+			start date occur before this date are now unchecked. Similarly, 
 			you could change
-			the start time and the end date and time to deselect other
+			the start time and the end date and time to uncheck other
 			QSOs.</para>
 			<para>Now click the Reset button. The start and end dates
 			are reset to the dates and times of the earliest and latest
@@ -947,10 +971,11 @@
 			you want at this time.</para>
 			<para>It is also possible to check and uncheck all QSOs at
 			once or multiple QSOs at a time. That is covered in the 
-			chapter titled <link linkend="workingwithqsos">Working With
-			QSOs</link>.</para>
+			chapter titled 
+			<link linkend="workingwithqsos"><emphasis role='underline'>Working
+			With QSOs</emphasis></link>.</para>
 			<para>Before proceeding, make sure that only the third QSO
-			is deselected.</para>
+			is unchecked.</para>
 		</section>
 	</section>
 	<section>
@@ -968,18 +993,19 @@
 			for this printer.</para>
 			<para>The print properties are also set to the defaults set in
 			User Preferences. These values control how the cards are printed.
-			If the Print Inside Printer Margins checkbox is checked and
-			disabled, and the Set Card Margins to Printer Margins checkbox
+			If the "Print Inside Printer Margins" checkbox is checked and
+			disabled, and the "Set Card Margins to Printer Margins" checkbox
 			is unchecked and disabled, then the minimum printer margins for
 			the selected printer has one or more margins that exceeds ¼ inch
 			or 6.35 mm. Printer margins and the reasons for forcing printing
 			inside the printer margins are discussed in the 
-			<link linkend="outputtingcards">Outputting Cards</link> chapter</para>
+			<link linkend="outputtingcards"><emphasis role='underline'>Outputting 
+			Cards</emphasis></link> chapter</para>
 			<para>There are two checkboxes that affect the card in display mode as
 			well as print mode:</para>
-			<itemizedlist>
+			<itemizedlist spacing='compact'>
 				<listitem>
-					<para>Print Card Outlines checkbox determines whether a black line
+					<para>"Print Card Outlines" checkbox determines whether a black line
 					is drawn around the outside of the card. This helps to determine
 					where the card edges are when you cut the cards out of the
 					cardstock. Check this box; note that a line is drawn around
@@ -987,7 +1013,7 @@
 					</para>
 				</listitem>
 				<listitem>
-					<para>Set Card Margins to Printer Margins checkbox determines
+					<para>"Set Card Margins to Printer Margins" checkbox determines
 					whether card contents are printed with a margin inside the card
 					edges or card contents are printed to the edges of each card.
 					If you select a card layout on your cardstock such that one or
@@ -1005,9 +1031,9 @@
 				</listitem>
 			</itemizedlist>
 			<para>The other two checkboxes only affect the card when printed:</para>
-			<itemizedlist>
+			<itemizedlist spacing='compact'>
 				<listitem>
-					<para>Print Inside Card Margins checkbox determines whether you
+					<para>"Print Inside Card Margins" checkbox determines whether you
 					can place cards up to the edges of your cardstock. When this
 					checkbox is checked, the cards are placed to ensure that their
 					edges are inside the printer's page margins; when not checked,
@@ -1015,8 +1041,8 @@
 					</para>
 				</listitem>
 				<listitem>
-					<para>Fill Last Page With Blank Cards checkbox determines if the
-					last card will be filled with cards with no QSO information
+					<para>"Fill Last Page With Blank Cards" checkbox determines if the
+					last sheet of cardstock will be filled with cards with no QSO information
 					printed in the QSOs Box. In many cases, the number of cards
 					being printed is not evenly divisible by the number of cards
 					that are printed on each page. This wastes cardstock. In
@@ -1043,18 +1069,18 @@
 			<para>As you can see, the printer properties and print properties are
 			displayed again. The settings in this dialog match the settings for
 			the card. This is your last chance to make changes before printing.</para>
-			<para>Check the Print Card Outlines and Fill Last Page With Blank Cards
+			<para>Check the "Print Card Outlines" and "Fill Last Page With Blank Cards"
 			checkboxes.</para>
 			<para>The third group box on the dialog is the cards layout group box.
 			This box shows various card layouts on the cardstock. The white rectangles
 			surrounded by blue lines represent the cards, with the cardstock
 			shown in pink. If you change paper size and check or uncheck the 
-			Print Inside Printer Margins checkbox, the cars layouts will change.
+			"Print Inside Printer Margins" checkbox, the cards layouts will change.
 			In some cases these changes are subtle and in other cases the number
 			of cards that can be printed per page changes.</para>
 			<para>For this tutorial, make sure that the paper size is set to either
-			Letter or A4 size. The Print Card Outlines and Fill Last Page With
-			Blank Cards checkboxes should also be checked. Click on the radio button at
+			Letter or A4 size. The "Print Card Outlines" and "Fill Last Page With
+			Blank Cards" checkboxes should also be checked. Click on the radio button at
 			the right of the first row of card layouts. Now click on the Preview
 			button at the bottom of the dialog. This will create a print preview
 			of the cards as shown in the image below.</para>
@@ -1077,16 +1103,32 @@
 			</figure>
 			<para>The buttons
 			on this toolbar from left to right are as follows:</para>
-			<simplelist>
-				<member>Print the pages.</member>
-				<member>Set zoom factor.</member>
-				<member>Display one page.</member>
-				<member>Display two pages.</member>
-				<member>Display three pages.</member>
-				<member>Display four pages.</member>
-				<member>Display six pages.</member>
-				<member>Close the dialog.</member>
-			</simplelist>
+			<itemizedlist spacing='compact'>
+				<listitem>
+					<para>Print the pages.</para>
+				</listitem>
+				<listitem>
+					<para>Set zoom factor.</para>
+				</listitem>
+				<listitem>
+					<para>Display one page.</para>
+				</listitem>
+				<listitem>
+					<para>Display two pages.</para>
+				</listitem>
+				<listitem>
+					<para>Display three pages.</para>
+				</listitem>
+				<listitem>
+					<para>Display four pages.</para>
+				</listitem>
+				<listitem>
+					<para>Display six pages.</para>
+				</listitem>
+				<listitem>
+					<para>Close the dialog.</para>
+				</listitem>
+			</itemizedlist>
 			<para>There is a spin box at the top right of the dialog that allows
 			you to scroll through the various pages.</para>
 			<para>Press the Display two pages button so that the dialog looks
@@ -1102,8 +1144,9 @@
 			the salutation text is "Thanks for the QSO. 73,". On the
 			card with two QSOs the texts are "Confirming 2-Way QSOs
 			with..." and "Thanks for the QSOs. 73,". The inclusion and
-			exclusion of the "s" on "QSO" is controlled by a Count Macro.
-			See <link linkend="macros">Macros</link> for more information.
+			exclusion of the "s" on "QSO" is controlled by a Count Macro. See the
+			<link linkend="macros"><emphasis role='underline'>Macros</emphasis></link>
+			chapter for more information.
 			</para>
 			<para>Now view the second page of cards. The first card is 
 			for the QSO with CG3JNO, and the last two cards contain a
@@ -1119,8 +1162,8 @@
 			cards would be printed in the middle of the cardstock; the offset
 			in Print Preview is caused by the print processing in .Net.
 			More information about printing is included in the 
-			<link linkend="outputtingcards">Outputting
-			Cards</link> chapter.</para>
+			<link linkend="outputtingcards"><emphasis role='underline'>Outputting
+			Cards</emphasis></link> chapter.</para>
 			<para>Close the print preview dialog. Go back and try the
 			various print options settings combinations to see the effect
 			that each setting has.</para>
@@ -1128,11 +1171,11 @@
 		<section>
 			<title>Concluding the Tutorial</title>
 			<para>You have now concluded this tutorial, but you have
-			only scratched the surface of the capabilities of HamQSLer.
+			only scratched the surface of the capabilities of<literal>HamQSLer</literal>.
 			Be sure to read the remaining chapters in this user
 			manual as they contain more information on every aspect of
 			the program and also contain many helpful hints and suggestions
-			to get the most out of HamQSLer.</para>
+			to get the most out of <literal>HamQSLer</literal>.</para>
 		</section>
 	</section>
 </chapter>

@@ -4,9 +4,9 @@
 	<title>Introduction</title>
 	<section>
 		<title>HamQSLer</title>
-	<para>HamQSLer is a program for 
+	<para><literal>HamQSLer</literal> is a program for 
 	designing and printing amateur
-	radio QSL cards. HamQSLer is the most 
+	radio QSL cards. <literal>HamQSLer</literal> is the most 
 	feature rich QSL design
 	and print program available today. Its capabilities include:
 	</para>
@@ -36,7 +36,7 @@
 			<para>name and QTH; and,</para>
         </listitem>
         <listitem>
-			<para>salutation</para>
+			<para>salutation;</para>
 		</listitem>
         </itemizedlist>
     </listitem>
@@ -47,19 +47,19 @@
 		<para>Macros that can be inserted into text fields;</para>
 	</listitem>
     <listitem>
-		<para>Variable number of QSOs in the QSOs box;</para>
+		<para>Variable number of QSOs in the Qsos box;</para>
     </listitem>
     <listitem>
-		<para>Choice of date formats in the QSOs box;</para>
+		<para>Choice of date formats in the Qsos box;</para>
     </listitem>
     <listitem>
-		<para>Choice of printing bands or frequencies in the QSOs box;</para>
+		<para>Choice of printing bands or frequencies in the Qsos box;</para>
     </listitem>
     <listitem>
-		<para>Choice of including or not including a QSL column in the QSOs box;</para>
+		<para>Choice of including or not including a QSL column in the Qsos box;</para>
     </listitem>
     <listitem>
-		<para>User settable defaults for the QSOs box:</para>
+		<para>User settable defaults for the Qsos box:</para>
 		<itemizedlist spacing="compact" mark="opencircle">
 			<listitem>
 				<para>confirmation text;</para>
@@ -75,7 +75,7 @@
 				<para>text placed in QSL column; and,</para>
 			</listitem>
 			<listitem>
-				<para>font used to print the QSOs box text.</para>
+				<para>font used to print the QSOs box text;</para>
 			</listitem>
 		</itemizedlist>
 	</listitem>
@@ -169,12 +169,12 @@
 
 		<tip>
 			<para>This is an example of a tip. Tips provide information 
-			on simplifying your use of QslDesignAndPrint, or provide 
+			on simplifying your use of <literal>HamQSLer</literal>, or provide 
 			information on how to get the most out of the program.</para>
 		</tip>
 		<caution>
 			<para>This is an example of a caution. Cautions provide 
-			information about traps and pitfalls in the use of HamQSLer.
+			information about traps and pitfalls in the use of <literal>HamQSLer</literal>.
 			</para>
 		</caution>
 	</section>
