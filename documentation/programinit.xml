@@ -5,16 +5,20 @@
 	<title>Program Initialization and the Splash Screen</title>
 	<section>
 		<title>Program Initialization</title>
-		<para>When HamQSLer starts, it performs a number of intialization steps. These steps are:</para>
-		<orderedlist>
+		<para>When <literal>HamQSLer</literal> starts, it performs a number of intialization 
+		steps. These steps are:</para>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Displays the splash screen.</para>
 			</listitem>
 			<listitem>
-				<para>Checks if the <emphasis>hamqsler</emphasis> directory and its subdirectories
+				<para>Checks if the <filename class='directory'>hamqsler</filename> directory 
+				and its subdirectories
 				exist and create them if they do not. Copies any initial files to the directories.
-				These files include sample.jpg and sample.adi that are needed in the 
-				<link linkend="gettingstarted">Getting Started</link> chapter.</para>
+				These files include <filename>sample.jpg</filename> and 
+				<filename>sample.adi</filename> that are needed in the
+				<link linkend="gettingstarted"><emphasis role='underline'>Getting
+				Started</emphasis></link> chapter.</para>
 			</listitem>
 			<listitem>
 				<para>Creates a new log file.</para>
@@ -34,8 +38,9 @@
 				informs the user if new versions are available.</para>
 				<tip>
 					<para>A setting is provided in user preferences to turn on or turn off checking for
-					new program and data file versions. See the <link linkend="settinguserprefs">
-					Setting User Preferences</link> chapter for more information.</para>
+					new program and data file versions. See the 
+					<link linkend="settinguserprefs"><emphasis role='underline'>Setting User
+					Preferences</emphasis></link> chapter for more information.</para>
 				</tip>
 			</listitem>
 			<listitem>
@@ -50,8 +55,10 @@
 		<para>Information about
 		what initialization is being performed, and any conditions that the user must
 		be informed of are displayed on the splash screen. For example, the splash screen shown
-		below is what the user would probably see the first time he starts HamQSLer. There are
-		messages informing the user that the hamqsler directories were created and files copied
+		below is what the user would probably see the first time he starts 
+		<literal>HamQSLer</literal>. There are
+		messages informing the user that the <filename class='directory'>hamqsler</filename>
+		directories were created and files copied
 		to them, and the User Preferences file was created because it could not be found.</para>
 		<figure xml:id="firstsplashscreen2">
 			<title>Splash Screen First Time HamQSLer Started</title>
@@ -67,7 +74,8 @@
 		that the program is checking for new program and data file versions. If new versions of files
 		are found, messages about the new files are displayed.</para>
 		<para>Once initialization has completed, if there is no information to be presented to the user,
-		then the HamQSLer main window opens and the splash screen closes. If there are messsages for
+		then the <literal>HamQSLer</literal> main window opens and the splash screen closes. 
+		If there are messages for
 		the user, then the splash screen is displayed, along with one or two buttons: Continue and
 		Terminate. The user must select one of these buttons before the program can continue. Obviously,
 		if the user clicks the Terminate button, then the program will terminate. This action would be
@@ -80,12 +88,14 @@
 				<term>Created hamqsler directories in and/or copied Samples 
 								files to your 'Documents' directory.</term>
 				<listitem>
-					<para>The <emphasis>hamqsler</emphasis> directory, one or more of its default 
+					<para>The <filename class='directory'>hamqsler</filename> directory, one or 
+					more of its default 
 					subdirectories, or the sample files were not found. The directories have been
 					created and/or the sample files have been copied. This message is most likely
-					to appear the first time that you start HamQSLer. If it appears later than
+					to appear the first time that you start <literal>HamQSLer</literal>. 
+					If it appears later than
 					the first execution of the program, then one or more of the files or directories
-					was deleted prior to starting HamQSLer.</para>
+					was deleted prior to starting <literal>HamQSLer</literal>.</para>
 					<para>The list of directories created and files copied is placed in the log file.
 					</para>
 				</listitem>
@@ -95,8 +105,9 @@
 							files to your 'Documents' directory</term>
 				<listitem>
 					<para>An error occurred while attempting to create the 
-					<emphasis>hamqsler</emphasis> directory, one of its subdirectories,
-					or while attempting to copy the Sample files. A MessageBox has
+					<filename class='directory'>hamqsler</filename> directory, 
+					one of its subdirectories,
+					or while attempting to copy the sample files. A MessageBox has
 					already been displayed to show the cause of the error.</para>
 				</listitem>
 			</varlistentry>
@@ -108,12 +119,14 @@
 					the log file. You must discuss this problem with the person who set up your
 					computer. For more information, see 
 					<link xlink:href="http://msdn.microsoft.com/en-us/library/33tceax8(v=vs.100).aspx">
-					Code Access Security Basics</link>.</para>
-					<para>As stated in the message, you may continue to use HamQSLer but no logging
+					<emphasis role='underline'>Code Access Security Basics</emphasis></link>.</para>
+					<para>As stated in the message, you may continue to use <literal>HamQSLer</literal>
+					but no logging
 					will be done. Realistically, if you receive this message, you will probably
-					encounter many other problems with HamQSLer. The only solution is to fix the
-					security settings problems; that topic is beyond the scope of HamQSLer and
-					this document.</para>
+					encounter many other problems with <literal>HamQSLer</literal>. 
+					The only solution is to fix the
+					security settings problems; that topic is beyond the scope of 
+					<literal>HamQSLer</literal> and this document.</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
@@ -122,7 +135,8 @@
 				<listitem>
 					<para>Access permissions for the log file prevent you from creating a
 					new log file. There could be several reasons for this, but the most
-					likely cause is that the log file or the <emphasis>Logs</emphasis>
+					likely cause is that the log file or the 
+					<filename class='directory'>Logs</filename>
 					directory have been set to be read-only.</para>
 				</listitem>
 			</varlistentry>
@@ -130,20 +144,20 @@
 				<term>Error occurred while attempting to access user
 					  preferences file. Preferences have been created.</term>
 				<listitem>
-					<para>The user preferences file (<emphasis>.hamqsler</emphasis>) could not
+					<para>The user preferences file (<filename>.hamqsler</filename>) could not
 					be accessed for some reason. A MessageBox has already been displayed giving
 					the reason for the error. As stated, a new user preferences file and object
 					have been created and initialized. If this is not the first time that you
-					have run HamQSLer, then any user preference settings you changed will the
-					past have been lost.</para>
+					have run <literal>HamQSLer</literal>, then any user preference settings you 
+					changed in the past have been lost.</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>User preferences file did not exist. It has been created.</term>
 				<listitem>
 					<para>A new user preferences file has been created. If this is not the
-					first time that you have started HamQSLer, then any setting changes you
-					made in the past have been lost.</para>
+					first time that you have started <literal>HamQSLer</literal>, \
+					then any setting changes you made in the past have been lost.</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
@@ -158,26 +172,28 @@
 			<varlistentry>
 				<term>New stable version of HamQSLer is available.</term>
 				<listitem>
-					<para>A new stable (release)version of HamQSLer is available. Go to the website to
-					download it.</para>
+					<para>A new stable (release) version of <literal>HamQSLer</literal>
+					 is available. Go to the website to download it.</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>New development version of HamQSLer is available.</term>
 				<listitem>
-					<para>A new development version of HamQSLer is available. Go to the
-					website to download it.</para>
+					<para>A new development version of <literal>HamQSLer</literal> is available. 
+					Go to the website to download it.</para>
 					<tip>
 						<para>A setting is provided in user preferences to turn on or turn off checking for
-						new development versions of the program. See the <link linkend="settinguserprefs">
-						Setting User Preferences</link> chapter for more information.</para>
+						new development versions of the program. See the 
+						<link linkend="settinguserprefs"><emphasis role='underline'>Setting User 
+						Preferences</emphasis></link> chapter for more information.</para>
 					</tip>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>Checking for program update and data file revisions.</term>
 				<listitem>
-					<para>As stated, HamQSLer is checking for updates to the program and
+					<para>As stated, <literal>HamQSLer</literal> is checking for updates to the 
+					program and
 					associated data files. This message is displayed only while the checking is
 					being performed, and will disappear as soon as the checking is completed,
 					regardless of whether the versions file could be retrieved from the website

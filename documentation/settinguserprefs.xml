@@ -4,16 +4,20 @@
 		 xml:id="settinguserprefs">
 	<title>Setting User Preferences</title>
 	<para>User preferences control a number of aspects of program execution and contain many text
-	and QSOs Box related properties. Depending on some of the user preferences settings,
-	HamQSLer may save additional information in the user preferences file. For example, if the setting
+	and Qsos Box related properties. Depending on some of the user preferences settings,
+	<literal>HamQSLer</literal> may save additional information in the user preferences file. 
+	For example, if the setting
 	for restoring ADIF files is set, then the paths to all ADIF files that were loaded would be saved
-	with the user preferences so that HamQSLer could load these files when the program starts.</para>
-	<para>User preferences are written to a text file called <emphasis>.hamqsler</emphasis> and
-	stored in the <emphasis>hamqsler</emphasis> directory. This file is loaded during program
-	initialization. See the <link linkend="programinit">Program Initialization and the Splash
-	Screen</link> chapter for more information.</para>
+	with the user preferences so that <literal>HamQSLer</literal> could load these files when the 
+	program starts.</para>
+	<para>User preferences are written to a text file called <filename>.hamqsler</filename> and
+	stored in the <filename class='directory'>hamqsler</filename> directory. This file is loaded 
+	during program
+	initialization. See the <link linkend="programinit"><emphasis role='underline'>Program 
+	Initialization and the Splash
+	Screen</emphasis></link> chapter for more information.</para>
 	<para>Users edit user preferences settings by using the User Preferences dialog. This dialog
-	is displayed by selecting the Edit->User Preferences menu item on the main window. When first
+	is displayed by selecting the Edit => User Preferences menu item on the main window. When first
 	opened, the dialog looks like the image below.</para>
 	<figure xml:id="userprefsdialog2">
 		<title>User Preferences Dialog When First Opened</title>
@@ -24,7 +28,8 @@
 		</mediaobject>
 	</figure>
 	<para>User preferences are arranged in a set of topics. For example, Program contains settings
-	that affect how HamQSLer executes, and TextItems contains settings related to text items. The
+	that affect how <literal>HamQSLer</literal> executes, and TextItems contains settings related 
+	to text items. The
 	default font face for text items and the default callsign, name and QTH, and salutation that
 	are placed on a card when it is first created are examples of texit item settings.</para>
 	<para>The box on the left of the dialog contains the set of topics in expander controls. To open
@@ -39,11 +44,12 @@
 		</mediaobject>
 	</figure>
 	<para>Clicking on any of the subtopics displays a panel of controls on the right side of the
-	dialog. These controls may be set by the user to changed the corresponding user preference.</para>
+	dialog. These controls may be set by the user to change the corresponding user preference.</para>
 	<para>Each of the topics and settings is discussed in the sections that follow.</para>
 	<section>
 		<title>Program Settings</title>
-		<para>Program settings affect the execution of HamQSLer during program initialization.</para>
+		<para>Program settings affect the execution of <literal>HamQSLer</literal> during program 
+		initialization.</para>
 		<section>
 			<title>Program Version Check</title>
 			<para>The image below shows the user preferences dialog with the Program
@@ -58,21 +64,22 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>The Check for Program and Data File Updates checkbox controls whether HamQSLer
+			<para>The Check for Program and Data File Updates checkbox controls whether 
+			<literal>HamQSLer</literal>
 			checks for new program and data file versions during initialization. With the
 			checkbox checked, the program checks for new versions, and with the checkbox
 			unchecked, the program does not check for new versions. The
 			default value (the value set when the user preferences file is first created)
 			is to check for new versions.</para>
 			<para>The Stable and Development Program Releases checkbox determines whether
-			HamQSLer should check only for data file updates and stable program
-			updates, or if it should also check for development updates. if this checkbox
-			is checked, then HamQSLer checks for both stable and development new
-			releases during program initialization. If unchecked, HamQSLer checks only 
-			for new stable releases. The default value is to not check for development
+			<literal>HamQSLer</literal> should check only for data file updates and stable program
+			updates, or if it should also check for development updates. If this checkbox
+			is checked, then <literal>HamQSLer</literal> checks for both stable and development new
+			releases during program initialization. If unchecked, <literal>HamQSLer</literal>
+			checks only for new stable releases. The default value is to not check for development
 			versions.</para>
-			<para>Development
-			versions of HamQSLer are provided to allow users access to new features as they
+			<para>Development versions of <literal>HamQSLer</literal> are provided to allow users 
+			access to new features as they
 			are developed rather than waiting for a stable release. You can think of
 			development releases as beta releases of the program.</para>
 			<para>This checkbox can only be checked or unchecked if the Check for Program
@@ -92,7 +99,8 @@
 			<section>
 				<title>HTTP Proxy Settings</title>
 				<para>The image below shows the user preferences dialog with the HTTP Proxy
-				Settings subtopic selected. These controls configure HamQSLer to use an
+				Settings subtopic selected. These controls configure <literal>HamQSLer</literal>
+				to use an
 				HTTP proxy. Most users do not need to modify the default settings.</para>
 				<figure xml:id="httpproxysettings">
 					<title>Proxy Settings Preferences</title>
@@ -108,14 +116,15 @@
 				The default value is 80, which is the standard port number for HTTP servers.
 				Other typical port numbers are 8000, 8080, and 8888.</para>
 				<caution>
-					<para>Change these settings only if HamQSLer cannot retrieve the versions
+					<para>Change these settings only if <literal>HamQSLer</literal>
+					cannot retrieve the versions
 					file during program initialization. Internet service providers typically
 					do not require you to configure proxy servers on their networks, so
 					proxy server settings are only required if your network has one installed.
 					This is not something that is typically done on a home network.</para>
 					<para>Even if a proxy server is installed on your network, it would
-					normally be configured in Control Panel->Internet Options, so there
-					would be no need to configure the server here.</para>
+					normally be configured in Start Menu => Control Panel => Internet Options, 
+					so there would be no need to configure the server here.</para>
 				</caution>
 			</section>
 	</section>
@@ -125,7 +134,8 @@
 		card, and images files and folders.</para>
 		<section>
 			<title>ADIF Files and Folder</title>
-			<para>This subtopic contains preferences specifying whether HamQSLer should
+			<para>This subtopic contains preferences specifying whether
+			<literal>HamQSLer</literal> should
 			reload ADIF files when the program starts, and the directory that the
 			file open dialog should open in when handling Import QSOs... and Add QSOs...
 			menu items processing. The image below shows the user preferences dialog
@@ -139,12 +149,13 @@
 				</mediaobject>
 			</figure>
 			<para>The Reload ADIF Files on Startup checkbox setting determines whether ADIF
-			files are reloaded or not when HamQSLer starts up. With the checkbox checked,
+			files are reloaded or not when <literal>HamQSLer</literal> starts up.
+			With the checkbox checked,
 			the files are loaded; with the checkbox unchecked, the files are not
 			loaded.</para>
 			<para>The files that are reloaded are determined by the user's use of four
 			menu items from the QSOs dropdown menu:</para>
-			<orderedlist>
+			<orderedlist spacing='compact'>
 				<listitem>
 					<para>Selecting the Clear QSOs menu item also clears the 
 					ADIF files reload list.</para>
@@ -160,7 +171,7 @@
 				</listitem>
 				<listitem>
 					<para>Selecting the Export QSOs... menu item clears the
-					ADIF files list and then add the file to which the QSOs were exported
+					ADIF files list and then adds the file to which the QSOs were exported
 					to the list.</para>
 				</listitem>
 			</orderedlist>
@@ -171,11 +182,12 @@
 				<para>If the user opens the user preferences file in a text editor, he
 				must be certain not to make any changes to the file; in other words,
 				if a change is made accidentally, the user must not save the file.
-				Editing the user preferences file could result in HamQSLer aborting
+				Editing the user preferences file could result in 
+				<literal>HamQSLer</literal> aborting
 				or otherwise malfunctioning.</para>
 			</caution>
-			<para>The Default ADIF Files Folder is the directory that HamQSLer opens
-			in a File Open dialog when the user selects either the Import QSOs... or
+			<para>The Default ADIF Files Folder is the directory that <literal>HamQSLer</literal>
+			opens in a File Open dialog when the user selects either the Import QSOs... or
 			Add QSOs... menu item. The user should set this value to the directory in which
 			he stores ADIF files.</para>
 			<para>To change the folder, click on the button labeled "..." that is
@@ -184,8 +196,8 @@
 		</section>
 		<section>
 			<title>Cards Files and Folder Preferences</title>
-			<para>This subtopic contains preferences specifying whether HamQSLer should
-			reload card files when the program starts, and the directory that the
+			<para>This subtopic contains preferences specifying whether <literal>HamQSLer</literal>
+			should reload card files when the program starts, and the directory that the
 			file open dialog should open in when handling the Open Card... 
 			menu item processing. The image below shows the user preferences dialog
 			with the Card Files and Folder subtopic selected.</para>
@@ -198,12 +210,13 @@
 				</mediaobject>
 			</figure>
 			<para>The Reload Card Files on Startup checkbox setting determines whether card
-			files are reloaded or not when HamQSLer starts up. With the checkbox checked,
+			files are reloaded or not when <literal>HamQSLer</literal> starts up. With the 
+			checkbox checked,
 			the files are loaded; with the checkbox unchecked, the files are not
 			loaded.</para>
 			<para>The files that are reloaded are determined by the card files that are
-			open when HamQSLer is terminated. New cards that have not been saved are
-			not reloaded.</para>
+			open when <literal>HamQSLer</literal> is terminated. New cards that have not been 
+			saved are not reloaded.</para>
 			<para>The card files list is stored in the user preferences file but there
 			is no way for the user to see the list except by opening the user
 			preferences file in a text editor.</para>
@@ -211,11 +224,11 @@
 				<para>If you open the user preferences file in a text editor, 
 				be certain not to make any changes to the file; in other words,
 				if a change is made accidentally, do not save the file.
-				Editing the user preferences file could result in HamQSLer aborting
-				or otherwise malfunctioning.</para>
+				Editing the user preferences file could result in <literal>HamQSLer</literal>
+				aborting or otherwise malfunctioning.</para>
 			</caution>
-			<para>The Default Card Files Folder is the directory that HamQSLer opens
-			in a File Open dialog when the user selects the OpenCard
+			<para>The Default Card Files Folder is the directory that <literal>HamQSLer</literal>
+			opens in a File Open dialog when the user selects the OpenCard
 			menu item. The user should set this value to the directory in which
 			he stores ADIF files.</para>
 			<para>To change the folder, click on the button labeled "..." that is
@@ -251,12 +264,13 @@
 			<para>The default text font is the font that text items are displayed in
 			when a new card is created. All text items are displayed in this font on
 			the new card. However, the user may later select a different font for each
-			text item on the card. See the <link linkend="carddesign">Working With
-			Cards</link> chapter for more information.</para>
+			text item on the card. See the 
+			<link linkend="carddesign"><emphasis role='underline'>Working With
+			Cards</emphasis></link> chapter for more information.</para>
 			<para>The user preferences dialog with the default font face subtopic
 			selected is shown in the image below. The only preference available
 			in this panel is the Default Text FontFace. A list of all fonts
-			registered on the computer is provided in a dropdown box. When HamQSLer
+			registered on the computer is provided in a dropdown box. When <literal>HamQSLer</literal>
 			is executed for the first time, the default text font face is set to
 			Arial.</para>
 			<figure xml:id="defaulttextfont2">
@@ -277,7 +291,8 @@
 			when it is first created. The image below shows the user preferences dialog with
 			the Callsign Text subtopic selected. In this image, there is a text box with the
 			text "MyCall" in it, and a Macros button below it. When the user preferences file is
-			created, either the first time that HamQSLer is started, or if HamQSLer cannot locate
+			created, either the first time that <literal>HamQSLer</literal> is started, or if 
+			<literal>HamQSLer</literal> cannot locate
 			the user preferences files and creates a new one, the default callsign is set to "MyCall".
 			</para>
 			<figure xml:id="callsigntext2">
@@ -289,18 +304,21 @@
 				</mediaobject>
 			</figure>
 			<para>You may either edit the callsign text, or click on the Macros button to set the
-			default callsign to a set of macros. See the <link linkend="macros">Macros</link>
+			default callsign to a set of macros. See the 
+			<link linkend="macros"><emphasis role='underline'>Macros</emphasis></link>
 			chapter for more information.</para>
 			<tip>
 				<para>If you always use the same callsign, change "MyCall" to that callsign. If you
-				followed the <link linkend="gettingstarted">Getting Started</link> tutorial,
+				followed the <link linkend="gettingstarted"><emphasis role='underline'>Getting 
+				Started</emphasis></link> tutorial,
 				then you have already performed this step.</para>
 			</tip>
 			<tip>
 				<para>If you use a number of different callsigns and the callsign that is used for each
 				QSO is stored in your QSO database and exported to an ADIF file, then you should
 				follow one of more of the tips in the AdifMacro and AdifExistsMacro sections of the
-				<link linkend="macros">Macros</link> chapter. See the documentation for your
+				<link linkend="macros"><emphasis role='underline'>Macros</emphasis></link> chapter. 
+				See the documentation for your
 				logging program to determine the ADIF fields that the logging program uses.</para>
 			</tip>
 		</section>
@@ -327,8 +345,9 @@
 			<tip>
 				<para>If you operate from different locations such as at home, at your
 				cottage, and as a rover during contests, add a new text item to the card
-				and place the operating location in it. See <link linkend="carddesign">Working
-				With Cards</link> for information about adding text items to a
+				and place the operating location in it. See 
+				<link linkend="carddesign"><emphasis role='underline'>Working
+				With Cards</emphasis></link> for information about adding text items to a
 				card.</para>
 			</tip>
 		</section>
@@ -355,8 +374,8 @@
 			is a Static Text group box with a text box containing the text "Thanks for the
 			QSO" in it, a Count Macro group box, and finally, another Static Text group
 			box with the text ". 73," in it. The count macro is discussed in the
-			<link linkend="macros">Macros</link> chapter, so it will not be discussed in
-			detail here.</para>
+			<link linkend="macros"><emphasis role='underline'>Macros</emphasis></link> chapter, 
+			so it will not be discussed in detail here.</para>
 			<para>As currently set up, the salutation text that is displayed on a new
 			card in design mode is "Thanks for the QSO$. 73,". When you print cards, if
 			you set the maximum number of QSOs that can be printed on a card to 1, or the
@@ -384,21 +403,22 @@
 	<section>
 		<title>QSOs Box Preferences</title>
 		<para>The QSOs Box preferences topic contains user preferences that are related
-		to the display of text items in the QSOs Box, such as the font face that all
-		text in the QSOs Box is displayed in, the contents of the headers in each
+		to the display of text items in the Qsos Box, such as the font face that all
+		text in the Qsos Box is displayed in, the contents of the headers in each
 		column of the box, and the frequency values printed for QSOs whose records contain
 		a band field but no frequency field.</para>
 		<section>
 			<title>Default QSOs Box Font Preference</title>
-			<para>The default QSOs Box font is the font that all text in the QSOs Box
+			<para>The default Qsos Box font is the font that all text in the Qsos Box
 			is displayed in when a new card is created. While designing a card, the user 
-			may select a different font. See the <link linkend="carddesign">Working With
-			Cards</link> chapter for more information.</para>
+			may select a different font. See the 
+			<link linkend="carddesign"><emphasis role='underline'>Working With
+			Cards</emphasis></link> chapter for more information.</para>
 			<para>The user preferences dialog with the default QSOs Box font face subtopic
 			selected is shown in the image below. The only preference available
-			in this panel is the Default QSOs Box FontFace. A list of all fonts
-			registered on the computer is provided in a dropdown box. When HamQSLer
-			is executed for the first time, the default QSOs Box font face is set to
+			in this panel is the Default Qsos Box FontFace. A list of all fonts
+			registered on the computer is provided in a dropdown box. When <literal>HamQSLer</literal>
+			is executed for the first time, the default Qsos Box font face is set to
 			Arial.</para>
 			<figure xml:id="defaultqsosboxfont">
 				<title>Default QSOs Box Font Preference</title>
@@ -414,7 +434,7 @@
 		</section>
 		<section>
 			<title>Confirming Text Preference</title>
-			<para>The confirming text is placed on the first line of the QSOs box of a
+			<para>The confirming text is placed on the first line of the Qsos Box of a
 			card. The first image below shows the user preferences dialog with the
 			Confirming Text subtopic selected. Note that there is no text box, just a
 			Macros button. This is what you would see the first time that you select this
@@ -435,8 +455,8 @@
 			is a Static Text group box with a text box containing the text "Confirming 2-Way
 			QSO" in it, a Count Macro group box, and finally, another Static Text group
 			box with the text "with" in it. The count macro is discussed in the
-			<link linkend="macros">Macros</link> chapter, so it will not be discussed in
-			detail here.</para>
+			<link linkend="macros"><emphasis role='underline'>Macros</emphasis></link> chapter, 
+			so it will not be discussed in detail here.</para>
 			<para>As currently set up, the confirming text that is displayed on a 
 			card in design mode is "Confirming 2-Way QSO$ with". When you print cards, if
 			you set the maximum number of QSOs that can be printed on a card to 1, or the
@@ -444,7 +464,7 @@
 			printed on the card, then the confiming text that is printed is "Confirming
 			2-Way QSO with". If the maximum number of QSOs is set to greater than 1 and no
 			QSOs are being printed, or there is more than 1 QSO being printed on the card,
-			then the salutation text printed on that card would be "Confirming
+			then the confirming text printed on that card would be "Confirming
 			2-Way QSOs with".</para>
 			<figure xml:id="defaultconfirmingtext">
 				<title>Default Confirming Text Macros</title>
@@ -463,7 +483,7 @@
 		<section>
 			<title>Date Formats Preferences</title>
 			<para>These preferences refer to the format that dates should be printed
-			in, and the header text for the date column in the QSOs Box.</para>
+			in, and the header text for the date column in the Qsos Box.</para>
 			<figure xml:id="dateheaders">
 				<title>Date Formats Preferences</title>
 				<mediaobject>
@@ -475,7 +495,7 @@
 			<para>The image above shows the user preferences dialog with the Date Formats
 			subtopic selected. The dropdown box at the bottom of the panel contains all of
 			the formats that the dates may be printed in. Currently the choices are:</para>
-			<orderedlist>
+			<orderedlist spacing='compact'>
 				<listitem>
 				<para>YYYY-MM-DD. This is the date in ISO 8601 format.</para>
 				</listitem>
@@ -490,14 +510,14 @@
 			a new card is created. This may be changed to a different format when designing
 			a card.</para>
 			<para>The choice of format determines the header text that is displayed in the
-			date column in the QSOs Box. Edit the header text for each
+			date column in the Qsos Box. Edit the header text for each
 			date format using the text boxes above the dropdown box.</para>
 			<tip>
 				<para>What does 02-04-03 mean? It depends on the country you live in, among
 				other things. For the answer to this question and a discussion of 
 				meaningful date formats, see
-				<link xlink:href="www.w3.org/QA/Tips/iso-date">Use international
-				date format</link>.</para>
+				<link xlink:href="www.w3.org/QA/Tips/iso-date"><emphasis role='underline'>Use 
+				international date format</emphasis></link>.</para>
 			</tip>
 			<caution>
 				<para>As noted in the tip above, 02-04-03 can mean different dates in
@@ -514,8 +534,8 @@
 			Text subtopic selected. There is one text box for each of the five
 			headers.</para>
 			<para>Modify the header text to the text that you want for each column. The
-			text may be a maximum of 6 characters. The header text for the QSOs Box
-			on a card is fixed to these values when a card is creating. In other words,
+			text may be a maximum of 6 characters. The header text for the Qsos Box
+			on a card is fixed to these values when a card is created. In other words,
 			changing the preferences only affects new cards that the user creates.</para>
 			<figure xml:id="headertext">
 				<title>Header Text Preferences</title>
@@ -532,7 +552,7 @@
 			<caution>
 				<para>If you delete all text from one of the text boxes, the default
 				text will be used when printing the card. In other words, column headers
-				in the QSOs Box are never blank when designing and printing a card.</para>
+				in the Qsos Box are never blank when designing and printing a card.</para>
 			</caution>
 		</section>
 		<section>
@@ -557,11 +577,10 @@
 			<title>Month Abreviations Preferences</title>
 			<para>This subtopic allows the user to change the three character
 			text representing the months that are printed in the date column of
-			the QSOs Box when "DD-MMM-YY" is selected as the date format.</para>
+			the Qsos Box when "DD-MMM-YY" is selected as the date format.</para>
 			<para>The image below shows the user preferences dialog with the
 			month abreviations subtopic selected. There is a text box for each month.
-			These values are set when a new card is created and cannot be changed
-			for that card.</para>
+			</para>
 			<figure xml:id="monthabreviations">
 				<title>Month Abreviations Preferences</title>
 				<mediaobject>
@@ -570,13 +589,11 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>Change the month texts to the text you want displayed on a new card.
-			Month abreviations are limited to three characters.</para>
+			<para>Month abreviations are limited to three characters.</para>
 			<caution>
-				<para>Do not delete all text from these text boxes, even if you
-				never intend to select the "DD-MMM-YY" date format. You may change
-				your mind at a later time, and there is no way to change the months
-				texts on an existing card.</para>
+				<para>When cards are printed, the month abreviations are retrieved from
+				the user preferences file. Therefore, changing one or more of these
+				values affects all cards that use the "DD-MMM-YY" date format.</para>
 			</caution>
 		</section>
 		<section>
@@ -584,8 +601,8 @@
 			<para>For an ADIF QSO record to be valid, it must contain either a band field,
 			a frequency field, or both. What happens if you want to print cards with
 			a frequency column rather than a band column, but the records only contain
-			a band field? HamQSLer uses the frequency values specified in the bands /
-			frequencies preferences.</para>
+			a band field? <literal>HamQSLer</literal> uses the frequency values specified in
+			the bands / frequencies preferences.</para>
 			<para>The image below shows the user preferences dialog with the bands /
 			frequencies subtopic selected. As you can see, there is a text box for
 			each band to allow you to set a frequency to substitute for each band.
@@ -603,7 +620,8 @@
 			<para>Edit each text box to contain the frequency that you want printed for
 			that band. Frequencies are limited to 8 characters and must be within the
 			ADIF specified band limits. Input validation, as discussed in
-			the <link linkend="errorhandlingandlogging">Error Handling and Logging</link>
+			the <link linkend="errorhandlingandlogging"><emphasis role='underline'>Error
+			Handling and Logging</emphasis></link>
 			chapter, is performed.</para>
 		</section>
 	</section>
@@ -632,7 +650,7 @@
 			options subtopic selected. Note that there are two group boxes, one
 			for printer properties and one for print properties.</para>
 			<figure xml:id="printoptionsprefs">
-				<title>Print Options Preferences</title>
+				<title>Printer and Print Options Preferences</title>
 				<mediaobject>
 					<imageobject>
 						<imagedata fileref="images/printoptionsprefs.png" />
@@ -642,8 +660,33 @@
 			<para>Understanding printer and print properties requires an understanding
 			of printer margins. Rather than duplicate that explanation here and because
 			the same properties appear three times, a discussion of print options is
-			deferred to the <link linkend="outputtingcards">Outputting Cards</link>
-			chapter.</para>
+			deferred to the 
+			<link linkend="outputtingcards"><emphasis role='underline'>Outputting 
+			Cards</emphasis></link> chapter.</para>
 		</section>
+	</section>
+	<section>
+		<title>Debugging Preferences</title>
+		<para>Debugging preferences turn on or turn off debugging in certain portions
+		of <literal>HamQSLer</literal>.The image below shows the user preferences dialog
+		with the debug options subtopic selected.</para>
+		<figure xml:id="debugoptions">
+			<title>Debug Options Preferences</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/debugoptions.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Check the appropriate debug checkbox to log debug information and uncheck
+		the debug checkbox to not log debug information. The debug information is written
+		to the log file.</para>
+		<caution>
+			<para>Turning on a debug option can potentially write a large volume of text
+			to the log file and slow down the execution speed of <literal>HamQSLer</literal>.
+			Only turn on a debug option if you are asked to do so by a HamQSLer developer
+			so that a problem you are experiencing can be debugged. Turn the option off as
+			soon as you are done.</para>
+		</caution>
 	</section>
 </chapter>

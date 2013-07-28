@@ -3,14 +3,16 @@
 		 xmlns:xlink="http://www.w3.org/1999/xlink"
 		 xml:id="errorhandlingandlogging">
 	<title>Input Validation, Logging, and Error Handling</title>
-	<para>HamQSLer performs checks on user inputs, reports and recovers from error conditions
+	<para><literal>HamQSLer</literal> performs checks on user inputs, reports and recovers from 
+	error conditions
 	where possible, and provides a logging facility to assist both the user and the
 	developers in determining what caused a specific error condition. This chapter discusses
 	each of these topics. Additionally, a section is included on what the user should do to
 	report a bug.</para>
 	<section>
 		<title>Input Validation</title>
-		<para>HamQSLer performs many checks on user input, from validating individual characters,
+		<para><literal>HamQSLer</literal> performs many checks on user input, from validating 
+		individual characters,
 		to validating the contents of input fields, and to validating multiple fields and the
 		entire user input. In order to aid in a discussion of these topics, we will use
 		the input QSOs dialog as an example. This discussion applies equally well everywhere
@@ -25,10 +27,10 @@
 			</mediaobject>
 		</figure>
 		<para>Some of the fields should contain a limited selection of characters.
-		For example, the Callsign field should only accept letters, digits, and "/".
+		For example, the Callsign field should only accept unaccented letters, digits, and "/".
 		Similarly, the start date and start time fields should only accept digits.
 		When the user attempts to input an invalid character into a field, 
-		HamQSLer causes the computer to
+		<literal>HamQSLer</literal> causes the computer to
 		emit a short beep to indicate the error. The character is not added to
 		the field.</para>
 		<para>You will note that some of the input fields are outlined in red.
@@ -62,7 +64,7 @@
 		radio bands. If not, the red rectangle is displayed indicating that the
 		value is in error.</para>
 		<para>So the user can enter either a band, or a valid frequency without
-		problems. What happens is the user selects a band and then enters
+		problems. What happens if the user selects a band and then enters
 		a frequency that is within a different band, or enters a valid frequency
 		and then selects a different band? The field that was last changed will
 		be outlined in red. The user must move the mouse cursor over that field
@@ -92,18 +94,21 @@
 		<para>A different way of handling invalid values is shown in the QSOs View.
 		The Manager field must either be empty or contain a valid callsign. The contents
 		of the field is obtained from the ADIF QSL_VIA field which may contain any text.
-		HamQSLer requires that this field contain either a valid callsign or no text.
+		<literal>HamQSLer</literal> requires that this field contain either a valid callsign 
+		or no text.
 		Therefore, the field may be marked as invalid as discussed above. However,
-		HamQSLer does not require that this field be valid before the program will
-		print QSL cards. Instead HamQSLer simply treats the Manager field
+		<literal>HamQSLer</literal> does not require that this field be valid before the 
+		program will
+		print QSL cards. Instead <literal>HamQSLer</literal> simply treats the Manager field
 		as empty if it does not contain only a valid callsign.</para>
 	</section>
 	<section>
 		<title>Log File, Exceptions, Message Boxes, and Status Bar</title>
 		<section>
 			<title>Log File</title>
-			<para>HamQSLer uses a log file to save information about the program
-			and its execution. When HamQSLer starts, it logs program and data file version 
+			<para><literal>HamQSLer</literal> uses a log file to save information about the program
+			and its execution. When <literal>HamQSLer</literal> starts, it logs program and data 
+			file version 
 			information, the .Net version, operating system version, the number of processors
 			on your computer and other information that may be useful in case a problem
 			occurs that causes the program to malfunction. Here is an example of this
@@ -130,12 +135,15 @@
 			a problem that you are having. Turning on debugging can cause a large
 			amount of text to be written to the log file, and slows program execution
 			considerably. More information is provided in the 
-			<link linkend="settinguserprefs">User Preferences</link> chapter.</para>
-			<para>A new log file is generated each time HamQSLer begins execution. The log
-			file is located in the <emphasis>hamqsler\Logs</emphasis> subdirectory of the
-			user's <emphasis>My Documents</emphasis> directory. This is a simple text file
+			<link linkend="settinguserprefs"><emphasis role='underline'>User 
+			Preferences</emphasis></link> chapter.</para>
+			<para>A new log file is generated each time <literal>HamQSLer</literal>
+			begins execution. The log
+			file is located in the <filename class='directory'>hamqsler\Logs</filename>
+			subdirectory of the	user's <filename class='directory'>My Documents</filename>
+			directory. This is a simple text file
 			that can be opened with a text editor, or when the program is running, by
-			selecting the Help->View Log File... menu item.</para>
+			selecting the Help => View Log File... menu item.</para>
 		</section>
 		<section>
 			<title>Message Boxes</title>
@@ -166,15 +174,16 @@
 			to conditions that cause the program to abort.</para>
 			<para>The following list contains some examples of where exceptions are
 			generated and their effects on the program and user:</para>
-			<itemizedlist>
+			<itemizedlist spacing='compact'>
 				<listitem>
 					<para>An invalid field in a QSO record in an ADIF file generates
 					an exception. In this case, information about the invalid field
-					is written to the log file, the QSO record is not loaded, and processing
+					is written to the log file, either the ADIF field or the QSO record is 
+					not loaded, and processing
 					continues with the next record. Once all records have been processed,
 					a message box is displayed informing the user of the problem and 
 					directing the user to look in the log file for more information. The
-					user may continue to use HamQSLer and the loaded QSOs.</para>
+					user may continue to use <literal>HamQSLer</literal> and the loaded QSOs.</para>
 				</listitem>
 				<listitem>
 					<para>If a card file contains an invalid field, a message box will
@@ -186,7 +195,7 @@
 					below.</para>
 				</listitem>
 				<listitem>
-					<para>A programming error or an bug in .Net may cause an unhandled
+					<para>A programming error or a bug in .Net may cause an unhandled
 					exception to be thrown. In this case, the error information is
 					written to the log file and a message box is displayed to alert
 					the user that the program is about to terminate because of the
@@ -201,7 +210,8 @@
 			program. Information messages may be displayed here. Very few messages are
 			actually displayed; they are used mainly to inform the user when a potentially
 			long lasting process has completed. For example, after the user imports
-			QslDnP files into the <emphasis>hamqsler</emphasis> directory, the status
+			<filename class='directory'>QslDnP</filename> files into the 
+			<filename class='directory'>hamqsler</filename> directory, the status
 			message "QslDnP files have been copied and card files converted." is
 			displayed.</para>
 		</section>
@@ -209,7 +219,7 @@
 	<section>
 		<title>Reporting Bugs</title>
 		<para>To help with debugging problems, please include the following
-		information when reporting a bug in HamQSLer:</para>
+		information when reporting a bug in <literal>HamQSLer</literal>:</para>
 		<orderedlist>
 			<listitem>
 				<para>A description of the bug, including any error messages that
@@ -224,7 +234,7 @@
 				<para>Contents of the log file. The log file is
 				overwritten when you start HamQSLer, so if the program aborts, do
 				not restart the program to view the log file; the log file is
-				located at <emphasis>...\My Documents\hamqsler\Logs\hamqsler.log</emphasis>
+				located at <filename>...\My Documents\hamqsler\Logs\hamqsler.log</filename>
 				</para>
 			</listitem>
 			<listitem>

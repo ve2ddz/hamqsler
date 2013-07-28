@@ -5,13 +5,13 @@
 	<title>Macros</title>
 	<section>
 		<title>Introduction to Macros</title>
-		<para>Macros add a powerful feature to HamQSLer by providing
+		<para>Macros add a powerful feature to <literal>HamQSLer</literal> by providing
 		<emphasis>active</emphasis> text. For every macro there is text
 		that is displayed on the card in design view, and text that is
 		inserted when the cards are printed. These macros may be used
 		in any text item and also in the confirming text user preference.
-		If you followed the Getting
-		Started Tutorial, you got your first glimpse of Count Macro.</para>
+		If you followed the <link linkend='gettingstarted'><emphasis role='underline'>Getting
+		Started</emphasis></link> tutorial, you got your first glimpse of Count Macro.</para>
 		<para>This discussion will focus on macros used in text items;
 		using macros in the confirming text user preference are similar
 		to macros within the Text and Macros dialog which you
@@ -72,8 +72,9 @@
 		</figure>
 		<para>Every macro has a section called "Design Text". This is
 		the text that is displayed on the card in design mode. In the
-		Getting Started Tutorial, this is the "$" in both the confirming
-		text in the QSOs Box and in the salutation text item. Other sections
+		<link linkend='gettingstarted'><emphasis role='underline'>Getting Started</emphasis></link>
+		tutorial, this is the "$" in both the confirming
+		text in the Qsos Box and in the salutation text item. Other sections
 		are specific to the macros. At print time, the Manager Macro
 		will place the contents of the Manager field for the QSO on the
 		card, or the No Manager Text if the Manager field is empty.
@@ -112,8 +113,9 @@
 		will be added to the card.</para>
 		<para>Add the name of the ADIF field for this macro to the ADIF
 		Field text box. Standard ADIF fields are defined in the ADIF
-		standard, available at <link xlink:href="http://www.adif.org">
-		http://www.adif.org</link>. Be sure to select the
+		standard, available at 
+		<emphasis role='underline'><link xlink:href="http://www.adif.org">
+		http://www.adif.org</link></emphasis>. Be sure to select the
 		version of the standard that corresponds to the version specified by
 		your logging application. In addition to the fields defined in the
 		standard, your logger may also export application specific fields.
@@ -139,9 +141,9 @@
 			do this by adding a new text item, positioning it appropriately,
 			and including text such as "To: " as well as an ADIF macro
 			for the CALL field.</para>
-			<para>HamQSLer does not easily support printing
+			<para><literal>HamQSLer</literal> does not easily support printing
 			this on the opposite side of the card from other text and
-			the QSOs Box, but if you properly design your card, it can
+			the Qsos Box, but if you properly design your card, it can
 			be placed on the same side as these items and still be very
 			visible to the sorters at the QSL bureaus.</para>
 		</tip>
@@ -177,8 +179,9 @@
 		or the field contents are not empty.</para>
 		<para>Add the name of the ADIF field for this macro to the ADIF
 		Field text box. Standard ADIF fields are defined in the ADIF
-		standard, available at <link xlink:href="http://www.adif.org">
-		http://www.adif.org</link>. Be sure to select the
+		standard, available at <link
+		 xlink:href="http://www.adif.org">
+		<emphasis role='underline'>http://www.adif.org</emphasis></link>. Be sure to select the
 		version of the standard that corresponds to the version specified by
 		your logging application. In addition to the fields defined in the
 		standard, your logger may also export application specific fields.
@@ -202,11 +205,11 @@
 		<title>Count Macro</title>
 		<para>The Count Macro specifies text that is to be printed when
 		the condition is met and text that is printed when the condition
-		is not met. When a card with QSOs in the QSOs Box is printed,
+		is not met. When a card with QSOs in the Qsos Box is printed,
 		the condition is tested against the number of QSOs being  printed
-		in the QSOs Box. If a blank card (i.e. a card without QSOs) is
+		in the Qsos Box. If a blank card (i.e. a card without QSOs) is
 		printed, the condition is tested against the maximum QSOs count for
-		the QSOs Box. This matches the number of blank rows printed on
+		the Qsos Box. This matches the number of blank rows printed on
 		the card.</para>
 		<para>The image below shows a view of the Count Macro. This image 
 		shows the various sections
@@ -241,9 +244,9 @@
 		<para>You may reverse conditions by reversing the True Text and
 		False Text texts.</para>
 		<tip>
-			<para>The confirming text in the QSOs Box and the salutation
+			<para>The confirming text in the Qsos Box and the salutation
 			text defined in the original user preferences (set when you
-			start HamQSLer for the first time) each contain a Count Macro.
+			start <literal>HamQSLer</literal> for the first time) each contain a Count Macro.
 			As used there, the design text is "$", "s" is printed when
 			the number of QSOs (or the max QSOs count for blank cards)
 			is greater than 1 and no text is printed when the number of
@@ -308,9 +311,9 @@
 			Manager Exists Macro for the manager field. In the Exists
 			Text section, add a Manager Macro so that the callsign of
 			the manager is printed after the "To: " or "Via: " text.</para>
-			<para>HamQSLer does not easily support printing
+			<para><literal>HamQSLer</literal> does not easily support printing
 			this on the opposite side of the card from other text and
-			the QSOs Box, but if you properly design your card, it can
+			the Qsos Box, but if you properly design your card, it can
 			be placed on the same side as these items and still be very
 			visible to the sorters at the QSL bureaus.</para>
 		</tip>
