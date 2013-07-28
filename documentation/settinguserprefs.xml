@@ -659,8 +659,8 @@
 			</figure>
 			<para>Understanding printer and print properties requires an understanding
 			of printer margins. Rather than duplicate that explanation here and because
-			the same properties appear three times, a discussion of print options is
-			deferred to the 
+			the same properties appear three times in <literal>HamQSLer</literal>, 
+			a discussion of print options is deferred to the 
 			<link linkend="outputtingcards"><emphasis role='underline'>Outputting 
 			Cards</emphasis></link> chapter.</para>
 		</section>
