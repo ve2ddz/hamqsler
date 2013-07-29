@@ -6,8 +6,8 @@
 	<section>
 		<title>Saving HamQSLer Card Files</title>
 		<para>Once a card has been created, it may be saved to be loaded
-		and used at a future time. To do this, select the Cards->File Save or
-		Cards->File Save As... menu items. File Save is only available if the
+		and used at a future time. To do this, select the Cards => File Save or
+		Cards => File Save As... menu items. File Save is only available if the
 		card has previously been saved because the program must know the
 		directory in which you want to save the card.</para>
 		<para>When you select the Card Save As... menu item, the File Save As
@@ -21,8 +21,9 @@
 			</mediaobject>
 		</figure>
 		<para>The dialog opens in the default card files folder. This folder can
-		be set in user preferences. See <link linkend='settinguserprefs'>Setting
-		User Preferences</link> for setting this value. 
+		be set in user preferences. See 
+		<link linkend='settinguserprefs'><emphasis role='underline'>Setting
+		User Preferences</emphasis></link> for setting this value. 
 		Navigate to the folder where you want to save the card file,
 		enter the name you want to save the file as, and
 		then click on the Save button. The card file will be saved and the
@@ -31,7 +32,7 @@
 	<section>
 		<title>Loading HamQSLer Card Files</title>
 		<para>Once a card has been saved, it can be loaded at a later time
-		by selecting the Cards->Open Card... menu item. This displays the
+		by selecting the Cards => Open Card... menu item. This displays the
 		File Open dialog with the default directory set to the default card files
 		folder. See the image below:</para>
 		<figure xml:id="cardopendialog">
@@ -48,59 +49,72 @@
 		or double-click on the file.</para>
 		<tip>
 			<para>Keep all of your card related files (card files, images,
-			logos, etc.) in the hamqsler directory or create subdirectories
+			logos, etc.) in the <filename class='directory'>hamqsler</filename>
+			directory or create subdirectories
 			for each file type. That way, all of the files needed for
 			your cards are located in one place so they are easy to back
 			up and to move to another location.</para>
 			<para>In the past, as Microsoft released new versions of Windows,
-			they sometimes changed the location of the My Directories folder.
+			they sometimes changed the location of the 
+			<filename class='directory'>My Directories</filename> folder.
 			This occurred, for example, when Windows Vista was released,
-			and people who upgraded from Windows XP had problems with hard-coded 
-			paths.</para>
+			and people who upgraded from Windows XP ore earlier had problems 
+			with hard-coded paths.</para>
 		</tip>
 		<tip>
 			<para>If you want to reload the saved card or cards every time
 			you restart the program, check the "Reload Card Files on Startup"
-			checkbox in the User Preferences. See the <link linkend="settinguserprefs">
-			User Preferences</link> chapter for more information.</para>
+			checkbox in the User Preferences. See the 
+			<link linkend="settinguserprefs"><emphasis role='undlerline'>User 
+			Preferences</emphasis></link> chapter for more information.</para>
 		</tip>
 	</section>
 	<section>
 		<title>Moving and Converting QslDesignAndPrint Files</title>
 		<para>QslDesignAndPrint card files are normally stored in the
-		<emphasis>QslDnP</emphasis> subdirectory of your My Documents directory. 
+		<filename role='underline'>QslDnP</filename> subdirectory of your 
+		<filename role='underline'>My Documents</filename> directory.
 		You may also
 		have stored other related files such as images, logos, and
-		possibly ADIF files in <emphasis>QslDnP</emphasis>.</para>
+		possibly ADIF files in <filename class='directory'>QslDnP</filename>.</para>
 		<para> 
-		HamQSLer uses the <emphasis>hamqsler</emphasis> subdirectory in
-		My Documents. To ease the transition from QslDesignAndPrint to
-		HamQSLer, a move and convert tool has been included in HamQSLer. 
+		<literal>HamQSLer</literal> uses the <filename class='directory'>hamqsler</filename> 
+		subdirectory in <filename class='directory'>My Documents</filename>. 
+		To ease the transition from <literal>QslDesignAndPrint</literal> to
+		<literal>HamQSLer</literal>, a move and convert tool has been included in 
+		<literal>HamQSLer</literal>. 
 		This tool performs two tasks:</para>
 		<orderedlist>
 			<listitem>
 				<para>All files except log files, card files, and the user preferences
 				file are copied from
 				a user selected source directory to a user specified destination directory. 
-				These files have the extensions .xqsl, .xml, .log, and .log-old.</para>
+				These files have the extensions <filename>.xqsl</filename>, 
+				<filename>.xml</filename>, <filename>.log</filename>, 
+				and <filename>.log-old</filename>.</para>
 			</listitem>
 			<listitem>
-				<para>Card files are converted from QslDesignAndPrint format to
-				HamQSLer format and copied to the 
+				<para>Card files are converted from <literal>QslDesignAndPrint</literal> 
+				format to
+				<literal>HamQSLer</literal> format and copied to the 
 				destination directory and its subdirectories.</para>
 			</listitem>
 		</orderedlist>
-		<para>The following files are not copied or converted: ...\Samples\text2.adi,
-		...\Samples\moonbasin.jpg, and ...\Samples\sample.xqsl. These three files are
-		used in the QslDesignAndPrint getting started tutorial; a different set of
-		files is used in the HamQSLer getting started tutorial.</para>
-		<para>To copy and convert your QslDesignAndPrint related files, select
-		the Tools -> Import QslDesignAndPrint Files menu item. This opens a Browse For
+		<para>The following files are not copied or converted: 
+		<filename>...\Samples\text2.adi</filename>,
+		<filename>...\Samples\moonbasin.jpg</filename>, and 
+		<filename>...\Samples\sample.xqsl</filename>. These three files are
+		used in the <literal>QslDesignAndPrint</literal> getting started tutorial; 
+		a different set of files is used in the <literal>HamQSLer</literal>
+		getting started tutorial.</para>
+		<para>To copy and convert your <literal>QslDesignAndPrint</literal> related files, 
+		select
+		the Tools => Import QslDesignAndPrint Files menu item. This opens a Browse For
 		Folder dialog. Select the directory containing the files you want to copy and
 		convert, then click the OK button. Another Browse For Folder dialog will open;
 		use this dialog to select the destination directory, and click the OK button.
 		Copying and conversion will begin.</para>
-		<para>If one or more errors occur when copying files from the source directory
+		<para>If one or more errors occurs when copying files from the source directory
 		to the destination directory,
 		the following message box will be displayed, and as noted, the file or files
 		that could not be copied are listed in the log file along with the reason why.</para>
@@ -134,7 +148,8 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>If an image in a QslDesignAndPrint card file references an image
+		<para>If an image in a <literal>QslDesignAndPrint</literal>
+		card file references an image
 		file in the source directory, then the location of the image
 		file is changed to the destination directory. If any image file cannot be located, 
 		then the message box shown below is displayed, and you are given the choice
@@ -152,26 +167,27 @@
 		<para>When all files have been moved and all card files have been converted,
 		the text "Files have been copied and card files converted. See log file for
 		details." is
-		displayed in the status bar at the bottom of HamQSLer's main window. The log
+		displayed in the status bar at the bottom of <literal>HamQSLer</literal>'s 
+		main window. The log
 		file contains a message for every file copied, every card file converted, every
 		image replaced, every font that could not be found, and every error that was
 		detected during the copy and conversion tasks.</para>
 		<caution>
-			<para>HamQSLer uses a different graphical user interface than 
-			QslDesignAndPrint to draw cards. In some cases, font face names are
+			<para><literal>HamQSLer</literal> uses a different graphical user interface than 
+			<literal>QslDesignAndPrint</literal> to draw cards. In some cases, font face names are
 			different; if your card file references one of these font face names,
 			then the card will not display text in your selected font. The font will
 			be replaced by the first font in the installed fonts list. You may of course 
 			change the font face at any time while the card is in design mode.</para>
-			<para>QslDesignAndPrint used Windows Presentation Foundation (WPF) to
-			print and display cards. HamQSLer uses Windows Forms libraries for
+			<para><literal>QslDesignAndPrint</literal> used Windows Presentation Foundation (WPF) to
+			print and display cards. <literal>HamQSLer</literal> uses Windows Forms libraries for
 			printing and displaying cards. There are two potential differences between
 			these libraries as related to fonts:</para>
-			<orderedlist>
+			<orderedlist spacing='compact'>
 				<listitem>
 					<para>WPF enumerates all fonts that are installed on your computer.
 					Windows forms only enumerates installed fonts that are located in
-					your Fonts directory.</para>
+					your <filename class='directory'>...\Windows\Fonts</filename> directory.</para>
 				</listitem>
 				<listitem>
 					<para>There may be small differences in names between the list of
@@ -179,17 +195,18 @@
 					affects a few font names.</para>
 				</listitem>
 			</orderedlist>
-			<para>For these reasons, one or more of the fonts on your QslDesignAndPrint
+			<para>For these reasons, one or more of the fonts on your 
+			<literal>QslDesignAndPrint</literal>
 			cards may be replaced by the first font in the Windows Forms installed fonts
 			list during the conversion process.</para>
 		</caution>
 		<caution>
-			<para>QslDesignAndPrint supports three font weights: 
+			<para><literal>QslDesignAndPrint</literal> supports three font weights: 
 			<emphasis>normal</emphasis>, <emphasis>bold</emphasis>, 
 			and <emphasis>black</emphasis>.
-			HamQSLer only supports <emphasis>normal</emphasis> and 
+			<literal>HamQSLer</literal> only supports <emphasis>normal</emphasis> and 
 			<emphasis>bold</emphasis>. For most font faces used in
-			QslDesignAndPrint, <emphasis>black</emphasis> is simply displayed as 
+			<literal>QslDesignAndPrint</literal>, <emphasis>black</emphasis> is simply displayed as 
 			<emphasis>bold</emphasis>. The one obvious
 			font face for which there is a <emphasis>black</emphasis> font weight is Arial.
 			</para>
@@ -204,16 +221,17 @@
 	</section>
 	<section>
 		<title>Creating a New Card</title>
-		<para>A new card may be created by selecting the Cards -> New menu item. This
+		<para>A new card may be created by selecting the Cards => New menu item. This
 		opens another submenu from which to select the card size and orientation that
 		you want. At this time, there are three card sizes available:</para>
-		<itemizedlist>
+		<itemizedlist spacing='compact'>
 			<listitem>
 				<para>Bureau sized card in landscape mode (5.5 inches wide by 3.5 inches high,
 				or 139.7 mm wide by 88.9 mm high). This is the standard size for QSL cards
 				and is the size preferred by all QSL bureaus. There are three known suppliers
 				of perforated cardstock for this size of card. See the
-				<link linkend='outputtingcards'>Outputting Cards</link> chapter for more
+				<link linkend='outputtingcards'><emphasis role='underline'>Outputting
+				Cards</emphasis></link> chapter for more
 				information.</para>
 			</listitem>
 			<listitem>
@@ -221,7 +239,8 @@
 				107.95 mm high). Four of these cards may be printed in a two by two layout
 				on US Letter sized card stock. A number of micro-perforated cardstocks are
 				available in this size. See the
-				<link linkend='outputtingcards'>Outputting Cards</link> chapter for more
+				<link linkend='outputtingcards'><emphasis role='underline'>Outputting
+				Cards</emphasis></link> chapter for more
 				information.</para>
 			</listitem>
 			<listitem>
@@ -230,11 +249,13 @@
 				15 cm photopaper.</para>
 			</listitem>
 		</itemizedlist>
-		<para>Select the card size that you want. The new card will be displayed in a new
+		<para>Select the menu item for the card size that you want. 
+		The new card will be displayed in a new
 		tab in the main window; this tab displays the card in design mode in the panel
 		on the left, and a properties panel on the right. If you set up the various text 
 		items properties in User Preferences, as outlined in the 
-		<link linkend='settinguserprefs'>Setting User Preferences</link> chapter,
+		<link linkend='settinguserprefs'><emphasis role='underline'>Setting User 
+		Preferences</emphasis></link> chapter,
 		then a card similar to the image below will be displayed. The card in this image is
 		bureau sized. If you select a different size card, then that size of card is
 		displayed.</para>
@@ -247,8 +268,8 @@
 			</mediaobject>
 		</figure>
 		<para>The tab header contains the text "New Card" and the window title is "HamQSLer -
-		New Card. Once you have changed one of the card properties, the tab header will change
-		to *New Card, and the window title will change to "HamQSLer - New Card - Modified"
+		New Card". Once you have changed one of the card properties, the tab header will change
+		to "*New Card", and the window title will change to "HamQSLer - New Card - Modified"
 		to show that one or more changes have been made to the card. When you save the card,
 		the tab header will contain the name of the file that you saved the card to, and the
 		window title will contain "HamQSLer - <emphasis>full path to card file</emphasis>.</para>
@@ -257,10 +278,11 @@
 		<para>The properties panel on the right side of the card tab contains default printer and
 		print properties for the card, or card item specific properties when a card item is
 		selected. Card default printer and print properties are discussed in the
-		<link linkend='outputtingcards'>Outputting Cards</link> chapter and therefore
+		<link linkend='outputtingcards'><emphasis role='underline'>Outputting
+		Cards</emphasis></link> chapter and therefore
 		will not be mentioned further here.</para>
 		<para>Cards that are designed using HamQSLer may contain:</para>
-		<itemizedlist>
+		<itemizedlist spacing='compact'>
 			<listitem>
 				<para>A background image.</para>
 			</listitem>
@@ -271,16 +293,16 @@
 				<para>Any number of text items.</para>
 			</listitem>
 			<listitem>
-				<para>Zero or one QSOs Box which contains QSO information.</para>
+				<para>Zero or one Qsos Box which contains QSO information.</para>
 			</listitem>
 		</itemizedlist>
 		<para>A new card contains no background or secondary images; three text items:
-		callsign, name and QTH, and a salutation; and a QSOs Box. Any item on a card may be
+		callsign, name and QTH, and a salutation; and a Qsos Box. Any item on a card may be
 		deleted from the card, and any item may be added to the card. Background image is a
 		special case. The actual image may be cleared, but the background image item is still
-		maintained as an item on the card. The QSOs Box is also a special case. Only one
-		QSOs Box is permitted on a card, so it is only possible to add a QSOs Box if the
-		original QSOs Box has been deleted.</para>
+		maintained as an item on the card. The Qsos Box is also a special case. Only one
+		Qsos Box is permitted on a card, so it is only possible to add a Qsos Box if the
+		original Qsos Box has been deleted.</para>
 		<para>The following sections deal with the properties of each card item type, but
 		first we will discuss card design related menu items and then highlighting and 
 		selecting card items.</para>
@@ -319,44 +341,48 @@
 							<entry>Select Highlighted Item</entry>
 							<entry>Selects the highlighted card item to allow editing of the
 							item's properties. See 
-							<link linkend='highlightingitems'>Highlighting and Selecting Card
-							Items</link> for more information.</entry>
+							<link linkend='highlightingitems'><emphasis role='underline'>Highlighting
+							and Selecting Card Items</emphasis></link> for more 
+							information.</entry>
 						</row>
 						<row>
 							<entry>Deselect Item</entry>
 							<entry>Deselects the selected card item. See 
-							<link linkend='highlightingitems'>Highlighting and Selecting Card
-							Items</link> for more information.</entry>
+							<link linkend='highlightingitems'><emphasis role='underline'>Highlighting 
+							and Selecting Card Items</emphasis></link> for more information.</entry>
 						</row>
 						<row>
 							<entry>Add Image</entry>
 							<entry>Adds a new secondary image to the card and selects it
-							for editing. See <link linkend='addingimages'>Adding Secondary
-							Images</link> for more information.</entry>
+							for editing. See 
+							<link linkend='addingimages'><emphasis role='underline'>Adding
+							Secondary Images</emphasis></link> for more information.</entry>
 						</row>
 						<row>
 							<entry>Add Text Item</entry>
 							<entry>Adds a new text item to the card. See
-							<link linkend='addingtextitems'>Add New Text Items</link> for
+							<link linkend='addingtextitems'><emphasis role='underline'>Adding 
+							New Text Items</emphasis></link> for
 							more information.</entry>
 						</row>
 						<row>
 							<entry>Add Qsos Box</entry>
 							<entry>Adds a new Qsos Box to the card. See
-							<link linkend='addingqsosbox'>Adding a Qsos Box</link> for
+							<link linkend='addingqsosbox'><emphasis role='underline'>Adding 
+							a Qsos Box</emphasis></link> for
 							more information.</entry>
 						</row>
 						<row>
 							<entry>Delete Selected Item</entry>
 							<entry>Deletes the selected card item from the card. See
-							<link linkend='deletingitem'>Deleting a Card Item</link>
-							for more information.</entry>
+							<link linkend='deletingitem'><emphasis role='underline'>Deleting 
+							a Card Item</emphasis></link> for more information.</entry>
 						</row>
 						<row>
 							<entry>Clear Background Image</entry>
 							<entry>Clears the background image. See
-							<link linkend='clearbackground'>Clearing the Background
-							Image</link> for more information</entry>
+							<link linkend='clearbackground'><emphasis role='underline'>Clearing 
+							the Background Image</emphasis></link> for more information.</entry>
 						</row>
 					</tbody>
 				</tgroup>
@@ -389,32 +415,36 @@
 						<row>
 							<entry>Add Image</entry>
 							<entry>Adds a new secondary image to the card and selects it
-							for editing. See <link linkend='addingimages'>Adding Secondary
-							Images</link> for more information.</entry>
+							for editing. See
+							<link linkend='addingimages'><emphasis role='underline'>Adding 
+							Secondary Images</emphasis></link> for more information.</entry>
 						</row>
 						<row>
 							<entry>Add Text Item</entry>
 							<entry>Adds a new text item to the card. See
-							<link linkend='addingtextitems'>Add New Text Items</link> for
+							<link linkend='addingtextitems'><emphasis role='underline'>Adding 
+							New Text Items</emphasis></link> for
 							more information.</entry>
 						</row>
 						<row>
 							<entry>Add Qsos Box</entry>
 							<entry>Adds a new Qsos Box to the card. See
-							<link linkend='addingqsosbox'>Adding a Qsos Box</link> for
+							<link linkend='addingqsosbox'><emphasis role='underline'>Adding 
+							a Qsos Box</emphasis></link> for
 							more information.</entry>
 						</row>
 						<row>
 							<entry>Delete Selected Item</entry>
 							<entry>Deletes the selected card item from the card. See
-							<link linkend='deletingitem'>Deleting a Card Item</link>
+							<link linkend='deletingitem'><emphasis role='underline'>Deleting 
+							a Card Item</emphasis></link>
 							for more information.</entry>
 						</row>
 						<row>
 							<entry>Clear Background Image</entry>
 							<entry>Clears the background image. See
-							<link linkend='clearbackground'>Clearing the Background
-							Image</link> for more information</entry>
+							<link linkend='clearbackground'><emphasis role='underline'>Clearing 
+							the Background Image</emphasis></link> for more information.</entry>
 						</row>
 					</tbody>
 				</tgroup>
@@ -439,7 +469,8 @@
 				</mediaobject>
 			</figure>
 			<para>The following table shows the menu items and their actions. See
-			<link linkend='highlightingitems'>Highlighting and Selecting Card Items</link>
+			<link linkend='highlightingitems'><emphasis role='underline'>Highlighting 
+			and Selecting Card Items</emphasis></link>
 			for more information on selecting card items.</para>
 			<table frame='all'>
 				<title>Card Design Related Select Dropdown Menu Items and Actions</title>
@@ -511,24 +542,26 @@
 		shows the precedence of card items from highest to lowest:</para>
 		<simplelist>
 			<member>Qsos Box.</member>
-			<member>Text items in the reverse of the order that they were created in.</member>
-			<member>Secondary images in the reverse of the order that they were created in.
+			<member>Text items in the reverse of the order that they were created.</member>
+			<member>Secondary images in the reverse of the order that they were created.
 			</member>
 			<member>Background.</member>
 		</simplelist>
 		<para>A card item may be selected in one of two ways:</para>
-		<orderedlist>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Move the cursor over the card item to highlight it, then click the right
 				mouse button to open the card item context menu. Select the "Select Highlighted
 				Item" menu item from the context menu. The contents of this context menu is
-				discussed in the <link linkend='carddesigncontextmenu'>Card Design
-				Context Menu</link> section, above.</para>
+				discussed in the 
+				<link linkend='carddesigncontextmenu'><emphasis role='underline'>Card Design
+				Context Menu</emphasis></link> section, above.</para>
 			</listitem>
 			<listitem>
 				<para>Select the card item from the Select dropdown menu. More information
-				about this menu is provided in the <link linkend='selectmenu2'>Select Dropdown
-				Menu</link> section, above.</para>
+				about this menu is provided in the 
+				<link linkend='selectmenu2'><emphasis role='underline'>Select Dropdown
+				Menu</emphasis></link> section, above.</para>
 			</listitem>
 		</orderedlist>
 		<para>When a card item has been selected, the card item is outlined by a dark blue
@@ -549,7 +582,7 @@
 	<section>
 		<title>Deselecting Selected Card Items</title>
 		<para>A card item may be deselected in either of the following ways:</para>
-		<orderedlist>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Open the card item context menu and select the "Deselect Item"
 				menu item.</para>
@@ -565,10 +598,12 @@
 		<title>Deleting a Card Item</title>
 		<para>A card item must be selected before it can be deleted. There are two ways to delete
 		a card item:</para>
-		<orderedlist>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Select the "Delete Selected Item" menu item from the card items context
 				menu.</para>
+			</listitem>
+			<listitem>
 				<para>Select "Delete Selected Item" from the Edit dropdown menu.</para>
 			</listitem>
 		</orderedlist>
@@ -581,7 +616,7 @@
 	<section xml:id='addingimages'>
 		<title>Adding Secondary Images</title>
 		<para>A secondary image may be added to a card in either of the following ways:</para>
-		<orderedlist>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Select "Add Image" from the card items context menu.</para>
 			</listitem>
@@ -594,7 +629,8 @@
 		the secondary image properties panel is displayed in the card properties panel to the
 		right of the card design panel. This card item may be moved and resized at any time.
 		 See the
-		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section below.</para>
+		<link linkend='movingcarditem'><emphasis role='underline'>Moving and Resizing Card 
+		Items</emphasis></link> section below.</para>
 		<tip>
 			<para>If your card does not contain a background image, use the background image
 			item for the first image on your card. This reduces the size of the card file
@@ -603,15 +639,17 @@
 		<caution>
 			<para>As stated, when a new secondary image is added to a card, it is centered on
 			the card. Because of the order in which card items are drawn (see the precedence
-			order in <link linkend='highlightingitems'>Highlighting and Selecting Card
-			Items</link>, above), the image may not be visible. Move any other images, text
+			order in 
+			<link linkend='highlightingitems'><emphasis role='underline'>Highlighting and 
+			Selecting Card Items</emphasis></link>, above), the image may not be visible. 
+			Move any other images, text
 			items, and the Qsos Box to see the image.</para>
 		</caution>
 	</section>
 	<section xml:id='addingtextitems'>
 		<title>Adding New Text Items</title>
 		<para>A new text item may be added to a card in the following ways:</para>
-		<orderedlist>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Select "Add Text Item" from the card item context menu.</para>
 			</listitem>
@@ -622,30 +660,33 @@
 		<para>The new text item is initially positioned with the top left corner of the card
 		item located at the center of the card. The text item has the following properties
 		when it is created:</para>
-		<itemizedlist>
+		<itemizedlist spacing='compact'>
 			<listitem>
 				<para>Text is "Text Item".</para>
 			</listitem>
 			<listitem>
 				<para>Font face is the default text font face that was defined when the
-				card was first created. See the <link linkend='settinguserprefs'>Setting
-				User Preferences</link> chapter for information on setting this default
-				property.</para>
+				card was first created. See the 
+				<link linkend='settinguserprefs'><emphasis role='underline'>Setting
+				User Preferences</emphasis></link> chapter for information on setting this 
+				default property.</para>
 			</listitem>
 			<listitem>
 				<para>The font size is 12 points.</para>
 			</listitem>
 		</itemizedlist>
 		<para>The text item may be moved at any time. See the
-		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section below.</para>
+		<link linkend='movingcarditem'><emphasis role='underline'>Moving and Resizing Card 
+		Items</emphasis></link> section below.</para>
 		<para>When the text item is created, it is automatically selected and the text item
-		properties panel is displayed in the card items properties panel.</para>
+		properties panel is displayed in the card properties panel.</para>
 		<caution>
 			<para>As stated, when a new text item is added to a card, it is positioned at the
 			center of
 			the card. Because of the order in which card items are drawn (see the precedence
-			order in <link linkend='highlightingitems'>Highlighting and Selecting Card
-			Items</link>, above), the text item may not be visible. Move any text
+			order in <link linkend='highlightingitems'><emphasis role='underline'>Highlighting 
+			and Selecting Card
+			Items</emphasis></link>, above), the text item may not be visible. Move any text
 			items and the Qsos Box to see the new text item.</para>
 		</caution>
 	</section>
@@ -653,7 +694,7 @@
 		<title>Adding a Qsos Box</title>
 		<para>A Qsos Box can be added to a card if the original Qsos Box was deleted. There
 		are two ways to add a Qsos Box to a card:</para>
-		<orderedlist>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Select "Add Qsos Box" from the card items context menu.</para>
 			</listitem>
@@ -665,18 +706,22 @@
 		card. The box width is set at 90% of the width of the card, and the box is positioned
 		horizontally at the center of the card. The Qsos Box may be moved and resized at any
 		time. See the
-		<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section below.</para>
+		<link linkend='movingcarditem'><emphasis role='underline'>Moving and Resizing Card 
+		Items</emphasis></link> section below.</para>
 		<para>When the Qsos Box is added to the card, it is selected and the Qsos Box
-		properties panel is displayed in the card items properties panel.</para>
+		properties panel is displayed in the card properties panel.</para>
 		<tip>
 			<para>Text in the Qsos Box is intially displayed in the Qsos Box default font
-			face. See the <link linkend='settinguserprefs'>Setting User Preferences</link>
+			face. See the 
+			<link linkend='settinguserprefs'><emphasis role='underline'>Setting User 
+			Preferences</emphasis></link>
 			chapter for information on changing this property.</para>
 		</tip>
 		<tip>
 			<para>Text that is displayed in the Qsos Box (confirming text, column headers, and
-			the text printed in the QSL column) is defined in the user preferences.See the
-			<link linkend='settinguserprefs'>Setting User Preferences</link>
+			the text printed in the QSL column) is defined in the user preferences. See the
+			<link linkend='settinguserprefs'><emphasis role='underline'>Setting User 
+			Preferences</emphasis></link>
 			chapter for information on setting these text values.</para>
 		</tip>
 		<caution>
@@ -688,7 +733,7 @@
 	<section xml:id='clearbackground'>
 		<title>Clearing the Background Image</title>
 		<para>The background image may be cleared in one of two ways:</para>
-		<orderedlist>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Select "Clear Background Image" from the card items context menu.</para>
 			</listitem>
@@ -709,7 +754,8 @@
 		determined by a number of Qsos Box properties including the font, the font size,
 		the columns shown, the column headers, the date format selected, and the maximum
 		number of Qsos that may be printed on the card.  See the 
-		<link linkend='qsosboxprops'>Setting Qsos Box Properties</link> section for information 
+		<link linkend='qsosboxprops'><emphasis role='underline'>Setting Qsos Box 
+		Properties</emphasis></link> section for information 
 		on changing these properties.</para>
 		<para>When the mouse cursor is moved over a selected card item, the cursor will change
 		to one of the cursors shown in the table below. The cursor that is displayed is
@@ -756,7 +802,7 @@
 							</inlinemediaobject>
 						</entry>
 						<entry>This cursor is only displayed when the mouse cursor is moved over
-						the top left or bottom right corners of a selected background or
+						the top left or bottom right corner of a selected background or
 						secondary image. Press and hold the left mouse button and drag the mouse
 						towards the center of the image to reduce the size of the image. To enlarge
 						the image, press the left mouse button and drag the mouse away from
@@ -839,13 +885,16 @@
 				appropriate section below. </para>
 				<tip>
 					<para>The default images folder is maintained in the user preferences file. See
-					the <link linkend='settinguserprefs'>Setting User Preferences</link>
+					the <link linkend='settinguserprefs'><emphasis role='underline'>Setting 
+					User Preferences</emphasis></link>
 					chapter for information on setting this value.</para>
 				</tip>
 				<para>When you load an image, the path to the image file is displayed in the
 				text box below the "..." button in the image properties panel.
 				The image below shows the background image properties
-				panel after the background image used in the Getting Started tutorial has been
+				panel after the background image used in the 
+				<link linkend='gettingstarted'><emphasis role='underline'>Getting 
+				Started</emphasis></link> tutorial has been
 				loaded.</para>
 				<figure xml:id="backgroundimageproperties3">
 					<title>Background Image Properties With Sample Image Loaded</title>
@@ -856,12 +905,19 @@
 					</mediaobject>
 				</figure>
 				<para>There are
-				two relative path specifiers: "$MyDocs$" is a reference to the current user's 
-				"My Documents" directory; "$hamqslerFolder$" is a references to the hamqsler directory
-				in the current user's "My Documents" directory. If the image file is located anywhere
-				other than in "My Documents", "hamqsler", or a subdirectory of these directories, then
-				the full path name is specified. The path in the image above specifies that the image
-				file is located at "...\My Documents\hamqsler\Samples\sample.jpg".</para>
+				two relative path specifiers: <filename class='directory'>$MyDocs$</filename> 
+				is a reference to the current user's 
+				<filename class='directory'>My Documents</filename> directory; 
+				<filename class='directory'>$hamqslerFolder$</filename> is a references to the 
+				<filename class='directory'>hamqsler</filename> directory
+				in the current user's <filename class='directory'>My Documents</filename> 
+				directory. If the image file is located anywhere
+				other than in <filename class='directory'>My Documents</filename>, 
+				<filename class='directory'>hamqsler</filename>, 
+				or a subdirectory of these directories, then
+				the full path name is specified. The path in the image above specifies that 
+				the image file is located at 
+				<filename>...\My Documents\hamqsler\Samples\sample.jpg</filename>.</para>
 			</section>
 			<section xml:id='settingcolors'>
 				<title>Setting Colors</title>
@@ -894,7 +950,7 @@
 					</mediaobject>
 				</figure>
 				<para>There are several ways to select a color:</para>
-				<orderedlist>
+				<orderedlist spacing='compact'>
 					<listitem>
 						<para>Click on a color swatch in the Basic colors section. Note the
 						ColorSolid swatch, and the settings of the Hue, Saturation and 
@@ -904,18 +960,18 @@
 					</listitem>
 					<listitem>
 						<para>Click on a location in the color rainbow, then move the
-						slider located to the right of the rainbow to adjust the selected
-						color from black through the selected color to white. Note that the
+						slider located to the right of the rainbow to adjust the 
+						luminance of the selected color. Note that the
 						Hue, Saturation, and Luminance values, as well as the Red, Green,
 						and Blue values, change to match the color. The ColorSolid swatch
 						also changes to match.</para>
 					</listitem>
 					<listitem>
-						<para>Adjust the Hue, Saturation, and Luminance values directly. Valid
+						<para>Enter the Hue, Saturation, and Luminance values directly. Valid
 						values are from 0 to 240.</para>
 					</listitem>
 					<listitem>
-						<para>Adjust the Red, Green, and Blue values directly. Valid values
+						<para>Enter the Red, Green, and Blue values directly. Valid values
 						range from 0 to 255. You are probably much more familiar with this
 						method of specifying a color than using hue, saturation, and
 						luminance.</para>
@@ -925,26 +981,24 @@
 				The color picker dialog will close, the color of the button will change to match
 				the chosen color, and the corresponding card item property will change to 
 				that color.</para>
-				<caution>
+				<tip>
 					<para>In the color picker dialog, there is an "Add to Custom Colors" button.
 					If you click on that button, the chosen color will be added to the Custom
-					colors swatches. The custom colors are not saved, so the next time you
-					open the color picker dialog, the custom colors are not displayed. To
-					retrieve the same color again, remember the hue, saturation, and
-					luminance values or the red, green, and blue values.</para>
-				</caution>
+					colors swatches. Custom colors are saved for display the next time that
+					you open the color picker dialog.</para>
+				</tip>
 			</section>
 			<section xml:id='settingdropdownboxvalues'>
 				<title>Setting Dropdown Box Values</title>
-				<para>In a dropdown box, the list of acceptable values is listed when you click
+				<para>In a dropdown box, the list of acceptable values is shown when you click
 				on the dropdown box. There are several ways to select a value:</para>
-				<orderedlist>
+				<orderedlist spacing='compact'>
 					<listitem>
 						<para>Click anywhere in the dropdown box to open it. Select the value
 						you want by clicking on it. The dropdown list closes and the selected
-						value is displayed in the box.</para>
-						<para>If the list is long, it will not all be displayed in the dropdown.
-						To scroll to up the list, place the mouse cursor at the top of the
+						value is displayed in the box.
+						If the list is long, it will not all be displayed in the dropdown.
+						To scroll up the list, place the mouse cursor at the top of the
 						dropdown; to scroll down the list, place the mouse cursor at the bottom
 						of the dropdown. Alternatively, you may scroll using the mouse
 						wheel.</para>
@@ -988,30 +1042,34 @@
 			<title>Setting Background Image Properties</title>
 			<para>The only property for a background image is the image file name. The method for
 			setting this property is described in the
-			<link linkend='imagefilename'>Setting an Image File Name</link> section, above.</para>
+			<link linkend='imagefilename'><emphasis role='underline'>Setting an Image File 
+			Name</emphasis></link> section, above.</para>
 			<para>When you set the image file name for a background image, the image will be
 			sized to completely cover the card; if the aspect ratio of the image is different from
 			the aspect ratio of the card, then the image will extend either to the left and right
 			of the card or the top and bottom of the card. You saw this in the
-			<link linkend="gettingstarted">Getting Started</link> tutorial.</para>
+			<link linkend="gettingstarted"><emphasis role='underline'>Getting 
+			Started</emphasis></link> tutorial.</para>
 			<para>You may move and resize the image by following the instructions in the
-			<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section of this
-			chapter.</para>
+			<link linkend='movingcarditem'><emphasis role='underline'>Moving and Resizing 
+			Card Items</emphasis></link> section of this chapter.</para>
 		</section>
 		<section>
 			<title>Setting Secondary Image Properties</title>
 			<para>The method for specifying the image file name for a secondary image is
-			described in the <link linkend='imagefilename'>Setting an Image File Name</link>
+			described in the 
+			<link linkend='imagefilename'><emphasis role='underline'>Setting an Image File 
+			Name</emphasis></link>
 			section above. When the image is displayed for the first time, it is centered on the
 			card, and the shorter of the width and height dimensions of the image is set to 1 inch
 			or 25.4 mm. You may move and resize the image using the instructions in the
-			<link linkend='movingcarditem'>Moving and Resizing Card Items</link> section in this
-			chapter.</para>
+			<link linkend='movingcarditem'><emphasis role='underline'>Moving and Resizing 
+			Card Items</emphasis></link> section in this chapter.</para>
 		</section>
 		<section>
 			<title>Setting Text Item Properties</title>
 			<para>When a text item is selected, the text item properties panel is displayed
-			in the card items properties panel. The image below shows the text item
+			in the card properties panel. The image below shows the text item
 			properties panel when the callsign text item is selected.</para>
 			<figure xml:id="textitemproperties2">
 				<title>Text Item Properties Panel for Callsign Text Item</title>
@@ -1022,8 +1080,10 @@
 				</mediaobject>
 			</figure>
 			<para>The font used to display the text item is selected using the font
-			dropdown box. See <link linkend='settingdropdownboxvalues'>Setting Dropdown
-			Box Values</link>, above for methods to select a font from this dropdown box.</para>
+			dropdown box. See 
+			<link linkend='settingdropdownboxvalues'><emphasis role='underline'>Setting Dropdown
+			Box Values</emphasis></link>, above for methods to select a font from this 
+			dropdown box.</para>
 			<tip>
 				<para>Choose a font that is easy to read.
 				In general, proportionally spaced fonts are easier to read than
@@ -1103,13 +1163,17 @@
 			You may either select
 			a predefined value, or enter a different value. The value entered must be greater
 			than 0; if 0 is entered, the value 1 is actually used. See 
-			<link linkend='settingcomboboxvalues'>Setting Combobox Values</link> above
+			<link linkend='settingcomboboxvalues'><emphasis role='underline'>Setting Combobox 
+			Values</emphasis></link> above
 			for information on using this combobox.</para>
 			<para>Click on the text color button to open the color picker dialog to select
-			a color for the text. See <link linkend='settingcolors'>Setting Colors</link>
+			a color for the text. See 
+			<link linkend='settingcolors'><emphasis role='underline'>Setting 
+			Colors</emphasis></link>
 			above for selecting a color using the color picker dialog.</para>
 			<para>In the image above, the Text groupbox contains a static text box with the
-			text "VA3HJ" and a Macros button. See the <link linkend='macros'>Macros</link>
+			text "VA3HJ" and a Macros button. See the 
+			<link linkend='macros'><emphasis role='underline'>Macros</emphasis></link>
 			chapter for information on using macros.</para>
 			<para>The Check Boxes group box contains a number of properties related to
 			the display of check boxes before and after the text in a text item.</para>
@@ -1118,13 +1182,13 @@
 			<para>To set the thickness of the checkboxes, adjust the Line Thickness
 			slider. The value displayed is in hundredths of an inch.</para>
 			<para>To change the size of the checkboxes, adjust the Check Box Ratio slider.
-			The value that is displayed is the ratio of the height and width of the checkboxes
+			The value that is displayed is the ratio of the height and and width of the checkboxes
 			to the total height of the text item.</para>
 		</section>
 		<section xml:id='settingqsosboxproperties'>
 			<title>Setting Qsos Box Properties</title>
 			<para>The Qsos Box properties panel, shown in the image below, is displayed in the 
-			card items properties panel when the Qsos Box is selected.</para>
+			card properties panel when the Qsos Box is selected.</para>
 			<figure xml:id="qsosboxproperties2">
 				<title>Qsos Box Properties Panel</title>
 				<mediaobject>
@@ -1142,12 +1206,14 @@
 			is printed; if the checkbox is unchecked, then the text is not printed.</para>
 			<tip>
 				<para>The confirming text is stored in the user preferences file. See the
-				<link linkend='settinguserprefs'>Setting User Preferences</link>
+				<link linkend='settinguserprefs'><emphasis role='underline'>Setting User 
+				Preferences</emphasis></link>
 				chapter for information on changing this text.</para>
 			</tip>
 			<caution>
 				<para>The confirming text is saved with the card file when the card is created.
-				The only way to change this text is to create a new card.</para>
+				The only way to change this text is to change the confirming text item
+				in user preferences, then create a new card.</para>
 			</caution>
 			<para>The Qsos Box may contain either a band or a frequency column. The column
 			that is printed on the card is controlled by the Show Band Column and Show
@@ -1163,7 +1229,8 @@
 			<tip>
 				<para>The frequency value that is substituted is determined by values stored
 				in the user preferences file. See the
-				<link linkend='settinguserprefs'>Setting User Preferences</link> chapter
+				<link linkend='settinguserprefs'><emphasis role='underline'>Setting User
+				Preferences</emphasis></link> chapter
 				for information on changing the values that are substituted.</para>
 			</tip>
 			<para>The Qsos Box may contain an optional QSL column containing text such as
@@ -1173,7 +1240,8 @@
 			<tip>
 				<para>The QSL column header text and the text printed for each QSO is set
 				in the user preferences file. See the 
-				<link linkend='settinguserprefs'>Setting User Preferences</link> chapter
+				<link linkend='settinguserprefs'><emphasis role='underline'>Setting User 
+				Preferences</emphasis></link> chapter
 				for information on changing the text.</para>
 			</tip>
 			<caution>
@@ -1185,10 +1253,10 @@
 			print the dates in the date column on the card. The setting also determines the
 			header that is printed for the date column. Select the date format you want from
 			the dropdown box. Methods for selecting a value are discussed in the
-			<link linkend='settingdropdownboxvalues'>Setting Dropdown Box Values</link>
-			section.</para>
+			<link linkend='settingdropdownboxvalues'><emphasis role='underline'>Setting 
+			Dropdown Box Values</emphasis></link> section.</para>
 			<para>The following date formats are available:</para>
-			<orderedlist>
+			<orderedlist spacing='compact'>
 				<listitem>
 					<para>YYYY-MM-DD. This is one of the ISO 8601 date formats.</para>
 				</listitem>
@@ -1204,24 +1272,27 @@
 				<para>The header text that is printed or displayed in the date column is
 				determined by the date format selected. The header text for each format
 				may be set in the user preferences file. See the
-				<link linkend='settinguserprefs'>Setting User Preferences</link>
+				<link linkend='settinguserprefs'><emphasis role='underline'>Setting User 
+				Preferences</emphasis></link>
 				chapter for more information.</para>
 			</tip>
 			<tip>
 				<para>The default date format is also set in the user preferences file.
-				See the <link linkend='settinguserprefs'>Setting User Preferences</link>
+				See the <link linkend='settinguserprefs'><emphasis role='underline'>Setting 
+				User Preferences</emphasis></link>
 				chapter for information on how to set this default value.</para>
 			</tip>
 			<tip>
 				<para>The three character month abreviations are saved in the user
 				preferences file. See the 
-					<link linkend='settinguserprefs'>Setting User Preferences</link>
+				<link linkend='settinguserprefs'><emphasis role='underline'>Setting 
+				User Preferences</emphasis></link>
 				chapter for information on how to change these values.</para>
 			</tip>
 			<caution>
 				<para>The header text for each date format is saved 
 				in the card file when the card is created. The only way to change these
-				values is to create a new card.</para>
+				values is to change them in user preferences and then create a new card.</para>
 			</caution>
 			<para>The value selected in the Max QSOs dropdown box determines the maximum
 			number or QSOs that can be printed on a card. This is also the number of lines
@@ -1231,7 +1302,9 @@
 			an empty line for each of the maximum number of QSOs.</para>
 			<para>Click the Line and Text Color button to change the color that the Qsos Box
 			lines and text are printed in. This opens a Color Picker dialog to allow selection
-			of a color. See the <link linkend='settingcolors'>Setting Colors</link>
+			of a color. See the 
+			<link linkend='settingcolors'><emphasis role='underline'>Setting 
+			Colors</emphasis></link>
 			section for information on how to select a color.</para>
 			<para>Click the Callsign Color button to set the color that the callsign
 			in the confirming text is printed in. This opens a Color Picker dialog to allow
@@ -1241,11 +1314,14 @@
 			opens a Color Picker dialog to allow the selection of the color.</para>
 			<para>The Font Size dropdown box contains a list of font sizes (in points) that
 			the text in the Qsos Box can be printed in. Select a value using one of the
-			methods described in the <link linkend='settingdropdownboxvalues'>Setting Dropdown
-			Box Values</link> section.</para>
+			methods described in the 
+			<link linkend='settingdropdownboxvalues'><emphasis role='underline'>Setting 
+			Dropdown Box Values</emphasis></link> section.</para>
 			<tip>
-				<para>As described in the <link linkend='movingcarditem'>Moving and Resizing
-				Card Items</link> section in this chapter, the width of the Qsos Box may be
+				<para>As described in the 
+				<link linkend='movingcarditem'><emphasis role='underline'>Moving and Resizing
+				Card Items</emphasis></link> section in this chapter, the width of the 
+				Qsos Box may be
 				resized. The minimum width for the Qsos Box is determined by the width
 				of the text displayed in each column. The width of the text is determined
 				by the font size that the text is displayed or printed in. Select a smaller
@@ -1265,7 +1341,8 @@
 			<para>The Qsos Box background has two properties: color and opacity. Click the
 			Background Color button to set the background color. This opens a Color Picker
 			dialog that allows you to select a color. See the
-			<link linkend='settingcolors'>Setting Colors</link> section, above, for
+			<link linkend='settingcolors'><emphasis role='underline'>Setting 
+			Colors</emphasis></link> section, above, for
 			information on how to select a color.</para>
 			<para>Once the background color has been set, adjust the Background Opacity
 			slider to set the opacity (reverse of transparency) of the Qsos Box. The lower
@@ -1281,7 +1358,7 @@
 			<section xml:id='multiplecallsigns'>
 				<title>Handling Multiple Callsigns</title>
 				<para>There are several ways that you can handle multiple callsigns:</para>
-				<orderedlist>
+				<orderedlist spacing='compact'>
 					<listitem>
 						<para>Create a different card for each callsign.</para>
 					</listitem>
@@ -1295,9 +1372,10 @@
 						<para>For your callsign text item, use an AdifMacro to retrieve the
 						STATION_CALLSIGN field from the QSOs. If your logging program does
 						not log STATION_CALLSIGN, use the OPERATOR field instead. Finally,
-						if the OPERATOR field is no logged, check for the OWNER_CALLSIGN
+						if the OPERATOR field is not logged, check for the OWNER_CALLSIGN
 						field. Be sure to check the Separate Cards by ADIF Field checkbox
-						for the macro. See the <link linkend='macros'>Macros</link>
+						for the macro. See the 
+						<link linkend='macros'><emphasis role='underline'>Macros</emphasis></link>
 						chapter for information on the AdifMacro.</para>
 					</listitem>
 				</orderedlist>
@@ -1305,7 +1383,7 @@
 			<section xml:id='multipleqths'>
 				<title>Handling Multiple QTHs</title>
 				<para>There are also several ways to handle multiple QTHs:</para>
-				<orderedlist>
+				<orderedlist spacing='compact'>
 					<listitem>
 						<para>Create a different card for each QTH. You would want to use
 						this method if you use different images for each QTH.</para>
@@ -1320,7 +1398,7 @@
 						field to specify unique QTHs that you operate from, use an
 						AdifMacro in a text item to specify the QTH. Check the Separate
 						Cards by ADIF Field checkbox for the macro. See the
-						<link linkend='macros'>Macros</link>
+						<link linkend='macros'><emphasis role='underline'>Macros</emphasis></link>
 						chapter for information on the AdifMacro.</para>
 					</listitem>
 				</orderedlist>
@@ -1329,8 +1407,8 @@
 				<title>Please QSL Thanks</title>
 				<para>Every QSL card should contain either a request for a QSL card from 
 				the other station, or a thanks for the card that the other station sent you. 
-				HamQSLer provides a number of ways of accomplishing this:</para>
-				<orderedlist>
+				<literal>HamQSLer</literal> provides a number of ways of accomplishing this:</para>
+				<orderedlist spacing='compact'>
 					<listitem>
 						<para>If you only send QSL cards in response to a received card, then 
 						<link linkend='addingtextitems'>add a text item</link> containing the 
@@ -1355,12 +1433,12 @@
 						pen to check the appropriate checkbox.</para>
 					</listitem>
 					<listitem>
-						<para>What if you are QSLing a number of QSOs, some that received a
+						<para>What if you are QSLing a number of QSOs, some that you received a
 						QSL card for, and some that you did not receive a QSL card for? An
 						optional QSL column may be added to the Qsos Box with "Pse" or "Tnx"
 						printed as appropriate for each QSO. See
-						<link linkend='settingqsosboxproperties'>Setting Qsos Box
-						Properties</link> for more information.</para>
+						<link linkend='settingqsosboxproperties'><emphasis role='underline'>Setting 
+						Qsos Box Properties</emphasis></link> for more information.</para>
 					</listitem>
 				</orderedlist>
 			</section>
@@ -1368,9 +1446,10 @@
 	</section>
 	<section>
 		<title>Two-Sided Cards</title>
-		<para>HamQSLer does not directly support the design and printing of two-sided cards.
+		<para><literal>HamQSLer</literal> does not directly support the design and printing 
+		of two-sided cards.
 		You could use the following method to create a two-sided card:</para>
-		<orderedlist>
+		<orderedlist spacing='compact'>
 			<listitem>
 				<para>Design a QSL card that will serve as the front of your card. Include
 				one or more images, your callsign, and possibly a greeting or your city,
@@ -1384,7 +1463,7 @@
 			</listitem>
 			<listitem>
 				<para>When you print the cards, first print the front of the cards, then
-				reload the cardstock in your printer so that the backside will be printed. 
+				reload the cardstock in your printer so that the backside can be printed. 
 				Print the back of the card.</para>
 			</listitem>
 		</orderedlist>
