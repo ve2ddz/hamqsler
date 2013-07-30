@@ -14,10 +14,11 @@
 		printed on a card. Other factors are the order that the QSOs are sorted,
 		and any macros containing ADIF fields that are used on the card.</para>
 		<para>To determine the number of cards that will be printed, select the
-		Cards -> Calculate Number of Cards to be Printed... menu item. This opens
+		Cards => Calculate Number of Cards to be Printed... menu item. This opens
 		the dialog shown in the image below. The number of cards shown in the
 		dialog corresponds to the QSOs that were loaded, selected and sorted in
-		the <link linkend="gettingstarted">Get Started tutorial</link>, and the
+		the <link linkend="gettingstarted"><emphasis role='underline'>Getting 
+		Started</emphasis></link> tutorial, and the
 		card that was designed in that tutorial.</para>
 		<para>To determine the number of sheets of cardstock that are needed, divide
 		the number of cards by the number of cards that will be printed per page,
@@ -41,7 +42,7 @@
 			printer can handle. For example, A3 paper is 297 by 420 mm (approximately 11.7 by
 			16.5 inches). This paper cannot be inserted into a printer whose width is limited to
 			US letter (8 1/2 inches or 216 mm wide) or A4 (210 mm or 8.3 inches wide) paper. In
-			some other cases, the printer manufacturer may decide not to support a printer size
+			some other cases, the printer manufacturer may decide not to support a paper size
 			because it is a size that is rarely used.</para>
 			<para>Most printers support defining custom paper sizes, either on a system wide
 			basis, or for a single print job. In the former case, the paper size is defined once
@@ -50,7 +51,8 @@
 			for one print job; if the paper size is needed again, it must be defined in the next
 			print job.</para>
 			<para>The following two subsections show how to define a system wide custom paper size for
-			printers that support it, and a tool for defining a custom paper size in HamQSLer that
+			printers that support it, and a tool for defining a custom paper size in 
+			<literal>HamQSLer</literal> that
 			is saved so that it may be reused in future card print jobs. In both subsections, a
 			custom paper size for bureau cards will be created.</para>
 			<section>
@@ -88,7 +90,7 @@
 				printer. Click on the dropdown box to open it. The contents will look similar to the
 				image below.</para>
 				<figure xml:id="papersizesdropdown">
-					<title>Features Panel on Printing Preferences Dialog</title>
+					<title>IOpen Paper Sizes Dropdown Box</title>
 					<mediaobject>
 						<imageobject>
 							<imagedata fileref="images/papersizesdropdown.png" />
@@ -100,7 +102,8 @@
 				is opened that allows you to change the default paper size for your printer. Any custom
 				paper sizes that you define are probably listed at the bottom. Since we are not
 				interested in changing the default paper size, you can ignore this menu item.</para>
-				<para>The last menu item is Custom... If this item is present, you can define
+				<para>The last menu item is Custom... Other printer manufacturers may label this
+				as "User Defined..." or similar. If this item is present, you can define
 				custom paper sizes; if it is not present,
 				then you must set your custom paper sizes using the method
 				in the section below. Click on the Custom... item to open the custom paper size
@@ -122,24 +125,27 @@
 				to save the new custom paper size, then click the OK button to close the dialog. Your new
 				custom paper size will be available from the standard print dialog that is displayed
 				when you print from most programs. This paper size will also be available from the
-				print dialog in HamQSLer. Printing cards in HamQSLer is discussed below.</para>
+				print dialog in <literal>HamQSLer</literal>. 
+				Printing cards in <literal>HamQSLer</literal> is discussed below.</para>
 				<tip>
 					<para>Always set the width in the custom paper size dialog to the smaller dimension
-					of your custom paper size, and the length to the larger dimension. HamQSLer assumes
+					of your custom paper size, and the length to the larger dimension. 
+					<literal>HamQSLer</literal> assumes
 					that the paper sizes are set for Portrait mode.</para>
 				</tip>
 				<caution>
 					<para>Your printer may limit the number of custom paper sizes that you
 					can define. If you need to define additional paper sizes for use
-					with HamQSLer, use the method described in the following section.</para>
+					with <literal>HamQSLer</literal>, use the method described in the following 
+					section.</para>
 				</caution>
 			</section>
 			<section>
 				<title>Defining a Custom Paper Size for HamQSLer Only</title>
 				<para>If your printer does not support setting system wide custom paper sizes, you
 				may use the method described here to create a custom size that can be used only
-				within HamQSLer.</para>
-				<para>To define a custom paper size, select the Tools -> Define Custom
+				within <literal>HamQSLer</literal>.</para>
+				<para>To define a custom paper size, select the Tools => Define Custom
 				Paper Sizes menu item. This opens the custom paper sizes dialog shown in
 				the image below.</para>
 				<figure xml:id="custompapersizes">
@@ -151,7 +157,7 @@
 					</mediaobject>
 				</figure>
 				<para>The Name dropdown box contains the names of all custom paper sizes
-				you have already defined in HamQSLer and the word
+				you have already defined in <literal>HamQSLer</literal>, and the word
 				<emphasis>Custom</emphasis>. To make changes to any of the paper sizes
 				you have defined, select that paper size name. Otherwise, select
 				<emphasis>Custom</emphasis>. Note that <emphasis>Custom</emphasis>
@@ -172,17 +178,18 @@
 				new paper size, then click the Close button to close the dialog.</para>
 				<para>This new paper size will be displayed at the end of the
 				paper sizes in the paper size dropdown
-				in the print dialog for HamQSLer.</para>
+				in the print dialog for <literal>HamQSLer</literal>.</para>
 				<tip>
 					<para>Always enter the smaller paper dimension in the width field
-					and the larger dimension in the height field. HamQSLer assumes the
+					and the larger dimension in the height field. 
+					<literal>HamQSLer</literal> assumes the
 					paper sizes are defined in Portrait mode.</para>
 				</tip>
 				<caution>
 					<para>Only use this method to define custom paper sizes if you cannot
 					define a system wide custom paper size for your printer. Defining
 					a custom paper size using the instructions in this section means
-					that the paper size is available in HamQSLer only.</para>
+					that the paper size is available in <literal>HamQSLer</literal> only.</para>
 				</caution>
 				<caution>
 					<para>The custom paper sizes created using this method are stored
@@ -198,7 +205,8 @@
 			Borderless printing is normally used for printing photographs. The printer increases
 			the image size by a few percent to ensure that the image is larger than the paper
 			size so that the image being printed completely covers the paper. A small portion
-			of the edges of the image are outside the boundaries of the paper. This is
+			of the edges of the image are outside the boundaries of the paper to compensate for
+			any paper misalignments in the printer. This is
 			usually not noticed when you print a photograph, but will be noticeable if
 			you print multiple QSL cards in borderless mode, especially if you select a
 			cards layout on the page where the one or more cards is positioned at the edges
@@ -226,23 +234,28 @@
 			For example, the HP Officejet 6500 printer has margins of 0.125 inch (3.175 mm)
 			on every side; the HP Photosmart 7960 series printers have minimum margins of
 			0.125, 0.07, 0.135, and 0.583 inch or 3.175, 1.778, 3.429, and 14.817 mm.
-			How do you determine the minimum margins for you printers? HamQSLer
-			includes a tool for that. See <link linkend="minimummargins">
-			Determining Printer Minimum Margins</link> below.</para>
-			<para>Obviously mimimum margins would lead to a problem if you attempted to 
+			How do you determine the minimum margins for you printers? 
+			<literal>HamQSLer</literal>
+			includes a tool for that. See 
+			<link linkend="minimummargins"><emphasis role='underline'>Determining Printer 
+			Minimum Margins</emphasis></link> below.</para>
+			<para>Obviously minimum margins would lead to a problem if you attempted to 
 			print cards	using a cards layout that positioned the cards on one or more edges 
 			of the page. The edges of the cards that are positioned at the edges of the page
-			are clipped, producing a white margin on those edges. Provided the minimum margins are less than
-			0.25 inch or 6.35 mm, HamQSLer has a setting that allows you to clip the printing
+			are clipped, producing a white margin on those edges. Provided the minimum margins 
+			are less than 0.25 inch or 6.35 mm, <literal>HamQSLer</literal> 
+			has a setting that allows you to clip the printing
 			around the edges of each card to match the largest minimum margin for the
-			printer. See <link linkend="printerprops">Printer Properties and
-			Print Properties</link>, below for more information.</para>
+			printer. See 
+			<link linkend="printerprops"><emphasis role='underline'>Printer Properties and
+			Print Properties</emphasis></link>, below for more information.</para>
 		</section>
 		<section xml:id="minimummargins">
 			<title>Determining Printer Minimum Margins</title>
 			<para>As discussed above, printer minimum margins determine where on a page you
-			can actually print. HamQSLer provides a tool to enumerate these margins. To open
-			the tool, select the Tools -> Show Printer Margins.</para>
+			can actually print. <literal>HamQSLer</literal> provides a tool to enumerate 
+			these margins. To open
+			the tool, select the Tools => Show Printer Margins menu item.</para>
 			<para>The printer minimum margins dialog opens. The printer dropdown box
 			lists all of the printers installed on the user's computer, with the default
 			printer selected, and the margins listed below the dropdown. The image below
@@ -277,7 +290,7 @@
 		<section xml:id="printerprops">
 			<title>Printer Properties and Print Properties</title>
 			<para>Printer settings and print settings may be set in three locations:</para>
-			<orderedlist>
+			<orderedlist spacing='compact'>
 				<listitem>
 					<para>The settings in user preferences are program default settings.
 					These settings are transferred to the card file when a new card is
@@ -412,7 +425,8 @@
 				of the card are printed to all edges of the card. This checkbox also
 				has an effect in card design mode; if the checkbox is checked, the margin
 				is displayed on the card. The image below shows the card created in
-				the Getting Started chapter with the Set Card Margins to Printer
+				the <link linkend='gettingstarted'><emphasis role='underline'>Getting 
+				Started</emphasis></link> chapter with the Set Card Margins to Printer
 				Margins checkbox checked. The Print Card Outlines checkbox was also
 				checked to better show the card edges. As you can see, there is a
 				clean margin around the inside edges of the card. This margin allows
@@ -437,7 +451,7 @@
 				are a number of ways to layout the cards on the cardstock; this setting
 				simply allows the user to select a cards layout that prints cards out
 				to the edges of the cardstock.</para>
-				<para>What happens if the maximum printer margin is large. Have a look at
+				<para>What happens if the maximum printer margin is large? Have a look at
 				the following image.</para>
 				<figure xml:id="cardmargins2">
 					<title>Card With Large Printer Margins</title>
@@ -459,9 +473,10 @@
 		</section>
 		<section>
 			<title>Printing Cards</title>
-			<para>HamQSLer prints cards with QSO information in the QSOs Box on each card.
+			<para><literal>HamQSLer</literal> prints cards with QSO information in the Qsos Box 
+			on each card.
 			If no QSOs are loaded or selected for printing, then a single page of cards
-			with no QSO information in the QSOs Box is printed.</para>
+			with no QSO information in the Qsos Box is printed.</para>
 			<caution>
 				<para>The cards are printed with QSOs in the order that they are sorted
 				in the QSOs tab. Be sure to sort the cards in the order you want them
@@ -470,7 +485,7 @@
 			<para>To print cards, the card must be loaded into the program, and the card's
 			tab must be selected. That is, the card must be displayed in the program's
 			main window.</para>
-			<para>Select the Cards -> Print Cards... menu item. This will open the
+			<para>Select the Cards => Print Cards... menu item. This will open the
 			print cards dialog which is shown in the image below.</para>
 			<figure xml:id="printdialog2">
 				<title>Print Cards Dialog</title>
@@ -501,7 +516,7 @@
 			<para>If cards cannot be printed on the cardstock in one of the orientations,
 			then that row of layouts is not displayed in the dialog. For example, the
 			image below shows the cards layout group box for bureau sized cards on
-			4 by 6 inch paper. Because the card width is greater than the 4 inches,
+			4 by 6 inch paper. Because the card width is greater than 4 inches,
 			cards cannot be printed on the paper in portrait orientation, so the
 			portrait layouts are not shown.</para>
 			<figure xml:id="cardslayoutlandscapeonly">
@@ -537,8 +552,10 @@
 			11 inches wide in landscape mode. So, two cards can just be printed across
 			the paper in landscape mode. However, if the cards are to be printed inside the
 			printer margins, then only one card wide can be printed. Compare this image
-			to the image in Figure 9.7. The only difference in settings is that the
-			Print Inside Printer Margins is checked for Figure 9.10.</para>
+			to the image in 
+			<link linkend='printdialog2'><emphasis role='underline'>Figure
+			9.13</emphasis></link>. The only difference in settings is that the
+			Print Inside Printer Margins is checked for Figure 9.16.</para>
 			<figure xml:id="cardsinsidemargins">
 				<title>Cards Layouts Inside Margins</title>
 				<mediaobject>
@@ -562,7 +579,7 @@
 			<para>The print cards dialog contains three buttons: Print, Preview, and Cancel.
 			These buttons perform the expected functions.</para>
 			<para>Selecting the Print button prints the cards. A message box, like the one
-			in the image below is displayed and updated for each page of cards as
+			in the image below, is displayed and updated for each page of cards as
 			they are printed. When the last past page is printed, the message
 			box disappears.</para>
 			<figure xml:id="printing">
@@ -577,7 +594,7 @@
 			output is queued to the printer queue, and control returns to the program.
 			Only then will the printer start printing the cards. This has a number of
 			advantages:</para>
-			<itemizedlist>
+			<itemizedlist spacing='compact'>
 				<listitem>
 					<para>The program does not have to wait for the printer to finish
 					printing before it regains control.</para>
@@ -597,8 +614,9 @@
 			the message box shown in the image above is displayed until the last page
 			of cards is processed. The first page of cards is displayed in the print
 			preview dialog. For example, the image below shows the print preview dialog
-			as displayed if you followed the <link linkend="gettingstarted">Getting 
-			Started tutorial</link>.</para>
+			as displayed if you followed the 
+			<link linkend="gettingstarted"><emphasis role='underline'>Getting 
+			Started</emphasis></link> tutorial.</para>
 			<figure xml:id="printpreview1">
 				<title>Print Preview Dialog</title>
 				<mediaobject>
@@ -726,7 +744,7 @@
 	<section>
 		<title>Saving Card as a JPEG</title>
 		<para>A card, with or without QSO data, may be saved as a JPEG file for display
-		on a website or for sending over the Internet. To do this, select the Cards ->
+		on a website or for sending over the Internet. To do this, select the Cards =>
 		Save Card as Jpeg... menu item. This opens the JPEG Image Properties dialog
 		which is shown below.</para>
 		<figure xml:id="saveasjpeg">
@@ -741,21 +759,22 @@
 		image. If you want to include QSO data in the image, then check the Show QSOs
 		checkbox. The card in the image will contain the QSOs that would appear on the 
 		first card if you were printing cards.</para>
-		<para>The resolution dropdown box contains three commonly used values; 96 DPI
+		<para>The resolution combobox contains three commonly used values; 96 DPI
 		is the value to use for displaying cards on a computer, such as from a website.
-		This corresponds approximately to the typical resolution of a computer monitor,
+		This corresponds approximately to the resolution of a typical computer monitor,
 		so the cards will appear about lifesize on the monitor.
 		300 and 600 DPI are good values for printing or for sending to a QSL card printer.
-		The dropdown box value is also editable so you can enter any value you want.</para>
+		The combobox value is also editable so you can enter any value you want.</para>
 		<para>JPEG files use a lossy compression when they are saved, so when a file is
-		saved, its quality will decrease somewhat. The quality dropdown box contains a number
+		saved, its quality will decrease somewhat. The quality combobox contains a number
 		of values that control the amount of compression that is applied when the card
 		is saved. Quality values vary between 0 and 100, with 100 being the best
 		quality. Even at 100, there is some compression applied.</para>
-		<para>There is a link between quality and the size of the image file; the
+		<para>There is a link between quality and the size of the image file: the
 		higher the quality setting, the larger the file size. For example, take the sample
-		card that was created in the <link linkend="gettingstarted">Getting
-		Started tutorial</link>. The table below shows the size of the file that
+		card that was created in the 
+		<link linkend="gettingstarted"><emphasis role='underline'>Getting
+		Started</emphasis></link> tutorial. The table below shows the size of the file that
 		is created at each of four quality values, with the resolution set to 300 DPI.</para>
 		<table frame='all'>
 			<title>JPEG Quality Versus File Size</title>
@@ -810,18 +829,19 @@
 			<para>If you want to have your QSL card added to the sample cards on the website,
 			please use the following settings: Show QSOs checked, resolution of 96 DPI,
 			quality of 85.  Because of the use of macros in the card, QSOs should be
-			printed on the card. You can use the QSOs that are included in the sample.adi 
-			file
-			in the Samples directory. I promise not to claim credit for any QSOs that are
-			included on the card.</para>
+			printed on the card. You can use the QSOs that are included in the 
+			<filename>sample.adi</filename> file in the 
+			<filename class='directory'>Samples</filename> directory. I promise not to 
+			claim credit for any QSOs that are included on the card.</para>
 		</tip>
 	</section>
 	<section>
 		<title>Saving 4-Up Bureau Cards For Printing</title>
-		<para>HamQSLer allows the user to save a set of four blank bureau-sized cards
+		<para><literal>HamQSLer</literal> allows the user to save a set of four blank 
+		bureau-sized cards
 		as a JPEG file for sending to a print shop or a QSL card printer for
 		printing large quantities of the the cards. To save the blank cards, select
-		the Cards -> Save 4-Up Cards For Printing... menu item. This action opens the
+		the Cards => Save 4-Up Cards For Printing... menu item. This action opens the
 		dialog shown in the image below.</para>
 		<figure xml:id="fourupcards">
 			<title>JPEG Image Properties for 4 Up Blank Bureau Cards Dialog</title>
@@ -833,14 +853,14 @@
 		</figure>
 		<para>There are only two options available: the Include Card Outlines checkbox
 		controls whether a black line is included around the outside of the card or not,
-		and the resolution dropdown box controls the resolution that the image is saved at.
-		There are only two values provided in this dropdown box: 300 DPI and 600 DPI. These
-		are standard values that are used when printing. The dropdown box is also editable,
+		and the resolution combobox controls the resolution that the image is saved at.
+		There are only two values provided in this combobox: 300 DPI and 600 DPI. These
+		are standard values that are used when printing. The combobox is editable,
 		so you can enter any value that you wish.</para>
-		<para>When the OK button is clicked a Save As dialog box opens to allow the user
+		<para>When the OK button is clicked, a Save As dialog opens to allow the user
 		to enter a name for the file, and to select a directory to save the file in. When
 		the image has been saved, the message "Card image has been saved to 
-		<emphasis>(filename)</emphasis> is displayed in the status bar of the main
+		<emphasis>(filename)</emphasis>" is displayed in the status bar of the main
 		window.</para>
 		<para>The cards are saved in a two by two array. The image is 7 by 11 inches in
 		size, so the image may be printed lifesize on either letter or A4 sized cardstock.
@@ -853,7 +873,7 @@
 		<title>Saving Cards For Printing</title>
 		<para>Instead of printing cards with QSO data on them, the cards may be saved in
 		a set of JPEG files for sending or taking to a photo print shop. To create these
-		image files, the user must select the Cards -> Save Cards For Printing... menu
+		image files, the user must select the Cards => Save Cards For Printing... menu
 		item. When this is done, the browse for folder dialog box, shown below, is
 		displayed.</para>
 		<figure xml:id="cardsforprinting">
@@ -867,21 +887,28 @@
 		<para>The user must select a directory to save the image files in. Once
 		the directory has been selected and the OK button is clicked, the card images
 		are generated and saved in the selected directory. The files are saved with
-		filenames <emphasis>qslXXX.jpg</emphasis>, where XXX is a number that is
+		filenames <filename>qslXXX.jpg</filename>, where 
+		<emphasis>XXX</emphasis> is a number that is
 		incremented for each card.</para>
-		<para>Filenames start at qsl1.jpg. If the selected directory already contains
-		files named qslXXX.jpg, then the number in the filename of the first file saved
-		is set to one more than the highest value of XXX. That is, if there is a file 
-		called qsl25.jpg in the directory,
-		the first file saved will be qsl26.jpg.</para>
-		<para>As the files are being created, the text "Creating card X of Y cards" where
-		X is the number of the card being created and Y is the total number of cards
+		<para>Filenames start at <filename>qsl1.jpg</filename>. If the selected directory 
+		already contains
+		files named <filename>qslXXX.jpg</filename>, then the number in 
+		the filename of the first file saved
+		is set to one more than the highest value of <emphasis>XXX</emphasis>. That is, if 
+		there is a file 
+		called <filename>qsl25.jpg</filename> in the directory,
+		the first file saved will be <filename>qsl26.jpg</filename>.</para>
+		<para>As the files are being created, the text "Creating card 
+		<emphasis>X</emphasis> of<emphasis> Y</emphasis> cards" where
+		<emphasis>X</emphasis> is the number of the card being created and 
+		<emphasis>Y</emphasis> is the total number of cards
 		being created is displayed in the status bar of the main window. When all of the
-		files have been created, the text "Y of Y cards created in directory:
+		files have been created, the text "<emphasis>Y</emphasis> of <emphasis>Y</emphasis> 
+		cards created in directory:
 		<emphasis>(directory)</emphasis>" is displayed in the status bar.</para>
 		<tip>
 			<para>Create a subdirectory in the hamqsler directory to contain the card
-			images. Name the file <emphasis>Printing</emphasis> or something similar so
+			images. Name the directory <emphasis>Printing</emphasis> or something similar so
 			that you know what the directory contains.</para>
 		</tip>
 		<caution>

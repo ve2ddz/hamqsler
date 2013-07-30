@@ -3,11 +3,14 @@
 		  xmlns:xlink="http://www.w3.org/1999/xlink" 
 		  xml:id="nonkeyboardchars">
 	<title>Non-Keyboard Characters</title>
-	<para>There are three ways to add characters that are not on your keyboard to static text
+	<para>There are four ways to add characters that are not on your keyboard to static text
 	fields:</para>
-	<orderedlist>
+	<orderedlist spacing='compact'>
 		<listitem>
 			<para>Keyboard entry of extended ASCII codes.</para>
+		</listitem>
+		<listitem>
+			<para>Keyboard entry of Unicode character codes.</para>
 		</listitem>
 		<listitem>
 			<para>Selecting characters using the Character Map utility.</para>
@@ -17,10 +20,17 @@
 		</listitem>
 	</orderedlist>
 	<para>Each of these methods is discussed below.</para>
+	<caution>
+		<para>A character can only be displayed or printed if it is included in the character
+		set for the selected font face. If the character is not included, then either no
+		character is displayed or printed, or another character is substituted. For example,
+		the font face used for the body of this manual substitutes the character '#' for
+		any characters that are not included in its character set.</para>
+	</caution>
 	<section>
 		<title>Keyboard Entry of Extended ASCII Characters</title>
 		<para>This method only works if your keyboard has a numeric keypad.
-		To enter a character press and hold one of the Alt keys and enter
+		To enter a character, press and hold one of the Alt keys and enter
 		the three digit code for the character using the number pad. Once the
 		code has been entered, release the Alt key. The characters
 		and their corresponding codes are listed in the table below.</para>
@@ -372,23 +382,26 @@
 		<para>This method also works only if your keyboard has a numeric keypad.</para>
 		<para>A registry setting is required. If you do not know what the registry is, or
 		don't feel comforable making registry changes, then don't use this method.</para>
-		<para>Start regedit or regedt32. Under HKEY_Current_User/Control Panel/Input Method,
+		<para>Start <literal>regedit</literal> or <literal>regedt32</literal>. 
+		Under <filename>HKEY_Current_User/Control Panel/Input Method</filename>,
 		set EnableHexNumPad to "1". If you must add this entry, set the type to "REG_SZ".
 		Restart your computer.</para>
 		<para>To enter characters, press and hold the Alt key, press the "+" key on the
 		numeric keypad, enter the Unicode character's hex code, then release the Alt key.
 		The character is displayed after you release the Alt key. For example, the code
 		"00bf" results in the character "¿". See 
-		[<link xlink:href='http://unicode.org/charts/'></link>] for a map of all Unicode
+		<link xlink:href='http://unicode.org/charts/'><emphasis role='underline'>Unicode
+		6.2 Character Code Charts</emphasis></link> for a map of all Unicode
 		characters and their codes.</para>
 	</section>
 	<section>
 		<title>Character Map Utility</title>
 		<para>Microsoft Windows comes with a utility called Character Map that allows
 		the user to select characters that are not available directly from the keyboard.
-		Character Map may be started from All Programs -> Accessories -> System Tools -> 
-		Character Map in the Start Menu.
-		See [<link xlink:href='http://symbolcodes.tlt.psu.edu/accents/charmap.html'></link>]
+		Character Map may be started from Start Menu => All Programs => Accessories => 
+		System Tools => Character Map. See 
+		<link xlink:href='http://symbolcodes.tlt.psu.edu/accents/charmap.html'><emphasis role='underline'>Character
+		Map Utility</emphasis></link>
 		for information on how to use Character Map.</para>
 		<caution>
 			<para>If you use Character Map to input a character that is not in the same
@@ -401,13 +414,15 @@
 		</caution>
 	</section>
 	<section>
-		<title>Other Utilities</title>
-		<para>Links to other free character utilities are provided below.</para>
-		<itemizedlist>
-			<listitem>
-				<para><link xlink:href='http://sourceforge.net/projects/allchars/'>AllChars</link>
-				</para>
-			</listitem>
-		</itemizedlist>
+		<title>AllChars</title>
+		<para>AllChars is a utility that mimics the Compose key of Unix and Linux systems on
+		Windows. It allows for the easy entry of accented and special characters like
+		ù and £, by pressing the Compose key and then two other characters. The Compose
+		key is configurable to be any of the Alt, Ctrl, Windows or Menu keys on the keyboard.
+		Characters are formed by pressing and releasing the Compose key and then pressing and
+		releasing the two keys that represent the character.</para>
+		<para>See 
+		<link xlink:href='http://sourceforge.net/projects/allchars/'><emphasis role='underline'>AllChars</emphasis></link>
+		to download the program and to get more information.</para>
 	</section>
 </appendix>
