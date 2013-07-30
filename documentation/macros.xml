@@ -79,6 +79,12 @@
 		will place the contents of the Manager field for the QSO on the
 		card, or the No Manager Text if the Manager field is empty.
 		Any of these fields may be blank.</para>
+		<tip>
+			<para>See 
+			<link linkend='nonkeyboardchars'><emphasis role='underline'>Appendix C</emphasis></link>
+			if you want to enter characters that are not available
+			on your keyboard.</para>
+		</tip>
 		<para>Macros may be inserted inside macros anywhere that a static
 		text field is allowed. For example, you could add a macro inside
 		the Design Text or No Manager Text fields of the Manager Macro,

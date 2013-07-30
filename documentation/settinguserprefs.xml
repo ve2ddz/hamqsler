@@ -343,6 +343,12 @@
 			button, although it is unlikely to be very useful. Why would you want QSL cards
 			sent to different addresses?</para>
 			<tip>
+				<para>See 
+				<link linkend='nonkeyboardchars'><emphasis role='underline'>Appendix C</emphasis></link>
+				if you want to enter characters that are not available
+				on your keyboard.</para>
+			</tip>
+			<tip>
 				<para>If you operate from different locations such as at home, at your
 				cottage, and as a rover during contests, add a new text item to the card
 				and place the operating location in it. See 

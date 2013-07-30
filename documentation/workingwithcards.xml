@@ -1175,6 +1175,12 @@
 			text "VA3HJ" and a Macros button. See the 
 			<link linkend='macros'><emphasis role='underline'>Macros</emphasis></link>
 			chapter for information on using macros.</para>
+			<tip>
+				<para>See 
+				<link linkend='nonkeyboardchars'><emphasis role='underline'>Appendix C</emphasis></link>
+				if you want to enter characters that are not available
+				on your keyboard.</para>
+			</tip>
 			<para>The Check Boxes group box contains a number of properties related to
 			the display of check boxes before and after the text in a text item.</para>
 			<para>To place a checkbox before the text, check the Before Text checkbox. To

@@ -212,6 +212,12 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
+			<tip>
+				<para>See 
+				<link linkend='nonkeyboardchars'><emphasis role='underline'>Appendix C</emphasis></link>
+				if you want to enter characters that are not available
+				on your keyboard.</para>
+			</tip>
 		</section>
 		<section>
 			<title>Set Salutation</title>
@@ -529,6 +535,12 @@
 			line with the top of the callsign text. Position the text
 			so that it is to the right of the callsign. Deselect the 
 			text item.</para>
+			<tip>
+				<para>See 
+				<link linkend='nonkeyboardchars'><emphasis role='underline'>Appendix C</emphasis></link>
+				if you want to enter characters that are not available
+				on your keyboard.</para>
+			</tip>
 			<para>Now look at the salutation text on the card. Note
 			the text is "Thanks for the QSO$. 73, ". The "$" character
 			is a placeholder for a Count Macro. We will look at this
