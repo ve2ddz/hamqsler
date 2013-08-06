@@ -354,6 +354,11 @@
 			</figure>
 			<para>The contents of the QSOs View, the sort panel and the selection panel are discussed
 			in another section below.</para>
+			<caution>
+				<para>Do not import or add ADIF files with a large number of QSOs. The greater
+				the number of QSOs, the longer loading, sorting and displaying the QSOs takes. ADIF
+				files with a very large number of QSOs take an excessive amount of time to display.</para>
+			</caution>
 		</section>
 		<section>
 			<title>Adding QSOs</title>
@@ -367,6 +372,11 @@
 			to any QSOs that were previously loaded into the program. Once the QSOs have been loaded,
 			any duplicated QSOs are deleted, and then the QSOs are sorted according the sort order
 			selected in the sort panel.</para>
+			<caution>
+				<para>Do not import or add ADIF files with a large number of QSOs. The greater
+				the number of QSOs, the longer loading, sorting and displaying the QSOs takes. ADIF
+				files with a very large number of QSOs take an excessive amount of time to display.</para>
+			</caution>
 		</section>
 		<section>
 			<title>Clear QSOs</title>

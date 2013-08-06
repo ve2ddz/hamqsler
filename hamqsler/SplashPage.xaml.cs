@@ -140,8 +140,6 @@ namespace hamqsler
 			}
 			else
 			{
-				App app = (App)Application.Current;
-				app.ShowMainWindow();
 				this.Close();
 			}
 			this.Cursor = oldCursor;
@@ -297,8 +295,6 @@ namespace hamqsler
 		/// <param name="e">RoutedEventArgs object for this event</param>
 		void OkButton_Click(object sender, RoutedEventArgs e)
 		{
-			App app = (App)Application.Current;
-			app.ShowMainWindow();
 			this.Close();
 			e.Handled = true;
 		}

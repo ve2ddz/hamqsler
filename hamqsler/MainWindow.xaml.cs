@@ -464,6 +464,35 @@ namespace hamqsler
 		void Window_Loaded(object sender, EventArgs e)
 		{
 			UserPreferences prefs = ((App)App.Current).UserPreferences;
+			// load card files
+			if(prefs.CardsReloadOnStartup)
+			{
+				string[] fileNames = prefs.CardFiles.ToArray();
+				prefs.CardFiles.Clear();
+				CardWF card;
+				foreach(string fileName in fileNames)
+				{
+					try
+					{
+						card = CardWF.DeserializeCard(fileName);
+					}
+					catch(Exception ex)
+					{
+						App.Logger.Log(ex);
+						continue;
+					}
+					card.FileName = fileName;
+					card.IsInDesignMode = true;
+					CardTabItem cti = new CardTabItem(card);
+					mainTabControl.Items.Add(cti);
+					cti.IsSelected = true;		// select the new tab
+					card.IsDirty = false;
+					cti.SetTabLabel();
+					// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
+					SetTitle(card.FileName, card.IsDirty);
+					prefs.CardFiles.Add(fileName);
+				}
+			}
 			// load Adif files
 			if(prefs.AdifReloadOnStartup)
 			{
@@ -493,37 +522,6 @@ namespace hamqsler
 					}
 					qsosView.ShowIncludeSelectors();
 				}
-			}
-			// load card files
-			if(prefs.CardsReloadOnStartup)
-			{
-				string[] fileNames = prefs.CardFiles.ToArray();
-				prefs.CardFiles.Clear();
-				CardWF card;
-				foreach(string fileName in fileNames)
-				{
-					try
-					{
-						card = CardWF.DeserializeCard(fileName);
-					}
-					catch(Exception ex)
-					{
-						App.Logger.Log(ex);
-						continue;
-					}
-					card.FileName = fileName;
-					card.IsInDesignMode = true;
-					CardTabItem cti = new CardTabItem(card);
-					mainTabControl.Items.Add(cti);
-					cti.IsSelected = true;		// select the new tab
-					card.IsDirty = false;
-					cti.SetTabLabel();
-					// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
-					SetTitle(card.FileName, card.IsDirty);
-					prefs.CardFiles.Add(fileName);
-				}
-				((App)Application.Current).UserPreferences = prefs;
-				((App)Application.Current).UserPreferences.SerializeAsXml();
 			}
 		}
 		

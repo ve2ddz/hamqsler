@@ -79,14 +79,6 @@ namespace hamqsler
 			// create and show SplashPage
 			splash = new SplashPage();
 			splash.ShowDialog();
-		}
-		
-		/// <summary>
-		/// Create and show the program's main window
-		/// This should be called only once, from the SplashPage when it is closing
-		/// </summary>
-		internal void ShowMainWindow()
-		{
 			this.MainWindow = new MainWindow();
 			MainWindow.Show();
 		}
