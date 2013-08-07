@@ -439,6 +439,7 @@ namespace hamqsler
 				CardTabItem cti = ti as CardTabItem;
 				if(cti != null)
 				{
+					cti.IsSelected = true;
 					CloseCardTab(cti, false);
 				}
 			}
@@ -601,11 +602,12 @@ namespace hamqsler
 		/// <summary>
 		/// Handler for Card Save Executed event
 		/// </summary>
-		/// <param name="sender">Object that is the source of this event</param>
-		/// <param name="e">ExecutedRoutedEventArgs object</param>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		private void CardSaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			SaveCard();
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			SaveCard(cti);
 		}
 		
 		/// <summary>
@@ -615,7 +617,8 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void CardSaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			SaveCardAs();
+			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
+			SaveCardAs(cti);
 		}
 		
 		/// <summary>
@@ -1590,7 +1593,7 @@ namespace hamqsler
 				                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
 				if(result == MessageBoxResult.Yes)
 				{
-					SaveCard();
+					SaveCard(cti);
 				}
 			}
 			mainTabControl.Items.Remove(cti);
@@ -1608,10 +1611,10 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Save card to file named in Card.FileName
+		/// <param name="cti">CardTabItem containing card to save</param>
 		/// </summary>
-		private void SaveCard()
+		private void SaveCard(CardTabItem cti)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			CardWF qslCard = cti.cardPanel.QslCard;
 			if(qslCard.FileName != null)
 			{
@@ -1625,17 +1628,17 @@ namespace hamqsler
 			}
 			else
 			{
-				SaveCardAs();
+				SaveCardAs(cti);
 			}
 
 		}
 		
 		/// <summary>
 		/// Save card to new file
+		/// <param name="cti">CardTabItem containing card to save</param>
 		/// </summary>
-		private void SaveCardAs()
+		private void SaveCardAs(CardTabItem cti)
 		{
-			CardTabItem cti = mainTabControl.SelectedItem as CardTabItem;
 			CardWF qslCard = cti.cardPanel.QslCard;
 			string fileName = qslCard.FileName;
 			SaveFileDialog sDialog = new SaveFileDialog();
