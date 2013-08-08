@@ -560,6 +560,7 @@ namespace hamqsler
 				if(qwi.Include)
 				{
 					if(managerCall == thisManagerCall &&
+					   card.QsosBox != null &&
 					   qsosCount < card.QsosBox.MaximumQsos &&
 					   card.QsosBox != null &&
 					   AdifFieldsEqual(fields, qwi, thisQso) &&
