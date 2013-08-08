@@ -498,7 +498,7 @@ namespace hamqsler
 				}
 				System.Drawing.Font font = 
 					new System.Drawing.Font(new System.Drawing.FontFamily(
-						this.FontName), this.FontSize,
+						this.FontName), this.FontSize * (96F / g.DpiX),
 			        	System.Drawing.FontStyle.Regular, 
 			        	System.Drawing.GraphicsUnit.Point);
 				System.Drawing.SizeF size =g.MeasureString("SampleText", font);

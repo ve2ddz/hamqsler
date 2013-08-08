@@ -191,7 +191,7 @@ namespace hamqsler
 				{
 					style |= System.Drawing.FontStyle.Italic;
 				}
-				Font font = new Font(new FontFamily(this.TextFontFace), this.FontSize,
+				Font font = new Font(new FontFamily(this.TextFontFace), this.FontSize * (96F/g.DpiX),
 					         style, GraphicsUnit.Point);
 				System.Drawing.SizeF size = g.MeasureString(this.Text.GetText(
 					QslCard, qsos, QslCard.IsInDesignMode), font);

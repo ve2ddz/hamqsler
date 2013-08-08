@@ -398,7 +398,7 @@ namespace hamqsler
 			{
 				style |= FontStyle.Italic;
 			}
-			Font font = new Font(new FontFamily(tItem.TextFontFace), tItem.FontSize,
+			Font font = new Font(new FontFamily(tItem.TextFontFace), tItem.FontSize * (96F / g.DpiX),
 				         style, GraphicsUnit.Point);
 			int startTextX = CardLocation.X + tItem.X + tItem.Height + 4;
 			g.DrawString(tItem.Text.GetText(QslCard, qsos, QslCard.IsInDesignMode),
@@ -450,7 +450,7 @@ namespace hamqsler
 			Pen pen = new Pen(qBox.LineTextBrush, 1);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			Font font = new Font(new System.Drawing.FontFamily(
-				qBox.FontName), qBox.FontSize, FontStyle.Regular, GraphicsUnit.Point);
+				qBox.FontName), qBox.FontSize * (96F / g.DpiX), FontStyle.Regular, GraphicsUnit.Point);
 			List<string> colHeaders = CreateColumnHeaders(qBox);
 			List<float> colWidths = CreateColumnWidths(g, font, colHeaders, qBox);
 			GraphicsPath path = CreateOutsideBoxPath(qBox);
@@ -754,7 +754,7 @@ namespace hamqsler
 			{
 				SizeF size = g.MeasureString(confText, font);
 				startX += (int)size.Width + 2;
-				float fontSize = box.FontSize;
+				float fontSize = box.FontSize * (96F / g.DpiX);
 				y++; // compensate for bold
 				Font callFont = new Font(box.FontName, fontSize, FontStyle.Bold, GraphicsUnit.Point);
 				g.DrawString(Callsign, callFont, box.CallsignBrush, startX, y);
