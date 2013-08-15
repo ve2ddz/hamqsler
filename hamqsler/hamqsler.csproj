@@ -239,7 +239,9 @@
     <Page Include="QsoInputDialog.xaml" />
     <Page Include="QSOsView.xaml" />
     <Page Include="SplashPage.xaml" />
-    <Page Include="StaticTextGroupBox.xaml" />
+    <Page Include="StaticTextGroupBox.xaml">
+      <DependentUpon>UserPreferences.cs</DependentUpon>
+    </Page>
     <Page Include="StaticTextViewer.xaml" />
     <Page Include="TextMacrosDialog.xaml" />
     <Page Include="UserPreferencesDialog.xaml" />
