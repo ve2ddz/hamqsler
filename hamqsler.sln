@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QslBureausTests", "QslBurea
 EndProject
 Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "Setup", "Setup\Setup.wixproj", "{DAEBF758-DE02-48EF-ADA5-D15BB6E2B740}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hamqslerTest", "hamqslerTest\hamqslerTest.csproj", "{673B6200-5850-4DE3-B2CD-7B579CF2ACFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -44,5 +46,9 @@ Global
 		{DAEBF758-DE02-48EF-ADA5-D15BB6E2B740}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{DAEBF758-DE02-48EF-ADA5-D15BB6E2B740}.Release|x86.Build.0 = Release|Any CPU
 		{DAEBF758-DE02-48EF-ADA5-D15BB6E2B740}.Release|x86.ActiveCfg = Release|Any CPU
+		{673B6200-5850-4DE3-B2CD-7B579CF2ACFF}.Debug|x86.Build.0 = Debug|Any CPU
+		{673B6200-5850-4DE3-B2CD-7B579CF2ACFF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{673B6200-5850-4DE3-B2CD-7B579CF2ACFF}.Release|x86.Build.0 = Release|Any CPU
+		{673B6200-5850-4DE3-B2CD-7B579CF2ACFF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

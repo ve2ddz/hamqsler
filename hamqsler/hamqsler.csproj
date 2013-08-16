@@ -80,11 +80,13 @@
       <DependentUpon>AboutDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Address.cs" />
     <Compile Include="AdifExistsMacro.cs" />
     <Compile Include="AdifExistsMacroGroupBox.xaml.cs">
       <DependentUpon>AdifExistsMacroGroupBox.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AdifField.cs" />
     <Compile Include="AdifMacro.cs" />
     <Compile Include="AdifMacroGroupBox.xaml.cs">
       <DependentUpon>AdifMacroGroupBox.xaml</DependentUpon>
