@@ -247,7 +247,10 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="g">Graphics object on which to draw the card</param>
 		/// <param name="qsos">List of QSOs to paint on the card</param>
-		public void PaintCard(Graphics g, List<DispQso> dQsos)
+		/// <param name="fontAdjustmentFactor">Amount to adjust font size by to get
+		/// properly sized text. This should be 1 except when creating card jpegs where
+		/// it should be 96F/g.DpiX where g is the Graphics object</param>
+		public void PaintCard(Graphics g, List<DispQso> dQsos, float fontAdjustmentFactor = 1)
 		{
 			Qsos = dQsos;
 			g.TextRenderingHint = TextRenderingHint.AntiAlias;
@@ -281,7 +284,7 @@ namespace hamqsler
 				// only be done with Graphics.DrawImage, not Graphics.DrawString, etc.
 				Bitmap designSurface = new Bitmap(this.Width, this.Height);
 				Graphics bGraphics = Graphics.FromImage(designSurface);
-				PaintCardItems(bGraphics, Qsos);
+				PaintCardItems(bGraphics, Qsos, fontAdjustmentFactor);
 				// create a graphics path that excludes the card itself
 				GraphicsPath path = new GraphicsPath();
 				path.AddRectangle(new RectangleF(this.Location.X, this.Location.Y, 
@@ -300,7 +303,7 @@ namespace hamqsler
 			// now draw the card items on the card.
 			state = g.Save();
 			g.Clip = new Region(clipRect);
-			PaintCardItems(g, Qsos);
+			PaintCardItems(g, Qsos, fontAdjustmentFactor);
 			g.Restore(state);
 			// paint the card outline if requested
 			if(QslCard.CardPrintProperties.PrintCardOutlines)
@@ -316,7 +319,9 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="g">Graphics object on which to paint the card</param>
 		/// <param name="qsos">List of QSOs to paint on the card</param>
-		private void PaintCardItems(Graphics g, List<DispQso> qsos)
+		/// <param name="fontAdjustmentFactor">Amount to adjust font sizes by. This should
+		/// be one except for creating jpegs where it should be 96F / resolution</param>
+		private void PaintCardItems(Graphics g, List<DispQso> qsos, float fontAdjustmentFactor)
 		{
 			// paint the background image
 			PaintImage(g, QslCard.BackgroundImage);
@@ -328,13 +333,13 @@ namespace hamqsler
 			// paint text items
 			foreach(TextWFItem tItem in QslCard.TextItems)
 			{
-				tItem.CalculateRectangle(g, qsos);
-				PaintTextItem(g, qsos, tItem);
+				tItem.CalculateRectangle(g, qsos, fontAdjustmentFactor);
+				PaintTextItem(g, qsos, tItem, fontAdjustmentFactor);
 			}
 			if(QslCard.QsosBox != null)
 			{
-				QslCard.QsosBox.CalculateRectangle(g, qsos.Count);
-				PaintQsosBox(g, qsos, QslCard.QsosBox);
+				QslCard.QsosBox.CalculateRectangle(g, qsos.Count, fontAdjustmentFactor);
+				PaintQsosBox(g, qsos, QslCard.QsosBox, fontAdjustmentFactor);
 			}
 		}
 		
@@ -387,7 +392,10 @@ namespace hamqsler
 		/// <param name="g">Graphics object on which to do the drawing</param>
 		/// <param name="qsos">List of QSOs that will be printed in the QSOsBox</param>
 		/// <param name="tItem">TextWFItem object to draw</param>
-		private void PaintTextItem(Graphics g, List<DispQso> qsos, TextWFItem tItem)
+		/// <param name="fontAdjustmentFactor">amount to adjust font sizes by. This should be
+		/// 1 except for images where it should be 96F/resolution</param>
+		private void PaintTextItem(Graphics g, List<DispQso> qsos, TextWFItem tItem,
+		                          float fontAdjustmentFactor)
 		{
 			FontStyle style = FontStyle.Regular;
 			if(tItem.IsBold)
@@ -398,8 +406,9 @@ namespace hamqsler
 			{
 				style |= FontStyle.Italic;
 			}
-			Font font = new Font(new FontFamily(tItem.TextFontFace), tItem.FontSize * (96F / g.DpiX),
-				         style, GraphicsUnit.Point);
+			Font font = new Font(new FontFamily(tItem.TextFontFace), 
+			                     tItem.FontSize * fontAdjustmentFactor,
+				         		 style, GraphicsUnit.Point);
 			int startTextX = CardLocation.X + tItem.X + tItem.Height + 4;
 			g.DrawString(tItem.Text.GetText(QslCard, qsos, QslCard.IsInDesignMode),
 			             font, tItem.TextBrush, startTextX, CardLocation.Y + tItem.Y);
@@ -445,19 +454,23 @@ namespace hamqsler
 		/// <param name="g">Graphics object on which to do the drawing</param>
 		/// <param name="qsos">List of QSOs to paint on the card</param>
 		/// <param name="qBox">QsosWFBox object to draw</param>
-		private void PaintQsosBox(Graphics g, List<DispQso> qsos, QsosWFBox qBox)
+		/// <param name="fontAdjustmentFactor">amount to adjust font sizes by. This should be
+		/// 1 except for images where it should be 96F/resolution</param>
+		private void PaintQsosBox(Graphics g, List<DispQso> qsos, QsosWFBox qBox,
+		                         float fontAdjustmentFactor)
 		{
 			Pen pen = new Pen(qBox.LineTextBrush, 1);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			Font font = new Font(new System.Drawing.FontFamily(
-				qBox.FontName), qBox.FontSize * (96F / g.DpiX), FontStyle.Regular, GraphicsUnit.Point);
+				qBox.FontName), qBox.FontSize * fontAdjustmentFactor, 
+				FontStyle.Regular, GraphicsUnit.Point);
 			List<string> colHeaders = CreateColumnHeaders(qBox);
 			List<float> colWidths = CreateColumnWidths(g, font, colHeaders, qBox);
 			GraphicsPath path = CreateOutsideBoxPath(qBox);
 			FillQsosBoxBackground(g, path, qBox);
 			CreateInsideBoxPath(g, ref path, font, colHeaders, colWidths, qBox);
 			g.DrawPath(pen, path);
-			DrawConfirmingText(g, font, qsos, qBox);
+			DrawConfirmingText(g, font, qsos, qBox, fontAdjustmentFactor);
 			DrawHeaders(g, font, colHeaders, colWidths, qBox);
 			DrawQsos(g, qsos, font, colWidths, qBox);
 			pen.Dispose();
@@ -743,8 +756,10 @@ namespace hamqsler
 		/// <param name="g">Graphics object of which to draw the text</param>
 		/// <param name="font">Font in which to draw the text</param>
 		/// <param name="box">Qsos box being drawn</param>
+		/// <param name="fontAdjustmentFactor">amount to adjust font sizes by. This should be
+		/// 1 except for images where it should be 96F/resolution</param>
 		private void DrawConfirmingText(Graphics g, Font font, List<DispQso> qsos,
-		                                QsosWFBox box)
+		                                QsosWFBox box, float fontAdjustmentFactor)
 		{
 			int startX = CardLocation.X + box.X + 5;
 			int y = CardLocation.Y + box.Y + 1;
@@ -754,7 +769,7 @@ namespace hamqsler
 			{
 				SizeF size = g.MeasureString(confText, font);
 				startX += (int)size.Width + 2;
-				float fontSize = box.FontSize * (96F / g.DpiX);
+				float fontSize = box.FontSize * fontAdjustmentFactor;
 				y++; // compensate for bold
 				Font callFont = new Font(box.FontName, fontSize, FontStyle.Bold, GraphicsUnit.Point);
 				g.DrawString(Callsign, callFont, box.CallsignBrush, startX, y);

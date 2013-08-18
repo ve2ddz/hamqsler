@@ -178,7 +178,10 @@ namespace hamqsler
 		/// Calculate the size of this TextWFItem based on its various properties
 		/// </summary>
 		/// <param name="g">Graphics object the card is being drawn on</param>
-		public void CalculateRectangle(System.Drawing.Graphics g, List<DispQso> qsos)
+		/// <param name="fontAdjustmentFactor">amount to adjust font sizes by. This should be
+		/// 1 except for images where it should be 96F/resolution</param>
+		public void CalculateRectangle(System.Drawing.Graphics g, List<DispQso> qsos,
+		                              float fontAdjustmentFactor)
 		{
 			if(QslCard != null)
 			{
@@ -191,8 +194,9 @@ namespace hamqsler
 				{
 					style |= System.Drawing.FontStyle.Italic;
 				}
-				Font font = new Font(new FontFamily(this.TextFontFace), this.FontSize * (96F/g.DpiX),
-					         style, GraphicsUnit.Point);
+				Font font = new Font(new FontFamily(this.TextFontFace), 
+				                     this.FontSize * fontAdjustmentFactor,
+					         		 style, GraphicsUnit.Point);
 				System.Drawing.SizeF size = g.MeasureString(this.Text.GetText(
 					QslCard, qsos, QslCard.IsInDesignMode), font);
 				this.Height = (int)size.Height;
