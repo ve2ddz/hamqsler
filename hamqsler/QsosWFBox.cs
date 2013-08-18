@@ -485,7 +485,10 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="g">Graphics object the card is being drawn on</param>
 		/// <param name="qsosCount">Number of QSOs to be displayed</param>
-		public void CalculateRectangle(System.Drawing.Graphics g, int qsosCount)
+		/// <param name="fontAdjustmentFactor">amount to adjust font sizes by. This should be
+		/// 1 except for images where it should be 96F/resolution</param>
+		public void CalculateRectangle(System.Drawing.Graphics g, int qsosCount,
+		                              float fontAdjustmentFactor)
 		{
 			if(QslCard != null)
 			{
@@ -498,7 +501,7 @@ namespace hamqsler
 				}
 				System.Drawing.Font font = 
 					new System.Drawing.Font(new System.Drawing.FontFamily(
-						this.FontName), this.FontSize * (96F / g.DpiX),
+						this.FontName), this.FontSize * fontAdjustmentFactor,
 			        	System.Drawing.FontStyle.Regular, 
 			        	System.Drawing.GraphicsUnit.Point);
 				System.Drawing.SizeF size =g.MeasureString("SampleText", font);

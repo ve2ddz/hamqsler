@@ -706,7 +706,8 @@ namespace hamqsler
 				System.Drawing.Graphics graphics = 
 					System.Drawing.Graphics.FromImage(bitmap);
 				graphics.ScaleTransform(scale, scale);
-				cView.PaintCard(graphics, dispQsos.Count > 0 ? dispQsos[0] : null);
+				cView.PaintCard(graphics, dispQsos.Count > 0 ? dispQsos[0] : null,
+				               96F / resolution);
 				graphics.Dispose();
 				
 				System.Drawing.Imaging.ImageCodecInfo jpgEncoder = 
@@ -829,7 +830,7 @@ namespace hamqsler
 					System.Drawing.Graphics graphics = 
 						System.Drawing.Graphics.FromImage(bitmap);
 					graphics.ScaleTransform(scale, scale);
-					cView.PaintCard(graphics, qsos[cardNum]);
+					cView.PaintCard(graphics, qsos[cardNum], 96F / 300F);
 					graphics.Dispose();
 					string fileName = directoryName + "\\Qsl" + 
 						(startNumber + cardNum + 1) + ".jpg";
@@ -912,7 +913,7 @@ namespace hamqsler
 	            float offX = (cardNo % 2 == 0) ? 0 : card.Width;
                 float offY = (cardNo < 2) ? 0 : card.Height;
                 graphics.TranslateTransform(offX, offY);
-                cView.PaintCard(graphics, null);
+                cView.PaintCard(graphics, null, 96F / resolution);
                 graphics.Restore(state);
             }
             graphics.Dispose();
