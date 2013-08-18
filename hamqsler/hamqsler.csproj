@@ -96,6 +96,10 @@
       <DependentUpon>App.xaml.cs</DependentUpon>
     </Compile>
     <Compile Include="AdifToYYYYMMDDDateConverter.cs" />
+    <Compile Include="Age.cs" />
+    <Compile Include="AIndex.cs" />
+    <Compile Include="AntAz.cs" />
+    <Compile Include="AntEl.cs" />
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
@@ -157,6 +161,7 @@
     </Compile>
     <Compile Include="MarginConverter.cs" />
     <Compile Include="MinMaxPaperSizes.cs" />
+    <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
