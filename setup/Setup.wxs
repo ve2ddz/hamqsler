@@ -19,11 +19,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<!-- F509845A-3329-422C-89EA-C0EDD45FD4EF" -->
-	<Product Id="A0799426-5BD0-485B-A5D1-1856619246B5"
+	<!-- A0799426-5BD0-485B-A5D1-1856619246B5 -->
+	<Product Id="37BB7A4F-69C1-4827-A78C-5FAE2D60E7BA"
 		Name="HamQSLer"
 		Language="1033"
-		Version="0.9.0"
+		Version="0.9.2"
 		UpgradeCode="B4FB1901-CFD5-4CDD-B80F-DECBCE9717B7"
 		Manufacturer="VA3HJ Software">
 		<Package Description="HamQSLer Installer Package"
@@ -32,7 +32,7 @@
 		<Upgrade Id="B4FB1901-CFD5-4CDD-B80F-DECBCE9717B7">
 			<UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND"
 					Minimum="0.1.0" IncludeMinimum="yes"
-					Maximum="0.9.0" IncludeMaximum="no" />
+					Maximum="0.9.2" IncludeMaximum="no" />
 		</Upgrade>
 		<CustomAction Id='NoDowngrade' Error='A later version of HamQSLer is already installed.' />
 		
