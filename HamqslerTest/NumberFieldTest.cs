@@ -33,16 +33,20 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsValid()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField("94");
-			Assert.IsTrue(nf.IsValid());
+			Assert.IsTrue(nf.Validate(out err));
+			Assert.AreEqual(null, err);
 		}
 		
 		// test IsValid returns true for decimal value 
 		[Test]
 		public void TestIsValid1()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField("94.21345");
-			Assert.IsTrue(nf.IsValid());
+			Assert.IsTrue(nf.Validate(out err));
+			Assert.AreEqual(null, err);
 		}
 		
 		// test IsValid returns true for decimal value starting with decimal separator
@@ -50,40 +54,50 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsValid2()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField(".27");
-			Assert.IsTrue(nf.IsValid());
+			Assert.IsTrue(nf.Validate(out err));
+			Assert.AreEqual(null, err);
 		}
 		
 		// test IsValid returns true for decimal value ending with decimal separator
 		[Test]
 		public void TestIsValid3()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField("27.");
-			Assert.IsTrue(nf.IsValid());
+			Assert.IsTrue(nf.Validate(out err));
+			Assert.AreEqual(null, err);
 		}
 		
 		// test IsValid return true for empty string value
 		[Test]
 		public void TestIsValid4()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField("");
-			Assert.IsTrue(nf.IsValid());
+			Assert.IsTrue(nf.Validate(out err));
+			Assert.AreEqual(null, err);
 		}
 		
 		// test IsValid returns true for negative number
 		[Test]
 		public void TestIsValid5()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField("-5");
-			Assert.IsTrue(nf.IsValid());
+			Assert.IsTrue(nf.Validate(out err));
+			Assert.AreEqual(null, err);
 		}
 		
 		// test IsValid returns true for negative number with decimal sep
 		[Test]
 		public void TestIsValid6()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField("-2.3");
-			Assert.IsTrue(nf.IsValid());
+			Assert.IsTrue(nf.Validate(out err));
+			Assert.AreEqual(null, err);
 		}
 		
 		/// <summary>
@@ -92,24 +106,30 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsNotValid()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField("fred");
-			Assert.IsFalse(nf.IsValid());
+			Assert.IsFalse(nf.Validate(out err));
+			Assert.AreEqual("Value must be a number", err);
 		}
 		
 		// test that IsValid returns false for decimal separator only
 		[Test]
 		public void TestIsNotValid1()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField(".");
-			Assert.IsFalse(nf.IsValid());
+			Assert.IsFalse(nf.Validate(out err));
+			Assert.AreEqual("Value must be a number", err);
 		}
 		
 		// test that IsValid returns false for 2 decimal separators
 		[Test]
 		public void TestIsNotValid2()
 		{
+			string err = string.Empty;
 			NumberField nf = new NumberField("4.2.5");
-			Assert.IsFalse(nf.IsValid());
+			Assert.IsFalse(nf.Validate(out err));
+			Assert.AreEqual("Value must be a number", err);
 		}
 	}
 }

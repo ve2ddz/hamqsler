@@ -60,9 +60,17 @@ namespace hamqsler
 		/// Validate the field
 		/// </summary>
 		/// <returns>true if Value is not null</returns>
-		public virtual bool IsValid()
+		/// <param name="err">Error message if Validate is false, or null</param>
+		/// <returns>true if Value is not null</returns>
+		public virtual bool Validate(out string err)
 		{
-			return Value != null;
+			err = null;
+			if(Value == null)
+			{
+				err = "Value is null";
+				return false;
+			}
+			return true;
 		}
 		
 	}

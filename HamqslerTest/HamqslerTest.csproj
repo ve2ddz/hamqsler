@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AddressFieldTest.cs" />
     <Compile Include="AdifFieldTest.cs" />
+    <Compile Include="EnumerationFieldTest.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

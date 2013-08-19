@@ -135,6 +135,7 @@
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="DispQso.cs" />
+    <Compile Include="EnumerationField.cs" />
     <Compile Include="FloatToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FormsColorToWPFSolidColorBrushConverter.cs" />

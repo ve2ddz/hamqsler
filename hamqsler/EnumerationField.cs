@@ -18,40 +18,47 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Text.RegularExpressions;
 
 namespace hamqsler
 {
 	/// <summary>
-	/// Base class for all number based ADIF Fields
+	/// QSO Field of type enumeration
 	/// </summary>
-	public class NumberField : AdifField
+	public class EnumerationField : AdifField
 	{
-		/// <summary>
-		/// constructor
-		/// </summary>
-		/// <param name="value">Value for the field</param>
-		public NumberField(string value) : base(value)
+		private string[] enumeration = null;
+		public string [] Enumeration
 		{
+			get {return enumeration;}
+			set {enumeration = value;}
 		}
 		
 		/// <summary>
-		/// Validates the value as a number
+		/// Constructor
 		/// </summary>
-		/// <param name="err">Error message if Validate is false, or null</param>
-		/// <returns>true if value is empty or a number</returns>
+		/// <param name="value">Field value</param>
+		/// <param name="enums">Enumeration values</param>
+		public EnumerationField(string value, string [] enums) : base(value)
+		{
+			Enumeration = enums;
+		}
+		
+		/// <summary>
+		/// Validate that value is within the enumeration
+		/// </summary>
+		/// <param name="err">Error message if value not within enumeration</param>
+		/// <returns>true if value within enumeration, false otherwise</returns>
 		public override bool Validate(out string err)
 		{
 			err = null;
-			if(string.Equals(string.Empty, Value))
-		    {
-		   		return true;
-		    }
-			else if(Regex.IsMatch(Value, @"^-{0,1}([\d]+|[\d]+\.[\d]*|\.[\d]+)$"))
+			foreach(string enumer in Enumeration)
 			{
-				return true;
+				if(Value.Equals(enumer))
+				{
+					return true;
+				}
 			}
-			err = "Value must be a number";
+			err = "This QSO Field is of type enumeration. The value was not found in enumeration";
 			return false;
 		}
 	}

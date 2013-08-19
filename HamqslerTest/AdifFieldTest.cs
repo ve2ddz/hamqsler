@@ -57,16 +57,20 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsValid()
 		{
+			string err = string.Empty;
 			AdifField field = new AdifField("VA3HJ");
-			Assert.IsTrue(field.IsValid());
+			Assert.IsTrue(field.Validate(out err));
+			Assert.IsNull(err);
 		}
 		
 		// test IsValid returns false
 		[Test]
 		public void TestIsValidFalse()
 		{
+			string err = string.Empty;
 			AdifField field = new AdifField(null);
-			Assert.IsFalse(field.IsValid());
+			Assert.IsFalse(field.Validate(out err));
+			Assert.AreEqual("Value is null", err);
 		}
 	}
 }
