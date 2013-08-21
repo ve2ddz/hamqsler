@@ -18,6 +18,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace hamqsler
 {
@@ -27,10 +29,17 @@ namespace hamqsler
 	public class EnumerationField : AdifField
 	{
 		private string[] enumeration = null;
-		public string [] Enumeration
+		public string[] Enumeration
 		{
 			get {return enumeration;}
 			set {enumeration = value;}
+		}
+		
+		private string enumName = null;
+		public string EnumName
+		{
+			get {return enumName;}
+			set {enumName = value;}
 		}
 		
 		/// <summary>
@@ -38,9 +47,21 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="value">Field value</param>
 		/// <param name="enums">Enumeration values</param>
-		public EnumerationField(string value, string [] enums) : base(value)
+		public EnumerationField(string value, string[] enums) : base(value)
 		{
 			Enumeration = enums;
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="value">Field value</param>
+		/// <param name="enums">Enumeration values</param>
+		/// <param name="adifEnumName">Name of Adif enumeration</param>
+		public EnumerationField(string value, string[] enums, string adifEnumName) : base(value)
+		{
+			Enumeration = enums;
+			EnumName = adifEnumName;
 		}
 		
 		/// <summary>
@@ -60,6 +81,16 @@ namespace hamqsler
 			}
 			err = "This QSO Field is of type enumeration. The value was not found in enumeration";
 			return false;
+		}
+		
+		/// <summary>
+		/// Check if this value is deprecated
+		/// </summary>
+		/// <param name="aEnums">AdifEnumerations object containing the enumerations info</param>
+		/// <returns></returns>
+		public bool IsDeprecated(AdifEnumerations aEnums)
+		{
+			return aEnums.IsDeprecated(EnumName, Value);
 		}
 	}
 }

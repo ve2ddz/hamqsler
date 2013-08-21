@@ -18,6 +18,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using hamqsler;
 
@@ -79,6 +81,42 @@ namespace hamqslerTest
 			Assert.IsFalse(ef.Validate(out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value was not found in enumeration",
 			                err);
+		}
+		
+		// test if value deprecated and return new value
+		[Test]
+		public void TestIsDeprecated()
+		{
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string[] sections = aEnums.GetEnumeratedValues("Arrl_Section");
+			EnumerationField ef = new EnumerationField("NWT", sections, "Arrl_Section");
+			string error = string.Empty;
+			Assert.IsTrue(ef.Validate(out error));
+			Assert.IsTrue(ef.IsDeprecated(aEnums));
+		}
+		
+		// test for IsDeprecated not set
+		[Test]
+		public void TestIsNotDeprecated()
+		{
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string[] sections = aEnums.GetEnumeratedValues("Arrl_Section");
+			EnumerationField ef = new EnumerationField("ON", sections, "Arrl_Section");
+			string error = string.Empty;
+			Assert.IsTrue(ef.Validate(out error));
+			Assert.IsFalse(ef.IsDeprecated(aEnums));
 		}
 	}
 }

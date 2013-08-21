@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressFieldTest.cs" />
+    <Compile Include="AdifEnumerationsTest.cs" />
     <Compile Include="AdifFieldTest.cs" />
     <Compile Include="EnumerationFieldTest.cs" />
     <Compile Include="NumberFieldTest.cs" />

@@ -29,6 +29,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using System.Xml;
 
 using QslBureaus;
 using Qsos;
@@ -46,6 +47,13 @@ namespace hamqsler
 		public static ExceptionLogger Logger
 		{
 			get {return logger;}
+		}
+		
+		private static AdifEnumerations adifEnums;
+		public static AdifEnumerations AdifEnums
+		{
+			get {return adifEnums;}
+			set {adifEnums = value;}
 		}
 		
 		string created = string.Empty;
@@ -413,6 +421,20 @@ namespace hamqsler
 				return true;
 			else
 				return false;
+		}
+		
+		/// <summary>
+		/// Load AdifEnumerations from AdifEnumerations.xml
+		/// </summary>
+		private void GetAdifEnumerations()
+		{
+            // get the assembly for this program
+            Assembly assembly = Assembly.GetAssembly(this.GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnums = new AdifEnumerations(str);
 		}
 	}
 }

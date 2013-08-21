@@ -81,6 +81,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Address.cs" />
+    <Compile Include="AdifEnumerations.cs" />
     <Compile Include="AdifExistsMacro.cs" />
     <Compile Include="AdifExistsMacroGroupBox.xaml.cs">
       <DependentUpon>AdifExistsMacroGroupBox.xaml</DependentUpon>
@@ -100,10 +101,12 @@
     <Compile Include="AIndex.cs" />
     <Compile Include="AntAz.cs" />
     <Compile Include="AntEl.cs" />
+    <Compile Include="AntPath.cs" />
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArrlSect.cs" />
     <Compile Include="BackgroundWFImage.cs" />
     <Compile Include="BandComparer.cs" />
     <Compile Include="BureauComparer.cs" />
@@ -268,6 +271,7 @@
     <Folder Include="Samples" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AdifEnumerations.xml" />
     <None Include="Samples\sample.adi">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
