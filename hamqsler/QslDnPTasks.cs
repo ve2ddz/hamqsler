@@ -143,6 +143,10 @@ namespace hamqsler
 						   (fromFolder.EndsWith("Samples") && !file.EndsWith("sample.xqsl")))
 						{
 							CardWF card = QslDnPTasks.ConvertFromXQSL(file);
+							if(card == null)
+							{
+								continue;
+							}
 							FileInfo fInfo = new FileInfo(file);
 							string toFile = toFolder + "\\" + fInfo.Name;
 							// if directory does not exist in hamqsler, then create it
@@ -191,42 +195,72 @@ namespace hamqsler
 		{
 			CardWF card = null;
 			XmlDocument doc = new XmlDocument();
-			Stream fStream = new FileStream(file, FileMode.Open);
-			doc.Load(fStream);
-			XmlNode node = doc.DocumentElement;
-			switch(node.Name)
+			try
 			{
-				case "LandscapeCard55x425":
-					card = new CardWF(550, 425, false);
-					break;
-				case "LandscapeCard6x4":	// note fallthrough
-				case "LandscapeCard15x10":
-					card = new CardWF(600, 400, false);
-					break;
-				case "LandscapeCard55x35":
-				case "LandscapeCard":
-					card = new CardWF(550, 350, false);
-					break;
-				default:
-					throw new XmlException("Invalid card file");
+				Stream fStream = new FileStream(file, FileMode.Open);
+				doc.Load(fStream);
+				XmlNode node = doc.DocumentElement;
+				switch(node.Name)
+				{
+					case "LandscapeCard55x425":
+						card = new CardWF(550, 425, false);
+						break;
+					case "LandscapeCard6x4":	// note fallthrough
+					case "LandscapeCard15x10":
+						card = new CardWF(600, 400, false);
+						break;
+					case "LandscapeCard55x35":
+					case "LandscapeCard":
+						card = new CardWF(550, 350, false);
+						break;
+					default:
+						throw new XmlException("Invalid card file");
+				}
+				CultureInfo cardCulture = CultureInfo.InvariantCulture;
+				XmlAttributeCollection attrCollection = node.Attributes;
+				XmlAttribute culture = attrCollection["Culture"];
+				if(culture != null)
+				{
+					cardCulture = new CultureInfo(culture.Value, false);
+				}
+				XmlNode cNode = XmlProcs.GetFirstChildElement(node);
+				if(cNode != null && cNode.Name.Equals("Card"))
+				{
+					LoadXQSLCard(card, cNode, cardCulture);
+				}
+				else
+				{
+					throw new XmlException("Invalid card file - Node is not a Card node");
+				}
+				fStream.Close();
+				return card;
 			}
-			CultureInfo cardCulture = CultureInfo.InvariantCulture;
-			XmlAttributeCollection attrCollection = node.Attributes;
-			XmlAttribute culture = attrCollection["Culture"];
-			if(culture != null)
+			catch(IOException ioe)
 			{
-				cardCulture = new CultureInfo(culture.Value, false);
+				Exception ex = new Exception("IO error occurred loading file: " + file, ioe);
+				App.Logger.Log(ex, true, false);
+				string err = string.Format("IO error encountered while trying to convert file {0}." +
+				                           Environment.NewLine +
+				                           "See the log file for more information.", file);
+
+				MessageBox.Show(err, "IO Error During Conversion", MessageBoxButton.OK,
+				                MessageBoxImage.Error);
+				return null;
 			}
-			XmlNode cNode = XmlProcs.GetFirstChildElement(node);
-			if(cNode != null && cNode.Name.Equals("Card"))
+			catch(XmlException xe)
 			{
-				LoadXQSLCard(card, cNode, cardCulture);
+				Exception ex = new Exception("XML error occurred while reading file: " + file, xe);
+				App.Logger.Log(ex, true, false);
+				string err = string.Format("XML error encountered while trying to convert file {0}." +
+				                           Environment.NewLine +
+				                           "See the log file for more information.", file);
+
+				MessageBox.Show(err, "XML Error During Conversion", MessageBoxButton.OK,
+				                MessageBoxImage.Error);
+				return null;
 			}
-			else
-			{
-				throw new XmlException("Invalid card file - Node is not a Card node");
-			}
-			return card;
+					
+					
 		}
 		
 		/// <summary>
@@ -735,5 +769,6 @@ namespace hamqsler
 			App.Logger.Log("Font: " + font + " not found. Replaced with " + fName);
 			return fName;
 		}
+		
 	}
 }
