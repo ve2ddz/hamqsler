@@ -24,9 +24,9 @@ using System.Xml.Linq;
 namespace hamqsler
 {
 	/// <summary>
-	/// QSO Field of type enumeration
+	/// Base class for QSO Fields of type enumeration
 	/// </summary>
-	public class EnumerationField : AdifField
+	public class EnumerationField
 	{
 		private string[] enumeration = null;
 		public string[] Enumeration
@@ -42,12 +42,13 @@ namespace hamqsler
 			set {enumName = value;}
 		}
 		
+		private AdifEnumerations aEnums = null;
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="value">Field value</param>
 		/// <param name="enums">Enumeration values</param>
-		public EnumerationField(string value, string[] enums) : base(value)
+		public EnumerationField(string[] enums)
 		{
 			Enumeration = enums;
 		}
@@ -55,26 +56,36 @@ namespace hamqsler
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="value">Field value</param>
-		/// <param name="enums">Enumeration values</param>
 		/// <param name="adifEnumName">Name of Adif enumeration</param>
-		public EnumerationField(string value, string[] enums, string adifEnumName) : base(value)
+		/// <param name="adifEnum">AdifEnumerations object that contains the enumeration</param>
+		public EnumerationField(string adifEnumName, AdifEnumerations adifEnum)
 		{
-			Enumeration = enums;
+			aEnums = adifEnum;
 			EnumName = adifEnumName;
 		}
 		
 		/// <summary>
 		/// Validate that value is within the enumeration
 		/// </summary>
+		/// <param name="value">Value to check against enumeration</param>
 		/// <param name="err">Error message if value not within enumeration</param>
 		/// <returns>true if value within enumeration, false otherwise</returns>
-		public override bool Validate(out string err)
+		public virtual bool IsInEnumeration(string value, out string err)
 		{
 			err = null;
-			foreach(string enumer in Enumeration)
+			if(Enumeration != null)
 			{
-				if(Value.Equals(enumer))
+				foreach(string enumer in Enumeration)
+				{
+					if(value.Equals(enumer))
+					{
+						return true;
+					}
+				}
+			}
+			else if(aEnums != null && EnumName != null)
+			{
+				if(aEnums.IsInEnumeration(EnumName, value))
 				{
 					return true;
 				}
@@ -83,14 +94,11 @@ namespace hamqsler
 			return false;
 		}
 		
-		/// <summary>
-		/// Check if this value is deprecated
-		/// </summary>
-		/// <param name="aEnums">AdifEnumerations object containing the enumerations info</param>
-		/// <returns></returns>
-		public bool IsDeprecated(AdifEnumerations aEnums)
+		public virtual bool Validate(string value, out string err)
 		{
-			return aEnums.IsDeprecated(EnumName, Value);
+			err = string.Empty;
+			return this.IsInEnumeration(value, out err);
 		}
+		
 	}
 }

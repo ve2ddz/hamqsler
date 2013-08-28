@@ -31,21 +31,12 @@ namespace hamqslerTest
 	[TestFixture]
 	public class EnumerationFieldTest
 	{
-		// test that Value is set properly
-		[Test]
-		public void TestValue()
-		{
-			string[] enums = {"e1", "e2", "e3", "e4"};
-			EnumerationField ef = new EnumerationField("e1", enums);
-			Assert.AreEqual("e1", ef.Value);
-		}
-		
 		// test that Enumeration fields set properly
 		[Test]
 		public void TestEnumerationSet()
 		{
 			string[] enums = {"e1", "e2", "e3", "e4"};
-			EnumerationField ef = new EnumerationField("e1", enums);
+			EnumerationField ef = new EnumerationField(enums);
 			Assert.AreEqual(enums, ef.Enumeration);
 		}
 		
@@ -55,8 +46,8 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string[] enums = {"e1", "e2", "e3", "e4"};
-			EnumerationField ef = new EnumerationField("e1", enums);
-			Assert.IsTrue(ef.Validate(out err));
+			EnumerationField ef = new EnumerationField(enums);
+			Assert.IsTrue(ef.IsInEnumeration("e1", out err));
 			Assert.AreEqual(null, err);
 		}
 		
@@ -66,8 +57,57 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string[] enums = {"e1", "e2", "e3", "e4"};
-			EnumerationField ef = new EnumerationField("e4", enums);
-			Assert.IsTrue(ef.Validate(out err));
+			EnumerationField ef = new EnumerationField(enums);
+			Assert.IsTrue(ef.IsInEnumeration("e4", out err));
+			Assert.AreEqual(null, err);
+		}
+		
+		// test that Enumeration fields set properly
+		[Test]
+		public void TestEnumerationSet2()
+		{
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			EnumerationField ef = new EnumerationField("Arrl_Sect", aEnums);
+			Assert.AreEqual("Arrl_Sect", ef.EnumName);
+		}
+		
+		// test that value is in the enumeration
+		[Test]
+		public void TestValueInEnumeration2()
+		{
+			string err = string.Empty;
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			Assert.IsTrue(ef.IsInEnumeration("NT", out err));
+			Assert.AreEqual(null, err);
+		}
+		
+		// test that value is in the enumeration
+		[Test]
+		public void TestValueInEnumeration3()
+		{
+			string err = string.Empty;
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			Assert.IsTrue(ef.IsInEnumeration("EB", out err));
 			Assert.AreEqual(null, err);
 		}
 		
@@ -77,34 +117,64 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string[] enums = {"e1", "e2", "e3", "e4"};
-			EnumerationField ef = new EnumerationField("e5", enums);
-			Assert.IsFalse(ef.Validate(out err));
+			EnumerationField ef = new EnumerationField(enums);
+			Assert.IsFalse(ef.IsInEnumeration("e5", out err));
+			Assert.AreEqual("This QSO Field is of type enumeration. The value was not found in enumeration",
+			                err);
+		}
+		// test that value is not in the enumeration
+		[Test]
+		public void TestValueNotInEnumeration1()
+		{
+			string err = string.Empty;
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			Assert.IsFalse(ef.IsInEnumeration("ABCD", out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value was not found in enumeration",
 			                err);
 		}
 		
-		// test if value deprecated and return new value
+		// validate that value is in enumeration
 		[Test]
-		public void TestIsDeprecated()
+		public void TestValidateTrue()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			string[] sections = aEnums.GetEnumeratedValues("Arrl_Section");
-			EnumerationField ef = new EnumerationField("NWT", sections, "Arrl_Section");
-			string error = string.Empty;
-			Assert.IsTrue(ef.Validate(out error));
-			Assert.IsTrue(ef.IsDeprecated(aEnums));
+			string err = string.Empty;
+			string[] enums = {"e1", "e2", "e3", "e4"};
+			EnumerationField ef = new EnumerationField(enums);
+			Assert.IsTrue(ef.Validate("e1", out err));
 		}
 		
-		// test for IsDeprecated not set
+		// valkidate that value is in enumeration
 		[Test]
-		public void TestIsNotDeprecated()
+		public void TestValidateTrue1()
 		{
+			string err = string.Empty;
+			string[] enums = {"e1", "e2", "e3", "e4"};
+			EnumerationField ef = new EnumerationField(enums);
+			Assert.IsTrue(ef.Validate("e4", out err));			
+		}
+		
+		// validate that value is not in enumeration
+		[Test]
+		public void TestValidateFalse()
+		{
+			string err = string.Empty;
+			string[] enums = {"e1", "e2", "e3", "e4"};
+			EnumerationField ef = new EnumerationField(enums);
+			Assert.IsFalse(ef.Validate("e5", out err));						
+		}
+		
+		// validate that value is in enumeration
+		[Test]
+		public void TestValidateTrue2()
+		{
+			string err = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -112,11 +182,40 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			string[] sections = aEnums.GetEnumeratedValues("Arrl_Section");
-			EnumerationField ef = new EnumerationField("ON", sections, "Arrl_Section");
-			string error = string.Empty;
-			Assert.IsTrue(ef.Validate(out error));
-			Assert.IsFalse(ef.IsDeprecated(aEnums));
+			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			Assert.IsTrue(ef.Validate("NT", out err));
+		}
+		
+		// validate that value is in enumeration
+		[Test]
+		public void TestValidateTrue3()
+		{
+			string err = string.Empty;
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			Assert.IsTrue(ef.Validate("EB", out err));
+		}
+		
+		// validate that value is not in enumeration
+		[Test]
+		public void TestValidateFalse1()
+		{
+			string err = string.Empty;
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			Assert.IsFalse(ef.Validate("ABCD", out err));
 		}
 	}
 }

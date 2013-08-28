@@ -101,12 +101,12 @@
     <Compile Include="AIndex.cs" />
     <Compile Include="AntAz.cs" />
     <Compile Include="AntEl.cs" />
-    <Compile Include="AntPath.cs" />
+    <Compile Include="Ant_Path.cs" />
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ArrlSect.cs" />
+    <Compile Include="Arrl_Sect.cs" />
     <Compile Include="BackgroundWFImage.cs" />
     <Compile Include="BandComparer.cs" />
     <Compile Include="BureauComparer.cs" />
@@ -139,6 +139,7 @@
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="DispQso.cs" />
     <Compile Include="EnumerationField.cs" />
+    <Compile Include="EnumerationValue.cs" />
     <Compile Include="FloatToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FormsColorToWPFSolidColorBrushConverter.cs" />

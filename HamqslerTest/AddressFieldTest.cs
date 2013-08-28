@@ -53,5 +53,21 @@ namespace hamqslerTest
 			Assert.AreEqual(address, addr.Value);
 		}
 		
+		// test Address.ToAdifString returns correct value
+		[Test]
+		public void TestToAdifString()
+		{
+			string address = "My Name" + Environment.NewLine +
+			                 "2124 Any Street" + Environment.NewLine +
+			                 "AnyTown Code" + Environment.NewLine +
+			                 "Some Country";
+			Address addr = new Address(address);
+			Assert.AreEqual("<Address:52>My Name" + Environment.NewLine +
+			                 "2124 Any Street" + Environment.NewLine +
+			                 "AnyTown Code" + Environment.NewLine +
+			                 "Some Country",
+			                 addr.ToAdifString());
+		}
+		
 	}
 }
