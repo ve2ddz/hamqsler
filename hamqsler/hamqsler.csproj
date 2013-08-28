@@ -98,9 +98,9 @@
     </Compile>
     <Compile Include="AdifToYYYYMMDDDateConverter.cs" />
     <Compile Include="Age.cs" />
-    <Compile Include="AIndex.cs" />
-    <Compile Include="AntAz.cs" />
-    <Compile Include="AntEl.cs" />
+    <Compile Include="A_Index.cs" />
+    <Compile Include="Ant_Az.cs" />
+    <Compile Include="Ant_El.cs" />
     <Compile Include="Ant_Path.cs" />
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>

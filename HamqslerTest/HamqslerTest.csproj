@@ -54,6 +54,10 @@
     <Compile Include="AddressFieldTest.cs" />
     <Compile Include="AdifEnumerationsTest.cs" />
     <Compile Include="AdifFieldTest.cs" />
+    <Compile Include="AgeTest.cs" />
+    <Compile Include="AIndexTest.cs" />
+    <Compile Include="AntAzTest.cs" />
+    <Compile Include="AntElTest.cs" />
     <Compile Include="AntPathTest.cs" />
     <Compile Include="ArrlSectTest.cs" />
     <Compile Include="EnumerationFieldTest.cs" />

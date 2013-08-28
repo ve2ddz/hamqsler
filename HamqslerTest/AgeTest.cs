@@ -18,20 +18,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using NUnit.Framework;
+using hamqsler;
 
-namespace hamqsler
+namespace hamqslerTest
 {
-	/// <summary>
-	/// ANT_EL QSO field
-	/// </summary>
-	public class AntEl : NumberField 
+	// tests for Age class
+	[TestFixture]
+	public class AgeTest
 	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="value">Antenna elevation in degrees</param>
-		public AntEl(string value) : base(value)
+		// test Age.ToAdifString method
+		[Test]
+		public void TestToAdifString()
 		{
+			Age age = new Age("17");
+			Assert.AreEqual("<Age:2>17", age.ToAdifString());
 		}
 	}
 }

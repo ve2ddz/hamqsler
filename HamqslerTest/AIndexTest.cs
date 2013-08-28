@@ -18,20 +18,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using NUnit.Framework;
+using hamqsler;
 
-namespace hamqsler
+namespace hamqslerTest
 {
-	/// <summary>
-	/// ANT_AZ QSO field
-	/// </summary>
-	public class AntAz : NumberField
+	// tests for A_Index class
+	[TestFixture]
+	public class AIndexTest
 	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="value">Antenna azimuth value in degrees</param>
-		public AntAz(string value) : base(value)
+		// test A_Index.ToAdifString
+		[Test]
+		public void TestToAdifString()
 		{
+			A_Index aIndex = new A_Index("400");
+			Assert.AreEqual("<A_Index:3>400", aIndex.ToAdifString());
 		}
 	}
 }

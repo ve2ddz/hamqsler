@@ -24,13 +24,13 @@ namespace hamqsler
 	/// <summary>
 	///  AIndex QSO field
 	/// </summary>
-	public class AIndex : NumberField
+	public class A_Index : NumberField
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="value">A index value</param>
-		public AIndex(string value) : base(value)
+		public A_Index(string value) : base(value)
 		{
 		}
 	}
