@@ -136,6 +136,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DateTimeComparer.cs" />
+    <Compile Include="DelimitedList.cs" />
+    <Compile Include="DelimitedListEnumeration.cs" />
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="DispQso.cs" />
     <Compile Include="EnumerationField.cs" />

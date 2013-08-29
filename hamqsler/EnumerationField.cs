@@ -90,10 +90,17 @@ namespace hamqsler
 					return true;
 				}
 			}
-			err = "This QSO Field is of type enumeration. The value was not found in enumeration";
+			err = string.Format("This QSO Field is of type enumeration. The value '{0}' " +
+			                    "was not found in enumeration", value);
 			return false;
 		}
 		
+		/// <summary>
+		/// Validate that the value is in the enumeration
+		/// </summary>
+		/// <param name="value">Value to check</param>
+		/// <param name="err">error messsage if not in enumeration</param>
+		/// <returns></returns>
 		public virtual bool Validate(string value, out string err)
 		{
 			err = string.Empty;

@@ -59,7 +59,7 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Arrl_Sect sect = new Arrl_Sect("ABCD", aEnums);
 			Assert.IsFalse(sect.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value was not found in enumeration",
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration",
 			                err);
 		}
 		

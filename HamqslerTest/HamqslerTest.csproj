@@ -60,6 +60,8 @@
     <Compile Include="AntElTest.cs" />
     <Compile Include="AntPathTest.cs" />
     <Compile Include="ArrlSectTest.cs" />
+    <Compile Include="DelimitedListEnumerationTests.cs" />
+    <Compile Include="DelimitedListTests.cs" />
     <Compile Include="EnumerationFieldTest.cs" />
     <Compile Include="EnumerationValueTests.cs" />
     <Compile Include="NumberFieldTest.cs" />

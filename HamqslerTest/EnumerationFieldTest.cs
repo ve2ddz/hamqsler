@@ -119,7 +119,7 @@ namespace hamqslerTest
 			string[] enums = {"e1", "e2", "e3", "e4"};
 			EnumerationField ef = new EnumerationField(enums);
 			Assert.IsFalse(ef.IsInEnumeration("e5", out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value was not found in enumeration",
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e5' was not found in enumeration",
 			                err);
 		}
 		// test that value is not in the enumeration
@@ -136,7 +136,7 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
 			Assert.IsFalse(ef.IsInEnumeration("ABCD", out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value was not found in enumeration",
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration",
 			                err);
 		}
 		

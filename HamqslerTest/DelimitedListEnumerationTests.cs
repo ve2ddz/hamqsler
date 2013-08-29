@@ -25,35 +25,27 @@ using hamqsler;
 
 namespace hamqslerTest
 {
+	/// <summary>
+	/// Tests for DelimitedListEnumeration class
+	/// </summary>
 	[TestFixture]
-	public class EnumerationValueTests
+	public class DelimitedListEnumerationTests
 	{
-		// test Validate returns true for value in enumeration
+		// test constructor and Count accessor
 		[Test]
-		public void TestValidateTrue()
+		public void TestCount()
 		{
-			string[] enums = {"e1", "e2", "e3", "e4"};
-			EnumerationValue eVal = new EnumerationValue("e1", enums);
-			string err = string.Empty;
-			Assert.IsTrue(eVal.Validate(out err));
+			string list = "item1,item4,item3";
+			string[] enumeration = {"item1", "item2", "item3", "item4"};
+			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
+			Assert.AreEqual(3, dLE.Count);
 		}
 		
-		// test Validate returns false for value not in enumeration
+		// test constructor and Count accessor
 		[Test]
-		public void TestValidateFalse()
+		public void TestCount2()
 		{
-			string[] enums = {"e1", "e2", "e3", "e4"};
-			EnumerationValue eVal = new EnumerationValue("e5", enums);
-			string err = string.Empty;
-			Assert.IsFalse(eVal.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e5' was not found in enumeration",
-			                err);
-		}
-
-	// test Validate returns true for value in enumeration
-		[Test]
-		public void TestValidateTrue1()
-		{
+			string list = "ON:NT:EB:EPA";
 			string err = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
@@ -62,14 +54,56 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			EnumerationValue ef = new EnumerationValue("NT", "Arrl_Section", aEnums);
-			Assert.IsTrue(ef.Validate(out err));
+			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
+			Assert.AreEqual(4, dLE.Count);
 		}
 		
-		// test Validate returns false for value not in enumeration
+		// test IsInList method
 		[Test]
-		public void TestValidateFalse1()
+		public void TestIsInList()
 		{
+			string list = "item1,item4,item3";
+			string[] enumeration = {"item1", "item2", "item3", "item4"};
+			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
+			Assert.IsTrue(dLE.IsInList("item1"));
+		}
+		
+		// test IsInList method
+		[Test]
+		public void TestIsInList1()
+		{
+			string list = "item1,item4,item3";
+			string[] enumeration = {"item1", "item2", "item3", "item4"};
+			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
+			Assert.IsTrue(dLE.IsInList("item3"));			
+		}
+		
+		// test IsInList with item not in list
+		[Test]
+		public void TestIsInListFalse()
+		{
+			string list = "item1,item4,item3";
+			string[] enumeration = {"item1", "item2", "item3", "item4"};
+			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
+			Assert.IsFalse(dLE.IsInList("item6"));						
+		}
+		
+		// test Validate method
+		[Test]
+		public void TestValidate()
+		{
+			string list = "item1,item4,item3";
+			string[] enumeration = {"item1", "item2", "item3", "item4"};
+			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
+			string err = string.Empty;
+			Assert.IsTrue(dLE.Validate(out err));
+		}
+		
+		// test Validate method with item not in enumeration
+		[Test]
+		public void TestValidateInvalidValue()
+		{
+			string list = "ON:NT:EOR:EPA";
 			string err = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
@@ -78,16 +112,17 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			EnumerationValue ef = new EnumerationValue("ABCD", "Arrl_Section", aEnums);
-			Assert.IsFalse(ef.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration",
+			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
+			Assert.IsFalse(dLE.Validate(out err));
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'EOR' was not found in enumeration",
 			                err);
 		}
 		
-		// test ToAdifString returns correct value
+		// test ToAdifString method
 		[Test]
 		public void TestToAdifString()
 		{
+			string list = "ON:NT:OR:EPA";
 			string err = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
@@ -96,8 +131,8 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			EnumerationValue ef = new EnumerationValue("NT", "Arrl_Section", aEnums);
-			Assert.AreEqual("<EnumerationValue:2>NT", ef.ToAdifString());
+			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
+			Assert.AreEqual("<DelimitedListEnumeration:12>ON:NT:OR:EPA", dLE.ToAdifString());
 		}
 	}
 }

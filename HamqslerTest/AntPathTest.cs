@@ -60,7 +60,7 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Ant_Path ap = new Ant_Path("F", aEnums);
 			Assert.IsFalse(ap.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value was not found in enumeration",
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration",
 			                err);
 		}
 		

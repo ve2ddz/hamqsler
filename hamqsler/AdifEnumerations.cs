@@ -72,7 +72,7 @@ namespace hamqsler
 			
 			if(elts.Count == 0)
 			{
-				string err = string.Format("Programming error: Attempting to retieve {0} enumeration from " +
+				string err = string.Format("Programming error: Attempting to retrieve {0} enumeration from " +
 				              "AdifEnumerations but not found", enumeration);
 				throw new XmlException(err);
 			}
