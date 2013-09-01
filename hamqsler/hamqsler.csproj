@@ -98,6 +98,7 @@
     </Compile>
     <Compile Include="AdifToYYYYMMDDDateConverter.cs" />
     <Compile Include="Age.cs" />
+    <Compile Include="Award_Granted.cs" />
     <Compile Include="Award_Submitted.cs" />
     <Compile Include="A_Index.cs" />
     <Compile Include="Ant_Az.cs" />
