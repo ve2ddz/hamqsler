@@ -27,6 +27,10 @@ namespace hamqsler
 	public class DelimitedListEnumeration : EnumerationField
 	{
 		private DelimitedList delimList = null;
+		public DelimitedList DelimList
+		{
+			get {return delimList;}
+		}
 		
 		public int Count
 		{
@@ -79,7 +83,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="err">Error message if at least one item is not in the enumeration</param>
 		/// <returns>true if all values in the delimited list are in the enumeration, false otherwise</returns>
-		public bool Validate(out string err)
+		public virtual bool Validate(out string err)
 		{
 			err = string.Empty;
 			foreach(string item in delimList.Items)
@@ -90,6 +94,20 @@ namespace hamqsler
 			   }
 			}
 			return true;
+		}
+		
+		/// <summary>
+		/// Check specified item against the enumeration. This is needed for cases where the
+		/// delimited list contains entries where only a portion of the entry is included in
+		/// the enumeration. One such example is the Award_Submitted class.
+		/// </summary>
+		/// <param name="item">Item to check against the enumeration</param>
+		/// <param name="err">Error message if the item is not in the enumeration</param>
+		/// <returns>true if item is in the enumeration, false otherwise.</returns>
+		public override bool Validate(string item, out string err)
+		{
+			err = string.Empty;
+			return base.Validate(item, out err);
 		}
 		
 		public string ToAdifString()

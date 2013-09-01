@@ -26,27 +26,17 @@ using hamqsler;
 namespace hamqslerTest
 {
 	/// <summary>
-	/// Tests for DelimitedListEnumeration class
+	/// Tests for AwardSubmitted class
 	/// </summary>
 	[TestFixture]
-	public class DelimitedListEnumerationTests
+	public class AwardSubmittedTests
 	{
-		// test constructor and Count accessor
+		/// <summary>
+		/// Test Count accessor
+		/// </summary>
 		[Test]
 		public void TestCount()
 		{
-			string list = "item1,item4,item3";
-			string[] enumeration = {"item1", "item2", "item3", "item4"};
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
-			Assert.AreEqual(3, dLE.Count);
-		}
-		
-		// test constructor and Count accessor
-		[Test]
-		public void TestCount2()
-		{
-			string list = "ON:NT:EB:EPA";
-			string err = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -54,57 +44,16 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
-			Assert.AreEqual(4, dLE.Count);
+			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
+			Assert.AreEqual(3, aSub.Count);
 		}
 		
-		// test IsInList method
+		/// <summary>
+		/// Test Validate method with valid awards
+		/// </summary>
 		[Test]
-		public void TestIsInList()
+		public void TestValidateOK()
 		{
-			string list = "item1,item4,item3";
-			string[] enumeration = {"item1", "item2", "item3", "item4"};
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
-			Assert.IsTrue(dLE.IsInList("item1"));
-		}
-		
-		// test IsInList method
-		[Test]
-		public void TestIsInList1()
-		{
-			string list = "item1,item4,item3";
-			string[] enumeration = {"item1", "item2", "item3", "item4"};
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
-			Assert.IsTrue(dLE.IsInList("item3"));			
-		}
-		
-		// test IsInList with item not in list
-		[Test]
-		public void TestIsInListFalse()
-		{
-			string list = "item1,item4,item3";
-			string[] enumeration = {"item1", "item2", "item3", "item4"};
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
-			Assert.IsFalse(dLE.IsInList("item6"));						
-		}
-		
-		// test Validate method
-		[Test]
-		public void TestValidate()
-		{
-			string list = "item1,item4,item3";
-			string[] enumeration = {"item1", "item2", "item3", "item4"};
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
-			string err = string.Empty;
-			Assert.IsTrue(dLE.Validate(out err));
-		}
-		
-		// test Validate method with item not in enumeration
-		[Test]
-		public void TestValidateInvalidValue()
-		{
-			string list = "ON:NT:EOR:EPA";
-			string err = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -112,18 +61,66 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
-			Assert.IsFalse(dLE.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'EOR' was not found in enumeration",
+			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
+			string err = string.Empty;
+			Assert.IsTrue(aSub.Validate(out err));
+		}
+		
+		// test Validate with invalid award
+		[Test]
+		public void TestValidateBadEntry()
+		{
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", aEnums);
+			string err = string.Empty;
+			Assert.IsFalse(aSub.Validate(out err));
+			Assert.AreEqual("The sponsors portion of Awards_Submitted is an enumeration." +
+			                Environment.NewLine +
+			                "The value 'DARCDOC_' was not found in enumeration",
 			                err);
 		}
 		
-		// test ToAdifString method
+		// test Validate method with no awards
+		[Test]
+		public void TestValidateNoAwards()
+		{
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Award_Submitted aSub = new Award_Submitted(string.Empty, aEnums);
+			string err = string.Empty;
+			Assert.IsTrue(aSub.Validate(out err));
+		}
+		
+		[Test]
+		public void TestValidateNull()
+		{
+		    // get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Award_Submitted aSub = new Award_Submitted(null, aEnums);
+			string err = string.Empty;
+			Assert.IsTrue(aSub.Validate(out err));
+		}
+		
+		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			string list = "ON:NT:OR:EPA";
-			string err = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -131,16 +128,15 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
-			Assert.AreEqual("<DelimitedListEnumeration:12>ON:NT:OR:EPA", dLE.ToAdifString());
+			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
+			Assert.AreEqual("<Award_Submitted:38>ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500",
+			                aSub.ToAdifString());
 		}
 		
-		// test Validate for a single item
+		// test ToAdifString with null string
 		[Test]
-		public void TestValidateSingleItem()
+		public void TestToAdifStringNull()
 		{
-			string list = "ON:NT:OR:EPA";
-			string err = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -148,28 +144,9 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
-			Assert.IsTrue(dLE.Validate("NT", out err));
+			Award_Submitted aSub = new Award_Submitted(null, aEnums);
+			Assert.AreEqual("<Award_Submitted:0>",
+			                aSub.ToAdifString());
 		}
-		
-		// test Validate for non-included item
-		[Test]
-		public void TestValidateSingleItemNotPresent()
-		{
-			string list = "ON:NT:OR:EPA";
-			string err = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
-			Assert.IsFalse(dLE.Validate("XPS", out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'XPS' " +
-			                    "was not found in enumeration", err);
-		}
-		
 	}
 }
