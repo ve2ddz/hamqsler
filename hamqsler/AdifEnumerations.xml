@@ -88,6 +88,38 @@
 		<EnumValue Description='Wisconsin'>WI</EnumValue>
 		<EnumValue Description='Wyoming'>WY</EnumValue>
 	</Arrl_Section>
+	<Band Description='Band and Limits Enumeration'>
+		<EnumValue Description='2190m Band' LowerFreq='.136' UpperFreq='.137'>2190m</EnumValue>
+		<EnumValue Description='630m Band' LowerFreq='.472' UpperFreq='.479'>630m</EnumValue>
+		<EnumValue Description='560m Band' LowerFreq='.501' UpperFreq='.504'>560m</EnumValue>
+		<EnumValue Description='160m Band' LowerFreq='1.8' UpperFreq='2.0'>160m</EnumValue>
+		<EnumValue Description='80m Band' LowerFreq='3.5' UpperFreq='4.0'>80m</EnumValue>
+		<EnumValue Description='60m Band' LowerFreq='5.102' UpperFreq='5.4065'>260m</EnumValue>
+		<EnumValue Description='40m Band' LowerFreq='7.0' UpperFreq='7.3'>40m</EnumValue>
+		<EnumValue Description='30m Band' LowerFreq='10.0' UpperFreq='10.15'>30m</EnumValue>
+		<EnumValue Description='20m Band' LowerFreq='14.0' UpperFreq='14.35'>20m</EnumValue>
+		<EnumValue Description='17m Band' LowerFreq='18.068' UpperFreq='18.168'>17m</EnumValue>
+		<EnumValue Description='15m Band' LowerFreq='21.0' UpperFreq='21.45'>15m</EnumValue>
+		<EnumValue Description='12m Band' LowerFreq='24.89' UpperFreq='24.990'>12m</EnumValue>
+		<EnumValue Description='10m Band' LowerFreq='28.0' UpperFreq='29.7'>10m</EnumValue>
+		<EnumValue Description='6m Band' LowerFreq='50.0' UpperFreq='54.0'>6m</EnumValue>
+		<EnumValue Description='4m Band' LowerFreq='70.0' UpperFreq='71.0'>4m</EnumValue>
+		<EnumValue Description='2m Band' LowerFreq='144' UpperFreq='148'>2m</EnumValue>
+		<EnumValue Description='1.25m Band' LowerFreq='222' UpperFreq='225'>1.25m</EnumValue>
+		<EnumValue Description='70cm Band' LowerFreq='420' UpperFreq='450'>70cm</EnumValue>
+		<EnumValue Description='33cm Band' LowerFreq='902' UpperFreq='928'>33cm</EnumValue>
+		<EnumValue Description='23cm Band' LowerFreq='1240' UpperFreq='1300'>23cm</EnumValue>
+		<EnumValue Description='13cm Band' LowerFreq='2300' UpperFreq='2450'>13cm</EnumValue>
+		<EnumValue Description='9cm Band' LowerFreq='3300' UpperFreq='3500'>9cm</EnumValue>
+		<EnumValue Description='6cm Band' LowerFreq='5650' UpperFreq='5925'>6cm</EnumValue>
+		<EnumValue Description='3cm Band' LowerFreq='10000' UpperFreq='10500'>3cm</EnumValue>
+		<EnumValue Description='1.25cm Band' LowerFreq='24000' UpperFreq='24250'>1.25cm</EnumValue>
+		<EnumValue Description='6mm Band' LowerFreq='47000' UpperFreq='47200'>6mm</EnumValue>
+		<EnumValue Description='4mm Band' LowerFreq='75500' UpperFreq='81000'>4mm</EnumValue>
+		<EnumValue Description='2.5mm Band' LowerFreq='119800' UpperFreq='120020'>2.5mm</EnumValue>
+		<EnumValue Description='2mm Band' LowerFreq='142000' UpperFreq='149000'>2mm</EnumValue>
+		<EnumValue Description='1mm Band' LowerFreq='241000' UpperFreq='250000'>1mm</EnumValue>
+	</Band>
 	<Sponsored_Award Description='Sponsor portion of Sponsored Award Enumeration'>
 		<EnumValue Description="ARI - l'Associazione RadioAmatori Italiani">ARI_</EnumValue>
 		<EnumValue Description='ARRL - American Radio Relay League'>ARRL_</EnumValue>

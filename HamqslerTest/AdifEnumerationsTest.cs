@@ -295,6 +295,119 @@ namespace hamqslerTest
 			Assert.IsNull(aEnums.GetReplacementValue("Arrl_Section", "ON"));
 		}
 			
-			
+		// test GetBandLimits for valid band
+		[Test]
+		public void TestGetBandLimits2190m()
+		{
+			// get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string lowerLimit = string.Empty;
+			string upperLimit = string.Empty;
+			Assert.IsTrue(aEnums.GetBandLimits("2190m", out lowerLimit, out upperLimit));
+			Assert.AreEqual(".136", lowerLimit);
+			Assert.AreEqual(".137", upperLimit);
+		}
+
+		// test GetBandLimits for valid band
+		[Test]
+		public void TestGetBandLimits1mm()
+		{
+			// get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string lowerLimit = string.Empty;
+			string upperLimit = string.Empty;
+			Assert.IsTrue(aEnums.GetBandLimits("1mm", out lowerLimit, out upperLimit));
+			Assert.AreEqual("241000", lowerLimit);
+			Assert.AreEqual("250000", upperLimit);
+		}
+		
+		// test GetBandLimits for invalid band
+		[Test]
+		public void TestGetBandLimitsBadBand()
+		{
+			// get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string lowerLimit = string.Empty;
+			string upperLimit = string.Empty;
+			Assert.IsFalse(aEnums.GetBandLimits("11mm", out lowerLimit, out upperLimit));
+		}
+		
+		// test GetBandFromFrequency for valid band
+		[Test]
+		public void TestGetBandFromFrequency4m()
+		{
+			// get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string band = string.Empty;
+			Assert.IsTrue(aEnums.GetBandFromFrequency("70.58", out band));
+			Assert.AreEqual("4m", band);
+		}
+		
+		// test GetBandFromFrequency for valid band with freq at lower edge
+		[Test]
+		public void TestGetBandFromFrequencyLowerEdge()
+		{
+			// get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string band = string.Empty;
+			Assert.IsTrue(aEnums.GetBandFromFrequency("7", out band));
+			Assert.AreEqual("40m", band);
+		}
+		
+		// test GetBandFromFrequency for valid band with freq at upper edge
+		[Test]
+		public void TestGetBandFromFrequencyUpperEdge()
+		{
+			// get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string band = string.Empty;
+			Assert.IsTrue(aEnums.GetBandFromFrequency(".479", out band));
+			Assert.AreEqual("630m", band);
+		}
+
+		// test GetBandFromFrequency for frequency not in band
+		[Test]
+		public void TestGetBandFromFrequencyInvalidFreq()
+		{
+			// get the hamqsler assembly
+			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+            // get a stream for the AdifEnumerations.xml file
+            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+             // load in the xml file
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string band = string.Empty;
+			Assert.IsFalse(aEnums.GetBandFromFrequency(".485", out band));
+		}
 	}
 }

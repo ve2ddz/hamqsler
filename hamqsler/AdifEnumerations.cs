@@ -20,6 +20,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -227,6 +228,56 @@ namespace hamqsler
 				                         value, enumeration);
 				throw new XmlException(err);
 			}
+		}
+		
+		/// <summary>
+		/// Get the lower and upper band limits for the specified band
+		/// </summary>
+		/// <param name="band">Band to get limits for</param>
+		/// <param name="lLimit">lower band limit</param>
+		/// <param name="uLimit">upper band limit</param>
+		/// <returns>true if band exists, false otherwise</returns>
+		public bool GetBandLimits(string band, out string lLimit, out string uLimit)
+		{
+			lLimit = string.Empty;
+			uLimit = string.Empty;
+			XElement b = GetEnumValue("Band", band);
+			if(b != null)
+			{
+				XAttribute lower = b.Attribute("LowerFreq");
+				XAttribute upper = b.Attribute("UpperFreq");
+				lLimit = lower.Value;
+				uLimit = upper.Value;
+				return true;
+			}
+			return false;
+		}
+		
+		/// <summary>
+		/// Get band for the specified frequency
+		/// </summary>
+		/// <param name="freq">Frequency to get band for</param>
+		/// <param name="band">Band containing the frequency</param>
+		/// <returns>true if freq is within a band, false otherwise.</returns>
+		public bool GetBandFromFrequency(string freq, out string band)
+		{
+			band = string.Empty;
+			List<XElement> elts = AdifEnumerationsDoc.Descendants("Band").ToList();
+			IEnumerable<XElement> bands = elts.Descendants("EnumValue");
+			float f = float.Parse(freq, CultureInfo.InvariantCulture);
+			foreach(XElement b in bands)
+			{
+				string lower = b.Attribute("LowerFreq").Value;
+				string upper = b.Attribute("UpperFreq").Value;
+				float lFreq = float.Parse(lower, CultureInfo.InvariantCulture);
+				float uFreq = float.Parse(upper, CultureInfo.InvariantCulture);
+				if(f >= lFreq && f <= uFreq)
+				{
+					band = b.Value;
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

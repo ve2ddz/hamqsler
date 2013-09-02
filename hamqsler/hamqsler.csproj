@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Arrl_Sect.cs" />
     <Compile Include="BackgroundWFImage.cs" />
+    <Compile Include="Band.cs" />
     <Compile Include="BandComparer.cs" />
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />

@@ -42,7 +42,7 @@ namespace hamqsler
 			set {enumName = value;}
 		}
 		
-		private AdifEnumerations aEnums = null;
+		protected AdifEnumerations aEnums = null;
 		
 		/// <summary>
 		/// Constructor
