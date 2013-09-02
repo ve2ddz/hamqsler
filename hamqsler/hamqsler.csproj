@@ -112,6 +112,7 @@
     <Compile Include="BackgroundWFImage.cs" />
     <Compile Include="Band.cs" />
     <Compile Include="BandComparer.cs" />
+    <Compile Include="Band_Rx.cs" />
     <Compile Include="BureauComparer.cs" />
     <Compile Include="CallComparer.cs" />
     <Compile Include="CardPrintDocument.cs" />
