@@ -64,7 +64,7 @@ namespace hamqslerTest
 		public void TestLoadingAdifEnumerationsXml()
 		{
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -78,7 +78,7 @@ namespace hamqslerTest
 		public void TestAntPathEnumG()
 		{
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -92,7 +92,7 @@ namespace hamqslerTest
 		public void TestAntPathEnumO()
 		{
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -106,7 +106,7 @@ namespace hamqslerTest
 		public void TestAntPathEnumS()
 		{
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -120,7 +120,7 @@ namespace hamqslerTest
 		public void TestAntPathEnumL()
 		{
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -134,7 +134,7 @@ namespace hamqslerTest
 		public void TestAntPathEnumNoMatch()
 		{
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -148,7 +148,7 @@ namespace hamqslerTest
 		public void TestGetDescriptionWithEnum()
 		{
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -165,7 +165,7 @@ namespace hamqslerTest
 		public void TestGetDescriptionWithBadEnum()
 		{
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -180,7 +180,7 @@ namespace hamqslerTest
 		public void TestGetEnumeratedValues()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -200,7 +200,7 @@ namespace hamqslerTest
 		public void TestGetEnumeratedValuesWithNoEnumeration()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -214,7 +214,7 @@ namespace hamqslerTest
 		public void TestIsDeprecated()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -228,7 +228,7 @@ namespace hamqslerTest
 		public void TestIsNotDeprecated()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -243,7 +243,7 @@ namespace hamqslerTest
 		public void TestIsDeprecatedThrowsExceptionValueNotFound()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -258,7 +258,7 @@ namespace hamqslerTest
 		public void TestIfDeprecatedThrowsExceptionEnumerationNotFound()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -272,7 +272,7 @@ namespace hamqslerTest
 		public void TestGetReplacementValueForValidReplacement()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -286,7 +286,7 @@ namespace hamqslerTest
 		public void TestGetReplacementValueNoReplacement()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -300,7 +300,7 @@ namespace hamqslerTest
 		public void TestGetBandLimits2190m()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -318,7 +318,7 @@ namespace hamqslerTest
 		public void TestGetBandLimits1mm()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -336,7 +336,7 @@ namespace hamqslerTest
 		public void TestGetBandLimitsBadBand()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -352,7 +352,7 @@ namespace hamqslerTest
 		public void TestGetBandFromFrequency4m()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -368,7 +368,7 @@ namespace hamqslerTest
 		public void TestGetBandFromFrequencyLowerEdge()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -384,7 +384,7 @@ namespace hamqslerTest
 		public void TestGetBandFromFrequencyUpperEdge()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -400,7 +400,7 @@ namespace hamqslerTest
 		public void TestGetBandFromFrequencyInvalidFreq()
 		{
 			// get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField(string.Empty)).GetType());
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");

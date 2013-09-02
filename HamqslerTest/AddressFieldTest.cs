@@ -69,5 +69,17 @@ namespace hamqslerTest
 			                 addr.ToAdifString());
 		}
 		
+		// test Validate
+		[Test]
+		public void TestValidate()
+		{
+			string address = "My Name" + Environment.NewLine +
+			                 "2124 Any Street" + Environment.NewLine +
+			                 "AnyTown Code" + Environment.NewLine +
+			                 "Some Country";
+			Address addr = new Address(address);
+			string err = string.Empty;
+			Assert.IsTrue(addr.Validate(out err));
+		}
 	}
 }

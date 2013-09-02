@@ -33,24 +33,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetName()
 		{
-			AdifField field = new AdifField("VA3HJ");
+			AdifField field = new AdifField();
 			Assert.AreEqual("AdifField", field.Name);
-		}
-		
-		// test Value accessor
-		[Test]
-		public void TestGetValue()
-		{
-			AdifField field = new AdifField("VA3HJ");
-			Assert.AreEqual("VA3HJ", field.Value);
-		}
-		
-		// test ToAdifField
-		[Test]
-		public void TestToAdifString()
-		{
-			AdifField field = new AdifField("VA3HJ");
-			Assert.AreEqual("<AdifField:5>VA3HJ", field.ToAdifString());
 		}
 		
 		// test IsValid
@@ -58,19 +42,10 @@ namespace hamqslerTest
 		public void TestIsValid()
 		{
 			string err = string.Empty;
-			AdifField field = new AdifField("VA3HJ");
+			AdifField field = new AdifField();
 			Assert.IsTrue(field.Validate(out err));
 			Assert.IsNull(err);
 		}
 		
-		// test IsValid returns false
-		[Test]
-		public void TestIsValidFalse()
-		{
-			string err = string.Empty;
-			AdifField field = new AdifField(null);
-			Assert.IsFalse(field.Validate(out err));
-			Assert.AreEqual("Value is null", err);
-		}
 	}
 }

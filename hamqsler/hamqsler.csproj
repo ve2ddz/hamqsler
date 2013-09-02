@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="MarginConverter.cs" />
     <Compile Include="MinMaxPaperSizes.cs" />
+    <Compile Include="MultilineStringField.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
@@ -214,6 +215,7 @@
       <DependentUpon>StaticTextViewer.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="StringField.cs" />
     <Compile Include="TextMacrosDialog.xaml.cs">
       <DependentUpon>TextMacrosDialog.xaml</DependentUpon>
       <SubType>Code</SubType>

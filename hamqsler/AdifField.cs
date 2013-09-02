@@ -31,29 +31,11 @@ namespace hamqsler
 			get {return this.GetType().ToString().Substring("hamqsler.".Length);}
 		}
 		
-		private string eltValue = string.Empty;
-		public string Value
-		{
-			get {return eltValue;}
-			set {eltValue = value;}
-		}
-		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="value">field value</param>
-		public AdifField(string value)
+		public AdifField()
 		{
-			Value = value;
-		}
-		
-		/// <summary>
-		/// Create ADIF field string from contents of this element
-		/// </summary>
-		/// <returns>ADIF field string</returns>
-		public virtual string ToAdifString()
-		{
-			return "<" + Name + ":" + Value.Length + ">" + Value;
 		}
 		
 		/// <summary>
@@ -65,11 +47,6 @@ namespace hamqsler
 		public virtual bool Validate(out string err)
 		{
 			err = null;
-			if(Value == null)
-			{
-				err = "Value is null";
-				return false;
-			}
 			return true;
 		}
 		

@@ -18,41 +18,34 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Text.RegularExpressions;
 
 namespace hamqsler
 {
 	/// <summary>
-	/// Base class for all number based ADIF Fields
+	/// MultilineStringField class - base class for ADIF fields containing multiline strings
 	/// </summary>
-	public class NumberField : StringField
+	public class MultilineStringField : StringField
 	{
-		/// <summary>
-		/// constructor
-		/// </summary>
-		/// <param name="value">Value for the field</param>
-		public NumberField(string value) : base(value)
+		public MultilineStringField(string value) : base(value)
 		{
 		}
-		
+
 		/// <summary>
-		/// Validates the value as a number
+		/// Validate the field
 		/// </summary>
+		/// <returns>true if Value is not null</returns>
 		/// <param name="err">Error message if Validate is false, or null</param>
-		/// <returns>true if value is empty or a number</returns>
+		/// <returns>true if Value is not null</returns>
 		public override bool Validate(out string err)
 		{
 			err = null;
-			if(string.Equals(string.Empty, Value))
-		    {
-		   		return true;
-		    }
-			else if(Regex.IsMatch(Value, @"^-{0,1}([\d]+|[\d]+\.[\d]*|\.[\d]+)$"))
+			if(Value == null)
 			{
-				return true;
+				err = "Value is null";
+				return false;
 			}
-			err = "Value must be a number";
-			return false;
+			return true;
 		}
+
 	}
 }

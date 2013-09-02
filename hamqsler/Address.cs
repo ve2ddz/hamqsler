@@ -24,7 +24,7 @@ namespace hamqsler
 	/// <summary>
 	/// Description of Address.
 	/// </summary>
-	public class Address : AdifField
+	public class Address : MultilineStringField
 	{
 		/// <summary>
 		/// constructor

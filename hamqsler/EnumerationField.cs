@@ -26,7 +26,7 @@ namespace hamqsler
 	/// <summary>
 	/// Base class for QSO Fields of type enumeration
 	/// </summary>
-	public class EnumerationField
+	public class EnumerationField : AdifField
 	{
 		private string[] enumeration = null;
 		public string[] Enumeration

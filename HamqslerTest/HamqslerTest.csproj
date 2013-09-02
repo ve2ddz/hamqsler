@@ -68,9 +68,11 @@
     <Compile Include="DelimitedListTests.cs" />
     <Compile Include="EnumerationFieldTest.cs" />
     <Compile Include="EnumerationValueTests.cs" />
+    <Compile Include="MultilineStringFieldTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringFieldTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

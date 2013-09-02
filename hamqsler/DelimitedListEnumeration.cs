@@ -37,11 +37,6 @@ namespace hamqsler
 			get {return delimList.Count;}
 		}
 		
-		public string Name
-		{
-			get {return this.GetType().ToString().Substring("hamqsler.".Length);}
-		}
-		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -83,7 +78,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="err">Error message if at least one item is not in the enumeration</param>
 		/// <returns>true if all values in the delimited list are in the enumeration, false otherwise</returns>
-		public virtual bool Validate(out string err)
+		public override bool Validate(out string err)
 		{
 			err = string.Empty;
 			foreach(string item in delimList.Items)

@@ -18,13 +18,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Text.RegularExpressions;
 
 namespace hamqsler
 {
 	/// <summary>
-	/// Adif Field of type EnumerationField with a single string value.
+	/// Description of StringField.
 	/// </summary>
-	public class EnumerationValue : EnumerationField
+	public class StringField : AdifField
 	{
 		private string eltValue = string.Empty;
 		public string Value
@@ -33,46 +34,41 @@ namespace hamqsler
 			set {eltValue = value;}
 		}
 		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="value">Field value</param>
-		/// <param name="enums">Enumeration values</param>
-		public EnumerationValue(string value, string[] enums) : base(enums)
+		public StringField(string value)
 		{
 			Value = value;
 		}
-		
+
 		/// <summary>
-		/// Constructor
+		/// Validate the field
 		/// </summary>
-		/// <param name="value">Field value</param>
-		/// <param name="enumeration">Name of Adif Enumeration</param>
-		/// <param name="aEnum">AdifEnumerations object</param>
-		public EnumerationValue(string value, string enumeration, AdifEnumerations aEnum) :
-			base(enumeration, aEnum)
-		{
-			Value = value;
-		}
-		
-		/// <summary>
-		/// Validate that the value is within the enumeration
-		/// </summary>
-		/// <param name="err"></param>
-		/// <returns></returns>
+		/// <returns>true if Value is not null</returns>
+		/// <param name="err">Error message if Validate is false, or null</param>
+		/// <returns>true if Value is not null and does not contain a newline character</returns>
 		public override bool Validate(out string err)
 		{
 			err = null;
-			return base.Validate(Value, out err);
+			if(Value == null)
+			{
+				err = "Value is null";
+				return false;
+			}
+			if(Regex.IsMatch(Value, "[\\n\\r]"))
+			{
+				err = "String value contains a new line character. This is not allowed in StringField types";
+				return false;
+			}
+			return true;
 		}
-		
+
 		/// <summary>
-		/// Get ADIF string for this field
+		/// Create ADIF field string from contents of this element
 		/// </summary>
-		/// <returns>string in ADIF format</returns>
+		/// <returns>ADIF field string</returns>
 		public virtual string ToAdifString()
 		{
 			return "<" + Name + ":" + Value.Length + ">" + Value;
 		}
+		
 	}
 }
