@@ -25,9 +25,9 @@
 	
 	namespace hamqslerTest
 	{
-		// tests for Band class
+		// tests for Band_Rx class
 		[TestFixture]
-		public class BandTests
+		public class BandRxTests
 		{
 			// test Validate with valid value
 			[Test]
@@ -40,7 +40,7 @@
 	            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 	             // load in the xml file
 				AdifEnumerations aEnums = new AdifEnumerations(str);
-				Band band = new Band("2190m", aEnums);
+				Band_Rx band = new Band_Rx("2190m", aEnums);
 				string error = string.Empty;
 				Assert.IsTrue(band.Validate(out error));
 			}
@@ -56,7 +56,7 @@
 	            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 	             // load in the xml file
 				AdifEnumerations aEnums = new AdifEnumerations(str);
-				Band band = new Band("1mm", aEnums);
+				Band_Rx band = new Band_Rx("1mm", aEnums);
 				string error = string.Empty;
 				Assert.IsTrue(band.Validate(out error));
 			}
@@ -72,7 +72,7 @@
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Band band = new Band("23mm", aEnums);
+			Band_Rx band = new Band_Rx("23mm", aEnums);
 			string error = string.Empty;
 			Assert.IsFalse(band.Validate(out error));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value '23mm' was not found in enumeration", 
@@ -90,9 +90,9 @@
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Band band = new Band("23cm", aEnums);
+			Band_Rx band = new Band_Rx("23cm", aEnums);
 			string error = string.Empty;
-			Assert.AreEqual("<Band:4>23cm", band.ToAdifString());
+			Assert.AreEqual("<Band_Rx:4>23cm", band.ToAdifString());
 		}
 		
 		// test IsWithinBand for frequency within the band
@@ -106,7 +106,7 @@
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Band band = new Band("40m", aEnums);
+			Band_Rx band = new Band_Rx("40m", aEnums);
 			string error = string.Empty;
 			Assert.IsTrue(band.IsWithinBand("7.102"));
 		}
@@ -122,7 +122,7 @@
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Band band = new Band("40m", aEnums);
+			Band_Rx band = new Band_Rx("40m", aEnums);
 			string error = string.Empty;
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
