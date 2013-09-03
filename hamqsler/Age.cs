@@ -22,7 +22,7 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// AGE QSO field.
+	/// Age class - the contacted station's operator's age in years
 	/// </summary>
 	public class Age : NumberField
 	{

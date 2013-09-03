@@ -22,7 +22,7 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// Description of ArrlSect.
+	/// ArrlSect class - the contacted station's ARRL section
 	/// </summary>
 	public class Arrl_Sect : EnumerationValue
 	{

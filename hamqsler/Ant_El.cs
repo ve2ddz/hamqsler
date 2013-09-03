@@ -22,7 +22,7 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// ANT_EL QSO field
+	/// Ant-El class - the logging station's antenna elevation, in degrees
 	/// </summary>
 	public class Ant_El : NumberField 
 	{

@@ -24,7 +24,7 @@ using System.Text.RegularExpressions;
 namespace hamqsler
 {
 	/// <summary>
-	/// Call class - reperesents ADIF Call field
+	/// Call class - the contacted station's callsign
 	/// </summary>
 	public class Call : StringField
 	{

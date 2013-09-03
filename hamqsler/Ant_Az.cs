@@ -22,7 +22,7 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// ANT_AZ QSO field
+	/// Ant_Az class = the logging station's antenna azimuth, in degrees
 	/// </summary>
 	public class Ant_Az : NumberField
 	{

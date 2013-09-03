@@ -22,7 +22,7 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	///  AIndex QSO field
+	///  AIndex class - the geomagnetic A index at the time of the QSO
 	/// </summary>
 	public class A_Index : NumberField
 	{

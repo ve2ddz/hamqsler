@@ -22,7 +22,9 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// Award_Granted class - contains list of awards granted
+	/// Award_Granted class - the list of awards granted by a sponsor.
+	/// This field might not be used in a QSO record. It is included here
+	/// for completeness
 	/// </summary>
 	public class Award_Granted : DelimitedListEnumeration
 	{

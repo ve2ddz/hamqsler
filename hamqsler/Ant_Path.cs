@@ -22,7 +22,7 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// AntPath field for ADIF
+	/// AntPath class - the signal path
 	/// </summary>
 	public class Ant_Path : EnumerationValue
 	{

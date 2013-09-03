@@ -22,7 +22,8 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// Description of Address.
+	/// Address class - the contacted station's complete mailing address (full name, street address,
+	/// city, postal code and country)
 	/// </summary>
 	public class Address : MultilineStringField
 	{
