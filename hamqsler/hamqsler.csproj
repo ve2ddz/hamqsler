@@ -114,6 +114,7 @@
     <Compile Include="BandComparer.cs" />
     <Compile Include="Band_Rx.cs" />
     <Compile Include="BureauComparer.cs" />
+    <Compile Include="Call.cs" />
     <Compile Include="CallComparer.cs" />
     <Compile Include="CardPrintDocument.cs" />
     <Compile Include="CardPropertiesGroupBox.xaml.cs">

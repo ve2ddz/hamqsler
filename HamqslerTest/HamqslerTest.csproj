@@ -64,6 +64,7 @@
     <Compile Include="AwardSubmittedTests.cs" />
     <Compile Include="BandRxTests.cs" />
     <Compile Include="BandTests.cs" />
+    <Compile Include="CallTests.cs" />
     <Compile Include="DelimitedListEnumerationTests.cs" />
     <Compile Include="DelimitedListTests.cs" />
     <Compile Include="EnumerationFieldTest.cs" />
