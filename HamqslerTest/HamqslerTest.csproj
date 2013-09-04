@@ -67,6 +67,7 @@
     <Compile Include="CallTests.cs" />
     <Compile Include="CheckTests.cs" />
     <Compile Include="ClassTests.cs" />
+    <Compile Include="ClublogQsoUploadDateTests.cs" />
     <Compile Include="DateFieldTests.cs" />
     <Compile Include="DelimitedListEnumerationTests.cs" />
     <Compile Include="DelimitedListTests.cs" />
