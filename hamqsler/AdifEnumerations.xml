@@ -120,6 +120,11 @@
 		<EnumValue Description='2mm Band' LowerFreq='142000' UpperFreq='149000'>2mm</EnumValue>
 		<EnumValue Description='1mm Band' LowerFreq='241000' UpperFreq='250000'>1mm</EnumValue>
 	</Band>
+	<Qso_Upload_Status Description='QSO upload status'>
+		<EnumValue Description='The QSO has been uploaded to, and accepted by, the online service'>Y</EnumValue>
+		<EnumValue Description='Do not upload the QSO to the online service'>N</EnumValue>
+		<EnumValue Description='The QSO has been modified since being uploaded to the online service'>M</EnumValue>
+	</Qso_Upload_Status>
 	<Sponsored_Award Description='Sponsor portion of Sponsored Award Enumeration'>
 		<EnumValue Description="ARI - l'Associazione RadioAmatori Italiani">ARI_</EnumValue>
 		<EnumValue Description='ARRL - American Radio Relay League'>ARRL_</EnumValue>
@@ -129,6 +134,6 @@
 		<EnumValue Description='JARL - Japan Amateur Radio League'>JARL_</EnumValue>
 		<EnumValue Description='RSGB - Radio Society of Great Britain'>RSGB_</EnumValue>
 		<EnumValue Description='TAG - Tambov Award Group'>TAG_</EnumValue>
-		<EnumValue Description='WAB = Worked All Britain'>WABAG_</EnumValue>
+		<EnumValue Description='WAB - Worked All Britain'>WABAG_</EnumValue>
 	</Sponsored_Award>
 </AdifEnumerations>
