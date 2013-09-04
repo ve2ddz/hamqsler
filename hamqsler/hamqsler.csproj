@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="CardWFItem.cs" />
     <Compile Include="Check.cs" />
+    <Compile Include="Class.cs" />
     <Compile Include="CountMacro.cs" />
     <Compile Include="CountMacroGroupBox.xaml.cs">
       <DependentUpon>CountMacroGroupBox.xaml</DependentUpon>
