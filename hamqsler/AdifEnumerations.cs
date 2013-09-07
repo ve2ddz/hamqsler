@@ -279,5 +279,28 @@ namespace hamqsler
 			}
 			return false;
 		}
+		
+		/// <summary>
+		/// Get country code given country name
+		/// </summary>
+		/// <param name="name">country name</param>
+		/// <param name="code">code for the named country</param>
+		/// <returns>true if country found, false otherwise</returns>
+		public bool GetCountryCodeFromName(string name, out string code)
+		{
+			code = string.Empty;
+			List<XElement> elts = AdifEnumerationsDoc.Descendants("Country_Code").ToList();
+			IEnumerable<XElement> codes = elts.Descendants("EnumValue");
+			foreach(XElement c in codes)
+			{
+				string desc = c.Attribute("Description").Value;
+				if(desc.Equals(name))
+				{
+					code = c.Value;
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }

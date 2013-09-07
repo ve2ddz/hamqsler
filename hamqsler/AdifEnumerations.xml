@@ -56,7 +56,7 @@
 		<EnumValue Description='Alabama'>AL</EnumValue>
 		<EnumValue Description='Ohio'>OH</EnumValue>
 		<EnumValue Description='Oklahoma'>OK</EnumValue>
-		<EnumValue Description='Ontario' Deleted='Yes' DeletionDate='20121101'>ON</EnumValue>
+		<EnumValue Description='Ontario' Deleted='Yes' DeletionDate='20120901'>ON</EnumValue>
 		<EnumValue Description='Orange'>ORG</EnumValue>
 		<EnumValue Description='Oregon'>OR</EnumValue>
 		<EnumValue Description='Pacific'>PAC</EnumValue>
@@ -120,6 +120,409 @@
 		<EnumValue Description='2mm Band' LowerFreq='142000' UpperFreq='149000'>2mm</EnumValue>
 		<EnumValue Description='1mm Band' LowerFreq='241000' UpperFreq='250000'>1mm</EnumValue>
 	</Band>
+	<Country_Code Description='Country code and name enumeration'>
+		<EnumValue Description='CANADA'>1</EnumValue>
+		<EnumValue Description='ABU AIL' Deleted='Yes'>2</EnumValue>
+		<EnumValue Description='AFGANISTAN'>3</EnumValue>
+		<EnumValue Description='AGALEGA &amp; ST BRANDON'>4</EnumValue>
+		<EnumValue Description='ALAND IS'>5</EnumValue>
+		<EnumValue Description='ALASKA'>6</EnumValue>
+		<EnumValue Description='ALBANIA'>7</EnumValue>
+		<EnumValue Description='ALDABRA' Deleted='Yes'>8</EnumValue>
+		<EnumValue Description='AMERICAN SAMOA'>9</EnumValue>
+		<EnumValue Description='AMSTERDAM &amp; ST PAUL'>10</EnumValue>
+		<EnumValue Description='ANDAMAN &amp; NICOBAR IS'>11</EnumValue>
+		<EnumValue Description='ANGUILLA'>12</EnumValue>
+		<EnumValue Description='ANTARCTICA'>13</EnumValue>
+		<EnumValue Description='ARMENIA'>14</EnumValue>
+		<EnumValue Description='ASIATIC RUSSIA'>15</EnumValue>
+		<EnumValue Description='AUCKLAND &amp; CAMPBELL'>16</EnumValue>
+		<EnumValue Description='AVES ISLAND'>17</EnumValue>
+		<EnumValue Description='AZERBAIJAN'>18</EnumValue>
+		<EnumValue Description='BAJO NUEVO' Deleted='Yes'>19</EnumValue>
+		<EnumValue Description='BAKER, HOWLAND IS'>20</EnumValue>
+		<EnumValue Description='BALEARIC IS'>21</EnumValue>
+		<EnumValue Description='PALAU'>22</EnumValue>
+		<EnumValue Description='BLENHEIM REEF' Deleted='Yes'>23</EnumValue>
+		<EnumValue Description='BOUVET'>24</EnumValue>
+		<EnumValue Description='BRITISH N. BORNEO' Deleted='Yes'>25</EnumValue>
+		<EnumValue Description='BRITISH SOMALI' Deleted='Yes'>26</EnumValue>
+		<EnumValue Description='BELARUS'>27</EnumValue>
+		<EnumValue Description='CANAL ZONE' Deleted='Yes'>28</EnumValue>
+		<EnumValue Description='CANARY IS'>29</EnumValue>
+		<EnumValue Description='CELEBE/MOLUCCA IS' Deleted='Yes'>30</EnumValue>
+		<EnumValue Description='C KIRIBATI'>31</EnumValue>
+		<EnumValue Description='CEUTA &amp; MELILLA'>32</EnumValue>
+		<EnumValue Description='CHAGOS'>33</EnumValue>
+		<EnumValue Description='CHATHAM IS'>34</EnumValue>
+		<EnumValue Description='CHRISTMAS IS'>35</EnumValue>
+		<EnumValue Description='CLIPPERTON IS'>36</EnumValue>
+		<EnumValue Description='COCOS ISLAND'>37</EnumValue>
+		<EnumValue Description='COCOS-KEELING IS'>38</EnumValue>
+		<EnumValue Description='COMOROS' Deleted='Yes'>39</EnumValue>
+		<EnumValue Description='CRETE'>40</EnumValue>
+		<EnumValue Description='CROZET'>41</EnumValue>
+		<EnumValue Description='DAMAO, DUI' Deleted='Yes'>42</EnumValue>
+		<EnumValue Description='DESECHEO IS'>43</EnumValue>
+		<EnumValue Description='DESROCHES' Deleted='Yes'>44</EnumValue>
+		<EnumValue Description='DODECANESE'>45</EnumValue>
+		<EnumValue Description='EAST MALAYSIA'>46</EnumValue>
+		<EnumValue Description='EASTER IS'>47</EnumValue>
+		<EnumValue Description='EASTERN KIRIBATI'>48</EnumValue>
+		<EnumValue Description='EQUATORIAL GUINEA'>49</EnumValue>
+		<EnumValue Description='MEXICO'>50</EnumValue>
+		<EnumValue Description='ERITREA'>51</EnumValue>
+		<EnumValue Description='ESTONIA'>52</EnumValue>
+		<EnumValue Description='ETHIOPIA'>53</EnumValue>
+		<EnumValue Description='EUROPEAN RUSSIA'>54</EnumValue>
+		<EnumValue Description='FARQUHAR' Deleted='Yes'>55</EnumValue>
+		<EnumValue Description='FERNANDO DE NORONHA'>56</EnumValue>
+		<EnumValue Description='FRENCH EQ. AFRICA' Deleted='Yes'>57</EnumValue>
+		<EnumValue Description='FRENCH INDO-CHINA' Deleted='Yes'>58</EnumValue>
+		<EnumValue Description='FRENCH WEST AFRICA' Deleted='Yes'>59</EnumValue>
+		<EnumValue Description='BAHAMAS'>60</EnumValue>
+		<EnumValue Description='FRANZ JOSEF LAND'>61</EnumValue>
+		<EnumValue Description='BARBADOS'>62</EnumValue>
+		<EnumValue Description='FRENCH GUIANA'>63</EnumValue>
+		<EnumValue Description='BERMUDA'>64</EnumValue>
+		<EnumValue Description='BRITISH VIRGIN IS'>65</EnumValue>
+		<EnumValue Description='BELIZE'>66</EnumValue>
+		<EnumValue Description='FRENCH INDIA' Deleted='Yes'>67</EnumValue>
+		<EnumValue Description='SAUDI/KUWAIT N.Z.' Deleted='Yes'>68</EnumValue>
+		<EnumValue Description='CAYMAN ISLANDS'>69</EnumValue>
+		<EnumValue Description='CUBA'>70</EnumValue>
+		<EnumValue Description='GALAPAGOS'>71</EnumValue>
+		<EnumValue Description='DOMINICAN REPUBLIC'>72</EnumValue>
+		<EnumValue Description='EL SALVADOR'>74</EnumValue>
+		<EnumValue Description='GEORGIA'>75</EnumValue>
+		<EnumValue Description='GUATEMALA'>76</EnumValue>
+		<EnumValue Description='GRENADA'>77</EnumValue>
+		<EnumValue Description='HAITI'>78</EnumValue>
+		<EnumValue Description='GUADELOUPE'>79</EnumValue>
+		<EnumValue Description='HONDURAS'>80</EnumValue>
+		<EnumValue Description='GERMANY' Deleted='Yes'>81</EnumValue>
+		<EnumValue Description='JAMAICA'>82</EnumValue>
+		<EnumValue Description='MARTINIQUE'>84</EnumValue>
+		<EnumValue Description='BONAIRE,CURACAO' Deleted='Yes'>85</EnumValue>
+		<EnumValue Description='NICARAGUA'>86</EnumValue>
+		<EnumValue Description='PANAMA'>88</EnumValue>
+		<EnumValue Description='TURKS &amp; CAICOS IS'>89</EnumValue>
+		<EnumValue Description='TRINIDAD &amp; TOBAGO'>90</EnumValue>
+		<EnumValue Description='ARUBA'>91</EnumValue>
+		<EnumValue Description='GEYSER REEF' Deleted='Yes'>93</EnumValue>
+		<EnumValue Description='ANTIGUA &amp; BARBUDA'>94</EnumValue>
+		<EnumValue Description='DOMINICA'>95</EnumValue>
+		<EnumValue Description='MONTSERRAT'>96</EnumValue>
+		<EnumValue Description='ST LUCIA'>97</EnumValue>
+		<EnumValue Description='ST VINCENT'>98</EnumValue>
+		<EnumValue Description='GLORIOSO IS'>99</EnumValue>
+		<EnumValue Description='ARGENTINA'>100</EnumValue>
+		<EnumValue Description='GOA' Deleted='Yes'>101</EnumValue>
+		<EnumValue Description='GOLD COAST, TOGOLAND' Deleted='Yes'>102</EnumValue>
+		<EnumValue Description='GUAM'>103</EnumValue>
+		<EnumValue Description='BOLIVIA'>104</EnumValue>
+		<EnumValue Description='GUANTANAMO BAY'>105</EnumValue>
+		<EnumValue Description='GUERNSEY'>106</EnumValue>
+		<EnumValue Description='GUINEA'>107</EnumValue>
+		<EnumValue Description='BRAZIL'>108</EnumValue>
+		<EnumValue Description='GUINEA-BISSAU'>109</EnumValue>
+		<EnumValue Description='HAWAII'>110</EnumValue>
+		<EnumValue Description='HEARD IS'>111</EnumValue>
+		<EnumValue Description='CHILE'>112</EnumValue>
+		<EnumValue Description='IFNI' Deleted='Yes'>113</EnumValue>
+		<EnumValue Description='ISLE OF MAN'>114</EnumValue>
+		<EnumValue Description='ITALIAN SOMALI' Deleted='Yes'>115</EnumValue>
+		<EnumValue Description='COLOMBIA'>116</EnumValue>
+		<EnumValue Description='ITU HQ'>117</EnumValue>
+		<EnumValue Description='JAN MAYEN'>118</EnumValue>
+		<EnumValue Description='JAVA' Deleted='Yes'>119</EnumValue>
+		<EnumValue Description='ECUADOR'>120</EnumValue>
+		<EnumValue Description='JERSEY'>122</EnumValue>
+		<EnumValue Description='JOHNSTON IS'>123</EnumValue>
+		<EnumValue Description='JUAN DE NOVA'>124</EnumValue>
+		<EnumValue Description='JUAN FERNANDEZ'>125</EnumValue>
+		<EnumValue Description='KALININGRAD'>126</EnumValue>
+		<EnumValue Description='KAMARAN IS' Deleted='Yes'>127</EnumValue>
+		<EnumValue Description='KARELO-FINN REP' Deleted='Yes'>128</EnumValue>
+		<EnumValue Description='GUYANA'>129</EnumValue>
+		<EnumValue Description='KAZAKHSTAN'>130</EnumValue>
+		<EnumValue Description='KERGUELEN'>131</EnumValue>
+		<EnumValue Description='PARAGUAY'>132</EnumValue>
+		<EnumValue Description='KERMADEC'>133</EnumValue>
+		<EnumValue Description='KINGMAN REEF'>134</EnumValue>
+		<EnumValue Description='KYRGYZSTAN'>135</EnumValue>
+		<EnumValue Description='PERU'>136</EnumValue>
+		<EnumValue Description='REPUBLIC OF KOREA'>137</EnumValue>
+		<EnumValue Description='KURE ISLAND'>138</EnumValue>
+		<EnumValue Description='KURIA MURIA IS' Deleted='Yes'>139</EnumValue>
+		<EnumValue Description='SURINAME'>140</EnumValue>
+		<EnumValue Description='FALKLAND IS'>141</EnumValue>
+		<EnumValue Description='LAKSHADWEEP ISLANDS'>142</EnumValue>
+		<EnumValue Description='LAOS'>143</EnumValue>
+		<EnumValue Description='URUGUAY'>144</EnumValue>
+		<EnumValue Description='LATVIA'>145</EnumValue>
+		<EnumValue Description='LITHUANIA'>146</EnumValue>
+		<EnumValue Description='LORD HOWE IS'>147</EnumValue>
+		<EnumValue Description='VENEZUELA'>148</EnumValue>
+		<EnumValue Description='AZORES'>149</EnumValue>
+		<EnumValue Description='AUSTRALIA'>150</EnumValue>
+		<EnumValue Description='MALYJ VYSOTSKIIS' Deleted='Yes'>151</EnumValue>
+		<EnumValue Description='MACAO'>152</EnumValue>
+		<EnumValue Description='MACQUARIE IS'>153</EnumValue>
+		<EnumValue Description='YEMEN ARAB REP' Deleted='Yes'>154</EnumValue>
+		<EnumValue Description='MALAYA' Deleted='Yes'>155</EnumValue>
+		<EnumValue Description='NAURU'>157</EnumValue>
+		<EnumValue Description='VANUATU'>158</EnumValue>
+		<EnumValue Description='MALDIVES'>159</EnumValue>
+		<EnumValue Description='TONGA'>160</EnumValue>
+		<EnumValue Description='MALPELO IS'>161</EnumValue>
+		<EnumValue Description='NEW CALEDONIA'>162</EnumValue>
+		<EnumValue Description='PAPUA NEW GUINEA'>163</EnumValue>
+		<EnumValue Description='MANCHURIA' Deleted='Yes'>164</EnumValue>
+		<EnumValue Description='MAURITIUS IS'>165</EnumValue>
+		<EnumValue Description='MARIANA IS'>166</EnumValue>
+		<EnumValue Description='MARKET REEF'>167</EnumValue>
+		<EnumValue Description='MARSHALL IS'>168</EnumValue>
+		<EnumValue Description='MAYOTTE'>169</EnumValue>
+		<EnumValue Description='NEW ZEALAND'>170</EnumValue>
+		<EnumValue Description='MELLISH REEF'>171</EnumValue>
+		<EnumValue Description='PITCAIRN IS'>172</EnumValue>
+		<EnumValue Description='MICRONESIA'>173</EnumValue>
+		<EnumValue Description='MIDWAY IS'>174</EnumValue>
+		<EnumValue Description='FRENCH POLYNESIA'>175</EnumValue>
+		<EnumValue Description='FIJI'>176</EnumValue>
+		<EnumValue Description='MINAMI TORISHIMA'>177</EnumValue>
+		<EnumValue Description='MINERVA REEF' Deleted='Yes'>178</EnumValue>
+		<EnumValue Description='MOLDOVA'>179</EnumValue>
+		<EnumValue Description='MOUNT ATHOS'>180</EnumValue>
+		<EnumValue Description='MOZAMBIQUE'>181</EnumValue>
+		<EnumValue Description='NAVASSA IS'>182</EnumValue>
+		<EnumValue Description='NETHERLANDS BORNEO' Deleted='Yes'>183</EnumValue>
+		<EnumValue Description='NETHERLANDS N GUINEA' Deleted='Yes'>184</EnumValue>
+		<EnumValue Description='SOLOMON ISLANDS'>185</EnumValue>
+		<EnumValue Description='NEWFOUNDLAND, LABRADOR' Deleted='Yes'>186</EnumValue>
+		<EnumValue Description='NIGER'>187</EnumValue>
+		<EnumValue Description='NIUE'>188</EnumValue>
+		<EnumValue Description='NORFOLK IS'>189</EnumValue>
+		<EnumValue Description='SAMOA'>190</EnumValue>
+		<EnumValue Description='N COOK IS'>191</EnumValue>
+		<EnumValue Description='OGASAWARA'>192</EnumValue>
+		<EnumValue Description='OKINAWA' Deleted='Yes'>193</EnumValue>
+		<EnumValue Description='OKINO TORI-SHIMA' Deleted='Yes'>194</EnumValue>
+		<EnumValue Description='ANNOBON I.'>175</EnumValue>
+		<EnumValue Description='PALESTINE' Deleted='Yes'>196</EnumValue>
+		<EnumValue Description='PALMYRA &amp; JARVIS IS'>197</EnumValue>
+		<EnumValue Description='PAPUA TERR' Deleted='Yes'>198</EnumValue>
+		<EnumValue Description='PETER I IS'>199</EnumValue>
+		<EnumValue Description='PORTUGUESE TIMOR' Deleted='Yes'>200</EnumValue>
+		<EnumValue Description='PRINCE EDWARD &amp; MARION'>201</EnumValue>
+		<EnumValue Description='PUERTO RICO'>202</EnumValue>
+		<EnumValue Description='ANDORRA'>203</EnumValue>
+		<EnumValue Description='REVILLAGIGEDO'>204</EnumValue>
+		<EnumValue Description='ASCENSION ISLAND'>205</EnumValue>
+		<EnumValue Description='AUSTRIA'>206</EnumValue>
+		<EnumValue Description='RODRIGUEZ IS'>207</EnumValue>
+		<EnumValue Description='RUANDA-URUNDI' Deleted='Yes'>208</EnumValue>
+		<EnumValue Description='BELGIUM'>209</EnumValue>
+		<EnumValue Description='SAAR' Deleted='Yes'>210</EnumValue>
+		<EnumValue Description='SABLE ISLAND'>211</EnumValue>
+		<EnumValue Description='BULGARIA'>212</EnumValue>
+		<EnumValue Description='SAINT MARTIN'>213</EnumValue>
+		<EnumValue Description='CORSICA'>214</EnumValue>
+		<EnumValue Description='CYPRUS'>215</EnumValue>
+		<EnumValue Description='SAN ANDRES &amp; PROVIDENCIA'>216</EnumValue>
+		<EnumValue Description='SAN FELIX'>217</EnumValue>
+		<EnumValue Description='CZECHOSLOVAKIA' Deleted='Yes'>218</EnumValue>
+		<EnumValue Description='SAO TOME &amp; PRINCIPE'>219</EnumValue>
+		<EnumValue Description='SARAWAK' Deleted='Yes'>220</EnumValue>
+		<EnumValue Description='DENMARK'>221</EnumValue>
+		<EnumValue Description='FAROE IS'>222</EnumValue>
+		<EnumValue Description='ENGLAND'>223</EnumValue>
+		<EnumValue Description='FINLAND'>224</EnumValue>
+		<EnumValue Description='SARDINIA'>225</EnumValue>
+		<EnumValue Description='SAUDI/IRAQ N.Z' Deleted='Yes'>226</EnumValue>
+		<EnumValue Description='FRANCE'>227</EnumValue>
+		<EnumValue Description='SERRANA BANK &amp; RONCADOR CAY' Deleted='Yes'>228</EnumValue>
+		<EnumValue Description='GERMAN DEM. REP.' Deleted='Yes'>229</EnumValue>
+		<EnumValue Description='FED REP OF GERMANY'>230</EnumValue>
+		<EnumValue Description='SIKKIM' Deleted='Yes'>231</EnumValue>
+		<EnumValue Description='SOMALIA'>232</EnumValue>
+		<EnumValue Description='GIBRALTAR'>233</EnumValue>
+		<EnumValue Description='S COOK IS'>234</EnumValue>
+		<EnumValue Description='SOUTH GEORGIA IS'>235</EnumValue>
+		<EnumValue Description='GREECE'>236</EnumValue>
+		<EnumValue Description='GREENLAND'>237</EnumValue>
+		<EnumValue Description='SOUTH ORKNEY IS'>238</EnumValue>
+		<EnumValue Description='HUNGARY'>239</EnumValue>
+		<EnumValue Description='SOUTH SANDWICH ISLANDS'>240</EnumValue>
+		<EnumValue Description='SOUTH SHETLAND ISLANDS'>241</EnumValue>
+		<EnumValue Description='ICELAND'>242</EnumValue>
+		<EnumValue Description='DEM REP OF YEMEN' Deleted='Yes'>243</EnumValue>
+		<EnumValue Description='SOUTHERN SUDAN' Deleted='Yes'>244</EnumValue>
+		<EnumValue Description='IRELAND'>245</EnumValue>
+		<EnumValue Description='SOV MILITARY ORDER OF MALTA'>246</EnumValue>
+		<EnumValue Description='SPRATLY IS'>247</EnumValue>
+		<EnumValue Description='ITALY'>248</EnumValue>
+		<EnumValue Description='ST KITTS &amp; NEVIS'>249</EnumValue>
+		<EnumValue Description='ST HELENA IS'>250</EnumValue>
+		<EnumValue Description='LIECHTENSTEIN'>251</EnumValue>
+		<EnumValue Description='ST PAUL ISLAND'>252</EnumValue>
+		<EnumValue Description='ST. PETER &amp; ST. PAUL ROCKS'>253</EnumValue>
+		<EnumValue Description='LUXEMBOURG'>254</EnumValue>
+		<EnumValue Description='SINT MAARTEN, SABA, ST EUSTATIUS' Deleted='Yes'>255</EnumValue>
+		<EnumValue Description='MADEIRA IS'>256</EnumValue>
+		<EnumValue Description='MALTA'>257</EnumValue>
+		<EnumValue Description='SUMATRA' Deleted='Yes'>258</EnumValue>
+		<EnumValue Description='SVALBARD IS'>259</EnumValue>
+		<EnumValue Description='MONACO'>260</EnumValue>
+		<EnumValue Description='SWAN ISLAND' Deleted='Yes'>261</EnumValue>
+		<EnumValue Description='TAJIKISTAN'>262</EnumValue>
+		<EnumValue Description='NETHERLANDS'>263</EnumValue>
+		<EnumValue Description='TANGIER' Deleted='Yes'>264</EnumValue>
+		<EnumValue Description='NORTHERN IRELAND'>265</EnumValue>
+		<EnumValue Description='NORWAY'>266</EnumValue>
+		<EnumValue Description='TERR NEW GUINEA' Deleted='Yes'>267</EnumValue>
+		<EnumValue Description='TIBET' Deleted='Yes'>268</EnumValue>
+		<EnumValue Description='POLAND'>269</EnumValue>
+		<EnumValue Description='TOKELAU IS'>270</EnumValue>
+		<EnumValue Description='TRIESTE' Deleted='Yes'>271</EnumValue>
+		<EnumValue Description='PORTUGAL'>272</EnumValue>
+		<EnumValue Description='TRINDADE &amp; MARTIN VAZ ISLANDS'>273</EnumValue>
+		<EnumValue Description='TRISTAN DA CUNHA &amp; GOUGH IS'>274</EnumValue>
+		<EnumValue Description='ROMANIA'>275</EnumValue>
+		<EnumValue Description='TROMELIN'>276</EnumValue>
+		<EnumValue Description='ST PIERRE &amp; MIQUELON'>277</EnumValue>
+		<EnumValue Description='SAN MARINO'>278</EnumValue>
+		<EnumValue Description='SCOTLAND'>279</EnumValue>
+		<EnumValue Description='TURKMENISTAN'>280</EnumValue>
+		<EnumValue Description='SPAIN'>281</EnumValue>
+		<EnumValue Description='TUVALU'>282</EnumValue>
+		<EnumValue Description='UK BASES ON CYPRUS'>283</EnumValue>
+		<EnumValue Description='SWEDEN'>284</EnumValue>
+		<EnumValue Description='US VIRGIN ISLANDS'>285</EnumValue>
+		<EnumValue Description='UGANDA'>286</EnumValue>
+		<EnumValue Description='SWITZERLAND'>287</EnumValue>
+		<EnumValue Description='UKRAINE'>288</EnumValue>
+		<EnumValue Description='UNITED NATIONS HQ'>289</EnumValue>
+		<EnumValue Description='UNITED STATES'>291</EnumValue>
+		<EnumValue Description='UZBEKISTAN'>292</EnumValue>
+		<EnumValue Description='VIETNAM'>293</EnumValue>
+		<EnumValue Description='WALES'>294</EnumValue>
+		<EnumValue Description='VATICAN'>295</EnumValue>
+		<EnumValue Description='SERBIA'>296</EnumValue>
+		<EnumValue Description='SERBIA'>297</EnumValue>
+		<EnumValue Description='WALLIS &amp; FUTUNA'>298</EnumValue>
+		<EnumValue Description='WEST MALAYSIA'>299</EnumValue>
+		<EnumValue Description='W KIRIBATI'>301</EnumValue>
+		<EnumValue Description='WESTERN SAHARA'>302</EnumValue>
+		<EnumValue Description='WILLIS IS'>303</EnumValue>
+		<EnumValue Description='BAHRAIN'>304</EnumValue>
+		<EnumValue Description='BANGLADESHD'>305</EnumValue>
+		<EnumValue Description='BHUTAN'>306</EnumValue>
+		<EnumValue Description='ZANZIBAR' Deleted='Yes'>307</EnumValue>
+		<EnumValue Description='COSTA RICA'>308</EnumValue>
+		<EnumValue Description='MYANMAR'>309</EnumValue>
+		<EnumValue Description='CAMBODIA'>312</EnumValue>
+		<EnumValue Description='SRI LANKA'>315</EnumValue>
+		<EnumValue Description='CHINA'>318</EnumValue>
+		<EnumValue Description='HONG KONG'>321</EnumValue>
+		<EnumValue Description='INDIA'>324</EnumValue>
+		<EnumValue Description='INDONESIA'>327</EnumValue>
+		<EnumValue Description='IRAN'>330</EnumValue>
+		<EnumValue Description='IRAQ'>333</EnumValue>
+		<EnumValue Description='ISRAEL'>336</EnumValue>
+		<EnumValue Description='JAPAN'>339</EnumValue>
+		<EnumValue Description='JORDAN'>342</EnumValue>
+		<EnumValue Description="DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA">344</EnumValue>
+		<EnumValue Description='BRUNEI'>345</EnumValue>
+		<EnumValue Description='KUWAIT'>348</EnumValue>
+		<EnumValue Description='LEBANON'>354</EnumValue>
+		<EnumValue Description='MONGOLIA'>363</EnumValue>
+		<EnumValue Description='NEPAL'>369</EnumValue>
+		<EnumValue Description='OMAN'>370</EnumValue>
+		<EnumValue Description='PAKISTAN'>372</EnumValue>
+		<EnumValue Description='PHILIPPINES'>375</EnumValue>
+		<EnumValue Description='QATAR'>376</EnumValue>
+		<EnumValue Description='SAUDI ARABIA'>378</EnumValue>
+		<EnumValue Description='SEYCHELLES'>379</EnumValue>
+		<EnumValue Description='SINGAPORE'>381</EnumValue>
+		<EnumValue Description='DJIBOUTI'>382</EnumValue>
+		<EnumValue Description='SYRIAs'>384</EnumValue>
+		<EnumValue Description='TAIWAN'>386</EnumValue>
+		<EnumValue Description='THAILAND'>387</EnumValue>
+		<EnumValue Description='TURKEY'>390</EnumValue>
+		<EnumValue Description='UNITED ARAB EMIRATES'>391</EnumValue>
+		<EnumValue Description='ALGERIA'>400</EnumValue>
+		<EnumValue Description='ANGOLA'>401</EnumValue>
+		<EnumValue Description='BOTSWANA'>402</EnumValue>
+		<EnumValue Description='BURUNDI'>404</EnumValue>
+		<EnumValue Description='CAMEROON'>406</EnumValue>
+		<EnumValue Description='CENTRAL AFRICAN REPUBLIC'>408</EnumValue>
+		<EnumValue Description='CAPE VERDE'>409</EnumValue>
+		<EnumValue Description='CHAD'>410</EnumValue>
+		<EnumValue Description='COMOROS'>411</EnumValue>
+		<EnumValue Description='REPUBLIC OF THE CONGO'>412</EnumValue>
+		<EnumValue Description='DEM. REPUBLIC OF THE CONGO'>414</EnumValue>
+		<EnumValue Description='BENIN'>416</EnumValue>
+		<EnumValue Description='GABON'>420</EnumValue>
+		<EnumValue Description='THE GAMBIA'>422</EnumValue>
+		<EnumValue Description='GHANA'>424</EnumValue>
+		<EnumValue Description="COTE D'IVOIRE">428</EnumValue>
+		<EnumValue Description='KENYA'>430</EnumValue>
+		<EnumValue Description='LESOTHO'>432</EnumValue>
+		<EnumValue Description='LIBERIA'>434</EnumValue>
+		<EnumValue Description='LIBYA'>436</EnumValue>
+		<EnumValue Description='MADAGASCAR'>438</EnumValue>
+		<EnumValue Description='MALAWI'>440</EnumValue>
+		<EnumValue Description='MALI'>442</EnumValue>
+		<EnumValue Description='MAURITANIA'>444</EnumValue>
+		<EnumValue Description='MOROCCO'>446</EnumValue>
+		<EnumValue Description='NIGERIA'>450</EnumValue>
+		<EnumValue Description='ZIMBABWE'>452</EnumValue>
+		<EnumValue Description='REUNION'>453</EnumValue>
+		<EnumValue Description='RWANDA'>454</EnumValue>
+		<EnumValue Description='SENEGAL'>456</EnumValue>
+		<EnumValue Description='SIERRA LEONE'>458</EnumValue>
+		<EnumValue Description='ROTUMA IS'>460</EnumValue>
+		<EnumValue Description='REPUBLIC OF SOUTH AFRICA'>462</EnumValue>
+		<EnumValue Description='NAMIBIA'>464</EnumValue>
+		<EnumValue Description='SUDAN'>466</EnumValue>
+		<EnumValue Description='SWAZILAND'>468</EnumValue>
+		<EnumValue Description='TANZANIA'>470</EnumValue>
+		<EnumValue Description='TUNISIA'>474</EnumValue>
+		<EnumValue Description='EGYPT'>478</EnumValue>
+		<EnumValue Description='BURKINA-FASO'>480</EnumValue>
+		<EnumValue Description='ZAMBIA'>482</EnumValue>
+		<EnumValue Description='TOGO'>483</EnumValue>
+		<EnumValue Description='WALVIS BAY' Deleted='Yes'>488</EnumValue>
+		<EnumValue Description='CONWAY REEF'>489</EnumValue>
+		<EnumValue Description='BANABA ISLAND'>490</EnumValue>
+		<EnumValue Description='YEMEN'>492</EnumValue>
+		<EnumValue Description='PENGUIN ISLANDS' Deleted='Yes'>493</EnumValue>
+		<EnumValue Description='CROATIA'>497</EnumValue>
+		<EnumValue Description='SLOVENIA'>499</EnumValue>
+		<EnumValue Description='BOSNIA-HERZEGOVINA'>501</EnumValue>
+		<EnumValue Description='MACEDONIA'>502</EnumValue>
+		<EnumValue Description='CZECH REPUBLIC'>503</EnumValue>
+		<EnumValue Description='SLOVAK REPUBLIC'>504</EnumValue>
+		<EnumValue Description='PRATAS IS'>505</EnumValue>
+		<EnumValue Description='SCARBOROUGH REEF'>506</EnumValue>
+		<EnumValue Description='TEMOTU PROVINCE'>507</EnumValue>
+		<EnumValue Description='AUSTRAL IS'>508</EnumValue>
+		<EnumValue Description='MARQUESAS IS'>509</EnumValue>
+		<EnumValue Description='PALESTINE'>510</EnumValue>
+		<EnumValue Description='TIMOR-LESTE'>511</EnumValue>
+		<EnumValue Description='CHESTERFIELD IS'>512</EnumValue>
+		<EnumValue Description='DUCIE IS'>513</EnumValue>
+		<EnumValue Description='MONTENEGRO'>514</EnumValue>
+		<EnumValue Description='SWAINS ISLAND'>515</EnumValue>
+		<EnumValue Description='SWAINS ISLAND'>516</EnumValue>
+		<EnumValue Description='CURACAO'>517</EnumValue>
+		<EnumValue Description='SINT MAARTEN'>518</EnumValue>
+		<EnumValue Description='ST EUSTATIUS AND SABA'>519</EnumValue>
+		<EnumValue Description='BONAIRE'>520</EnumValue>
+		<EnumValue Description='SOUTH SUDAN'>521</EnumValue>
+	</Country_Code>
 	<Qso_Upload_Status Description='QSO upload status'>
 		<EnumValue Description='The QSO has been uploaded to, and accepted by, the online service'>Y</EnumValue>
 		<EnumValue Description='Do not upload the QSO to the online service'>N</EnumValue>

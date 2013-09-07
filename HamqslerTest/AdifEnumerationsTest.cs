@@ -409,5 +409,94 @@ namespace hamqslerTest
 			string band = string.Empty;
 			Assert.IsFalse(aEnums.GetBandFromFrequency(".485", out band));
 		}
+
+		// test IsInEnumeration for Country Code
+		[Test]
+		public void TestIsInCountryCodeEnumeration()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Assert.IsTrue(aEnums.IsInEnumeration("Country_Code", "26"));
+		}
+
+		// test IsInEnumeration for Country Code invalid code
+		[Test]
+		public void TestIsNotInCountryCodeEnumeration()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Assert.IsFalse(aEnums.IsInEnumeration("Country_Code", "73"));
+		}
+
+		// test GetDescription for Country Code
+		[Test]
+		public void TestGetDesscriptionCountryCode()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Assert.AreEqual("BRITISH SOMALI", aEnums.GetDescription("Country_Code", "26"));
+		}
+
+		// test GetDescription for Country Code with '&' in description
+		[Test]
+		public void TestGetDescriptionCountryCodeAmpersand()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Assert.AreEqual("AUCKLAND & CAMPBELL", aEnums.GetDescription("Country_Code", "16"));
+		}
+
+		// test GetDescription for Country Code invalid code
+		[Test]
+		public void TestGetDesscriptionInvalidCountryCode()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Assert.AreEqual(null, aEnums.GetDescription("Country_Code", "73"));
+		}
+		
+		// test GetCountryCodeFromName with valid name
+		[Test]
+		public void TestGetCountryCodeFromValidName()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string code = string.Empty;
+			bool found = aEnums.GetCountryCodeFromName("BRITISH SOMALI", out code);
+			Assert.IsTrue(found);
+			Assert.AreEqual("26", code);
+		}
+		
+		// test GetCountryCodeFromName with valid name containing '&'
+		[Test]
+		public void TestGetCountryCodeFromValidNameAmpersand()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string code = string.Empty;
+			bool found = aEnums.GetCountryCodeFromName("AUCKLAND & CAMPBELL", out code);
+			Assert.IsTrue(found);
+			Assert.AreEqual("16", code);
+		}
+		
+		// test GetCountryCodeFromName with invalid name
+		[Test]
+		public void TestGetCountryCodeFromInValidName()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string code = string.Empty;
+			bool found = aEnums.GetCountryCodeFromName("BOOGALOO", out code);
+			Assert.IsFalse(found);
+			Assert.AreEqual(string.Empty, code);
+		}
 	}
 }
