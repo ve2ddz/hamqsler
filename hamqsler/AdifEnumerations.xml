@@ -120,6 +120,15 @@
 		<EnumValue Description='2mm Band' LowerFreq='142000' UpperFreq='149000'>2mm</EnumValue>
 		<EnumValue Description='1mm Band' LowerFreq='241000' UpperFreq='250000'>1mm</EnumValue>
 	</Band>
+	<Continent Description='Continent enumeration'>
+		<EnumValue Description='North America'>NA</EnumValue>
+		<EnumValue Description='South America'>SA</EnumValue>
+		<EnumValue Description='Europe'>EU</EnumValue>
+		<EnumValue Description='Africa'>AF</EnumValue>
+		<EnumValue Description='Oceana'>OC</EnumValue>
+		<EnumValue Description='Asia'>AS</EnumValue>
+		<EnumValue Description='Antarctica'>AN</EnumValue>
+	</Continent>
 	<Country_Code Description='Country code and name enumeration'>
 		<EnumValue Description='CANADA'>1</EnumValue>
 		<EnumValue Description='ABU AIL' Deleted='Yes'>2</EnumValue>
