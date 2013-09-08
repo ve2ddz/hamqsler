@@ -73,6 +73,7 @@
     <Compile Include="ClublogQsoUploadStatusTests.cs" />
     <Compile Include="CntyTests.cs" />
     <Compile Include="CommentTests.cs" />
+    <Compile Include="ContactedOpTests.cs" />
     <Compile Include="ContTests.cs" />
     <Compile Include="DateFieldTests.cs" />
     <Compile Include="DelimitedListEnumerationTests.cs" />

@@ -138,6 +138,7 @@
     <Compile Include="Cnty.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="Cont.cs" />
+    <Compile Include="Contacted_Op.cs" />
     <Compile Include="CountMacro.cs" />
     <Compile Include="CountMacroGroupBox.xaml.cs">
       <DependentUpon>CountMacroGroupBox.xaml</DependentUpon>
