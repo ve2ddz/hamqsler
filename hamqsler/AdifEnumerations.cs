@@ -199,6 +199,26 @@ namespace hamqsler
 			}
 		}
 		
+		public bool IsDeleted(string enumeration, string value)
+		{
+			XElement val = GetEnumValue(enumeration, value);
+			if(val != null)
+			{
+				XAttribute deleted = val.Attribute("Deleted");
+				if(deleted != null)
+				{
+					return deleted.Value.Equals("Yes");
+				}
+				return false;
+			}
+			else
+			{
+				string err = string.Format("Error: {0} not found in {1} enumeration in Enumeration file",
+				                         value, enumeration);
+				throw new XmlException(err);
+			}
+		}
+		
 		/// <summary>
 		/// Get replacement value if value is deprecated
 		/// </summary>

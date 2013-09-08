@@ -252,7 +252,7 @@ namespace hamqslerTest
 			aEnums.IsDeprecated("Arrl_Section", "NXTW");
 		}
 		
-		// test if IsDeprecated throuws XmlException if enumeration not found
+		// test if IsDeprecated throws XmlException if enumeration not found
 		[Test]
 		[ExpectedException(typeof(XmlException))]
 		public void TestIfDeprecatedThrowsExceptionEnumerationNotFound()
@@ -265,6 +265,37 @@ namespace hamqslerTest
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			aEnums.IsDeprecated("Arrl2", "NT");
+		}
+		
+		// test if enumeration value is deleted
+		[Test]
+		public void TestIsDeleted()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Assert.IsTrue(aEnums.IsDeleted("Country_Code", "8"));
+		}
+		
+		// test if enumeration value is deleted for not deleted value
+		[Test]
+		public void TestIsDeletedNotDeletedValue()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Assert.IsFalse(aEnums.IsDeleted("Country_Code", "1"));
+		}
+		
+		// test if IsDeleted throws XmlException if enumeration not found
+		[Test]
+		[ExpectedException(typeof(XmlException))]
+		public void TestIfIsDeletedThrowsExceptionEnumerationNotFound()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			aEnums.IsDeleted("Country_Code", "1026");
 		}
 		
 		// test GetReplacementValue when IsDeprecated and replacement value exists
