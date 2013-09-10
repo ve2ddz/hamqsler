@@ -817,7 +817,7 @@ namespace hamqsler
 					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
 						g, qso.RST, font, box.LineTextBrush, colWidths[5], xStart, y);
 					string qsl = string.Empty;
-					if(qso.Qsl.Equals("No") || qso.Qsl.Equals("Requested"))
+					if(qso.Qsl.Equals("No") || qso.Qsl.Equals("Requested") || qso.Qsl.Equals(string.Empty))
 					{
 						qsl = box.PseText;
 					}
