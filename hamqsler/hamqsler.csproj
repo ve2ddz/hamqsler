@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Country.cs" />
     <Compile Include="CQZ.cs" />
+    <Compile Include="Credit_Submitted.cs" />
     <Compile Include="CustomPaperSizesDialog.xaml.cs">
       <DependentUpon>CustomPaperSizesDialog.xaml</DependentUpon>
       <SubType>Code</SubType>

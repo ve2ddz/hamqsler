@@ -519,7 +519,7 @@ namespace hamqslerTest
 		
 		// test GetCountryCodeFromName with invalid name
 		[Test]
-		public void TestGetCountryCodeFromInValidName()
+		public void TestGetCountryCodeFromInvalidName()
 		{
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -528,6 +528,39 @@ namespace hamqslerTest
 			bool found = aEnums.GetCountryCodeFromName("BOOGALOO", out code);
 			Assert.IsFalse(found);
 			Assert.AreEqual(string.Empty, code);
+		}
+		
+		// test GetCreditEquivalentForAward with replacement value
+		[Test]
+		public void TestGetCreditEquivalentForAwardWithReplacement()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string credit = string.Empty;
+			Assert.AreEqual("DXCC_MODE", aEnums.GetCreditEquivalentForAward("DXCC_CW"));
+		}
+
+		// test GetCreditEquivalentForAward with replacement value
+		[Test]
+		public void TestGetCreditEquivalentForAwardWithReplacement2()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string credit = string.Empty;
+			Assert.AreEqual("IOTA", aEnums.GetCreditEquivalentForAward("IOTA"));
+		}
+
+		// test GetCreditEquivalentForAward with no replacement value
+		[Test]
+		public void TestGetCreditEquivalentForAwardWithNoReplacement()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string credit = string.Empty;
+			Assert.AreEqual(null, aEnums.GetCreditEquivalentForAward("CPAWARD"));
 		}
 	}
 }

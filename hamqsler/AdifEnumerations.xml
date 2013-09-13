@@ -88,6 +88,37 @@
 		<EnumValue Description='Wisconsin'>WI</EnumValue>
 		<EnumValue Description='Wyoming'>WY</EnumValue>
 	</Arrl_Section>
+	<Award Description='Award Enumeration' Deprecated='Yes'>
+		<!-- Award enumeration is deprecated. You should use Credit enumeration instead -->
+		<EnumValue Description='' Deprecated='Yes'>AJA</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='CQDX'>CQDX</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='CQDXFIELD'>CQDXFIELD</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='CQWAZ_MIXED'>CQWAZ_MIXED</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='CQWAZ_MODE'>CQWAZ_CW</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='CQWAZ_MODE'>QWAZ_PHONE</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='CQWAZ_MODE'>CQWAZ_RTTY</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='CQWAZ_BAND'>CQWAZ_160m</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='CQWPX'>CQWPX</EnumValue>
+		<EnumValue Description='' Deprecated='Yes'>DARC_DOK</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='DXCC'>DXCC</EnumValue>
+		<EnumValue Description='' Deprecated='Yes'>DXCC_MIXED</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='DXCC_MODE'>DXCC_CW</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='DXCC_MODE'>DXCC_PHONE</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='DXCC_MODE'>DXCC_RTTY</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='IOTA'>IOTA</EnumValue>
+		<EnumValue Description='' Deprecated='Yes'>JCC</EnumValue>
+		<EnumValue Description='' Deprecated='Yes'>JCG</EnumValue>
+		<EnumValue Description='' Deprecated='Yes'>MARATHON</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='RDA'>RDA</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='USACA'>USACA</EnumValue>
+		<EnumValue Description='' Deprecated='Yes'>VUCC</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='WAB'>WAB</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='WAC'>WAC</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='WAE'>WAE</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='WAIP'>WAIP</EnumValue>
+		<EnumValue Description='' Deprecated='Yes'>WAJA</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWithCredit='WAS'>WAS</EnumValue>
+	</Award>
 	<Band Description='Band and Limits Enumeration'>
 		<EnumValue Description='2190m Band' LowerFreq='.136' UpperFreq='.137'>2190m</EnumValue>
 		<EnumValue Description='630m Band' LowerFreq='.472' UpperFreq='.479'>630m</EnumValue>
@@ -746,6 +777,52 @@
 		<EnumValue Description='BONAIRE'>520</EnumValue>
 		<EnumValue Description='SOUTH SUDAN'>521</EnumValue>
 	</Country_Code>
+	<Credit Description='Credit enumeration'>
+		<EnumValue Description=''>CQDX</EnumValue>
+		<EnumValue Description=''>CQDX_BAND</EnumValue>
+		<EnumValue Description=''>CQDX_MODE</EnumValue>
+		<EnumValue Description=''>CQDX_MOBILE</EnumValue>
+		<EnumValue Description=''>CQDX_QRP</EnumValue>
+		<EnumValue Description=''>CQDX_SATELLITE</EnumValue>
+		<EnumValue Description=''>CQDXFIELD</EnumValue>
+		<EnumValue Description=''>CQDXFIELD_BAND</EnumValue>
+		<EnumValue Description=''>CQDXFIELD_MODE</EnumValue>
+		<EnumValue Description=''>CQDXFIELD_MOBILE</EnumValue>
+		<EnumValue Description=''>CQDXFIELD_QRP</EnumValue>
+		<EnumValue Description=''>CQDXFIELD_SATELLITE</EnumValue>
+		<EnumValue Description=''>CQWAZ_MIXED</EnumValue>
+		<EnumValue Description=''>CQWAZ_BAND</EnumValue>
+		<EnumValue Description=''>CQWAZ_MODE</EnumValue>
+		<EnumValue Description=''>CQWAZ_SATELLITE</EnumValue>
+		<EnumValue Description=''>CQWAZ_EME</EnumValue>
+		<EnumValue Description=''>CQWAZ_MOBILE</EnumValue>
+		<EnumValue Description=''>CQWAZ_QRP</EnumValue>
+		<EnumValue Description=''>CQWPX</EnumValue>
+		<EnumValue Description=''>CQWPX_BAND</EnumValue>
+		<EnumValue Description=''>CQWPX_MODE</EnumValue>
+		<EnumValue Description=''>DXCC</EnumValue>
+		<EnumValue Description=''>DXCC_BAND</EnumValue>
+		<EnumValue Description=''>DXCC_MODE</EnumValue>
+		<EnumValue Description=''>DXCC_SATELLITE</EnumValue>
+		<EnumValue Description=''>IOTA</EnumValue>
+		<EnumValue Description=''>RDA</EnumValue>
+		<EnumValue Description=''>USACA</EnumValue>
+		<EnumValue Description=''>VUCC_BAND</EnumValue>
+		<EnumValue Description=''>VUCC_SATELLITE</EnumValue>
+		<EnumValue Description=''>WAB</EnumValue>
+		<EnumValue Description=''>WAC</EnumValue>
+		<EnumValue Description=''>WAC_BAND</EnumValue>
+		<EnumValue Description=''>WAE</EnumValue>
+		<EnumValue Description=''>WAE_BAND</EnumValue>
+		<EnumValue Description=''>WAE_MODE</EnumValue>
+		<EnumValue Description=''>WAIP</EnumValue>
+		<EnumValue Description=''>WAIP_BAND</EnumValue>
+		<EnumValue Description=''>WAIP_MODE</EnumValue>
+		<EnumValue Description=''>WAS</EnumValue>
+		<EnumValue Description=''>WAS_BAND</EnumValue>
+		<EnumValue Description=''>WAS_MODE</EnumValue>
+		<EnumValue Description=''>WAS_SATELLITE</EnumValue>
+	</Credit>
 	<Qso_Upload_Status Description='QSO upload status'>
 		<EnumValue Description='The QSO has been uploaded to, and accepted by, the online service'>Y</EnumValue>
 		<EnumValue Description='Do not upload the QSO to the online service'>N</EnumValue>

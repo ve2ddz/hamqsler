@@ -322,5 +322,28 @@ namespace hamqsler
 			}
 			return false;
 		}
+		
+		/// <summary>
+		/// Get the credit equivalent to an award
+		/// </summary>
+		/// <param name="award">Name of award to get replacement for</param>
+		/// <returns>Name of credit that replaces the award, or null if no replacement</returns>
+		public string GetCreditEquivalentForAward(string award)
+		{
+			XElement elt = GetEnumValue("Award", award);
+			if(elt != null)
+			{
+				XAttribute deprecated = elt.Attribute("Deprecated");
+				if(deprecated.Value.Equals("Yes"))
+				{
+					XAttribute replacement = elt.Attribute("ReplaceWithCredit");
+					if(replacement != null)
+					{
+						return replacement.Value;
+					}
+				}
+			}
+			return null;
+		}
 	}
 }
