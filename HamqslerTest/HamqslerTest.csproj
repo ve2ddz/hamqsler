@@ -76,6 +76,7 @@
     <Compile Include="ContactedOpTests.cs" />
     <Compile Include="ContestIdTests.cs" />
     <Compile Include="ContTests.cs" />
+    <Compile Include="CountryTests.cs" />
     <Compile Include="DateFieldTests.cs" />
     <Compile Include="DelimitedListEnumerationTests.cs" />
     <Compile Include="DelimitedListTests.cs" />

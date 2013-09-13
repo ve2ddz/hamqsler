@@ -145,6 +145,7 @@
       <DependentUpon>CountMacroGroupBox.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Country.cs" />
     <Compile Include="CustomPaperSizesDialog.xaml.cs">
       <DependentUpon>CustomPaperSizesDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
