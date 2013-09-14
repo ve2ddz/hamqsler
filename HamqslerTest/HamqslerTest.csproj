@@ -78,7 +78,9 @@
     <Compile Include="ContTests.cs" />
     <Compile Include="CountryTests.cs" />
     <Compile Include="CQZTests.cs" />
+    <Compile Include="CreditListTests.cs" />
     <Compile Include="CreditSubmittedTests.cs" />
+    <Compile Include="CreditTests.cs" />
     <Compile Include="DateFieldTests.cs" />
     <Compile Include="DelimitedListEnumerationTests.cs" />
     <Compile Include="DelimitedListTests.cs" />

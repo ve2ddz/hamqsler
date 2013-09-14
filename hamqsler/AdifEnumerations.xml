@@ -823,6 +823,11 @@
 		<EnumValue Description=''>WAS_MODE</EnumValue>
 		<EnumValue Description=''>WAS_SATELLITE</EnumValue>
 	</Credit>
+	<QSL_Medium Description='QSL Medium enumeration'>
+		<EnumValue Description='QSO confirmation via paper QSL card'>CARD</EnumValue>
+		<EnumValue Description='QSO confirmation via eQSL.cc'>EQSL</EnumValue>
+		<EnumValue Description='QSO confirmation via ARRL Logbook of the World'>LOTW</EnumValue>
+	</QSL_Medium>
 	<Qso_Upload_Status Description='QSO upload status'>
 		<EnumValue Description='The QSO has been uploaded to, and accepted by, the online service'>Y</EnumValue>
 		<EnumValue Description='Do not upload the QSO to the online service'>N</EnumValue>
