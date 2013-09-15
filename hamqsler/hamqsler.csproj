@@ -162,6 +162,7 @@
     <Compile Include="DisplayQsos.cs" />
     <Compile Include="DispQso.cs" />
     <Compile Include="Distance.cs" />
+    <Compile Include="DXCC.cs" />
     <Compile Include="EnumerationField.cs" />
     <Compile Include="EnumerationValue.cs" />
     <Compile Include="FloatToPercentConverter.cs" />
