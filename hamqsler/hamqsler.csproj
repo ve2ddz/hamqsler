@@ -149,6 +149,7 @@
     <Compile Include="CQZ.cs" />
     <Compile Include="Credit.cs" />
     <Compile Include="CreditList.cs" />
+    <Compile Include="Credit_Granted.cs" />
     <Compile Include="Credit_Submitted.cs" />
     <Compile Include="CustomPaperSizesDialog.xaml.cs">
       <DependentUpon>CustomPaperSizesDialog.xaml</DependentUpon>
