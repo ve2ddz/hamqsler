@@ -28,6 +28,10 @@ namespace hamqsler
 	public class Credit
 	{
 		private AdifEnumerations adifEnums = null;
+		public AdifEnumerations AdifEnums
+		{
+			get {return adifEnums;}
+		}
 		
 		private string creditName;
 		public string CreditName
@@ -55,7 +59,7 @@ namespace hamqsler
 				string[] mediums = parts[1].Split('&');
 				foreach(string med in mediums)
 				{
-					Media.Add(med.ToUpper());
+					Media.Add(med.Trim(' ').ToUpper());
 				}
 			}
 			else

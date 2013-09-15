@@ -27,7 +27,12 @@ namespace hamqsler
 	/// </summary>
 	public class CreditList : AdifField
 	{
-		private List<Credit> creditList = new List<Credit>();
+		private HashSet<Credit> creditList = new HashSet<Credit>();
+		
+		public HashSet<Credit> Credits
+		{
+			get {return creditList;}
+		}
 		
 		public int Count
 		{
@@ -52,7 +57,7 @@ namespace hamqsler
 			string[] creds = credits.Split(',');
 			foreach(string credit in creds)
 			{
-				Credit c = new Credit(credit, aEnums);
+				Credit c = new Credit(credit.Trim(' '), aEnums);
 				this.Add(c);
 			}
 		}
@@ -92,19 +97,22 @@ namespace hamqsler
 			item.Media.CopyTo(itemMedia);
 			foreach(Credit credit in credits)
 			{
-				string[] media = new string[credit.Media.Count];
-				credit.Media.CopyTo(media);
-				if(itemMedia.Length == 1 && itemMedia[0] == null && media.Length == 1 && media[0] == null)
-				{
-					return;
-				}
-				else if(itemMedia[0] != null && media[0] != null)
-				{
-					foreach(string it in itemMedia)
+				if(credit.CreditName.Equals(item.CreditName))
+			 	{
+					string[] media = new string[credit.Media.Count];
+					credit.Media.CopyTo(media);
+					if(itemMedia[0] == null && media[0] == null)
 					{
-						credit.Media.Add(it);
+						return;
 					}
-					return;
+					else if(itemMedia[0] != null && media[0] != null)
+					{
+						foreach(string it in itemMedia)
+						{
+							credit.Media.Add(it);
+						}
+						return;
+					}
 				}
 			}
 			creditList.Add(item);
@@ -126,6 +134,46 @@ namespace hamqsler
 				adif = adif.Substring(0, adif.Length -1);
 			}
 			return "<" + Name + ":" + adif.Length + ">" + adif;
+		}
+		
+		public override bool Validate(out string err)
+		{
+			err = null;
+			foreach(Credit cred in Credits)
+			{
+				if(!cred.Validate(out err))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		/// <summary>
+		/// Replace Award with Credit if there is an equivalent
+		/// </summary>
+		public void ReplaceAwardsWithCredits()
+		{
+			Credit[] creds = new Credit[Credits.Count];
+			Credits.CopyTo(creds);
+			string err = string.Empty;
+			foreach(Credit credit in creds)
+			{
+				bool inEnumeration =  credit.Validate(out err);
+				if(!inEnumeration)
+				{
+					string replacement = credit.AdifEnums.GetCreditEquivalentForAward(credit.CreditName);
+					if(replacement == null)
+					{
+						Credits.Remove(credit);
+					}
+					else
+					{
+						Credits.Remove(credit);
+						this.Add(new Credit(replacement, credit.AdifEnums));
+					}
+				}
+			}
 		}
 	}
 }

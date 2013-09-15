@@ -25,45 +25,11 @@ namespace hamqsler
 	/// <summary>
 	/// Credit_Submitted class - list of credits sought for this QSO
 	/// </summary>
-	public class Credit_Submitted : DelimitedListEnumeration
+	public class Credit_Submitted : CreditList
 	{
 		public Credit_Submitted(string credit, AdifEnumerations aEnums)
-			: base(',', credit, "Credit", aEnums)
+			: base(credit, aEnums)
 		{
-		}
-		
-		/// <summary>
-		/// Replace Award with Credit if there is an equivalent
-		/// </summary>
-		public void ReplaceAwardsWithCredits()
-		{
-			string [] credits = new string[DelimList.Count];
-			DelimList.Items.CopyTo(credits, 0);
-			foreach(string credit in credits)
-			{
-				bool inEnumeration = true;
-				if(credit.IndexOf(":") == -1)
-				{
-					inEnumeration = aEnums.IsInEnumeration("Credit", credit);
-				}
-				else
-				{
-					inEnumeration = aEnums.IsInEnumeration("Credit", credit.Substring(0, credit.IndexOf(":")));
-				}
-				if(!inEnumeration)
-				{
-					string replacement = aEnums.GetCreditEquivalentForAward(credit);
-					if(replacement == null)
-					{
-						DelimList.Items.Remove(credit);
-					}
-					else
-					{
-						DelimList.Items.Remove(credit);
-						DelimList.Items.Add(replacement);
-					}
-				}
-			}
 		}
 	}
 }

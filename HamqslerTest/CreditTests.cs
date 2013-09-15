@@ -189,6 +189,5 @@ namespace hamqslerTest
 			Assert.IsFalse(credit.Validate(out err));
 			Assert.AreEqual("Programming Error: Credit object cannot contain both null and other QSL Media", err);
 		}
-		
 	}
 }
