@@ -85,6 +85,7 @@
     <Compile Include="DateFieldTests.cs" />
     <Compile Include="DelimitedListEnumerationTests.cs" />
     <Compile Include="DelimitedListTests.cs" />
+    <Compile Include="DistanceTests.cs" />
     <Compile Include="EnumerationFieldTest.cs" />
     <Compile Include="EnumerationValueTests.cs" />
     <Compile Include="MultilineStringFieldTests.cs" />
