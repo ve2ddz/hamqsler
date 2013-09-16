@@ -42,7 +42,7 @@ namespace hamqsler
 		/// <returns>True if date is valid, false if not valid</returns>
 		public override bool Validate(out string err)
 		{
-			err = string.Empty;
+			err = null;
 			if(Value.Length != 8)
 			{
 				err = "Date must be exactly 8 characters long";
