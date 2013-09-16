@@ -90,6 +90,7 @@
     <Compile Include="EmailTests.cs" />
     <Compile Include="EnumerationFieldTest.cs" />
     <Compile Include="EnumerationValueTests.cs" />
+    <Compile Include="EqCallTests.cs" />
     <Compile Include="MultilineStringFieldTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />

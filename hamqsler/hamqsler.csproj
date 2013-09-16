@@ -166,6 +166,7 @@
     <Compile Include="Email.cs" />
     <Compile Include="EnumerationField.cs" />
     <Compile Include="EnumerationValue.cs" />
+    <Compile Include="Eq_Call.cs" />
     <Compile Include="FloatToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="FormsColorToWPFSolidColorBrushConverter.cs" />

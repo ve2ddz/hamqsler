@@ -102,7 +102,7 @@ namespace hamqsler
 		/// <returns>True if callsign is valid, false otherwise</returns>
 		public override bool Validate(out string err)
 		{
-			err = string.Empty;
+			err = null;
 			if(Value == null)
 			{
 				err = "Null callsign is invalid.";

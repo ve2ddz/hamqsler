@@ -117,7 +117,7 @@ namespace hamqslerTest
 			Call call = new Call("OEH20");
 			string error = string.Empty;
 			Assert.IsTrue(call.Validate(out error));
-			Assert.AreEqual(string.Empty, error);
+			Assert.AreEqual(null, error);
 		}
 		
 		// test Validate for ZW1CCOM54
@@ -127,7 +127,7 @@ namespace hamqslerTest
 			Call call = new Call("ZW1CCOM54");
 			string error = string.Empty;
 			Assert.IsTrue(call.Validate(out error));
-			Assert.AreEqual(string.Empty, error);
+			Assert.AreEqual(null, error);
 		}
 		
 		// test GetCall with no prefix or suffix
