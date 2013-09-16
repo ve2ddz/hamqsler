@@ -835,6 +835,13 @@
 		<EnumValue Description='Ignore or invalid'>I</EnumValue>
 		<EnumValue Description='Verified' Deprecated='Yes'>V</EnumValue>
 	</Qsl_Rcvd>
+	<Qsl_Sent Description='Qsl Sent enumeration'>
+		<EnumValue Description='An outgoing QSL card has been sent, or the QSO has been uploaed to, and accepted by, the online service'>Y</EnumValue>
+		<EnumValue Description='Do not send an outgoing QSL card, or do not upload the QSO to the online service'>N</EnumValue>
+		<EnumValue Description='The contacted station has requested a QSL card, or the contacted station has requested the QSO be uploaded to the online service'>R</EnumValue>
+		<EnumValue Description='An outgoing QSL card has been selected to be sent, or a QSO has been selected to be uploaded to the online service'>Q</EnumValue>
+		<EnumValue Description='Ignore or Invalid'>I</EnumValue>
+	</Qsl_Sent>
 	<Qso_Upload_Status Description='QSO upload status'>
 		<EnumValue Description='The QSO has been uploaded to, and accepted by, the online service'>Y</EnumValue>
 		<EnumValue Description='Do not upload the QSO to the online service'>N</EnumValue>
