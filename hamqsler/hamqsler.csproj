@@ -179,6 +179,7 @@
     <Compile Include="FormsColorToWPFSolidColorBrushConverter.cs" />
     <Compile Include="FormsCardView.cs" />
     <Compile Include="Freq.cs" />
+    <Compile Include="Freq_Rx.cs" />
     <Compile Include="HamQSLerPrintDialog.xaml.cs">
       <DependentUpon>HamQSLerPrintDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
