@@ -45,7 +45,9 @@ namespace hamqsler
 			err = null;
 			// the email regular expression below is copyright by Mykola Dobrochynskyy and
 			// released under Code Project Open License (CPOL) 1.02.
-			// See http://www.codeproject.com/info/cpol10.aspx for the terms of the license.
+			// See http://www.codeproject.com/Articles/22777/Email-Address-Validation-Using-Regular-Expression
+			// for the more information about this expression, and
+			// http:..www.codeproject.com/info/cpol10.aspx for a copy of the license.
 			if(Regex.IsMatch(Value, @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
 						     + @"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?
 										[0-9]{1,2}|25[0-5]|2[0-4][0-9])\."
