@@ -91,6 +91,7 @@
     <Compile Include="EnumerationFieldTest.cs" />
     <Compile Include="EnumerationValueTests.cs" />
     <Compile Include="EqCallTests.cs" />
+    <Compile Include="EqslQslRcvdTests.cs" />
     <Compile Include="EqslQslrDateTests.cs" />
     <Compile Include="EqslQslSDateTests.cs" />
     <Compile Include="MultilineStringFieldTests.cs" />

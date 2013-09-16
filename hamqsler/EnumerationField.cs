@@ -103,7 +103,7 @@ namespace hamqsler
 		/// <returns></returns>
 		public virtual bool Validate(string value, out string err)
 		{
-			err = string.Empty;
+			err = null;
 			return this.IsInEnumeration(value, out err);
 		}
 		

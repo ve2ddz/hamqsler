@@ -828,6 +828,13 @@
 		<EnumValue Description='QSO confirmation via eQSL.cc'>EQSL</EnumValue>
 		<EnumValue Description='QSO confirmation via ARRL Logbook of the World'>LOTW</EnumValue>
 	</QSL_Medium>
+	<Qsl_Rcvd Description='Qsl Rcvd enumeration'>
+		<EnumValue Description='An incoming QSL card has been received, or the QSO has been confirmed by the online service'>Y</EnumValue>
+		<EnumValue Description='An incoming QSL card has not been received, or the QSO has not been confirmed by the online service'>N</EnumValue>
+		<EnumValue Description='The logging station has requested a QSL card, or the logging station has requested the QSO be uploaded to the online service'>R</EnumValue>
+		<EnumValue Description='Ignore or invalid'>I</EnumValue>
+		<EnumValue Description='Verified' Deprecated='Yes'>V</EnumValue>
+	</Qsl_Rcvd>
 	<Qso_Upload_Status Description='QSO upload status'>
 		<EnumValue Description='The QSO has been uploaded to, and accepted by, the online service'>Y</EnumValue>
 		<EnumValue Description='Do not upload the QSO to the online service'>N</EnumValue>

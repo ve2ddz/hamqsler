@@ -168,6 +168,7 @@
     <Compile Include="EnumerationValue.cs" />
     <Compile Include="Eqsl_QslRDate.cs" />
     <Compile Include="Eqsl_QslSDate.cs" />
+    <Compile Include="Eqsl_Qsl_Rcvd.cs" />
     <Compile Include="Eq_Call.cs" />
     <Compile Include="FloatToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
