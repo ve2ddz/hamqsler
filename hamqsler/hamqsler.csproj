@@ -190,6 +190,7 @@
     <Compile Include="HrdLog_Qso_Upload_Date.cs" />
     <Compile Include="HrdLog_Qso_Upload_Status.cs" />
     <Compile Include="ImageWFBase.cs" />
+    <Compile Include="Iota.cs" />
     <Compile Include="JpegPropsDialog.xaml.cs">
       <DependentUpon>JpegPropsDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
