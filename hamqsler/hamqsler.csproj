@@ -187,6 +187,7 @@
       <DependentUpon>HamQSLerPrintDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="HrdLog_Qso_Upload_Date.cs" />
     <Compile Include="ImageWFBase.cs" />
     <Compile Include="JpegPropsDialog.xaml.cs">
       <DependentUpon>JpegPropsDialog.xaml</DependentUpon>
