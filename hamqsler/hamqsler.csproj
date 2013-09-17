@@ -192,6 +192,7 @@
     <Compile Include="ImageWFBase.cs" />
     <Compile Include="Iota.cs" />
     <Compile Include="Iota_Island_ID.cs" />
+    <Compile Include="ITUZ.cs" />
     <Compile Include="JpegPropsDialog.xaml.cs">
       <DependentUpon>JpegPropsDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
