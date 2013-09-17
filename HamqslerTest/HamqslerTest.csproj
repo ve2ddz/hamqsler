@@ -102,6 +102,7 @@
     <Compile Include="FreqRxTests.cs" />
     <Compile Include="FreqTests.cs" />
     <Compile Include="GridSquareTests.cs" />
+    <Compile Include="GuestOpTests.cs" />
     <Compile Include="MultilineStringFieldTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
