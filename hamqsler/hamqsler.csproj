@@ -188,6 +188,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="HrdLog_Qso_Upload_Date.cs" />
+    <Compile Include="HrdLog_Qso_Upload_Status.cs" />
     <Compile Include="ImageWFBase.cs" />
     <Compile Include="JpegPropsDialog.xaml.cs">
       <DependentUpon>JpegPropsDialog.xaml</DependentUpon>
