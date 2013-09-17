@@ -173,6 +173,7 @@
     <Compile Include="Eqsl_Qsl_Sent.cs" />
     <Compile Include="Eq_Call.cs" />
     <Compile Include="Fists.cs" />
+    <Compile Include="Fists_CC.cs" />
     <Compile Include="FloatToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="Force_Init.cs" />

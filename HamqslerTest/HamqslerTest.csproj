@@ -96,6 +96,7 @@
     <Compile Include="EqslQslrDateTests.cs" />
     <Compile Include="EqslQslSDateTests.cs" />
     <Compile Include="EqslQslSentTests.cs" />
+    <Compile Include="FistsCCTests.cs" />
     <Compile Include="FistsTests.cs" />
     <Compile Include="ForceInitTests.cs" />
     <Compile Include="FreqRxTests.cs" />
