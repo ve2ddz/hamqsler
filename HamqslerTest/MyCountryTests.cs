@@ -1,0 +1,69 @@
+﻿/*
+ *  Author:
+ *       Jim Orcheson <jimorcheson@gmail.com>
+ * 
+ *  Copyright (c) 2013 Jim Orcheson
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ * 
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ * 
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+using System;
+using System.IO;
+using System.Reflection;
+using NUnit.Framework;
+using hamqsler;
+
+namespace hamqslerTest
+{
+	// test My_Country class
+	[TestFixture]
+	public class MyCountryTests
+	{
+		// test ToAdifString
+		[Test]
+		public void TestToAdifString()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			My_Country country = new My_Country("United States", aEnums);
+			Assert.AreEqual("<My_Country:13>UNITED STATES", country.ToAdifString());
+		}
+		
+		// test Validate with valid country
+		[Test]
+		public void ValidateWithValidCountry()
+		{
+			string err = string.Empty;
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			My_Country country = new My_Country("UNITED STATES", aEnums);
+			Assert.IsTrue(country.Validate(out err));
+			Assert.AreEqual(null, err);
+		}
+		
+		// test Validate with invalid country
+		[Test]
+		public void ValidateWithInvalidCountry()
+		{
+			string err = string.Empty;
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			My_Country country = new My_Country("COCHISE", aEnums);
+			Assert.IsFalse(country.Validate(out err));
+			Assert.AreEqual("'COCHISE' is not a valid country", err);
+		}
+	}
+}
