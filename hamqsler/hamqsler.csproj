@@ -200,6 +200,7 @@
     <Compile Include="K_Index.cs" />
     <Compile Include="Lat.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="Lon.cs" />
     <Compile Include="MacroGroupBox.cs" />
     <Compile Include="ManagerExistsMacro.cs" />
     <Compile Include="ManagerExistsMacroGroupBox.xaml.cs">
