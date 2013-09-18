@@ -126,6 +126,7 @@
     <Compile Include="MyCQZoneTests.cs" />
     <Compile Include="MyDXCCTests.cs" />
     <Compile Include="MyFistsTests.cs" />
+    <Compile Include="MyGridSquareTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
