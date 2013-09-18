@@ -33,6 +33,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NUnit.Framework">
+      <HintPath>$(SharpDevelopBinPath)\Tools\NUnit\NUnit.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -203,6 +206,7 @@
     <Compile Include="Lon.cs" />
     <Compile Include="Lotw_QslRDate.cs" />
     <Compile Include="Lotw_QslSDate.cs" />
+    <Compile Include="Lotw_Qsl_Rcvd.cs" />
     <Compile Include="MacroGroupBox.cs" />
     <Compile Include="ManagerExistsMacro.cs" />
     <Compile Include="ManagerExistsMacroGroupBox.xaml.cs">

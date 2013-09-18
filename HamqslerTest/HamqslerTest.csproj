@@ -112,6 +112,7 @@
     <Compile Include="LatTests.cs" />
     <Compile Include="LocationTests.cs" />
     <Compile Include="LonTests.cs" />
+    <Compile Include="LotwQslRcvdTests.cs" />
     <Compile Include="LotwQslRDateTests.cs" />
     <Compile Include="LotwQslSDateTests.cs" />
     <Compile Include="MultilineStringFieldTests.cs" />
