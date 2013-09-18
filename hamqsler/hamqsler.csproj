@@ -202,6 +202,7 @@
     <Compile Include="Location.cs" />
     <Compile Include="Lon.cs" />
     <Compile Include="Lotw_QslRDate.cs" />
+    <Compile Include="Lotw_QslSDate.cs" />
     <Compile Include="MacroGroupBox.cs" />
     <Compile Include="ManagerExistsMacro.cs" />
     <Compile Include="ManagerExistsMacroGroupBox.xaml.cs">
