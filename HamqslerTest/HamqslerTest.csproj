@@ -134,6 +134,7 @@
     <Compile Include="MyLonTests.cs" />
     <Compile Include="MyNameTests.cs" />
     <Compile Include="MyPostalCodeTests.cs" />
+    <Compile Include="MyRigTests.cs" />
     <Compile Include="NameTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
