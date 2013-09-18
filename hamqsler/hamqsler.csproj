@@ -220,6 +220,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MarginConverter.cs" />
+    <Compile Include="Max_Bursts.cs" />
     <Compile Include="MinMaxPaperSizes.cs" />
     <Compile Include="MultilineStringField.cs" />
     <Compile Include="NumberField.cs" />
