@@ -241,6 +241,7 @@
     <Compile Include="My_Postal_Code.cs" />
     <Compile Include="My_Rig.cs" />
     <Compile Include="My_Sig.cs" />
+    <Compile Include="My_Sig_Info.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
