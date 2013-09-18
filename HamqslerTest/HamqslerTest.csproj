@@ -141,6 +141,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RigTests.cs" />
+    <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
     <Compile Include="StringEnumerationValueTests.cs" />
     <Compile Include="StringFieldTests.cs" />
