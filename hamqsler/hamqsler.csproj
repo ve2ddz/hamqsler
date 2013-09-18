@@ -271,6 +271,7 @@
     <Compile Include="QsosWFBox.cs" />
     <Compile Include="QsoWithInclude.cs" />
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
+    <Compile Include="Rig.cs" />
     <Compile Include="SecondaryWFImage.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="StaticText.cs" />
