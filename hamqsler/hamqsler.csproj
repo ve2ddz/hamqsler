@@ -274,6 +274,7 @@
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
     <Compile Include="Rig.cs" />
     <Compile Include="SecondaryWFImage.cs" />
+    <Compile Include="Sig.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="StaticText.cs" />
     <Compile Include="StaticTextGroupBox.xaml.cs">
