@@ -223,6 +223,7 @@
     <Compile Include="Max_Bursts.cs" />
     <Compile Include="MinMaxPaperSizes.cs" />
     <Compile Include="Mode.cs" />
+    <Compile Include="Ms_Shower.cs" />
     <Compile Include="MultilineStringField.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
