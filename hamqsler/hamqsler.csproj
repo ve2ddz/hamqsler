@@ -237,6 +237,7 @@
     <Compile Include="My_ITU_Zone.cs" />
     <Compile Include="My_Lat.cs" />
     <Compile Include="My_Lon.cs" />
+    <Compile Include="My_Name.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
