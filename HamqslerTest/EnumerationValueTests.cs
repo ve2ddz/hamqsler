@@ -84,6 +84,19 @@ namespace hamqslerTest
 			                err);
 		}
 		
+		// test Validate returns false for null value
+		[Test]
+		public void TestValidateNullValue()
+		{
+			string err = string.Empty;
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			EnumerationValue ef = new EnumerationValue(null, "Arrl_Section", aEnums);
+			Assert.IsFalse(ef.Validate(out err));
+			Assert.AreEqual("Value is null.", err);
+		}
+		
 		// test ToAdifString returns correct value
 		[Test]
 		public void TestToAdifString()

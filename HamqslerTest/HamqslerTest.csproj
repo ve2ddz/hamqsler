@@ -117,6 +117,7 @@
     <Compile Include="LotwQslSDateTests.cs" />
     <Compile Include="LotwQslSentTests.cs" />
     <Compile Include="MaxBurstsTests.cs" />
+    <Compile Include="ModeTests.cs" />
     <Compile Include="MultilineStringFieldTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />

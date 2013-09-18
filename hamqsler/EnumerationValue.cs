@@ -63,6 +63,11 @@ namespace hamqsler
 		public override bool Validate(out string err)
 		{
 			err = null;
+			if(Value == null)
+			{
+				err = "Value is null.";
+				return false;
+			}
 			return base.Validate(Value, out err);
 		}
 		
