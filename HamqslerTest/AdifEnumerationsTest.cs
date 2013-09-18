@@ -562,5 +562,65 @@ namespace hamqslerTest
 			string credit = string.Empty;
 			Assert.AreEqual(null, aEnums.GetCreditEquivalentForAward("CPAWARD"));
 		}
+		
+		// test GetModeAndSubmode for null mode
+		[Test]
+		public void TestGetModeAndSubmodeNullMode()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string mode = null;
+			string newMode = string.Empty;
+			string subMode = string.Empty;
+			bool status = aEnums.GetModeAndSubmode(mode, out newMode, out subMode);
+			Assert.IsFalse(status);
+		}
+
+		// test GetModeAndSubmode for invalid mode
+		[Test]
+		public void TestGetModeAndSubmodeInvalidMode()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string mode = "BADFMODE";
+			string newMode = string.Empty;
+			string subMode = string.Empty;
+			bool status = aEnums.GetModeAndSubmode(mode, out newMode, out subMode);
+			Assert.IsFalse(status);
+		}
+
+		// test GetModeAndSubmode for mode with no replacement
+		[Test]
+		public void TestGetModeAndSubmodeNoReplacement()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string mode = "AM";
+			string newMode = string.Empty;
+			string subMode = string.Empty;
+			bool status = aEnums.GetModeAndSubmode(mode, out newMode, out subMode);
+			Assert.IsTrue(status);
+			Assert.AreEqual(mode, newMode);
+			Assert.AreEqual(null, subMode);
+		}
+
+		// test GetModeAndSubmode for mode with replacement
+		[Test]
+		public void TestGetModeAndSubmodeReplacement()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			string mode = "DOMINOF";
+			string newMode = string.Empty;
+			string subMode = string.Empty;
+			bool status = aEnums.GetModeAndSubmode(mode, out newMode, out subMode);
+			Assert.IsTrue(status);
+			Assert.AreEqual("DOMINO", newMode);
+			Assert.AreEqual("DOMINOF", subMode);
+		}
 	}
 }

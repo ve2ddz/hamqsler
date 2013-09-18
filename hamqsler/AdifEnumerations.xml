@@ -823,6 +823,88 @@
 		<EnumValue Description=''>WAS_MODE</EnumValue>
 		<EnumValue Description=''>WAS_SATELLITE</EnumValue>
 	</Credit>
+	<Mode Description='QSO mode'>
+		<EnumValue Description=''>AM</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='TOR' Submode='AMTORVEC'>AMTORVEC</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' Replacewith='RTTY' Submode='ASCI'>ASCI</EnumValue>
+		<EnumValue Description=''>ATV</EnumValue>
+		<EnumValue Description=''>CHIP</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='CHIP' Submode='CHIP64'>CHIP64</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='CHIP' Submode='CHIP128'>CHIP128</EnumValue>
+		<EnumValue Description=''>CLO</EnumValue>
+		<EnumValue Description=''>CONTESTI</EnumValue>
+		<EnumValue Description=''>DIGITALVOICE</EnumValue>
+		<EnumValue Description=''>DOMINO</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='DOMINO' Submode='DOMINOF'>DOMINOF</EnumValue>
+		<EnumValue Description=''>DSTAR</EnumValue>
+		<EnumValue Description=''>FAX</EnumValue>
+		<EnumValue Description=''>FM</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='HELL' Submode='FMHELL'>FMHELL</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='FSK31'>FSK31</EnumValue>
+		<EnumValue Description=''>FSK441</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='TOR' Submode='GTOR'>GTOR</EnumValue>
+		<EnumValue Description=''>HELL</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='HELL' Submode='HELL80'>HELL80</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='HELL' Submode='HFSK'>HFSK</EnumValue>
+		<EnumValue Description=''>ISCAT</EnumValue>
+		<EnumValue Description=''>JT4</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT4' Submode='JT4A'>JT4A</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT4' Submode='JT4B'>JT4B</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT4' Submode='JT4C'>JT4C</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT4' Submode='JT4D'>JT4D</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT4' Submode='JT4E'>JT4E</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT4' Submode='JT4F'>JT4F</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT4' Submode='JT4G'>JT4G</EnumValue>
+		<EnumValue Description=''>JT6M</EnumValue>
+		<EnumValue Description=''>JT9</EnumValue>
+		<EnumValue Description=''>JT44</EnumValue>
+		<EnumValue Description=''>JT65</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT65' Submode='JT65A'>JT65A</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT65' Submode='JT65B'>JT65B</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='JT65' Submode='JT65C'>JT65C</EnumValue>
+		<EnumValue Description=''>MFSK</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='MFSK' Submode='MFSK8'>MFSK8</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='MFSK' Submode='MFSK16'>MFSK16</EnumValue>
+		<EnumValue Description=''>MT63</EnumValue>
+		<EnumValue Description=''>OLIVIA</EnumValue>
+		<EnumValue Description=''>OPERA</EnumValue>
+		<EnumValue Description=''>PAC</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PAC' Submode='PAC2'>PAC2</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PAC' Submode='PAC3'>PAC3</EnumValue>
+		<EnumValue Description=''>PAX</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PAX' Submode='PAX2'>PAX2</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='CW' Submode='PCW'>PCW</EnumValue>
+		<EnumValue Description=''>PKT</EnumValue>
+		<EnumValue Description=''>PSK</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSK10'>PSK10</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSK31'>PSK31</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSK63'>PSK63</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSK63F'>PSK63F</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSK63F'>PSK63F</EnumValue>
+		<EnumValue Description=''>PSK2K</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSK63F'>PSK63F</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSKAM31'>PSKAM31</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSKAM50'>PSKAM50</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='PSKFEC31'>PSKFEC31</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='HELL' Submode='PSKHELL'>PSKHELL</EnumValue>
+		<EnumValue Description=''>Q15</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='QPSK31'>QPSK31</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='QPSK63'>QPSK63</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='PSK' Submode='QPSK125'>QPSK125</EnumValue>
+		<EnumValue Description=''>ROS</EnumValue>
+		<EnumValue Description=''>RTTY</EnumValue>
+		<EnumValue Description=''>RTTYM</EnumValue>
+		<EnumValue Description=''>SSB</EnumValue>
+		<EnumValue Description=''>SSTV</EnumValue>
+		<EnumValue Description=''>THOR</EnumValue>
+		<EnumValue Description=''>THRB</EnumValue>
+		<EnumValue Description='' Deprecated='Yes' ReplaceWith='THRB' Submode='THRBX'>THRBX</EnumValue>
+		<EnumValue Description=''>TOR</EnumValue>
+		<EnumValue Description=''>V4</EnumValue>
+		<EnumValue Description=''>VOI</EnumValue>
+		<EnumValue Description=''>WINMOR</EnumValue>
+		<EnumValue Description=''>WSPR</EnumValue>
+	</Mode>
 	<QSL_Medium Description='QSL Medium enumeration'>
 		<EnumValue Description='QSO confirmation via paper QSL card'>CARD</EnumValue>
 		<EnumValue Description='QSO confirmation via eQSL.cc'>EQSL</EnumValue>

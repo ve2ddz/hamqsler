@@ -345,5 +345,35 @@ namespace hamqsler
 			}
 			return null;
 		}
+		
+		/// <summary>
+		/// Get new mode and submode based on input mode
+		/// </summary>
+		/// <param name="mode">input mode</param>
+		/// <param name="newMode">replacement mode</param>
+		/// <param name="subMode">replacement submode</param>
+		/// <returns>false if mode is null or not found, false otherwise</returns>
+		public bool GetModeAndSubmode(string mode, out string newMode, out string subMode)
+		{
+			newMode = mode;
+			subMode = null;
+			if(mode == null)
+			{
+				return false;
+			}
+			XElement val = GetEnumValue("Mode", mode);
+			if(val == null)
+			{
+				newMode = null;
+				return false;
+			}
+			XAttribute deprecated = val.Attribute("Deprecated");
+			if(deprecated != null && deprecated.Value.Equals("Yes"))
+			{
+				newMode = val.Attribute("ReplaceWith").Value;
+				subMode = val.Attribute("Submode").Value;
+			}
+			return true;
+		}
 	}
 }
