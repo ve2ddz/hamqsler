@@ -225,6 +225,7 @@
     <Compile Include="Mode.cs" />
     <Compile Include="Ms_Shower.cs" />
     <Compile Include="MultilineStringField.cs" />
+    <Compile Include="My_City.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
