@@ -207,6 +207,7 @@
     <Compile Include="Lotw_QslRDate.cs" />
     <Compile Include="Lotw_QslSDate.cs" />
     <Compile Include="Lotw_Qsl_Rcvd.cs" />
+    <Compile Include="Lotw_Qsl_Sent.cs" />
     <Compile Include="MacroGroupBox.cs" />
     <Compile Include="ManagerExistsMacro.cs" />
     <Compile Include="ManagerExistsMacroGroupBox.xaml.cs">
