@@ -229,6 +229,7 @@
     <Compile Include="My_Cnty.cs" />
     <Compile Include="My_Country.cs" />
     <Compile Include="My_CQ_Zone.cs" />
+    <Compile Include="My_DXCC.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
