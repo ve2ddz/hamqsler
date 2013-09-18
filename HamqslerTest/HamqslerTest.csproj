@@ -130,6 +130,7 @@
     <Compile Include="MyIotaIslandIdTests.cs" />
     <Compile Include="MyIotaTests.cs" />
     <Compile Include="MyITUZoneTests.cs" />
+    <Compile Include="MyLatTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

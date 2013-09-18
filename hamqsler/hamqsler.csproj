@@ -235,6 +235,7 @@
     <Compile Include="My_Iota.cs" />
     <Compile Include="My_Iota_Island_ID.cs" />
     <Compile Include="My_ITU_Zone.cs" />
+    <Compile Include="My_Lat.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
