@@ -121,6 +121,7 @@
     <Compile Include="MsShowerTests.cs" />
     <Compile Include="MultilineStringFieldTests.cs" />
     <Compile Include="MyCityTests.cs" />
+    <Compile Include="MyCntyTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
