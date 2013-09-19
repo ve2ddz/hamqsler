@@ -137,6 +137,7 @@
     <Compile Include="MyRigTests.cs" />
     <Compile Include="MySigInfoTests.cs" />
     <Compile Include="MySigTests.cs" />
+    <Compile Include="MySotaRefTests.cs" />
     <Compile Include="NameTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
