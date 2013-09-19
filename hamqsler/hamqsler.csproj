@@ -278,6 +278,7 @@
     <Compile Include="SecondaryWFImage.cs" />
     <Compile Include="Sig.cs" />
     <Compile Include="Sig_Info.cs" />
+    <Compile Include="Sota_Ref.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="StaticText.cs" />
     <Compile Include="StaticTextGroupBox.xaml.cs">
