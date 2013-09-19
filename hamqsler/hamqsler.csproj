@@ -302,6 +302,7 @@
     <Compile Include="TextPart.cs" />
     <Compile Include="TextParts.cs" />
     <Compile Include="TextWFItem.cs" />
+    <Compile Include="Usaca_Counties.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="MainWindow.xaml.cs">
