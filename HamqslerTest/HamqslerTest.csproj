@@ -144,6 +144,7 @@
     <Compile Include="MyVUCCGridsTests.cs" />
     <Compile Include="NameTests.cs" />
     <Compile Include="NotesTests.cs" />
+    <Compile Include="NrBurstsTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
