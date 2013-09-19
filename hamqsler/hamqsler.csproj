@@ -246,6 +246,7 @@
     <Compile Include="My_State.cs" />
     <Compile Include="My_Street.cs" />
     <Compile Include="My_Usaca_Counties.cs" />
+    <Compile Include="My_VUCC_Grids.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
