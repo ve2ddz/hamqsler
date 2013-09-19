@@ -318,6 +318,7 @@
       <DependentUpon>UserPreferencesDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="VUCC_Grids.cs" />
     <Compile Include="XmlProcs.cs" />
   </ItemGroup>
   <ItemGroup>
