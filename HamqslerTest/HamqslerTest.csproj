@@ -146,6 +146,7 @@
     <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
     <Compile Include="SotaRefTests.cs" />
+    <Compile Include="StateTests.cs" />
     <Compile Include="StringEnumerationValueTests.cs" />
     <Compile Include="StringFieldTests.cs" />
   </ItemGroup>

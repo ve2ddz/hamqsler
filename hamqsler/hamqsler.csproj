@@ -281,6 +281,7 @@
     <Compile Include="Sig_Info.cs" />
     <Compile Include="Sota_Ref.cs" />
     <Compile Include="StartEndDateTime.cs" />
+    <Compile Include="State.cs" />
     <Compile Include="StaticText.cs" />
     <Compile Include="StaticTextGroupBox.xaml.cs">
       <DependentUpon>StaticTextGroupBox.xaml</DependentUpon>
