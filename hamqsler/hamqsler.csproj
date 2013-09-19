@@ -244,6 +244,7 @@
     <Compile Include="My_Sig_Info.cs" />
     <Compile Include="My_Sota_Ref.cs" />
     <Compile Include="My_State.cs" />
+    <Compile Include="My_Street.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
