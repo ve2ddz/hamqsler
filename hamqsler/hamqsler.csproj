@@ -248,6 +248,7 @@
     <Compile Include="My_Usaca_Counties.cs" />
     <Compile Include="My_VUCC_Grids.cs" />
     <Compile Include="Name.cs" />
+    <Compile Include="Notes.cs" />
     <Compile Include="NumberField.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
