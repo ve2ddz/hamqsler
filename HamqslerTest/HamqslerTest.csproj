@@ -140,6 +140,7 @@
     <Compile Include="MySotaRefTests.cs" />
     <Compile Include="MyStateTests.cs" />
     <Compile Include="MyStreetTests.cs" />
+    <Compile Include="MyUsacaCountiesTests.cs" />
     <Compile Include="NameTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
     <Compile Include="Program.cs" />

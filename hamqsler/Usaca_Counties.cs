@@ -54,7 +54,7 @@ namespace hamqsler
 		public string ToAdifString()
 		{
 			string cnties = counties.ToString();
-			return string.Format("<Usaca_Counties:{0}>{1}", cnties.Length, cnties);
+			return string.Format("<{2}:{0}>{1}", cnties.Length, cnties, base.Name);
 		}
 		
 		/// <summary>
@@ -67,7 +67,7 @@ namespace hamqsler
 			err = null;
 			if(counties.Count != 2 && counties.Count != 0)
 			{
-				err = "Usaca_Counties must contain exactly two counties.";
+				err = string.Format("{0} must contain exactly two counties.", base.Name);
 				return false;
 			}
 			foreach(string cnty in counties.Items)
