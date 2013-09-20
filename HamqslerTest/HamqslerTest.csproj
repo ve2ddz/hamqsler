@@ -172,6 +172,7 @@
     <Compile Include="QthTests.cs" />
     <Compile Include="RigTests.cs" />
     <Compile Include="RstRcvdTests.cs" />
+    <Compile Include="RstSentTests.cs" />
     <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
     <Compile Include="SotaRefTests.cs" />
