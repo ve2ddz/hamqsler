@@ -273,6 +273,7 @@
       <DependentUpon>PrintPropertiesPanel.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Prop_Mode.cs" />
     <Compile Include="QslDnPTasks.cs" />
     <Compile Include="QslRcvdToPseTnxConverter.cs" />
     <Compile Include="QsoInputData.cs" />

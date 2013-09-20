@@ -905,6 +905,25 @@
 		<EnumValue Description=''>WINMOR</EnumValue>
 		<EnumValue Description=''>WSPR</EnumValue>
 	</Mode>
+	<Propagation Description='Propagation mode enumeration'>
+		<EnumValue Description='Aurora'>AUR</EnumValue>
+		<EnumValue Description='Aurora-E'>AUE</EnumValue>
+		<EnumValue Description='Back Scatter'>BS</EnumValue>
+		<EnumValue Description='EchoLink'>ECH</EnumValue>
+		<EnumValue Description='Earth-Moon-Earth'>EME</EnumValue>
+		<EnumValue Description='Sporadic E'>ES</EnumValue>
+		<EnumValue Description='Field Aligned Irregularities'>FAI</EnumValue>
+		<EnumValue Description='F2 Reflection'>F2</EnumValue>
+		<EnumValue Description='Internet-assisted'>INTERNET</EnumValue>
+		<EnumValue Description='Ionoscatter'>ION</EnumValue>
+		<EnumValue Description='IRLP'>IRL</EnumValue>
+		<EnumValue Description='Meteor Scatter'>MS</EnumValue>
+		<EnumValue Description='Terrestrial or atmospheric repeater or transponder'>RPT</EnumValue>
+		<EnumValue Description='Rain scatter'>RS</EnumValue>
+		<EnumValue Description='Satellite'>SAT</EnumValue>
+		<EnumValue Description='Trans-equatorial'>TEP</EnumValue>
+		<EnumValue Description='Tropospheric ducting'>TR</EnumValue>
+	</Propagation>
 	<QSL_Medium Description='QSL Medium enumeration'>
 		<EnumValue Description='QSO confirmation via paper QSL card'>CARD</EnumValue>
 		<EnumValue Description='QSO confirmation via eQSL.cc'>EQSL</EnumValue>
