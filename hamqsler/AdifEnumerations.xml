@@ -949,6 +949,12 @@
 		<EnumValue Description='Electronic'>E</EnumValue>
 		<EnumValue Description='Manager' Deprecated='Yes' Replacewith=''>M</EnumValue>
 	</Qsl_Via>
+	<Qso_Complete Description='QSO complete enumeration'>
+		<EnumValue Description='Yes'>Y</EnumValue>
+		<EnumValue Description='No'>N</EnumValue>
+		<EnumValue Description='Not heard'>NIL</EnumValue>
+		<EnumValue Description='Uncertain'>?</EnumValue>
+	</Qso_Complete>
 	<Qso_Upload_Status Description='QSO upload status'>
 		<EnumValue Description='The QSO has been uploaded to, and accepted by, the online service'>Y</EnumValue>
 		<EnumValue Description='Do not upload the QSO to the online service'>N</EnumValue>
