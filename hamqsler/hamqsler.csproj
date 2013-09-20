@@ -285,6 +285,7 @@
     <Compile Include="Qsl_Rcvd.cs" />
     <Compile Include="Qsl_Rcvd_Via.cs" />
     <Compile Include="Qsl_Sent.cs" />
+    <Compile Include="Qsl_Sent_Via.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
