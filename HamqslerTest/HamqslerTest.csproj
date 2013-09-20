@@ -171,6 +171,7 @@
     <Compile Include="QsoRandomTests.cs" />
     <Compile Include="QthTests.cs" />
     <Compile Include="RigTests.cs" />
+    <Compile Include="RstRcvdTests.cs" />
     <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
     <Compile Include="SotaRefTests.cs" />

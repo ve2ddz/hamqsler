@@ -304,6 +304,7 @@
     <Compile Include="Qso_Random.cs" />
     <Compile Include="Qth.cs" />
     <Compile Include="Rig.cs" />
+    <Compile Include="Rst_Rcvd.cs" />
     <Compile Include="SecondaryWFImage.cs" />
     <Compile Include="Sig.cs" />
     <Compile Include="Sig_Info.cs" />
