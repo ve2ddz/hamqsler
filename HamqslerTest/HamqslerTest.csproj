@@ -155,6 +155,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropModeTests.cs" />
     <Compile Include="PublicKeyTests.cs" />
+    <Compile Include="QrzComQsoUploadDateTests.cs" />
     <Compile Include="RigTests.cs" />
     <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
