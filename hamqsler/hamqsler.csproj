@@ -276,6 +276,7 @@
     <Compile Include="Prop_Mode.cs" />
     <Compile Include="Public_Key.cs" />
     <Compile Include="QrzCom_Qso_Upload_Date.cs" />
+    <Compile Include="QrzCom_Qso_Upload_Status.cs" />
     <Compile Include="QslDnPTasks.cs" />
     <Compile Include="QslRcvdToPseTnxConverter.cs" />
     <Compile Include="QsoInputData.cs" />
