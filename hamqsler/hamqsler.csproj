@@ -302,6 +302,7 @@
     <Compile Include="Qso_Date.cs" />
     <Compile Include="Qso_Date_Off.cs" />
     <Compile Include="Qso_Random.cs" />
+    <Compile Include="Qth.cs" />
     <Compile Include="Rig.cs" />
     <Compile Include="SecondaryWFImage.cs" />
     <Compile Include="Sig.cs" />
