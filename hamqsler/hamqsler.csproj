@@ -299,6 +299,7 @@
     <Compile Include="QsoWithInclude.cs" />
     <Compile Include="QsoWithIncludeEqualityComparer.cs" />
     <Compile Include="Qso_Complete.cs" />
+    <Compile Include="Qso_Date.cs" />
     <Compile Include="Rig.cs" />
     <Compile Include="SecondaryWFImage.cs" />
     <Compile Include="Sig.cs" />

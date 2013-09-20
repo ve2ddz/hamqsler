@@ -166,6 +166,7 @@
     <Compile Include="QslSentViaTests.cs" />
     <Compile Include="QslViaTests.cs" />
     <Compile Include="QsoCompleteTests.cs" />
+    <Compile Include="QsoDateTests.cs" />
     <Compile Include="RigTests.cs" />
     <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
