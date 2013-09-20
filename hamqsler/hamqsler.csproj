@@ -274,6 +274,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Prop_Mode.cs" />
+    <Compile Include="Public_Key.cs" />
     <Compile Include="QslDnPTasks.cs" />
     <Compile Include="QslRcvdToPseTnxConverter.cs" />
     <Compile Include="QsoInputData.cs" />
