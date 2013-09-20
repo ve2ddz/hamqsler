@@ -280,6 +280,7 @@
     <Compile Include="QslDnPTasks.cs" />
     <Compile Include="QslMsg.cs" />
     <Compile Include="QslRcvdToPseTnxConverter.cs" />
+    <Compile Include="QslRDate.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
