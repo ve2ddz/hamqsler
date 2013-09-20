@@ -147,6 +147,7 @@
     <Compile Include="NrBurstsTests.cs" />
     <Compile Include="NrPingsTests.cs" />
     <Compile Include="NumberFieldTest.cs" />
+    <Compile Include="OperatorTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RigTests.cs" />

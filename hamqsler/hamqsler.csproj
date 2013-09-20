@@ -252,6 +252,7 @@
     <Compile Include="Nr_Bursts.cs" />
     <Compile Include="Nr_Pings.cs" />
     <Compile Include="NumberField.cs" />
+    <Compile Include="Operator.cs" />
     <Compile Include="Print4UpDialog.xaml.cs">
       <DependentUpon>Print4UpDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
