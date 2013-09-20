@@ -278,6 +278,7 @@
     <Compile Include="QrzCom_Qso_Upload_Date.cs" />
     <Compile Include="QrzCom_Qso_Upload_Status.cs" />
     <Compile Include="QslDnPTasks.cs" />
+    <Compile Include="QslMsg.cs" />
     <Compile Include="QslRcvdToPseTnxConverter.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">

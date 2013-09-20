@@ -157,6 +157,7 @@
     <Compile Include="PublicKeyTests.cs" />
     <Compile Include="QrzComQsoUploadDateTests.cs" />
     <Compile Include="QrzComQsoUploadStatusTests.cs" />
+    <Compile Include="QslMsgTests.cs" />
     <Compile Include="RigTests.cs" />
     <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
