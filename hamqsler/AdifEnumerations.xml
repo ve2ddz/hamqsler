@@ -943,6 +943,12 @@
 		<EnumValue Description='An outgoing QSL card has been selected to be sent, or a QSO has been selected to be uploaded to the online service'>Q</EnumValue>
 		<EnumValue Description='Ignore or Invalid'>I</EnumValue>
 	</Qsl_Sent>
+	<Qsl_Via Description='Qsl Via Enumeration'>
+		<EnumValue Description='Bureau'>B</EnumValue>
+		<EnumValue Description='Direct'>D</EnumValue>
+		<EnumValue Description='Electronic'>E</EnumValue>
+		<EnumValue Description='Manager' Deprecated='Yes' Replacewith=''>M</EnumValue>
+	</Qsl_Via>
 	<Qso_Upload_Status Description='QSO upload status'>
 		<EnumValue Description='The QSO has been uploaded to, and accepted by, the online service'>Y</EnumValue>
 		<EnumValue Description='Do not upload the QSO to the online service'>N</EnumValue>

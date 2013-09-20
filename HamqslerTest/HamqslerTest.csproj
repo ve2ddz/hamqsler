@@ -159,6 +159,7 @@
     <Compile Include="QrzComQsoUploadStatusTests.cs" />
     <Compile Include="QslMsgTests.cs" />
     <Compile Include="QslRcvdTests.cs" />
+    <Compile Include="QslRcvdViaTests.cs" />
     <Compile Include="QslRDateTests.cs" />
     <Compile Include="QslSDateTests.cs" />
     <Compile Include="RigTests.cs" />

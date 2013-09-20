@@ -283,6 +283,7 @@
     <Compile Include="QslRDate.cs" />
     <Compile Include="QslSDate.cs" />
     <Compile Include="Qsl_Rcvd.cs" />
+    <Compile Include="Qsl_Rcvd_Via.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
