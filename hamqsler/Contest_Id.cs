@@ -26,8 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class Contest_Id : StringEnumerationValue
 	{
-		public Contest_Id(string id, string enumeration, AdifEnumerations aEnums) 
-			: base(id, enumeration, aEnums)
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="id">contest id</param>
+		/// <param name="aEnums">AdifEnumerations object containing the Contest_ID enumeration</param>
+		public Contest_Id(string id, AdifEnumerations aEnums) 
+			: base(id, "Contest_ID", aEnums)
 		{
 		}
 	}

@@ -36,7 +36,7 @@ namespace hamqslerTest
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", "Contest_ID", aEnums);
+			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
 			Assert.AreEqual("<Contest_Id:17>RAC-CANADA-WINTER", id.ToAdifString());
 		}
 		
@@ -48,7 +48,7 @@ namespace hamqslerTest
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", "Contest_ID", aEnums);
+			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
 			Assert.IsTrue(id.IsInEnumeration(out err));
 			Assert.AreEqual(null, err);
 		}
@@ -61,7 +61,7 @@ namespace hamqslerTest
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Contest_Id id = new Contest_Id("e6", "Contest_ID", aEnums);
+			Contest_Id id = new Contest_Id("e6", aEnums);
 			Assert.IsFalse(id.IsInEnumeration(out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e6' " +
 			                    "was not found in enumeration", err);
@@ -75,7 +75,7 @@ namespace hamqslerTest
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", "Contest_ID", aEnums);
+			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
 			Assert.IsTrue(id.Validate(out err));
 			Assert.AreEqual(null, err);
 		}
@@ -88,7 +88,7 @@ namespace hamqslerTest
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Contest_Id id = new Contest_Id("e6", "Contest_ID", aEnums);
+			Contest_Id id = new Contest_Id("e6", aEnums);
 			Assert.IsTrue(id.Validate(out err));
 			Assert.AreEqual(null, err);
 		}
