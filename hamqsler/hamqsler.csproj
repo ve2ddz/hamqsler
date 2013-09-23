@@ -310,6 +310,7 @@
     <Compile Include="Sat_Mode.cs" />
     <Compile Include="Sat_Name.cs" />
     <Compile Include="SecondaryWFImage.cs" />
+    <Compile Include="SFI.cs" />
     <Compile Include="Sig.cs" />
     <Compile Include="Sig_Info.cs" />
     <Compile Include="Sota_Ref.cs" />

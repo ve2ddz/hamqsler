@@ -176,6 +176,7 @@
     <Compile Include="RxPwrTests.cs" />
     <Compile Include="SatModeTests.cs" />
     <Compile Include="SatNameTests.cs" />
+    <Compile Include="SFITests.cs" />
     <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
     <Compile Include="SotaRefTests.cs" />
