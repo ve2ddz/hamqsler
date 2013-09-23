@@ -331,6 +331,7 @@
     <Compile Include="Station_Callsign.cs" />
     <Compile Include="StringEnumerationValue.cs" />
     <Compile Include="StringField.cs" />
+    <Compile Include="Stx.cs" />
     <Compile Include="TextMacrosDialog.xaml.cs">
       <DependentUpon>TextMacrosDialog.xaml</DependentUpon>
       <SubType>Code</SubType>

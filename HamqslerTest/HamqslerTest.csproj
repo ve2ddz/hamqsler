@@ -187,6 +187,7 @@
     <Compile Include="StationCallsignTests.cs" />
     <Compile Include="StringEnumerationValueTests.cs" />
     <Compile Include="StringFieldTests.cs" />
+    <Compile Include="StxTests.cs" />
     <Compile Include="UsacaCountiesTests.cs" />
     <Compile Include="VUCCGridsTests.cs" />
   </ItemGroup>
