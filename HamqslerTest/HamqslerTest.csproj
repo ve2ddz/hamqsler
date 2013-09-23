@@ -179,6 +179,7 @@
     <Compile Include="SFITests.cs" />
     <Compile Include="SigInfoTests.cs" />
     <Compile Include="SigTests.cs" />
+    <Compile Include="SKCCTests.cs" />
     <Compile Include="SotaRefTests.cs" />
     <Compile Include="StateTests.cs" />
     <Compile Include="StringEnumerationValueTests.cs" />
