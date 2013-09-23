@@ -971,4 +971,84 @@
 		<EnumValue Description='TAG - Tambov Award Group'>TAG_</EnumValue>
 		<EnumValue Description='WAB - Worked All Britain'>WABAG_</EnumValue>
 	</Sponsored_Award>
+	<Submode Description='Submode enumeration'>
+		<EnumValue Description='AMTORFEC' Mode='TOR'>AMTORFEC</EnumValue>
+		<EnumValue Description='ASCI' Mode='RTTY'>ASCI</EnumValue>
+		<EnumValue Description='CHIP64' Mode='CHIP'>CHIP64</EnumValue>
+		<EnumValue Description='CHIP128' Mode='CHIP'>CHIP128</EnumValue>
+		<EnumValue Description='DOMINOEX' Mode='DOMINO'>DOMINOEX</EnumValue>
+		<EnumValue Description='DOMINOF' Mode='DOMINO'>DOMINOF</EnumValue>
+		<EnumValue Description='FMHELL' Mode='HELL'>FMHELL</EnumValue>
+		<EnumValue Description='FSK31' Mode='PSK'>FSK31</EnumValue>
+		<EnumValue Description='FSKHELL' Mode='HELL'>FSKHELL</EnumValue>
+		<EnumValue Description='GTOR' Mode='TOR'>GTOR</EnumValue>
+		<EnumValue Description='HELL80' Mode='HELL'>HELL80</EnumValue>
+		<EnumValue Description='HFSK' Mode='HELL'>HFSK</EnumValue>
+		<EnumValue Description='ISCAT-A' Mode='ISCAT'>ISCAT-A</EnumValue>
+		<EnumValue Description='ISCAT-B' Mode='ISCAT'>ISCAT-B</EnumValue>
+		<EnumValue Description='JT4A' Mode='JT4'>JT4A</EnumValue>
+		<EnumValue Description='JT4B' Mode='JT4'>JT4B</EnumValue>
+		<EnumValue Description='JT4C' Mode='JT4'>JT4C</EnumValue>
+		<EnumValue Description='JT4D' Mode='JT4'>JT4D</EnumValue>
+		<EnumValue Description='JT4E' Mode='JT4'>JT4E</EnumValue>
+		<EnumValue Description='JT4F' Mode='JT4'>JT4F</EnumValue>
+		<EnumValue Description='JT4G' Mode='JT4'>JT4G</EnumValue>
+		<EnumValue Description='JT9-1' Mode='JT9'>JT9-1</EnumValue>
+		<EnumValue Description='JT9-2' Mode='JT9'>JT9-2</EnumValue>
+		<EnumValue Description='JT9-5' Mode='JT9'>JT9-5</EnumValue>
+		<EnumValue Description='JT9-10' Mode='JT9'>JT9-10</EnumValue>
+		<EnumValue Description='JT9-30' Mode='JT9'>JT9-30</EnumValue>
+		<EnumValue Description='JT65A' Mode='JT65'>JT65A</EnumValue>
+		<EnumValue Description='JT65B' Mode='JT65'>JT65B</EnumValue>
+		<EnumValue Description='JT65B2' Mode='JT65'>JT65B2</EnumValue>
+		<EnumValue Description='JT65C' Mode='JT65'>JT65C</EnumValue>
+		<EnumValue Description='JT65C2' Mode='JT65'>JT65C2</EnumValue>
+		<EnumValue Description='LSB' Mode='SSB'>LSB</EnumValue>
+		<EnumValue Description='MFSK4' Mode='MFSK'>MFSK4</EnumValue>
+		<EnumValue Description='MFSK8' Mode='MFSK'>MFSK8</EnumValue>
+		<EnumValue Description='MFSK11' Mode='MFSK'>MFSK11</EnumValue>
+		<EnumValue Description='MFSK16' Mode='MFSK'>MFSK16</EnumValue>
+		<EnumValue Description='MFSK22' Mode='MFSK'>MFSK22</EnumValue>
+		<EnumValue Description='MFSK31' Mode='MFSK'>MFSK31</EnumValue>
+		<EnumValue Description='MFSK32' Mode='MFSK'>MFSK32</EnumValue>
+		<EnumValue Description='MFSK64' Mode='MFSK'>MFSK64</EnumValue>
+		<EnumValue Description='MFSK128' Mode='MFSK'>MFSK128</EnumValue>
+		<EnumValue Description='OLIVIA 4/125' Mode='OLIVIA'>OLIVIA 4/125</EnumValue>
+		<EnumValue Description='OLIVIA 4/250' Mode='OLIVIA'>OLIVIA 4/250</EnumValue>
+		<EnumValue Description='OLIVIA 8/250' Mode='OLIVIA'>OLIVIA 8/250</EnumValue>
+		<EnumValue Description='OLIVIA 8/500' Mode='OLIVIA'>OLIVIA 8/500</EnumValue>
+		<EnumValue Description='OLIVIA 16/500' Mode='OLIVIA'>OLIVIA 16/500</EnumValue>
+		<EnumValue Description='OLIVIA 16/1000' Mode='OLIVIA'>OLIVIA 16/1000</EnumValue>
+		<EnumValue Description='OLIVIA 32/1000' Mode='OLIVIA'>OLIVIA 32/1000</EnumValue>
+		<EnumValue Description='OPERA-BEACON' Mode='OPERA'>OPERA-BEACON</EnumValue>
+		<EnumValue Description='OPERA-QSO' Mode='OPERA'>OPERA-QSO</EnumValue>
+		<EnumValue Description='PAC2' Mode='PAC'>PAC2</EnumValue>
+		<EnumValue Description='PAC3' Mode='PAC'>PAC3</EnumValue>
+		<EnumValue Description='PAC4' Mode='PAC'>PAC4</EnumValue>
+		<EnumValue Description='PAX2' Mode='PAX'>PAX2</EnumValue>
+		<EnumValue Description='PCW' Mode='CW'>PCW</EnumValue>
+		<EnumValue Description='PSK10' Mode='PSK'>PSK10</EnumValue>
+		<EnumValue Description='PSK31' Mode='PSK'>PSK31</EnumValue>
+		<EnumValue Description='PSK63' Mode='PSK'>PSK63</EnumValue>
+		<EnumValue Description='PSK63F' Mode='PSK'>PSK63F</EnumValue>
+		<EnumValue Description='PSK125' Mode='PSK'>PSK125</EnumValue>
+		<EnumValue Description='PSK250' Mode='PSK'>PSK250</EnumValue>
+		<EnumValue Description='PSK500' Mode='PSK'>PSK500</EnumValue>
+		<EnumValue Description='PSK1000' Mode='PSK'>PSK1000</EnumValue>
+		<EnumValue Description='PSKAM10' Mode='PSK'>PSKAM10</EnumValue>
+		<EnumValue Description='PSKAM31' Mode='PSK'>PSKAM31</EnumValue>
+		<EnumValue Description='PSKAM50' Mode='PSK'>PSKAM50</EnumValue>
+		<EnumValue Description='PSKFEC31' Mode='PSK'>PSKFEC31</EnumValue>
+		<EnumValue Description='PSKHELL' Mode='HELL'>PSKHELL</EnumValue>
+		<EnumValue Description='QPSK31' Mode='PSK'>QPSK31</EnumValue>
+		<EnumValue Description='QPSK63' Mode='PSK'>QPSK63</EnumValue>
+		<EnumValue Description='QPSK125' Mode='PSK'>QPSK125</EnumValue>
+		<EnumValue Description='QPSK250' Mode='PSK'>QPSK250</EnumValue>
+		<EnumValue Description='QPSK500' Mode='PSK'>QPSK500</EnumValue>
+		<EnumValue Description='ROS-EME' Mode='ROS'>ROS-EME</EnumValue>
+		<EnumValue Description='ROS-HF' Mode='ROS'>ROS-HF</EnumValue>
+		<EnumValue Description='ROS-MF' Mode='ROS'>ROS-MF</EnumValue>
+		<EnumValue Description='THRBX' Mode='THRB'>THRBX</EnumValue>
+		<EnumValue Description='USB' Mode='SSB'>USB</EnumValue>
+	</Submode>
 </AdifEnumerations>
