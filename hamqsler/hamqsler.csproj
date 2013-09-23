@@ -332,6 +332,7 @@
     <Compile Include="StringEnumerationValue.cs" />
     <Compile Include="StringField.cs" />
     <Compile Include="Stx.cs" />
+    <Compile Include="Stx_String.cs" />
     <Compile Include="TextMacrosDialog.xaml.cs">
       <DependentUpon>TextMacrosDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
