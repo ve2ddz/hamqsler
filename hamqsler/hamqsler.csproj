@@ -334,6 +334,7 @@
     <Compile Include="Stx.cs" />
     <Compile Include="Stx_String.cs" />
     <Compile Include="Submode.cs" />
+    <Compile Include="SWL.cs" />
     <Compile Include="TextMacrosDialog.xaml.cs">
       <DependentUpon>TextMacrosDialog.xaml</DependentUpon>
       <SubType>Code</SubType>

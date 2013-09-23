@@ -190,6 +190,7 @@
     <Compile Include="StxStringTests.cs" />
     <Compile Include="StxTests.cs" />
     <Compile Include="SubmodeTests.cs" />
+    <Compile Include="SWLTests.cs" />
     <Compile Include="UsacaCountiesTests.cs" />
     <Compile Include="VUCCGridsTests.cs" />
   </ItemGroup>
