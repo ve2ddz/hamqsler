@@ -328,6 +328,7 @@
       <DependentUpon>StaticTextViewer.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Station_Callsign.cs" />
     <Compile Include="StringEnumerationValue.cs" />
     <Compile Include="StringField.cs" />
     <Compile Include="TextMacrosDialog.xaml.cs">

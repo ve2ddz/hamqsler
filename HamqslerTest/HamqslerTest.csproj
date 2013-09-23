@@ -184,6 +184,7 @@
     <Compile Include="SrxStringTests.cs" />
     <Compile Include="SrxTests.cs" />
     <Compile Include="StateTests.cs" />
+    <Compile Include="StationCallsignTests.cs" />
     <Compile Include="StringEnumerationValueTests.cs" />
     <Compile Include="StringFieldTests.cs" />
     <Compile Include="UsacaCountiesTests.cs" />
