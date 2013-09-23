@@ -181,6 +181,7 @@
     <Compile Include="SigTests.cs" />
     <Compile Include="SKCCTests.cs" />
     <Compile Include="SotaRefTests.cs" />
+    <Compile Include="SrxTests.cs" />
     <Compile Include="StateTests.cs" />
     <Compile Include="StringEnumerationValueTests.cs" />
     <Compile Include="StringFieldTests.cs" />

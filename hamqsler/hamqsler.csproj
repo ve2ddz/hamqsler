@@ -315,6 +315,7 @@
     <Compile Include="Sig_Info.cs" />
     <Compile Include="SKCC.cs" />
     <Compile Include="Sota_Ref.cs" />
+    <Compile Include="Srx.cs" />
     <Compile Include="StartEndDateTime.cs" />
     <Compile Include="State.cs" />
     <Compile Include="StaticText.cs" />
