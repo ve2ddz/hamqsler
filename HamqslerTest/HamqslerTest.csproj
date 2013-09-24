@@ -192,6 +192,7 @@
     <Compile Include="SubmodeTests.cs" />
     <Compile Include="SWLTests.cs" />
     <Compile Include="TenTenTests.cs" />
+    <Compile Include="TimeFieldTests.cs" />
     <Compile Include="UsacaCountiesTests.cs" />
     <Compile Include="VUCCGridsTests.cs" />
   </ItemGroup>
