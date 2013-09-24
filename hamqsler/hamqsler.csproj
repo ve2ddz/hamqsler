@@ -344,6 +344,7 @@
     <Compile Include="TextParts.cs" />
     <Compile Include="TextWFItem.cs" />
     <Compile Include="TimeField.cs" />
+    <Compile Include="Time_Off.cs" />
     <Compile Include="Usaca_Counties.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
