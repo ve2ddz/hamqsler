@@ -195,6 +195,7 @@
     <Compile Include="TimeFieldTests.cs" />
     <Compile Include="TimeOffTests.cs" />
     <Compile Include="TimeOnTests.cs" />
+    <Compile Include="TxPwrTests.cs" />
     <Compile Include="UsacaCountiesTests.cs" />
     <Compile Include="VUCCGridsTests.cs" />
   </ItemGroup>

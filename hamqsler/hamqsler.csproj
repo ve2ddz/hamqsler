@@ -346,6 +346,7 @@
     <Compile Include="TimeField.cs" />
     <Compile Include="Time_Off.cs" />
     <Compile Include="Time_On.cs" />
+    <Compile Include="Tx_Pwr.cs" />
     <Compile Include="Usaca_Counties.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
