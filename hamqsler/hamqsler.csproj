@@ -364,6 +364,7 @@
     </Compile>
     <Compile Include="VE_Prov.cs" />
     <Compile Include="VUCC_Grids.cs" />
+    <Compile Include="Web.cs" />
     <Compile Include="XmlProcs.cs" />
   </ItemGroup>
   <ItemGroup>

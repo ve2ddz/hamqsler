@@ -199,6 +199,7 @@
     <Compile Include="UsacaCountiesTests.cs" />
     <Compile Include="VEProvTests.cs" />
     <Compile Include="VUCCGridsTests.cs" />
+    <Compile Include="WebTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
