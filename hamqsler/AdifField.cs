@@ -26,7 +26,7 @@ namespace hamqsler
 	/// </summary>
 	public class AdifField
 	{
-		public string Name
+		public virtual string Name
 		{
 			get {return this.GetType().ToString().Substring("hamqsler.".Length);}
 		}

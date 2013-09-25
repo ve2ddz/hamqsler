@@ -61,6 +61,7 @@
     <Compile Include="AntAzTest.cs" />
     <Compile Include="AntElTest.cs" />
     <Compile Include="AntPathTest.cs" />
+    <Compile Include="ApplicationDefinedFieldTests.cs" />
     <Compile Include="ArrlSectTest.cs" />
     <Compile Include="AwardGrantedTests.cs" />
     <Compile Include="AwardSubmittedTests.cs" />

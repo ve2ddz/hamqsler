@@ -823,6 +823,20 @@
 		<EnumValue Description=''>WAS_MODE</EnumValue>
 		<EnumValue Description=''>WAS_SATELLITE</EnumValue>
 	</Credit>
+	<DataType Description='Field data types enumeration'>
+		<EnumValue Description='AwardList' Deprecated='Yes'>A</EnumValue>
+		<EnumValue Description='Boolean'>B</EnumValue>
+		<EnumValue Description='CreditList'>C</EnumValue>
+		<EnumValue Description='Date'>D</EnumValue>
+		<EnumValue Description='IntlMultiline String' International='Yes'>G</EnumValue>
+		<EnumValue Description='IntlCharacter or IntlString' International='Yes'>I</EnumValue>
+		<EnumValue Description='Location'>L</EnumValue>
+		<EnumValue Description='Multiline String'>M</EnumValue>
+		<EnumValue Description='Digit or Number'>N</EnumValue>
+		<EnumValue Description='SponsoredAwardList'>P</EnumValue>
+		<EnumValue Description='Character or String'>S</EnumValue>
+		<EnumValue Description='Time'>T</EnumValue>
+	</DataType>
 	<Mode Description='QSO mode'>
 		<EnumValue Description=''>AM</EnumValue>
 		<EnumValue Description='' Deprecated='Yes' ReplaceWith='TOR' Submode='AMTORVEC'>AMTORVEC</EnumValue>
