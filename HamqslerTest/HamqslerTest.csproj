@@ -198,6 +198,7 @@
     <Compile Include="TimeOnTests.cs" />
     <Compile Include="TxPwrTests.cs" />
     <Compile Include="UsacaCountiesTests.cs" />
+    <Compile Include="UserdefTests.cs" />
     <Compile Include="VEProvTests.cs" />
     <Compile Include="VUCCGridsTests.cs" />
     <Compile Include="WebTests.cs" />

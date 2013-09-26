@@ -349,6 +349,7 @@
     <Compile Include="Time_On.cs" />
     <Compile Include="Tx_Pwr.cs" />
     <Compile Include="Usaca_Counties.cs" />
+    <Compile Include="Userdef.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="MainWindow.xaml.cs">

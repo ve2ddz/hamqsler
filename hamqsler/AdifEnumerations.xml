@@ -828,6 +828,7 @@
 		<EnumValue Description='Boolean'>B</EnumValue>
 		<EnumValue Description='CreditList'>C</EnumValue>
 		<EnumValue Description='Date'>D</EnumValue>
+		<EnumValue Description='Enumeration'>E</EnumValue>
 		<EnumValue Description='IntlMultiline String' International='Yes'>G</EnumValue>
 		<EnumValue Description='IntlCharacter or IntlString' International='Yes'>I</EnumValue>
 		<EnumValue Description='Location'>L</EnumValue>
