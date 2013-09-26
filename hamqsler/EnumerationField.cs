@@ -107,5 +107,20 @@ namespace hamqsler
 			return this.IsInEnumeration(value, out err);
 		}
 		
+		public override string ToString()
+		{
+			string value = string.Empty;
+			if(enumeration != null)
+			{
+				foreach(string v in enumeration)
+				{
+					value += v + ",";
+				}
+				value = value.Length > 0 ? value.Substring(0, value.Length - 1) : value;
+			}
+			return value;
+		}
+
+		
 	}
 }
