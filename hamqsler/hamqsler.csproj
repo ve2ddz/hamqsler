@@ -91,6 +91,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AdifField.cs" />
+    <Compile Include="AdifFieldParts.cs" />
     <Compile Include="AdifMacro.cs" />
     <Compile Include="AdifMacroGroupBox.xaml.cs">
       <DependentUpon>AdifMacroGroupBox.xaml</DependentUpon>
