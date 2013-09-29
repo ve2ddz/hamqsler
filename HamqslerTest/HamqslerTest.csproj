@@ -202,6 +202,7 @@
     <Compile Include="UserdefBooleanTests.cs" />
     <Compile Include="UserdefDateTests.cs" />
     <Compile Include="UserdefEnumerationTests.cs" />
+    <Compile Include="UserdefLocationTests.cs" />
     <Compile Include="UserdefMultilineStringTests.cs" />
     <Compile Include="UserdefNumberTests.cs" />
     <Compile Include="UserdefStringTests.cs" />
