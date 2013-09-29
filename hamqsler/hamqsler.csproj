@@ -351,6 +351,7 @@
     <Compile Include="Tx_Pwr.cs" />
     <Compile Include="Usaca_Counties.cs" />
     <Compile Include="Userdef.cs" />
+    <Compile Include="UserdefBoolean.cs" />
     <Compile Include="UserdefMultilineString.cs" />
     <Compile Include="UserdefString.cs" />
     <Compile Include="UserPreferences.cs" />

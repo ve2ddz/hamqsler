@@ -199,6 +199,7 @@
     <Compile Include="TimeOnTests.cs" />
     <Compile Include="TxPwrTests.cs" />
     <Compile Include="UsacaCountiesTests.cs" />
+    <Compile Include="UserdefBooleanTests.cs" />
     <Compile Include="UserdefMultilineStringTests.cs" />
     <Compile Include="UserdefStringTests.cs" />
     <Compile Include="UserdefTests.cs" />
