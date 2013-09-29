@@ -353,6 +353,7 @@
     <Compile Include="Userdef.cs" />
     <Compile Include="UserdefBoolean.cs" />
     <Compile Include="UserdefDate.cs" />
+    <Compile Include="UserdefEnumeration.cs" />
     <Compile Include="UserdefMultilineString.cs" />
     <Compile Include="UserdefNumber.cs" />
     <Compile Include="UserdefString.cs" />
