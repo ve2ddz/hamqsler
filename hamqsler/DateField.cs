@@ -45,38 +45,38 @@ namespace hamqsler
 			err = null;
 			if(Value.Length != 8)
 			{
-				err = "Date must be exactly 8 characters long";
+				err = "Date must be exactly 8 characters long.";
 				return false;
 			}
 			if(!Regex.IsMatch(Value, "^[0-9]+$"))
 			{
-				err = "Date must contain number characters only";
+				err = "Date must contain number characters only.";
 				return false;
 			}
 			string year = Value.Substring(0, 4);
 			if(year.CompareTo("1930") < 0)
 			{
-				err = "Date must be 19300101 or later";
+				err = "Date must be 19300101 or later.";
 				return false;
 			}
 			DateTime now = DateTime.UtcNow;
 			string strNow = string.Format("{0:yyyyMMdd}", now);
 			if(Value.CompareTo(strNow) > 0)
 			{
-				err = "Date must not be later than today";
+				err = "Date must not be later than today.";
 				return false;
 			}
 			string month = Value.Substring(4, 2);
 			if(month.CompareTo("01") < 0 || month.CompareTo("12") > 0)
 			{
-				err = "Invalid month in date: must be between 01 and 12";
+				err = "Invalid month in date: must be between 01 and 12.";
 				return false;
 			}
 			string day = Value.Substring(6, 2);
 			int lastDay = DateTime.DaysInMonth(int.Parse(year), int.Parse(month));
 			if(day.CompareTo("01") < 0 || day.CompareTo(lastDay.ToString()) > 0)
 			{
-				err = "Invalid day in date: must be between 01 and end of month";
+				err = "Invalid day in date: must be between 01 and end of month.";
 				return false;
 			}
 			return true;

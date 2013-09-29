@@ -29,13 +29,20 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ApplicationDefinedFieldTests
 	{
+		AdifEnumerations aEnums;
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "S", 
 			                                                          "Test It", aEnums);
 			Assert.AreEqual("<APP_HAMQSLER_TEST:7:S>Test It", adf.ToAdifString());
@@ -45,9 +52,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidValues()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
@@ -59,9 +63,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNotApp()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APPL_HAMQSLER_TEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
@@ -73,9 +74,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNot3Parts()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLERTEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
@@ -87,9 +85,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNoProgramName()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP__TEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
@@ -101,9 +96,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNoFieldName()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
@@ -115,9 +107,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidDataType()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "Q", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
@@ -129,9 +118,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidAwardList()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "A", 
 			                                                          "CQWAZ_CW,DARC_DOK", aEnums);
 			string err = string.Empty;
@@ -143,9 +129,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidAwardList()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "A", 
 			                                                          "CQWAZ_CW,CQFRED", aEnums);
 			string err = string.Empty;
@@ -157,9 +140,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidBoolean()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "B", 
 			                                                          "Y", aEnums);
 			string err = string.Empty;
@@ -171,9 +151,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidBoolean()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "B", 
 			                                                          "F", aEnums);
 			string err = string.Empty;
@@ -185,9 +162,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidCreditList()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "C", 
 			                                                          "CQWAZ_MODE,IOTA", aEnums);
 			string err = string.Empty;
@@ -199,9 +173,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidCreditList()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "C", 
 			                                                          "CQWAZ_MODE,CQFRED", aEnums);
 			string err = string.Empty;
@@ -213,9 +184,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidDate()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "D", 
 			                                                          "20120613", aEnums);
 			string err = string.Empty;
@@ -227,23 +195,17 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidDate()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "D", 
 			                                                          "19250612", aEnums);
 			string err = string.Empty;
 			Assert.IsFalse(adf.Validate(out err));
-			Assert.AreEqual("Date must be 19300101 or later", err);
+			Assert.AreEqual("Date must be 19300101 or later.", err);
 		}
 
 		// test Validate with IntlMulitline String - not allowed in ADI
 		[Test] 
 		public void TestValidateIntlMultilineString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "G", 
 			                                                          "Fred", aEnums);
 			string err = string.Empty;
@@ -255,9 +217,6 @@ namespace hamqslerTest
 		[Test] 
 		public void TestValidateIntlString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "I", 
 			                                                          "Fred", aEnums);
 			string err = string.Empty;
@@ -269,9 +228,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidLocation()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "L", 
 			                                                          "E179 42.385", aEnums);
 			string err = string.Empty;
@@ -283,9 +239,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidLocation()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "L", 
 			                                                          "E185 42.385", aEnums);
 			string err = string.Empty;
@@ -297,9 +250,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidMultilineString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "M", 
 			                                                          "E185 42.385", aEnums);
 			string err = string.Empty;
@@ -311,9 +261,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidNumber()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "N", 
 			                                                          "42.385", aEnums);
 			string err = string.Empty;
@@ -325,9 +272,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidNumber()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "N", 
 			                                                          "E185", aEnums);
 			string err = string.Empty;
@@ -339,9 +283,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidSponsoredAwardList()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "P", 
 			                                                          "ARRL_WAS_CW", aEnums);
 			string err = string.Empty;
@@ -353,9 +294,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidSponsoredAwardList()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "P", 
 			                                                          "DOK_DARC_FRED", aEnums);
 			string err = string.Empty;
@@ -367,9 +305,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
@@ -382,9 +317,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "S", 
 			                                                          "Test\r\nIt", aEnums);
 			string err = string.Empty;
@@ -397,9 +329,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidTime()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "T", 
 			                                                          "123456", aEnums);
 			string err = string.Empty;
@@ -411,9 +340,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidTime()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "T", 
 			                                                          "2403", aEnums);
 			string err = string.Empty;

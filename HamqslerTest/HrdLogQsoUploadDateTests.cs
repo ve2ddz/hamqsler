@@ -52,7 +52,7 @@ namespace hamqslerTest
 			HrdLog_Qso_Upload_Date date = new HrdLog_Qso_Upload_Date("19250615");
 			string err = string.Empty;
 			Assert.IsFalse(date.Validate(out err));
-			Assert.AreEqual("Date must be 19300101 or later", err);
+			Assert.AreEqual("Date must be 19300101 or later.", err);
 		}
 	}
 }
