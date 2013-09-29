@@ -58,8 +58,7 @@ namespace hamqslerTest
 			Assert.IsTrue(uds.Validate(out err));
 			Assert.AreEqual(null, err);
 		}
-		
-		
+				
 		// test Validate with invalid input
 		[Test]
 		public void TestValidateInvalid()
@@ -68,6 +67,28 @@ namespace hamqslerTest
 			string err = string.Empty;
 			Assert.IsFalse(uds.Validate(out err));
 			Assert.AreEqual("Value must be a number.", err);
+		}
+				
+		// test Validate with valid range data
+		[Test]
+		public void TestValidateValidRange()
+		{
+			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", aEnums);
+			UserdefNumber uds = new UserdefNumber("14.315", userdef2);
+			string err = string.Empty;
+			Assert.IsTrue(uds.Validate(out err));
+			Assert.AreEqual(null, err);
+		}
+				
+		// test Validate data outside range
+		[Test]
+		public void TestValidateOutsideRange()
+		{
+			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", aEnums);
+			UserdefNumber uds = new UserdefNumber("1", userdef2);
+			string err = string.Empty;
+			Assert.IsFalse(uds.Validate(out err));
+			Assert.AreEqual("'1' is not within range specified by the Userdef field.", err);
 		}
 	}
 }

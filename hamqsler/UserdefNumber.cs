@@ -47,5 +47,33 @@ namespace hamqsler
 			return string.Format("<{0}:{1}:{2}>{3}", userdef.UName, Value.Length,
 			                     userdef.DataType.Value, Value);
 		}
+		
+		/// <summary>
+		/// Validate the data
+		/// </summary>
+		/// <param name="err">Error message if data is not valid</param>
+		/// <returns>true if data is valid, false otherwise.</returns>
+		public override bool Validate(out string err)
+		{
+			if(!base.Validate(out err))
+			{
+				return false;
+			}
+			if(!userdef.LowerValue.Equals(string.Empty) && !userdef.UpperValue.Equals(string.Empty)
+			   && !Value.Equals(string.Empty))
+			{
+				float lower = float.Parse(userdef.LowerValue);
+				float upper = float.Parse(userdef.UpperValue);
+				float val = float.Parse(Value);
+				if(val < lower || val > upper)
+				{
+					err = string.Format("'{0}' is not within range specified by the Userdef field.",
+					                    Value);
+					return false;
+				}
+			}
+			err = null;
+			return true;
+		}
 	}
 }
