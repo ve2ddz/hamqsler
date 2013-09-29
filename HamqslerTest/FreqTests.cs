@@ -76,7 +76,7 @@ namespace hamqslerTest
 			Freq freq = new Freq("Fred", aEnums);
 			string err = string.Empty;
 			Assert.IsFalse(freq.Validate(out err));
-			Assert.AreEqual("Value must be a number", err);
+			Assert.AreEqual("Value must be a number.", err);
 		}
 		
 		// test Validate with non number
@@ -89,7 +89,7 @@ namespace hamqslerTest
 			Freq freq = new Freq("14.235F", aEnums);
 			string err = string.Empty;
 			Assert.IsFalse(freq.Validate(out err));
-			Assert.AreEqual("Value must be a number", err);
+			Assert.AreEqual("Value must be a number.", err);
 		}
 	}
 }

@@ -52,7 +52,7 @@ namespace hamqslerTest
 			Nr_Pings pings = new Nr_Pings("fred");
 			string err = string.Empty;
 			Assert.IsFalse(pings.Validate(out err));
-			Assert.AreEqual("Value must be a number", err);
+			Assert.AreEqual("Value must be a number.", err);
 		}
 
 		// test Validate with empty string

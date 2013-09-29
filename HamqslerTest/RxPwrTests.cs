@@ -52,7 +52,7 @@ namespace hamqslerTest
 			Rx_Pwr power = new Rx_Pwr("fred");
 			string err = string.Empty;
 			Assert.IsFalse(power.Validate(out err));
-			Assert.AreEqual("Value must be a number", err);
+			Assert.AreEqual("Value must be a number.", err);
 		}
 
 		// test Validate with empty string

@@ -52,7 +52,7 @@ namespace hamqslerTest
 			My_ITU_Zone zone = new My_ITU_Zone("fb");
 			string err = string.Empty;
 			Assert.IsFalse(zone.Validate(out err));
-			Assert.AreEqual("Value must be a number", err);
+			Assert.AreEqual("Value must be a number.", err);
 		}
 	}
 }

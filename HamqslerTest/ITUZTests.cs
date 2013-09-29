@@ -52,7 +52,7 @@ namespace hamqslerTest
 			ITUZ zone = new ITUZ("fb");
 			string err = string.Empty;
 			Assert.IsFalse(zone.Validate(out err));
-			Assert.AreEqual("Value must be a number", err);
+			Assert.AreEqual("Value must be a number.", err);
 		}
 	}
 }

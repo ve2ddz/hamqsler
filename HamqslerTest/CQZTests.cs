@@ -52,7 +52,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			CQZ cqz = new CQZ("hump");
 			Assert.IsFalse(cqz.Validate(out err));
-			Assert.AreEqual("Value must be a number", err);
+			Assert.AreEqual("Value must be a number.", err);
 		}
 	}
 }

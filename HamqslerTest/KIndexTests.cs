@@ -52,7 +52,7 @@ namespace hamqslerTest
 			K_Index k = new K_Index("k4");
 			string err = string.Empty;
 			Assert.IsFalse(k.Validate(out err));
-			Assert.AreEqual("Value must be a number", err);
+			Assert.AreEqual("Value must be a number.", err);
 		}
 	}
 }
