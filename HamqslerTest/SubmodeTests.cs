@@ -64,7 +64,7 @@ namespace hamqslerTest
 			Submode sm = new Submode("e6", aEnums);
 			Assert.IsFalse(sm.IsInEnumeration(out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e6' " +
-			                    "was not found in enumeration", err);
+			                    "was not found in enumeration.", err);
 		}
 		
 		// test Validate with value in enumeration

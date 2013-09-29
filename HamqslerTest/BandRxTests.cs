@@ -75,7 +75,7 @@
 			Band_Rx band = new Band_Rx("23mm", aEnums);
 			string error = string.Empty;
 			Assert.IsFalse(band.Validate(out error));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value '23mm' was not found in enumeration", 
+			Assert.AreEqual("This QSO Field is of type enumeration. The value '23mm' was not found in enumeration.", 
 			                error);
 		}
 

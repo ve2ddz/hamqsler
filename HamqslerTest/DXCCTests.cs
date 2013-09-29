@@ -64,7 +64,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			Assert.IsFalse(dxcc.Validate(out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value '1023' " +
-			                    "was not found in enumeration", err);
+			                    "was not found in enumeration.", err);
 		}
 		
 		// test GetCountryName with valid country code

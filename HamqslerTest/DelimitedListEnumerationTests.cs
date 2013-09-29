@@ -114,7 +114,7 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.IsFalse(dLE.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'EOR' was not found in enumeration",
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'EOR' was not found in enumeration.",
 			                err);
 		}
 		
@@ -168,7 +168,7 @@ namespace hamqslerTest
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.IsFalse(dLE.Validate("XPS", out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'XPS' " +
-			                    "was not found in enumeration", err);
+			                    "was not found in enumeration.", err);
 		}
 		
 	}

@@ -63,7 +63,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			Lotw_Qsl_Sent rcvd = new Lotw_Qsl_Sent("F", aEnums);
 			Assert.IsFalse(rcvd.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration",
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
 		}
 	}

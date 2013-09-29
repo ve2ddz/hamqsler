@@ -63,7 +63,7 @@ namespace hamqslerTest
 			Prop_Mode pm = new Prop_Mode("PMS", aEnums);
 			string err = string.Empty;
 			Assert.IsFalse(pm.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'PMS' was not found in enumeration",
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'PMS' was not found in enumeration.",
 			                err);
 		}
 	}

@@ -64,7 +64,7 @@ namespace hamqslerTest
 			Contest_Id id = new Contest_Id("e6", aEnums);
 			Assert.IsFalse(id.IsInEnumeration(out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e6' " +
-			                    "was not found in enumeration", err);
+			                    "was not found in enumeration.", err);
 		}
 		
 		// test Validate with value in enumeration

@@ -63,7 +63,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			Qsl_Sent_Via status = new Qsl_Sent_Via("F", aEnums);
 			Assert.IsFalse(status.Validate(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration", 
+			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration.", 
 			                err);
 		}
 	}

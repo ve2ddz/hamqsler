@@ -73,7 +73,7 @@ namespace hamqslerTest
 			StringEnumerationValue se = new StringEnumerationValue("e4", "Contest_ID", aEnums);
 			Assert.IsFalse(se.IsInEnumeration(out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e4' " +
-			                    "was not found in enumeration", err);
+			                    "was not found in enumeration.", err);
 		}
 		
 		// test Validate with value in enumeration
