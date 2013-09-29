@@ -352,6 +352,7 @@
     <Compile Include="Usaca_Counties.cs" />
     <Compile Include="Userdef.cs" />
     <Compile Include="UserdefBoolean.cs" />
+    <Compile Include="UserdefDate.cs" />
     <Compile Include="UserdefMultilineString.cs" />
     <Compile Include="UserdefNumber.cs" />
     <Compile Include="UserdefString.cs" />
