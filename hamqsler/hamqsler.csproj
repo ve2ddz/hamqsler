@@ -356,6 +356,7 @@
     <Compile Include="UserdefMultilineString.cs" />
     <Compile Include="UserdefNumber.cs" />
     <Compile Include="UserdefString.cs" />
+    <Compile Include="UserdefTime.cs" />
     <Compile Include="UserPreferences.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="MainWindow.xaml.cs">
