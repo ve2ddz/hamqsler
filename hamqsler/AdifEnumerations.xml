@@ -848,6 +848,7 @@
 		<EnumValue Description='' Deprecated='Yes' ReplaceWith='CHIP' Submode='CHIP128'>CHIP128</EnumValue>
 		<EnumValue Description=''>CLO</EnumValue>
 		<EnumValue Description=''>CONTESTI</EnumValue>
+		<EnumValue Description=''>CW</EnumValue>
 		<EnumValue Description=''>DIGITALVOICE</EnumValue>
 		<EnumValue Description=''>DOMINO</EnumValue>
 		<EnumValue Description='' Deprecated='Yes' ReplaceWith='DOMINO' Submode='DOMINOF'>DOMINOF</EnumValue>
