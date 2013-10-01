@@ -29,6 +29,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="call">callsign of the logging operator</param>
 		public Guest_Op(string call) : base(call)
@@ -39,10 +41,12 @@ namespace hamqsler
 		/// Validate the callsign - must be valid call with no prefix or suffix
 		/// </summary>
 		/// <param name="err">Error message if not valid simple callsign, null if valid</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if callsign is valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modstr)
 		{
 			err = null;
+			modstr = null;
 			if(!Value.Equals(this.GetCall()))
 		    {
 		   		err = "Not a valid callsign.";

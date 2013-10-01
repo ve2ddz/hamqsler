@@ -35,7 +35,10 @@ namespace hamqslerTest
 			string[] enums = {"e1", "e2", "e3", "e4"};
 			EnumerationValue eVal = new EnumerationValue("e1", enums);
 			string err = string.Empty;
-			Assert.IsTrue(eVal.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(eVal.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate returns false for value not in enumeration
@@ -45,9 +48,11 @@ namespace hamqslerTest
 			string[] enums = {"e1", "e2", "e3", "e4"};
 			EnumerationValue eVal = new EnumerationValue("e5", enums);
 			string err = string.Empty;
-			Assert.IsFalse(eVal.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(eVal.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e5' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
 
 	// test Validate returns true for value in enumeration
@@ -55,6 +60,7 @@ namespace hamqslerTest
 		public void TestValidateTrue1()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -63,7 +69,9 @@ namespace hamqslerTest
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			EnumerationValue ef = new EnumerationValue("NT", "Arrl_Section", aEnums);
-			Assert.IsTrue(ef.Validate(out err));
+			Assert.IsTrue(ef.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate returns false for value not in enumeration
@@ -71,6 +79,7 @@ namespace hamqslerTest
 		public void TestValidateFalse1()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -79,9 +88,10 @@ namespace hamqslerTest
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			EnumerationValue ef = new EnumerationValue("ABCD", "Arrl_Section", aEnums);
-			Assert.IsFalse(ef.Validate(out err));
+			Assert.IsFalse(ef.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate returns false for null value
@@ -89,12 +99,14 @@ namespace hamqslerTest
 		public void TestValidateNullValue()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			EnumerationValue ef = new EnumerationValue(null, "Arrl_Section", aEnums);
-			Assert.IsFalse(ef.Validate(out err));
+			Assert.IsFalse(ef.Validate(out err, out modStr));
 			Assert.AreEqual("Value is null.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test ToAdifString returns correct value

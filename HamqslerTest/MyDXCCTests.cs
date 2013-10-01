@@ -49,8 +49,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			My_DXCC dxcc = new My_DXCC("1", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(dxcc.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr =string.Empty;
+			Assert.IsTrue(dxcc.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid country code
@@ -62,9 +64,11 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			My_DXCC dxcc = new My_DXCC("1023", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(dxcc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(dxcc.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value '1023' " +
 			                    "was not found in enumeration.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test GetCountryName with valid country code

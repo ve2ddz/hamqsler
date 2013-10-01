@@ -145,8 +145,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(credit.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(credit.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid credit, no Media
@@ -158,8 +160,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA2", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(credit.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(credit.Validate(out err, out modStr));
 			Assert.AreEqual("'IOTA2' not found in Credit enumeration", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid credit, single invalid Media
@@ -171,8 +175,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA:crad", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(credit.Validate(out err));
+			string modStr =string.Empty;
+			Assert.IsFalse(credit.Validate(out err, out modStr));
 			Assert.AreEqual("'CRAD' not found in QSL Medium enumeration", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid credit, null media and other media
@@ -186,8 +192,10 @@ namespace hamqslerTest
 			credit.Media.Add("Card");
 			credit.Media.Add("LotW");
 			string err = string.Empty;
-			Assert.IsFalse(credit.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(credit.Validate(out err, out modStr));
 			Assert.AreEqual("Programming Error: Credit object cannot contain both null and other QSL Media", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

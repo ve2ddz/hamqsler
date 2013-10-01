@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Stx : NumberField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="stx">serial number</param>
 		public Stx(string stx) : base(stx)
 		{
 		}

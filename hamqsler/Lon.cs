@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Lon : Location
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="lon">contacted station's longitude</param>
 		public Lon(string lon) : base(lon)
 		{
 		}

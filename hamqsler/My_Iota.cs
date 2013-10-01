@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class My_Iota : Iota
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="iota">IOTA designator</param>
+		/// <param name="aEnums">AdifEnumerations containing the Continent enumeration</param>
 		public My_Iota(string iota, AdifEnumerations aEnums) : base(iota, aEnums)
 		{
 		}

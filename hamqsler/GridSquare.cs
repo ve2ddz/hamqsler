@@ -30,6 +30,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="square">grid square</param>
 		public GridSquare(string square) : base(square)
@@ -40,10 +42,12 @@ namespace hamqsler
 		/// Validate the value of the grid square
 		/// </summary>
 		/// <param name="err">Error message if grid square is invalid, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			int len = Value.Length;
 			if(len == 2 && Regex.IsMatch(Value.Substring(0, 2), "[A-Ra-r][A-Ra-r]"))
 		    {

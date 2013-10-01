@@ -29,6 +29,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="time">time in HHMM or HHMMSS format</param>
 		public TimeField(string time) : base(time)
@@ -39,10 +41,12 @@ namespace hamqsler
 		/// Validate time field
 		/// </summary>
 		/// <param name="err">Error message if time is invalid, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if time is valid, false otherwise.</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			int length = Value.Length;
 			if(length == 0)
 			{

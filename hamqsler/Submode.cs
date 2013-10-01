@@ -28,6 +28,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="submode">submode value</param>
 		/// <param name="aEnums">AdifEnumerations object containing the Submode enumeration</param>

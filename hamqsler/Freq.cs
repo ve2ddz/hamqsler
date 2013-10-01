@@ -30,6 +30,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="freq">Frequency value in MHz</param>
 		/// <param name="aEnums">AdifEnumerations object containing Band enumeration</param>
@@ -43,11 +45,13 @@ namespace hamqsler
 		/// Validate the frequency = must be within the limits of a defined band
 		/// </summary>
 		/// <param name="err">Error message if frequency not valid, or null</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
-			if(!base.Validate(out err))
+			modStr = null;
+			if(!base.Validate(out err, out modStr))
 			{
 				return false;
 			}

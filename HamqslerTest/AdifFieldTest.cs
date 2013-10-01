@@ -42,9 +42,11 @@ namespace hamqslerTest
 		public void TestIsValid()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			AdifField field = new AdifField();
-			Assert.IsTrue(field.Validate(out err));
+			Assert.IsTrue(field.Validate(out err, out modStr));
 			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 	}

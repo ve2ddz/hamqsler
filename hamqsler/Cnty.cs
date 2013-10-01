@@ -22,13 +22,19 @@ using System;
 namespace hamqsler
 {
 	/// <summary>
-	/// Cnty class - conacted station's Secondary Administrative Subdivision (e.g. US county, JA Gun).
+	/// Cnty class - contacted station's Secondary Administrative Subdivision (e.g. US county, JA Gun).
 	/// This class is really an enumeration type, but the enumerations are included only by
 	/// reference in the ADIF standard, so this class is defined as StringField type, and no
 	/// validation is performed.
 	/// </summary>
 	public class Cnty : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="value">secondary administrative subdivision</param>
 		public Cnty(string value) : base(value)
 		{
 		}

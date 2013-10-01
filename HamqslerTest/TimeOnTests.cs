@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("");
 			string err = string.Empty;
-			Assert.IsTrue(tf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(tf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid HHMM time
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("1234");
 			string err = string.Empty;
-			Assert.IsTrue(tf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(tf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid HHMMSS time
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("123456");
 			string err = string.Empty;
-			Assert.IsTrue(tf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(tf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid HHMMS time
@@ -71,8 +77,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("123");
 			string err = string.Empty;
-			Assert.IsFalse(tf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(tf.Validate(out err, out modStr));
 			Assert.AreEqual("Time must be in HHMM or HHMMSS format.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid HHMMS time
@@ -81,8 +89,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("12345");
 			string err = string.Empty;
-			Assert.IsFalse(tf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(tf.Validate(out err, out modStr));
 			Assert.AreEqual("Time must be in HHMM or HHMMSS format.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid hour
@@ -91,8 +101,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("243456");
 			string err = string.Empty;
-			Assert.IsFalse(tf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(tf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid time.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid minute
@@ -101,8 +113,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("126056");
 			string err = string.Empty;
-			Assert.IsFalse(tf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(tf.Validate(out err, out modStr));
 			Assert.AreEqual("Time must be in HHMM or HHMMSS format.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid hour
@@ -111,8 +125,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("2434");
 			string err = string.Empty;
-			Assert.IsFalse(tf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(tf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid time.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid minute
@@ -121,8 +137,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("1260");
 			string err = string.Empty;
-			Assert.IsFalse(tf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(tf.Validate(out err, out modStr));
 			Assert.AreEqual("Time must be in HHMM or HHMMSS format.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid second
@@ -131,8 +149,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("125060");
 			string err = string.Empty;
-			Assert.IsFalse(tf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(tf.Validate(out err, out modStr));
 			Assert.AreEqual("Time must be in HHMM or HHMMSS format.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with non digit
@@ -141,8 +161,10 @@ namespace hamqslerTest
 		{
 			Time_On tf = new Time_On("1250-0");
 			string err = string.Empty;
-			Assert.IsFalse(tf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(tf.Validate(out err,out modStr));
 			Assert.AreEqual("Time must be in HHMM or HHMMSS format.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

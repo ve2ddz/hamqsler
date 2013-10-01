@@ -40,8 +40,10 @@ namespace hamqslerTest
 		{
 			Sat_Name name = new Sat_Name("AO-25");
 			string err = string.Empty;
-			Assert.IsTrue(name.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(name.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

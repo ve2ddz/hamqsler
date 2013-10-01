@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Srx_String : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="srxs">contest QSO received info</param>
 		public Srx_String(string srxs) : base(srxs)
 		{
 		}

@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_Sota_Ref : Sota_Ref
 	{
+		/// <summary>
+		/// Contructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="sota">SOTA reference</param>
 		public My_Sota_Ref(string sota) : base(sota)
 		{
 		}

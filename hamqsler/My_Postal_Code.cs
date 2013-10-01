@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_Postal_Code : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="code">postal code</param>
 		public My_Postal_Code(string code) : base(code)
 		{
 		}

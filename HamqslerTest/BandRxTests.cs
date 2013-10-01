@@ -42,7 +42,10 @@
 				AdifEnumerations aEnums = new AdifEnumerations(str);
 				Band_Rx band = new Band_Rx("2190m", aEnums);
 				string error = string.Empty;
-				Assert.IsTrue(band.Validate(out error));
+				string modStr = string.Empty;
+				Assert.IsTrue(band.Validate(out error, out modStr));
+				Assert.IsNull(error);
+				Assert.IsNull(modStr);
 			}
 	
 			// test Validate with valid value
@@ -58,7 +61,10 @@
 				AdifEnumerations aEnums = new AdifEnumerations(str);
 				Band_Rx band = new Band_Rx("1mm", aEnums);
 				string error = string.Empty;
-				Assert.IsTrue(band.Validate(out error));
+				string modStr = string.Empty;
+				Assert.IsTrue(band.Validate(out error, out modStr));
+				Assert.IsNull(error);
+				Assert.IsNull(modStr);
 			}
 	
 			// test Validate with invalid value
@@ -74,9 +80,11 @@
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Band_Rx band = new Band_Rx("23mm", aEnums);
 			string error = string.Empty;
-			Assert.IsFalse(band.Validate(out error));
+			string modStr = string.Empty;
+			Assert.IsFalse(band.Validate(out error, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value '23mm' was not found in enumeration.", 
 			                error);
+			Assert.IsNull(modStr);
 		}
 
 		// test ToAdifString
@@ -91,7 +99,6 @@
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Band_Rx band = new Band_Rx("23cm", aEnums);
-			string error = string.Empty;
 			Assert.AreEqual("<Band_Rx:4>23cm", band.ToAdifString());
 		}
 		
@@ -107,7 +114,6 @@
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Band_Rx band = new Band_Rx("40m", aEnums);
-			string error = string.Empty;
 			Assert.IsTrue(band.IsWithinBand("7.102"));
 		}
 		
@@ -123,7 +129,6 @@
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Band_Rx band = new Band_Rx("40m", aEnums);
-			string error = string.Empty;
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
 

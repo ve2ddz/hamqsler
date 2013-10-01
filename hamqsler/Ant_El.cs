@@ -28,6 +28,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">Antenna elevation in degrees</param>
 		public Ant_El(string value) : base(value)

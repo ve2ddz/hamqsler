@@ -58,9 +58,11 @@ namespace hamqslerTest
 		public void TestIsValid()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			StringField field = new StringField("VA3HJ");
-			Assert.IsTrue(field.Validate(out err));
+			Assert.IsTrue(field.Validate(out err, out modStr));
 			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid returns false
@@ -68,9 +70,11 @@ namespace hamqslerTest
 		public void TestIsValidFalse()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			StringField field = new StringField(null);
-			Assert.IsFalse(field.Validate(out err));
+			Assert.IsFalse(field.Validate(out err, out modStr));
 			Assert.AreEqual("Value is null", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid with NewLine = should return false
@@ -78,10 +82,12 @@ namespace hamqslerTest
 		public void TestIsValidNewLine()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			StringField field = new StringField("VA3HJ" + Environment.NewLine + "VA3JNO");
-			Assert.IsFalse(field.Validate(out err));
+			Assert.IsFalse(field.Validate(out err, out modStr));
 			Assert.AreEqual("String value contains a new line character. This is not allowed in StringField types",
 			                err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

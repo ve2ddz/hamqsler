@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class K_Index : NumberField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="index">K index at time of QSO</param>
 		public K_Index(string index) : base(index)
 		{ 
 		}

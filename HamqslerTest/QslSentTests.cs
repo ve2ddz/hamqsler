@@ -48,9 +48,11 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Qsl_Sent rcvd = new Qsl_Sent("Y", aEnums);
-			Assert.IsTrue(rcvd.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(rcvd.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid value
@@ -61,10 +63,12 @@ namespace hamqslerTest
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Qsl_Sent rcvd = new Qsl_Sent("F", aEnums);
-			Assert.IsFalse(rcvd.Validate(out err));
+			Assert.IsFalse(rcvd.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

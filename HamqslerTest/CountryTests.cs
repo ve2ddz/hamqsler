@@ -45,12 +45,14 @@ namespace hamqslerTest
 		public void ValidateWithValidCountry()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Country country = new Country("UNITED STATES", aEnums);
-			Assert.IsTrue(country.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(country.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid country
@@ -58,12 +60,14 @@ namespace hamqslerTest
 		public void ValidateWithInvalidCountry()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Country country = new Country("COCHISE", aEnums);
-			Assert.IsFalse(country.Validate(out err));
+			Assert.IsFalse(country.Validate(out err, out modStr));
 			Assert.AreEqual("'COCHISE' is not a valid country", err);
+			Assert.IsNull(modStr);
 		}
 		
 	}

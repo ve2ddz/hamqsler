@@ -41,8 +41,9 @@ namespace hamqslerTest
 		{
 			SFI sfi = new SFI("-106.3");
 			string err = string.Empty;
-			Assert.IsTrue(sfi.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(sfi.Validate(out err, out modStr));
+			Assert.IsNull(err);
 		}
 	}
 }

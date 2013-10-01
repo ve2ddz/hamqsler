@@ -33,8 +33,10 @@ namespace hamqslerTest
 		{
 			Guest_Op op = new Guest_Op("VA3HJ");
 			string err = string.Empty;
-			Assert.IsTrue(op.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(op.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid callsign
@@ -43,8 +45,10 @@ namespace hamqslerTest
 		{
 			Guest_Op op = new Guest_Op("VAHJ");
 			string err = string.Empty;
-			Assert.IsFalse(op.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(op.Validate(out err, out modStr));
 			Assert.AreEqual("Not a valid callsign.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid callsign
@@ -53,8 +57,10 @@ namespace hamqslerTest
 		{
 			Guest_Op op = new Guest_Op("PJ2/VA3HJ");
 			string err = string.Empty;
-			Assert.IsFalse(op.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(op.Validate(out err, out modStr));
 			Assert.AreEqual("Not a valid callsign.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

@@ -49,7 +49,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call("VA3HJ");
 			string error = string.Empty;
-			Assert.IsTrue(call.Validate(out error));
+			string modStr = string.Empty;
+			Assert.IsTrue(call.Validate(out error, out modStr));
+			Assert.IsNull(error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with simple callsign
@@ -58,7 +61,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call("6Y5BF");
 			string error = string.Empty;
-			Assert.IsTrue(call.Validate(out error));
+			string modStr = string.Empty;
+			Assert.IsTrue(call.Validate(out error, out modStr));
+			Assert.IsNull(error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid callsign
@@ -67,8 +73,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call("VAHJ");
 			string error = string.Empty;
-			Assert.IsFalse(call.Validate(out error));
+			string modStr = string.Empty;
+			Assert.IsFalse(call.Validate(out error, out modStr));
 			Assert.AreEqual("Callsign 'VAHJ' is invalid.", error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with another invalid callsign
@@ -77,8 +85,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call("9A");
 			string error = string.Empty;
-			Assert.IsFalse(call.Validate(out error));
+			string modStr = string.Empty;
+			Assert.IsFalse(call.Validate(out error, out modStr));
 			Assert.AreEqual("Callsign '9A' is invalid.", error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with prefix
@@ -87,7 +97,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call("GB2/VA3HJ");
 			string error = string.Empty;
-			Assert.IsTrue(call.Validate(out error));
+			string modStr = string.Empty;
+			Assert.IsTrue(call.Validate(out error, out modStr));
+			Assert.IsNull(error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with empty callsign
@@ -96,8 +109,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call(string.Empty);
 			string error = string.Empty;
-			Assert.IsFalse(call.Validate(out error));
+			string modStr = string.Empty;
+			Assert.IsFalse(call.Validate(out error, out modStr));
 			Assert.AreEqual("Callsign '' is invalid.", error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with empty callsign
@@ -106,8 +121,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call(null);
 			string error = string.Empty;
-			Assert.IsFalse(call.Validate(out error));
+			string modStr = string.Empty;
+			Assert.IsFalse(call.Validate(out error, out modStr));
 			Assert.AreEqual("Null callsign is invalid.", error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate for OEH20
@@ -116,8 +133,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call("OEH20");
 			string error = string.Empty;
-			Assert.IsTrue(call.Validate(out error));
-			Assert.AreEqual(null, error);
+			string modStr = string.Empty;
+			Assert.IsTrue(call.Validate(out error, out modStr));
+			Assert.IsNull(error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate for ZW1CCOM54
@@ -126,8 +145,10 @@ namespace hamqslerTest
 		{
 			Call call = new Call("ZW1CCOM54");
 			string error = string.Empty;
-			Assert.IsTrue(call.Validate(out error));
-			Assert.AreEqual(null, error);
+			string modStr = string.Empty;
+			Assert.IsTrue(call.Validate(out error, out modStr));
+			Assert.IsNull(error);
+			Assert.IsNull(modStr);
 		}
 		
 		// test GetCall with no prefix or suffix

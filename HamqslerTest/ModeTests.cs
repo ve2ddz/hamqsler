@@ -49,8 +49,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Mode mode = new Mode("PSK", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(mode.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(mode.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid mode
@@ -62,9 +64,11 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Mode mode = new Mode("BADMODE", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(mode.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(mode.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'BADMODE' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with null mode
@@ -76,8 +80,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Mode mode = new Mode(null, aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(mode.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(mode.Validate(out err, out modStr));
 			Assert.AreEqual("Value is null.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

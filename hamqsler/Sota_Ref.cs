@@ -27,6 +27,12 @@ namespace hamqsler
 	/// </summary>
 	public class Sota_Ref : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="sota">SOTA reference</param>
 		public Sota_Ref(string sota) : base(sota)
 		{
 		}
@@ -36,10 +42,12 @@ namespace hamqsler
 		/// Value is checked for format, not actual value
 		/// </summary>
 		/// <param name="err">Error message if value is not valid, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if format is valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(!Regex.IsMatch(Value, "^[0-9]{0,1}[A-Za-z]{1,2}[0-9]{0,1}/[A-Za-z]{2}-[0-9]{3}$"))
 			{
 				err = string.Format("'{0}' is not a valid SOTA Reference.", Value);

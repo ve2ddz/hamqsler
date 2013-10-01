@@ -35,6 +35,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="cnties">list of two counties separated by ':'</param>
 		public Usaca_Counties(string cnties)
@@ -61,10 +63,12 @@ namespace hamqsler
 		/// Validate the counties - must be exactly 2, and must be in correct format
 		/// </summary>
 		/// <param name="err">Error message if not valid, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(counties.Count != 2 && counties.Count != 0)
 			{
 				err = string.Format("{0} must contain exactly two counties.", base.Name);

@@ -28,7 +28,9 @@ namespace hamqsler
 	public class Address : MultilineStringField
 	{
 		/// <summary>
-		/// constructor
+		/// constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">Value of the field</param>
 		public Address(string value) : base(value)

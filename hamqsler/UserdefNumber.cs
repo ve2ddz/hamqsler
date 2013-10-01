@@ -30,6 +30,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">field value</param>
 		/// <param name="userdefField">Userdef object that defines this field type</param>
@@ -52,10 +54,11 @@ namespace hamqsler
 		/// Validate the data
 		/// </summary>
 		/// <param name="err">Error message if data is not valid</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if data is valid, false otherwise.</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
-			if(!base.Validate(out err))
+			if(!base.Validate(out err, out modStr))
 			{
 				return false;
 			}

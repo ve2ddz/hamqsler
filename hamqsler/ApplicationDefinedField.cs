@@ -35,6 +35,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="fldName">Name of application defined field</param>
 		/// <param name="dType">Data type of the field</param>
@@ -63,10 +65,12 @@ namespace hamqsler
 		/// 2. Datatype must be in the enumeration of data types defined in 
 		/// </summary>
 		/// <param name="err">Error message if values are not valid</param>
+		/// <param name="modStr">Message if value has been modified</param>
 		/// <returns>true if values are valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			string[] appParts = Name.Split('_');
 			if(appParts.Length != 3 || appParts[1].Equals(string.Empty) ||
 			   appParts[2].Equals(string.Empty) ||
@@ -75,7 +79,7 @@ namespace hamqsler
 				err = "Invalid Application Defined Fieldname.";
 				return false;
 			}
-			if(!dataType.Validate(out err))
+			if(!dataType.Validate(out err, out modStr))
 			{
 				err = "Invalid Data Type.";
 				return false;
@@ -84,18 +88,31 @@ namespace hamqsler
 			{
 				case "A":			// AwardList type
 					string[] awards = Value.Split(',');
-					foreach(string award in awards)
+					string[] awardsList = Value.Split(',');
+					for(int i = 0; i < awards.Length; i++)
 					{
-						if(!dataType.aEnums.IsInEnumeration("Award", award))
+						if(!dataType.aEnums.IsInEnumeration("Award", awards[i]))
 						{
-							err = "Invalid AwardList item: '" + award + "'.";
-							return false;
+							modStr = "Invalid AwardList item: '" + awards[i] + "'. Item removed.";
+							awardsList[i] = null;
 						}
+					}
+					Value = string.Empty;
+					foreach(string award in awardsList)
+					{
+						if(award != null)
+						{
+							Value += award + ",";
+						}
+					}
+					if(Value != string.Empty)
+					{
+						Value = Value.Substring(0, Value.Length - 1);
 					}
 					break;
 				case "B":			// Boolean type
 					BooleanField bf = new BooleanField(Value);
-					if(!bf.Validate(out err))
+					if(!bf.Validate(out err, out modStr))
 					{
 						err = "Invalid Boolean Value: '" + Value + "'.";
 						return false;
@@ -103,25 +120,38 @@ namespace hamqsler
 					break;
 				case "C":			// CreditList type
 					string[] credits = Value.Split(',');
-					foreach(string credit in credits)
+					string[] creditList = Value.Split(',');
+					for(int i = 0; i < credits.Length; i++)
 					{
-						if(!dataType.aEnums.IsInEnumeration("Credit", credit))
+						if(!dataType.aEnums.IsInEnumeration("Credit", credits[i]))
 						{
-							err = "Invalid CreditList item: '" + credit + "'.";
-							return false;
+							modStr = "Invalid CreditList item: '" + credits[i] + "'.";
+							creditList[i] = null;
 						}
+					}
+					Value = string.Empty;
+					foreach(string credit in creditList)
+					{
+						if(credit != null)
+						{
+							Value += credit + ",";
+						}
+					}
+					if(Value != string.Empty)
+					{
+						Value = Value.Substring(0, Value.Length - 1);
 					}
 					break;
 				case "D":		// Date type
 					DateField df = new DateField(Value);
-					if(!df.Validate(out err))
+					if(!df.Validate(out err, out modStr))
 					{
 						return false;
 					}
 					break;
 				case "L":		// Location type
 					Location loc = new Location(Value);
-					if(!loc.Validate(out err))
+					if(!loc.Validate(out err, out modStr))
 					{
 						err = "Invalid location: '" + Value + "'.";
 						return false;
@@ -129,7 +159,7 @@ namespace hamqsler
 					break;
 				case "M":		// multiline string type
 					MultilineStringField sf = new MultilineStringField(Value);
-					if(!sf.Validate(out err))
+					if(!sf.Validate(out err, out modStr))
 					{
 						err = "Invalid multiline string: '" + Value + "'.";
 						return false;
@@ -137,31 +167,40 @@ namespace hamqsler
 					break;
 				case "N":		// number type
 					NumberField nf = new NumberField(Value);
-					if(!nf.Validate(out err))
+					if(!nf.Validate(out err, out modStr))
 					{
 						err = "Invalid number: '" + Value + "'.";
 						return false;
 					}
 					break;
 				case "P":		// sponsored award list type
-					// Award_Granted is sponsored award list type
-					Award_Granted granted = new Award_Granted(Value, dataType.aEnums);
-					if(!granted.Validate(out err))
+					awards = Value.Split(',');
+					string[] awardList = Value.Split(',');
+					for(int i = 0; i < awardList.Length; i++)
 					{
-						err = "Invalid sponsored award item: '" + Value + "'.";
-						return false;
+						string gError = string.Empty;
+						string gMod = string.Empty;
+						Award_Granted granted = new Award_Granted(awards[i], dataType.aEnums);
+						if(!granted.Validate(out gError, out gMod))
+						{
+							err += gError + Environment.NewLine;
+						}
+						if(gMod != null)
+						{
+							modStr += gMod + Environment.NewLine;
+						}
 					}
-					break;
+					return err == null;
 				case "S":		// string type
 					StringField str = new StringField(Value);
-					if(!str.Validate(out err))
+					if(!str.Validate(out err, out modStr))
 					{
 						return false;
 					}
 					break;
 				case "T":		// time type
 					TimeField tf = new TimeField(Value);
-					if(!tf.Validate(out err))
+					if(!tf.Validate(out err, out modStr))
 					{
 						return false;
 					}

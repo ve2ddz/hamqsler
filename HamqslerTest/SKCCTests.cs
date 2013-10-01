@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			SKCC skcc = new SKCC("102C");
 			string err = string.Empty;
-			Assert.IsTrue(skcc.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(skcc.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

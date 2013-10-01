@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class QrzCom_Qso_Upload_Status : EnumerationValue
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="status">upload status</param>
+		/// <param name="aEnums">AdifEnumerations object containing the Qso_Upload_Status enumeration</param>
 		public QrzCom_Qso_Upload_Status(string status, AdifEnumerations aEnums)
 			: base(status, "Qso_Upload_Status", aEnums)
 		{

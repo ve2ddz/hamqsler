@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_ITU_Zone : ITUZ
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="zone">ITU zone</param>
 		public My_ITU_Zone(string zone) : base(zone)
 		{
 		}

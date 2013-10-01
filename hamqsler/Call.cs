@@ -89,6 +89,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="call">callsign</param>
 		public Call(string call) : base(call)
@@ -99,10 +101,12 @@ namespace hamqsler
 		/// Validate the callsign
 		/// </summary>
 		/// <param name="err">Error message if callsign is not valid</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>True if callsign is valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(Value == null)
 			{
 				err = "Null callsign is invalid.";

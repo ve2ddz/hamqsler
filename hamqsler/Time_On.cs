@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Time_On : TimeField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="time">time QSO started</param>
 		public Time_On(string time) : base(time)
 		{
 		}

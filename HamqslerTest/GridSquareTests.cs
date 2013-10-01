@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FN");
 			string err = string.Empty;
-			Assert.IsTrue(grid.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(grid.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid 2-character grid square
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("F3");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'F3' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with 1-character square
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("F");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'F' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with 3-character square
@@ -71,8 +77,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG2");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'FG2' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with 5-character square
@@ -81,8 +89,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG21i");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'FG21i' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with 7-character square
@@ -91,8 +101,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG21il5");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'FG21il5' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with 9-character square
@@ -101,8 +113,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG21il55k");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'FG21il55k' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid 4-character square
@@ -111,8 +125,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG21");
 			string err = string.Empty;
-			Assert.IsTrue(grid.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(grid.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid 4-character square
@@ -121,8 +137,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG2g");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'FG2g' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid 6-character square
@@ -131,8 +149,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG21ix");
 			string err = string.Empty;
-			Assert.IsTrue(grid.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(grid.Validate(out err,out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid 6-character square
@@ -141,8 +161,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG21iy");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'FG21iy' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid 8-character square
@@ -151,8 +173,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG21ix04");
 			string err = string.Empty;
-			Assert.IsTrue(grid.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(grid.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid 8-character square
@@ -161,8 +185,10 @@ namespace hamqslerTest
 		{
 			GridSquare grid = new GridSquare("FG21iy8f");
 			string err = string.Empty;
-			Assert.IsFalse(grid.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(grid.Validate(out err, out modStr));
 			Assert.AreEqual("'FG21iy8f' is not a valid grid square.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			My_Fists fists = new My_Fists("1234");
 			string err = string.Empty;
-			Assert.IsTrue(fists.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(fists.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with number and other data
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			My_Fists fists = new My_Fists("1234 Fred is dead");
 			string err = string.Empty;
-			Assert.IsTrue(fists.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(fists.Validate(out err,out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with no number
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			My_Fists fists = new My_Fists("Fred is dead");
 			string err = string.Empty;
-			Assert.IsFalse(fists.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(fists.Validate(out err, out modStr));
 			Assert.AreEqual("Fists must start with member's number.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate starting with non-number
@@ -71,8 +77,10 @@ namespace hamqslerTest
 		{
 			My_Fists fists = new My_Fists("F1234 red is dead");
 			string err = string.Empty;
-			Assert.IsFalse(fists.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(fists.Validate(out err, out modStr));
 			Assert.AreEqual("Fists must start with member's number.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate starting with number including decimal point
@@ -81,8 +89,10 @@ namespace hamqslerTest
 		{
 			My_Fists fists = new My_Fists("12.34");
 			string err = string.Empty;
-			Assert.IsFalse(fists.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(fists.Validate(out err, out modStr));
 			Assert.AreEqual("Fists number must be digits only.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate starting with number including decimal point
@@ -91,8 +101,10 @@ namespace hamqslerTest
 		{
 			My_Fists fists = new My_Fists("12.34Fred");
 			string err = string.Empty;
-			Assert.IsFalse(fists.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(fists.Validate(out err, out modStr));
 			Assert.AreEqual("Fists number must be digits only.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

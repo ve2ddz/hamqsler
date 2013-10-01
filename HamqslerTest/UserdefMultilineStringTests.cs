@@ -55,8 +55,10 @@ namespace hamqslerTest
 		{
 			UserdefMultilineString uds = new UserdefMultilineString(@"1234\n\r56", userdef1);
 			string err = string.Empty;
-			Assert.IsTrue(uds.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with null value
@@ -65,8 +67,10 @@ namespace hamqslerTest
 		{
 			UserdefMultilineString uds = new UserdefMultilineString(null, userdef1);
 			string err = string.Empty;
-			Assert.IsFalse(uds.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(uds.Validate(out err, out modStr));
 			Assert.AreEqual("Value is null", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

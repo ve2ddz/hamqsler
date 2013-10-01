@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_Rig : Rig
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="rig">equipment description</param>
 		public My_Rig(string rig) : base(rig)
 		{
 		}

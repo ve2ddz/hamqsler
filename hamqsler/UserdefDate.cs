@@ -30,6 +30,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">field value</param>
 		/// <param name="userdefField">Userdef object that defines this field type</param>

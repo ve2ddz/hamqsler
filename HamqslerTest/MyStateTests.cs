@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			My_State state = new My_State("ON");
 			string err = string.Empty;
-			Assert.IsTrue(state.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(state.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

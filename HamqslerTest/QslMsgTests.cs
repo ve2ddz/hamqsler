@@ -40,9 +40,11 @@ namespace hamqslerTest
 		public void TestValidate1Line()
 		{
 			QslMsg msg = new QslMsg("A single line note");
-			string err = null;
-			Assert.IsTrue(msg.Validate(out err));
-			Assert.AreEqual(null, err);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(msg.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate mulitple lines
@@ -50,9 +52,11 @@ namespace hamqslerTest
 		public void TestValidateMultipleLines()
 		{
 			QslMsg msg = new QslMsg("line1\r\nline2\r\nline3");
-			string err = null;
-			Assert.IsTrue(msg.Validate(out err));
-			Assert.AreEqual(null, err);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(msg.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

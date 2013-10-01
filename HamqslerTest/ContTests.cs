@@ -45,11 +45,14 @@ namespace hamqslerTest
 		public void TestValidate()
 		{
 			string err = string.Empty;
+			string modStr =string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
  			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Cont cont = new Cont("AF", aEnums);
-			Assert.IsTrue(cont.Validate(out err));
+			Assert.IsTrue(cont.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid value
@@ -57,13 +60,15 @@ namespace hamqslerTest
 		public void TestValidateInvalidValue()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
  			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Cont cont = new Cont("AX", aEnums);
-			Assert.IsFalse(cont.Validate(out err));
+			Assert.IsFalse(cont.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'AX' " +
 			                "was not found in enumeration.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

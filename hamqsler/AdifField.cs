@@ -32,7 +32,8 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Constructor
+		/// Constructor.
+		/// Call validate after constructor because no validation is performed in constructor.
 		/// </summary>
 		public AdifField()
 		{
@@ -43,10 +44,12 @@ namespace hamqsler
 		/// </summary>
 		/// <returns>true if Value is not null</returns>
 		/// <param name="err">Error message if Validate is false, or null</param>
+		/// <param name="modString">Message indicating what values were modified, or null</param>
 		/// <returns>true if Value is not null</returns>
-		public virtual bool Validate(out string err)
+		public virtual bool Validate(out string err, out string modString)
 		{
 			err = null;
+			modString = null;
 			return true;
 		}
 		

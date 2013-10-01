@@ -42,8 +42,10 @@ namespace hamqslerTest
 		{
 			Notes notes = new Notes("A single line note");
 			string err = null;
-			Assert.IsTrue(notes.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(notes.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate mulitple lines
@@ -52,8 +54,10 @@ namespace hamqslerTest
 		{
 			Notes notes = new Notes("line1\r\nline2\r\nline3");
 			string err = null;
-			Assert.IsTrue(notes.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(notes.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

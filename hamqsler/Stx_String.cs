@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Stx_String : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="stxs">transmitted info</param>
 		public Stx_String(string stxs) : base(stxs)
 		{
 		}

@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_CQ_Zone : CQZ
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="zone">logging station's CQ zone</param>
 		public My_CQ_Zone(string zone) : base(zone)
 		{
 		}

@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Pfx pfx = new Pfx("VA3");
 			string err = string.Empty;
-			Assert.IsTrue(pfx.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(pfx.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid prefix
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Pfx pfx = new Pfx("W4");
 			string err = string.Empty;
-			Assert.IsTrue(pfx.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(pfx.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid prefix
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			Pfx pfx = new Pfx("9A");
 			string err = string.Empty;
-			Assert.IsTrue(pfx.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(pfx.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid prefix
@@ -71,8 +77,10 @@ namespace hamqslerTest
 		{
 			Pfx pfx = new Pfx("99");
 			string err = string.Empty;
-			Assert.IsFalse(pfx.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(pfx.Validate(out err, out modStr));
 			Assert.AreEqual("'99' is not a valid prefix.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid prefix
@@ -81,8 +89,10 @@ namespace hamqslerTest
 		{
 			Pfx pfx = new Pfx("WW");
 			string err = string.Empty;
-			Assert.IsFalse(pfx.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(pfx.Validate(out err, out modStr));
 			Assert.AreEqual("'WW' is not a valid prefix.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid prefix
@@ -91,8 +101,10 @@ namespace hamqslerTest
 		{
 			Pfx pfx = new Pfx("WWE4");
 			string err = string.Empty;
-			Assert.IsFalse(pfx.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(pfx.Validate(out err, out modStr));
 			Assert.AreEqual("'WWE4' is not a valid prefix.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid prefix
@@ -101,8 +113,10 @@ namespace hamqslerTest
 		{
 			Pfx pfx = new Pfx("9A/W4");
 			string err = string.Empty;
-			Assert.IsFalse(pfx.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(pfx.Validate(out err, out modStr));
 			Assert.AreEqual("'9A/W4' is not a valid prefix.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

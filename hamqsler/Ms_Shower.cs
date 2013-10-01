@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Ms_Shower : StringField
 	{
+		/// <summary>
+		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="shower">name of meteor shower</param>
 		public Ms_Shower(string shower) : base(shower)
 		{
 		}

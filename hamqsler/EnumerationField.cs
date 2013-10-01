@@ -46,6 +46,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="enums">Enumeration values</param>
 		public EnumerationField(string[] enums)
@@ -55,6 +57,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="adifEnumName">Name of Adif enumeration</param>
 		/// <param name="adifEnum">AdifEnumerations object that contains the enumeration</param>
@@ -107,6 +111,10 @@ namespace hamqsler
 			return this.IsInEnumeration(value, out err);
 		}
 		
+		/// <summary>
+		/// Get list of enumerated values as a string
+		/// </summary>
+		/// <returns>string containing enumerated values</returns>
 		public override string ToString()
 		{
 			string value = string.Empty;

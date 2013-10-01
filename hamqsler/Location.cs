@@ -33,6 +33,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="location">location specifier</param>
 		public Location(string location) : base(location)
@@ -43,10 +45,12 @@ namespace hamqsler
 		/// Validate that location is in correct format
 		/// </summary>
 		/// <param name="err">Error message if location not in correct format, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if correct format, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(!Regex.IsMatch(Value, @"^[EWNS][0-9]{3} [0-9]{2}\.[0-9]{3}$"))
 			{
 				err = string.Format("'{0}' is not a valid location.", Value);

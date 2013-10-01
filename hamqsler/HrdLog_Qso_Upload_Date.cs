@@ -28,6 +28,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="date"Date QSO was uploaded></param>
 		public HrdLog_Qso_Upload_Date(string date) : base(date)

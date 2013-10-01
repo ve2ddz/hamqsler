@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class My_DXCC : DXCC
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="code">country code</param>
+		/// <param name="aEnums">AdifEnumerations object containing the Country_Code enumeration</param>
 		public My_DXCC(string code, AdifEnumerations aEnums) : base(code, aEnums)
 		{
 		}

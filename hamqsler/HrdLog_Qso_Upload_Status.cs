@@ -28,6 +28,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="status">upload status</param>
 		/// <param name="aEnums">AdifEnumerations object containing the Qso_Upload_Status enumeration</param>

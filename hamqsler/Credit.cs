@@ -47,6 +47,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="credit">credit info (item from Credit enumeration plus QSL medium values</param>
 		public Credit(string credit, AdifEnumerations aEnums)
@@ -123,10 +125,12 @@ namespace hamqsler
 		/// and media are either null or all are in QSL Medium enumeration)
 		/// </summary>
 		/// <param name="err">Reason that Validate failed, or null if passed</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if valid, false if not valid</returns>
-		public bool Validate(out string err)
+		public bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(!adifEnums.IsInEnumeration("Credit", CreditName))
 			{
 				err = string.Format("'{0}' not found in Credit enumeration", CreditName);

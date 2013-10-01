@@ -41,7 +41,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("19960412");
 			string err = string.Empty;
-			Assert.IsTrue(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(date.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with date that is too short
@@ -50,8 +53,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("1996412");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("Date must be exactly 8 characters long.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with date that is too long
@@ -60,8 +65,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("199604123");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("Date must be exactly 8 characters long.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with date containing non-numeric characters
@@ -70,8 +77,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("1996MR12");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err,out modStr));
 			Assert.AreEqual("Date must contain number characters only.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with date before 1930
@@ -80,8 +89,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("19291231");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("Date must be 19300101 or later.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with date later than now
@@ -93,8 +104,10 @@ namespace hamqslerTest
 			string strNow = string.Format("{0:yyyyMMdd}", future);
 			DateField date = new DateField(strNow);
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("Date must not be later than today.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid month (=00)
@@ -103,8 +116,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("20130012");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid month in date: must be between 01 and 12.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid month (=13)
@@ -113,8 +128,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("20121312");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid month in date: must be between 01 and 12.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid day (=00)
@@ -123,8 +140,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("20120400");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err,out modStr));
 			Assert.AreEqual("Invalid day in date: must be between 01 and end of month.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid day (greater than last day of month)
@@ -133,8 +152,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("20120431");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid day in date: must be between 01 and end of month.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with Feb 29 of leap year
@@ -143,8 +164,10 @@ namespace hamqslerTest
 		{
 			DateField date = new DateField("20000229");
 			string err = string.Empty;
-			Assert.IsTrue(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(date.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
-		
 	}
 }

@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Contacted_Op : Call
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="call">callsign of contacted station's operator</param>
 		public Contacted_Op(string call) : base(call)
 		{
 		}

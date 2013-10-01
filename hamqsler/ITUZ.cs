@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class ITUZ : NumberField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="zone">ITU zone</param>
 		public ITUZ(string zone) : base(zone)
 		{
 		}

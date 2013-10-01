@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			CQZ cqz = new CQZ("10");
 			string err = string.Empty;
-			Assert.IsTrue(cqz.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr =string.Empty;
+			Assert.IsTrue(cqz.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid value
@@ -50,9 +52,11 @@ namespace hamqslerTest
 		public void TestValidateWithInvalidValue()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			CQZ cqz = new CQZ("hump");
-			Assert.IsFalse(cqz.Validate(out err));
+			Assert.IsFalse(cqz.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

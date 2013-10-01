@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Public_Key key = new Public_Key("A65412B5");
 			string err = string.Empty;
-			Assert.IsTrue(key.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(key.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate - null key
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Public_Key key = new Public_Key(null);
 			string err = string.Empty;
-			Assert.IsFalse(key.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(key.Validate(out err, out modStr));
 			Assert.AreEqual("Value is null", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

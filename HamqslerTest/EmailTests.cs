@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Email email = new Email("hamqsler@va3hj.ca");
 			string err = string.Empty;
-			Assert.IsTrue(email.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(email.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid email address
@@ -51,9 +53,10 @@ namespace hamqslerTest
 		{
 			Email email = new Email("hamqsler.va3hj:ca");
 			string err = string.Empty;
-			Assert.IsFalse(email.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(email.Validate(out err, out modStr));
 			Assert.AreEqual("'hamqsler.va3hj:ca' does not appear to be a valid email address.", err);
+			Assert.IsNull(modStr);
 		}
-		
 	}
 }

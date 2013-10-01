@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class Qsl_Sent : EnumerationValue
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="status">sent status</param>
+		/// <param name="aEnums">AdifEnumerations object containing the Qsl_Sent enumeration</param>
 		public Qsl_Sent(string status, AdifEnumerations aEnums)
 			: base(status, "Qsl_Sent", aEnums)
 		{

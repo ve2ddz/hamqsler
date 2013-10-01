@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class Prop_Mode : EnumerationValue
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="mode">propagation mode</param>
+		/// <param name="aEnums">AdifEnumerations object containing the Propagation enumeration</param>
 		public Prop_Mode(string mode, AdifEnumerations aEnums) :
 			base(mode, "Propagation", aEnums)
 		{

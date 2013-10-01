@@ -79,7 +79,10 @@ namespace hamqslerTest
 			                 "Some Country";
 			Address addr = new Address(address);
 			string err = string.Empty;
-			Assert.IsTrue(addr.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(addr.Validate(out err, out modStr));
+			Assert.AreEqual(null, err);
+			Assert.AreEqual(null, modStr);
 		}
 	}
 }

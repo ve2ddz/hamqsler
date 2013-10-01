@@ -26,20 +26,33 @@ namespace hamqsler
 	/// </summary>
 	public class Eq_Call : Call
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="call">callsign</param>
 		public Eq_Call(string call) : base(call)
 		{
 		}
 		
-		public override bool Validate(out string err)
+		/// <summary>
+		/// Validate the value
+		/// </summary>
+		/// <param name="err">Error message if value is invalid</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
+		/// <returns>true if value is valid, false otherwise</returns>
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			string c = this.GetCall();
 			if(!Value.Equals(c))
 			{
 				err = string.Format("'{0}' is not a valid callsign.", Value);
 				return false;
 			}
-			return base.Validate(out err);
+			return base.Validate(out err, out modStr);
 		}
 	}
 }

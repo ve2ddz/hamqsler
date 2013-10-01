@@ -29,6 +29,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="date">Date in format YYYYMMDD</param>
 		public DateField(string date) : base(date)
@@ -39,10 +41,12 @@ namespace hamqsler
 		/// Validate the value of the date field (between 19300101 and today)
 		/// </summary>
 		/// <param name="err">Error message to return if date not valid</param>
+		/// <param name="err">Message if value has been modified (always null for this class)</param>
 		/// <returns>True if date is valid, false if not valid</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(Value.Length != 8)
 			{
 				err = "Date must be exactly 8 characters long.";

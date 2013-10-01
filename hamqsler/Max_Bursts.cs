@@ -27,6 +27,12 @@ namespace hamqsler
 	/// </summary>
 	public class Max_Bursts : NumberField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="bursts">max length of bursts heard</param>
 		public Max_Bursts(string bursts) : base(bursts)
 		{
 		}

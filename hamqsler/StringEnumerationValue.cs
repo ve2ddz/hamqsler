@@ -28,6 +28,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">Field value</param>
 		/// <param name="enums">Enumeration values</param>
@@ -37,6 +39,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">Field value</param>
 		/// <param name="enumeration">Name of Adif Enumeration</param>
@@ -50,10 +54,12 @@ namespace hamqsler
 		/// Validate the value.
 		/// </summary>
 		/// <param name="err">string containing error message if any</param>
+		/// <param name="modStr">Message indicating what values were modified, or null</param>
 		/// <returns>true always, because value does not have to be in enumeration</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			return true;
 		}
 		

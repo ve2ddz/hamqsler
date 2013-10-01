@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Rst_Sent rst = new Rst_Sent("599");
 			string err = string.Empty;
-			Assert.IsTrue(rst.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(rst.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

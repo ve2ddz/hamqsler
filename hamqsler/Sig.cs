@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Sig : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="sig">other station's special interest group or event</param>
 		public Sig(string sig) : base(sig)
 		{
 		}

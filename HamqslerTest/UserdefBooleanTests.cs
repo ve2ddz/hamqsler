@@ -55,8 +55,10 @@ namespace hamqslerTest
 		{
 			UserdefBoolean uds = new UserdefBoolean("Y", userdef1);
 			string err = string.Empty;
-			Assert.IsTrue(uds.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid input
@@ -65,8 +67,10 @@ namespace hamqslerTest
 		{
 			UserdefBoolean uds = new UserdefBoolean("F", userdef1);
 			string err = string.Empty;
-			Assert.IsFalse(uds.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(uds.Validate(out err, out modStr));
 			Assert.AreEqual("Boolean field must have value 'Y' or 'N'.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with null value
@@ -75,8 +79,10 @@ namespace hamqslerTest
 		{
 			UserdefBoolean uds = new UserdefBoolean(null, userdef1);
 			string err = string.Empty;
-			Assert.IsFalse(uds.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(uds.Validate(out err, out modStr));
 			Assert.AreEqual("Boolean field must have value 'Y' or 'N'.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

@@ -29,6 +29,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="complete">complete status</param>
 		/// <param name="aEnums">AdifEnumerations object containing the Qso_Complete enumeration</param>

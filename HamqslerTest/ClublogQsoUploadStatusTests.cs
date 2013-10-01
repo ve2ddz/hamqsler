@@ -46,11 +46,14 @@ namespace hamqslerTest
 		public void TestValidateY()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Clublog_Qso_Upload_Status status = new Clublog_Qso_Upload_Status("Y", aEnums);
-			Assert.IsTrue(status.Validate(out err));
+			Assert.IsTrue(status.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid status
@@ -58,14 +61,15 @@ namespace hamqslerTest
 		public void TestValidateB()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Clublog_Qso_Upload_Status status = new Clublog_Qso_Upload_Status("B", aEnums);
-			Assert.IsFalse(status.Validate(out err));
+			Assert.IsFalse(status.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'B' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
-		
 	}
 }

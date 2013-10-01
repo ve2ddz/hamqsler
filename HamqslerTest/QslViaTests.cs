@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Qsl_Via via = new Qsl_Via("LotW and eQsl.cc");
 			string err = string.Empty;
-			Assert.IsTrue(via.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(via.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

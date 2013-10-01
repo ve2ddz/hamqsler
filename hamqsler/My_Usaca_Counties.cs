@@ -29,6 +29,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_Usaca_Counties : Usaca_Counties
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="counties">two US counties that logging station is on border of</param>
 		public My_Usaca_Counties(string counties) : base(counties)
 		{
 		}

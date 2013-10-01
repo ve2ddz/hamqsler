@@ -49,8 +49,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Prop_Mode pm = new Prop_Mode("EME", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(pm.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(pm.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid mode
@@ -62,9 +64,11 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Prop_Mode pm = new Prop_Mode("PMS", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(pm.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(pm.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'PMS' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

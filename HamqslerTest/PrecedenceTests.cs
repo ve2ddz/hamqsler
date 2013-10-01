@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Precedence prec = new Precedence("96");
 			string err = string.Empty;
-			Assert.IsTrue(prec.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(prec.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate - any value allowed
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Precedence prec = new Precedence("Fred 99");
 			string err = string.Empty;
-			Assert.IsTrue(prec.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(prec.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 	}

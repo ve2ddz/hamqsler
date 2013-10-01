@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Qso_Random bf = new Qso_Random("Y");
 			string err = string.Empty;
-			Assert.IsTrue(bf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(bf.Validate(out err,out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid value
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Qso_Random bf = new Qso_Random("N");
 			string err = string.Empty;
-			Assert.IsTrue(bf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr =string.Empty;
+			Assert.IsTrue(bf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid value
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			Qso_Random bf = new Qso_Random("F");
 			string err = string.Empty;
-			Assert.IsFalse(bf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(bf.Validate(out err, out modStr));
 			Assert.AreEqual("Boolean field must have value 'Y' or 'N'.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

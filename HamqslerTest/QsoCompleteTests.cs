@@ -49,8 +49,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Qso_Complete qc = new Qso_Complete("?", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(qc.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(qc.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid value
@@ -62,9 +64,11 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Qso_Complete qc = new Qso_Complete("F", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(qc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(qc.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Eq_Call call = new Eq_Call("VA3HJ");
 			string err = string.Empty;
-			Assert.IsTrue(call.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(call.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 				
 		// test Validate with compound callsign
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Eq_Call call = new Eq_Call("VP9/VA3HJ");
 			string err = string.Empty;
-			Assert.IsFalse(call.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(call.Validate(out err, out modStr));
 			Assert.AreEqual("'VP9/VA3HJ' is not a valid callsign.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid callsign
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			Eq_Call call = new Eq_Call("VAHJ");
 			string err = string.Empty;
-			Assert.IsFalse(call.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(call.Validate(out err, out modStr));
 			Assert.AreEqual("'VAHJ' is not a valid callsign.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with special callsign
@@ -71,7 +77,10 @@ namespace hamqslerTest
 		{
 			Eq_Call call = new Eq_Call("8J2KSG7X");
 			string err = string.Empty;
-			Assert.IsTrue(call.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(call.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 	}

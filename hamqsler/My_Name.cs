@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_Name : Name
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="name">name</param>
 		public My_Name(string name) : base(name)
 		{
 		}

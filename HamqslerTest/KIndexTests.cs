@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			K_Index k = new K_Index("3");
 			string err = string.Empty;
-			Assert.IsTrue(k.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(k.Validate(out err,out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid index
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			K_Index k = new K_Index("k4");
 			string err = string.Empty;
-			Assert.IsFalse(k.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(k.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

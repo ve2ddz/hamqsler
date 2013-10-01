@@ -55,8 +55,10 @@ namespace hamqslerTest
 		{
 			UserdefDate uds = new UserdefDate("20000613", userdef1);
 			string err = string.Empty;
-			Assert.IsTrue(uds.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		
@@ -66,8 +68,10 @@ namespace hamqslerTest
 		{
 			UserdefDate uds = new UserdefDate("2000061F", userdef1);
 			string err = string.Empty;
-			Assert.IsFalse(uds.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(uds.Validate(out err, out modStr));
 			Assert.AreEqual("Date must contain number characters only.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

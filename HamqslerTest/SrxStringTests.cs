@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Srx_String srxs = new Srx_String("102 ON Jim");
 			string err = string.Empty;
-			Assert.IsTrue(srxs.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(srxs.Validate(out err,out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

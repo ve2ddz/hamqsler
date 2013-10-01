@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class MultilineStringField : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="value">string</param>
 		public MultilineStringField(string value) : base(value)
 		{
 		}
@@ -35,10 +41,12 @@ namespace hamqsler
 		/// </summary>
 		/// <returns>true if Value is not null</returns>
 		/// <param name="err">Error message if Validate is false, or null</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if Value is not null</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(Value == null)
 			{
 				err = "Value is null";

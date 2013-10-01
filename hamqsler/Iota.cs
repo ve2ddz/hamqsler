@@ -32,6 +32,8 @@ namespace hamqsler
 		private AdifEnumerations adifEnums = null;
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="iota">IOTA designator</param>
 		/// <param name="aEnums">AdifEnumerations object containing Continent enumeration</param>
@@ -44,10 +46,12 @@ namespace hamqsler
 		/// Validate the value - must be valid IOTA designator
 		/// </summary>
 		/// <param name="err">Error message if invalid, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if designator is in valid format, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(!Regex.IsMatch(Value, "^[A-Z]{2}-[0-9]{3}$"))
 			{
 				err = string.Format("'{0}' is not a valid IOTA designator.", Value);

@@ -392,7 +392,9 @@
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
     <Page Include="ManagerMacroGroupBox.xaml" />
     <Page Include="Print4UpDialog.xaml" />
-    <Page Include="PrinterMarginsDialog.xaml" />
+    <Page Include="PrinterMarginsDialog.xaml">
+      <DependentUpon>PrintPropertiesPanel.xaml</DependentUpon>
+    </Page>
     <Page Include="PrintImageableAreaErrorDialog.xaml" />
     <Page Include="PrintPropertiesPanel.xaml" />
     <Page Include="QsoInputDialog.xaml" />

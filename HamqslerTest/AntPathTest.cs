@@ -34,6 +34,7 @@ namespace hamqslerTest
 		public void TestConstructor()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -42,7 +43,9 @@ namespace hamqslerTest
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Ant_Path ap = new Ant_Path("G", aEnums);
-			Assert.IsTrue(ap.Validate(out err));
+			Assert.IsTrue(ap.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 
@@ -51,6 +54,7 @@ namespace hamqslerTest
 		public void TestConstructor1()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -59,9 +63,10 @@ namespace hamqslerTest
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Ant_Path ap = new Ant_Path("F", aEnums);
-			Assert.IsFalse(ap.Validate(out err));
+			Assert.IsFalse(ap.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test that ToAdifString returns correct value

@@ -31,6 +31,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="info">FISTS CW Club member information</param>
 		public Fists(string info) : base(info)
@@ -41,10 +43,12 @@ namespace hamqsler
 		/// Validate member information
 		/// </summary>
 		/// <param name="err">Error message if info does not start with member number, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if info begins with number, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(!Regex.IsMatch(Value, @"^[0-9]+"))
 			{
 				err = "Fists must start with member's number.";

@@ -71,8 +71,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("EPC", "N", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(ud.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(ud.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid fields
@@ -82,8 +84,10 @@ namespace hamqslerTest
 			string[] sizes = {"S","M","L"};
 			Userdef ud = new Userdef("SweaterSize", "E", sizes, aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(ud.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(ud.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid range
@@ -92,8 +96,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("ShoeSize", "E", "5", "20", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(ud.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(ud.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with no name
@@ -102,8 +108,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("", "N", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid fieldname.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with null name
@@ -112,8 +120,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef(null, "N", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid fieldname.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with no datatype
@@ -122,8 +132,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("EPC", "", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid data type.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with null datatype
@@ -132,8 +144,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("EPC", null, aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid data type.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid datatype
@@ -142,8 +156,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("EPC", "Q", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid data type.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with no enumeration
@@ -153,8 +169,10 @@ namespace hamqslerTest
 			string[] sizes = {};
 			Userdef ud = new Userdef("SweaterSize", "E", sizes, aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid enumeration.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with null enumeration
@@ -163,8 +181,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("SweaterSize", "E", null, aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid enumeration.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with non number lower limit
@@ -174,8 +194,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("ShoeSize", "E", lower, "20", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid lower limit.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with non number upper limit
@@ -185,8 +207,10 @@ namespace hamqslerTest
 		{
 			Userdef ud = new Userdef("ShoeSize", "E", "5", upper, aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(ud.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ud.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid upper limit.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

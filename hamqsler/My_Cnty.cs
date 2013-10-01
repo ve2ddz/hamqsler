@@ -29,6 +29,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_Cnty : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="cnty">secondary administrative subdivision</param>
 		public My_Cnty(string cnty) : base(cnty)
 		{
 		}

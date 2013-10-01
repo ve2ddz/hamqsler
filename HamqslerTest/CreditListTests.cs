@@ -276,8 +276,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(credit.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(credit.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid multiple credits
@@ -289,8 +291,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(credit.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(credit.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with single invalid credit
@@ -302,8 +306,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA2", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(credit.Validate(out err));
+			string modStr =string.Empty;
+			Assert.IsFalse(credit.Validate(out err, out modStr));
 			Assert.AreEqual("'IOTA2' not found in Credit enumeration", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with single invalid credit in list of credits
@@ -315,8 +321,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,DXCC_BANE,DXCC_MODE", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(credit.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(credit.Validate(out err, out modStr));
 			Assert.AreEqual("'DXCC_BANE' not found in Credit enumeration", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test ReplaceAwardWithCredit with credits only

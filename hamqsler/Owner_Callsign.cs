@@ -30,6 +30,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="call">callsign of the station owner</param>
 		public Owner_Callsign(string call) : base(call)
@@ -40,11 +42,13 @@ namespace hamqsler
 		/// Validate the callsign. Must be simple call in valid format
 		/// </summary>
 		/// <param name="err">Error message if call is invalid, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if call is valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
-			if(!base.Validate(out err))
+			modStr = null;
+			if(!base.Validate(out err, out modStr))
 			{
 				return false;
 			}

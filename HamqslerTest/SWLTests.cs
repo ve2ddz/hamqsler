@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			SWL swl = new SWL("Y");
 			string err = string.Empty;
-			Assert.IsTrue(swl.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(swl.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid value
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			SWL swl = new SWL("N");
 			string err = string.Empty;
-			Assert.IsTrue(swl.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(swl.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid value
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			SWL swl = new SWL("F");
 			string err = string.Empty;
-			Assert.IsFalse(swl.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(swl.Validate(out err, out modStr));
 			Assert.AreEqual("Boolean field must have value 'Y' or 'N'.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

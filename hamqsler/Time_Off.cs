@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Time_Off : TimeField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="time">time QSO ended</param>
 		public Time_Off(string time) : base(time)
 		{
 		}

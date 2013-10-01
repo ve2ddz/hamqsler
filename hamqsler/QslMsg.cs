@@ -26,6 +26,10 @@ namespace hamqsler
 	/// </summary>
 	public class QslMsg : MultilineStringField
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="msg">message</param>
 		public QslMsg(string msg) : base(msg)
 		{
 		}

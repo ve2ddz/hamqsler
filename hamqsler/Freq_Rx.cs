@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class Freq_Rx : Freq
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="freq">frequency</param>
+		/// <param name="aEnums">AdifEnumerations object containing the Band enumeration</param>
 		public Freq_Rx(string freq, AdifEnumerations aEnums) : base(freq, aEnums)
 		{
 		}

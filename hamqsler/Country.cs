@@ -28,6 +28,14 @@ namespace hamqsler
 	public class Country : StringField
 	{
 		private AdifEnumerations adifEnums;
+		
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="value">DXCC entity name</param>
+		/// <param name="aEnums">AdifEnumeration object containing the Country_Code enumeration</param>
 		public Country(string value, AdifEnumerations aEnums) : base(value.ToUpper())
 		{
 			adifEnums = aEnums;
@@ -37,10 +45,12 @@ namespace hamqsler
 		/// Validate the country name
 		/// </summary>
 		/// <param name="err">Error message if country name is invalid, null if country name is valid</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if country name is valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			string countryCode = string.Empty;
 			if(!adifEnums.GetCountryCodeFromName(Value, out countryCode))
 			{

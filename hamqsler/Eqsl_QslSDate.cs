@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Eqsl_QslSDate :DateField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="date">date QSL sent</param>
 		public Eqsl_QslSDate(string date) : base(date)
 		{
 		}

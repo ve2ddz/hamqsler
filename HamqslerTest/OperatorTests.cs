@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Operator op = new Operator("VA3HJ");
 			string err = string.Empty;
-			Assert.IsTrue(op.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(op.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid callsign
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Operator op = new Operator("VAHJ");
 			string err = string.Empty;
-			Assert.IsFalse(op.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(op.Validate(out err, out modStr));
 			Assert.AreEqual("Callsign 'VAHJ' is invalid.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with compound callsign
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			Operator op = new Operator("VA3HJ/W8");
 			string err = string.Empty;
-			Assert.IsFalse(op.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(op.Validate(out err, out modStr));
 			Assert.AreEqual("Callsign 'VA3HJ/W8' contains modifiers.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

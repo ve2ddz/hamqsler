@@ -30,6 +30,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="grids">list of grid squares</param>
 		public My_VUCC_Grids(string grids) : base(grids)

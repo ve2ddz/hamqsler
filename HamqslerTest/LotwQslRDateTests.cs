@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Lotw_QslRDate date = new Lotw_QslRDate("19990615");
 			string err = string.Empty;
-			Assert.IsTrue(date.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(date.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid date
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Lotw_QslRDate date = new Lotw_QslRDate("19250615");
 			string err = string.Empty;
-			Assert.IsFalse(date.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("Date must be 19300101 or later.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

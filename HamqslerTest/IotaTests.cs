@@ -50,8 +50,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Iota iota = new Iota("NA-001", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(iota.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(iota.Validate(out err,out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid IOTA designator
@@ -63,8 +65,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Iota iota = new Iota("SNA-001", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(iota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(iota.Validate(out err, out modStr));
 			Assert.AreEqual("'SNA-001' is not a valid IOTA designator.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid IOTA designator
@@ -76,8 +80,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Iota iota = new Iota("NA-0011", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(iota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(iota.Validate(out err, out modStr));
 			Assert.AreEqual("'NA-0011' is not a valid IOTA designator.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid IOTA designator
@@ -89,8 +95,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Iota iota = new Iota("NA-0F1", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(iota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(iota.Validate(out err, out modStr));
 			Assert.AreEqual("'NA-0F1' is not a valid IOTA designator.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid IOTA designator (bad format)
@@ -102,8 +110,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Iota iota = new Iota("BA0001", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(iota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(iota.Validate(out err, out modStr));
 			Assert.AreEqual("'BA0001' is not a valid IOTA designator.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid IOTA designator (bad continent
@@ -115,9 +125,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Iota iota = new Iota("BA-001", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(iota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(iota.Validate(out err,out modStr));
 			Assert.AreEqual("'BA-001' is not a valid IOTA designator.", err);
+			Assert.IsNull(modStr);
 		}
-		
 	}
 }

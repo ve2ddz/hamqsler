@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Clublog_Qso_Upload_Date : DateField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="date">date QSO was last uploaed to the Club Log service</param>
 		public Clublog_Qso_Upload_Date(string date) : base(date)
 		{
 		}

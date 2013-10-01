@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Class : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="value">contest class</param>
 		public Class(string value) : base(value)
 		{
 		}

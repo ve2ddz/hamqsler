@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class SWL : BooleanField
 	{
+		/// <summary>
+		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="swl">'Y' for true, 'N' for false</param>
 		public SWL(string swl) : base(swl)
 		{
 		}

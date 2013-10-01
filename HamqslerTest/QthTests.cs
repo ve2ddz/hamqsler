@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Qth qth = new Qth("Ottawa ON");
 			string err = string.Empty;
-			Assert.IsTrue(qth.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(qth.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

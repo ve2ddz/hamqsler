@@ -29,6 +29,12 @@ namespace hamqsler
 	/// </summary>
 	public class State : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="state">primary administrative subdivision</param>
 		public State(string state) : base(state)
 		{
 		}

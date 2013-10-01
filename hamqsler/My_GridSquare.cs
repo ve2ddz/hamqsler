@@ -27,6 +27,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_GridSquare : GridSquare
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="grid">grid square</param>
 		public My_GridSquare(string grid) : base(grid)
 		{
 		}

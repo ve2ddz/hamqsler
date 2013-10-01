@@ -30,15 +30,24 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="cc">Fists CC number</param>
 		public Fists_CC(string cc) : base(cc)
 		{
 		}
 		
-		public override bool Validate(out string err)
+		/// <summary>
+		/// Validate the value
+		/// </summary>
+		/// <param name="err">Error message if value is not valid</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class</param>
+		/// <returns>true if value is valid, false otherwise</returns>
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(!Regex.IsMatch(Value, "^[0-9]*$"))
 			{
 				err = "Invalid Fists CC number.";

@@ -48,6 +48,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="credits">string containing credits informatin</param>
 		/// <param name="aEnums">AdifEnumerations object containing the Award, Credit, and
@@ -136,14 +138,26 @@ namespace hamqsler
 			return "<" + Name + ":" + adif.Length + ">" + adif;
 		}
 		
-		public override bool Validate(out string err)
+		/// <summary>
+		/// Validate the values in this list
+		/// </summary>
+		/// <param name="err"></param>
+		/// <param name="modString"></param>
+		/// <returns></returns>
+		public override bool Validate(out string err, out string modString)
 		{
-			err = null;
+			string modStr = null;
+			base.Validate(out err, out modString);
 			foreach(Credit cred in Credits)
 			{
-				if(!cred.Validate(out err))
+				if(!cred.Validate(out err, out modStr))
 				{
 					return false;
+				}
+				else if(modStr != null)
+				{
+					modString += modString != null ? Environment.NewLine : string.Empty;
+					modString += modStr;
 				}
 			}
 			return true;
@@ -157,9 +171,10 @@ namespace hamqsler
 			Credit[] creds = new Credit[Credits.Count];
 			Credits.CopyTo(creds);
 			string err = string.Empty;
+			string modStr = string.Empty;
 			foreach(Credit credit in creds)
 			{
-				bool inEnumeration =  credit.Validate(out err);
+				bool inEnumeration =  credit.Validate(out err, out modStr);
 				if(!inEnumeration)
 				{
 					string replacement = credit.AdifEnums.GetCreditEquivalentForAward(credit.CreditName);

@@ -63,7 +63,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(aSub.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(aSub.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid award
@@ -79,11 +82,13 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(aSub.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(aSub.Validate(out err, out modStr));
+			Assert.IsNull(err);
 			Assert.AreEqual("The sponsors portion of Awards_Submitted is an enumeration." +
 			                Environment.NewLine +
 			                "The value 'DARCDOC_' was not found in enumeration",
-			                err);
+			                modStr);
 		}
 		
 		// test Validate method with no awards
@@ -99,7 +104,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted(string.Empty, aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(aSub.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(aSub.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		[Test]
@@ -114,7 +122,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted(null, aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(aSub.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(aSub.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test ToAdifString

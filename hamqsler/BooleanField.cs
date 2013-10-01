@@ -26,13 +26,26 @@ namespace hamqsler
 	/// </summary>
 	public class BooleanField : StringField
 	{
+		/// <summary>
+		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="value">'Y' for true, 'N' for false</param>
 		public BooleanField(string value) : base(value)
 		{
 		}
 		
-		public override bool Validate(out string err)
+		/// <summary>
+		/// Validate the boolean value
+		/// </summary>
+		/// <param name="err">Message if value is not valid</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
+		/// <returns>true if value is valud, false otherwise</returns>
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			switch(Value)
 			{
 				case "Y":

@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Public_Key : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="key">contacted station's public encryption key</param>
 		public Public_Key(string key) : base(key)
 		{
 		}

@@ -49,8 +49,10 @@ namespace hamqslerTest
 		{
 			My_Usaca_Counties ucs = new My_Usaca_Counties("MA,Franklin:MA,Hampshire");
 			string err = string.Empty;
-			Assert.IsTrue(ucs.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(ucs.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid format for first county
@@ -59,8 +61,10 @@ namespace hamqslerTest
 		{
 			My_Usaca_Counties ucs = new My_Usaca_Counties("Franklin:MA,Hampshire");
 			string err = string.Empty;
-			Assert.IsFalse(ucs.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ucs.Validate(out err, out modStr));
 			Assert.AreEqual("'Franklin' is not in correct county format.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid format for second county
@@ -69,8 +73,10 @@ namespace hamqslerTest
 		{
 			My_Usaca_Counties ucs = new My_Usaca_Counties("MA,Franklin:MASS,Hampshire");
 			string err = string.Empty;
-			Assert.IsFalse(ucs.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ucs.Validate(out err, out modStr));
 			Assert.AreEqual("'MASS,Hampshire' is not in correct county format.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with three counties
@@ -79,8 +85,10 @@ namespace hamqslerTest
 		{
 			My_Usaca_Counties ucs = new My_Usaca_Counties("MA,Franklin:MA,Hampshire:MA,Somerset");
 			string err = string.Empty;
-			Assert.IsFalse(ucs.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ucs.Validate(out err, out modStr));
 			Assert.AreEqual("My_Usaca_Counties must contain exactly two counties.", err);
+			Assert.IsNull(modStr);
 		}		
 
 		// test Validate with one county
@@ -89,8 +97,10 @@ namespace hamqslerTest
 		{
 			My_Usaca_Counties ucs = new My_Usaca_Counties("MA,Franklin");
 			string err = string.Empty;
-			Assert.IsFalse(ucs.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(ucs.Validate(out err, out modStr));
 			Assert.AreEqual("My_Usaca_Counties must contain exactly two counties.", err);
+			Assert.IsNull(modStr);
 		}		
 
 		// test Validate with no counties
@@ -99,8 +109,10 @@ namespace hamqslerTest
 		{
 			My_Usaca_Counties ucs = new My_Usaca_Counties(string.Empty);
 			string err = string.Empty;
-			Assert.IsTrue(ucs.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(ucs.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}		
 	}
 }

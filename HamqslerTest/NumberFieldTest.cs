@@ -34,9 +34,11 @@ namespace hamqslerTest
 		public void TestIsValid()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField("94");
-			Assert.IsTrue(nf.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(nf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid returns true for decimal value 
@@ -44,9 +46,11 @@ namespace hamqslerTest
 		public void TestIsValid1()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField("94.21345");
-			Assert.IsTrue(nf.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(nf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid returns true for decimal value starting with decimal separator
@@ -55,9 +59,11 @@ namespace hamqslerTest
 		public void TestIsValid2()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField(".27");
-			Assert.IsTrue(nf.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(nf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid returns true for decimal value ending with decimal separator
@@ -65,9 +71,11 @@ namespace hamqslerTest
 		public void TestIsValid3()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField("27.");
-			Assert.IsTrue(nf.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(nf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid return true for empty string value
@@ -75,9 +83,11 @@ namespace hamqslerTest
 		public void TestIsValid4()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField("");
-			Assert.IsTrue(nf.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(nf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid returns true for negative number
@@ -85,9 +95,11 @@ namespace hamqslerTest
 		public void TestIsValid5()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField("-5");
-			Assert.IsTrue(nf.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(nf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid returns true for negative number with decimal sep
@@ -95,9 +107,11 @@ namespace hamqslerTest
 		public void TestIsValid6()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField("-2.3");
-			Assert.IsTrue(nf.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(nf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		/// <summary>
@@ -107,9 +121,11 @@ namespace hamqslerTest
 		public void TestIsNotValid()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField("fred");
-			Assert.IsFalse(nf.Validate(out err));
+			Assert.IsFalse(nf.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test that IsValid returns false for decimal separator only
@@ -117,9 +133,11 @@ namespace hamqslerTest
 		public void TestIsNotValid1()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField(".");
-			Assert.IsFalse(nf.Validate(out err));
+			Assert.IsFalse(nf.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test that IsValid returns false for 2 decimal separators
@@ -127,9 +145,11 @@ namespace hamqslerTest
 		public void TestIsNotValid2()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			NumberField nf = new NumberField("4.2.5");
-			Assert.IsFalse(nf.Validate(out err));
+			Assert.IsFalse(nf.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

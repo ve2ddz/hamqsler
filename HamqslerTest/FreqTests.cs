@@ -49,8 +49,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("14.235", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(freq.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(freq.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with frequency outside band limits
@@ -62,8 +64,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("14.463", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(freq.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(freq.Validate(out err, out modStr));
 			Assert.AreEqual("'14.463' is outside enumerated band limits.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with non number
@@ -75,8 +79,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("Fred", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(freq.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(freq.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with non number
@@ -88,8 +94,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("14.235F", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(freq.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(freq.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

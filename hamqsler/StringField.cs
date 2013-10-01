@@ -34,6 +34,12 @@ namespace hamqsler
 			set {eltValue = value;}
 		}
 		
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="value">string value</param>
 		public StringField(string value)
 		{
 			Value = value;
@@ -44,10 +50,12 @@ namespace hamqsler
 		/// </summary>
 		/// <returns>true if Value is not null</returns>
 		/// <param name="err">Error message if Validate is false, or null</param>
+		/// <param name="modStr">Message indicating what values were modified, or null</param>
 		/// <returns>true if Value is not null and does not contain a newline character</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(Value == null)
 			{
 				err = "Value is null";

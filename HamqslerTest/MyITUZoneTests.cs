@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			My_ITU_Zone zone = new My_ITU_Zone("19");
 			string err = string.Empty;
-			Assert.IsTrue(zone.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(zone.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid zone
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			My_ITU_Zone zone = new My_ITU_Zone("fb");
 			string err = string.Empty;
-			Assert.IsFalse(zone.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(zone.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

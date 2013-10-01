@@ -29,6 +29,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="band">Band value</param>
 		/// <param name="aEnums">AdifEnumerations object containing the Band enumeration</param>

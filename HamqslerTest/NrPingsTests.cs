@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Nr_Pings pings = new Nr_Pings("12");
 			string err = string.Empty;
-			Assert.IsTrue(pings.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(pings.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid number
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Nr_Pings pings = new Nr_Pings("fred");
 			string err = string.Empty;
-			Assert.IsFalse(pings.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(pings.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with empty string
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			Nr_Pings pings = new Nr_Pings(string.Empty);
 			string err = string.Empty;
-			Assert.IsTrue(pings.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(pings.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

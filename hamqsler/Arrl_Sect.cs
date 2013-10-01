@@ -28,6 +28,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">Arrl section</param>
 		/// <param name="aEnums">AdifEnumerations object containing the Arrl_Section enumeration</param>

@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class QrzCom_Qso_Upload_Date : DateField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="date">date QSO was uploaded</param>
 		public QrzCom_Qso_Upload_Date(string date) : base(date)
 		{
 		}

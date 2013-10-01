@@ -28,6 +28,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">Ant_Path value</param>
 		/// <param name="aEnum">AdifEnumerations object that contains the Ant_Path enumeration</param>

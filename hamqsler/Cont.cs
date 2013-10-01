@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class Cont : EnumerationValue
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="cont">continent</param>
+		/// <param name="aEnums">AdifEnumeration object containing the Continent enumeration</param>
 		public Cont(string cont, AdifEnumerations aEnums) : base(cont, "Continent", aEnums)
 		{
 		}

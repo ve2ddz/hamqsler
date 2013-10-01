@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Stx stx = new Stx("105");
 			string err = string.Empty;
-			Assert.IsTrue(stx.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(stx.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

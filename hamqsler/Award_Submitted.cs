@@ -31,6 +31,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="awardsList">lit of awards that are being applied for</param>
 		public Award_Submitted(string awardsList, AdifEnumerations aEnums) : 
@@ -43,22 +45,23 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="error">Error message if the SPONSOR portion of at least one award is not
 		/// in the SponsoredAward enumeration.</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if no awards or SPONSOR portion of all awards are in SponsoredAward
 		/// enumeration, false if SPONSOR portion of at least one award is not in SponsoredAward
 		/// enumberation.</returns>
-		public override bool Validate(out string error)
+		public override bool Validate(out string error, out string modStr)
 		{
-			error = string.Empty;
+			error = null;
+			modStr = null;
 			foreach(string award in DelimList.Items)
 			{
 				string[] parts = award.Split('_');
 				string sponsor = parts[0] + "_";
 				if(!base.Validate(sponsor, out error))
 				{
-					error = string.Format("The sponsors portion of Awards_Submitted is an enumeration." +
+					modStr += string.Format("The sponsors portion of Awards_Submitted is an enumeration." +
 					    Environment.NewLine +
 						"The value '{0}' was not found in enumeration", sponsor);
-					return false;
 				}
 			}
 			return true;

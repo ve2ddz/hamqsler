@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_Iota_Island_ID : Iota_Island_ID
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="id">Island ID</param>
 		public My_Iota_Island_ID(string id) : base(id)
 		{
 		}

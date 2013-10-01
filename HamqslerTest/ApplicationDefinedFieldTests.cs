@@ -32,7 +32,7 @@ namespace hamqslerTest
 		AdifEnumerations aEnums;
 		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void TestSepup()
+		public void TestSetUp()
 		{
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
@@ -55,8 +55,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
 			Assert.AreEqual(null, err);
+			Assert.AreEqual(null, modStr);
 		}
 		
 		// test Validate with field name not starting with APP_
@@ -66,7 +68,8 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APPL_HAMQSLER_TEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid Application Defined Fieldname.", err);
 		}
 		
@@ -77,7 +80,8 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLERTEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid Application Defined Fieldname.", err);
 		}
 		
@@ -88,7 +92,8 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP__TEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid Application Defined Fieldname.", err);
 		}
 		
@@ -99,7 +104,8 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid Application Defined Fieldname.", err);
 		}
 		
@@ -110,7 +116,8 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "Q", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid Data Type.", err);
 		}
 
@@ -121,8 +128,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "A", 
 			                                                          "CQWAZ_CW,DARC_DOK", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid List data
@@ -132,30 +141,50 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "A", 
 			                                                          "CQWAZ_CW,CQFRED", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
-			Assert.AreEqual("Invalid AwardList item: 'CQFRED'.", err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.AreEqual(null, err);
+			Assert.AreEqual("Invalid AwardList item: 'CQFRED'. Item removed.", modStr);
+			Assert.AreEqual("CQWAZ_CW", adf.Value);
 		}
 
-		// test Validate with valid CreditList data
+		// test Validate with invalid List data
+		[Test]
+		public void TestValidateInvalidAwardList2()
+		{
+			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "A", 
+			                                                          "CQFRED", aEnums);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.AreEqual("Invalid AwardList item: 'CQFRED'. Item removed.", modStr);
+		}
+
+		// test Validate with valid Boolean data
 		[Test]
 		public void TestValidateValidBoolean()
 		{
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "B", 
 			                                                          "Y", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
-		// test Validate with invalid CreditList data
+		// test Validate with invalid Boolean data
 		[Test]
 		public void TestValidateInvalidBoolean()
 		{
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "B", 
 			                                                          "F", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid Boolean Value: 'F'.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with valid CreditList data
@@ -165,8 +194,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "C", 
 			                                                          "CQWAZ_MODE,IOTA", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid CreditList data
@@ -176,8 +207,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "C", 
 			                                                          "CQWAZ_MODE,CQFRED", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
-			Assert.AreEqual("Invalid CreditList item: 'CQFRED'.", err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.AreEqual("Invalid CreditList item: 'CQFRED'.", modStr);
 		}
 
 		// test Validate with valid Date
@@ -187,8 +220,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "D", 
 			                                                          "20120613", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid Date
@@ -198,8 +233,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "D", 
 			                                                          "19250612", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Date must be 19300101 or later.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with IntlMulitline String - not allowed in ADI
@@ -209,8 +246,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "G", 
 			                                                          "Fred", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid data type: 'G'.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with IntlString - not allowed in ADI
@@ -220,8 +259,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "I", 
 			                                                          "Fred", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid data type: 'I'.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with valid Location
@@ -231,8 +272,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "L", 
 			                                                          "E179 42.385", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid Location
@@ -242,8 +285,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "L", 
 			                                                          "E185 42.385", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid location: 'E185 42.385'.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with Multiline String - all strings are valid
@@ -253,8 +298,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "M", 
 			                                                          "E185 42.385", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with valid number
@@ -264,8 +311,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "N", 
 			                                                          "42.385", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid number
@@ -275,8 +324,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "N", 
 			                                                          "E185", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid number: 'E185'.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with valid SponsoredAwardList
@@ -286,8 +337,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "P", 
 			                                                          "ARRL_WAS_CW", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(err);
 		}
 
 		// test Validate with invalid SponsoredAwardList
@@ -297,8 +350,13 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "P", 
 			                                                          "DOK_DARC_FRED", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
-			Assert.AreEqual("Invalid sponsored award item: 'DOK_DARC_FRED'.", err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.AreEqual("The sponsors portion of Awards_Granted is an enumeration." +
+			                Environment.NewLine +
+			                "The value 'DOK_' was not found in enumeration" +
+			                Environment.NewLine, modStr);
 		}
 
 		// test Validate with valid string
@@ -308,8 +366,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "S", 
 			                                                          "Test It", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 
@@ -320,9 +380,11 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "S", 
 			                                                          "Test\r\nIt", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("String value contains a new line character. This is not allowed in StringField types",
 			                err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with valid Time
@@ -332,8 +394,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "T", 
 			                                                          "123456", aEnums);
 			string err = string.Empty;
-			Assert.IsTrue(adf.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid Time
@@ -343,8 +407,10 @@ namespace hamqslerTest
 			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_TEST", "T", 
 			                                                          "2403", aEnums);
 			string err = string.Empty;
-			Assert.IsFalse(adf.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(adf.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid time.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

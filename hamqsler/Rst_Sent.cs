@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Rst_Sent : StringField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="rst">signal report sent to other station</param>
 		public Rst_Sent(string rst) : base(rst)
 		{
 		}

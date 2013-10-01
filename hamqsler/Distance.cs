@@ -29,6 +29,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="distance">Distance in kilometers</param>
 		public Distance(string distance) : base(distance)

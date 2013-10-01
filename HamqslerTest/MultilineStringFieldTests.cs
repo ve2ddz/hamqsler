@@ -50,10 +50,12 @@ namespace hamqslerTest
 		public void TestIsValid()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			MultilineStringField field = new MultilineStringField("VA3HJ" + Environment.NewLine +
 			                                                      "VA3JNO");
-			Assert.IsTrue(field.Validate(out err));
+			Assert.IsTrue(field.Validate(out err, out modStr));
 			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test IsValid returns false
@@ -61,10 +63,11 @@ namespace hamqslerTest
 		public void TestIsValidFalse()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			MultilineStringField field = new MultilineStringField(null);
-			Assert.IsFalse(field.Validate(out err));
+			Assert.IsFalse(field.Validate(out err, out modStr));
 			Assert.AreEqual("Value is null", err);
+			Assert.IsNull(modStr);
 		}
-		
 	}
 }

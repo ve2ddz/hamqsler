@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			My_Sota_Ref sota = new My_Sota_Ref("VE2/OU-036");
 			string err = string.Empty;
-			Assert.IsTrue(sota.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(sota.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with valid reference
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			My_Sota_Ref sota = new My_Sota_Ref("9A/OU-036");
 			string err = string.Empty;
-			Assert.IsTrue(sota.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(sota.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid reference
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			My_Sota_Ref sota = new My_Sota_Ref("OU-036");
 			string err = string.Empty;
-			Assert.IsFalse(sota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(sota.Validate(out err, out modStr));
 			Assert.AreEqual("'OU-036' is not a valid SOTA Reference.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid reference
@@ -71,8 +77,10 @@ namespace hamqslerTest
 		{
 			My_Sota_Ref sota = new My_Sota_Ref("4/OU-036");
 			string err = string.Empty;
-			Assert.IsFalse(sota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(sota.Validate(out err, out modStr));
 			Assert.AreEqual("'4/OU-036' is not a valid SOTA Reference.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid reference
@@ -81,8 +89,10 @@ namespace hamqslerTest
 		{
 			My_Sota_Ref sota = new My_Sota_Ref("9A/O-036");
 			string err = string.Empty;
-			Assert.IsFalse(sota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(sota.Validate(out err, out modStr));
 			Assert.AreEqual("'9A/O-036' is not a valid SOTA Reference.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid reference
@@ -91,8 +101,10 @@ namespace hamqslerTest
 		{
 			My_Sota_Ref sota = new My_Sota_Ref("99A/O-036");
 			string err = string.Empty;
-			Assert.IsFalse(sota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(sota.Validate(out err, out modStr));
 			Assert.AreEqual("'99A/O-036' is not a valid SOTA Reference.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid reference
@@ -101,8 +113,10 @@ namespace hamqslerTest
 		{
 			My_Sota_Ref sota = new My_Sota_Ref("9A/OU-03");
 			string err = string.Empty;
-			Assert.IsFalse(sota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(sota.Validate(out err, out modStr));
 			Assert.AreEqual("'9A/OU-03' is not a valid SOTA Reference.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid reference
@@ -111,7 +125,10 @@ namespace hamqslerTest
 		{
 			My_Sota_Ref sota = new My_Sota_Ref("9A/OU-0365");
 			string err = string.Empty;
-			Assert.IsFalse(sota.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(sota.Validate(out err, out modStr));
 			Assert.AreEqual("'9A/OU-0365' is not a valid SOTA Reference.", err);
-		}	}
+			Assert.IsNull(modStr);
+		}
+	}
 }

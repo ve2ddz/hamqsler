@@ -55,8 +55,10 @@ namespace hamqslerTest
 		{
 			UserdefNumber uds = new UserdefNumber("1234.5", userdef1);
 			string err = string.Empty;
-			Assert.IsTrue(uds.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 				
 		// test Validate with invalid input
@@ -65,8 +67,10 @@ namespace hamqslerTest
 		{
 			UserdefNumber uds = new UserdefNumber("1234F", userdef1);
 			string err = string.Empty;
-			Assert.IsFalse(uds.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(uds.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
+			Assert.IsNull(modStr);
 		}
 				
 		// test Validate with valid range data
@@ -76,8 +80,10 @@ namespace hamqslerTest
 			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", aEnums);
 			UserdefNumber uds = new UserdefNumber("14.315", userdef2);
 			string err = string.Empty;
-			Assert.IsTrue(uds.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 				
 		// test Validate data outside range
@@ -87,8 +93,10 @@ namespace hamqslerTest
 			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", aEnums);
 			UserdefNumber uds = new UserdefNumber("1", userdef2);
 			string err = string.Empty;
-			Assert.IsFalse(uds.Validate(out err));
+			string modStr = string.Empty;			
+			Assert.IsFalse(uds.Validate(out err,out modStr));
 			Assert.AreEqual("'1' is not within range specified by the Userdef field.", err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

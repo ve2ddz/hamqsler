@@ -27,6 +27,14 @@ namespace hamqsler
 	/// </summary>
 	public class Credit_Submitted : CreditList
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="credits">Credits list</param>
+		/// <param name="aEnums">AdifEnumerations object containing Award, Credit, and
+		/// QSL_Medium enumerations</param>
 		public Credit_Submitted(string credit, AdifEnumerations aEnums)
 			: base(credit, aEnums)
 		{

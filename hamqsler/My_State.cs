@@ -31,6 +31,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="state">Primary Administrative Subdivision code</param>
 		public My_State(string state) : base(state)

@@ -28,6 +28,13 @@ namespace hamqsler
 	{
 		private Userdef userdef;
 		
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="value">string</param>
+		/// <param name="userdefField">Userdef object describing this field</param>
 		public UserdefMultilineString(string value, Userdef userdefField)
 			: base(value)
 		{

@@ -29,6 +29,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="value">Value for the field</param>
 		public NumberField(string value) : base(value)
@@ -39,10 +41,12 @@ namespace hamqsler
 		/// Validates the value as a number
 		/// </summary>
 		/// <param name="err">Error message if Validate is false, or null</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if value is empty or a number</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(string.Equals(string.Empty, Value))
 		    {
 		   		return true;

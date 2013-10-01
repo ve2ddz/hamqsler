@@ -81,12 +81,14 @@ namespace hamqslerTest
 		public void TestValidateValueInEnumeration()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			StringEnumerationValue se = new StringEnumerationValue("RAC-CANADA-DAY", "Contest_ID", aEnums);
-			Assert.IsTrue(se.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(se.Validate(out err,out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with value notin enumeration
@@ -94,13 +96,14 @@ namespace hamqslerTest
 		public void TestValidateValueNotInEnumeration()
 		{
 			string err = string.Empty;
+			string modStr = string.Empty;
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			StringEnumerationValue se = new StringEnumerationValue("e4", "Contest_ID", aEnums);
-			Assert.IsTrue(se.Validate(out err));
-			Assert.AreEqual(null, err);
+			Assert.IsTrue(se.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
-		
 	}
 }

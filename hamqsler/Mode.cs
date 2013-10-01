@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class Mode : EnumerationValue
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="mode">mode</param>
+		/// <param name="aEnums">AdifEnumerations object containing the Mode enumeration</param>
 		public Mode(string mode, AdifEnumerations aEnums) : base(mode, "Mode", aEnums)
 		{
 		}

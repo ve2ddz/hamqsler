@@ -38,6 +38,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="grids">list of two or four grid squares</param>
 		public VUCC_Grids(string grids)
@@ -69,10 +71,12 @@ namespace hamqsler
 		/// Validate the grid squares
 		/// </summary>
 		/// <param name="err">Error message if one or more grid squares is not valid, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if 0, 2 or 4 grid squares and grid squares are in correct format</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(!(Count == 2) && !(Count == 4) && !(Count == 0))
 			{
 				err = string.Format("{1} contains {0} grid squares. Must contain either 2 or 4 grid squares.",

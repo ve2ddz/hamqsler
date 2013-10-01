@@ -96,7 +96,10 @@ namespace hamqslerTest
 			string[] enumeration = {"item1", "item2", "item3", "item4"};
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(',', list, enumeration);
 			string err = string.Empty;
-			Assert.IsTrue(dLE.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(dLE.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate method with item not in enumeration
@@ -105,6 +108,7 @@ namespace hamqslerTest
 		{
 			string list = "ON:NT:EOR:EPA";
 			string err = string.Empty;
+			string modStr = string.Empty;
 		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
@@ -113,9 +117,10 @@ namespace hamqslerTest
              // load in the xml file
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
-			Assert.IsFalse(dLE.Validate(out err));
+			Assert.IsFalse(dLE.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'EOR' was not found in enumeration.",
 			                err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test ToAdifString method
@@ -123,8 +128,6 @@ namespace hamqslerTest
 		public void TestToAdifString()
 		{
 			string list = "ON:NT:OR:EPA";
-			string err = string.Empty;
-		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             // get a stream for the AdifEnumerations.xml file
             // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData

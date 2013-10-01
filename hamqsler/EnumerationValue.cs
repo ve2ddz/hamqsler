@@ -34,7 +34,8 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Constructor
+		/// Constructor.
+		/// Call Validate after constructor because no validation is done in constructor.
 		/// </summary>
 		/// <param name="value">Field value</param>
 		/// <param name="enums">Enumeration values</param>
@@ -44,7 +45,8 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Constructor
+		/// Constructor.
+		/// Call Validate after constructor because no validation is done in constructor.
 		/// </summary>
 		/// <param name="value">Field value</param>
 		/// <param name="enumeration">Name of Adif Enumeration</param>
@@ -58,11 +60,13 @@ namespace hamqsler
 		/// <summary>
 		/// Validate that the value is within the enumeration
 		/// </summary>
-		/// <param name="err"></param>
-		/// <returns></returns>
-		public override bool Validate(out string err)
+		/// <param name="err">Error message if Validate is false, or null</param>
+		/// <param name="modStr">Message indicating what values were modified, or null</param>
+		/// <returns>true is Value is valid, false otherwise.</returns>
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(Value == null)
 			{
 				err = "Value is null.";

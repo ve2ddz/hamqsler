@@ -60,6 +60,8 @@ namespace hamqsler
 
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="name">field name</param>
 		/// <param name="type">data type</param>
@@ -73,6 +75,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="name">field name</param>
 		/// <param name="type">data type</param>
@@ -88,6 +92,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="name">field name</param>
 		/// <param name="type">data type</param>
@@ -131,17 +137,19 @@ namespace hamqsler
 		/// Validate the Userdef object
 		/// </summary>
 		/// <param name="err">Error message if object not valid, null otherwise</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if valid, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			if(uName == null || uName.Length == 0)
 			{
 				err = "Invalid fieldname.";
 				return false;
 			}
 			if(dataType == null || dataType.Value == null || dataType.Value.Length == 0 ||
-			   !dataType.Validate(out err))
+			   !dataType.Validate(out err, out modStr))
 			{
 				err = "Invalid data type.";
 				return false;

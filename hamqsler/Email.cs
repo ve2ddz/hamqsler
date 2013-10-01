@@ -29,6 +29,8 @@ namespace hamqsler
 	{
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="addr">email address</param>
 		public Email(string addr) : base(addr)
@@ -39,10 +41,12 @@ namespace hamqsler
 		/// Validate the email address
 		/// </summary>
 		/// <param name="err">Error info if not a valid email address</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
 		/// <returns>true if valid, false if not</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
 			err = null;
+			modStr = null;
 			// the email regular expression below is copyright by Mykola Dobrochynskyy and
 			// released under Code Project Open License (CPOL) 1.02.
 			// See http://www.codeproject.com/Articles/22777/Email-Address-Validation-Using-Regular-Expression

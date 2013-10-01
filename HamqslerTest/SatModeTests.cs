@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Sat_Mode mode = new Sat_Mode("mode");
 			string err = string.Empty;
-			Assert.IsTrue(mode.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(mode.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }

@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Fists_CC fcc = new Fists_CC("1234");
 			string err = string.Empty;
-			Assert.IsTrue(fcc.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(fcc.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid CC number
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Fists_CC fcc = new Fists_CC("12f4");
 			string err = string.Empty;
-			Assert.IsFalse(fcc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(fcc.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid Fists CC number.", err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid CC number
@@ -61,9 +65,10 @@ namespace hamqslerTest
 		{
 			Fists_CC fcc = new Fists_CC("12.4");
 			string err = string.Empty;
-			Assert.IsFalse(fcc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(fcc.Validate(out err, out modStr));
 			Assert.AreEqual("Invalid Fists CC number.", err);
+			Assert.IsNull(modStr);
 		}
-		
 	}
 }

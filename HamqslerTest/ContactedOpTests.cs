@@ -41,7 +41,10 @@ namespace hamqslerTest
 		{
 			Contacted_Op op = new Contacted_Op("VA3HJ");
 			string err = string.Empty;
-			Assert.IsTrue(op.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsTrue(op.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 		
 		// test Validate with invalid callsign
@@ -50,9 +53,10 @@ namespace hamqslerTest
 		{
 			Contacted_Op op = new Contacted_Op("stretch");
 			string err = string.Empty;
-			Assert.IsFalse(op.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(op.Validate(out err, out modStr));
 			Assert.AreEqual("Callsign 'stretch' is invalid.", err);
+			Assert.IsNull(modStr);
 		}
-		
 	}
 }

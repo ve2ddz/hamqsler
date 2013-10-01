@@ -39,6 +39,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="separator">list delimiter</param>
 		/// <param name="list">delimited list</param>
@@ -51,6 +53,8 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Constructor
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
 		/// </summary>
 		/// <param name="separator">list delimiter</param>
 		/// <param name="list">delimited list</param>
@@ -77,10 +81,12 @@ namespace hamqsler
 		/// Check that all items in the delimited list are in the enumeration
 		/// </summary>
 		/// <param name="err">Error message if at least one item is not in the enumeration</param>
+		/// <param name="modStr">Message if value has been modified</param>
 		/// <returns>true if all values in the delimited list are in the enumeration, false otherwise</returns>
-		public override bool Validate(out string err)
+		public override bool Validate(out string err, out string modStr)
 		{
-			err = string.Empty;
+			err = null;
+			modStr = null;
 			foreach(string item in delimList.Items)
 			{
 				if(!base.Validate(item, out err))

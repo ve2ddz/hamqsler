@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Lat : Location
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="lat">contacted station's latitude</param>
 		public Lat(string lat) : base(lat)
 		{ 
 		}

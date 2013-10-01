@@ -26,6 +26,13 @@ namespace hamqsler
 	/// </summary>
 	public class Eqsl_Qsl_Rcvd : EnumerationValue
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="rcvd">received status</param>
+		/// <param name="aEnums">AdifEnumerations object containing the Qsl_Rcvd enumeration</param>
 		public Eqsl_Qsl_Rcvd(string rcvd, AdifEnumerations aEnums) : base(rcvd, "Qsl_Rcvd", aEnums)
 		{
 		}

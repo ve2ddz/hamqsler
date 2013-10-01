@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("W079 54.086");
 			string err = string.Empty;
-			Assert.IsTrue(loc.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(loc.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid direction
@@ -51,8 +53,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("U079 54.086");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'U079 54.086' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -61,8 +65,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S07 54.086");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'S07 54.086' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -71,8 +77,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S079  54.086");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'S079  54.086' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -81,8 +89,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S079 4.086");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'S079 4.086' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -91,8 +101,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S079 543.08");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'S079 543.08' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -101,8 +113,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S079 54.0866");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'S079 54.0866' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -111,8 +125,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S079 54.0f6");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'S079 54.0f6' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -121,8 +137,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S181 54.086");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err,out modStr));
 			Assert.AreEqual("'S181 54.086' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -131,8 +149,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S073 60.000");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'S073 60.000' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
 
 		// test Validate with invalid location format
@@ -141,9 +161,10 @@ namespace hamqslerTest
 		{
 			Location loc = new Location("S180 00.001");
 			string err = string.Empty;
-			Assert.IsFalse(loc.Validate(out err));
+			string modStr = string.Empty;
+			Assert.IsFalse(loc.Validate(out err, out modStr));
 			Assert.AreEqual("'S180 00.001' is not a valid location.", err);
+			Assert.IsNull(modStr);
 		}
-
 	}
 }

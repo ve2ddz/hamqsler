@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class Lotw_QslSDate : DateField
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="date">date QSL was sent</param>
 		public Lotw_QslSDate(string date) : base(date)
 		{
 		}

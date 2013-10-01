@@ -26,6 +26,12 @@ namespace hamqsler
 	/// </summary>
 	public class My_Lon : Lon
 	{
+		/// <summary>
+		/// Constructor.
+		/// Note: no validation of input is performed in the constructor. Call Validate after
+		/// the constructor and when changing values.
+		/// </summary>
+		/// <param name="lon">longitude</param>
 		public My_Lon(string lon) : base(lon)
 		{
 		}

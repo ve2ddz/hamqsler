@@ -41,8 +41,10 @@ namespace hamqslerTest
 		{
 			My_Street street = new My_Street("123 AnyStreet Ave.");
 			string err = string.Empty;
-			Assert.IsTrue(street.Validate(out err));
-			Assert.AreEqual(null, err);
+			string modStr = string.Empty;
+			Assert.IsTrue(street.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
 		}
 	}
 }
