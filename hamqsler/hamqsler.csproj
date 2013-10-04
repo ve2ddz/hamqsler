@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="AdifField.cs" />
     <Compile Include="AdifFieldParts.cs" />
+    <Compile Include="AdifFields.cs" />
     <Compile Include="AdifMacro.cs" />
     <Compile Include="AdifMacroGroupBox.xaml.cs">
       <DependentUpon>AdifMacroGroupBox.xaml</DependentUpon>
@@ -289,6 +290,7 @@
     <Compile Include="Qsl_Sent.cs" />
     <Compile Include="Qsl_Sent_Via.cs" />
     <Compile Include="Qsl_Via.cs" />
+    <Compile Include="Qso2.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>

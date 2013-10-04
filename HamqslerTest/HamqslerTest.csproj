@@ -56,6 +56,7 @@
     <Compile Include="AddressFieldTest.cs" />
     <Compile Include="AdifEnumerationsTest.cs" />
     <Compile Include="AdifFieldPartsTests.cs" />
+    <Compile Include="AdifFieldsTests.cs" />
     <Compile Include="AdifFieldTest.cs" />
     <Compile Include="AgeTest.cs" />
     <Compile Include="AIndexTest.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="QslSentTests.cs" />
     <Compile Include="QslSentViaTests.cs" />
     <Compile Include="QslViaTests.cs" />
+    <Compile Include="Qso2Tests.cs" />
     <Compile Include="QsoCompleteTests.cs" />
     <Compile Include="QsoDateOffTests.cs" />
     <Compile Include="QsoDateTests.cs" />
