@@ -39,6 +39,22 @@ namespace hamqsler
 			get {return creditList.Count;}
 		}
 		
+		public override string Value {
+			get 
+			{ 
+				string value = string.Empty;
+				foreach(Credit credit in creditList)
+				{
+					value += credit.ToString() + ",";
+				}
+				if(creditList.Count > 0)
+				{
+					value = value.Substring(0, value.Length - 1);
+				}
+				return value;
+			}
+		}
+		
 		/// <summary>
 		/// Default constructor
 		/// </summary>
@@ -190,5 +206,11 @@ namespace hamqsler
 				}
 			}
 		}
+		
+		public override string ToString()
+		{
+			return base.ToString();
+		}
+
 	}
 }

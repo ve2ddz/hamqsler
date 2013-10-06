@@ -26,13 +26,6 @@ namespace hamqsler
 	/// </summary>
 	public class EnumerationValue : EnumerationField
 	{
-		private string eltValue = string.Empty;
-		public string Value
-		{
-			get {return eltValue;}
-			set {eltValue = value;}
-		}
-		
 		/// <summary>
 		/// Constructor.
 		/// Call Validate after constructor because no validation is done in constructor.

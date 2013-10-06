@@ -27,6 +27,10 @@ namespace hamqsler
 	/// </summary>
 	public class Credit_Submitted : CreditList
 	{
+		public override string Value {
+			get { return base.Value; }
+		}
+		
 		/// <summary>
 		/// Constructor.
 		/// Note: no validation of input is performed in the constructor. Call Validate after

@@ -29,6 +29,10 @@ namespace hamqsler
 	/// </summary>
 	public class Award_Submitted : DelimitedListEnumeration
 	{
+		public override string Value {
+			get { return base.DelimList.ToString(); }
+		}
+		
 		/// <summary>
 		/// Constructor
 		/// Note: no validation of input is performed in the constructor. Call Validate after

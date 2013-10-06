@@ -49,6 +49,10 @@ namespace hamqsler
 			get {return counties.Count;}
 		}
 		
+		public override string Value {
+			get { return counties.ToString(); }
+		}
+		
 		/// <summary>
 		/// Create string in Adif field format
 		/// </summary>

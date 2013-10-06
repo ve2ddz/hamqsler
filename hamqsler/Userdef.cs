@@ -35,29 +35,6 @@ namespace hamqsler
 			get {return uName;}
 		}
 		
-		private EnumerationValue dataType = null;
-		public EnumerationValue DataType
-		{
-			get {return dataType;}
-		}
-		
-		private EnumerationField enumField = null;
-		public EnumerationField EnumField
-		{
-			get {return enumField;}
-		}
-		
-		private string lowerValue = string.Empty;
-		public string LowerValue
-		{
-			get {return lowerValue;}
-		}
-		private string upperValue = string.Empty;
-		public string UpperValue
-		{
-			get {return upperValue;}
-		}
-
 		/// <summary>
 		/// Constructor
 		/// Note: no validation of input is performed in the constructor. Call Validate after
@@ -70,7 +47,7 @@ namespace hamqsler
 		{
 			aEnums = enums;
 			uName = name;
-			dataType = new EnumerationValue(type, "DataType", aEnums);
+			DataType = new EnumerationValue(type, "DataType", aEnums);
 		}
 		
 		/// <summary>
@@ -86,8 +63,8 @@ namespace hamqsler
 		{
 			aEnums = adifEnums;
 			uName = name;
-			dataType = new EnumerationValue(type, "DataType", aEnums);
-			enumField = new EnumerationField(enums);
+			DataType = new EnumerationValue(type, "DataType", aEnums);
+			EnumField = new EnumerationField(enums);
 		}
 		
 		/// <summary>
@@ -104,9 +81,9 @@ namespace hamqsler
 		{
 			aEnums = enums;
 			uName = name;
-			dataType = new EnumerationValue(type, "DataType", aEnums);
-			lowerValue = lLimit;
-			upperValue = uLimit;
+			DataType = new EnumerationValue(type, "DataType", aEnums);
+			LowerValue = lLimit;
+			UpperValue = uLimit;
 		}
 		
 		/// <summary>
@@ -123,9 +100,9 @@ namespace hamqsler
 				return string.Format("<Userdef{0}:{1}:{2}>{3}", defNum, 
 				                            value.Length, DataType.Value, value);
 			}
-			else if(!lowerValue.Equals(string.Empty))
+			else if(!LowerValue.Equals(string.Empty))
 			{
-				string rangeString = lowerValue + ":" + upperValue;
+				string rangeString = LowerValue + ":" + UpperValue;
 				string value = uName + ",{" + rangeString +"}";
 				return string.Format("<Userdef{0}:{1}:{2}>{3}", defNum,
 				                     value.Length, DataType.Value, value);
@@ -148,8 +125,8 @@ namespace hamqsler
 				err = "Invalid fieldname.";
 				return false;
 			}
-			if(dataType == null || dataType.Value == null || dataType.Value.Length == 0 ||
-			   !dataType.Validate(out err, out modStr))
+			if(DataType == null || DataType.Value == null || DataType.Value.Length == 0 ||
+			   !DataType.Validate(out err, out modStr))
 			{
 				err = "Invalid data type.";
 				return false;
@@ -159,26 +136,26 @@ namespace hamqsler
 				err = "Invalid enumeration.";
 				return false;
 			}
-			if(lowerValue == null)
+			if(LowerValue == null)
 			{
 				err = "Invalid lower limit.";
 				return false;				
 			}
-			if(upperValue == null)
+			if(UpperValue == null)
 			{
 				err = "Invalid upper limit.";
 				return false;				
 			}
-			if(lowerValue.Equals(string.Empty) && upperValue.Equals(string.Empty))
+			if(LowerValue.Equals(string.Empty) && UpperValue.Equals(string.Empty))
 			{
 				return true;
 			}
-			else if(lowerValue.Equals(string.Empty) || !Regex.IsMatch(lowerValue, @"^-{0,1}[0-9]+\.{0,1}[0-9]*$"))
+			else if(LowerValue.Equals(string.Empty) || !Regex.IsMatch(LowerValue, @"^-{0,1}[0-9]+\.{0,1}[0-9]*$"))
 			{
 				err = "Invalid lower limit.";
 				return false;
 			}
-			else if(upperValue.Equals(string.Empty) || !Regex.IsMatch(upperValue, @"^-{0,1}[0-9]+\.{0,1}[0-9]*$"))
+			else if(UpperValue.Equals(string.Empty) || !Regex.IsMatch(UpperValue, @"^-{0,1}[0-9]+\.{0,1}[0-9]*$"))
 			{
 				err = "Invalid upper limit.";
 				return false;				

@@ -26,6 +26,41 @@ namespace hamqsler
 	/// </summary>
 	public class AdifField
 	{
+		private string eltValue = string.Empty;
+		public virtual string Value
+		{
+			get {return eltValue;}
+			set {eltValue = value;}
+		}
+		
+		
+		private EnumerationValue dataType = null;
+		public EnumerationValue DataType
+		{
+			get {return dataType;}
+			set {dataType = value;}
+		}
+		
+		private EnumerationField enumField = null;
+		public EnumerationField EnumField
+		{
+			get {return enumField;}
+			set {enumField = value;}
+		}
+		
+		private string lowerValue = string.Empty;
+		public string LowerValue
+		{
+			get {return lowerValue;}
+			set {lowerValue = value;}
+		}
+		private string upperValue = string.Empty;
+		public string UpperValue
+		{
+			get {return upperValue;}
+			set {upperValue = value;}
+		}
+
 		public virtual string Name
 		{
 			get {return this.GetType().ToString().Substring("hamqsler.".Length);}

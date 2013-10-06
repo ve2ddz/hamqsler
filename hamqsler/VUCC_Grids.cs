@@ -30,7 +30,11 @@ namespace hamqsler
 	public class VUCC_Grids : AdifField
 	{
 		private DelimitedList gridSquares = null;
-
+		
+		public override string Value {
+			get { return gridSquares.ToString(); }
+		}
+		
 		public int Count
 		{
 			get {return gridSquares.Count;}

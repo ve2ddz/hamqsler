@@ -65,6 +65,11 @@ namespace hamqslerTest
 			Assert.AreEqual("Call", qso.Fields[2].Name);
 			Assert.AreEqual("Qso_Date", qso.Fields[3].Name);
 			Assert.AreEqual("Time_On", qso.Fields[4].Name);
+			Assert.AreEqual("CW", qso.Fields[0].Value);
+			Assert.AreEqual("10m", qso.Fields[1].Value);
+			Assert.AreEqual("VA3HJ", qso.Fields[2].Value);
+			Assert.AreEqual("20131001", qso.Fields[3].Value);
+			Assert.AreEqual("1017", qso.Fields[4].Value);
 		}
 		
 		// test fields
@@ -88,6 +93,15 @@ namespace hamqslerTest
 			Assert.AreEqual("Ant_Az", qso.Fields[3].Name);
 			Assert.AreEqual("Ant_El", qso.Fields[4].Name);
 			Assert.AreEqual("Ant_Path", qso.Fields[5].Name);
+			Assert.AreEqual("400", qso.Fields[0].Value);
+			Assert.AreEqual("My Name" + Environment.NewLine +
+			                 	"2124 Any Street" + Environment.NewLine +
+			                 	"AnyTown Code" + Environment.NewLine +
+			                 	"Some Country", qso.Fields[1].Value);
+			Assert.AreEqual("99", qso.Fields[2].Value);
+			Assert.AreEqual("27", qso.Fields[3].Value);
+			Assert.AreEqual("-84", qso.Fields[4].Value);
+			Assert.AreEqual("L", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -106,6 +120,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Band_Rx", qso.Fields[3].Name);
 			Assert.AreEqual("Check", qso.Fields[4].Name);
 			Assert.AreEqual("Class", qso.Fields[5].Name);
+			Assert.AreEqual("NT", qso.Fields[0].Value);
+			Assert.AreEqual("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", qso.Fields[1].Value);
+			Assert.AreEqual("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", qso.Fields[2].Value);
+			Assert.AreEqual("6m", qso.Fields[3].Value);
+			Assert.AreEqual("96", qso.Fields[4].Value);
+			Assert.AreEqual("3A", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -126,6 +146,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Cont", qso.Fields[4].Name);
 			Assert.AreEqual("Contacted_Op", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("20120816", qso.Fields[0].Value);
+			Assert.AreEqual("N", qso.Fields[1].Value);
+			Assert.AreEqual("MA,Somerset", qso.Fields[2].Value);
+			Assert.AreEqual("A comment", qso.Fields[3].Value);
+			Assert.AreEqual("NA", qso.Fields[4].Value);
+			Assert.AreEqual("VA3HJ", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -146,6 +172,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Credit_Submitted", qso.Fields[4].Name);
 			Assert.AreEqual("Distance", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("ON-QSO-PARTY", qso.Fields[0].Value);
+			Assert.AreEqual("CANADA", qso.Fields[1].Value);
+			Assert.AreEqual("4", qso.Fields[2].Value);
+			Assert.AreEqual("CQDX:CARD,CQDX_BAND:CARD&LOTW", qso.Fields[3].Value);
+			Assert.AreEqual("CQDX:CARD,CQDX_BAND:CARD&LOTW", qso.Fields[4].Value);
+			Assert.AreEqual("1097.6", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -167,6 +199,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Eqsl_QslSDate", qso.Fields[4].Name);
 			Assert.AreEqual("Eqsl_Qsl_Rcvd", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("289", qso.Fields[0].Value);
+			Assert.AreEqual("test@va3hj.ca", qso.Fields[1].Value);
+			Assert.AreEqual("VA3JNO", qso.Fields[2].Value);
+			Assert.AreEqual("20130619", qso.Fields[3].Value);
+			Assert.AreEqual("20130712", qso.Fields[4].Value);
+			Assert.AreEqual("Y", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -189,6 +227,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Freq", qso.Fields[4].Name);
 			Assert.AreEqual("Freq_Rx", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("Y", qso.Fields[0].Value);
+			Assert.AreEqual("12345C", qso.Fields[1].Value);
+			Assert.AreEqual("12345", qso.Fields[2].Value);
+			Assert.AreEqual("N", qso.Fields[3].Value);
+			Assert.AreEqual("7.035", qso.Fields[4].Value);
+			Assert.AreEqual("7.135", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -211,6 +255,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Iota", qso.Fields[4].Name);
 			Assert.AreEqual("Iota_Island_ID", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("FN03", qso.Fields[0].Value);
+			Assert.AreEqual("VA3JNO", qso.Fields[1].Value);
+			Assert.AreEqual("20130912", qso.Fields[2].Value);
+			Assert.AreEqual("Y", qso.Fields[3].Value);
+			Assert.AreEqual("NA-001", qso.Fields[4].Value);
+			Assert.AreEqual("Newfoundland", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -233,6 +283,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Lotw_QslRDate", qso.Fields[4].Name);
 			Assert.AreEqual("Lotw_QslSDate", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("90", qso.Fields[0].Value);
+			Assert.AreEqual("9", qso.Fields[1].Value);
+			Assert.AreEqual("N027 25.984", qso.Fields[2].Value);
+			Assert.AreEqual("W079 43.526", qso.Fields[3].Value);
+			Assert.AreEqual("20130612", qso.Fields[4].Value);
+			Assert.AreEqual("20120502", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -255,6 +311,12 @@ namespace hamqslerTest
 			Assert.AreEqual("My_City", qso.Fields[4].Name);
 			Assert.AreEqual("My_Cnty", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("Y", qso.Fields[0].Value);
+			Assert.AreEqual("Y", qso.Fields[1].Value);
+			Assert.AreEqual("12", qso.Fields[2].Value);
+			Assert.AreEqual("Perseids", qso.Fields[3].Value);
+			Assert.AreEqual("Burlington ON", qso.Fields[4].Value);
+			Assert.AreEqual("ON,Halton", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -277,6 +339,12 @@ namespace hamqslerTest
 			Assert.AreEqual("My_GridSquare", qso.Fields[4].Name);
 			Assert.AreEqual("My_Iota", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("CANADA", qso.Fields[0].Value);
+			Assert.AreEqual("4", qso.Fields[1].Value);
+			Assert.AreEqual("1", qso.Fields[2].Value);
+			Assert.AreEqual("1234", qso.Fields[3].Value);
+			Assert.AreEqual("FN03", qso.Fields[4].Value);
+			Assert.AreEqual("EU-126", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -284,7 +352,7 @@ namespace hamqslerTest
 		public void TestFields12()
 		{
 			errorString = string.Empty;
-			Qso2 qso = new Qso2("<my_iota_island_id:4>cuba" +
+			Qso2 qso = new Qso2("<my_iota_island_id:4>Cuba" +
 			                    "<my_itu_Zone:1>4" +
 			                    "<my_Lat:11>N043 21.263" +
 			                    "<my_lon:11>W079 43.795" +
@@ -299,6 +367,12 @@ namespace hamqslerTest
 			Assert.AreEqual("My_Name", qso.Fields[4].Name);
 			Assert.AreEqual("My_Postal_Code", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("Cuba", qso.Fields[0].Value);
+			Assert.AreEqual("4", qso.Fields[1].Value);
+			Assert.AreEqual("N043 21.263", qso.Fields[2].Value);
+			Assert.AreEqual("W079 43.795", qso.Fields[3].Value);
+			Assert.AreEqual("Jim", qso.Fields[4].Value);
+			Assert.AreEqual("L7R 1E1", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -321,6 +395,12 @@ namespace hamqslerTest
 			Assert.AreEqual("My_State", qso.Fields[4].Name);
 			Assert.AreEqual("My_Street", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("Icom IC-7800", qso.Fields[0].Value);
+			Assert.AreEqual("CNE", qso.Fields[1].Value);
+			Assert.AreEqual("Canadian National Exhibition 2013", qso.Fields[2].Value);
+			Assert.AreEqual("VE3/ON-046", qso.Fields[3].Value);
+			Assert.AreEqual("ON", qso.Fields[4].Value);
+			Assert.AreEqual("360 Pearl St.", qso.Fields[5].Value);
 		}
 
 		// test fields
@@ -344,6 +424,13 @@ namespace hamqslerTest
 			Assert.AreEqual("Nr_Bursts", qso.Fields[4].Name);
 			Assert.AreEqual("Nr_Pings", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("MA,Franklin:MA,Hampshire", qso.Fields[0].Value);
+			Assert.AreEqual("EN98,FM08,EM97,FM07", qso.Fields[1].Value);
+			Assert.AreEqual("Fred", qso.Fields[2].Value);
+			Assert.AreEqual("Some notes" + Environment.NewLine +
+			                    "for this QSO.", qso.Fields[3].Value);
+			Assert.AreEqual("47", qso.Fields[4].Value);
+			Assert.AreEqual("32", qso.Fields[5].Value);
 		}
 		
 		// test fields
@@ -366,6 +453,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Prop_Mode", qso.Fields[4].Name);
 			Assert.AreEqual("Public_Key", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("VA3JNO", qso.Fields[0].Value);
+			Assert.AreEqual("VA3HJ", qso.Fields[1].Value);
+			Assert.AreEqual("VA3", qso.Fields[2].Value);
+			Assert.AreEqual("96", qso.Fields[3].Value);
+			Assert.AreEqual("ECH", qso.Fields[4].Value);
+			Assert.AreEqual("A456FCBA234999FC", qso.Fields[5].Value);
 		}
 		
 		// test fields
@@ -389,6 +482,13 @@ namespace hamqslerTest
 			Assert.AreEqual("QslSDate", qso.Fields[4].Name);
 			Assert.AreEqual("Qsl_Rcvd", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("20130219", qso.Fields[0].Value);
+			Assert.AreEqual("N", qso.Fields[1].Value);
+			Assert.AreEqual("Qsl message" + Environment.NewLine +
+			                    "More message", qso.Fields[2].Value);
+			Assert.AreEqual("19980328", qso.Fields[3].Value);
+			Assert.AreEqual("19960516", qso.Fields[4].Value);
+			Assert.AreEqual("Y", qso.Fields[5].Value);
 		}
 		
 		// test fields
@@ -411,6 +511,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Qso_Complete", qso.Fields[4].Name);
 			Assert.AreEqual("Qso_Date_Off", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("B", qso.Fields[0].Value);
+			Assert.AreEqual("Y", qso.Fields[1].Value);
+			Assert.AreEqual("B", qso.Fields[2].Value);
+			Assert.AreEqual("VA3HJ", qso.Fields[3].Value);
+			Assert.AreEqual("NIL", qso.Fields[4].Value);
+			Assert.AreEqual("19990801", qso.Fields[5].Value);
 		}
 		
 		// test fields
@@ -433,6 +539,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Rst_Sent", qso.Fields[4].Name);
 			Assert.AreEqual("Rx_Pwr", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("Y", qso.Fields[0].Value);
+			Assert.AreEqual("Toronto", qso.Fields[1].Value);
+			Assert.AreEqual("Kenwood TS2000", qso.Fields[2].Value);
+			Assert.AreEqual("579", qso.Fields[3].Value);
+			Assert.AreEqual("-22", qso.Fields[4].Value);
+			Assert.AreEqual("0.125", qso.Fields[5].Value);
 		}
 		
 		// test fields
@@ -455,6 +567,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Sig_Info", qso.Fields[4].Name);
 			Assert.AreEqual("SKCC", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("FM", qso.Fields[0].Value);
+			Assert.AreEqual("AO-27", qso.Fields[1].Value);
+			Assert.AreEqual("107", qso.Fields[2].Value);
+			Assert.AreEqual("CNE", qso.Fields[3].Value);
+			Assert.AreEqual("Some event", qso.Fields[4].Value);
+			Assert.AreEqual("102", qso.Fields[5].Value);
 		}
 		
 		// test fields
@@ -477,6 +595,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Station_Callsign", qso.Fields[4].Name);
 			Assert.AreEqual("Stx", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("VE3/ON-046", qso.Fields[0].Value);
+			Assert.AreEqual("107", qso.Fields[1].Value);
+			Assert.AreEqual("Jim 96 107", qso.Fields[2].Value);
+			Assert.AreEqual("ON", qso.Fields[3].Value);
+			Assert.AreEqual("VA3HJ", qso.Fields[4].Value);
+			Assert.AreEqual("19", qso.Fields[5].Value);
 		}
 		
 		// test fields
@@ -499,6 +623,12 @@ namespace hamqslerTest
 			Assert.AreEqual("Time_Off", qso.Fields[4].Name);
 			Assert.AreEqual("Tx_Pwr", qso.Fields[5].Name);
 			Assert.AreEqual(6, qso.Count);
+			Assert.AreEqual("Jim 96 107", qso.Fields[0].Value);
+			Assert.AreEqual("PSK31", qso.Fields[1].Value);
+			Assert.AreEqual("N", qso.Fields[2].Value);
+			Assert.AreEqual("23174", qso.Fields[3].Value);
+			Assert.AreEqual("123456", qso.Fields[4].Value);
+			Assert.AreEqual("100", qso.Fields[5].Value);
 		}
 		
 		// test fields
@@ -517,6 +647,10 @@ namespace hamqslerTest
 			Assert.AreEqual("VUCC_Grids", qso.Fields[2].Name);
 			Assert.AreEqual("Web", qso.Fields[3].Name);
 			Assert.AreEqual(4, qso.Count);
+			Assert.AreEqual("MA,Franklin:MA,Hampshire", qso.Fields[0].Value);
+			Assert.AreEqual("ON", qso.Fields[1].Value);
+			Assert.AreEqual("EN98,FM08,EM97,FM07", qso.Fields[2].Value);
+			Assert.AreEqual("http://www.va3hj.ca", qso.Fields[3].Value);
 		}
 		
 		// test application defined fields
@@ -527,6 +661,7 @@ namespace hamqslerTest
 			Qso2 qso = new Qso2("<APP_HAMQSLER_TEST:10:S>Test value", aEnums, ref errorString);
 			Assert.AreEqual(string.Empty, errorString);
 			Assert.AreEqual("APP_HAMQSLER_TEST", qso.Fields[0].Name);
+			Assert.AreEqual("Test value", qso.Fields[0].Value);
 		}
 	}
 }

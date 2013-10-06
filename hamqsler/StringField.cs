@@ -27,13 +27,6 @@ namespace hamqsler
 	/// </summary>
 	public class StringField : AdifField
 	{
-		private string eltValue = string.Empty;
-		public string Value
-		{
-			get {return eltValue;}
-			set {eltValue = value;}
-		}
-		
 		/// <summary>
 		/// Constructor.
 		/// Note: no validation of input is performed in the constructor. Call Validate after

@@ -113,7 +113,7 @@ namespace hamqsler
 						ValidateAndAddField(cls, values[i], ref errorString);
 						break;
 					case "CLUBLOG_QSO_UPLOAD_DATE":
-						Clublog_Qso_Upload_Date cdate = new Clublog_Qso_Upload_Date("20120519");
+						Clublog_Qso_Upload_Date cdate = new Clublog_Qso_Upload_Date(values[i]);
 						ValidateAndAddField(cdate, values[i], ref errorString);
 						break;
 					case "CLUBLOG_QSO_UPLOAD_STATUS":
@@ -600,11 +600,11 @@ namespace hamqsler
 			bool valid = field.Validate(out err, out mod);
 			if(mod != null)
 			{
-				errorString += string.Format("{0}:{1} - {2} - Value modified", field.Name, value, mod);
+				errorString += string.Format("{0}:{1} - {2} - Value modified", field.Name, field.Value, mod);
 			}
 			if(!valid)
 			{
-				errorString += string.Format("{0}:{1} - {2} - Field deleted", field.Name, value, err);
+				errorString += string.Format("{0}:{1} - {2} - Field deleted", field.Name, field.Value, err);
 			}
 			else
 			{
