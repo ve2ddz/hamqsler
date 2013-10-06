@@ -172,6 +172,14 @@ namespace QsosTests
 			Assert.AreEqual("ZW1CCOM54", c.Call);
 		}
 		
+		
+		// test ctor for special callsign VX31763
+		[Test]
+		public void TestCTorVX31763()
+		{
+			CallSign c = new CallSign("VX31763");
+			Assert.AreEqual("VX31763", c.Call);
+		}
 	}
 }
 
