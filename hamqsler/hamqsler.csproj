@@ -296,6 +296,7 @@
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Qsos2.cs" />
     <Compile Include="QSOsView.xaml.cs">
       <DependentUpon>QSOsView.xaml</DependentUpon>
     </Compile>

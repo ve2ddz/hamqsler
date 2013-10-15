@@ -40,5 +40,22 @@ namespace hamqslerTest
 			AdifFields fields = new AdifFields(record);
 			Assert.AreEqual(count, fields.Count);
 		}
+		
+		// test Accessors
+		[Test]
+		public void TestAccessors()
+		{
+			string record = "<mode:2>CW<Time_On:4:T>1017<adif_ver:5>3.0.4";
+			AdifFields fields = new AdifFields(record);
+			Assert.AreEqual("mode", fields.FieldNames[0]);
+			Assert.AreEqual("Time_On", fields.FieldNames[1]);
+			Assert.AreEqual("adif_ver", fields.FieldNames[2]);
+			Assert.AreEqual(string.Empty, fields.DataTypes[0]);
+			Assert.AreEqual("T", fields.DataTypes[1]);
+			Assert.AreEqual(string.Empty, fields.DataTypes[2]);
+			Assert.AreEqual("CW", fields.Values[0]);
+			Assert.AreEqual("1017", fields.Values[1]);
+			Assert.AreEqual("3.0.4", fields.Values[2]);
+		}
 	}
 }

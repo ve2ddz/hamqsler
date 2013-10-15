@@ -611,5 +611,16 @@ namespace hamqsler
 				fields.Add(field);
 			}
 		}
+		
+		/// <summary>
+		/// Validate the QSO. This ensures that the QSO has at least the minimum fields
+		/// </summary>
+		/// <param name="err">Error message if QSO is not valid, null otherwise.</param>
+		/// <returns>true if QSO is valid, false otherwise</returns>
+		public bool Validate(ref string err)
+		{
+			err = null;
+			return true;
+		}
 	}
 }

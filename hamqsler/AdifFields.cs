@@ -82,6 +82,11 @@ namespace hamqsler
 			while(record.Length != 0)
 			{
 				int fieldStart = record.IndexOf('<');
+				if(fieldStart == -1)
+				{
+					// no more fields, so we are done
+					break;
+				}
 				record = record.Substring(fieldStart);
 				int fieldEnd = record.IndexOf('>');
 				string field = record.Substring(0, fieldEnd + 1);
