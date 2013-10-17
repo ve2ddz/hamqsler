@@ -113,8 +113,10 @@ namespace hamqsler
 		/// <returns>false if error retrieving UserDefs, true otherwise</returns>
 		private bool GetUserDefs(string adif, AdifEnumerations aEnums, ref string err)
 		{
-			string reg = @"^([A-Za-z_]+)((,\{([A-Za-z0-9,]+)|([0-9]+\.{0,1}[0-9]}*):([0-9]+\.{0,1}[0-9]}*)\}){0,1})";
-			AdifFields fields = new AdifFields(adif);
+			string reg = @"^([A-Za-z_]+)";
+			string enumReg = @",\{([A-Za-z0-9,]+)\}";
+			string rangeReg = @"([0-9]+){0,1}:([0-9]+)}*\}{0,1}";
+			AdifFields fields = new AdifFields(adif, ref err);
 			for(int i = 0; i < fields.Count; i ++)
 			{
 				bool alreadyDefined = false;
@@ -152,24 +154,39 @@ namespace hamqsler
 						switch(fields.DataTypes[i])
 						{
 							case "E":
-								udef = new Userdef(match.Groups[1].Value, fields.DataTypes[i], aEnums);
-								break;
-							case "N":
-								if(!match.Groups[5].Value.Equals(string.Empty) &&
-								   !match.Groups[6].Value.Equals(string.Empty))
+								Match enumMatch = Regex.Match(fields.Values[i], enumReg);
+								if(enumMatch.Groups[1].Value.Equals(string.Empty))
 								{
-									udef = new Userdef(match.Groups[1].Value, fields.DataTypes[i], aEnums);
+									err += "User Defined Field: '" + fields.Values[i] +
+										"' is of type Enumeration, but no enumeration is supplied. " +
+										"Field not added.";
+									break;
+								}
+								string[] enums = enumMatch.Groups[1].Value.Split(',');
+								udef = new Userdef(match.Groups[1].Value, "E", enums, aEnums);
+								userDefs.Add(udef);
+									break;
+							case "N":
+									Match rangeMatch = Regex.Match(fields.Values[i], rangeReg);
+								if(!rangeMatch.Groups[1].Value.Equals(string.Empty) &&
+								   !rangeMatch.Groups[2].Value.Equals(string.Empty))
+								{
+									udef = new Userdef(match.Groups[1].Value, "N", 
+										                   rangeMatch.Groups[1].Value, rangeMatch.Groups[2].Value,
+										                   aEnums);
+									userDefs.Add(udef);
 								}
 								else
 								{
-									udef = new Userdef(match.Groups[1].Value, fields.DataTypes[i], aEnums);
+									udef = new Userdef(match.Groups[1].Value, "N", aEnums);
+									userDefs.Add(udef);
 								}
 								break;
 							default:
 								udef = new Userdef(match.Groups[1].Value, fields.DataTypes[i], aEnums);
+								userDefs.Add(udef);
 								break;
 						}
-						userDefs.Add(udef);
 					}
 				}
 			}

@@ -219,7 +219,7 @@ namespace hamqslerTest
 			                    "<FREQ:5>7.035" +
 			                    "<Freq_Rx:5>7.135",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Eqsl_Qsl_Sent", qso.Fields[0].Name);
 			Assert.AreEqual("Fists", qso.Fields[1].Name);
 			Assert.AreEqual("Fists_CC", qso.Fields[2].Name);
@@ -247,7 +247,7 @@ namespace hamqslerTest
 			                    "<IOTA:6>NA-001" +
 			                    "<IOTA_ISland_id:12>Newfoundland",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("GridSquare", qso.Fields[0].Name);
 			Assert.AreEqual("Guest_Op", qso.Fields[1].Name);
 			Assert.AreEqual("HrdLog_Qso_Upload_Date", qso.Fields[2].Name);
@@ -275,7 +275,7 @@ namespace hamqslerTest
 			                    "<Lotw_qslrdate:8>20130612" +
 			                    "<LOTW_QSLSdate:8>20120502",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("ITUZ", qso.Fields[0].Name);
 			Assert.AreEqual("K_Index", qso.Fields[1].Name);
 			Assert.AreEqual("Lat", qso.Fields[2].Name);
@@ -303,7 +303,7 @@ namespace hamqslerTest
 			                    "<my_city:13>Burlington ON" +
 			                    "<my_CNTY:9>ON,Halton",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Lotw_Qsl_Rcvd", qso.Fields[0].Name);
 			Assert.AreEqual("Lotw_Qsl_Sent", qso.Fields[1].Name);
 			Assert.AreEqual("Max_Bursts", qso.Fields[2].Name);
@@ -331,7 +331,7 @@ namespace hamqslerTest
 			                    "<My_Gridsquare:4>FN03" +
 			                    "<My_IOTA:6>EU-126",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("My_Country", qso.Fields[0].Name);
 			Assert.AreEqual("My_CQ_Zone", qso.Fields[1].Name);
 			Assert.AreEqual("My_DXCC", qso.Fields[2].Name);
@@ -359,7 +359,7 @@ namespace hamqslerTest
 			                    "<my_Name:3>Jim" +
 			                    "<my_postal_code:7>L7R 1E1",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("My_Iota_Island_ID", qso.Fields[0].Name);
 			Assert.AreEqual("My_ITU_Zone", qso.Fields[1].Name);
 			Assert.AreEqual("My_Lat", qso.Fields[2].Name);
@@ -387,7 +387,7 @@ namespace hamqslerTest
 			                    "<My_State:2>ON" +
 			                    "<My_Street:13>360 Pearl St.",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("My_Rig", qso.Fields[0].Name);
 			Assert.AreEqual("My_Sig", qso.Fields[1].Name);
 			Assert.AreEqual("My_Sig_Info", qso.Fields[2].Name);
@@ -416,7 +416,7 @@ namespace hamqslerTest
 			                    "<nr_bursts:2>47" +
 			                    "<nr_pings:2>32",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("My_Usaca_Counties", qso.Fields[0].Name);
 			Assert.AreEqual("My_VUCC_Grids", qso.Fields[1].Name);
 			Assert.AreEqual("Name", qso.Fields[2].Name);
@@ -445,7 +445,7 @@ namespace hamqslerTest
 			                    "<Prop_Mode:3>ECH" +
 			                    "<Public_Key:16>A456FCBA234999FC",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Operator", qso.Fields[0].Name);
 			Assert.AreEqual("Owner_Callsign", qso.Fields[1].Name);
 			Assert.AreEqual("Pfx", qso.Fields[2].Name);
@@ -474,7 +474,7 @@ namespace hamqslerTest
 			                    "<QslSDate:8>19960516" +
 			                    "<Qsl_Rcvd:1>Y",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("QrzCom_Qso_Upload_Date", qso.Fields[0].Name);
 			Assert.AreEqual("QrzCom_Qso_Upload_Status", qso.Fields[1].Name);
 			Assert.AreEqual("QslMsg", qso.Fields[2].Name);
@@ -503,7 +503,7 @@ namespace hamqslerTest
 			                    "<Qso_Complete:3>NIL" +
 			                    "<Qso_Date_Off:8>19990801",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Qsl_Rcvd_Via", qso.Fields[0].Name);
 			Assert.AreEqual("Qsl_Sent", qso.Fields[1].Name);
 			Assert.AreEqual("Qsl_Sent_Via", qso.Fields[2].Name);
@@ -531,7 +531,7 @@ namespace hamqslerTest
 			                    "<Rst_Sent:3>-22" +
 			                    "<Rx_Pwr:5>0.125",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Qso_Random", qso.Fields[0].Name);
 			Assert.AreEqual("Qth", qso.Fields[1].Name);
 			Assert.AreEqual("Rig", qso.Fields[2].Name);
@@ -559,7 +559,7 @@ namespace hamqslerTest
 			                    "<Sig_Info:10>Some event" +
 			                    "<SKCC:3>102",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Sat_Mode", qso.Fields[0].Name);
 			Assert.AreEqual("Sat_Mode", qso.Fields[1].Name);
 			Assert.AreEqual("SFI", qso.Fields[2].Name);
@@ -587,7 +587,7 @@ namespace hamqslerTest
 			                    "<Station_Callsign:5>VA3HJ" +
 			                    "<Stx:2>19",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Sota_Ref", qso.Fields[0].Name);
 			Assert.AreEqual("Srx", qso.Fields[1].Name);
 			Assert.AreEqual("Srx_String", qso.Fields[2].Name);
@@ -615,7 +615,7 @@ namespace hamqslerTest
 			                    "<Time_Off:6>123456" +
 			                    "<Tx_Pwr:3>100",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Stx_String", qso.Fields[0].Name);
 			Assert.AreEqual("Submode", qso.Fields[1].Name);
 			Assert.AreEqual("SWL", qso.Fields[2].Name);
@@ -641,7 +641,7 @@ namespace hamqslerTest
 			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07" +
 			                    "<Web:19>http://www.va3hj.ca",
 			                    aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Usaca_Counties", qso.Fields[0].Name);
 			Assert.AreEqual("VE_Prov", qso.Fields[1].Name);
 			Assert.AreEqual("VUCC_Grids", qso.Fields[2].Name);
@@ -659,7 +659,7 @@ namespace hamqslerTest
 		{
 			errorString = string.Empty;
 			Qso2 qso = new Qso2("<APP_HAMQSLER_TEST:10:S>Test value", aEnums, ref errorString);
-			Assert.AreEqual(string.Empty, errorString);
+			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("APP_HAMQSLER_TEST", qso.Fields[0].Name);
 			Assert.AreEqual("Test value", qso.Fields[0].Value);
 		}

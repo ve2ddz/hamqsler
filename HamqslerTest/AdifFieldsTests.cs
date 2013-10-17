@@ -37,8 +37,10 @@ namespace hamqslerTest
 			       "<eor>")] string record,
 			[Values(0, 5, 5, 0)] int count)
 		{
-			AdifFields fields = new AdifFields(record);
+			string err = string.Empty;
+			AdifFields fields = new AdifFields(record, ref err);
 			Assert.AreEqual(count, fields.Count);
+			Assert.AreEqual(null, err);
 		}
 		
 		// test Accessors
@@ -46,7 +48,8 @@ namespace hamqslerTest
 		public void TestAccessors()
 		{
 			string record = "<mode:2>CW<Time_On:4:T>1017<adif_ver:5>3.0.4";
-			AdifFields fields = new AdifFields(record);
+			string err = string.Empty;
+			AdifFields fields = new AdifFields(record, ref err);
 			Assert.AreEqual("mode", fields.FieldNames[0]);
 			Assert.AreEqual("Time_On", fields.FieldNames[1]);
 			Assert.AreEqual("adif_ver", fields.FieldNames[2]);

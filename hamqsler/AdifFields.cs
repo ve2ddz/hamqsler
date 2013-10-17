@@ -69,8 +69,10 @@ namespace hamqsler
 		/// each for each ADIF field in the input string
 		/// </summary>
 		/// <param name="record">ADIF string containing QSO record</param>
-		public AdifFields(string record)
+		/// <param name="err">String containing error message if there is a problem with record</param>
+		public AdifFields(string record, ref string err)
 		{
+			err = null;
 			string reg = "<([A-Za-z0-9_]+):([0-9]+)(:([A-Z])){0,1}>";
 			string rec = record.ToUpper();
 			int valLength = 0;
@@ -93,14 +95,23 @@ namespace hamqsler
 				Match m = Regex.Match(field, reg);
 				if(m.Groups.Count > 0)
 				{
-					fieldNames.Add(m.Groups[1].Value);
-					dataTypes.Add(m.Groups[4].Value);
 					string len = m.Groups[2].Value;
 					valLength = Int32.Parse(len);
-					values.Add(record.Substring(fieldEnd + 1, valLength));
+					if(valLength > record.Substring(fieldEnd + 1).Length)
+					{
+						err += string.Format("Invalid length specified for '{0}' in header. " +
+						                     "'{0}' not saved." +
+						                     Environment.NewLine, m.Groups[1].Value);
+						return;
+					}
+					else
+					{
+						fieldNames.Add(m.Groups[1].Value);
+						dataTypes.Add(m.Groups[4].Value);
+						values.Add(record.Substring(fieldEnd + 1, valLength));
+						record = record.Substring(fieldEnd + valLength + 1);
+					}
 				}
-				record = record.Substring(fieldEnd + valLength + 1);
-			
 			}
 		}
 	}

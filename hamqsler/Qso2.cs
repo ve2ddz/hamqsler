@@ -46,7 +46,7 @@ namespace hamqsler
 		/// <param name="errorString">string containing error and modification messages</param>
 		public Qso2(string qsoRecord, AdifEnumerations aEnums, ref string errorString)
 		{
-			AdifFields af = new AdifFields(qsoRecord);
+			AdifFields af = new AdifFields(qsoRecord, ref errorString);
 			string[] flds = af.FieldNames;
 			string[] types = af.DataTypes;
 			string[] values = af.Values;

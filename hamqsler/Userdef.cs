@@ -59,7 +59,7 @@ namespace hamqsler
 		/// <param name="type">data type</param>
 		/// <param name="num">Userdef number</param>
 		/// <param name="enums">enumeration values</param>
-		public Userdef(string name, string type,string[] enums, AdifEnumerations adifEnums)
+		public Userdef(string name, string type, string[] enums, AdifEnumerations adifEnums)
 		{
 			aEnums = adifEnums;
 			uName = name;

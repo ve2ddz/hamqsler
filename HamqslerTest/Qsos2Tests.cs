@@ -103,7 +103,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(2, qsos.Count);
-			Assert.AreEqual(string.Empty, error);
+			Assert.AreEqual(null, error);
 		}
 		
 		// test header with UserDef and QSOs with no user defined fields
@@ -118,7 +118,7 @@ namespace hamqslerTest
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
-			Assert.AreEqual(string.Empty, error);
+			Assert.AreEqual(null, error);
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("QRP_ARCI", qsos.UserDefs[0].UName);
 		}
@@ -175,6 +175,24 @@ namespace hamqslerTest
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("SweaterSize", qsos.UserDefs[0].UName);
+			Assert.AreEqual("S,M,L", qsos.UserDefs[0].EnumField.ToString());
+		}
+		
+		// test header with Userdef enumeration type with no enumeration
+		[Test]
+		public void TestUserdefEnumTypeNoEnum()
+		{
+			string adif = "some header text" + Environment.NewLine +
+				"<adif_ver:5>3.0.4" + Environment.NewLine +
+				"<userdef1:11:E>SweaterSize" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
+			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.AreEqual(0, qsos.UserDefs.Count);
+			Assert.AreEqual("User Defined Field: 'SweaterSize' is of type Enumeration, " +
+			                "but no enumeration is supplied. Field not added.", error);
 		}
 		
 		// test header with Userdef having numerical limits
@@ -191,6 +209,42 @@ namespace hamqslerTest
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("ShoeSize", qsos.UserDefs[0].UName);
+			Assert.AreEqual("5", qsos.UserDefs[0].LowerValue);
+			Assert.AreEqual("20", qsos.UserDefs[0].UpperValue);
+		}
+		
+		// test header with Userdef having no numerical limits
+		[Test]
+		public void TestUserdefNumericalNoLimits()
+		{
+			string adif = "some header text" + Environment.NewLine +
+				"<adif_ver:5>3.0.4" + Environment.NewLine +
+				"<userdef1:8:N>ShoeSize" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
+			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.AreEqual(1, qsos.UserDefs.Count);
+			Assert.AreEqual("ShoeSize", qsos.UserDefs[0].UName);
+			Assert.AreEqual(string.Empty, qsos.UserDefs[0].LowerValue);
+			Assert.AreEqual(string.Empty, qsos.UserDefs[0].UpperValue);
+		}
+		
+		// test header with last Userdef having invalid length
+		[Test]
+		public void TestBadUserdefLength()
+		{
+			string adif = "some header text" + Environment.NewLine +
+				"<adif_ver:5>3.0.4" + Environment.NewLine +
+				"<userdef1:14:N>ShoeSize" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
+			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.AreEqual("Invalid length specified for 'userdef1' in header. 'userdef1' not saved." +
+			                Environment.NewLine, error);
 		}
 	}
 }
