@@ -75,5 +75,16 @@ namespace hamqslerTest
 			                err);
 			Assert.IsNull(modStr);
 		}
+		
+		// test Name accessor
+		[Test]
+		public void TestNameAccessor()
+		{
+			UserdefEnumeration uds = new UserdefEnumeration("B", userdef1);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.AreEqual("HamQSLerQSLStatus", uds.Name);
+		}
 	}
 }

@@ -72,5 +72,16 @@ namespace hamqslerTest
 			Assert.AreEqual("Time must be in HHMM or HHMMSS format.", err);
 			Assert.IsNull(modStr);
 		}
+		
+		// test Name accessor
+		[Test]
+		public void TestNameAccessor()
+		{
+			UserdefTime uds = new UserdefTime("124819", userdef1);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.AreEqual("QslTime", uds.Name);
+		}
 	}
 }

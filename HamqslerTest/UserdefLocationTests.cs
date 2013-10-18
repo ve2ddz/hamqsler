@@ -73,5 +73,16 @@ namespace hamqslerTest
 			Assert.AreEqual("'U027 26.385' is not a valid location.", err);
 			Assert.IsNull(modStr);
 		}
+		
+		// test Name accessor
+		[Test]
+		public void TestNameAccessor()
+		{
+			UserdefLocation uds = new UserdefLocation("N027 26.385", userdef1);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.AreEqual("MumbaiLatitude", uds.Name);
+		}
 	}
 }

@@ -98,5 +98,17 @@ namespace hamqslerTest
 			Assert.AreEqual("'1' is not within range specified by the Userdef field.", err);
 			Assert.IsNull(modStr);
 		}
+		
+		// test Name accessor
+		[Test]
+		public void TestNameAccessor()
+		{
+			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", aEnums);
+			UserdefNumber uds = new UserdefNumber("6.5", userdef2);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.AreEqual("EPC2", uds.Name);
+		}
 	}
 }

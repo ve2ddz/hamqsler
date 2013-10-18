@@ -73,5 +73,16 @@ namespace hamqslerTest
 			Assert.AreEqual("Date must contain number characters only.", err);
 			Assert.IsNull(modStr);
 		}
+		
+		// test Name accessor
+		[Test]
+		public void TestNameAccessor()
+		{
+			UserdefDate uds = new UserdefDate("20000613", userdef1);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.AreEqual("Birthdate", uds.Name);
+		}
 	}
 }

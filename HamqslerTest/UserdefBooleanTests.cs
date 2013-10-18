@@ -84,5 +84,16 @@ namespace hamqslerTest
 			Assert.AreEqual("Boolean field must have value 'Y' or 'N'.", err);
 			Assert.IsNull(modStr);
 		}
+		
+		// test Name accessor
+		[Test]
+		public void TestNameAccessor()
+		{
+			UserdefBoolean uds = new UserdefBoolean("Y", userdef1);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.AreEqual("test", uds.Name);
+		}
 	}
 }

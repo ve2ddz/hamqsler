@@ -28,6 +28,11 @@ namespace hamqsler
 	{
 		private Userdef userdef;
 		
+		public override string Name 
+		{
+			get { return userdef.UName; }
+		}
+		
 		/// <summary>
 		/// Constructor
 		/// Note: no validation of input is performed in the constructor. Call Validate after

@@ -72,5 +72,16 @@ namespace hamqslerTest
 			Assert.AreEqual("Value is null", err);
 			Assert.IsNull(modStr);
 		}
+		
+		// test Name accessor
+		[Test]
+		public void TestNameAccessor()
+		{
+			UserdefMultilineString uds = new UserdefMultilineString(@"1234\n\r56", userdef1);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(uds.Validate(out err, out modStr));
+			Assert.AreEqual("EPC", uds.Name);
+		}
 	}
 }
