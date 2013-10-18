@@ -42,6 +42,20 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Import an ADIF string after clearing existing QSOs
+		/// </summary>
+		/// <param name="adif">string containing ADIF file contents (header and QSOs)</param>
+		/// <param name="error">string containing error and modification messages, null otherwise</param>
+		/// <param name="aEnums">AdifEnumerations object containing the ADIF enumerations</param>
+		/// <returns>true if no errors, false otherwise</returns>
+		public bool Import(string adif, ref string error, AdifEnumerations aEnums)
+		{
+			userDefs.Clear();
+			this.Clear();
+			return Add(adif, ref error, aEnums);
+		}
+		
+		/// <summary>
 		/// Add QSOs
 		/// </summary>
 		/// <param name="adif">string containing ADIF file contents (header and QSOs)</param>

@@ -313,5 +313,24 @@ namespace hamqslerTest
 								Environment.NewLine, error);
 		}
 		
+		// test Import
+		[Test]
+		public void TestImport()
+		{
+			string adif = "some header text" + Environment.NewLine +
+				"<adif_ver:5>3.0.4" + Environment.NewLine +
+				"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
+			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.AreEqual(1, qsos.UserDefs.Count);
+			Assert.AreEqual(2, qsos.Count);
+			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.AreEqual(1, qsos.UserDefs.Count);
+			Assert.AreEqual(null, error);
+			Assert.AreEqual(2, qsos.Count);
+		}
 	}
 }
