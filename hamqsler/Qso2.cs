@@ -44,12 +44,22 @@ namespace hamqsler
 		/// <param name="qsoRecord">string containing the QSO record in ADIF format</param>
 		/// <param name="aEnums">AdifEnumerations object</param>
 		/// <param name="errorString">string containing error and modification messages</param>
-		public Qso2(string qsoRecord, AdifEnumerations aEnums, ref string errorString)
+		/// <param name="qsos">Qsos2 object containing the user defined fields</param>
+		public Qso2(string qsoRecord, AdifEnumerations aEnums, ref string errorString, Qsos2 qsos=null)
 		{
 			AdifFields af = new AdifFields(qsoRecord, ref errorString);
 			string[] flds = af.FieldNames;
 			string[] types = af.DataTypes;
 			string[] values = af.Values;
+			List<Userdef> userDefs = null;
+			if(qsos != null)
+			{
+				userDefs = qsos.UserDefs;
+			}
+			else
+			{
+				userDefs = new List<Userdef>();
+			}
 			for(int i = 0; i < af.Count; i++)
 			{
 				string err = string.Empty;
@@ -581,6 +591,70 @@ namespace hamqsler
 							                                                          values[i],
 							                                                          aEnums);
 							ValidateAndAddField(adf, values[i], ref errorString);
+						}
+						else
+						{
+							bool userDefFound = false;
+							foreach(Userdef uDef in userDefs)
+							{
+								if(flds[i].Equals(uDef.UName))
+								{
+									switch(uDef.DataType.Value)
+									{
+										case "B":
+											UserdefBoolean field = new UserdefBoolean(values[i], uDef);
+											ValidateAndAddField(field, values[i], ref errorString);
+											break;
+										case "D":
+											UserdefDate uDate = new UserdefDate(values[i], uDef);
+											ValidateAndAddField(uDate, values[i], ref errorString);
+											break;
+										case "E":
+											UserdefEnumeration uEnum = 
+												new UserdefEnumeration(values[i], uDef);
+											ValidateAndAddField(uEnum, values[i], ref errorString);
+											break;
+										case "L":
+											UserdefLocation uLoc =
+												new UserdefLocation(values[i], uDef);
+											ValidateAndAddField(uLoc, values[i], ref errorString);
+											break;
+										case "M":
+											UserdefMultilineString uMS =
+												new UserdefMultilineString(values[i], uDef);
+											ValidateAndAddField(uMS, values[i], ref errorString);
+											break;
+										case "N":
+											UserdefNumber uNum =
+												new UserdefNumber(values[i], uDef);
+											ValidateAndAddField(uNum, values[i], ref errorString);
+											break;
+										case "S":
+											UserdefString uStr =
+												new UserdefString(values[i], uDef);
+											ValidateAndAddField(uStr, values[i], ref errorString);
+											break;
+										case "T":
+											UserdefTime uTime =
+												new UserdefTime(values[i], uDef);
+											ValidateAndAddField(uTime, values[i], ref errorString);
+											break;
+										default:
+											errorString += string.Format("'{0}' has unsupported data type." +
+											                             " Field deleted." +
+											                             Environment.NewLine, flds[i]);
+											break;
+									}
+									userDefFound = true;
+									break;
+								}
+							}
+							if(!userDefFound)
+							{
+								errorString += string.Format("'{0}' field not valid field type and" +
+								                             " not a user defined type. Field deleted." +
+								                             Environment.NewLine, flds[i]);
+							}
 						}
 						break;
 				}

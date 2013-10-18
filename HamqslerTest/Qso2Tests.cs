@@ -663,5 +663,134 @@ namespace hamqslerTest
 			Assert.AreEqual("APP_HAMQSLER_TEST", qso.Fields[0].Name);
 			Assert.AreEqual("Test value", qso.Fields[0].Value);
 		}
+		
+		// test user defined field with boolean value
+		[Test]
+		public void TestUserDefinedFieldValueBoolValue()
+		{
+			Qsos2 qsos = new Qsos2();
+			qsos.UserDefs.Add(new Userdef("HamQSLerTrue", "B", aEnums));
+			Qso2 qso = new Qso2("<HamQSLerTrue:1>Y", aEnums, ref errorString, qsos);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual(1, qso.Fields.Count);
+			Assert.AreEqual("HamQSLerTrue", qso.Fields[0].Name);
+			Assert.AreEqual("Y", qso.Fields[0].Value);
+		}
+		
+		// test user defined field with date value
+		[Test]
+		public void TestUserDefinedFieldValueDateValue()
+		{
+			Qsos2 qsos = new Qsos2();
+			qsos.UserDefs.Add(new Userdef("HamQSLerDate", "D", aEnums));
+			Qso2 qso = new Qso2("<HamQSLerDate:8>19990615", aEnums, ref errorString, qsos);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual(1, qso.Fields.Count);
+			Assert.AreEqual("HamQSLerDate", qso.Fields[0].Name);
+			Assert.AreEqual("19990615", qso.Fields[0].Value);
+		}
+		
+		// test user defined field with enumeration value
+		[Test]
+		public void TestUserDefinedFieldValueEnumValue()
+		{
+			Qsos2 qsos = new Qsos2();
+			string[] enums = {"S", "M", "L"};
+			qsos.UserDefs.Add(new Userdef("SweaterSize", "E", enums, aEnums));
+			Qso2 qso = new Qso2("<SweaterSize:1>M", aEnums, ref errorString, qsos);
+			Assert.AreEqual(1, qso.Fields.Count);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual("SweaterSize", qso.Fields[0].Name);
+			Assert.AreEqual("M", qso.Fields[0].Value);
+		}
+		
+		// test user defined field with location value
+		[Test]
+		public void TestUserDefinedFieldValueLocationValue()
+		{
+			Qsos2 qsos = new Qsos2();
+			qsos.UserDefs.Add(new Userdef("MumbaiLatitude", "L", aEnums));
+			Qso2 qso = new Qso2("<MumbaiLatitude:11>N010 27.315", aEnums, ref errorString, qsos);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual(1, qso.Fields.Count);
+			Assert.AreEqual("MumbaiLatitude", qso.Fields[0].Name);
+			Assert.AreEqual("N010 27.315", qso.Fields[0].Value);
+		}
+		
+		// test user defined field with multilinestring value
+		[Test]
+		public void TestUserDefinedFieldValueMultilineStringValue()
+		{
+			Qsos2 qsos = new Qsos2();
+			qsos.UserDefs.Add(new Userdef("Multi", "M", aEnums));
+			Qso2 qso = new Qso2("<Multi:12>Line1\n\rLine2", aEnums, ref errorString, qsos);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual(1, qso.Fields.Count);
+			Assert.AreEqual("Multi", qso.Fields[0].Name);
+			Assert.AreEqual("Line1\n\rLine2", qso.Fields[0].Value);
+		}
+		
+		// test user defined field with number value
+		[Test]
+		public void TestUserDefinedFieldValueNumberValue()
+		{
+			Qsos2 qsos = new Qsos2();
+			qsos.UserDefs.Add(new Userdef("EPC", "N", aEnums));
+			Qso2 qso = new Qso2("<EPC:2>12", aEnums, ref errorString, qsos);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual(1, qso.Fields.Count);
+			Assert.AreEqual("EPC", qso.Fields[0].Name);
+			Assert.AreEqual("12", qso.Fields[0].Value);
+		}
+		
+		// test user defined field with string value
+		[Test]
+		public void TestUserDefinedFieldValueStringValue()
+		{
+			Qsos2 qsos = new Qsos2();
+			qsos.UserDefs.Add(new Userdef("Hopefield", "S", aEnums));
+			Qso2 qso = new Qso2("<Hopefield:4>hope", aEnums, ref errorString, qsos);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual(1, qso.Fields.Count);
+			Assert.AreEqual("Hopefield", qso.Fields[0].Name);
+			Assert.AreEqual("hope", qso.Fields[0].Value);
+		}
+
+		// test user defined field with time value
+		[Test]
+		public void TestUserDefinedFieldValueTimeValue()
+		{
+			Qsos2 qsos = new Qsos2();
+			qsos.UserDefs.Add(new Userdef("LocalTime", "T", aEnums));
+			Qso2 qso = new Qso2("<LocalTime:4>1245", aEnums, ref errorString, qsos);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual(1, qso.Fields.Count);
+			Assert.AreEqual("LocalTime", qso.Fields[0].Name);
+			Assert.AreEqual("1245", qso.Fields[0].Value);
+		}
+
+		// test user defined field with invalid data type value
+		[Test]
+		public void TestUserDefinedFieldInvalidDataType()
+		{
+			Qsos2 qsos = new Qsos2();
+			qsos.UserDefs.Add(new Userdef("LocalTime", "X", aEnums));
+			Qso2 qso = new Qso2("<LocalTime:4>1245", aEnums, ref errorString, qsos);
+			Assert.AreEqual("'LocalTime' has unsupported data type. Field deleted." +
+			                Environment.NewLine, errorString);
+			Assert.AreEqual(0, qso.Fields.Count);
+		}
+
+		// test invalid field
+		[Test]
+		public void TestInvalidField()
+		{
+			Qsos2 qsos = new Qsos2();
+			Qso2 qso = new Qso2("<LocalTime:4>1245", aEnums, ref errorString, qsos);
+			Assert.AreEqual("'LocalTime' field not valid field type and" +
+                             " not a user defined type. Field deleted." +
+                             Environment.NewLine, errorString);
+			Assert.AreEqual(0, qso.Fields.Count);
+		}
 	}
 }
