@@ -50,9 +50,17 @@ namespace hamqsler
 		/// <returns>true if no errors, false otherwise</returns>
 		public bool Import(string adif, ref string error, AdifEnumerations aEnums)
 		{
+			this.ClearQsos();
+			return Add(adif, ref error, aEnums);
+		}
+		
+		/// <summary>
+		/// Clear all QSOs and Userdefs
+		/// </summary>
+		public void ClearQsos()
+		{
 			userDefs.Clear();
 			this.Clear();
-			return Add(adif, ref error, aEnums);
 		}
 		
 		/// <summary>
