@@ -85,7 +85,10 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(2, qsos.Count);
-			Assert.AreEqual("Data found after end of last QSO record: " + 
+			Assert.AreEqual("<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017" +
+				Environment.NewLine + "Data found after end of last QSO record: " +
 			                "<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017" +
 			                Environment.NewLine, error);
 
@@ -135,7 +138,15 @@ namespace hamqslerTest
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
-			Assert.AreEqual("User Defined Field: 'QRP_ARCI" + 
+			Assert.AreEqual( "some header text" + Environment.NewLine +
+						"<adif_ver:5>3.0.4" + Environment.NewLine +
+						"<userdef1:8:H>QRP_ARCI" +Environment.NewLine +
+						"<eoh>" + Environment.NewLine +
+						"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+						Environment.NewLine +
+						"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
+						Environment.NewLine +
+						"User Defined Field: 'QRP_ARCI" +
 						"' does not contain valid data type. Field not added." +
 						Environment.NewLine, error);
 			Assert.AreEqual(0, qsos.UserDefs.Count);
@@ -156,7 +167,15 @@ namespace hamqslerTest
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
-			Assert.AreEqual("User Defined Field: 'QRP_ARCI" +
+			Assert.AreEqual("some header text" + Environment.NewLine +
+				"<adif_ver:5>3.0.4" + Environment.NewLine +
+				"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"User Defined Field: 'QRP_ARCI" +
 								"' already defined. First definition retained." +
 								Environment.NewLine, error);
 		}
@@ -191,8 +210,17 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(0, qsos.UserDefs.Count);
-			Assert.AreEqual("User Defined Field: 'SweaterSize' is of type Enumeration, " +
-			                "but no enumeration is supplied. Field not added.", error);
+			Assert.AreEqual("some header text" + Environment.NewLine +
+							"<adif_ver:5>3.0.4" + Environment.NewLine +
+							"<userdef1:11:E>SweaterSize" +Environment.NewLine +
+							"<eoh>" + Environment.NewLine +
+							"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+							Environment.NewLine +
+							"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
+							Environment.NewLine +
+							"User Defined Field: 'SweaterSize' is of type Enumeration, " +
+			                "but no enumeration is supplied. Field not added." +
+							Environment.NewLine, error);
 		}
 		
 		// test header with Userdef having numerical limits
@@ -243,8 +271,47 @@ namespace hamqslerTest
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
-			Assert.AreEqual("Invalid length specified for 'userdef1' in header. 'userdef1' not saved." +
+			Assert.AreEqual("some header text" + Environment.NewLine +
+							"<adif_ver:5>3.0.4" + Environment.NewLine +
+							"<userdef1:14:N>ShoeSize" +Environment.NewLine +
+							"<eoh>" + Environment.NewLine +
+							"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+							Environment.NewLine +
+							"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
+							Environment.NewLine +
+							"Invalid length specified for 'userdef1' in header. 'userdef1' not saved." +
 			                Environment.NewLine, error);
 		}
+		
+		// test multiple errors
+		[Test]
+		public void TestMultipleErrors()
+		{
+			string adif = "some header text" + Environment.NewLine +
+				"<adif_ver:5>3.0.4" + Environment.NewLine +
+				"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>2013100<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
+			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.AreEqual(1, qsos.UserDefs.Count);
+			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.AreEqual(1, qsos.UserDefs.Count);
+			Assert.AreEqual("some header text" + Environment.NewLine +
+								"<adif_ver:5>3.0.4" + Environment.NewLine +
+								"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
+								"<eoh>" + Environment.NewLine +
+								"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>2013100<Time_On:4>1017<eor>" +
+								Environment.NewLine +
+								"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
+								Environment.NewLine +
+								"User Defined Field: 'QRP_ARCI" +
+								"' already defined. First definition retained." +
+								Environment.NewLine +
+								"Qso_Date:2013100< - Date must contain number characters only. - Field deleted." +
+								Environment.NewLine, error);
+		}
+		
 	}
 }

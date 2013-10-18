@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(key.Validate(out err, out modStr));
-			Assert.AreEqual("Value is null", err);
+			Assert.AreEqual("Value is null.", err);
 			Assert.IsNull(modStr);
 		}
 	}

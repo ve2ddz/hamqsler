@@ -73,7 +73,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			StringField field = new StringField(null);
 			Assert.IsFalse(field.Validate(out err, out modStr));
-			Assert.AreEqual("Value is null", err);
+			Assert.AreEqual("Value is null.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -85,7 +85,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			StringField field = new StringField("VA3HJ" + Environment.NewLine + "VA3JNO");
 			Assert.IsFalse(field.Validate(out err, out modStr));
-			Assert.AreEqual("String value contains a new line character. This is not allowed in StringField types",
+			Assert.AreEqual("String value contains a new line character. This is not allowed in StringField types.",
 			                err);
 			Assert.IsNull(modStr);
 		}

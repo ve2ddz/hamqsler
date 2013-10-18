@@ -51,12 +51,12 @@ namespace hamqsler
 			modStr = null;
 			if(Value == null)
 			{
-				err = "Value is null";
+				err = "Value is null.";
 				return false;
 			}
 			if(Regex.IsMatch(Value, "[\\n\\r]"))
 			{
-				err = "String value contains a new line character. This is not allowed in StringField types";
+				err = "String value contains a new line character. This is not allowed in StringField types.";
 				return false;
 			}
 			return true;

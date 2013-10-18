@@ -51,6 +51,7 @@ namespace hamqsler
 		public bool Add(string adif, ref string error, AdifEnumerations aEnums)
 		{
 			error = null;
+			string origAdif = adif;
 			if(adif == null || adif == string.Empty)
 			{
 				error = "No QSOs found." + Environment.NewLine;
@@ -69,6 +70,7 @@ namespace hamqsler
 				bool headerOK = GetUserDefs(header, aEnums, ref error);
 				if(!headerOK)
 				{
+					error = origAdif + Environment.NewLine + error;
 					return false;
 				}
 				adif = adif.Substring(eoh + 5);
@@ -81,7 +83,7 @@ namespace hamqsler
 				Qso2 qso = new Qso2(adif, aEnums, ref err);
 				if(err != null)
 				{
-					error += err;
+					error += err + Environment.NewLine;
 				}
 				string valError = string.Empty;
 				bool val = qso.Validate(ref valError);
@@ -101,6 +103,10 @@ namespace hamqsler
 			if(adif.Length > 0)
 			{
 				error += "Data found after end of last QSO record: " + adif + Environment.NewLine;
+			}
+			if(error != null)
+			{
+				error = origAdif + Environment.NewLine + error;
 			}
 			return true;
 		}
@@ -159,7 +165,7 @@ namespace hamqsler
 								{
 									err += "User Defined Field: '" + fields.Values[i] +
 										"' is of type Enumeration, but no enumeration is supplied. " +
-										"Field not added.";
+										"Field not added." +Environment.NewLine;
 									break;
 								}
 								string[] enums = enumMatch.Groups[1].Value.Split(',');

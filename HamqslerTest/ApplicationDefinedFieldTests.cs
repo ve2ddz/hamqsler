@@ -382,7 +382,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("String value contains a new line character. This is not allowed in StringField types",
+			Assert.AreEqual("String value contains a new line character. This is not allowed in StringField types.",
 			                err);
 			Assert.IsNull(modStr);
 		}
