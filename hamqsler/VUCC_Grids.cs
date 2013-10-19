@@ -31,8 +31,24 @@ namespace hamqsler
 	{
 		private DelimitedList gridSquares = null;
 		
-		public override string Value {
+		public override string Value 
+		{
 			get { return gridSquares.ToString(); }
+			set
+			{
+				string[] gs = value.Split(',');
+				string grds = string.Empty;
+				char[] trimChars = new char[1];
+				trimChars[0] = ' ';
+				foreach(string grid in gs)
+				{
+					string gr = grid.Trim(trimChars);
+					grds += gr + ",";
+				}
+				grds = grds.Substring(0, grds.Length - 1);
+				
+				gridSquares = new DelimitedList(',', grds);
+			}
 		}
 		
 		public int Count

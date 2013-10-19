@@ -745,9 +745,18 @@ namespace hamqsler
                 	if(field.Name.ToLower().Equals(key.ToLower()))
                 	{
                 		field.Value = value;
+                		string error = string.Empty;
+                		string modStr = string.Empty;
+                		bool valid = field.Validate(out error, out modStr);
+                		if(!valid)
+                		{
+                			throw new ArgumentException("Invalid value specified for field '" +
+                			                            key + "'.");
+                		}
                 		return;
                 	}
                 }
+                // not an existing field, so
                 // use new Qso2 object to validate that key is a proper field type
                 // and value is valid
                 string err = string.Empty;

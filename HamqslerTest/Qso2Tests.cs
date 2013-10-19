@@ -847,6 +847,17 @@ namespace hamqslerTest
 			Assert.AreEqual("AB", qso["ve_prov"]);
 		}
 		
+		// test this[key] set with existing field but invalid value
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestSetFieldExistingFieldInvalidValue()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			qso["VUCC_Grids"] = "EN98,FM08,EM97";
+			Assert.Fail("Should have generated ArgumentException");
+		}
+		
 		// test this[key] set with null field
 		[Test]
 		[ExpectedException(typeof(ArgumentNullException),
