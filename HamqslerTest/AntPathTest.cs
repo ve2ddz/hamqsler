@@ -29,19 +29,23 @@ namespace hamqslerTest
 	[TestFixture]
 	public class AntPathTest
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test that constructor creates valid object
 		[Test]
 		public void TestConstructor()
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Ant_Path ap = new Ant_Path("G", aEnums);
 			Assert.IsTrue(ap.Validate(out err, out modStr));
 			Assert.IsNull(err);
@@ -55,13 +59,6 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Ant_Path ap = new Ant_Path("F", aEnums);
 			Assert.IsFalse(ap.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
@@ -75,12 +72,6 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Ant_Path ap = new Ant_Path("G", aEnums);
 			Assert.AreEqual("<Ant_Path:1>G", ap.ToAdifString());
 		}

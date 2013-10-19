@@ -31,6 +31,17 @@ namespace hamqslerTest
 	[TestFixture]
 	public class DelimitedListEnumerationTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test constructor and Count accessor
 		[Test]
 		public void TestCount()
@@ -47,13 +58,6 @@ namespace hamqslerTest
 		{
 			string list = "ON:NT:EB:EPA";
 			string err = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.AreEqual(4, dLE.Count);
 		}
@@ -109,13 +113,6 @@ namespace hamqslerTest
 			string list = "ON:NT:EOR:EPA";
 			string err = string.Empty;
 			string modStr = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.IsFalse(dLE.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'EOR' was not found in enumeration.",
@@ -128,12 +125,6 @@ namespace hamqslerTest
 		public void TestToAdifString()
 		{
 			string list = "ON:NT:OR:EPA";
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.AreEqual("<DelimitedListEnumeration:12>ON:NT:OR:EPA", dLE.ToAdifString());
 		}
@@ -144,13 +135,6 @@ namespace hamqslerTest
 		{
 			string list = "ON:NT:OR:EPA";
 			string err = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.IsTrue(dLE.Validate("NT", out err));
 		}
@@ -161,13 +145,6 @@ namespace hamqslerTest
 		{
 			string list = "ON:NT:OR:EPA";
 			string err = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.IsFalse(dLE.Validate("XPS", out err));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'XPS' " +

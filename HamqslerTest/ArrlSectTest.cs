@@ -28,19 +28,23 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ArrlSectTest
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test that constructor creates valid object
 		[Test]
 		public void TestConstructor()
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Arrl_Sect sect = new Arrl_Sect("NT", aEnums);
 			Assert.IsTrue(sect.Validate(out err, out modStr));
 			Assert.IsNull(err);
@@ -54,13 +58,6 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Arrl_Sect sect = new Arrl_Sect("ABCD", aEnums);
 			Assert.IsFalse(sect.Validate(out err, out modStr));
 			Assert.AreEqual("This QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
@@ -72,12 +69,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Arrl_Sect sect = new Arrl_Sect("NT", aEnums);
 			Assert.AreEqual("<Arrl_Sect:2>NT", sect.ToAdifString());
 		}

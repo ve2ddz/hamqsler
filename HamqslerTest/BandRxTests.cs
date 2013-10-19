@@ -17,67 +17,57 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-	using System;
-	using System.IO;
-	using System.Reflection;
-	using NUnit.Framework;
-	using hamqsler;
-	
-	namespace hamqslerTest
+using System;
+using System.IO;
+using System.Reflection;
+using NUnit.Framework;
+using hamqsler;
+
+namespace hamqslerTest
+{
+	// tests for Band_Rx class
+	[TestFixture]
+	public class BandRxTests
 	{
-		// tests for Band_Rx class
-		[TestFixture]
-		public class BandRxTests
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
 		{
-			// test Validate with valid value
-			[Test]
-			public void TestValidate2190m()
-			{
-			    // get the hamqsler assembly
-				Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	            // get a stream for the AdifEnumerations.xml file
-	            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-	            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-	             // load in the xml file
-				AdifEnumerations aEnums = new AdifEnumerations(str);
-				Band_Rx band = new Band_Rx("2190m", aEnums);
-				string error = string.Empty;
-				string modStr = string.Empty;
-				Assert.IsTrue(band.Validate(out error, out modStr));
-				Assert.IsNull(error);
-				Assert.IsNull(modStr);
-			}
-	
-			// test Validate with valid value
-			[Test]
-			public void TestValidate1mm()
-			{
-			    // get the hamqsler assembly
-				Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	            // get a stream for the AdifEnumerations.xml file
-	            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-	            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-	             // load in the xml file
-				AdifEnumerations aEnums = new AdifEnumerations(str);
-				Band_Rx band = new Band_Rx("1mm", aEnums);
-				string error = string.Empty;
-				string modStr = string.Empty;
-				Assert.IsTrue(band.Validate(out error, out modStr));
-				Assert.IsNull(error);
-				Assert.IsNull(modStr);
-			}
-	
-			// test Validate with invalid value
-			[Test]
-			public void TestValidateBadValue()
-			{
-		    // get the hamqsler assembly
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
+		// test Validate with valid value
+		[Test]
+		public void TestValidate2190m()
+		{
+			Band_Rx band = new Band_Rx("2190m", aEnums);
+			string error = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(band.Validate(out error, out modStr));
+			Assert.IsNull(error);
+			Assert.IsNull(modStr);
+		}
+
+		// test Validate with valid value
+		[Test]
+		public void TestValidate1mm()
+		{
+			Band_Rx band = new Band_Rx("1mm", aEnums);
+			string error = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(band.Validate(out error, out modStr));
+			Assert.IsNull(error);
+			Assert.IsNull(modStr);
+		}
+
+		// test Validate with invalid value
+		[Test]
+		public void TestValidateBadValue()
+		{
 			Band_Rx band = new Band_Rx("23mm", aEnums);
 			string error = string.Empty;
 			string modStr = string.Empty;
@@ -91,13 +81,6 @@
 		[Test]
 		public void TestToAdifString()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Band_Rx band = new Band_Rx("23cm", aEnums);
 			Assert.AreEqual("<Band_Rx:4>23cm", band.ToAdifString());
 		}
@@ -106,13 +89,6 @@
 		[Test]
 		public void TestIsWithinBandValidFreq()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Band_Rx band = new Band_Rx("40m", aEnums);
 			Assert.IsTrue(band.IsWithinBand("7.102"));
 		}
@@ -121,16 +97,8 @@
 		[Test]
 		public void TestIsWithinBandBadFreq()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Band_Rx band = new Band_Rx("40m", aEnums);
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
-
 	}
 }

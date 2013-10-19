@@ -31,19 +31,23 @@ namespace hamqslerTest
 	[TestFixture]
 	public class AwardSubmittedTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		/// <summary>
 		/// Test Count accessor
 		/// </summary>
 		[Test]
 		public void TestCount()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
 			Assert.AreEqual(3, aSub.Count);
 		}
@@ -54,13 +58,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateOK()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -73,13 +70,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateBadEntry()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -95,13 +85,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNoAwards()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted(string.Empty, aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -113,13 +96,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNull()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted(null, aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -132,13 +108,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
 			Assert.AreEqual("<Award_Submitted:38>ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500",
 			                aSub.ToAdifString());
@@ -148,13 +117,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifStringNull()
 		{
-		    // get the hamqsler assembly
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Award_Submitted aSub = new Award_Submitted(null, aEnums);
 			Assert.AreEqual("<Award_Submitted:0>",
 			                aSub.ToAdifString());
