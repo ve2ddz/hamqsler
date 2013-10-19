@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
@@ -791,6 +792,106 @@ namespace hamqslerTest
                              " not a user defined type. Field deleted." +
                              Environment.NewLine, errorString);
 			Assert.AreEqual(0, qso.Fields.Count);
+		}
+		
+		// test this[key] get with valid field
+		[Test]
+		public void TestGetField()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			Assert.AreEqual("EN98,FM08,EM97,FM07", qso["vucc_grids"]);
+		}
+		
+		// test this[key] get with invalid field
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException),
+		                   ExpectedMessage="Value cannot be null.")]
+		public void TestGetFieldNullFieldName()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			string val = qso[null];
+			Assert.Fail("Should have generated ArgumentNullException");
+		}
+		
+		// test this[key] get with empty field name
+		[Test]
+		[ExpectedException(typeof(ArgumentException), ExpectedMessage="Empty key")]
+		public void TestGetFieldEmptyFieldName()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			string val = qso[string.Empty];
+			Assert.Fail("Should have generated ArgumentException");
+		}
+		
+		// test this[key] get with field that is not in Qso
+		[Test]
+		[ExpectedException(typeof(KeyNotFoundException))]
+		public void TestGetFieldNoField()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			string val = qso["band"];
+			Assert.Fail("Should have generated KeyNotFoundException");
+		}
+		
+		// test this[key] set with existing field
+		[Test]
+		public void TestSetFieldExistingField()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			qso["VE_pROV"] = "AB";
+			Assert.AreEqual("AB", qso["ve_prov"]);
+		}
+		
+		// test this[key] set with null field
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException),
+		                  ExpectedMessage="Value cannot be null.")]
+		public void TestSetFieldNullField()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			qso[null] = "AB";
+			Assert.Fail("Should have generated ArgumentNullException");
+		}
+		
+		// test this[key] set with empty field
+		[Test]
+		[ExpectedException(typeof(ArgumentException), ExpectedMessage="Value does not fall within the expected range.")]
+		public void TestSetFieldEmptyKey()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			qso[string.Empty] = "AB";
+			Assert.Fail("Should have generated ArgumentException");
+		}
+		
+		// test this[key] set with valid key for not existing field
+		[Test]
+		public void TestSetFieldValidKeyNotExistingField()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			qso["band"] = "10m";
+			Assert.AreEqual("10m", qso["BAND"]);
+		}
+		
+		// test this[key] set with valid key but invalid value for not existing field
+		[Test]
+		[ExpectedException(typeof(ArgumentException), 
+		                   ExpectedMessage="Programming Exception while attempting to add a new field:" +
+	                               "\r\nBand:11m - This QSO Field is of type enumeration. " +
+	                               "The value '11m' was not found in enumeration. - Field deleted.")]
+		public void TestSetFieldValidKeyNotExistingFieldInvalidValue()
+		{
+			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			qso["band"] = "11m";
+			Assert.Fail("Should have generated ArgumentException");
 		}
 	}
 }

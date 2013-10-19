@@ -27,6 +27,9 @@ namespace hamqsler
 	/// </summary>
 	public class Qso2
 	{
+		private AdifEnumerations adifEnums = null;
+		private Qsos2 qsos2 = null;
+		
 		private List<AdifField> fields = new List<AdifField>();
 		public List<AdifField> Fields
 		{
@@ -47,6 +50,8 @@ namespace hamqsler
 		/// <param name="qsos">Qsos2 object containing the user defined fields</param>
 		public Qso2(string qsoRecord, AdifEnumerations aEnums, ref string errorString, Qsos2 qsos=null)
 		{
+			adifEnums = aEnums;
+			qsos2 = qsos;
 			AdifFields af = new AdifFields(qsoRecord, ref errorString);
 			string[] flds = af.FieldNames;
 			string[] types = af.DataTypes;
@@ -698,5 +703,66 @@ namespace hamqsler
 			err = null;
 			return true;
 		}
+		
+        /// <summary>
+        /// retrieve value associated with key
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <returns>value associated with the key, or null if no field with that key in this Qso</returns>
+        /// <exception>ArgumentNullException if the key is null
+        /// ArgumentException if key is empty
+        /// KeyNotFoundException if no field with that key in this Qso
+        public string this[string key]
+        {
+            get
+            {
+                if (key == null)
+                    throw new ArgumentNullException();
+                if (key == string.Empty)
+                    throw new ArgumentException("Empty key");
+                foreach(AdifField field in fields)
+                {
+                	if(field.Name.ToLower().Equals(key.ToLower()))
+                	{
+                		return field.Value;
+                	}
+                }
+                throw new KeyNotFoundException();
+            }
+            set
+            {
+                if (key == null)
+                {
+                    throw new ArgumentNullException();
+                }
+                if (key == string.Empty)
+                {
+                    ArgumentException ex = new ArgumentException();
+                    throw ex;
+                }
+                foreach(AdifField field in fields)
+                {
+                	if(field.Name.ToLower().Equals(key.ToLower()))
+                	{
+                		field.Value = value;
+                		return;
+                	}
+                }
+                // use new Qso2 object to validate that key is a proper field type
+                // and value is valid
+                string err = string.Empty;
+                string fld = string.Format("<{0}:{1}>{2}", key, value.Length, value);
+                Qso2 q = new Qso2(fld, adifEnums, ref err, qsos2);
+                if(err != null)
+                {
+                	string error = "Programming Exception while attempting to add a new field:" +
+	                               Environment.NewLine +
+	                               err;
+                	throw new ArgumentException(error);
+                }
+                fields.Add(q.Fields[0]);
+            }
+        }
+
 	}
 }
