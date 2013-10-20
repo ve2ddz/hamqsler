@@ -934,5 +934,16 @@ namespace hamqslerTest
 			Assert.IsFalse(qso.Validate(ref errorString));
 			Assert.AreEqual(errMsg, errorString);
 		}
+		
+		// test ToAdifString
+		[Test]
+		public void TestToAdifString()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Assert.AreEqual("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<Qso_Date:8>20130615<Time_On:6>124316<eor>",
+			                qso.ToAdifString());
+		}
 	}
 }

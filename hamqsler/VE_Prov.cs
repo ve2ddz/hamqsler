@@ -35,14 +35,5 @@ namespace hamqsler
 		public VE_Prov(string prov) : base(prov)
 		{
 		}
-		
-		/// <summary>
-		/// Output class as a string in ADIF format
-		/// </summary>
-		/// <returns>value in ADIF format</returns>
-		public override string ToAdifString()
-		{
-			return string.Format("<State:{0}>{1}", Value.Length, Value);
-		}
 	}
 }

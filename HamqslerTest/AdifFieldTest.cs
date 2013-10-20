@@ -49,5 +49,13 @@ namespace hamqslerTest
 			Assert.IsNull(modStr);
 		}
 		
+		// test ToAdifField with no datatype
+		[Test]
+		public void TestToAdifFieldNoDataType()
+		{
+			AdifField field = new AdifField();
+			field.Value = "Fred";
+			Assert.AreEqual("<AdifField:4>Fred", field.ToAdifString());
+		}
 	}
 }

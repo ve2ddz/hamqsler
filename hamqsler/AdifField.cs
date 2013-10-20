@@ -88,5 +88,20 @@ namespace hamqsler
 			return true;
 		}
 		
+		public virtual string ToAdifString()
+		{
+			string adif = string.Empty;
+			if(DataType != null && DataType.Value != string.Empty)
+			{
+				adif += string.Format("<{0}:{1}:{3}>{2}", Name, Value.Length, Value, 
+				                      DataType.Value);
+			}
+			else
+			{
+				adif += string.Format("<{0}:{1}>{2}", Name, Value.Length, Value);
+			}
+			return adif;
+		}
+		
 	}
 }

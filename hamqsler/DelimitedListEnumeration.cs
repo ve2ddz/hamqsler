@@ -111,7 +111,7 @@ namespace hamqsler
 			return base.Validate(item, out err);
 		}
 		
-		public string ToAdifString()
+		public override string ToAdifString()
 		{
 			string list = delimList.ToString();
 			return "<" + Name + ":" + list.Length + ">" + list;

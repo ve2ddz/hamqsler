@@ -57,7 +57,7 @@ namespace hamqsler
 		/// Create string in Adif field format
 		/// </summary>
 		/// <returns>Counties in Adif field format</returns>
-		public string ToAdifString()
+		public override string ToAdifString()
 		{
 			string cnties = counties.ToString();
 			return string.Format("<{2}:{0}>{1}", cnties.Length, cnties, base.Name);

@@ -81,7 +81,7 @@ namespace hamqsler
 		/// Get VUCC_Grids in Adif Field format
 		/// </summary>
 		/// <returns>VUCC_Grids in Adif Field format</returns>
-		public string ToAdifString()
+		public override string ToAdifString()
 		{
 			string squares = gridSquares.ToString();
 			return string.Format("<{0}:{1}>{2}", base.Name, squares.Length, squares);

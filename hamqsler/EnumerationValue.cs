@@ -67,14 +67,5 @@ namespace hamqsler
 			}
 			return base.Validate(Value, out err);
 		}
-		
-		/// <summary>
-		/// Get ADIF string for this field
-		/// </summary>
-		/// <returns>string in ADIF format</returns>
-		public virtual string ToAdifString()
-		{
-			return "<" + Name + ":" + Value.Length + ">" + Value;
-		}
 	}
 }

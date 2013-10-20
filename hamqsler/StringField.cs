@@ -66,10 +66,10 @@ namespace hamqsler
 		/// Create ADIF field string from contents of this element
 		/// </summary>
 		/// <returns>ADIF field string</returns>
-		public virtual string ToAdifString()
+/*		public override string ToAdifString()
 		{
 			return "<" + Name + ":" + Value.Length + ">" + Value;
-		}
+		}*/
 		
 	}
 }

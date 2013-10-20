@@ -32,7 +32,7 @@ namespace hamqslerTest
 		public void TestToAdifString()
 		{
 			VE_Prov prov = new VE_Prov("ON");
-			Assert.AreEqual("<State:2>ON", prov.ToAdifString());
+			Assert.AreEqual("<VE_Prov:2>ON", prov.ToAdifString());
 		}
 	}
 }

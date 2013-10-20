@@ -807,5 +807,26 @@ namespace hamqsler
             }
         }
 
+        /// <summary>
+        /// Create an Adif Qso record from the fields in this object
+        /// </summary>
+        /// <returns>string containing the record</returns>
+        public string ToAdifString()
+        {
+        	string adif = string.Empty;
+			foreach(AdifField field in fields)
+			{
+				adif += field.ToAdifString();
+			}
+			if(adif != string.Empty)
+			{
+				adif += "<eor>";
+			}
+			else
+			{
+				adif = null;
+			}
+			return adif;
+        }
 	}
 }

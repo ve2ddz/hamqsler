@@ -31,8 +31,6 @@ namespace hamqsler
 			get { return fieldName; }
 		}
 		
-		private EnumerationValue dataType = null;
-		
 		/// <summary>
 		/// Constructor
 		/// Note: no validation of input is performed in the constructor. Call Validate after
@@ -46,16 +44,7 @@ namespace hamqsler
 			: base(value)
 		{
 			fieldName = fldName;
-			dataType = new EnumerationValue(dType, "DataType", aEnums);
-		}
-		
-		/// <summary>
-		/// Output object in ADIF field format
-		/// </summary>
-		/// <returns>object in ADIF field format</returns>
-		public override string ToAdifString()
-		{
-			return string.Format("<{0}:{1}:{2}>{3}", Name, Value.Length, dataType.Value, Value);
+			DataType = new EnumerationValue(dType, "DataType", aEnums);
 		}
 		
 		/// <summary>
@@ -79,19 +68,19 @@ namespace hamqsler
 				err = "Invalid Application Defined Fieldname.";
 				return false;
 			}
-			if(!dataType.Validate(out err, out modStr))
+			if(!DataType.Validate(out err, out modStr))
 			{
 				err = "Invalid Data Type.";
 				return false;
 			}
-			switch(dataType.Value)
+			switch(DataType.Value)
 			{
 				case "A":			// AwardList type
 					string[] awards = Value.Split(',');
 					string[] awardsList = Value.Split(',');
 					for(int i = 0; i < awards.Length; i++)
 					{
-						if(!dataType.aEnums.IsInEnumeration("Award", awards[i]))
+						if(!DataType.aEnums.IsInEnumeration("Award", awards[i]))
 						{
 							modStr = "Invalid AwardList item: '" + awards[i] + "'. Item removed.";
 							awardsList[i] = null;
@@ -123,7 +112,7 @@ namespace hamqsler
 					string[] creditList = Value.Split(',');
 					for(int i = 0; i < credits.Length; i++)
 					{
-						if(!dataType.aEnums.IsInEnumeration("Credit", credits[i]))
+						if(!DataType.aEnums.IsInEnumeration("Credit", credits[i]))
 						{
 							modStr = "Invalid CreditList item: '" + credits[i] + "'.";
 							creditList[i] = null;
@@ -180,7 +169,7 @@ namespace hamqsler
 					{
 						string gError = string.Empty;
 						string gMod = string.Empty;
-						Award_Granted granted = new Award_Granted(awards[i], dataType.aEnums);
+						Award_Granted granted = new Award_Granted(awards[i], DataType.aEnums);
 						if(!granted.Validate(out gError, out gMod))
 						{
 							err += gError + Environment.NewLine;
@@ -206,7 +195,7 @@ namespace hamqsler
 					}
 					break;
 				default:
-					err = "Invalid data type: '" + dataType.Value + "'.";
+					err = "Invalid data type: '" + DataType.Value + "'.";
 					return false;
 			}
 			return true;

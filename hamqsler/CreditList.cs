@@ -140,7 +140,7 @@ namespace hamqsler
 		/// Convert list to an Adif string
 		/// </summary>
 		/// <returns>string containing creditlist info in ADIF format</returns>
-		public string ToAdifString()
+		public override string ToAdifString()
 		{
 			string adif = string.Empty;
 			foreach(Credit credit in creditList)
