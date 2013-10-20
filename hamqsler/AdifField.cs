@@ -88,6 +88,10 @@ namespace hamqsler
 			return true;
 		}
 		
+		/// <summary>
+		/// Create Adif record for this field
+		/// </summary>
+		/// <returns>Adif formatted field for this object</returns>
 		public virtual string ToAdifString()
 		{
 			string adif = string.Empty;
@@ -103,5 +107,25 @@ namespace hamqsler
 			return adif;
 		}
 		
+		/// <summary>
+		/// check 2 AdifField object for equality
+		/// </summary>
+		/// <param name="obj">AdifField object to compare with this one</param>
+		/// <returns>true if equal, false otherwise</returns>
+		public override bool Equals(object obj)
+		{
+			AdifField f = obj as AdifField;
+			if(f == null)
+			{
+				return false;
+			}
+			return this.ToAdifString().Equals(f.ToAdifString());
+		}
+
+		public override int GetHashCode()
+		{
+			return this.ToAdifString().GetHashCode();
+		}
+
 	}
 }

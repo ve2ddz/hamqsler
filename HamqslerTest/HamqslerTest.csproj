@@ -172,6 +172,7 @@
     <Compile Include="QsoCompleteTests.cs" />
     <Compile Include="QsoDateOffTests.cs" />
     <Compile Include="QsoDateTests.cs" />
+    <Compile Include="QsoEqualityComparerTests.cs" />
     <Compile Include="QsoRandomTests.cs" />
     <Compile Include="Qsos2Tests.cs" />
     <Compile Include="QthTests.cs" />

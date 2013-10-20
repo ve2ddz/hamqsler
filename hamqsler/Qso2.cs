@@ -828,5 +828,57 @@ namespace hamqsler
 			}
 			return adif;
         }
+        
+        /// <summary>
+        /// compares a Qso2 object to this one for equality
+        /// </summary>
+        /// <param name="obj">Qso2 object to compare to this one</param>
+        /// <returns>true if equal, false otherwise</returns>
+        public override bool Equals(object obj)
+		{
+			Qso2 other = obj as Qso2;
+			if (other == null)
+			{
+				return false;
+			}
+			if(this.Fields.Count != other.Fields.Count)
+			{
+				return false;
+			}
+			foreach(AdifField field1 in this.Fields)
+			{
+				bool equal = false;
+				foreach(AdifField field2 in other.Fields)
+				{
+					if(field1.Name.Equals(field2.Name))
+					{
+						if(field1.Equals(field2))
+						{
+							equal = true;
+							break;
+						}
+						else
+						{
+							return false;
+						}
+					}
+				}
+				if(!equal)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+        
+        /// <summary>
+        /// Generate hash code for this object
+        /// </summary>
+        /// <returns>hash code for this object</returns>
+		public override int GetHashCode()
+		{
+			return this.ToAdifString().GetHashCode();
+		}
+
 	}
 }

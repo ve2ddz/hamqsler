@@ -57,5 +57,26 @@ namespace hamqslerTest
 			field.Value = "Fred";
 			Assert.AreEqual("<AdifField:4>Fred", field.ToAdifString());
 		}
+		
+		// test Equals with equal fields
+		[Test]
+		public void TestEqualsWithEqualFields()
+		{
+			AdifField f1 = new AdifField();
+			f1.Value = "Fred";
+			AdifField f2 = new AdifField();
+			f2.Value = "Fred";
+			Assert.IsTrue(f1.Equals(f2));
+		}
+		
+		// test Equals with unequal field types
+		[Test]
+		public void TestEqualsUnequalFieldTypes()
+		{
+			AdifField f1 = new AdifField();
+			f1.Value = "Fred";
+			Age f2 = new Age("19");
+			Assert.IsFalse(f1.Equals(f2));
+		}
 	}
 }

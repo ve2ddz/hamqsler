@@ -37,7 +37,7 @@ namespace hamqsler
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Qsos2()
+		public Qsos2() : base(new QsoEqualityComparer())
 		{
 		}
 		

@@ -945,5 +945,57 @@ namespace hamqslerTest
 			Assert.AreEqual("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<Qso_Date:8>20130615<Time_On:6>124316<eor>",
 			                qso.ToAdifString());
 		}
+		
+		// test Equals with equal Qsos
+		[Test]
+		public void TestEqualsWithEqualQsos()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(q2.Validate(ref errorString));
+			Assert.IsTrue(qso.Equals(q2));
+		}
+		
+		// test Equals with unequal Qsos (different date)
+		[Test]
+		public void TestEqualsWithDiffDates()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130622<time_on:6>124316",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(q2.Validate(ref errorString));
+			Assert.IsFalse(qso.Equals(q2));
+		}
+		
+		// test Equals with unequal Qsos (different number of fields)
+		[Test]
+		public void TestEqualsWithDiffNumberOfFields()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<time_off:6>124522",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(q2.Validate(ref errorString));
+			Assert.IsFalse(qso.Equals(q2));
+		}
+		
+		// test Equals with unequal Qsos (same number of fields, but one field different)
+		[Test]
+		public void TestEqualsWithDiffField()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<time_off:6>124522",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(q2.Validate(ref errorString));
+			Assert.IsFalse(qso.Equals(q2));
+		}
 	}
 }

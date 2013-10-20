@@ -291,6 +291,7 @@
     <Compile Include="Qsl_Sent_Via.cs" />
     <Compile Include="Qsl_Via.cs" />
     <Compile Include="Qso2.cs" />
+    <Compile Include="QsoEqualityComparer.cs" />
     <Compile Include="QsoInputData.cs" />
     <Compile Include="QsoInputDialog.xaml.cs">
       <DependentUpon>QsoInputDialog.xaml</DependentUpon>
