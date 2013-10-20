@@ -115,7 +115,7 @@ namespace hamqsler
 				}
 				else
 				{
-					error += valError;
+					error += valError + " - QSO not added." + Environment.NewLine;
 				}
 				adif = adif.Substring(eor + 5);
 				eor = adif.ToUpper().IndexOf("<EOR>");

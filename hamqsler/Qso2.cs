@@ -694,13 +694,47 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Validate the QSO. This ensures that the QSO has at least the minimum fields
+		/// Validate the QSO. This ensures that the QSO has at least the minimum fields:
+		/// call, mode, qso_date, time_on, and either band or freq.
 		/// </summary>
 		/// <param name="err">Error message if QSO is not valid, null otherwise.</param>
 		/// <returns>true if QSO is valid, false otherwise</returns>
 		public bool Validate(ref string err)
 		{
 			err = null;
+			string call = this["call"];
+			if(call == null || call == string.Empty)
+			{
+				err = "Invalid QSO: Call not specified.";
+				return false;
+			}
+			string mode = this["mode"];
+			if(mode == null || mode == string.Empty)
+			{
+				err = "Invalid QSO: Mode not specified.";
+				return false;
+			}
+			string freq = this["freq"];
+			string band = this["band"];
+			bool forb = (freq != null && freq != string.Empty) ||
+				(band != null && band != string.Empty);
+			if(!forb)
+			{
+				err = "Invalid QSO: Neither a band or frequency specified.";
+				return false;
+			}
+			string date = this["qso_date"];
+			if(date == null || date == string.Empty)
+			{
+				err = "Invalid QSO: Qso_Date not specified.";
+				return false;
+			}
+			string time = this["time_on"];
+			if(time == null || time == string.Empty)
+			{
+				err = "Invalid QSO: Time_On not specified.";
+				return false;
+			}
 			return true;
 		}
 		
@@ -727,7 +761,7 @@ namespace hamqsler
                 		return field.Value;
                 	}
                 }
-                throw new KeyNotFoundException();
+                return null;
             }
             set
             {

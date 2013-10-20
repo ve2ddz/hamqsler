@@ -828,13 +828,12 @@ namespace hamqslerTest
 		
 		// test this[key] get with field that is not in Qso
 		[Test]
-		[ExpectedException(typeof(KeyNotFoundException))]
 		public void TestGetFieldNoField()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
 			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
 			string val = qso["band"];
-			Assert.Fail("Should have generated KeyNotFoundException");
+			Assert.AreEqual(null, val);
 		}
 		
 		// test this[key] set with existing field
@@ -903,6 +902,37 @@ namespace hamqslerTest
 			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
 			qso["band"] = "11m";
 			Assert.Fail("Should have generated ArgumentException");
+		}
+		
+		// test Validate with valid QSO (call, mode, freq or band, qso_date, time_on)
+		[Test]
+		public void TestValidateValidWithFreq(
+			[Values("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
+			       "<Call:6>VA3JNO<Mode:3>SSB<band:3>40m<qso_date:8>20130615<time_on:6>124316")] string q)
+		{
+			Qso2 qso = new Qso2(q, aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Assert.AreEqual(null, errorString);
+		}
+		
+		// test Validate with invalid QSO (call, mode, freq or band, qso_date, time_on missing)
+		[Test, Sequential]
+		public void TestValidateRequiredFieldMissing(
+			[Values("<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
+			       "<Call:6>VA3JNO<band:3>40m<qso_date:8>20130615<time_on:6>124316",
+			       "<Call:6>VA3JNO<Mode:3>SSB<qso_date:8>20130615<time_on:6>124316",
+			       "<Call:6>VA3JNO<Mode:3>SSB<band:3>40m<time_on:6>124316",
+			       "<Call:6>VA3JNO<Mode:3>SSB<band:3>40m<qso_date:8>20130615")] string q,
+			[Values("Invalid QSO: Call not specified.",
+			       "Invalid QSO: Mode not specified.",
+			       "Invalid QSO: Neither a band or frequency specified.",
+			       "Invalid QSO: Qso_Date not specified.",
+			       "Invalid QSO: Time_On not specified.")] string errMsg)
+		{
+			Qso2 qso = new Qso2(q, aEnums, ref errorString);
+			Assert.AreEqual(null, errorString);
+			Assert.IsFalse(qso.Validate(ref errorString));
+			Assert.AreEqual(errMsg, errorString);
 		}
 	}
 }
