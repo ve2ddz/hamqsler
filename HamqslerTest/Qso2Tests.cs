@@ -997,5 +997,25 @@ namespace hamqslerTest
 			Assert.IsTrue(q2.Validate(ref errorString));
 			Assert.IsFalse(qso.Equals(q2));
 		}
+		
+		// test get field with default value
+		[Test]
+		public void TestGetFieldWithDefault()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Assert.AreEqual("SSB", qso["mode", "CW"]);
+		}
+		
+		// test get field with no field and default value
+		[Test]
+		public void TestGetNoFieldWithDefault()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Assert.AreEqual("CW", qso["mode2", "CW"]);
+		}
 	}
 }

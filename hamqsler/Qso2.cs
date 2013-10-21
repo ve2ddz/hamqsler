@@ -790,6 +790,7 @@ namespace hamqsler
                 		return;
                 	}
                 }
+                
                 // not an existing field, so
                 // use new Qso2 object to validate that key is a proper field type
                 // and value is valid
@@ -804,6 +805,22 @@ namespace hamqsler
                 	throw new ArgumentException(error);
                 }
                 fields.Add(q.Fields[0]);
+            }
+        }
+        
+        /// <summary>
+        /// retrieve value associated with key, or defaultValue if no field for key
+        /// </summary>
+        public string this[string key, string defaultValue]
+        {
+            get
+            {
+            	string value = this[key];
+            	if(value == null)
+            	{
+            		value = defaultValue;
+            	}
+                return value;
             }
         }
 
@@ -836,11 +853,11 @@ namespace hamqsler
         /// <returns>true if equal, false otherwise</returns>
         public override bool Equals(object obj)
 		{
+        	if(obj == null || !(obj is Qso2))
+        	{
+        		return false;
+        	}
 			Qso2 other = obj as Qso2;
-			if (other == null)
-			{
-				return false;
-			}
 			if(this.Fields.Count != other.Fields.Count)
 			{
 				return false;
@@ -870,7 +887,7 @@ namespace hamqsler
 			}
 			return true;
 		}
-        
+
         /// <summary>
         /// Generate hash code for this object
         /// </summary>
