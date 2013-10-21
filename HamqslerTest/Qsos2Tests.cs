@@ -388,5 +388,51 @@ namespace hamqslerTest
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(1, qsos.Count);
 		}
+		
+		// test ToAdifString
+		[Test]
+		public void TestToAdifString()
+		{
+			string adif = "some header text" + Environment.NewLine +
+				"<adif_ver:5>3.0.4" + Environment.NewLine +
+				"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
+				"<userdef2:19:E>SweaterSize,{S,M,L}" +Environment.NewLine +
+				"<userdef3:15:N>ShoeSize,{5:20}" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:6>VA3JNO<Qso_Date:8>20130801<Time_On:4>1017<eor>";
+			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.AreEqual(null, error);
+			DateTime now = DateTime.Now.ToUniversalTime();
+			string firstLine = string.Format("Generated on {0} at {1} UTC.", now.ToLongDateString(),
+			                                 now.ToShortTimeString());
+			string adifString = qsos.ToAdifString();
+			string[] lines = adifString.Split('\r');
+			if(!lines[0].Equals(firstLine))
+			{
+				now = now.AddSeconds(-1.0);
+				firstLine = string.Format("Generated on {0} at {1} UTC.", now.ToLongDateString(),
+			                              now.ToShortTimeString());			
+				if(!lines[0].Equals(firstLine))
+				{
+					Assert.Fail("Date and time on first line not within 1 second of current time");
+				}
+			}
+			string adifVer = qsos.AdifEnums.Version;
+			string compString = firstLine + Environment.NewLine +
+				string.Format("<adif_ver:{0}>{1}", adifVer.Length, adifVer) + Environment.NewLine +
+				"<programid:8>HamQSLer" + Environment.NewLine +
+				"<Userdef1:8:N>QRP_ARCI" +Environment.NewLine +
+				"<Userdef2:19:E>SweaterSize,{S,M,L}" +Environment.NewLine +
+				"<Userdef3:15:N>ShoeSize,{5:20}" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<Mode:2>CW<Band:3>10m<Call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<Mode:2>CW<Band:3>10m<Call:6>VA3JNO<Qso_Date:8>20130801<Time_On:4>1017<eor>" +
+				Environment.NewLine;
+			Assert.AreEqual(compString, qsos.ToAdifString());
+
+		}
 	}
 }

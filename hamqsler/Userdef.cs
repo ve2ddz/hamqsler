@@ -89,10 +89,15 @@ namespace hamqsler
 		/// <summary>
 		/// create string in ADIF format
 		/// </summary>
-		/// <param name="defNum">Userdef number</param>
+		/// <param name="defNum">Userdef number (must be positive, non-zero integer.)</param>
+		/// <exception>ArgumentException if defNum not greater than 0</exception>
 		/// <returns>Userdef in ADIF format</returns>
-		public string ToAdifString(uint defNum)
+		public string ToAdifString(int defNum)
 		{
+			if(defNum < 1)
+			{
+				throw new ArgumentException("Programming error: Value must be greater than 0.");
+			}
 			if(EnumField != null)
 			{
 				string enumString = EnumField.ToString();

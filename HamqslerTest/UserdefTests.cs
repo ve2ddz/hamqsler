@@ -61,8 +61,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifStringERange()
 		{
-			Userdef ud = new Userdef("ShoeSize", "E", "5", "20", aEnums);
-			Assert.AreEqual("<Userdef3:15:E>ShoeSize,{5:20}", ud.ToAdifString(3));
+			Userdef ud = new Userdef("ShoeSize", "N", "5", "20", aEnums);
+			Assert.AreEqual("<Userdef3:15:N>ShoeSize,{5:20}", ud.ToAdifString(3));
 		}
 		
 		// test Validate with valid fields

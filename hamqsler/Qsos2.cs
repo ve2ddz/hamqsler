@@ -34,6 +34,12 @@ namespace hamqsler
 			get {return userDefs;}
 		}
 		
+		private AdifEnumerations adifEnums;
+		public AdifEnumerations AdifEnums
+		{
+			get {return adifEnums;}
+		}
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -50,6 +56,7 @@ namespace hamqsler
 		/// <returns>true if no errors, false otherwise</returns>
 		public bool Import(string adif, ref string error, AdifEnumerations aEnums)
 		{
+			adifEnums = aEnums;
 			this.ClearQsos();
 			return Add(adif, ref error, aEnums);
 		}
@@ -219,6 +226,34 @@ namespace hamqsler
 				}
 			}
 			return true;
+		}
+		
+		/// <summary>
+		/// Convert this object to an ADIF string
+		/// </summary>
+		/// <returns>Adif string representing the contents of this Qsos2 object</returns>
+		public string ToAdifString()
+		{
+			DateTime now = DateTime.Now.ToUniversalTime();
+			string adif = string.Format("Generated on {0} at {1} UTC." +
+			                            Environment.NewLine +
+			                            "<adif_ver:{2}>{3}" +
+			                            Environment.NewLine +
+			                            "<programid:8>HamQSLer" +
+			                            Environment.NewLine,
+			                            now.ToLongDateString(), now.ToShortTimeString(),
+			                            adifEnums.Version.Length,
+			                       		adifEnums.Version);
+			for(int i = 0; i < UserDefs.Count; i++)
+			{
+				adif += UserDefs[i].ToAdifString(i+1) + Environment.NewLine;
+			}
+			adif += "<eoh>" + Environment.NewLine;
+			foreach(Qso2 qso in this)
+			{
+				adif += qso.ToAdifString() + Environment.NewLine;
+			}
+			return adif;
 		}
 	}
 }
