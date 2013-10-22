@@ -34,7 +34,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="band">Band value</param>
 		/// <param name="aEnums">AdifEnumerations object containing the Band enumeration</param>
-		public Band(string band, AdifEnumerations aEnums) : base(band, "Band", aEnums)
+		public Band(string band, AdifEnumerations aEnums) : base(band.ToLower(), "Band", aEnums)
 		{
 		}
 		

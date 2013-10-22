@@ -64,6 +64,18 @@
 				Assert.IsNull(modStr);
 			}
 	
+			// test Validate with valid value
+			[Test]
+			public void TestValidate1MM()
+			{
+				Band band = new Band("1MM", aEnums);
+				string error = string.Empty;
+				string modStr = string.Empty;
+				Assert.IsTrue(band.Validate(out error, out modStr));
+				Assert.IsNull(error);
+				Assert.IsNull(modStr);
+			}
+	
 			// test Validate with invalid value
 			[Test]
 			public void TestValidateBadValue()
@@ -101,5 +113,12 @@
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
 
+		// test IsWithinBand for frequency outside of the band
+		[Test]
+		public void TestIsWithinBandBadFreqM()
+		{
+			Band band = new Band("40M", aEnums);
+			Assert.IsFalse(band.IsWithinBand("14.302"));
+		}
 	}
 }

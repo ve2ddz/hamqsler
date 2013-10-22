@@ -63,6 +63,18 @@ namespace hamqslerTest
 			Assert.IsNull(error);
 			Assert.IsNull(modStr);
 		}
+	
+			// test Validate with valid value
+			[Test]
+			public void TestValidate1MM()
+			{
+				Band_Rx band = new Band_Rx("1MM", aEnums);
+				string error = string.Empty;
+				string modStr = string.Empty;
+				Assert.IsTrue(band.Validate(out error, out modStr));
+				Assert.IsNull(error);
+				Assert.IsNull(modStr);
+			}
 
 		// test Validate with invalid value
 		[Test]
@@ -98,6 +110,14 @@ namespace hamqslerTest
 		public void TestIsWithinBandBadFreq()
 		{
 			Band_Rx band = new Band_Rx("40m", aEnums);
+			Assert.IsFalse(band.IsWithinBand("14.302"));
+		}
+
+		// test IsWithinBand for frequency outside of the band
+		[Test]
+		public void TestIsWithinBandBadFreqM()
+		{
+			Band_Rx band = new Band_Rx("40M", aEnums);
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
 	}
