@@ -26,7 +26,7 @@ namespace hamqsler
 	/// </summary>
 	public class Freq : NumberField
 	{
-		private AdifEnumerations adifEnums;
+		protected AdifEnumerations adifEnums;
 		
 		/// <summary>
 		/// Constructor
@@ -62,6 +62,36 @@ namespace hamqsler
 				return false;
 			}
 			return true;
+		}
+
+		/// <summary>
+		/// Check value for this field and modify it or other fields in QSO if required
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string indicating changes made, or null if no changes</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mods = null;
+			string b = qso["band"];
+			string bandFromFreq = string.Empty;
+			adifEnums.GetBandFromFrequency(Value, out bandFromFreq);
+			if(b != null)
+			{
+				if(!b.Equals(bandFromFreq))
+				{
+					qso["band"] = bandFromFreq;
+					mods = "Ham band in Band field does not match band for given frequency." +
+						" Band field modified to match the frequency.";
+				}
+			}
+			else
+			{
+				string band = string.Empty;
+				Band fBand = new Band(band, adifEnums);
+				qso.Fields.Add(fBand);
+				mods = "Frequency specified, but band is not. Band field generated.";
+			}
+			return mods;
 		}
 	}
 }

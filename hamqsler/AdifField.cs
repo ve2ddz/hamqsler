@@ -127,5 +127,14 @@ namespace hamqsler
 			return this.ToAdifString().GetHashCode();
 		}
 
+		/// <summary>
+		/// Check value for this field and modify it or other fields in QSO if required
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string indicating changes made, or null if no changes</returns>
+		public virtual string ModifyValues(Qso2 qso)
+		{
+			return null;
+		}
 	}
 }

@@ -36,5 +36,35 @@ namespace hamqsler
 		public Freq_Rx(string freq, AdifEnumerations aEnums) : base(freq, aEnums)
 		{
 		}
+
+		/// <summary>
+		/// Check value for this field and modify it or other fields in QSO if required
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string indicating changes made, or null if no changes</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mods = null;
+			string b = qso["band_rx"];
+			string bandFromFreq = string.Empty;
+			adifEnums.GetBandFromFrequency(Value, out bandFromFreq);
+			if(b != null)
+			{
+				if(!b.Equals(bandFromFreq))
+				{
+					qso["band_rx"] = bandFromFreq;
+					mods = "Ham band in Band_Rx field does not match band for given frequency." +
+						" Band field modified to match the frequency.";
+				}
+			}
+			else
+			{
+				string band = string.Empty;
+				Band fBand = new Band(band, adifEnums);
+				qso.Fields.Add(fBand);
+				mods = "Frequency specified, but band is not. Band_Rx field generated.";
+			}
+			return mods;
+		}
 	}
 }

@@ -897,5 +897,21 @@ namespace hamqsler
 			return this.ToAdifString().GetHashCode();
 		}
 
+		/// <summary>
+		/// Retrieve Adif Field of type given by parameter
+		/// </summary>
+		/// <param name="fieldType">Name of field to return</param>
+		/// <returns>AdifField, or null if not in Qso</returns>
+		public AdifField GetField(string fieldType)
+		{
+			foreach(AdifField field in fields)
+			{
+				if(field.Name.ToUpper().Equals(fieldType.ToUpper()))
+				{
+					return field;
+				}
+			}
+			return null;
+		}
 	}
 }

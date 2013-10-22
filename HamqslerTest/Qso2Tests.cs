@@ -1017,5 +1017,25 @@ namespace hamqslerTest
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Assert.AreEqual("CW", qso["mode2", "CW"]);
 		}
+		
+		// test GetAdifField for field that exists in this QSO
+		[Test]
+		public void GetAdifField()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
+			                    aEnums, ref errorString);
+			AdifField field = qso.GetField("Call");
+			Assert.IsTrue(field is Call);
+		}
+		
+		// test GetAdifField for field that does not exist in this QSO
+		[Test]
+		public void GetAdifFieldNoField()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
+			                    aEnums, ref errorString);
+			Assert.IsTrue(qso.Validate(ref errorString));
+			Assert.IsNull(qso.GetField("time_off"));
+		}
 	}
 }

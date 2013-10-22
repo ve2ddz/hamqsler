@@ -78,5 +78,15 @@ namespace hamqslerTest
 			Age f2 = new Age("19");
 			Assert.IsFalse(f1.Equals(f2));
 		}
+		
+		// test ModifyValues
+		[Test]
+		public void TestModifyValues()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2(string.Empty, null, ref err, null);
+			AdifField f1 = new AdifField();
+			Assert.IsNull(f1.ModifyValues(qso));
+		}
 	}
 }

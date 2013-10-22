@@ -29,13 +29,21 @@ namespace hamqslerTest
 	[TestFixture]
 	public class FreqTests
 	{
+		AdifEnumerations aEnums = null;
+		
+		// test fixture setup
+		[TestFixtureSetUp]
+		public void Setup()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);			
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("14.235", aEnums);
 			Assert.AreEqual("<Freq:6>14.235", freq.ToAdifString());
 		}
@@ -44,9 +52,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidFreq()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("14.235", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -59,9 +64,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateFreqOutsideBands()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("14.463", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -74,9 +76,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateFreqNonNumber()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("Fred", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -89,15 +88,57 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateFreqNonNumber2()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Freq freq = new Freq("14.235F", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
 			Assert.AreEqual("Value must be a number.", err);
 			Assert.IsNull(modStr);
+		}
+		
+		// test ModifyValues with band matching frequency
+		[Test]
+		public void TestModifyValuesWithMatchingValues()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Freq:6>14.263<Band:3>20m", aEnums, ref err);
+			Assert.IsNull(err);
+			AdifField field = qso.GetField("Freq");
+			Assert.IsNotNull(field);
+			Freq freq = field as Freq;
+			Assert.IsNotNull(freq);
+			Assert.IsNull(freq.ModifyValues(qso));
+		}
+		
+		// test ModifyValues with band not matching frequency
+		[Test]
+		public void TestModifyValuesWithMisMatchedValues()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Freq:6>14.263<Band:3>10m", aEnums, ref err);
+			Assert.IsNull(err);
+			AdifField field = qso.GetField("Freq");
+			Assert.IsNotNull(field);
+			Freq freq = field as Freq;
+			Assert.IsNotNull(freq);
+			Assert.AreEqual("Ham band in Band field does not match band for given frequency." +
+						" Band field modified to match the frequency.",
+						freq.ModifyValues(qso));
+		}
+		
+		// test ModifyValues without band
+		[Test]
+		public void TestModifyValuesWithoutBand()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Freq:6>14.263", aEnums, ref err);
+			Assert.IsNull(err);
+			AdifField field = qso.GetField("Freq");
+			Assert.IsNotNull(field);
+			Freq freq = field as Freq;
+			Assert.IsNotNull(freq);
+			Assert.AreEqual("Frequency specified, but band is not. Band field generated.",
+						freq.ModifyValues(qso));
 		}
 	}
 }
