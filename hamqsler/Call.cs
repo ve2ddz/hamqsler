@@ -53,6 +53,10 @@ namespace hamqsler
 			"VP6[DP]",
 			"VP8[FGHOS]"
 		};
+		public static string[] Prefixes
+		{
+			get {return prefixes;}
+		}
 		
 		// the following array contains valid, non-standard callsigns
 		private static string[] nsCalls = {

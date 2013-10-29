@@ -37,45 +37,17 @@ namespace hamqslerTest
 		
 		// test Validate with valid prefix
 		[Test]
-		public void TestValidateValidVA3()
+		public void TestValidateValidPrefixes(
+			[Values("VA3", "W4", "9A", "5C5", "S58", "J79", "3D2C", "3D2R", "BV9P",
+			        "CE0A", "CE0X", "CE0Z", "E51N", "E51S", "FO0A", "FO0M", "FT0W",
+			        "FT0X", "FT1W", "FT1X", "FT2W", "FT2X", "FT3W", "FT3X", "FT4W",
+			       "FT4X", "FT5W", "FT5X", "FT6W", "FT6X", "FT7W", "FT7X", "FT8W",
+			       "FT8X", "FT9W", "FT9X", "HK0A", "HK0M", "JD1M", "JD1O", "KH5K",
+			       "KH7K", "PY0F", "PY0T", "R1FJ", "R1MV", "VK0H", "VK0M", "VK9C",
+			       "VK9L", "VK9M", "VK9N", "VK9W", "VK9X", "VP2M", "VP2V", "VP6D",
+			       "VP6P", "VP8F", "VP8G", "VP8H", "VP8O", "VP8S", "VP2E")] string prefix)
 		{
-			Pfx pfx = new Pfx("VA3");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsTrue(pfx.Validate(out err, out modStr));
-			Assert.IsNull(err);
-			Assert.IsNull(modStr);
-		}
-		
-		// test Validate with valid prefix
-		[Test]
-		public void TestValidateValidW4()
-		{
-			Pfx pfx = new Pfx("W4");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsTrue(pfx.Validate(out err, out modStr));
-			Assert.IsNull(err);
-			Assert.IsNull(modStr);
-		}
-		
-		// test Validate with valid prefix
-		[Test]
-		public void TestValidateValid9A()
-		{
-			Pfx pfx = new Pfx("9A");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsTrue(pfx.Validate(out err, out modStr));
-			Assert.IsNull(err);
-			Assert.IsNull(modStr);
-		}
-				
-		// test Validate with valid prefix
-		[Test]
-		public void TestValidateValid5C5()
-		{
-			Pfx pfx = new Pfx("5C5");
+			Pfx pfx = new Pfx(prefix);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(pfx.Validate(out err, out modStr));
@@ -83,87 +55,16 @@ namespace hamqslerTest
 			Assert.IsNull(modStr);
 		}
 
-		// test Validate with valid prefix
+		// test Validate with invalid prefixes
 		[Test]
-		public void TestValidateValidS58()
+		public void TestValidateInvalidPrefixes(
+			[Values("99", "WW", "WWE4", "9A/W4", "TG9F")] string prefix)
 		{
-			Pfx pfx = new Pfx("S58");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsTrue(pfx.Validate(out err, out modStr));
-			Assert.IsNull(err);
-			Assert.IsNull(modStr);
-		}
-
-		// test Validate with valid prefix
-		[Test]
-		public void TestValidateValidJ79()
-		{
-			Pfx pfx = new Pfx("J79");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsTrue(pfx.Validate(out err, out modStr));
-			Assert.IsNull(err);
-			Assert.IsNull(modStr);
-		}
-
-		// test Validate with invalid prefix
-		[Test]
-		public void TestValidateInvalid99()
-		{
-			Pfx pfx = new Pfx("99");
+			Pfx pfx = new Pfx(prefix);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(pfx.Validate(out err, out modStr));
-			Assert.AreEqual("\t'99' is not a valid prefix.", err);
-			Assert.IsNull(modStr);
-		}
-		
-		// test Validate with invalid prefix
-		[Test]
-		public void TestValidateInvalidWW()
-		{
-			Pfx pfx = new Pfx("WW");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsFalse(pfx.Validate(out err, out modStr));
-			Assert.AreEqual("\t'WW' is not a valid prefix.", err);
-			Assert.IsNull(modStr);
-		}
-		
-		// test Validate with invalid prefix
-		[Test]
-		public void TestValidateInvalidWWE4()
-		{
-			Pfx pfx = new Pfx("WWE4");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsFalse(pfx.Validate(out err, out modStr));
-			Assert.AreEqual("\t'WWE4' is not a valid prefix.", err);
-			Assert.IsNull(modStr);
-		}
-		
-		// test Validate with invalid prefix
-		[Test]
-		public void TestValidateInvalid9AW4()
-		{
-			Pfx pfx = new Pfx("9A/W4");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsFalse(pfx.Validate(out err, out modStr));
-			Assert.AreEqual("\t'9A/W4' is not a valid prefix.", err);
-			Assert.IsNull(modStr);
-		}
-		
-		// test Validate with invalid prefix
-		[Test]
-		public void TestValidateInvalidTG9F()
-		{
-			Pfx pfx = new Pfx("TG9F");
-			string err = string.Empty;
-			string modStr = string.Empty;
-			Assert.IsFalse(pfx.Validate(out err, out modStr));
-			Assert.AreEqual("\t'TG9F' is not a valid prefix.", err);
+			Assert.AreEqual(string.Format("\t'{0}' is not a valid prefix.", prefix), err);
 			Assert.IsNull(modStr);
 		}
 	}
