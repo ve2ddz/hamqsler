@@ -255,12 +255,6 @@ namespace hamqsler
 				bands.Add(qwi.Band);
 			}
 			List<string> bands2 = new List<string>(bands.Distinct());
-			// TODO: remove this check and make sure that a QSO always has a band.
-			int emptyIndex = bands2.IndexOf(string.Empty);
-			if(emptyIndex >= 0)
-			{
-				bands2.RemoveAt(emptyIndex);
-			}
 			bands2.Sort(new BandComparer());
 			return bands2;
 		}
