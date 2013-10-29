@@ -66,7 +66,7 @@ namespace hamqslerTest
  			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Cont cont = new Cont("AX", aEnums);
 			Assert.IsFalse(cont.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'AX' " +
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'AX' " +
 			                "was not found in enumeration.", err);
 			Assert.IsNull(modStr);
 		}

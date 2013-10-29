@@ -49,6 +49,10 @@ namespace hamqsler
 			err = null;
 			modStr = null;
 			int len = Value.Length;
+			if(len == 0)
+			{
+				return true;
+			}
 			if(len == 2 && Regex.IsMatch(Value.Substring(0, 2), "[A-Ra-r][A-Ra-r]"))
 		    {
 				return true;
@@ -65,7 +69,7 @@ namespace hamqsler
 			{
 				return true;
 			}
-			err = string.Format("'{0}' is not a valid grid square.", Value);
+			err = string.Format("\t'{0}' is not a valid grid square.", Value);
 			return false;
 		}
 	}

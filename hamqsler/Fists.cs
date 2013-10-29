@@ -51,12 +51,12 @@ namespace hamqsler
 			modStr = null;
 			if(!Regex.IsMatch(Value, @"^[0-9]+"))
 			{
-				err = "Fists must start with member's number.";
+				err = "\tFists must start with member's number.";
 				return false;
 			}
 			if(Regex.IsMatch(Value, @"^[0-9]+[\\.]"))
 			{
-				err = "Fists number must be digits only.";
+				err = "\tFists number must be digits only.";
 				return false;
 			}
 			return true;

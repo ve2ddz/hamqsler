@@ -54,7 +54,7 @@ namespace hamqsler
 			string countryCode = string.Empty;
 			if(!adifEnums.GetCountryCodeFromName(Value, out countryCode))
 			{
-				err = string.Format("'{0}' is not a valid country", Value);
+				err = string.Format("\t'{0}' is not a valid country", Value);
 				return false;
 			}
 			return true;

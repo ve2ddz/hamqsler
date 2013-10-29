@@ -663,6 +663,19 @@ namespace hamqslerTest
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("APP_HAMQSLER_TEST", qso.Fields[0].Name);
 			Assert.AreEqual("Test value", qso.Fields[0].Value);
+			Assert.AreEqual("S", qso.Fields[0].DataType.Value);
+		}
+		
+		// test application defined field with no data type
+		[Test]
+		public void TestApplicationDefinedFieldNoDataType()
+		{
+			errorString = string.Empty;
+			Qso2 qso = new Qso2("<APP_HAMQSLER_TEST:10>Test value", aEnums, ref errorString);
+			Assert.AreEqual(null, errorString);
+			Assert.AreEqual("APP_HAMQSLER_TEST", qso.Fields[0].Name);
+			Assert.AreEqual("Test value", qso.Fields[0].Value);
+			Assert.AreEqual("S", qso.Fields[0].DataType.Value);
 		}
 		
 		// test user defined field with boolean value
@@ -777,8 +790,7 @@ namespace hamqslerTest
 			Qsos2 qsos = new Qsos2();
 			qsos.UserDefs.Add(new Userdef("LocalTime", "X", aEnums));
 			Qso2 qso = new Qso2("<LocalTime:4>1245", aEnums, ref errorString, qsos);
-			Assert.AreEqual("'LocalTime' has unsupported data type. Field deleted." +
-			                Environment.NewLine, errorString);
+			Assert.AreEqual("\t'LocalTime' has unsupported data type. Field deleted.", errorString);
 			Assert.AreEqual(0, qso.Fields.Count);
 		}
 
@@ -788,7 +800,7 @@ namespace hamqslerTest
 		{
 			Qsos2 qsos = new Qsos2();
 			Qso2 qso = new Qso2("<LocalTime:4>1245", aEnums, ref errorString, qsos);
-			Assert.AreEqual("'LocalTime' field not valid field type and" +
+			Assert.AreEqual("\t'LocalTime' field not valid field type and" +
                              " not a user defined type. Field deleted." +
                              Environment.NewLine, errorString);
 			Assert.AreEqual(0, qso.Fields.Count);
@@ -890,12 +902,12 @@ namespace hamqslerTest
 			Assert.AreEqual("10m", qso["BAND"]);
 		}
 		
-		// test this[key] set with valid key but invalid value for not existing field
+		// test this[key] set with valid key but invalid value
 		[Test]
 		[ExpectedException(typeof(ArgumentException), 
-		                   ExpectedMessage="Programming Exception while attempting to add a new field:" +
-	                               "\r\nBand:11m - This QSO Field is of type enumeration. " +
-	                               "The value '11m' was not found in enumeration. - Field deleted.")]
+		                   ExpectedMessage="\tProgramming Exception while attempting to add a new field:" +
+	                               "\r\n\tBand:11m - \tThis QSO Field is of type enumeration. " +
+	                               "The value '11m' was not found in enumeration. - Field deleted.\r\n")]
 		public void TestSetFieldValidKeyNotExistingFieldInvalidValue()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
@@ -923,11 +935,11 @@ namespace hamqslerTest
 			       "<Call:6>VA3JNO<Mode:3>SSB<qso_date:8>20130615<time_on:6>124316",
 			       "<Call:6>VA3JNO<Mode:3>SSB<band:3>40m<time_on:6>124316",
 			       "<Call:6>VA3JNO<Mode:3>SSB<band:3>40m<qso_date:8>20130615")] string q,
-			[Values("Invalid QSO: Call not specified.",
-			       "Invalid QSO: Mode not specified.",
-			       "Invalid QSO: Neither a band or frequency specified.",
-			       "Invalid QSO: Qso_Date not specified.",
-			       "Invalid QSO: Time_On not specified.")] string errMsg)
+			[Values("\tInvalid QSO: Call not specified.",
+			       "\tInvalid QSO: Mode not specified.",
+			       "\tInvalid QSO: Neither a band or frequency specified.",
+			       "\tInvalid QSO: Qso_Date not specified.",
+			       "\tInvalid QSO: Time_On not specified.")] string errMsg)
 		{
 			Qso2 qso = new Qso2(q, aEnums, ref errorString);
 			Assert.AreEqual(null, errorString);

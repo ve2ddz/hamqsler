@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(k.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 	}

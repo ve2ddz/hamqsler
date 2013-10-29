@@ -54,13 +54,13 @@ namespace hamqsler
 			modStr = null;
 			if(!Regex.IsMatch(Value, "^[A-Z]{2}-[0-9]{3}$"))
 			{
-				err = string.Format("'{0}' is not a valid IOTA designator.", Value);
+				err = string.Format("\t'{0}' is not a valid IOTA designator.", Value);
 				return false;
 			}
 			string[] parts = Value.Split('-');
 			if(!adifEnums.IsInEnumeration("Continent", parts[0]))
 			{
-				err = string.Format("'{0}' is not a valid IOTA designator.", Value);
+				err = string.Format("\t'{0}' is not a valid IOTA designator.", Value);
 				return false;
 			}
 			return true;

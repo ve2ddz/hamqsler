@@ -56,20 +56,10 @@ namespace hamqsler
 			}
 			if(Regex.IsMatch(Value, "[\\n\\r]"))
 			{
-				err = "String value contains a new line character. This is not allowed in StringField types.";
+				err = "\tString value contains a new line character. This is not allowed in StringField types.";
 				return false;
 			}
 			return true;
 		}
-
-		/// <summary>
-		/// Create ADIF field string from contents of this element
-		/// </summary>
-		/// <returns>ADIF field string</returns>
-/*		public override string ToAdifString()
-		{
-			return "<" + Name + ":" + Value.Length + ">" + Value;
-		}*/
-		
 	}
 }

@@ -133,7 +133,7 @@ namespace hamqsler
 			modStr = null;
 			if(!adifEnums.IsInEnumeration("Credit", CreditName))
 			{
-				err = string.Format("'{0}' not found in Credit enumeration", CreditName);
+				err = string.Format("\t'{0}' not found in Credit enumeration", CreditName);
 				return false;
 			}
 			else
@@ -146,7 +146,7 @@ namespace hamqsler
 					}
 					else
 					{
-						err = "Programming Error: Credit object cannot contain both null and other QSL Media";
+						err = "\tProgramming Error: Credit object cannot contain both null and other QSL Media";
 						return false;
 					}
 				}
@@ -154,7 +154,7 @@ namespace hamqsler
 				{
 					if(!adifEnums.IsInEnumeration("QSL_Medium", medium))
 					{
-						err = string.Format("'{0}' not found in QSL Medium enumeration", medium);
+						err = string.Format("\t'{0}' not found in QSL Medium enumeration", medium);
 						return false;
 					}
 				}

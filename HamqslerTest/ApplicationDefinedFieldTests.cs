@@ -61,6 +61,19 @@ namespace hamqslerTest
 			Assert.AreEqual(null, modStr);
 		}
 		
+		// test Validate with long valid field name
+		[Test]
+		public void TestValidateValidValuesLong()
+		{
+			ApplicationDefinedField adf = new ApplicationDefinedField("APP_HAMQSLER_EQSL_QSL_SENT", "S", 
+			                                                          "R", aEnums);
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(adf.Validate(out err, out modStr));
+			Assert.AreEqual(null, err);
+			Assert.AreEqual(null, modStr);
+		}
+		
 		// test Validate with field name not starting with APP_
 		[Test]
 		public void TestValidateNotApp()
@@ -70,7 +83,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid Application Defined Fieldname.", err);
+			Assert.AreEqual("\tInvalid Application Defined Fieldname.", err);
 		}
 		
 		// test Validate with field name not 3 parts
@@ -82,7 +95,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid Application Defined Fieldname.", err);
+			Assert.AreEqual("\tInvalid Application Defined Fieldname.", err);
 		}
 		
 		// test Validate with field name no PROGRAMNAME
@@ -94,7 +107,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid Application Defined Fieldname.", err);
+			Assert.AreEqual("\tInvalid Application Defined Fieldname.", err);
 		}
 		
 		// test Validate with field name no FIELDNAME
@@ -106,7 +119,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid Application Defined Fieldname.", err);
+			Assert.AreEqual("\tInvalid Application Defined Fieldname.", err);
 		}
 		
 		// test Validate with invalid data type
@@ -118,7 +131,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid Data Type.", err);
+			Assert.AreEqual("\tInvalid Data Type.", err);
 		}
 
 		// test Validate with valid AwardList data
@@ -144,7 +157,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			Assert.IsTrue(adf.Validate(out err, out modStr));
 			Assert.AreEqual(null, err);
-			Assert.AreEqual("Invalid AwardList item: 'CQFRED'. Item removed.", modStr);
+			Assert.AreEqual("\tInvalid AwardList item: 'CQFRED'. Item removed.", modStr);
 			Assert.AreEqual("CQWAZ_CW", adf.Value);
 		}
 
@@ -158,7 +171,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			Assert.IsTrue(adf.Validate(out err, out modStr));
 			Assert.IsNull(err);
-			Assert.AreEqual("Invalid AwardList item: 'CQFRED'. Item removed.", modStr);
+			Assert.AreEqual("\tInvalid AwardList item: 'CQFRED'. Item removed.", modStr);
 		}
 
 		// test Validate with valid Boolean data
@@ -183,7 +196,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid Boolean Value: 'F'.", err);
+			Assert.AreEqual("\tInvalid Boolean Value: 'F'.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -210,7 +223,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			Assert.IsTrue(adf.Validate(out err, out modStr));
 			Assert.IsNull(err);
-			Assert.AreEqual("Invalid CreditList item: 'CQFRED'.", modStr);
+			Assert.AreEqual("\tInvalid CreditList item: 'CQFRED'.", modStr);
 		}
 
 		// test Validate with valid Date
@@ -235,7 +248,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Date must be 19300101 or later.", err);
+			Assert.AreEqual("\tDate must be 19300101 or later.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -248,7 +261,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid data type: 'G'.", err);
+			Assert.AreEqual("\tInvalid data type: 'G'.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -261,7 +274,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid data type: 'I'.", err);
+			Assert.AreEqual("\tInvalid data type: 'I'.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -287,7 +300,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid location: 'E185 42.385'.", err);
+			Assert.AreEqual("\tInvalid location: 'E185 42.385'.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -326,7 +339,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid number: 'E185'.", err);
+			Assert.AreEqual("\tInvalid number: 'E185'.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -353,9 +366,9 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			Assert.IsTrue(adf.Validate(out err, out modStr));
 			Assert.IsNull(err);
-			Assert.AreEqual("The sponsors portion of Awards_Granted is an enumeration." +
+			Assert.AreEqual("\tThe sponsors portion of Awards_Granted is an enumeration." +
 			                Environment.NewLine +
-			                "The value 'DOK_' was not found in enumeration" +
+			                "\t\tThe value 'DOK_' was not found in enumeration" +
 			                Environment.NewLine, modStr);
 		}
 
@@ -382,7 +395,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("String value contains a new line character. This is not allowed in StringField types.",
+			Assert.AreEqual("\tString value contains a new line character. This is not allowed in StringField types.",
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -409,7 +422,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(adf.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid time.", err);
+			Assert.AreEqual("\tInvalid time.", err);
 			Assert.IsNull(modStr);
 		}
 	}

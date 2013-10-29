@@ -84,7 +84,7 @@ namespace hamqslerTest
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(band.Validate(out error, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value '23mm' was not found in enumeration.", 
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value '23mm' was not found in enumeration.", 
 			                error);
 			Assert.IsNull(modStr);
 		}

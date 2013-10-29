@@ -75,7 +75,7 @@ namespace hamqslerTest
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(call.Validate(out error, out modStr));
-			Assert.AreEqual("Callsign 'VAHJ' is invalid.", error);
+			Assert.AreEqual("\tCallsign 'VAHJ' is invalid.", error);
 			Assert.IsNull(modStr);
 		}
 		
@@ -87,7 +87,7 @@ namespace hamqslerTest
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(call.Validate(out error, out modStr));
-			Assert.AreEqual("Callsign '9A' is invalid.", error);
+			Assert.AreEqual("\tCallsign '9A' is invalid.", error);
 			Assert.IsNull(modStr);
 		}
 		
@@ -111,7 +111,7 @@ namespace hamqslerTest
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(call.Validate(out error, out modStr));
-			Assert.AreEqual("Callsign '' is invalid.", error);
+			Assert.AreEqual("\tCallsign '' is invalid.", error);
 			Assert.IsNull(modStr);
 		}
 		
@@ -123,7 +123,7 @@ namespace hamqslerTest
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(call.Validate(out error, out modStr));
-			Assert.AreEqual("Null callsign is invalid.", error);
+			Assert.AreEqual("\tNull callsign is invalid.", error);
 			Assert.IsNull(modStr);
 		}
 		
@@ -231,6 +231,14 @@ namespace hamqslerTest
 			Assert.AreEqual("XM31812", call.GetCall());
 		}
 		
+		// test GetCall with XM31812
+		[Test]
+		public void TestGetCall5C5CW()
+		{
+			Call call = new Call("5C5CW");
+			Assert.AreEqual("5C5CW", call.GetCall());
+		}
+		
 		// test IsValid with null call
 		[Test]
 		public void TestIsValidNullCall()
@@ -308,5 +316,11 @@ namespace hamqslerTest
 			Assert.IsTrue(Call.IsValid("8J2KSG7X"));
 		}
 		
+		// test IsValid for 5C5CW
+		[Test]
+		public void TestIsValid5C5CW()
+		{
+			Assert.IsTrue(Call.IsValid("5C5CW"));
+		}
 	}
 }

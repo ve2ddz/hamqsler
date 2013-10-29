@@ -94,7 +94,7 @@ namespace hamqsler
 					return true;
 				}
 			}
-			err = string.Format("This QSO Field is of type enumeration. The value '{0}' " +
+			err = string.Format("\tThis QSO Field is of type enumeration. The value '{0}' " +
 			                    "was not found in enumeration.", value);
 			return false;
 		}

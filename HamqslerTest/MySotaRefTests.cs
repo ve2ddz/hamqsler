@@ -67,7 +67,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(sota.Validate(out err, out modStr));
-			Assert.AreEqual("'OU-036' is not a valid SOTA Reference.", err);
+			Assert.AreEqual("\t'OU-036' is not a valid SOTA Reference.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -79,7 +79,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(sota.Validate(out err, out modStr));
-			Assert.AreEqual("'4/OU-036' is not a valid SOTA Reference.", err);
+			Assert.AreEqual("\t'4/OU-036' is not a valid SOTA Reference.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -91,7 +91,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(sota.Validate(out err, out modStr));
-			Assert.AreEqual("'9A/O-036' is not a valid SOTA Reference.", err);
+			Assert.AreEqual("\t'9A/O-036' is not a valid SOTA Reference.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -103,7 +103,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(sota.Validate(out err, out modStr));
-			Assert.AreEqual("'99A/O-036' is not a valid SOTA Reference.", err);
+			Assert.AreEqual("\t'99A/O-036' is not a valid SOTA Reference.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -115,7 +115,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(sota.Validate(out err, out modStr));
-			Assert.AreEqual("'9A/OU-03' is not a valid SOTA Reference.", err);
+			Assert.AreEqual("\t'9A/OU-03' is not a valid SOTA Reference.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -127,7 +127,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(sota.Validate(out err, out modStr));
-			Assert.AreEqual("'9A/OU-0365' is not a valid SOTA Reference.", err);
+			Assert.AreEqual("\t'9A/OU-0365' is not a valid SOTA Reference.", err);
 			Assert.IsNull(modStr);
 		}
 	}

@@ -53,7 +53,7 @@ namespace hamqsler
 			}
 			else
 			{
-				err = string.Format("Country code '{0}' is not a valid code. Country name cannot be " +
+				err = string.Format("\tCountry code '{0}' is not a valid code. Country name cannot be " +
 				                    "retrieved.", Value);
 				return null;
 			}

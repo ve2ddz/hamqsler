@@ -61,7 +61,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(eVal.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e5' was not found in enumeration.",
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'e5' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -86,7 +86,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			EnumerationValue ef = new EnumerationValue("ABCD", "Arrl_Section", aEnums);
 			Assert.IsFalse(ef.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
 		}

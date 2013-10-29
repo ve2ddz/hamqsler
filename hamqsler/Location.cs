@@ -53,19 +53,19 @@ namespace hamqsler
 			modStr = null;
 			if(!Regex.IsMatch(Value, @"^[EWNS][0-9]{3} [0-9]{2}\.[0-9]{3}$"))
 			{
-				err = string.Format("'{0}' is not a valid location.", Value);
+				err = string.Format("\t'{0}' is not a valid location.", Value);
 				return false;
 			}
 			string deg = Value.Substring(1, 3);
 			int degrees = 0;
 			if(!Int32.TryParse(deg, NumberStyles.None, CultureInfo.InvariantCulture, out degrees))
 			{
-				err = string.Format("'{0}' is not a valid location.", Value);
+				err = string.Format("\t'{0}' is not a valid location.", Value);
 				return false;				
 			}
 			if(degrees > 180)
 			{
-				err = string.Format("'{0}' is not a valid location.", Value);
+				err = string.Format("\t'{0}' is not a valid location.", Value);
 				return false;				
 			}
 			string mins = Value.Substring(5, 6);
@@ -73,17 +73,17 @@ namespace hamqsler
 			if(!float.TryParse(mins, NumberStyles.Any, CultureInfo.InvariantCulture,
 			                  out minutes))
 			{
-				err = string.Format("'{0}' is not a valid location.", Value);
+				err = string.Format("\t'{0}' is not a valid location.", Value);
 				return false;
 			}
 			if(minutes >= 60F)
 			{
-				err = string.Format("'{0}' is not a valid location.", Value);
+				err = string.Format("\t'{0}' is not a valid location.", Value);
 				return false;
 			}
 			if(degrees == 180 && minutes != 0F)
 			{
-				err = string.Format("'{0}' is not a valid location.", Value);
+				err = string.Format("\t'{0}' is not a valid location.", Value);
 				return false;
 			}
 			return true;

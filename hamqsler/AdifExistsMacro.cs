@@ -145,8 +145,7 @@ namespace hamqsler
 			}
 			else if(qsos != null && qsos.Count != 0)
 			{
-				string val = qsos[0].Qso.getValue(AdifField.GetText(
-					card, qsos, screen), null);
+				string val = qsos[0].Qso[AdifField.GetText(card, qsos, screen), null];
 				if(val != null && val != string.Empty)
 				{
 					return ExistsText.GetText(card, qsos, screen);

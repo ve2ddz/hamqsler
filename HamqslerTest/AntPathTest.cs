@@ -61,7 +61,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			Ant_Path ap = new Ant_Path("F", aEnums);
 			Assert.IsFalse(ap.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
 		}

@@ -37,7 +37,8 @@ namespace hamqsler
 	{
 		public static double PIXELSPERINCH = 100;
 		
-		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so);
+		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so,
+		                                          AdifEnumerations aEnums);
 
 		public static RoutedCommand NewBureauCardCommand = new RoutedCommand();
 		public static RoutedCommand New45CardCommand = new RoutedCommand();
@@ -443,6 +444,7 @@ namespace hamqsler
 					CloseCardTab(cti, false);
 				}
 			}
+			CloseQsosTab();
 		}
 		
 		/// <summary>
@@ -506,11 +508,17 @@ namespace hamqsler
 					{
 						try
 						{
-							string error = qsosView.DisplayQsos.AddQsos(adifFiles[i], qsosView.SortOrder);
+							string error = qsosView.DisplayQsos.AddQsos(adifFiles[i], qsosView.SortOrder,
+							                                           App.AdifEnums);
 							if(error != null)
 							{
-								MessageBox.Show(error, "Import Error", MessageBoxButton.OK,
-							                MessageBoxImage.Warning);
+								MessageBox.Show("Either there are errors in the ADIF file loaded, or" +
+								                Environment.NewLine +
+								                "individual QSO fields were modified during load." +
+								                Environment.NewLine +
+								                "See log file for details.", "Import Error or Change", 
+								                MessageBoxButton.OK, MessageBoxImage.Warning);
+								App.Logger.Log(error);
 							}
 						}
 						catch(Exception ex)
@@ -1088,11 +1096,16 @@ namespace hamqsler
 				try
 				{
 					// import the QSOs from the ADIF file
-					string error = importOrAdd(adifFileName, qsosView.SortOrder);
+					string error = importOrAdd(adifFileName, qsosView.SortOrder, App.AdifEnums);
 					if(error != null)
 					{
-						MessageBox.Show(error, "Import Error", MessageBoxButton.OK,
-						                MessageBoxImage.Warning);
+						App.Logger.Log(error);
+						MessageBox.Show("Either there are errors in the ADIF file loaded, or" +
+						                Environment.NewLine +
+						                "individual QSO fields were modified during load." +
+						                Environment.NewLine +
+						                "See log file for details.", "Import Error or Change", 
+						                MessageBoxButton.OK, MessageBoxImage.Warning);
 					}
 				}
 				catch(Exception ex)
@@ -1124,42 +1137,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		private void ExportQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			// The only change that can be made is to update one or more managers.
-			// Transfer managers back to the actual Qsos
-			qsosView.DisplayQsos.UpdateQSOsWithManager();
-			// get QSOs as Adif stream in bytes
-			Byte[] asciiAdif = qsosView.DisplayQsos.GetQsosAsAdif2();
-			// determine file to store in
-			SaveFileDialog saveDialog = new SaveFileDialog();
-			saveDialog.InitialDirectory = 
-				((App)Application.Current).UserPreferences.DefaultAdifFilesFolder;
-			saveDialog.Filter = "Adif files (*.adi) | *.adi";
-			saveDialog.Title = "Select File to Save QSOs to";
-			if(saveDialog.ShowDialog() == true)
-			{
-				string fileName = saveDialog.FileName;
-				// make sure filename ends in .adi
-				if(fileName.Substring(fileName.Length-4).ToLower() != ".adi")
-				{
-					fileName += ".adi";
-				}
-				if(File.Exists(fileName))
-				{
-					File.Delete(fileName);
-				}
-				// write stream to file
-				StreamWriter writer = File.CreateText(fileName);
-				foreach(byte b in asciiAdif)
-				{
-					writer.Write(Convert.ToChar(b).ToString());
-				}
-				writer.Close();
-				qsosView.DisplayQsos.IsDirty = false;
-				UserPreferences prefs = ((App)Application.Current).UserPreferences;
-				prefs.AdifFiles.Clear();
-				prefs.AdifFiles.Add(fileName);
-				prefs.SerializeAsXml();
-			}
+			ExportQsos();
 		}
 		
 		/// <summary>
@@ -1870,6 +1848,67 @@ namespace hamqsler
 		{
 			CustomPaperSizesDialog psDialog = new CustomPaperSizesDialog();
 			psDialog.ShowDialog();
+		}
+		
+		/// <summary>
+		/// Close the qsosTab at program termination. If a QSO has been added or modified,
+		/// ask if user wants the QSOs saved in an ADIF file, and save.
+		/// </summary>
+		private void CloseQsosTab()
+		{
+			if(qsosView.DisplayQsos.IsDirty)
+			{
+				MessageBoxResult result = MessageBox.Show("One or more QSOs has been added or modified.\n"
+				                + "Do you want to save the QSOs before closing?", "QSOs Modified", 
+				                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+				if(result == MessageBoxResult.Yes)
+				{
+					ExportQsos();
+				}
+			}
+			mainTabControl.Items.Remove(qsosTab);
+		}
+		
+		/// <summary>
+		/// Save the loaded QSOs.
+		/// </summary>
+		private void ExportQsos()
+		{
+			// Transfer managers back to the actual Qsos
+			qsosView.DisplayQsos.UpdateQSOsWithManager();
+			// get QSOs as Adif stream in bytes
+			Byte[] asciiAdif = qsosView.DisplayQsos.GetQsosAsAdif2();
+			// determine file to store in
+			SaveFileDialog saveDialog = new SaveFileDialog();
+			saveDialog.InitialDirectory = 
+				((App)Application.Current).UserPreferences.DefaultAdifFilesFolder;
+			saveDialog.Filter = "Adif files (*.adi) | *.adi";
+			saveDialog.Title = "Select File to Save QSOs to";
+			if(saveDialog.ShowDialog() == true)
+			{
+				string fileName = saveDialog.FileName;
+				// make sure filename ends in .adi
+				if(fileName.Substring(fileName.Length-4).ToLower() != ".adi")
+				{
+					fileName += ".adi";
+				}
+				if(File.Exists(fileName))
+				{
+					File.Delete(fileName);
+				}
+				// write stream to file
+				StreamWriter writer = File.CreateText(fileName);
+				foreach(byte b in asciiAdif)
+				{
+					writer.Write(Convert.ToChar(b).ToString());
+				}
+				writer.Close();
+				qsosView.DisplayQsos.IsDirty = false;
+				UserPreferences prefs = ((App)Application.Current).UserPreferences;
+				prefs.AdifFiles.Clear();
+				prefs.AdifFiles.Add(fileName);
+				prefs.SerializeAsXml();
+			}			
 		}
 	}
 }

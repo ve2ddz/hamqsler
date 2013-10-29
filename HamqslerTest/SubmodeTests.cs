@@ -63,7 +63,7 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Submode sm = new Submode("e6", aEnums);
 			Assert.IsFalse(sm.IsInEnumeration(out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'e6' " +
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'e6' " +
 			                    "was not found in enumeration.", err);
 		}
 		

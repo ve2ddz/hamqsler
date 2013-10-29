@@ -91,8 +91,8 @@ namespace hamqsler
 			set {qsl = value;}
 		}
 		
-		private Qso qso = null;
-		public Qso Qso
+		private Qso2 qso = null;
+		public Qso2 Qso
 		{
 			get {return qso;}
 			set {qso =  value;}

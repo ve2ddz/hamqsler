@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr =string.Empty;
 			Assert.IsFalse(date.Validate(out err, out modStr));
-			Assert.AreEqual("Date must be 19300101 or later.", err);
+			Assert.AreEqual("\tDate must be 19300101 or later.", err);
 			Assert.IsNull(modStr);
 		}
 	}

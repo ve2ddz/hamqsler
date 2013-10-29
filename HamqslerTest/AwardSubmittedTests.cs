@@ -75,9 +75,9 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			Assert.IsTrue(aSub.Validate(out err, out modStr));
 			Assert.IsNull(err);
-			Assert.AreEqual("The sponsors portion of Awards_Submitted is an enumeration." +
+			Assert.AreEqual("\tThe sponsors portion of Awards_Submitted is an enumeration." +
 			                Environment.NewLine +
-			                "The value 'DARCDOC_' was not found in enumeration",
+			                "\t\tThe value 'DARCDOC_' was not found in enumeration",
 			                modStr);
 		}
 		

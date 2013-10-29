@@ -49,7 +49,7 @@ namespace hamqsler
 			modStr = null;
 			if(Value == null)
 			{
-				err = "Value is null";
+				err = "\tValue is null";
 				return false;
 			}
 			return true;

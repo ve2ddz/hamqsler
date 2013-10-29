@@ -70,7 +70,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(uds.Validate(out err, out modStr));
-			Assert.AreEqual("Date must contain number characters only.", err);
+			Assert.AreEqual("\tDate must contain number characters only.", err);
 			Assert.IsNull(modStr);
 		}
 		

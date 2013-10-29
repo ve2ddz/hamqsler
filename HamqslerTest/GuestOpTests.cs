@@ -47,7 +47,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(op.Validate(out err, out modStr));
-			Assert.AreEqual("Not a valid callsign.", err);
+			Assert.AreEqual("\tNot a valid callsign.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -59,7 +59,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(op.Validate(out err, out modStr));
-			Assert.AreEqual("Not a valid callsign.", err);
+			Assert.AreEqual("\tNot a valid callsign.", err);
 			Assert.IsNull(modStr);
 		}
 	}

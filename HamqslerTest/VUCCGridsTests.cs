@@ -67,7 +67,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grids.Validate(out err, out modStr));
-			Assert.AreEqual("VUCC_Grids contains 1 grid squares. Must contain either 2 or 4 grid squares.", 
+			Assert.AreEqual("\tVUCC_Grids contains 1 grid squares. Must contain either 2 or 4 grid squares.", 
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -92,7 +92,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grids.Validate(out err, out modStr));
-			Assert.AreEqual("'EN9' is not a valid VUCC_Grids grid square", 
+			Assert.AreEqual("\t'EN9' is not a valid VUCC_Grids grid square", 
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -105,7 +105,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grids.Validate(out err, out modStr));
-			Assert.AreEqual("'EN9' is not a valid VUCC_Grids grid square", 
+			Assert.AreEqual("\t'EN9' is not a valid VUCC_Grids grid square", 
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -118,7 +118,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grids.Validate(out err, out modStr));
-			Assert.AreEqual("'EN97bf' is not a valid VUCC_Grids grid square", 
+			Assert.AreEqual("\t'EN97bf' is not a valid VUCC_Grids grid square", 
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -131,7 +131,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grids.Validate(out err, out modStr));
-			Assert.AreEqual("'AX98' is not a valid VUCC_Grids grid square", 
+			Assert.AreEqual("\t'AX98' is not a valid VUCC_Grids grid square", 
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -144,7 +144,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grids.Validate(out err, out modStr));
-			Assert.AreEqual("'9A98' is not a valid VUCC_Grids grid square", 
+			Assert.AreEqual("\t'9A98' is not a valid VUCC_Grids grid square", 
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -157,7 +157,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grids.Validate(out err, out modStr));
-			Assert.AreEqual("'EN9B' is not a valid VUCC_Grids grid square", 
+			Assert.AreEqual("\t'EN9B' is not a valid VUCC_Grids grid square", 
 			                err);
 			Assert.IsNull(modStr);
 		}

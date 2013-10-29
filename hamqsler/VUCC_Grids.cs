@@ -99,7 +99,7 @@ namespace hamqsler
 			modStr = null;
 			if(!(Count == 2) && !(Count == 4) && !(Count == 0))
 			{
-				err = string.Format("{1} contains {0} grid squares. Must contain either 2 or 4 grid squares.",
+				err = string.Format("\t{1} contains {0} grid squares. Must contain either 2 or 4 grid squares.",
 				                    Count, base.Name);
 				return false;
 			}
@@ -107,7 +107,7 @@ namespace hamqsler
 			{
 				if(!Regex.IsMatch(grid, "^[A-Ra-r][A-Ra-r][0-9][0-9]$"))
 				{
-					err = string.Format("'{0}' is not a valid {1} grid square",
+					err = string.Format("\t'{0}' is not a valid {1} grid square",
 					                    grid, base.Name);
 					return false;
 				}

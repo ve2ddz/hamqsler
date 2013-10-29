@@ -235,8 +235,8 @@ namespace hamqsler
 				return bmcdt + ManagerCallDateTime;}
 		}
 		
-		private Qso qso;
-		public Qso Qso
+		private Qso2 qso;
+		public Qso2 Qso
 		{
 			get {return qso;}
 		}
@@ -244,25 +244,21 @@ namespace hamqsler
 		/// <summary>
 		/// Constructor - build a QsoWithInclude from a Qso object
 		/// </summary>
-		/// <param name="q">Qso object to build QsoWithInclude from</param>
-		public QsoWithInclude(Qso q)
+		/// <param name="q">Qso2 object to build QsoWithInclude from</param>
+		public QsoWithInclude(Qso2 q)
 		{
 			include = true;
-			callsign = q.getValue("call", string.Empty);
-			manager = q.getValue("qsl_via", string.Empty);
-			date = q.getValue("qso_date", string.Empty);
-			time = q.getValue("time_on", null);
-			if(time == null)
-			{
-				time = q.getValue("time_off", string.Empty);
-			}
-			band = q.getValue("band", string.Empty).ToLower();
-			frequency = q.getValue("freq", string.Empty);
-			mode = q.getValue("mode", string.Empty).ToUpper();
-			rst = q.getValue("rst_sent", string.Empty);
-			sent = q.getValue("qsl_sent", string.Empty).ToUpper();
-			rcvd = q.getValue("qsl_rcvd", string.Empty).ToUpper();
-			sendVia = q.getValue("qsl_sent_via", string.Empty).ToUpper();
+			callsign = q["call", string.Empty];
+			manager = q["qsl_via", string.Empty];
+			date = q["qso_date", string.Empty];
+			time = q["time_on", null];
+			band = q["band", string.Empty].ToLower();
+			frequency = q["freq", string.Empty];
+			mode = q["mode", string.Empty].ToUpper();
+			rst = q["rst_sent", string.Empty];
+			sent = q["qsl_sent", string.Empty].ToUpper();
+			rcvd = q["qsl_rcvd", string.Empty].ToUpper();
+			sendVia = q["qsl_sent_via", string.Empty].ToUpper();
 			string mcall = (CallSign.IsValid(manager) ? manager : callsign);
 			bureau = QslBureaus.QslBureaus.Bureau(mcall);
 			qso = q;
@@ -319,7 +315,7 @@ namespace hamqsler
 		/// </summary>
 		public void UpdateManager()
 		{
-			this.Qso.setField("qsl_via", Manager);
+			this.Qso["qsl_via"] =  Manager;
 		}
 	}
 }

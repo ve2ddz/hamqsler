@@ -49,7 +49,7 @@ namespace hamqsler
 			modstr = null;
 			if(!Value.Equals(this.GetCall()))
 		    {
-		   		err = "Not a valid callsign.";
+		   		err = "\tNot a valid callsign.";
 		   		return false;
 		    }
 			return true;

@@ -66,7 +66,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(dxcc.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value '1023' " +
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value '1023' " +
 			                    "was not found in enumeration.", err);
 			Assert.IsNull(modStr);
 		}
@@ -94,7 +94,7 @@ namespace hamqslerTest
 			My_DXCC dxcc = new My_DXCC("1023", aEnums);
 			string err = string.Empty;
 			Assert.AreEqual(null, dxcc.GetCountryName(out err));
-			Assert.AreEqual("Country code '1023' is not a valid code. Country name cannot be retrieved.", 
+			Assert.AreEqual("\tCountry code '1023' is not a valid code. Country name cannot be retrieved.", 
 			                err);
 		}
 	}

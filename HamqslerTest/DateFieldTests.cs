@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err, out modStr));
-			Assert.AreEqual("Date must be exactly 8 characters long.", err);
+			Assert.AreEqual("\tDate must be exactly 8 characters long.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -67,7 +67,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err, out modStr));
-			Assert.AreEqual("Date must be exactly 8 characters long.", err);
+			Assert.AreEqual("\tDate must be exactly 8 characters long.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -79,7 +79,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err,out modStr));
-			Assert.AreEqual("Date must contain number characters only.", err);
+			Assert.AreEqual("\tDate must contain number characters only.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -91,7 +91,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err, out modStr));
-			Assert.AreEqual("Date must be 19300101 or later.", err);
+			Assert.AreEqual("\tDate must be 19300101 or later.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -106,7 +106,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err, out modStr));
-			Assert.AreEqual("Date must not be later than today.", err);
+			Assert.AreEqual("\tDate must not be later than today.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -118,7 +118,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid month in date: must be between 01 and 12.", err);
+			Assert.AreEqual("\tInvalid month in date: must be between 01 and 12.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -130,7 +130,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid month in date: must be between 01 and 12.", err);
+			Assert.AreEqual("\tInvalid month in date: must be between 01 and 12.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -142,7 +142,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err,out modStr));
-			Assert.AreEqual("Invalid day in date: must be between 01 and end of month.", err);
+			Assert.AreEqual("\tInvalid day in date: must be between 01 and end of month.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -154,7 +154,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(date.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid day in date: must be between 01 and end of month.", err);
+			Assert.AreEqual("\tInvalid day in date: must be between 01 and end of month.", err);
 			Assert.IsNull(modStr);
 		}
 		

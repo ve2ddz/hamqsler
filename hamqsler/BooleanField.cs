@@ -52,7 +52,7 @@ namespace hamqsler
 				case "N":
 					return true;
 				default:
-					err = "Boolean field must have value 'Y' or 'N'.";
+					err = "\tBoolean field must have value 'Y' or 'N'.";
 					return false;
 			}
 		}

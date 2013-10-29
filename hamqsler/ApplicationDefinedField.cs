@@ -44,7 +44,7 @@ namespace hamqsler
 			: base(value)
 		{
 			fieldName = fldName;
-			DataType = new EnumerationValue(dType, "DataType", aEnums);
+			DataType = new EnumerationValue(dType.ToUpper(), "DataType", aEnums);
 		}
 		
 		/// <summary>
@@ -61,16 +61,16 @@ namespace hamqsler
 			err = null;
 			modStr = null;
 			string[] appParts = Name.Split('_');
-			if(appParts.Length != 3 || appParts[1].Equals(string.Empty) ||
+			if(appParts.Length < 3 || appParts[1].Equals(string.Empty) ||
 			   appParts[2].Equals(string.Empty) ||
 			   !appParts[0].ToUpper().Equals("APP"))
 			{
-				err = "Invalid Application Defined Fieldname.";
+				err = "\tInvalid Application Defined Fieldname.";
 				return false;
 			}
 			if(!DataType.Validate(out err, out modStr))
 			{
-				err = "Invalid Data Type.";
+				err = "\tInvalid Data Type.";
 				return false;
 			}
 			switch(DataType.Value)
@@ -82,7 +82,7 @@ namespace hamqsler
 					{
 						if(!DataType.aEnums.IsInEnumeration("Award", awards[i]))
 						{
-							modStr = "Invalid AwardList item: '" + awards[i] + "'. Item removed.";
+							modStr = "\tInvalid AwardList item: '" + awards[i] + "'. Item removed.";
 							awardsList[i] = null;
 						}
 					}
@@ -103,7 +103,7 @@ namespace hamqsler
 					BooleanField bf = new BooleanField(Value);
 					if(!bf.Validate(out err, out modStr))
 					{
-						err = "Invalid Boolean Value: '" + Value + "'.";
+						err = "\tInvalid Boolean Value: '" + Value + "'.";
 						return false;
 					}
 					break;
@@ -114,7 +114,7 @@ namespace hamqsler
 					{
 						if(!DataType.aEnums.IsInEnumeration("Credit", credits[i]))
 						{
-							modStr = "Invalid CreditList item: '" + credits[i] + "'.";
+							modStr = "\tInvalid CreditList item: '" + credits[i] + "'.";
 							creditList[i] = null;
 						}
 					}
@@ -142,7 +142,7 @@ namespace hamqsler
 					Location loc = new Location(Value);
 					if(!loc.Validate(out err, out modStr))
 					{
-						err = "Invalid location: '" + Value + "'.";
+						err = "\tInvalid location: '" + Value + "'.";
 						return false;
 					}
 					break;
@@ -150,7 +150,7 @@ namespace hamqsler
 					MultilineStringField sf = new MultilineStringField(Value);
 					if(!sf.Validate(out err, out modStr))
 					{
-						err = "Invalid multiline string: '" + Value + "'.";
+						err = "\tInvalid multiline string: '" + Value + "'.";
 						return false;
 					}
 					break;
@@ -158,7 +158,7 @@ namespace hamqsler
 					NumberField nf = new NumberField(Value);
 					if(!nf.Validate(out err, out modStr))
 					{
-						err = "Invalid number: '" + Value + "'.";
+						err = "\tInvalid number: '" + Value + "'.";
 						return false;
 					}
 					break;
@@ -195,7 +195,7 @@ namespace hamqsler
 					}
 					break;
 				default:
-					err = "Invalid data type: '" + DataType.Value + "'.";
+					err = "\tInvalid data type: '" + DataType.Value + "'.";
 					return false;
 			}
 			return true;

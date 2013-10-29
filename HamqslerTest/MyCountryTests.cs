@@ -66,7 +66,7 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			My_Country country = new My_Country("COCHISE", aEnums);
 			Assert.IsFalse(country.Validate(out err, out modStr));
-			Assert.AreEqual("'COCHISE' is not a valid country", err);
+			Assert.AreEqual("\t'COCHISE' is not a valid country", err);
 			Assert.IsNull(modStr);
 		}
 	}

@@ -69,7 +69,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(uds.Validate(out err, out modStr));
-			Assert.AreEqual("Boolean field must have value 'Y' or 'N'.", err);
+			Assert.AreEqual("\tBoolean field must have value 'Y' or 'N'.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -81,7 +81,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(uds.Validate(out err, out modStr));
-			Assert.AreEqual("Boolean field must have value 'Y' or 'N'.", err);
+			Assert.AreEqual("\tBoolean field must have value 'Y' or 'N'.", err);
 			Assert.IsNull(modStr);
 		}
 		

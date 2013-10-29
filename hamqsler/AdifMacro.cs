@@ -136,8 +136,8 @@ namespace hamqsler
 			{
 				// return retrieved ADIF field from first QSO 
 				// or noFieldText if ADIF field not present
-				return qsos[0].Qso.getValue(AdifField.GetText(card, qsos, screen),
-				                    NoFieldText.GetText(card, qsos, screen));
+				return qsos[0].Qso[AdifField.GetText(card, qsos, screen),
+				                   NoFieldText.GetText(card, qsos, screen)];
 			}
 			else
 			{

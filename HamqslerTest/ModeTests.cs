@@ -66,7 +66,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(mode.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'BADMODE' was not found in enumeration.",
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'BADMODE' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
 		}

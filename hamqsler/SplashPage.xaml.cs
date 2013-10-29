@@ -126,6 +126,7 @@ namespace hamqsler
 				}
 				HideCheckingForUpdatesLabel();
 			}
+			((App)App.Current).GetAdifEnumerations();
 			
 			if(directoriesError || newStableVersion || newDevelopmentVersion ||
 			   securityException || accessException)		// terminate class error

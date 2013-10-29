@@ -50,7 +50,7 @@ namespace hamqsler
 			modStr = null;
 			if(!Regex.IsMatch(Value, "^[0-9]{0,1}[A-Za-z]{1,2}[0-9]{0,1}/[A-Za-z]{2}-[0-9]{3}$"))
 			{
-				err = string.Format("'{0}' is not a valid SOTA Reference.", Value);
+				err = string.Format("\t'{0}' is not a valid SOTA Reference.", Value);
 				return false;
 			}
 			return true;

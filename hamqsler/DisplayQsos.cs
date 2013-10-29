@@ -50,6 +50,8 @@ namespace hamqsler
 			set {needsSorting = value;}
 		}
 		
+		private Qsos2 qsos2 = new Qsos2();
+		
 		/// <summary>
 		/// Default constructor
 		/// </summary>
@@ -66,7 +68,7 @@ namespace hamqsler
 			IsDirty = qsos.IsDirty;
 			foreach(QsoWithInclude qwi in qsos)
 			{
-				this.Add(qwi);
+				AddQso(qwi);
 			}
 		}
 		
@@ -75,12 +77,14 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="adifFile">Full file name of the ADIF file</param>
 		/// <returns>Error string if any errors, or null if none</returns>
-		public string ImportQsos(string adifFile, QSOsView.OrderOfSort so)
+		public string ImportQsos(string adifFile, QSOsView.OrderOfSort so, AdifEnumerations aEnums)
 		{
             this.Clear();			// remove all entries from the ObservableCollection
+            IsDirty = false;
+            NeedsSorting = false;
             UserPreferences prefs = ((App)App.Current).UserPreferences;
             prefs.AdifFiles.Clear();
-            return AddQsos(adifFile, so);
+            return AddQsos(adifFile, so, aEnums);
 		}
 		
 		/// <summary>
@@ -88,18 +92,19 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="adifFile">full name of the Adif file</param>
 		/// <returns>Error string if any errors, or null if none</returns>
-		public string AddQsos(string adifFile, QSOsView.OrderOfSort so)
+		public string AddQsos(string adifFile, QSOsView.OrderOfSort so, AdifEnumerations aEnums)
 		{
+			string errorString = string.Empty;
 			QsoWithIncludeEqualityComparer eComparer = new QsoWithIncludeEqualityComparer();
+			// adifFile already checked to ensure that it exists, so just read contents
+			string adifFileContents = File.ReadAllText(adifFile);
+			bool qsoError = !qsos2.Add(adifFileContents, ref errorString, aEnums);
 			List<QsoWithInclude>qList = new List<QsoWithInclude>();
-			foreach(QsoWithInclude qwi in this)
+			foreach(Qso2 qso in qsos2)
 			{
+				QsoWithInclude qwi = new QsoWithInclude(qso);
 				qList.Add(qwi);
 			}
-			bool qsoError;
-			string error = AddQsosFromAdifFile(adifFile, ref qList, out qsoError);
-			// make sure we do not have any duplicates
-            var qList2 = qList.Distinct<QsoWithInclude>(eComparer);
             List<QsoWithInclude> qList3 = new List<QsoWithInclude>();
             Comparer<QsoWithInclude> comparer = null;
             switch(so)
@@ -108,7 +113,7 @@ namespace hamqsler
             		// to define var qs before being used, and it is out of scope
             		// outside the switch
             	case QSOsView.OrderOfSort.DATETIME:		// sort by date/time
-           			var qs = from qsoWith in qList2
+           			var qs = from qsoWith in qList
 		            	orderby qsoWith.DateTime
 		            	select qsoWith;
 		            foreach (QsoWithInclude qw in qs) 
@@ -118,7 +123,7 @@ namespace hamqsler
 			        comparer = new DateTimeComparer();
            			break;
            		case QSOsView.OrderOfSort.CALL:			// sort by manager, call, date and time
-           			qs = from qsoWith in qList2
+           			qs = from qsoWith in qList
            				orderby qsoWith.ManagerCallDateTime
            				select qsoWith;
 		            foreach (QsoWithInclude qw in qs) 
@@ -128,7 +133,7 @@ namespace hamqsler
 		            comparer = new CallComparer();
            			break;
            		case QSOsView.OrderOfSort.BUREAU:		// sort by bureau, manager, call, date and time
-           			qs = from qsoWith in qList2
+           			qs = from qsoWith in qList
            				orderby qsoWith.BureauManagerCallDateTime
            				select qsoWith;
 		            foreach (QsoWithInclude qw in qs) 
@@ -143,7 +148,7 @@ namespace hamqsler
             this.Clear();
             foreach(QsoWithInclude qwi in qList3)
             {
-            	this.Add(qwi);
+            	this.AddQso(qwi);
             }
             UserPreferences prefs = ((App)App.Current).UserPreferences;            
 			if(prefs.AdifReloadOnStartup)
@@ -151,10 +156,9 @@ namespace hamqsler
 				prefs.AdifFiles.Add(adifFile);
 				prefs.SerializeAsXml();
 			}
-            if (qsoError)
+            if (qsoError || errorString != null)
             {
-                return "One or more QSOs contains an invalid field.\n\rThese QSOs have not been imported.\n\r" +
-                    "See the log file for details.";
+                return errorString;
             }
             NeedsSorting = false;
             return null;	// no error
@@ -183,100 +187,22 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Adds QSOs from the specified ADIF file to the list
-		/// </summary>
-		/// <param name="adifFile">Name of the ADIF file</param>
-		/// <param name="qList">QSOs list to add the ADIF file QSOs to</param>
-		/// <param name="qsoError">Bool indicating that a QSO related error occurred.</param>
-		/// <returns>Error string or null</returns>
-		private string AddQsosFromAdifFile(string adifFile, ref List<QsoWithInclude> qList, out bool qsoError)
-		{
-			ExceptionLogger logger = App.Logger;
-			qsoError = false;
-			// read all of the ADIF file
-			string adifFileContents = File.ReadAllText(adifFile);
-			// bypass header if any
-			int index = 0;
-			string adif = (string)adifFileContents.Clone();
-			index = adif.ToUpper().IndexOf("<EOH>");
-			if(index != -1)
-			{
-				adif = adif.Substring(index + 5); // move past eoh
-			}
-			// now split for each QSO, create Qso, and add to a SortedList
-			index = adif.ToUpper().IndexOf("<EOR>");
-			if (index == -1)			// check that file contains at least one ADIF record
-			{
-				return "You are attempting to import a file that does not contain ADIF records.";
-			}
-			adif = adif.Substring(adif.IndexOf('<'));  // skip any characters before first qso record
-			Qso q;
-            qsoError = false;      // keep track of bad QSOs; display MessageBox if one or more errors
-            // for each ADIF record
-			while ((index = adif.ToUpper().IndexOf("<EOR>")) != -1)
-			{
-				string qsoStr = adif.Substring(0, index) + "<EOR>";
-				try
-				{
-					q = new Qso(logger);
-
-					q.setQsoFromAdif(qsoStr);  // create Qso from ADIF record
-                    QsoWithInclude qso = new QsoWithInclude(q); 
-                    qList.Add(qso);	// add Qso to the list
-                }
-				catch (QsoException ex)
-				{
-					ex.Data.Add("Input String", qsoStr);
-					logger.Log(ex, false, false);
-                    qsoError = true;
-				}
-				
-				adif = adif.Substring(index + 5);   // remove qso from the string
-			}
-			return null;
-		}
-		
-		/// <summary>
 		/// Generates a byte array containing QSO info in Adif 2 format (ASCII)
 		/// </summary>
 		/// <returns>Byte array containing Adif file contents in ASCII</returns>
 		public Byte[] GetQsosAsAdif2()
 		{
-			string adif = GenerateAdifHeader();		// generate header
+			string adif = qsos2.ToAdifString();		// generate header
 			// add each QSO
 			foreach(QsoWithInclude qwi in this)
 			{
-				Qso qso = qwi.Qso;
+				Qso2 qso = qwi.Qso;
 				adif += qso.ToAdifString() + "\r\n";
 			}
 			// change encoding to ASCII
 			ASCIIEncoding ascii = new ASCIIEncoding();
 			Byte[] encodedBytes = ascii.GetBytes(adif);
 			return encodedBytes;
-		}
-		
-		/// <summary>
-		/// Create ADIF header
-		/// </summary>
-		/// <returns>string containing ADIF header</returns>
-		private string GenerateAdifHeader()
-		{
-			// build the ADIF header
-			string vers = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-			DateTime now = DateTime.Now.ToUniversalTime();
-			string datetime = string.Format("{0:D4}-{1:D2}-{2:D2} {3:D2}:{4:D2}:{5:D2} UTC",
-			                                now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
-			string adif = string.Format("ADIF file created by HamQSLer version {0}\r\n"
-			                            + "Copyright (c) 2012 - {1} by VA3HJ Software\r\n"
-			                            + "http://www.va3hj.ca\r\n\r\n"
-			                            + "Created: {2}\r\n\r\n"
-			                            + "<ADIF_VERS:3>2.0\r\n"
-			                            + "<PROGRAM:8>HamQSLer\r\n"
-			                            + "<PROGRAMVERSION:{3}>{0}\r\n"
-			                            + "<EOH>\r\n",
-			                            vers, now.Year, datetime,
-			                            vers.Length);
-			return adif;
 		}
 		
 		/// <summary>
@@ -329,6 +255,12 @@ namespace hamqsler
 				bands.Add(qwi.Band);
 			}
 			List<string> bands2 = new List<string>(bands.Distinct());
+			// TODO: remove this check and make sure that a QSO always has a band.
+			int emptyIndex = bands2.IndexOf(string.Empty);
+			if(emptyIndex >= 0)
+			{
+				bands2.RemoveAt(emptyIndex);
+			}
 			bands2.Sort(new BandComparer());
 			return bands2;
 		}
@@ -510,7 +442,9 @@ namespace hamqsler
 		public new void Clear()
 		{
 			base.Clear();
-			NeedsSorting = false;
+			qsos2.Clear();
+            IsDirty = false;
+            NeedsSorting = false;
 		}
 		
 		/// <summary>
@@ -544,7 +478,9 @@ namespace hamqsler
 			List<DispQso> cardQsos = null;
 			List<List<DispQso>> cardsQsosList = new List<List<DispQso>>();
 			string thisManagerCall = string.Empty;
-			QsoWithInclude thisQso = new QsoWithInclude(new Qso());
+			string error = string.Empty;
+			QsoWithInclude thisQso = new QsoWithInclude(new Qso2(string.Empty, App.AdifEnums,
+			                                                     ref error, null));
 			int qsosCount = 0;
 			HashSet<string> fields = new HashSet<string>();
 			HashSet<string> existFields = new HashSet<string>();
@@ -596,18 +532,18 @@ namespace hamqsler
 		{
 			foreach(string field in fields)
 			{
-				if(q1.Qso.ContainsKey(field.ToLower()))
+				if(q1.Qso[field] != null)
 				{
-					if(!q2.Qso.ContainsKey(field.ToLower()))
+					if(q2.Qso[field] != null)
 					{
 						return false;
 					}
-					else if(q1.Qso.getValue(field.ToLower()) != q2.Qso.getValue(field.ToLower()))
+					else if(q1.Qso[field] != q2.Qso[field])
 					{
 						return false;
 					}
 				}
-				else if(q2.Qso.ContainsKey(field.ToLower()))
+				else if(q2.Qso[field] != null)
 				{
 					return false;
 				}
@@ -627,19 +563,32 @@ namespace hamqsler
 		{
 			foreach(string field in fields)
 			{
-				if(q1.Qso.ContainsKey(field.ToLower()))
+				if(q1.Qso[field] != null)
 				{
-					if(!q2.Qso.ContainsKey(field.ToLower()))
+					if(q2.Qso[field] == null)
 					{
 						return false;
 					}
 				}
-				else if(q2.Qso.ContainsKey(field.ToLower()))
+				else if(q2.Qso[field] != null)
 				{
 					return false;
 				}
 			}
 			return true;
+		}
+		
+		/// <summary>
+		/// Add a Qso
+		/// </summary>
+		/// <param name="qwi">QsoWithInclude object containing the Qso to be added.</param>
+		public void AddQso(QsoWithInclude qwi)
+		{
+			qwi.Qso.Qsos = qsos2;
+			qsos2.Add(qwi.Qso);
+			this.Add(qwi);
+			this.IsDirty = true;
+			this.NeedsSorting = true;
 		}
 	}
 }

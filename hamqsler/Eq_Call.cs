@@ -49,7 +49,7 @@ namespace hamqsler
 			string c = this.GetCall();
 			if(!Value.Equals(c))
 			{
-				err = string.Format("'{0}' is not a valid callsign.", Value);
+				err = string.Format("\t'{0}' is not a valid callsign.", Value);
 				return false;
 			}
 			return base.Validate(out err, out modStr);

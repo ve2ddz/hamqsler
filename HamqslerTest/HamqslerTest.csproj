@@ -22,7 +22,7 @@
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <StartAction>Project</StartAction>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -89,6 +89,7 @@
     <Compile Include="DateFieldTests.cs" />
     <Compile Include="DelimitedListEnumerationTests.cs" />
     <Compile Include="DelimitedListTests.cs" />
+    <Compile Include="DisplayQsosTests.cs" />
     <Compile Include="DistanceTests.cs" />
     <Compile Include="DXCCTests.cs" />
     <Compile Include="EmailTests.cs" />

@@ -53,7 +53,7 @@ namespace hamqsler
 			}
 			if(!Regex.IsMatch(Value, "^[A-Za-z0-9]+$"))
 			{
-				err = string.Format("Callsign '{0}' contains modifiers.", Value);
+				err = string.Format("\tCallsign '{0}' contains modifiers.", Value);
 				return false;
 			}
 			return true;

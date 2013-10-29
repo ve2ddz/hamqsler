@@ -66,7 +66,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
-			Assert.AreEqual("'SNA-001' is not a valid IOTA designator.", err);
+			Assert.AreEqual("\t'SNA-001' is not a valid IOTA designator.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -81,7 +81,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
-			Assert.AreEqual("'NA-0011' is not a valid IOTA designator.", err);
+			Assert.AreEqual("\t'NA-0011' is not a valid IOTA designator.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -96,7 +96,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
-			Assert.AreEqual("'NA-0F1' is not a valid IOTA designator.", err);
+			Assert.AreEqual("\t'NA-0F1' is not a valid IOTA designator.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -111,7 +111,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
-			Assert.AreEqual("'BA0001' is not a valid IOTA designator.", err);
+			Assert.AreEqual("\t'BA0001' is not a valid IOTA designator.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -126,7 +126,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
-			Assert.AreEqual("'BA-001' is not a valid IOTA designator.", err);
+			Assert.AreEqual("\t'BA-001' is not a valid IOTA designator.", err);
 			Assert.IsNull(modStr);
 		}
 	}

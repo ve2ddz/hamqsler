@@ -109,7 +109,7 @@ namespace hamqsler
 			modStr = null;
 			if(Value == null)
 			{
-				err = "Null callsign is invalid.";
+				err = "\tNull callsign is invalid.";
 				return false;
 			}
 			string call = GetCall();
@@ -120,7 +120,7 @@ namespace hamqsler
 					return true;
 				}
 			}
-			err = string.Format("Callsign '{0}' is invalid.", Value);
+			err = string.Format("\tCallsign '{0}' is invalid.", Value);
 			return false;
 		}
 		

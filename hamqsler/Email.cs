@@ -63,7 +63,7 @@ namespace hamqsler
 			}
 			else
 			{
-				err = string.Format("'{0}' does not appear to be a valid email address.", Value);
+				err = string.Format("\t'{0}' does not appear to be a valid email address.", Value);
 				return  false;
 			}
 		}

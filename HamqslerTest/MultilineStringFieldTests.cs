@@ -66,7 +66,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			MultilineStringField field = new MultilineStringField(null);
 			Assert.IsFalse(field.Validate(out err, out modStr));
-			Assert.AreEqual("Value is null", err);
+			Assert.AreEqual("\tValue is null", err);
 			Assert.IsNull(modStr);
 		}
 	}

@@ -68,7 +68,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
-			Assert.AreEqual("'14.463' is outside enumerated band limits.", err);
+			Assert.AreEqual("\t'14.463' is outside enumerated band limits.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -80,7 +80,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -92,7 +92,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -101,11 +101,11 @@ namespace hamqslerTest
 		public void TestModifyValuesWithMatchingValues()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Freq:6>14.263<Band:3>20m", aEnums, ref err);
+			Qso2 qso = new Qso2("<Freq_Rx:6>14.263<Band_Rx:3>20m", aEnums, ref err);
 			Assert.IsNull(err);
-			AdifField field = qso.GetField("Freq");
+			AdifField field = qso.GetField("Freq_Rx");
 			Assert.IsNotNull(field);
-			Freq freq = field as Freq;
+			Freq_Rx freq = field as Freq_Rx;
 			Assert.IsNotNull(freq);
 			Assert.IsNull(freq.ModifyValues(qso));
 		}
@@ -115,15 +115,16 @@ namespace hamqslerTest
 		public void TestModifyValuesWithMisMatchedValues()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Freq:6>14.263<Band:3>10m", aEnums, ref err);
+			Qso2 qso = new Qso2("<Freq_Rx:6>14.263<Band_Rx:3>10m", aEnums, ref err);
 			Assert.IsNull(err);
-			AdifField field = qso.GetField("Freq");
+			AdifField field = qso.GetField("Freq_Rx");
 			Assert.IsNotNull(field);
-			Freq freq = field as Freq;
+			Freq_Rx freq = field as Freq_Rx;
 			Assert.IsNotNull(freq);
-			Assert.AreEqual("Ham band in Band field does not match band for given frequency." +
-						" Band field modified to match the frequency.",
+			Assert.AreEqual("\tHam band in Band_Rx field does not match band for given Freq_Rx." +
+						" Band_Rx field modified to match the frequency.",
 						freq.ModifyValues(qso));
+			Assert.AreEqual("20m", qso["band_rx"]);
 		}
 		
 		// test ModifyValues without band
@@ -131,14 +132,16 @@ namespace hamqslerTest
 		public void TestModifyValuesWithoutBand()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Freq:6>14.263", aEnums, ref err);
+			Qso2 qso = new Qso2("<Freq_Rx:5>7.263", aEnums, ref err);
 			Assert.IsNull(err);
-			AdifField field = qso.GetField("Freq");
+			AdifField field = qso.GetField("Freq_Rx");
 			Assert.IsNotNull(field);
-			Freq freq = field as Freq;
+			Freq_Rx freq = field as Freq_Rx;
 			Assert.IsNotNull(freq);
-			Assert.AreEqual("Frequency specified, but band is not. Band field generated.",
+			Assert.AreEqual("\tFreq_Rx specified, but Band_Rx is not. Band_Rx field generated.",
 						freq.ModifyValues(qso));
+			Assert.IsNotNull(qso["band_rx"]);
+			Assert.AreEqual("40m", qso["band_rx"]);
 		}
 	}
 }

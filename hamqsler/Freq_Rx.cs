@@ -53,16 +53,17 @@ namespace hamqsler
 				if(!b.Equals(bandFromFreq))
 				{
 					qso["band_rx"] = bandFromFreq;
-					mods = "Ham band in Band_Rx field does not match band for given frequency." +
-						" Band field modified to match the frequency.";
+					mods = "\tHam band in Band_Rx field does not match band for given Freq_Rx." +
+						" Band_Rx field modified to match the frequency.";
 				}
 			}
 			else
 			{
 				string band = string.Empty;
-				Band fBand = new Band(band, adifEnums);
+				adifEnums.GetBandFromFrequency(Value, out band);
+				Band_Rx fBand = new Band_Rx(band, adifEnums);
 				qso.Fields.Add(fBand);
-				mods = "Frequency specified, but band is not. Band_Rx field generated.";
+				mods = "\tFreq_Rx specified, but Band_Rx is not. Band_Rx field generated.";
 			}
 			return mods;
 		}

@@ -115,7 +115,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.IsFalse(dLE.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'EOR' was not found in enumeration.",
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'EOR' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
 		}
@@ -147,7 +147,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			DelimitedListEnumeration dLE = new DelimitedListEnumeration(':', list, "Arrl_Section", aEnums);
 			Assert.IsFalse(dLE.Validate("XPS", out err));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'XPS' " +
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'XPS' " +
 			                    "was not found in enumeration.", err);
 		}
 		

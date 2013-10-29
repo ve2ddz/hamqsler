@@ -73,7 +73,7 @@ namespace hamqsler
 			
 			if(elts.Count == 0)
 			{
-				string err = string.Format("Programming error: Attempting to retrieve {0} enumeration from " +
+				string err = string.Format("\tProgramming error: Attempting to retrieve {0} enumeration from " +
 				              "AdifEnumerations but not found", enumeration);
 				throw new XmlException(err);
 			}
@@ -133,7 +133,7 @@ namespace hamqsler
 			}
 			else
 			{
-				string err = string.Format("Programming Error: {0} enumeration not found in AdifEnumerations",
+				string err = string.Format("\tProgramming Error: {0} enumeration not found in AdifEnumerations",
 				                           enumeration);
 				throw new XmlException(err);
 			}
@@ -164,7 +164,7 @@ namespace hamqsler
 			}
 			else
 			{
-				string err = string.Format("Error: Enumeration {0} not found in Enumeration file",
+				string err = string.Format("\tError: Enumeration {0} not found in Enumeration file",
 				                          enumeration);
 				throw new XmlException(err);
 			}
@@ -193,7 +193,7 @@ namespace hamqsler
 			}
 			else
 			{
-				string err = string.Format("Error: {0} not found in {1} enumeration in Enumeration file",
+				string err = string.Format("\tError: {0} not found in {1} enumeration in Enumeration file",
 				                         value, enumeration);
 				throw new XmlException(err);
 			}
@@ -213,7 +213,7 @@ namespace hamqsler
 			}
 			else
 			{
-				string err = string.Format("Error: {0} not found in {1} enumeration in Enumeration file",
+				string err = string.Format("\tError: {0} not found in {1} enumeration in Enumeration file",
 				                         value, enumeration);
 				throw new XmlException(err);
 			}
@@ -244,7 +244,7 @@ namespace hamqsler
 			}
 			else
 			{
-				string err = string.Format("Error: {0} not found in {1} enumeration in Enumeration file",
+				string err = string.Format("\tError: {0} not found in {1} enumeration in Enumeration file",
 				                         value, enumeration);
 				throw new XmlException(err);
 			}

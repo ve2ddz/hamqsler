@@ -221,20 +221,11 @@ namespace hamqsler
 		/// <returns>false if there is an error in the QSO data, true otherwiser</returns>
 		private bool SaveQso()
 		{
-			try 
-			{
-				Qso qso = BuildQsoFromInput();
-				QsoWithInclude qwi = new QsoWithInclude(qso);
-				dispQsos.Add(qwi);
-				QsoData.ClearQsoData();
-				return true;
-			} 
-			catch (QsoException ex) 
-			{
-				MessageBox.Show(ex.Message, "QSO Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				App.Logger.Log(ex.Message);
-				return false;
-			}
+			Qso2 qso = BuildQsoFromInput();
+			QsoWithInclude qwi = new QsoWithInclude(qso);
+			dispQsos.AddQso(qwi);
+			QsoData.ClearQsoData();
+			return true;
 		}
 		
 		
@@ -266,22 +257,23 @@ namespace hamqsler
 		/// Helper method that builds a QSO object from the info input in dialog
 		/// </summary>
 		/// <returns>QSO object built from input</returns>
-		private Qso BuildQsoFromInput()
+		private Qso2 BuildQsoFromInput()
 		{
-			Qso qso = new Qso(App.Logger);
-			qso.setField("call", QsoData.Callsign);
+			string err = string.Empty;
+			Qso2 qso = new Qso2(string.Empty, App.AdifEnums, ref err, null);
+			qso["call"] = QsoData.Callsign;
 			if(QsoData.Manager != string.Empty)
 			{
-				qso.setField("qsl_via", QsoData.Manager);
+				qso["qsl_via"] = QsoData.Manager;
 			}
-			qso.setField("qso_date", QsoData.StartDate);
-			qso.setField("time_on", QsoData.StartTime);
-			qso.setField("mode", QsoData.Mode);
-			qso.setField("rst_sent", QsoData.RST);
+			qso["qso_date"] = QsoData.StartDate;
+			qso["time_on"] = QsoData.StartTime;
+			qso["mode"] = QsoData.Mode;
+			qso["rst_sent"] = QsoData.RST;
 			QsoData.Frequency = QsoData.Frequency.Replace(",", ".");
 			if(QsoData.Band != string.Empty)
 			{
-				qso.setField("band", QsoData.Band);
+				qso["band"] = QsoData.Band;
 			}
 			else
 			{
@@ -289,24 +281,24 @@ namespace hamqsler
 				if(float.TryParse(QsoData.Frequency, out freq))
 				{
 					HamBand band = HamBands.getHamBand(freq);
-					qso.setField("band", band.Band);
+					qso["band"] = band.Band;
 				}
 			}
 			if(QsoData.Frequency != string.Empty)
 			{
-				qso.setField("freq", QsoData.Frequency);
+				qso["freq"] = QsoData.Frequency;
 			}
 			if(QsoData.Rcvd != string.Empty)
 			{
-				qso.setField("qsl_rcvd", QsoData.Rcvd.Substring(0,1));
+				qso["qsl_rcvd"] = QsoData.Rcvd.Substring(0,1);
 			}
 			if(QsoData.Sent != string.Empty)
 			{
-				qso.setField("qsl_sent", QsoData.Sent.Substring(0,1));
+				qso["qsl_sent"] = QsoData.Sent.Substring(0,1);
 			}
 			if(QsoData.SentVia != string.Empty)
 			{
-				qso.setField("qsl_sent_via", QsoData.SentVia.Substring(0,1));
+				qso["qsl_sent_via"] = QsoData.SentVia.Substring(0,1);
 			}
 			return qso;
 		}

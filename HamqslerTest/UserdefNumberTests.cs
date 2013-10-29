@@ -69,7 +69,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(uds.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 				
@@ -95,7 +95,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;			
 			Assert.IsFalse(uds.Validate(out err,out modStr));
-			Assert.AreEqual("'1' is not within range specified by the Userdef field.", err);
+			Assert.AreEqual("\t'1' is not within range specified by the Userdef field.", err);
 			Assert.IsNull(modStr);
 		}
 		

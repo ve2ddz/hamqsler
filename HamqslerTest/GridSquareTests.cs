@@ -35,6 +35,18 @@ namespace hamqslerTest
 			Assert.AreEqual("<GridSquare:6>FN03bi", grid.ToAdifString());
 		}
 		
+		// test Validate with 0-character grid square
+		[Test]
+		public void TestValidate0Chars()
+		{
+			GridSquare grid = new GridSquare("");
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Assert.IsTrue(grid.Validate(out err, out modStr));
+			Assert.IsNull(err);
+			Assert.IsNull(modStr);
+		}
+		
 		// test Validate with valid 2-character grid square
 		[Test]
 		public void TestValidateValid2Chars()
@@ -55,7 +67,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'F3' is not a valid grid square.", err);
+			Assert.AreEqual("\t'F3' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -67,7 +79,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'F' is not a valid grid square.", err);
+			Assert.AreEqual("\t'F' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -79,7 +91,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'FG2' is not a valid grid square.", err);
+			Assert.AreEqual("\t'FG2' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -91,7 +103,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'FG21i' is not a valid grid square.", err);
+			Assert.AreEqual("\t'FG21i' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -103,7 +115,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'FG21il5' is not a valid grid square.", err);
+			Assert.AreEqual("\t'FG21il5' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -115,7 +127,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'FG21il55k' is not a valid grid square.", err);
+			Assert.AreEqual("\t'FG21il55k' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -139,7 +151,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'FG2g' is not a valid grid square.", err);
+			Assert.AreEqual("\t'FG2g' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -163,7 +175,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'FG21iy' is not a valid grid square.", err);
+			Assert.AreEqual("\t'FG21iy' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -187,7 +199,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(grid.Validate(out err, out modStr));
-			Assert.AreEqual("'FG21iy8f' is not a valid grid square.", err);
+			Assert.AreEqual("\t'FG21iy8f' is not a valid grid square.", err);
 			Assert.IsNull(modStr);
 		}
 	}

@@ -54,13 +54,13 @@ namespace hamqsler
 			}
 			if(!Regex.IsMatch(Value, "^[0-2][0-9][0-5][0-9]$|^[0-2][0-9][0-5][0-9][0-5][0-9]$"))
 			{
-				err = "Time must be in HHMM or HHMMSS format.";
+				err = "\tTime must be in HHMM or HHMMSS format.";
 				return false;
 			}
 			string hour = Value.Substring(0, 2);
 			if(hour.CompareTo("24") >= 0)
 			{
-				err = "Invalid time.";
+				err = "\tInvalid time.";
 				return false;
 			}
 			return true;

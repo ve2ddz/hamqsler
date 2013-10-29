@@ -45,11 +45,12 @@ namespace hamqsler
 		/// <returns>true if prefix is valid, false otherwise</returns>
 		public override bool Validate(out string err, out string modStr)
 		{
+			// TODO: modify to include prefixes like VP2E
 			err = null;
 			modStr = null;
-			if(!Regex.IsMatch(Value, "^[0-9][A-Za-z]$|^[A-Za-z]{1,2}[0-9]$"))
+			if(!Regex.IsMatch(Value, "^[0-9][A-Za-z][0-9]*$|^[A-Za-z]{1,2}[0-9]+$"))
 			{
-				err = string.Format("'{0}' is not a valid prefix.", Value);
+				err = string.Format("\t'{0}' is not a valid prefix.", Value);
 				return false;
 			}
 			return true;

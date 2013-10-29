@@ -124,7 +124,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			NumberField nf = new NumberField("fred");
 			Assert.IsFalse(nf.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -136,7 +136,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			NumberField nf = new NumberField(".");
 			Assert.IsFalse(nf.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -148,7 +148,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			NumberField nf = new NumberField("4.2.5");
 			Assert.IsFalse(nf.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 	}

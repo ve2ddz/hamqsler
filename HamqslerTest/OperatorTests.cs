@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(op.Validate(out err, out modStr));
-			Assert.AreEqual("Callsign 'VAHJ' is invalid.", err);
+			Assert.AreEqual("\tCallsign 'VAHJ' is invalid.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -67,7 +67,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(op.Validate(out err, out modStr));
-			Assert.AreEqual("Callsign 'VA3HJ/W8' contains modifiers.", err);
+			Assert.AreEqual("\tCallsign 'VA3HJ/W8' contains modifiers.", err);
 			Assert.IsNull(modStr);
 		}
 	}

@@ -58,7 +58,7 @@ namespace hamqsler
 			string band = string.Empty;
 			if(!adifEnums.GetBandFromFrequency(Value, out band))
 			{
-				err = string.Format("'{0}' is outside enumerated band limits.", Value);
+				err = string.Format("\t'{0}' is outside enumerated band limits.", Value);
 				return false;
 			}
 			return true;
@@ -80,16 +80,17 @@ namespace hamqsler
 				if(!b.Equals(bandFromFreq))
 				{
 					qso["band"] = bandFromFreq;
-					mods = "Ham band in Band field does not match band for given frequency." +
+					mods = "\tHam band in Band field does not match band for given frequency." +
 						" Band field modified to match the frequency.";
 				}
 			}
 			else
 			{
 				string band = string.Empty;
+				adifEnums.GetBandFromFrequency(Value, out band);
 				Band fBand = new Band(band, adifEnums);
 				qso.Fields.Add(fBand);
-				mods = "Frequency specified, but band is not. Band field generated.";
+				mods = "\tFrequency specified, but band is not. Band field generated.";
 			}
 			return mods;
 		}

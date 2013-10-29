@@ -67,7 +67,7 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			hamqsler.HrdLog_Qso_Upload_Status status = new hamqsler.HrdLog_Qso_Upload_Status("B", aEnums);
 			Assert.IsFalse(status.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'B' was not found in enumeration.",
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'B' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
 		}

@@ -67,7 +67,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(fists.Validate(out err, out modStr));
-			Assert.AreEqual("Fists must start with member's number.", err);
+			Assert.AreEqual("\tFists must start with member's number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -79,7 +79,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(fists.Validate(out err,out modStr));
-			Assert.AreEqual("Fists must start with member's number.", err);
+			Assert.AreEqual("\tFists must start with member's number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -91,7 +91,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(fists.Validate(out err, out modStr));
-			Assert.AreEqual("Fists number must be digits only.", err);
+			Assert.AreEqual("\tFists number must be digits only.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -103,7 +103,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(fists.Validate(out err, out modStr));
-			Assert.AreEqual("Fists number must be digits only.", err);
+			Assert.AreEqual("\tFists number must be digits only.", err);
 			Assert.IsNull(modStr);
 		}
 	}

@@ -162,7 +162,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(credit.Validate(out err, out modStr));
-			Assert.AreEqual("'IOTA2' not found in Credit enumeration", err);
+			Assert.AreEqual("\t'IOTA2' not found in Credit enumeration", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -177,7 +177,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr =string.Empty;
 			Assert.IsFalse(credit.Validate(out err, out modStr));
-			Assert.AreEqual("'CRAD' not found in QSL Medium enumeration", err);
+			Assert.AreEqual("\t'CRAD' not found in QSL Medium enumeration", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -194,7 +194,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(credit.Validate(out err, out modStr));
-			Assert.AreEqual("Programming Error: Credit object cannot contain both null and other QSL Media", err);
+			Assert.AreEqual("\tProgramming Error: Credit object cannot contain both null and other QSL Media", err);
 			Assert.IsNull(modStr);
 		}
 	}

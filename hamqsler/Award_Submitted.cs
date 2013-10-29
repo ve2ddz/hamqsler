@@ -63,9 +63,9 @@ namespace hamqsler
 				string sponsor = parts[0] + "_";
 				if(!base.Validate(sponsor, out error))
 				{
-					modStr += string.Format("The sponsors portion of Awards_Submitted is an enumeration." +
+					modStr += string.Format("\tThe sponsors portion of Awards_Submitted is an enumeration." +
 					    Environment.NewLine +
-						"The value '{0}' was not found in enumeration", sponsor);
+						"\t\tThe value '{0}' was not found in enumeration", sponsor);
 				}
 			}
 			return true;

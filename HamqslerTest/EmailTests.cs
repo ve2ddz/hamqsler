@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(email.Validate(out err, out modStr));
-			Assert.AreEqual("'hamqsler.va3hj:ca' does not appear to be a valid email address.", err);
+			Assert.AreEqual("\t'hamqsler.va3hj:ca' does not appear to be a valid email address.", err);
 			Assert.IsNull(modStr);
 		}
 	}

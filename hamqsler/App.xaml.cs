@@ -426,7 +426,7 @@ namespace hamqsler
 		/// <summary>
 		/// Load AdifEnumerations from AdifEnumerations.xml
 		/// </summary>
-		private void GetAdifEnumerations()
+		public void GetAdifEnumerations()
 		{
             // get the assembly for this program
             Assembly assembly = Assembly.GetAssembly(this.GetType());

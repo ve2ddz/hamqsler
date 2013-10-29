@@ -73,7 +73,7 @@ namespace hamqsler
 		public AdifFields(string record, ref string err)
 		{
 			err = null;
-			string reg = "<([A-Za-z0-9_]+):([0-9]+)(:([A-Z])){0,1}>";
+			string reg = "<([A-Za-z0-9_]+):([0-9]+)(:([A-Za-z])){0,1}>";
 			string rec = record.ToUpper();
 			int valLength = 0;
 			if(rec.Contains("<EOR>"))
@@ -96,21 +96,34 @@ namespace hamqsler
 				if(m.Groups.Count > 0)
 				{
 					string len = m.Groups[2].Value;
-					valLength = Int32.Parse(len);
-					if(valLength > record.Substring(fieldEnd + 1).Length)
+					if(Regex.IsMatch(len, "^[0-9]+$"))
 					{
-						err += string.Format("Invalid length specified for '{0}' in header. " +
-						                     "'{0}' not saved." +
-						                     Environment.NewLine, m.Groups[1].Value);
-						return;
+						valLength = Int32.Parse(len);
+						if(valLength > record.Substring(fieldEnd + 1).Length)
+						{
+							err += string.Format("\tInvalid length specified for '{0}' in header. " +
+							                     "'{0}' not saved.", field);
+						}
+						else
+						{
+							fieldNames.Add(m.Groups[1].Value);
+							dataTypes.Add(m.Groups[4].Value);
+							values.Add(record.Substring(fieldEnd + 1, valLength).Trim());
+						}
 					}
 					else
 					{
-						fieldNames.Add(m.Groups[1].Value);
-						dataTypes.Add(m.Groups[4].Value);
-						values.Add(record.Substring(fieldEnd + 1, valLength));
-						record = record.Substring(fieldEnd + valLength + 1);
+						err += "Invalid length specifier in field: '" + field + "'." +
+							" - Field not saved." + Environment.NewLine;
 					}
+				}
+				if(fieldEnd + valLength + 1 < record.Length)
+				{
+					record = record.Substring(fieldEnd + valLength + 1);
+				}
+				else
+				{
+					record = string.Empty;
 				}
 			}
 		}

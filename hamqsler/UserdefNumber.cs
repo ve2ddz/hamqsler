@@ -75,7 +75,7 @@ namespace hamqsler
 				float val = float.Parse(Value);
 				if(val < lower || val > upper)
 				{
-					err = string.Format("'{0}' is not within range specified by the Userdef field.",
+					err = string.Format("\t'{0}' is not within range specified by the Userdef field.",
 					                    Value);
 					return false;
 				}

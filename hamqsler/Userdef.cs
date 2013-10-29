@@ -96,7 +96,7 @@ namespace hamqsler
 		{
 			if(defNum < 1)
 			{
-				throw new ArgumentException("Programming error: Value must be greater than 0.");
+				throw new ArgumentException("\tProgramming error: Value must be greater than 0.");
 			}
 			if(EnumField != null)
 			{
@@ -127,28 +127,28 @@ namespace hamqsler
 			modStr = null;
 			if(uName == null || uName.Length == 0)
 			{
-				err = "Invalid fieldname.";
+				err = "\tInvalid fieldname.";
 				return false;
 			}
 			if(DataType == null || DataType.Value == null || DataType.Value.Length == 0 ||
 			   !DataType.Validate(out err, out modStr))
 			{
-				err = "Invalid data type.";
+				err = "\tInvalid data type.";
 				return false;
 			} 
 			if(EnumField != null && (EnumField.Enumeration == null || EnumField.Enumeration.Length == 0))
 			{
-				err = "Invalid enumeration.";
+				err = "\tInvalid enumeration.";
 				return false;
 			}
 			if(LowerValue == null)
 			{
-				err = "Invalid lower limit.";
+				err = "\tInvalid lower limit.";
 				return false;				
 			}
 			if(UpperValue == null)
 			{
-				err = "Invalid upper limit.";
+				err = "\tInvalid upper limit.";
 				return false;				
 			}
 			if(LowerValue.Equals(string.Empty) && UpperValue.Equals(string.Empty))
@@ -157,12 +157,12 @@ namespace hamqsler
 			}
 			else if(LowerValue.Equals(string.Empty) || !Regex.IsMatch(LowerValue, @"^-{0,1}[0-9]+\.{0,1}[0-9]*$"))
 			{
-				err = "Invalid lower limit.";
+				err = "\tInvalid lower limit.";
 				return false;
 			}
 			else if(UpperValue.Equals(string.Empty) || !Regex.IsMatch(UpperValue, @"^-{0,1}[0-9]+\.{0,1}[0-9]*$"))
 			{
-				err = "Invalid upper limit.";
+				err = "\tInvalid upper limit.";
 				return false;				
 			}
 			return true;

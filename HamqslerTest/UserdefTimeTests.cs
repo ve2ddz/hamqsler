@@ -69,7 +69,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(uds.Validate(out err, out modStr));
-			Assert.AreEqual("Time must be in HHMM or HHMMSS format.", err);
+			Assert.AreEqual("\tTime must be in HHMM or HHMMSS format.", err);
 			Assert.IsNull(modStr);
 		}
 		

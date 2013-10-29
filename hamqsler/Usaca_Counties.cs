@@ -82,7 +82,7 @@ namespace hamqsler
 			{
 				if(!Regex.IsMatch(cnty, "^[A-Z]{2},[A-Za-z]+[ A-Za-z]*$"))
 				{
-					err = string.Format("'{0}' is not in correct county format.", cnty);
+					err = string.Format("\t'{0}' is not in correct county format.", cnty);
 					return false;
 				}
 			}

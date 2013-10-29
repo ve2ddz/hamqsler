@@ -27,7 +27,7 @@
 		<EnumValue Description='Indiana'>IN</EnumValue>
 		<EnumValue Description='Iowa'>IA</EnumValue>
 		<EnumValue Description='Kansas'>KS</EnumValue>
-		<EnumValue Description='Kentucky'>KS</EnumValue>
+		<EnumValue Description='Kentucky'>KY</EnumValue>
 		<EnumValue Description='Los Angeles'>LAX</EnumValue>
 		<EnumValue Description='Louisiana'>LA</EnumValue>
 		<EnumValue Description='Maine'>ME</EnumValue>
@@ -66,7 +66,7 @@
 		<EnumValue Description='Sacramento Valley'>SV</EnumValue>
 		<EnumValue Description='San Diego'>SDG</EnumValue>
 		<EnumValue Description='San Francisco'>SF</EnumValue>
-		<EnumValue Description='San Joaquin valley'>SVG</EnumValue>
+		<EnumValue Description='San Joaquin valley'>SJV</EnumValue>
 		<EnumValue Description='Santa Barbara'>SB</EnumValue>
 		<EnumValue Description='Santa Clara Valley'>SCV</EnumValue>
 		<EnumValue Description='Saskatchewan'>SK</EnumValue>
@@ -83,6 +83,8 @@
 		<EnumValue Description='West Central Florida'>WCF</EnumValue>
 		<EnumValue Description='West Texas'>WTX</EnumValue>
 		<EnumValue Description='West Virginia'>WV</EnumValue>
+		<EnumValue Description='Western Massachusetts'>WMA</EnumValue>
+		<EnumValue Description='Western New York'>WNY</EnumValue>
 		<EnumValue Description='Western Pennsylvania'>WPA</EnumValue>
 		<EnumValue Description='Western Washington'>WWA</EnumValue>
 		<EnumValue Description='Wisconsin'>WI</EnumValue>

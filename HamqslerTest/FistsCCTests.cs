@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(fcc.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid Fists CC number.", err);
+			Assert.AreEqual("\tInvalid Fists CC number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -67,7 +67,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(fcc.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid Fists CC number.", err);
+			Assert.AreEqual("\tInvalid Fists CC number.", err);
 			Assert.IsNull(modStr);
 		}
 	}

@@ -60,7 +60,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			Arrl_Sect sect = new Arrl_Sect("ABCD", aEnums);
 			Assert.IsFalse(sect.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
 		}

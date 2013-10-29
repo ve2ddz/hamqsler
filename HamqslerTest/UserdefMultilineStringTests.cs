@@ -69,7 +69,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(uds.Validate(out err, out modStr));
-			Assert.AreEqual("Value is null", err);
+			Assert.AreEqual("\tValue is null", err);
 			Assert.IsNull(modStr);
 		}
 		

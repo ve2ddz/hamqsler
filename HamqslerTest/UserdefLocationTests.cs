@@ -70,7 +70,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(uds.Validate(out err, out modStr));
-			Assert.AreEqual("'U027 26.385' is not a valid location.", err);
+			Assert.AreEqual("\t'U027 26.385' is not a valid location.", err);
 			Assert.IsNull(modStr);
 		}
 		

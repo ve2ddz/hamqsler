@@ -55,7 +55,7 @@ namespace hamqsler
 			{
 				return true;
 			}
-			err = "Value must be a number.";
+			err = "\tValue must be a number.";
 			return false;
 		}
 	}

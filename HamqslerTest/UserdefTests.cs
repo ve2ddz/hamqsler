@@ -110,7 +110,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid fieldname.", err);
+			Assert.AreEqual("\tInvalid fieldname.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -122,7 +122,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid fieldname.", err);
+			Assert.AreEqual("\tInvalid fieldname.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -134,7 +134,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid data type.", err);
+			Assert.AreEqual("\tInvalid data type.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -146,7 +146,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid data type.", err);
+			Assert.AreEqual("\tInvalid data type.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -158,7 +158,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid data type.", err);
+			Assert.AreEqual("\tInvalid data type.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -171,7 +171,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid enumeration.", err);
+			Assert.AreEqual("\tInvalid enumeration.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -183,7 +183,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid enumeration.", err);
+			Assert.AreEqual("\tInvalid enumeration.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -196,7 +196,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid lower limit.", err);
+			Assert.AreEqual("\tInvalid lower limit.", err);
 			Assert.IsNull(modStr);
 		}
 
@@ -209,7 +209,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
-			Assert.AreEqual("Invalid upper limit.", err);
+			Assert.AreEqual("\tInvalid upper limit.", err);
 			Assert.IsNull(modStr);
 		}
 	}

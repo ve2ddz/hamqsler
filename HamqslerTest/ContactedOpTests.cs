@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(op.Validate(out err, out modStr));
-			Assert.AreEqual("Callsign 'stretch' is invalid.", err);
+			Assert.AreEqual("\tCallsign 'stretch' is invalid.", err);
 			Assert.IsNull(modStr);
 		}
 	}

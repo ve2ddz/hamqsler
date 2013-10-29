@@ -58,7 +58,7 @@ namespace hamqsler
 		{
 			adifEnums = aEnums;
 			this.ClearQsos();
-			return Add(adif, ref error, aEnums);
+			return Add(adif, ref error);
 		}
 		
 		/// <summary>
@@ -77,8 +77,12 @@ namespace hamqsler
 		/// <param name="error">string containing error and modification messages, null otherwise</param>
 		/// <param name="aEnums">AdifEnumerations object containing the ADIF enumerations</param>
 		/// <returns>true if no errors, false otherwise</returns>
-		public bool Add(string adif, ref string error, AdifEnumerations aEnums)
+		public bool Add(string adif, ref string error, AdifEnumerations aEnums = null)
 		{
+			if(aEnums != null)
+			{
+				adifEnums = aEnums;
+			}
 			error = null;
 			string origAdif = adif;
 			if(adif == null || adif == string.Empty)
@@ -96,46 +100,77 @@ namespace hamqsler
 			if(eoh != -1)
 			{
 				string header = adif.Substring(0, eoh);
-				bool headerOK = GetUserDefs(header, aEnums, ref error);
-				if(!headerOK)
+				bool headerOK = GetUserDefs(header, adifEnums, ref error);
+				if(error != null)
 				{
-					error = origAdif + Environment.NewLine + error;
-					return false;
+					error = header + error;
 				}
 				adif = adif.Substring(eoh + 5);
 			}
 			eor = adif.ToUpper().IndexOf("<EOR>");
+			char[] trimChars = {'\r', '\n'};
+			string adifQso = string.Empty;
 			while(eor != -1)
 			{
-				string adifQso = adif.Substring(0, eor);
+				bool qsoAddedToError = false;
+				int start = adif.IndexOf("<");
+				adifQso = adif.Substring(start, eor - start);
 				string err = string.Empty;
-				Qso2 qso = new Qso2(adif, aEnums, ref err);
+				Qso2 qso = new Qso2(adif, adifEnums, ref err);
 				if(err != null)
 				{
-					error += err + Environment.NewLine;
+					error += adifQso.Trim(trimChars) + "<eor>" +
+						Environment.NewLine + err + Environment.NewLine;
+					qsoAddedToError = true;
+					
 				}
 				string valError = string.Empty;
 				bool val = qso.Validate(ref valError);
 				if(val)
 				{
+					// the following code assumes that the AdifField objects in the Qso
+					// only have to be checked for modification once, and that any
+					// newly generated AdifFields don't have to be checked.
+					List<AdifField> fields = new List<AdifField>();
+					foreach(AdifField field in qso.Fields)
+					{
+						fields.Add(field);
+					}
+					foreach(AdifField field in fields)
+					{
+						AdifField f = qso.GetField(field.Name);
+						string modString = f.ModifyValues(qso);
+						if(modString != null)
+						{
+							if(!qsoAddedToError)
+							{
+								error += adifQso + "<eor>" + Environment.NewLine;
+							}
+							error += modString + Environment.NewLine + Environment.NewLine;
+						}
+					}
 					this.Add(qso);
 				}
 				else
 				{
+					if(!qsoAddedToError)
+					{
+						error += adifQso + "<eor>" + Environment.NewLine;
+					}
 					error += valError + " - QSO not added." + Environment.NewLine;
 				}
 				adif = adif.Substring(eor + 5);
 				eor = adif.ToUpper().IndexOf("<EOR>");
 			}
-			char[] trimChars = {' '};
-			adif.Trim(trimChars);
-			if(adif.Length > 0)
-			{
-				error += "Data found after end of last QSO record: " + adif + Environment.NewLine;
-			}
 			if(error != null)
 			{
-				error = origAdif + Environment.NewLine + error;
+				error += Environment.NewLine;
+			}
+			string whiteChars = @"^[ \r\n\t]*$";
+			if(!Regex.IsMatch(adif, whiteChars))
+			{
+				error += "Data found after end of last QSO record: '" + adif + "'" +
+					Environment.NewLine + Environment.NewLine;
 			}
 			return true;
 		}
@@ -148,6 +183,7 @@ namespace hamqsler
 		/// <returns>false if error retrieving UserDefs, true otherwise</returns>
 		private bool GetUserDefs(string adif, AdifEnumerations aEnums, ref string err)
 		{
+			bool headerError = false;
 			string reg = @"^([A-Za-z_]+)";
 			string enumReg = @",\{([A-Za-z0-9,]+)\}";
 			string rangeReg = @"([0-9]+){0,1}:([0-9]+)}*\}{0,1}";
@@ -162,9 +198,9 @@ namespace hamqsler
 					{
 						if(userdef.UName.Equals(match.Groups[1].Value))
 						{
-							err += "User Defined Field: '" + match.Groups[1] +
-								"' already defined. First definition retained." +
-								Environment.NewLine;
+							err += "\tUser Defined Field: '" + match.Groups[1] +
+								"' already defined. First definition retained.";
+							headerError = true;
 							alreadyDefined = true;
 							break;
 						}
@@ -173,28 +209,30 @@ namespace hamqsler
 					{
 						if(fields.DataTypes[i].Equals(string.Empty))
 						{
-							err += "User Defined Field: '" + fields.Values[i] +
-								"' does not contain a data type. Field not added." +
-								Environment.NewLine;
+							err += "\tUser Defined Field: '" + fields.Values[i] +
+								"' does not contain a data type. Field not added.";
+							headerError = true;
 							continue;
 						}
 						else if(!aEnums.IsInEnumeration("DataType", fields.DataTypes[i]))
 						{
-							err += "User Defined Field: '" + fields.Values[i] +
-								"' does not contain valid data type. Field not added." +
-								Environment.NewLine;
+							err += "\tUser Defined Field: '" + fields.Values[i] +
+								"' does not contain valid data type. Field not added.";
+							headerError = true;
 							continue;
 						}
 						Userdef udef;
+						fields.DataTypes[i] = fields.DataTypes[i].ToUpper();
 						switch(fields.DataTypes[i])
 						{
 							case "E":
 								Match enumMatch = Regex.Match(fields.Values[i], enumReg);
 								if(enumMatch.Groups[1].Value.Equals(string.Empty))
 								{
-									err += "User Defined Field: '" + fields.Values[i] +
+									err += "\tUser Defined Field: '" + fields.Values[i] +
 										"' is of type Enumeration, but no enumeration is supplied. " +
-										"Field not added." +Environment.NewLine;
+										"Field not added.";
+									headerError = true;
 									break;
 								}
 								string[] enums = enumMatch.Groups[1].Value.Split(',');
@@ -225,7 +263,7 @@ namespace hamqsler
 					}
 				}
 			}
-			return true;
+			return !headerError;
 		}
 		
 		/// <summary>

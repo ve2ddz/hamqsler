@@ -85,12 +85,9 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(2, qsos.Count);
-			Assert.AreEqual("<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
-				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
-				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017" +
-				Environment.NewLine + "Data found after end of last QSO record: " +
-			                "<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017" +
-			                Environment.NewLine, error);
+			Assert.AreEqual("Data found after end of last QSO record: " +
+			                "'<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017'"
+			                + Environment.NewLine + Environment.NewLine, error);
 
 		}
 		
@@ -138,17 +135,12 @@ namespace hamqslerTest
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
-			Assert.AreEqual( "some header text" + Environment.NewLine +
-						"<adif_ver:5>3.0.4" + Environment.NewLine +
-						"<userdef1:8:H>QRP_ARCI" +Environment.NewLine +
-						"<eoh>" + Environment.NewLine +
-						"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
-						Environment.NewLine +
-						"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
-						Environment.NewLine +
-						"User Defined Field: 'QRP_ARCI" +
-						"' does not contain valid data type. Field not added." +
-						Environment.NewLine, error);
+			Assert.AreEqual("some header text" + Environment.NewLine +
+							"<adif_ver:5>3.0.4" + Environment.NewLine +
+							"<userdef1:8:H>QRP_ARCI" +Environment.NewLine +
+							"\tUser Defined Field: 'QRP_ARCI" +
+							"' does not contain valid data type. Field not added." +
+							Environment.NewLine, error);
 			Assert.AreEqual(0, qsos.UserDefs.Count);
 		}
 		
@@ -168,16 +160,11 @@ namespace hamqslerTest
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("some header text" + Environment.NewLine +
-				"<adif_ver:5>3.0.4" + Environment.NewLine +
-				"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
-				"<eoh>" + Environment.NewLine +
-				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
-				Environment.NewLine +
-				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
-				Environment.NewLine +
-				"User Defined Field: 'QRP_ARCI" +
-								"' already defined. First definition retained." +
-								Environment.NewLine, error);
+							"<adif_ver:5>3.0.4" + Environment.NewLine +
+							"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
+							"\tUser Defined Field: 'QRP_ARCI" +
+							"' already defined. First definition retained." +
+							Environment.NewLine, error);
 		}
 		
 		// test header with Userdef having enumeration
@@ -213,12 +200,7 @@ namespace hamqslerTest
 			Assert.AreEqual("some header text" + Environment.NewLine +
 							"<adif_ver:5>3.0.4" + Environment.NewLine +
 							"<userdef1:11:E>SweaterSize" +Environment.NewLine +
-							"<eoh>" + Environment.NewLine +
-							"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
-							Environment.NewLine +
-							"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
-							Environment.NewLine +
-							"User Defined Field: 'SweaterSize' is of type Enumeration, " +
+							"\tUser Defined Field: 'SweaterSize' is of type Enumeration, " +
 			                "but no enumeration is supplied. Field not added." +
 							Environment.NewLine, error);
 		}
@@ -274,12 +256,7 @@ namespace hamqslerTest
 			Assert.AreEqual("some header text" + Environment.NewLine +
 							"<adif_ver:5>3.0.4" + Environment.NewLine +
 							"<userdef1:14:N>ShoeSize" +Environment.NewLine +
-							"<eoh>" + Environment.NewLine +
-							"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
-							Environment.NewLine +
-							"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
-							Environment.NewLine +
-							"Invalid length specified for 'userdef1' in header. 'userdef1' not saved." +
+							"\tInvalid length specified for '<userdef1:14:N>' in header. '<userdef1:14:N>' not saved." +
 			                Environment.NewLine, error);
 		}
 		
@@ -289,30 +266,17 @@ namespace hamqslerTest
 		{
 			string adif = "some header text" + Environment.NewLine +
 				"<adif_ver:5>3.0.4" + Environment.NewLine +
-				"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
 				"<eoh>" + Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>2013100<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
 			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
-			Assert.AreEqual(1, qsos.UserDefs.Count);
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
-			Assert.AreEqual(1, qsos.UserDefs.Count);
-			Assert.AreEqual("some header text" + Environment.NewLine +
-								"<adif_ver:5>3.0.4" + Environment.NewLine +
-								"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
-								"<eoh>" + Environment.NewLine +
-								"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>2013100<Time_On:4>1017<eor>" +
-								Environment.NewLine +
-								"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
-								Environment.NewLine +
-								"User Defined Field: 'QRP_ARCI" +
-								"' already defined. First definition retained." +
-								Environment.NewLine +
-								"Qso_Date:2013100< - Date must contain number characters only. - Field deleted." +
-								Environment.NewLine +
-								"Invalid QSO: Qso_Date not specified. - QSO not added." +
-								Environment.NewLine, error);
+			Assert.AreEqual("<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>2013100<Time_On:4>1017<eor>" +
+							Environment.NewLine +
+							"\tQso_Date:2013100< - \tDate must contain number characters only. - Field deleted." +
+							 Environment.NewLine + Environment.NewLine +
+							 "\tInvalid QSO: Qso_Date not specified. - QSO not added." +
+							 Environment.NewLine  + Environment.NewLine, error);
 		}
 		
 		// test Import
@@ -433,6 +397,24 @@ namespace hamqslerTest
 				Environment.NewLine;
 			Assert.AreEqual(compString, qsos.ToAdifString());
 
+		}
+
+		// test ModifyValues with missing field in each QSO
+		[Test]
+		public void TestModifyValuesWithMissingFieldInEachQso()
+		{
+			string adif = "some header text" + Environment.NewLine +
+				"<adif_ver:5>3.0.4" + Environment.NewLine +
+				"<userdef1:8:N>QRP_ARCI" +Environment.NewLine +
+				"<eoh>" + Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Time_On:4>1017<eor>" +
+				Environment.NewLine +
+				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>";
+			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.AreEqual(1, qsos.Count);
+			Assert.AreEqual("<mode:2>CW<band:3>10m<call:5>VA3HJ<Time_On:4>1017<eor>" +
+			                Environment.NewLine + "\tInvalid QSO: Qso_Date not specified. - QSO not added." +
+			                Environment.NewLine + Environment.NewLine, error);
 		}
 	}
 }

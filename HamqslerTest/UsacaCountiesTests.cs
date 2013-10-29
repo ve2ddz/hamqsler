@@ -63,7 +63,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ucs.Validate(out err, out modStr));
-			Assert.AreEqual("'Franklin' is not in correct county format.", err);
+			Assert.AreEqual("\t'Franklin' is not in correct county format.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -75,7 +75,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ucs.Validate(out err, out modStr));
-			Assert.AreEqual("'MASS,Hampshire' is not in correct county format.", err);
+			Assert.AreEqual("\t'MASS,Hampshire' is not in correct county format.", err);
 			Assert.IsNull(modStr);
 		}
 		

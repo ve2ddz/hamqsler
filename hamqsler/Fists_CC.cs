@@ -50,7 +50,7 @@ namespace hamqsler
 			modStr = null;
 			if(!Regex.IsMatch(Value, "^[0-9]*$"))
 			{
-				err = "Invalid Fists CC number.";
+				err = "\tInvalid Fists CC number.";
 				return false;
 			}
 			return true;

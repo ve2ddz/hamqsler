@@ -66,7 +66,7 @@ namespace hamqslerTest
 			string modStr = string.Empty;
 			Eqsl_Qsl_Sent rcvd = new Eqsl_Qsl_Sent("F", aEnums);
 			Assert.IsFalse(rcvd.Validate(out err, out modStr));
-			Assert.AreEqual("This QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
+			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
 		}

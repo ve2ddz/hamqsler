@@ -55,7 +55,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(call.Validate(out err, out modStr));
-			Assert.AreEqual("'VP9/VA3HJ' is not a valid callsign.", err);
+			Assert.AreEqual("\t'VP9/VA3HJ' is not a valid callsign.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -67,7 +67,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(call.Validate(out err, out modStr));
-			Assert.AreEqual("'VAHJ' is not a valid callsign.", err);
+			Assert.AreEqual("\t'VAHJ' is not a valid callsign.", err);
 			Assert.IsNull(modStr);
 		}
 		

@@ -68,7 +68,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
-			Assert.AreEqual("'14.463' is outside enumerated band limits.", err);
+			Assert.AreEqual("\t'14.463' is outside enumerated band limits.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -80,7 +80,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -92,7 +92,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
-			Assert.AreEqual("Value must be a number.", err);
+			Assert.AreEqual("\tValue must be a number.", err);
 			Assert.IsNull(modStr);
 		}
 		
@@ -121,7 +121,7 @@ namespace hamqslerTest
 			Assert.IsNotNull(field);
 			Freq freq = field as Freq;
 			Assert.IsNotNull(freq);
-			Assert.AreEqual("Ham band in Band field does not match band for given frequency." +
+			Assert.AreEqual("\tHam band in Band field does not match band for given frequency." +
 						" Band field modified to match the frequency.",
 						freq.ModifyValues(qso));
 		}
@@ -137,8 +137,10 @@ namespace hamqslerTest
 			Assert.IsNotNull(field);
 			Freq freq = field as Freq;
 			Assert.IsNotNull(freq);
-			Assert.AreEqual("Frequency specified, but band is not. Band field generated.",
+			Assert.AreEqual("\tFrequency specified, but band is not. Band field generated.",
 						freq.ModifyValues(qso));
+			Assert.IsNotNull(qso["band"]);
+			Assert.AreEqual("20m", qso["band"]);
 		}
 	}
 }

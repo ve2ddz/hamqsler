@@ -29,6 +29,11 @@ namespace hamqsler
 	{
 		private AdifEnumerations adifEnums = null;
 		private Qsos2 qsos2 = null;
+		public Qsos2 Qsos
+		{
+			get {return qsos2;}
+			set {qsos2 = value;}
+		}
 		
 		private List<AdifField> fields = new List<AdifField>();
 		public List<AdifField> Fields
@@ -591,6 +596,11 @@ namespace hamqsler
 					default:
 						if(flds[i].ToUpper().StartsWith("APP_"))
 						{
+							// if data type not specified, we must assume it is a string
+							if(types[i].Equals(string.Empty))
+							{
+								types[i] = "S";
+							}
 							ApplicationDefinedField adf = new ApplicationDefinedField(flds[i],
 							                                                          types[i],
 							                                                          values[i],
@@ -645,9 +655,8 @@ namespace hamqsler
 											ValidateAndAddField(uTime, values[i], ref errorString);
 											break;
 										default:
-											errorString += string.Format("'{0}' has unsupported data type." +
-											                             " Field deleted." +
-											                             Environment.NewLine, flds[i]);
+											errorString += string.Format("\t'{0}' has unsupported data type." +
+											                             " Field deleted.", flds[i]);
 											break;
 									}
 									userDefFound = true;
@@ -656,7 +665,7 @@ namespace hamqsler
 							}
 							if(!userDefFound)
 							{
-								errorString += string.Format("'{0}' field not valid field type and" +
+								errorString += string.Format("\t'{0}' field not valid field type and" +
 								                             " not a user defined type. Field deleted." +
 								                             Environment.NewLine, flds[i]);
 							}
@@ -679,12 +688,14 @@ namespace hamqsler
 			bool valid = field.Validate(out err, out mod);
 			if(mod != null)
 			{
-				errorString += string.Format("{0}:{1} - {2} - Value modified.",
+				errorString += string.Format("\t{0}:{1} - {2} - Value modified." +
+				                             Environment.NewLine,
 				                             field.Name, field.Value, mod);
 			}
 			if(!valid)
 			{
-				errorString += string.Format("{0}:{1} - {2} - Field deleted.",
+				errorString += string.Format("\t{0}:{1} - {2} - Field deleted." +
+				                             Environment.NewLine,
 				                             field.Name, field.Value, err);
 			}
 			else
@@ -705,13 +716,13 @@ namespace hamqsler
 			string call = this["call"];
 			if(call == null || call == string.Empty)
 			{
-				err = "Invalid QSO: Call not specified.";
+				err = "\tInvalid QSO: Call not specified.";
 				return false;
 			}
 			string mode = this["mode"];
 			if(mode == null || mode == string.Empty)
 			{
-				err = "Invalid QSO: Mode not specified.";
+				err = "\tInvalid QSO: Mode not specified.";
 				return false;
 			}
 			string freq = this["freq"];
@@ -720,19 +731,19 @@ namespace hamqsler
 				(band != null && band != string.Empty);
 			if(!forb)
 			{
-				err = "Invalid QSO: Neither a band or frequency specified.";
+				err = "\tInvalid QSO: Neither a band or frequency specified.";
 				return false;
 			}
 			string date = this["qso_date"];
 			if(date == null || date == string.Empty)
 			{
-				err = "Invalid QSO: Qso_Date not specified.";
+				err = "\tInvalid QSO: Qso_Date not specified.";
 				return false;
 			}
 			string time = this["time_on"];
 			if(time == null || time == string.Empty)
 			{
-				err = "Invalid QSO: Time_On not specified.";
+				err = "\tInvalid QSO: Time_On not specified.";
 				return false;
 			}
 			return true;
@@ -784,7 +795,7 @@ namespace hamqsler
                 		bool valid = field.Validate(out error, out modStr);
                 		if(!valid)
                 		{
-                			throw new ArgumentException("Invalid value specified for field '" +
+                			throw new ArgumentException("\tInvalid value specified for field '" +
                 			                            key + "'.");
                 		}
                 		return;
@@ -799,7 +810,7 @@ namespace hamqsler
                 Qso2 q = new Qso2(fld, adifEnums, ref err, qsos2);
                 if(err != null)
                 {
-                	string error = "Programming Exception while attempting to add a new field:" +
+                	string error = "\tProgramming Exception while attempting to add a new field:" +
 	                               Environment.NewLine +
 	                               err;
                 	throw new ArgumentException(error);
