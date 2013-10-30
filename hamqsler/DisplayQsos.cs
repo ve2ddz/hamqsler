@@ -98,6 +98,7 @@ namespace hamqsler
 			QsoWithIncludeEqualityComparer eComparer = new QsoWithIncludeEqualityComparer();
 			// adifFile already checked to ensure that it exists, so just read contents
 			string adifFileContents = File.ReadAllText(adifFile);
+			int errLen = errorString.Length;
 			bool qsoError = !qsos2.Add(adifFileContents, ref errorString, aEnums);
 			List<QsoWithInclude>qList = new List<QsoWithInclude>();
 			foreach(Qso2 qso in qsos2)
@@ -146,6 +147,12 @@ namespace hamqsler
             // now add the items in sorted order
             qList3.Sort(comparer);
             this.Clear();
+			// check if a change was made to the qso contents, and set IsDirty if this is the case.
+			// This check must be performed here because the call to Clear sets IsDirty to false;
+			if(errLen < errorString.Length)
+			{
+				IsDirty = true;
+			}
             foreach(QsoWithInclude qwi in qList3)
             {
             	this.AddQso(qwi);
@@ -178,7 +185,9 @@ namespace hamqsler
 			}
 			// sort and put QSOs back
             qList.Sort(comparer);
+            bool dirty = this.IsDirty;
             this.Clear();
+            this.IsDirty = dirty;
             foreach(QsoWithInclude qwi in qList)
             {
             	this.Add(qwi);
@@ -341,7 +350,9 @@ namespace hamqsler
 		                        ref Dictionary<string, bool> sentViaStatuses)
 		{
 			List<QsoWithInclude> qsos = this.ToList();
+			bool dirty = this.IsDirty;
 			this.Clear();
+			this.IsDirty = dirty;
 			foreach(QsoWithInclude qwi in qsos)
 			{
 				string band = qwi.Band.ToLower();
