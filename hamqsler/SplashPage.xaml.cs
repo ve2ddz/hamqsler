@@ -91,6 +91,7 @@ namespace hamqsler
 			{
 				ShowLogAccessErrorLabel();
 			}
+			((App)App.Current).GetAdifEnumerations();
 			((App)Application.Current).LogRuntimeInfo();		// output run start info
 			// load existing UserPreferences file, or create new one
 			// it is necessary to run this on the UI thread because UserPreferences is a
@@ -126,7 +127,6 @@ namespace hamqsler
 				}
 				HideCheckingForUpdatesLabel();
 			}
-			((App)App.Current).GetAdifEnumerations();
 			
 			if(directoriesError || newStableVersion || newDevelopmentVersion ||
 			   securityException || accessException)		// terminate class error

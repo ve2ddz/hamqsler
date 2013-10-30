@@ -156,6 +156,33 @@ namespace hamqsler
 					created += "hamqsler/Logs directory created" + Environment.NewLine;
 					showHamqslerCreatedLabel = true;
 				}
+				
+				// check if AppDataFolder\HamQSLer directory exists and create it if it doesn't
+				string appDataDirName =  Path.Combine(Environment.GetFolderPath(
+							Environment.SpecialFolder.ApplicationData), "HamQSLer");
+				DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
+				if(!appDataFolder.Exists)
+				{
+					appDataFolder.Create();
+					created += "AppData/HamQSLer directory created" + Environment.NewLine;
+					showHamqslerCreatedLabel = true;
+				}
+				// check for AdifEnumerations.xml file and copy if needed.
+				FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/AdifEnumerations.xml");
+				if(!fInfo.Exists)
+				{
+					Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+		        	Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+		        	FileStream fStream = File.Open(fInfo.FullName, FileMode.Create);
+		        	byte[] bytes = new Byte[str.Length];
+		        	str.Read(bytes, 0, (int)str.Length);
+		        	fStream.Write(bytes, 0, (int)str.Length);
+		        	fStream.Close();
+		        	str.Close();
+		        	created += @"AdifEnumerations.xml not found in AppData\HamQSLer. Copied from program." +
+		        		Environment.NewLine;
+				}
+
 				// check if Samples directory exists and create it if it doesn't
 				DirectoryInfo samplesDirInfo = new DirectoryInfo(hamqsler + "/Samples");
 				if (!samplesDirInfo.Exists)
@@ -176,11 +203,11 @@ namespace hamqsler
 				FileInfo[] files = samplesInfo.GetFiles();
 				foreach (FileInfo file in files)
 				{
-					FileInfo fInfo = new FileInfo(samplesDirInfo.FullName + "/" + file.Name);
-					if (!fInfo.Exists)
+					FileInfo sInfo = new FileInfo(samplesDirInfo.FullName + "/" + file.Name);
+					if (!sInfo.Exists)
 					{
-						file.CopyTo(fInfo.FullName);
-						created += fInfo.Name + " copied" + Environment.NewLine;
+						file.CopyTo(sInfo.FullName);
+						created += sInfo.Name + " copied" + Environment.NewLine;
 						showHamqslerCreatedLabel = true;
 					}
 				}
@@ -222,10 +249,6 @@ namespace hamqsler
 			// AdifString object only used so that I can get the Type for it to get
 			// the Assembly it is in
 			AssemblyName aName2 = assembly.GetName();
-			AdifString aStr = new AdifString("<eor>");
-			Type t = aStr.GetType();
-			Assembly asm = Assembly.GetAssembly(t);
-			AssemblyName aName = asm.GetName(); 
 			// get CLR version info
 			Version ver = Environment.Version;
 			// get newline for this platform
@@ -233,7 +256,7 @@ namespace hamqsler
 			// output start log message
 			logger.Log(string.Format("HamQSLer started" + newline +
 			                         "HamQSLer version: {6}" + newline +
-			                         "QsosLibrary version: {8}" + newline +
+			                         "AdifEnumerations version: {8}" + newline +
 			                         "QslBureaus version: {9}" + newline +
 			                         "CLR version: {2}.{3}.{4}.{5}" + newline +
 			                         "OS: {0}" + newline + 
@@ -244,7 +267,7 @@ namespace hamqsler
 									 ver.Major, ver.Minor, ver.Build, ver.Revision,
 			                         Assembly.GetExecutingAssembly().GetName().Version.ToString(),
 			                         CultureInfo.CurrentCulture.Name,
-			                         aName.Version.ToString(),
+			                         adifEnums.Version,
 			                         aName2.Version.ToString()
 			                ));
 			if(!created.Equals(string.Empty))
@@ -428,13 +451,11 @@ namespace hamqsler
 		/// </summary>
 		public void GetAdifEnumerations()
 		{
-            // get the assembly for this program
-            Assembly assembly = Assembly.GetAssembly(this.GetType());
-            // get a stream for the AdifEnumerations.xml file
-            // TODO: This is currently an embedded resource in the assembly, but needs to be moved to AppData
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-             // load in the xml file
+			string fileName = Path.Combine(Environment.GetFolderPath(
+				Environment.SpecialFolder.ApplicationData), @"HamQSLer\AdifEnumerations.xml");
+			Stream str = new FileStream(fileName, FileMode.Open);
 			AdifEnums = new AdifEnumerations(str);
+			str.Close();
 		}
 	}
 }
