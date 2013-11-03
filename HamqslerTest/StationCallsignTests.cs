@@ -66,8 +66,8 @@ namespace hamqslerTest
 			Station_Callsign oCall = new Station_Callsign("VA3HJ/W8");
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assert.IsFalse(oCall.Validate(out err, out modStr));
-			Assert.AreEqual("\tCallsign 'VA3HJ/W8' contains modifiers.", err);
+			Assert.IsTrue(oCall.Validate(out err, out modStr));
+			Assert.AreEqual(null, err);
 			Assert.IsNull(modStr);
 		}
 	}
