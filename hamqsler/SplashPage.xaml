@@ -98,6 +98,12 @@
 							>New stable version of HamQSLer is available.</Label>
 			<Label Name="newDevelopmentVersionLabel" Visibility="Collapsed"
 							>New development version of HamQSLer is available.</Label>
+			<Label Name="adifEnumerationsErrorLabel" Visibility="Collapsed"
+							>Error occurred loading AdifEnumerations file. Will load default file.</Label>
+			<Label Name="newAdifEnumerationsLabel" Visibility="Collapsed"
+							>New AdifEnumerations file downloaded.</Label>
+			<Label Name="newAdifEnumsErrorLabel" Visibility="Collapsed"
+							>Cannot access downloaded AdifEnumerations file. Will load default file.</Label>
 			<Label Name="checkingForUpdatesLabel" Visibility="Collapsed"
 							>Checking for program update and data file revisions.</Label>
 		</StackPanel>

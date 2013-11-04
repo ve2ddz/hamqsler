@@ -21,6 +21,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Xml;
 
 namespace hamqsler
 {
@@ -91,7 +92,39 @@ namespace hamqsler
 			{
 				ShowLogAccessErrorLabel();
 			}
-			((App)App.Current).GetAdifEnumerations();
+			try
+			{
+				((App)App.Current).GetAdifEnumerations();
+			}
+			catch(XmlException xe)
+			{
+				App.Logger.Log(xe, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
+				try
+				{
+					((App)App.Current).CopyDefaultAdifEnumerationsXml();
+					((App)App.Current).GetAdifEnumerations();
+					ShowAdifEnumerationsErrorLabel();
+				}
+				catch(Exception e)
+				{
+					App.Logger.Log(e, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
+					MessageBox.Show("Problem accessing AdifEnumerations.xml file." +
+					                Environment.NewLine +
+					                "Also encountered error attempting to replace AdifEnumerations.xml" +
+					                Environment.NewLine +
+					                "file with default file shipped with the program." +
+					                Environment.NewLine +
+					                "See log file for information on the errors." +
+					                Environment.NewLine +
+					                Environment.NewLine +
+					                "Program cannot continue without this file. Program will terminate.",
+					                "AdifEnumerations.xml Error",
+					                MessageBoxButton.OK,
+					                MessageBoxImage.Error);
+					// force program termination
+					System.Diagnostics.Process.GetCurrentProcess().Kill();
+				}
+			}
 			((App)Application.Current).LogRuntimeInfo();		// output run start info
 			// load existing UserPreferences file, or create new one
 			// it is necessary to run this on the UI thread because UserPreferences is a
@@ -101,6 +134,7 @@ namespace hamqsler
 			bool webError = false;
 			bool newStableVersion = false;
 			bool newDevelopmentVersion = false;
+			bool newAdifEnumerationsVersion = false;
 			ShowCheckingForUpdatesLabel();
 			// updates will contain program and file names with most recent versions available for download
 			// cannot proceed until UserPreferences have been created.
@@ -108,7 +142,8 @@ namespace hamqsler
 			{
 				((App)Application.Current).GetProgramVersions(out webError,
 					                  						  out newStableVersion,
-					                  						  out newDevelopmentVersion);
+					                  						  out newDevelopmentVersion,
+					                  						 out newAdifEnumerationsVersion);
 				if(webError)		// error retrieving file containing version info
 				{
 					ShowWebErrorLabel();
@@ -124,6 +159,47 @@ namespace hamqsler
 					{
 						ShowNewDevelopmentVersionLabel();
 					}
+					if(newAdifEnumerationsVersion)
+					{
+						try
+						{
+							((App)Application.Current).DownloadAdifEnumerationsXml();
+							((App)Application.Current).GetAdifEnumerations();
+						}
+						catch(Exception e)
+						{
+							App.Logger.Log(e);
+							ShowNewAdifEnumsErrorLabel();
+							try
+							{
+								((App)App.Current).CopyDefaultAdifEnumerationsXml();
+								((App)App.Current).GetAdifEnumerations();
+								ShowAdifEnumerationsErrorLabel();
+							}
+							catch(Exception ex)
+							{
+								App.Logger.Log(ex, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
+								MessageBox.Show("Problem accessing downloaded AdifEnumerations.xml file." +
+								                Environment.NewLine +
+								                "Also encountered error attempting to replace AdifEnumerations.xml" +
+								                Environment.NewLine +
+								                "file with default file shipped with the program." +
+								                Environment.NewLine +
+								                "See log file for information on the errors." +
+								                Environment.NewLine +
+								                Environment.NewLine +
+								                "Program cannot continue without this file. Program will terminate.",
+								                "AdifEnumerations.xml Error",
+								                MessageBoxButton.OK,
+								                MessageBoxImage.Error);
+								// force program termination
+								System.Diagnostics.Process.GetCurrentProcess().Kill();
+							}
+						}
+						ShowNewAdifEnumerationsLabel();
+						App.Logger.Log("AdifEnumerations.xml version " + App.AdifEnums.Version +
+						           " downloaded.");
+					}
 				}
 				HideCheckingForUpdatesLabel();
 			}
@@ -135,7 +211,7 @@ namespace hamqsler
 			}
 			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
 						directoriesError || newStableVersion || newDevelopmentVersion ||
-						securityException || accessException)
+						securityException || accessException || newAdifEnumerationsVersion)
 			{
 				ShowContinueButton();
 			}
@@ -253,6 +329,33 @@ namespace hamqsler
 		public void ShowNewDevelopmentVersionLabel()
 		{
 			newDevelopmentVersionLabel.Visibility = Visibility.Visible;
+			UpdateUI();
+		}
+		
+		/// <summary>
+		/// Shows the adifEnumerationsErrorLabel.
+		/// </summary>
+		public void ShowAdifEnumerationsErrorLabel()
+		{
+			adifEnumerationsErrorLabel.Visibility = Visibility.Visible;
+			UpdateUI();
+		}
+		
+		/// <summary>
+		/// Shows the newDevelopmentVersionLabel.
+		/// </summary>
+		public void ShowNewAdifEnumerationsLabel()
+		{
+			newAdifEnumerationsLabel.Visibility = Visibility.Visible;
+			UpdateUI();
+		}
+		
+		/// <summary>
+		/// Shows the newAdifEnumsErrorLabel.
+		/// </summary>
+		public void ShowNewAdifEnumsErrorLabel()
+		{
+			newAdifEnumsErrorLabel.Visibility = Visibility.Visible;
 			UpdateUI();
 		}
 		

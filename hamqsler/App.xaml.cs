@@ -171,14 +171,24 @@ namespace hamqsler
 				FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/AdifEnumerations.xml");
 				if(!fInfo.Exists)
 				{
-					Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-		        	Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-		        	FileStream fStream = File.Open(fInfo.FullName, FileMode.Create);
-		        	byte[] bytes = new Byte[str.Length];
-		        	str.Read(bytes, 0, (int)str.Length);
-		        	fStream.Write(bytes, 0, (int)str.Length);
-		        	fStream.Close();
-		        	str.Close();
+					try
+					{
+						CopyDefaultAdifEnumerationsXml();
+					}
+					catch(Exception e)
+					{
+						MessageBox.Show("The AdifEnumerations.xml file needs to be initialized in " +
+						                "the AppData directory, but the following error is prevent that:"
+						                + Environment.NewLine +
+						                e.Message +
+						                Environment.NewLine + Environment.NewLine +
+						                "Program must terminate.",
+						                "Program Initialization Error",
+						                MessageBoxButton.OK,
+						                MessageBoxImage.Error);
+						// force program termination
+						System.Diagnostics.Process.GetCurrentProcess().Kill();
+					}
 		        	created += @"AdifEnumerations.xml not found in AppData\HamQSLer. Copied from program." +
 		        		Environment.NewLine;
 				}
@@ -255,16 +265,16 @@ namespace hamqsler
 			string newline = Environment.NewLine;
 			// output start log message
 			logger.Log(string.Format("HamQSLer started" + newline +
-			                         "HamQSLer version: {6}" + newline +
-			                         "AdifEnumerations version: {8}" + newline +
-			                         "QslBureaus version: {9}" + newline +
-			                         "CLR version: {2}.{3}.{4}.{5}" + newline +
+			                         "HamQSLer version: {3}" + newline +
+			                         "AdifEnumerations version: {5}" + newline +
+			                         "QslBureaus version: {6}" + newline +
+			                         "CLR version: {2}" + newline +
 			                         "OS: {0}" + newline + 
 			                         "Processors: {1}" + newline +
-			                         "Culture: {7}" + newline,
+			                         "Culture: {4}" + newline,
 			                         os,
 			                         Environment.ProcessorCount, 
-									 ver.Major, ver.Minor, ver.Build, ver.Revision,
+									 ver, 
 			                         Assembly.GetExecutingAssembly().GetName().Version.ToString(),
 			                         CultureInfo.CurrentCulture.Name,
 			                         adifEnums.Version,
@@ -303,11 +313,12 @@ namespace hamqsler
 		/// <param name="newDevelopmentVersion">
 		/// Boolean indicating if a new development version of HamQSLer is available for download</param>
 		internal void GetProgramVersions(out bool webError, out bool newStableVersion,
-		                                out bool newDevelopmentVersion)
+		                                out bool newDevelopmentVersion, out bool adifEnumVersion)
         {
 			webError = false;
 			newStableVersion = false;
 			newDevelopmentVersion = false;
+			adifEnumVersion = false;
 			Dictionary<string, string> versions = new Dictionary<string, string>();
             // create request for website
             HttpWebRequest httpRequest = null;
@@ -328,7 +339,7 @@ namespace hamqsler
                 {
                     httpRequest.Proxy = new WebProxy(proxy, proxyPort);
                 }
-				// get OS information for including in UserAgentt
+				// get OS information for including in UserAgent
 				string os = "Unknown";
                 string osVer = Environment.OSVersion.VersionString;
                 Regex osRegex = new Regex("(Windows NT [\\d]\\.[\\d])");
@@ -343,11 +354,14 @@ namespace hamqsler
                 Encoding enc = Encoding.UTF8;
                 // get response from website
                 resStream = new StreamReader(response.GetResponseStream(), enc);
-				Regex updates = new Regex("([a-zA-Z]+)\\s([0-9]{6})");
+				Regex updates = new Regex("([a-zA-Z]+)\\s([0-9]{6,8})");
 				// build the Dictionary of names and versions from the contents of hamqslerVersion.txt
 				// It is expected that each line will contain a file or program name and its version.
-				// Version is exactly 6 digits containing 2 digits for Major build number,
-				// 2 digits for Minor build number, and 2 digits for Build number
+				// Program version is exactly 6 digits containing 2 digits for Major build number,
+				// 2 digits for Minor build number, and 2 digits for Build number.
+				// AdifEnumerations.xml version is exactly 8 digits containing 2 digits for Major
+				// build number, 2 digits for Minor build number, 2 digits for Build number, and
+				// 2 digits for modification number.
 				while(!resStream.EndOfStream)
 				{
 					string resp = resStream.ReadLine();
@@ -393,6 +407,9 @@ namespace hamqsler
 							break;
 						case "development":
 							newDevelopmentVersion = CheckHamQslerVersion(versions[key]);
+							break;
+						case "AdifEnumerations":
+							adifEnumVersion = CheckAdifEnumerationsVersion(versions[key]);
 							break;
 					}
 				}
@@ -456,6 +473,126 @@ namespace hamqsler
 			Stream str = new FileStream(fileName, FileMode.Open);
 			AdifEnums = new AdifEnumerations(str);
 			str.Close();
+		}
+		
+		/// <summary>
+		/// Checks AdifEnumerations.xml version number
+		/// </summary>
+		/// <returns>
+		/// Boolean indicating whether a new version of the AdifEnumerations.xml file is available or not
+		/// </returns>
+		private bool CheckAdifEnumerationsVersion(string version)
+		{
+			// get this file's version info
+			// this code assumes that each part of the vers
+			string ver = adifEnums.Version;
+			string[] verBits = ver.Split('.');
+			string vers = string.Format("{0}{1}{2}{3}", 
+			                            (verBits[0].Length == 1 ? "0" : "") + verBits[0],
+			                            (verBits[1].Length == 1 ? "0" : "") + verBits[1],
+			                            (verBits[2].Length == 1 ? "0" : "") + verBits[2],
+			                            (verBits[3].Length == 1 ? "0" : "") + verBits[3]);
+			if(vers.CompareTo(version) < 0)
+				return true;
+			else
+				return false;
+		}
+		
+		/// <summary>
+		/// Download AdifEnumerations.xml from the website
+		/// </summary>
+		/// <returns>true if an error occurred retrieving the file, false otherwise</returns>
+		public bool DownloadAdifEnumerationsXml()
+		{
+			bool webError = false;
+            // create request for website
+            HttpWebRequest httpRequest = null;
+            HttpWebResponse response = null;
+            StreamReader resStream = null;
+			// get this program's version info
+	        Version ver = Assembly.GetExecutingAssembly().GetName().Version;
+            string location = string.Format("http://www.va3hj.ca/AdifEnumerations.xml");
+            try
+            {
+            	// build the http request
+                httpRequest = (HttpWebRequest)WebRequest.Create(location);
+                httpRequest.Timeout = WEBREQUESTTIMEOUT;
+				string proxy = userPrefs.HttpProxyServer;
+				int proxyPort = userPrefs.HttpProxyServerPortNumber;
+                if (proxy != string.Empty)
+                {
+                    httpRequest.Proxy = new WebProxy(proxy, proxyPort);
+                }
+				// get OS information for including in UserAgent
+				string os = "Unknown";
+                string osVer = Environment.OSVersion.VersionString;
+                Regex osRegex = new Regex("(Windows NT [\\d]\\.[\\d])");
+                Match match = osRegex.Match(osVer);
+				os = match.Value;
+                httpRequest.UserAgent = string.Format("HamQsler ({0}; [{1}])",
+                            os, CultureInfo.CurrentCulture.Name);
+
+                // *** Retrieve request info headers
+                response = (HttpWebResponse)httpRequest.GetResponse();
+
+                Encoding enc = Encoding.UTF8;
+                // get response from website
+                resStream = new StreamReader(response.GetResponseStream(), enc);
+                
+                // copy file to AppData folder
+				string appDataDirName =  Path.Combine(Environment.GetFolderPath(
+							Environment.SpecialFolder.ApplicationData), "HamQSLer");
+				DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
+				FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/AdifEnumerations.xml");
+	        	string adifStr = resStream.ReadToEnd();
+	        	File.WriteAllText(fInfo.FullName, adifStr);
+            }
+            catch (SecurityException e)
+            {
+                logger.Log(e);
+				webError = true;
+            }
+            catch (WebException e)
+            {
+                DecodeWebException(e);
+				webError = true;
+            }
+            catch (Exception e)
+            {
+                logger.Log("Error retrieving AdifEnumerations from website: " + e.Message);
+				webError = true;
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                }
+                if (resStream != null)
+                {
+                    resStream.Close();
+                }
+            }
+ 			return webError;
+		}
+		
+		/// <summary>
+		/// Copies the AdifEnumerations.xml file stored within the program assembly to AppData
+		/// </summary>
+		public void CopyDefaultAdifEnumerationsXml()
+		{
+			string appDataDirName =  Path.Combine(Environment.GetFolderPath(
+						Environment.SpecialFolder.ApplicationData), "HamQSLer");
+			DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
+			FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/AdifEnumerations.xml");
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+        	Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+        	FileStream fStream = File.Open(fInfo.FullName, FileMode.Create);
+        	byte[] bytes = new Byte[str.Length];
+        	str.Read(bytes, 0, (int)str.Length);
+        	fStream.Write(bytes, 0, (int)str.Length);
+        	fStream.Close();
+        	str.Close();
 		}
 	}
 }
