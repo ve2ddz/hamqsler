@@ -115,13 +115,13 @@
 			information:</para>
 			<programlisting>
 			2013-06-11 11:32:19 HamQSLer started
-			                    HamQSLer version: 0.7.0.16516
-			                    QsosLibrary version: 2.0.0.0
-			                    QslBureaus version: 2.0.0.0
-			                    CLR version: 4.0.30319.296
-			                    OS: Microsoft Windows NT 6.1.7601 Service Pack 1
-			                    Processors: 2
-			                    Culture: en-US
+								HamQSLer version: 1.0.2.10659
+								AdifEnumerations version: 3.0.2.0
+								QslBureaus version: 2.0.0.0
+								CLR version: 4.0.30319.1008
+								OS: Microsoft Windows NT 6.1.7601 Service Pack 1
+								Processors: 2
+								Culture: en-US
 			</programlisting>
 			<para>Whenever an error occurs as the
 			result of a user action or data input, error information is written to the
@@ -162,8 +162,7 @@
 			the cause of the problem. For example, if there is a bad field in a QSO
 			record in an ADIF file that is being imported, the message box would state
 			that there is a problem with one or more records and
-			state that more information about the causes may be found in the log file.
-			This specific situation is discussed in more detail in Exceptions, below.</para>
+			state that more information about the causes may be found in the log file.</para>
 		</section>
 		<section>
 			<title>Exceptions</title>
@@ -175,16 +174,6 @@
 			<para>The following list contains some examples of where exceptions are
 			generated and their effects on the program and user:</para>
 			<itemizedlist spacing='compact'>
-				<listitem>
-					<para>An invalid field in a QSO record in an ADIF file generates
-					an exception. In this case, information about the invalid field
-					is written to the log file, either the ADIF field or the QSO record is 
-					not loaded, and processing
-					continues with the next record. Once all records have been processed,
-					a message box is displayed informing the user of the problem and 
-					directing the user to look in the log file for more information. The
-					user may continue to use <literal>HamQSLer</literal> and the loaded QSOs.</para>
-				</listitem>
 				<listitem>
 					<para>If a card file contains an invalid field, a message box will
 					be displayed to inform the user of the problem and redirects the
@@ -253,7 +242,5 @@
 				information.</para>
 			</listitem>
 		</orderedlist>
-		<para>For this alpha release only, please report all bugs to
-		qsl@va3hj.ca. </para>
 	</section>
 </chapter>

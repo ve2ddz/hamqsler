@@ -12,13 +12,14 @@
 		<!ENTITY doclicense SYSTEM "doclicense.xml">
 		<!ENTITY gpl SYSTEM "gpl.xml">
 		<!ENTITY nonkeyboardchars SYSTEM "nkeychars.xml">
+		<!ENTITY qsoandfieldvalidation SYSTEM "qsovalidation.xml">
 	]
 >
 <book xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
 	  xmlns:xlink="http://www.w3.org/1999/xlink">
 	<info>
 		<title>HamQSLer User Manual</title>
-		<subtitle>Version 1.0</subtitle>
+		<subtitle>Version 1.1.0</subtitle>
 		<author>
 			<personname><firstname>Jim</firstname><surname>Orcheson</surname></personname>
 		</author>
@@ -49,4 +50,5 @@ A</emphasis></link>, entitled <literal>GNU Free Documentation License</literal>.
 	&doclicense;
 	&gpl;
 	&nonkeyboardchars;
+	&qsoandfieldvalidation;
 </book>

@@ -19,23 +19,23 @@
 	generated to any version of the ADIF standard that preceeds the standard that the receiving program
 	claims compatibility with.</para>
 	<caution>
-		<para><literal>HamQSLer</literal> attempts to follow the ADIF standard but in a few 
-		places does not. In general, this does not cause a problem because 
+		<para><literal>HamQSLer</literal> attempts to follow the latest available version
+		of the ADIF standard but in a few 
+		places it may not be able to support esoteric features. In general, 
+		this does not cause a problem because 
 		<literal>HamQSLer</literal> is only interested in a few of the fields
-		that appear in QSO records in an ADIF file. Compatibility with the latest ADIF standard is
-		one of the first sets of changes that will be made to <literal>HamQSLer</literal>
-		once it has been released.</para>
+		that appear in QSO records in an ADIF file. Users may make use of
+		macros to access other fields.</para>
 	</caution>
 	<caution>
 		<para><literal>HamQSLer</literal> validates QSO records to ensure that they contain 
 		at least a minimum set of
-		data: start or end date and time for the QSO, frequency or band used, mode used for the QSO,
-		and the callsign of the station contacted. A number of validity checks are performed on the
-		data that is input via ADIF. For example, if a frequency is specified, it must be within
-		the ADIF specified ham bands, and the callsign must be valid. More information on the checking
+		data: start date and time for the QSO, frequency or band used, mode used for the QSO,
+		and the callsign of the station contacted. Validity checking is performed on each
+		field within a QSO. For example, if a frequency is specified, it must be within
+		the ADIF specified ham bands, and the callsign must be valid. Full information on the checking
 		that <literal>HamQSLer</literal> does to each QSO record being input is provided in 
-		the Importing QSOs section,
-		below.</para>
+		<link linkend="qsoandfieldvalidation"><emphasis role='underline'>Appendix D</emphasis></link>.</para>
 	</caution>
 	<para>A number of users may still keep paper logs. <literal>HamQSLer</literal>
 	provides a dialog for manually inputting
@@ -391,7 +391,7 @@
 			the user would only want to do this if he input one or more QSOs using the QSO input
 			dialog, or if he changed the manager field in the QSOs view.</para>
 		</section>
-		<section>
+		<section xml:id="reloadingqsosonstartup">
 			<title>Reloading ADIF Files on Program Startup</title>
 			<para>The Reload ADIF File on Startup setting in user preferences determines whether
 			the ADIF files that were loaded before <literal>HamQSLer</literal>
@@ -488,18 +488,15 @@
 						</row>
 						<row>
 							<entry>Date</entry>
-							<entry>The start date of the QSO (or the end date if the start date is
-							not specified).</entry>
+							<entry>The start date of the QSO.</entry>
 						</row>
 						<row>
 							<entry>Time</entry>
-							<entry>The start time of the QSO (or the end time if the start time is
-							not specified).</entry>
+							<entry>The start time of the QSO.</entry>
 						</row>
 						<row>
 							<entry>Band</entry>
-							<entry>The band that the QSO occurred on, or the band that the other
-							station transmitted on.</entry>
+							<entry>The band that the QSO occurred on, or the band that you transmitted on.</entry>
 						</row>
 						<row>
 							<entry>Freq</entry>

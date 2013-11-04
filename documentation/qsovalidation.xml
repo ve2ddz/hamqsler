@@ -1,0 +1,1099 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<appendix xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
+		  xmlns:xlink="http://www.w3.org/1999/xlink" 
+		  xml:id="qsoandfieldvalidation">
+	<title>QSO and QSO Field Validation</title>
+	<para>When an ADIF file is imported into HamQSLer, the following four
+	validation checks are performed:</para>
+	<itemizedlist spacing='compact'>
+		<listitem>
+			<para>Each USERDEF field in the header is validated and checked to
+			ensure that it has not already been included. If this field already
+			exists, the new field is simply ignored. This condition is most
+			likely to occur when you import an ADIF file and then add QSOs from
+			a second ADIF file. This will subsequently occur each time you
+			start HamQSLer if you set the "Reload ADIF Files on Startup" property
+			in User Preferences. See 
+			<link linkend="reloadingqsosonstartup"><emphasis role='underline'>Reloading
+			ADIF Files on Program Startup</emphasis></link> in the Working With QSOs
+			chapter for more information.</para>
+		</listitem>
+		<listitem>
+			<para>Each field is validated. See QSO Field Validation, below.</para>
+		</listitem>
+		<listitem>
+			<para>The QSO is validated to ensure that it contains at least the
+			minimum set of fields required for a valid QSO. See QSO Validation,
+			below.</para>
+		</listitem>
+		<listitem>
+			<para>Over time, as it is updated, the ADIF standard has deleted various field values,
+			and fields and field values have been deprecated and possibly replaced 
+			by other fields and field values, or values in other fields. 
+			See QSO Field and Multi-Field Validation and Modification,
+			below, for the changes that HamQSLer makes to support the latest
+			version of the ADIF standard.</para>
+		</listitem>
+	</itemizedlist>
+	<para>Every USERDEF field, QSO field, QSO, and QSO field modification that is
+	performed is logged. Once all QSOs from an ADIF file have been imported,
+	a message box is displayed to inform the user that changes have been made and to
+	view the log file for a description of all of the changes. If no changes
+	or modifications have been made, the message box is not displayed.</para>
+	<section>
+		<title>QSO Field Validation</title>
+		<section>
+			<title>Checking Field Names</title>
+			<para>As each field in a QSO record is input, it is checked to ensure that
+			the field is defined in the ADIF version that <literal>HamQSLer</literal>
+			follows. There are a number of specifically defined fields, plus
+			application specific fields, and user defined fields. Application
+			specific fields must have field names that follow the naming
+			convention for application specific fields defined in the ADIF
+			standard. User defined fields must also follow the formats specified
+			in the ADIF standard.</para>
+			<para>If the QSO field name is invalid, that field is not
+			added to the QSO record.</para>
+		</section>
+		<section>
+			<title>Checking Individual Field Values</title>
+			<para>Immediately after a field is created, its value is validated.
+			Each field has a specified field type, such as text, number, and
+			enumeration. If the value specified for the field does not match the
+			description specified for the field type, the field is not added to the QSO record.</para>
+			<para>The field types are specified in the ADIF standard, and are
+			shown in the table below for convenience.</para>
+			<table frame='all' xml:id='FieldTypes'>
+				<title>QSO Field Types</title>
+				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+					<colspec colname='Type' colwidth='100'/>
+					<colspec colname='TypeIndicator' colwidth='75'/>
+					<colspec colname='Description' />
+					<thead>
+					<row>
+						<entry namest='Type'>Data Type</entry>
+						<entry namest='ADIFValues'>Type Indicator</entry>
+						<entry namest='Description'>Description</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>AwardList</entry>
+							<entry>A</entry>
+							<entry>Comma-delimited list of members of the Award enumeration. This data type
+							is deprecated and replaced with the SponsoredAwardList.</entry>
+						</row>
+						<row>
+							<entry>Boolean</entry>
+							<entry>B</entry>
+							<entry>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>If True, the single ASCII character 'Y'.</para>
+									</listitem>
+									<listitem>
+										<para>If False, the single ASCII character 'N'.</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>CreditList</entry>
+							<entry>C</entry>
+							<entry>
+								<para>Comma-delimited list where each list item is either:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>A member of the Credit enumeration.</para>
+									</listitem>
+									<listitem>
+										<para>A member of the Credit enumeration followed by a colon 
+										and an ampersand-delimited list of members of the QSLMedium enumeration.</para>
+										<para>For example: IOTA,WAS:LOTW&amp;CARD,DXCC:CARD</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>Date</entry>
+							<entry>D</entry>
+							<entry>
+								<para>8 Digits representing a UTC date in YYYYMMDD format, where:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>YYYY is a 4-Digit year specifier, where 1930 &lt;= YYYY</para>
+									</listitem>
+									<listitem>
+										<para>MM is a 2-Digit month specifier, where 1 &lt;= MM &lt;= 12 [use leading zeroes]</para>
+									</listitem>
+									<listitem>
+										<para>DD is a 2-Digit day specifier, where 1 &lt;= DD &lt;= DaysInMonth(MM)  [use leading zeroes]</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>Enumeration</entry>
+							<entry>E</entry>
+							<entry>An explicit list of legal values represented in ASCII and defined in AdifEnumerations.xml for standard ADIF fields,
+							or set forth in set notation, e.g. {A, B, C, D} for user defined fields.</entry>
+						</row>
+						<row>
+							<entry>Location</entry>
+							<entry>L</entry>
+							<entry>
+								<para>a sequence of characters representing a latitude or longitude in 
+								XDDD MM.MMM format, where:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>X is a directional Character from the set {E, W, N, S}</para>
+									</listitem>
+									<listitem>
+										<para>DDD is a 3-Digit degrees specifier, where 0 &lt;= DDD &lt;= 180 
+										[use leading zeroes]</para>
+									</listitem>
+									<listitem>
+										<para>MM.MMM is a 6-Digit minutes specifier, where 0 &lt;= MM.MMM &lt;= 59.999  
+										[use leading zeroes]</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>MultilineString</entry>
+							<entry>M</entry>
+							<entry>a sequence of Characters and line-breaks, where a line break is an ASCII CR (code 13) followed immediately by an ASCII LF (code 10)</entry>
+						</row>
+						<row>
+							<entry>Digit</entry>
+							<entry>N</entry>
+							<entry>An ASCII character whose code lies in the range of 48 through 57, inclusive</entry>
+						</row>
+						<row>
+							<entry>Number</entry>
+							<entry>N</entry>
+							<entry>a sequence of one or more Digits representing a decimal number, optionally 
+							preceded by a minus sign (ASCII  code 45) and optionally including a single decimal 
+							point  (ASCII  code 46)</entry>
+						</row>
+						<row>
+							<entry>SponsoredAwardList</entry>
+							<entry>P</entry>
+							<entry>Comma-delimited list of members of the SponsoredAward enumeration</entry>
+						</row>
+						<row>
+							<entry>Character</entry>
+							<entry>S</entry>
+							<entry>An ASCII character whose code lies in the range of 32 through 126, inclusive</entry>
+						</row>
+						<row>
+							<entry>String</entry>
+							<entry>S</entry>
+							<entry>A sequence of Characters</entry>
+						</row>
+						<row>
+							<entry>Time</entry>
+							<entry>T</entry>
+							<entry>
+								<para>6 Digits representing a UTC time in HHMMSS format or 4 Digits representing a time in HHMM format, where:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>HH is a 2-Digit hour specifier, where 0 &lt;= HH &lt;= 23  [use leading zeroes]</para>
+									</listitem>
+									<listitem>
+										<para>MM is a 2-Digit minute specifier, where 0 &lt;= MM &lt;= 59  [use leading zeroes]</para>
+									</listitem>
+									<listitem>
+										<para>SS is a 2-Digit second specifier, where 0 &lt;= SS &lt;= 59  [use leading zeroes]</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>GridSquare</entry>
+							<entry></entry>
+							<entry>A case-insensitive 2-character, 4-character, 6-character, or 8-character 
+							Maidenhead locator</entry>
+						</row>
+						<row>
+							<entry>GridSquareList</entry>
+							<entry></entry>
+							<entry>A comma-delimited list of GridSquare items</entry>
+						</row>
+						<row>
+							<entry>SecondarySubdivisionList</entry>
+							<entry></entry>
+							<entry>
+								<para>A colon-delimited list of two or more members of the 
+								SecondaryAdministrativeSubdivision enumeration.</para>
+								<para>For example: MA,Franklin:MA,Hampshire</para>
+							</entry>
+						</row>
+						<row>
+							<entry>SOTARef</entry>
+							<entry></entry>
+							<entry>
+								<para>A sequence of Characters representing an International SOTA Reference.  
+								The sequence comprises:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>An ITU prefix;</para>
+									</listitem>
+									<listitem>
+										<para>If applicable, a SOTA subdivision;</para>
+									</listitem>
+									<listitem>
+										<para>A / Character;</para>
+									</listitem>
+									<listitem>
+										<para>A SOTA Reference Number</para>
+									</listitem>
+								</itemizedlist>
+								<para>For example:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>W2/WE-003</para>
+									</listitem>
+									<listitem>
+										<para>G/LD-003</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			<para>There are also limitations placed on the field value. The table
+			below lists each QSO field and validation that is performed in
+			addition to checking the value against data type definitions.</para>
+			<table frame='all' xml:id='QsoFields'>
+				<title>QSO Fields and Validation</title>
+				<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+					<colspec colname='FieldName' colwidth='170'/>
+					<colspec colname='TypeIndicator' colwidth='70'/>
+					<colspec colname='Validation' />
+					<thead>
+					<row>
+						<entry namest='FieldName'>Field Name</entry>
+						<entry namest='TypeIndicator'>Type Indicator</entry>
+						<entry namest='Validation'>Validation Performed</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>ADDRESS</entry>
+							<entry>M</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>AGE</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>A_INDEX</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>ANT_AZ</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>ANT_EL</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>ANT_PATH</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the Ant_Path enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>ARRL_SECT</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the Arrl_Section enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>AWARD_SUBMITTED</entry>
+							<entry>P</entry>
+							<entry>The first part of the value must be a value in the 
+							Sponsored_Award enumeration in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>AWARD_GRANTED</entry>
+							<entry>P</entry>
+							<entry>The first part of the value must be a value in the 
+							Sponsored_Award enumeration in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>BAND</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the 
+							Band enumeration in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>BAND_RX</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the 
+							Band enumeration in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>CALL</entry>
+							<entry>S</entry>
+							<entry>
+								<para>Must be a valid callsign. To be valid,
+								the callsign must be of the format:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>One or two letters, followed by one or more digits,
+										followed by one or more letters.</para>
+									</listitem>
+									<listitem>
+										<para>One digit followed by one letter, 
+										followed by one or more digits,
+										followed by one or more letters.</para>
+									</listitem>
+									<listitem>
+										<para>One of the special callsigns defined
+										in HamQSLer. At the moment, these special
+										callsigns are defined in the program, but in
+										future will be maintained in a data file.</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>CHECK</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>CLASS</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>CLUBLOG_QSO_UPLOAD_DATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>CLUBLOG_QSO_UPLOAD_STATUS</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the Qso_Upload_Status enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>CNTY</entry>
+							<entry>E</entry>
+							<entry>While this field is of type enumeration, no validation
+							is performed.</entry>
+						</row>
+						<row>
+							<entry>COMMENT</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>CONT</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the Continent enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>CONTACTED_OP</entry>
+							<entry>E</entry>
+							<entry>Same as CALL.</entry>
+						</row>
+						<row>
+							<entry>CONTEST_ID</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>COUNTRY</entry>
+							<entry>E</entry>
+							<entry>Must match one of the country names defined in the
+							Country_Code enumeration in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>CQZ</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>CREDIT_GRANTED</entry>
+							<entry>C</entry>
+							<entry>Must be included in the Credit enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>CREDIT_SUBMITTED</entry>
+							<entry>C</entry>
+							<entry>Must be included in the Credit enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>DISTANCE</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>DXCC</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Country_Code enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>EMAIL</entry>
+							<entry>S</entry>
+							<entry>Must be in valid Internet email format.</entry>
+						</row>
+						<row>
+							<entry>EQ_CALL</entry>
+							<entry>S</entry>
+							<entry>Same as CALL, with no prefix or suffix.</entry>
+						</row>
+						<row>
+							<entry>EQSL_QSLRDATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>EQSL_QSLSDATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>EQSL_QSL_RCVD</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qsl_Rcvd enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>EQSL_QSL_SENT</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qsl_Sent enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>FISTS</entry>
+							<entry>S</entry>
+							<entry>Must start with a digits only. Minus sign
+							and decimal point are not allowed.</entry>
+						</row>
+						<row>
+							<entry>FISTS_CC</entry>
+							<entry>S</entry>
+							<entry>Must be digits only. Minus sign
+							and decimal point are not allowed.</entry>
+						</row>
+						<row>
+							<entry>FORCE_INIT</entry>
+							<entry>B</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>FREQ</entry>
+							<entry>N</entry>
+							<entry>Must be within the limits of a band as defined
+							in the Band enumeration in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>FREQ_RX</entry>
+							<entry>N</entry>
+							<entry>Same as FREQ.</entry>
+						</row>
+						<row>
+							<entry>GRIDSQUARE</entry>
+							<entry>GridSquare</entry>
+							<entry>Must be empty or a valid grid square.</entry>
+						</row>
+						<row>
+							<entry>GUEST_OP</entry>
+							<entry>C</entry>
+							<entry>Same as CALL, with no prefix or suffix.</entry>
+						</row>
+						<row>
+							<entry>HRDLOG_QSO_UPLOAD_DATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>HRDLOG_QSO_UPLOAD_STATUS</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the Qso_Upload_Status enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>IOTA</entry>
+							<entry>S</entry>
+							<entry>
+								<para>Must be in format CC-XXX where:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>CC is in the Continent enumeration in
+										AdifEnumerations.xml; and,</para>
+									</listitem>
+									<listitem>
+										<para>000 &lt;= XXX &lt;= 999.</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>IOTA_ISLAND_ID</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>ITUZ</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>K_INDEX</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>LAT</entry>
+							<entry>L</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>LON</entry>
+							<entry>L</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>LOTW_QSLRDATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>LOTW_QSLSDATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>LOTW_QSL_RCVD</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qsl_Rcvd enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>LOTW_QSL_SENT</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qsl_Sent enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>MAX_BURSTS</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>MODE</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Mode enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>MS_SHOWER</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>MY_CITY</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>MY_CNTY</entry>
+							<entry>E</entry>
+							<entry>Same as CNTY.</entry>
+						</row>
+						<row>
+							<entry>MY_COUNTRY</entry>
+							<entry>E</entry>
+							<entry>Same as COUNTRY.</entry>
+						</row>
+						<row>
+							<entry>MY_CQ_ZONE</entry>
+							<entry>N</entry>
+							<entry>Same as CQZ.</entry>
+						</row>
+						<row>
+							<entry>MY_DXCC</entry>
+							<entry>E</entry>
+							<entry>Same as DXCC.</entry>
+						</row>
+						<row>
+							<entry>MY_FISTS</entry>
+							<entry>S</entry>
+							<entry>Same as FISTS.</entry>
+						</row>
+						<row>
+							<entry>MY_GRIDSQUARE</entry>
+							<entry>S</entry>
+							<entry>Same as GRIDSQUARE.</entry>
+						</row>
+						<row>
+							<entry>MY_IOTA</entry>
+							<entry>S</entry>
+							<entry>Same as IOTA.</entry>
+						</row>
+						<row>
+							<entry>MY_ITU_ZONE</entry>
+							<entry>N</entry>
+							<entry>Same as ITUZ.</entry>
+						</row>
+						<row>
+							<entry>MY_LAT</entry>
+							<entry>L</entry>
+							<entry>Same as LAT.</entry>
+						</row>
+						<row>
+							<entry>MY_LON</entry>
+							<entry>L</entry>
+							<entry>Same as LON.</entry>
+						</row>
+						<row>
+							<entry>MY_NAME</entry>
+							<entry>S</entry>
+							<entry>Same as NAME.</entry>
+						</row>
+						<row>
+							<entry>MY_POSTAL_CODE</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>MY_RIG</entry>
+							<entry>M</entry>
+							<entry>Same as RIG.</entry>
+						</row>
+						<row>
+							<entry>MY_SIG</entry>
+							<entry>S</entry>
+							<entry>Same as SIG.</entry>
+						</row>
+						<row>
+							<entry>MY_SIG_INFO</entry>
+							<entry>S</entry>
+							<entry>Same as SIG_INFO.</entry>
+						</row>
+						<row>
+							<entry>MY_SOTA_REF</entry>
+							<entry>SotaRef</entry>
+							<entry>Same as SOTA_REF.</entry>
+						</row>
+						<row>
+							<entry>MY_STATE</entry>
+							<entry>E</entry>
+							<entry>Same as STATE.</entry>
+						</row>
+						<row>
+							<entry>MY_STREET</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>MY_USACA_COUNTIES</entry>
+							<entry>SecondarySubdivisionList</entry>
+							<entry>Same as USACA_COUNTIES.</entry>
+						</row>
+						<row>
+							<entry>MY_VUCC_GRIDS</entry>
+							<entry>GridSquareList</entry>
+							<entry>Same as VUCC_GRIDS.</entry>
+						</row>
+						<row>
+							<entry>NAME</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>NOTES</entry>
+							<entry>M</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>NR_BURSTS</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>NR_PINGS</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>OPERATOR</entry>
+							<entry>S</entry>
+							<entry>Same as CALL, with no prefix or suffix.</entry>
+						</row>
+						<row>
+							<entry>OWNER_CALLSIGN</entry>
+							<entry>S</entry>
+							<entry>Same as CALL, with no prefix or suffix.</entry>
+						</row>
+						<row>
+							<entry>PFX</entry>
+							<entry>S</entry>
+							<entry>
+								<para>Must be a valid prefix. To be valid,
+								the prefix must be of the format:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>One or two letters, followed by one or more digits</para>
+									</listitem>
+									<listitem>
+										<para>One digit followed by one letter, 
+										followed by zero or more digits.</para>
+									</listitem>
+									<listitem>
+										<para>One of the special prefixes defined
+										in HamQSLer. At the moment, these special
+										prefixes are defined in the program, but in
+										future will be maintained in a data file.</para>
+										<para>For example: VP2V, R1MV</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>PRECEDENCE</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>PROP_MODE</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the Propagation enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>PUBLIC_KEY</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>QRZCOM_QSO_UPLOAD_DATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>QRZCOM_QSO_UPLOAD_STATUS</entry>
+							<entry>E</entry>
+							<entry>Must be a value in the Qso_Upload_Status enumeration in
+							AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>QSLMSG</entry>
+							<entry>M</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>QSLRDATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>QSLSDATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>QSL_RCVD</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qsl_Rcvd enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>QSL_RCVD_VIA</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qsl_Via enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>QSL_SENT</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qsl_Sent enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>QSL_SENT_VIA</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qsl_Via enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>QSL_VIA</entry>
+							<entry>S</entry>
+							<entry>No validation is performed on QSO import. If this
+							field contains only a callsign with no prefix or
+							suffix, it is used in HamQSLer as the contacted station's
+							QSL manager.</entry>
+						</row>
+						<row>
+							<entry>QSO_COMPLETE</entry>
+							<entry>E</entry>
+							<entry>Must be included in the Qso_Complete enumeration
+							in AdifEnumerations.xml.</entry>
+						</row>
+						<row>
+							<entry>QSO_DATE</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>QSO_DATE_OFF</entry>
+							<entry>D</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>QSO_RANDOM</entry>
+							<entry>B</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>RIG</entry>
+							<entry>M</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>RST_RCVD</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>RST_SENT</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>RX_PWR</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SAT_MODE</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SAT_NAME</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SFI</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SIG</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SIG_INFO</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SKCC</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SOTA_REF</entry>
+							<entry>SotaRef</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SRX</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SRX_STRING</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>STATE</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>STATION_CALLSIGN</entry>
+							<entry>S</entry>
+							<entry>Same as CALL.</entry>
+						</row>
+						<row>
+							<entry>STX</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>STX_STRING</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SUBMODE</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>SWL</entry>
+							<entry>B</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>TEN_TEN</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>TIME_OFF</entry>
+							<entry>T</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>TIME_ON</entry>
+							<entry>T</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>TX_PWR</entry>
+							<entry>N</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>USACA_COUNTIES</entry>
+							<entry>SecondarySubdivisionList</entry>
+							<entry>
+								<para>.Must contain exactly two counties. Each
+								county must contain:</para>
+								<itemizedlist spacing='compact'>
+									<listitem>
+										<para>Two letter US state. See STATE for
+										validation;</para>
+									</listitem>
+									<listitem>
+										<para>A comma; and,</para>
+									</listitem>
+									<listitem>
+										<para>A series of letters and space
+										characters for the county name. The first
+										character cannot be a space.</para>
+									</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>VE_PROV</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+						<row>
+							<entry>VUCC_GRIDS</entry>
+							<entry>GridSquareList</entry>
+							<entry>Must contain either two or four Maidenhead
+							grid locators. Each grid must be valid. No validation
+							is performed to ensure that the grid locators are
+							adjacent to each other.</entry>
+						</row>
+						<row>
+							<entry>WEB</entry>
+							<entry>S</entry>
+							<entry></entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+	</section>
+	<section>
+		<title>QSO Validation</title>
+		<para>After a QSO record is created from the validated QSO fields, the
+		imported QSO is checked to ensure that it contains
+		the following fields:</para>
+		<itemizedlist spacing='compact'>
+			<listitem>
+				<para>Call;</para>
+			</listitem>
+			<listitem>
+				<para>Mode;</para>
+			</listitem>
+			<listitem>
+				<para>Start date;</para>
+			</listitem>
+			<listitem>
+				<para>Start time; and,</para>
+			</listitem>
+			<listitem>
+				<para>Band or frequency.</para>
+			</listitem>
+		</itemizedlist>
+		<para>If the QSO does not contain these fields, the QSO is not added to the
+		list of QSOs imported by HamQSLer.</para>
+	</section>
+	<section>
+		<title>QSO Field and Multi-Field Validation and Modification</title>
+		<para>The following table describes the field and multi-field validation and 
+		modifications that HamQSLer performs after a QSO has been validated.
+		</para>
+		<table frame='all' xml:id='FieldModifications'>
+			<title>QSO Field Types</title>
+			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+				<colspec colname='Field' colwidth='100'/>
+				<colspec colname='Modification' />
+				<thead>
+				<row>
+					<entry namest='Field'>QSO Field</entry>
+					<entry namest='Modification'>Modification</entry>
+				</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>FREQ</entry>
+						<entry>
+							<para>If BAND does not exist, a BAND field is
+							created with a value matching the band that the
+							frequency is within.</para>
+							<para>If BAND does exist, the BAND field is checked
+							to ensure that the frequency specified in the 
+							FREQ field is within this band. If the frequency
+							is not within the specified band, then the value
+							of the BAND field is changed to correspond to
+							the frequency.</para>
+						</entry>
+					</row>
+					<row>
+						<entry>FREQ_RX</entry>
+						<entry>
+							<para>If BAND_RX does not exist, a BAND_RX field is
+							created with a value matching the band that the
+							frequency is within.</para>
+							<para>If BAND_RX does exist, the BAND_RX field is checked
+							to ensure that the frequency specified in the 
+							FREQ_RX field is within this band. If the frequency
+							is not within the specified band, then the value
+							of the BAND_RX field is changed to correspond to
+							the frequency.</para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+</appendix>

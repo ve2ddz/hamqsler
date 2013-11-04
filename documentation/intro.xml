@@ -80,14 +80,14 @@
 		</itemizedlist>
 	</listitem>
 	<listitem>
-		<para>Supports import of ADIF 2.0 files, including support up to
-		version 2.2.7;</para>
+		<para>Supports import of ADIF 2 files, including support up to
+		version 3.0.4;</para>
 	</listitem>
 	<listitem>
 		<para>QSOs to be printed may be selected by:</para>
 		<itemizedlist spacing="compact" mark="opencircle">
 			<listitem>
-				<para>band,</para>
+				<para>band;</para>
 			</listitem>
 			<listitem>
 				<para>mode;</para>
@@ -97,6 +97,9 @@
 			</listitem>
 			<listitem>
 				<para>QSL sent and received value;</para>
+			</listitem>
+			<listitem>
+				<para>QSL sent via value;</para>
 			</listitem>
 			<listitem>
 				<para>individual selection; or,</para>

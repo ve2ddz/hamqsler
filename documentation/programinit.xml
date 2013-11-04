@@ -21,6 +21,21 @@
 				Started</emphasis></link> chapter.</para>
 			</listitem>
 			<listitem>
+				<para>Checks if the <filename class='directory'>HamQSLer</filename> directory
+				exists in the <filename class='directory'>AppDataFolder</filename>. The
+				<filename class='directory'>AppDataFolder</filename> is the directory
+				<filename class='directory'>C:\User\</filename><emphasis>username</emphasis><filename class='directory'>\AppData\Roaming</filename>
+				on Windows 7 systems. It may be located in a different location
+				on computers running other versions of Windows. If the directory does
+				not exist, it is created.</para>
+			</listitem>
+			<listitem>
+				<para>The existence of the file <filename>AdifEnumerations.xml</filename>
+				in the <filename class='directory'>AppData</filename> is checked. If the
+				file does not exist, it is copied from the within the program
+				to the <filename class='directory'>AppData</filename> directory.</para>
+			</listitem>
+			<listitem>
 				<para>Creates a new log file.</para>
 			</listitem>
 			<listitem>
@@ -35,7 +50,9 @@
 			</listitem>
 			<listitem>
 				<para>Retrieves program and data file version information from the website, and
-				informs the user if new versions are available.</para>
+				informs the user if new versions are available. Downloads the
+				<filename>AdifEnumerations.xml</filename> file from the website
+				if a new version of the file is available.</para>
 				<tip>
 					<para>A setting is provided in user preferences to turn on or turn off checking for
 					new program and data file versions. See the 
@@ -91,7 +108,11 @@
 					<para>The <filename class='directory'>hamqsler</filename> directory, one or 
 					more of its default 
 					subdirectories, or the sample files were not found. The directories have been
-					created and/or the sample files have been copied. This message is most likely
+					created and/or the sample files have been copied.</para>
+					<para>The <filename class='directory'>HamQSLer</filename> directory in
+					<filename class='directory'>AppData</filename>, or the
+					<filename>AdifEnumerations.xml</filename> file has been created or copied.</para>
+					<para>This message is most likely
 					to appear the first time that you start <literal>HamQSLer</literal>. 
 					If it appears later than
 					the first execution of the program, then one or more of the files or directories
@@ -199,6 +220,27 @@
 					regardless of whether the versions file could be retrieved from the website
 					or not. Other messages will be displayed if there were any errors with
 					the versions file, or if new versions are available.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Error occurred loading AdifEnumerations file. Will load default file.</term>
+				<listitem>
+					<para>An error occurred while attempting to load the
+					<filename>AdifEnumerations.xml</filename> from
+					<filename class='directory'>AppData</filename>. There are many reasons
+					for this. See the log file for information on the error.</para>
+					<para>The original <filename>AdifEnumerations.xml</filename>
+					file that was included with this version of <literal>HamQSLer</literal>
+					will be loaded.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>New AdifEnumerations file downloaded.</term>
+				<listitem>
+					<para>A new version of the
+					<filename>AdifEnumerations.xml</filename> has been downloaded
+					from the website. The version number of the file is printed
+					to the log file.</para>
 				</listitem>
 			</varlistentry>
 		</variablelist>
