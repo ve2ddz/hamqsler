@@ -35,5 +35,23 @@ namespace hamqsler
 		public Contacted_Op(string call) : base(call)
 		{
 		}
+		
+		/// <summary>
+		/// Validate the callsign - must be valid call with no prefix or suffix
+		/// </summary>
+		/// <param name="err">Error message if not valid simple callsign, null if valid</param>
+		/// <param name="modStr">Message if value has been modified (always null for this class)</param>
+		/// <returns>true if callsign is valid, false otherwise</returns>
+		public override bool Validate(out string err, out string modstr)
+		{
+			err = null;
+			modstr = null;
+			if(!Value.Equals(this.GetCall()))
+		    {
+		   		err = "\tNot a valid callsign.";
+		   		return false;
+		    }
+			return true;
+		}
 	}
 }

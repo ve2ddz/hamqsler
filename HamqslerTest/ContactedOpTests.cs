@@ -49,13 +49,14 @@ namespace hamqslerTest
 		
 		// test Validate with invalid callsign
 		[Test]
-		public void TestValidateInvalidCall()
+		public void TestValidateInvalidCall(
+			[Values("stretch", "VA3HJ/W8", "VP9/VA3HJ")] string call)
 		{
-			Contacted_Op op = new Contacted_Op("stretch");
+			Contacted_Op op = new Contacted_Op(call);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(op.Validate(out err, out modStr));
-			Assert.AreEqual("\tCallsign 'stretch' is invalid.", err);
+			Assert.AreEqual("\tNot a valid callsign.", err);
 			Assert.IsNull(modStr);
 		}
 	}
