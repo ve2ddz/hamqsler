@@ -2,11 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 # SharpDevelop 4.3
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qsos", "Qsos\Qsos.csproj", "{4457D328-BC0E-4D99-AB72-77A51D111B74}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hamqsler", "hamqsler\hamqsler.csproj", "{16E25B0E-FD8E-4E54-B546-CF81CB50C5D5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QsosTests", "QsosTest\QsosTests.csproj", "{4DD49B7F-71AD-4D0C-9175-0D998DA70E04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QslBureaus", "QslBureaus\QslBureaus.csproj", "{ABAFD1CD-0843-491E-987F-562AB898D953}"
 EndProject
@@ -26,14 +22,6 @@ Global
 		{16E25B0E-FD8E-4E54-B546-CF81CB50C5D5}.Debug|x86.ActiveCfg = Debug|x86
 		{16E25B0E-FD8E-4E54-B546-CF81CB50C5D5}.Release|x86.Build.0 = Release|x86
 		{16E25B0E-FD8E-4E54-B546-CF81CB50C5D5}.Release|x86.ActiveCfg = Release|x86
-		{4457D328-BC0E-4D99-AB72-77A51D111B74}.Debug|x86.Build.0 = Debug|x86
-		{4457D328-BC0E-4D99-AB72-77A51D111B74}.Debug|x86.ActiveCfg = Debug|x86
-		{4457D328-BC0E-4D99-AB72-77A51D111B74}.Release|x86.Build.0 = Release|x86
-		{4457D328-BC0E-4D99-AB72-77A51D111B74}.Release|x86.ActiveCfg = Release|x86
-		{4DD49B7F-71AD-4D0C-9175-0D998DA70E04}.Debug|x86.Build.0 = Debug|x86
-		{4DD49B7F-71AD-4D0C-9175-0D998DA70E04}.Debug|x86.ActiveCfg = Debug|x86
-		{4DD49B7F-71AD-4D0C-9175-0D998DA70E04}.Release|x86.Build.0 = Release|x86
-		{4DD49B7F-71AD-4D0C-9175-0D998DA70E04}.Release|x86.ActiveCfg = Release|x86
 		{ABAFD1CD-0843-491E-987F-562AB898D953}.Debug|x86.Build.0 = Debug|x86
 		{ABAFD1CD-0843-491E-987F-562AB898D953}.Debug|x86.ActiveCfg = Debug|x86
 		{ABAFD1CD-0843-491E-987F-562AB898D953}.Release|x86.Build.0 = Release|x86

@@ -129,7 +129,7 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Gets calsign from possible prefix/call/suffixes
+		/// Gets callsign from possible prefix/call/suffixes
 		/// </summary>
 		/// <returns>Callsign if valid, or null if no callsign found</returns>
 		public string GetCall()

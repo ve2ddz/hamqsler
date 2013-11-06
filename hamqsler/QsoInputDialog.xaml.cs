@@ -22,8 +22,6 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
-using Qsos;
-
 namespace hamqsler
 {
 	/// <summary>
@@ -277,12 +275,9 @@ namespace hamqsler
 			}
 			else
 			{
-				float freq;
-				if(float.TryParse(QsoData.Frequency, out freq))
-				{
-					HamBand band = HamBands.getHamBand(freq);
-					qso["band"] = band.Band;
-				}
+				string band = null;
+				App.AdifEnums.GetBandFromFrequency(QsoData.Frequency, out band);
+					qso["band"] = band;
 			}
 			if(QsoData.Frequency != string.Empty)
 			{

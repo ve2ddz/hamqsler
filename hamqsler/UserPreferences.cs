@@ -23,12 +23,11 @@ using System.ComponentModel;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Xml.Serialization;
-
-using Qsos;
 
 namespace hamqsler
 {
@@ -931,8 +930,10 @@ namespace hamqsler
 				{
 					Regex regexData = new Regex("^[0-9\\.,]*$");
 					Regex regexDecimalSep = new Regex("[\\.,][0-9]*[\\.,]");
-					HamBand band = null;
-					string strFreq = GetBandProperties(propertyName, out band);
+					string band = null;
+					string lower = null;
+					string upper = null;
+					string strFreq = GetBandProperties(propertyName, out band, out lower, out upper);
 					if(strFreq != null)
 					{
 						if(regexDecimalSep.IsMatch(strFreq))
@@ -948,40 +949,19 @@ namespace hamqsler
 						string f = strFreq.Replace(",", ".");
 						float freq = float.Parse(f, NumberStyles.AllowDecimalPoint,
 						                    CultureInfo.InvariantCulture);
-						if(freq < band.LowerEdge || freq > band.UpperEdge)
+						float fLower = float.Parse(lower, NumberStyles.AllowDecimalPoint,
+						                    CultureInfo.InvariantCulture);
+						float fUpper = float.Parse(upper, NumberStyles.AllowDecimalPoint,
+						                    CultureInfo.InvariantCulture);
+						if(freq < fLower || freq > fUpper)
 							result = string.Format("String must be between {0} and {1} MHz", 
-							                       band.LowerEdge, band.UpperEdge);
+							                       lower, upper);
 					}
 				}
 				return result;
 			}
 		}
-		
-		/// <summary>
-		/// Helper method that validates a callsign
-		/// </summary>
-		/// <returns>validation string (error string or null if no error)</returns>
-		private string ValidateCallsign()
-		{
-			CallSign call;
-			if(Callsign.Count == 1 && Callsign[0].GetType() == typeof(StaticText))
-			{
-				try
-				{
-					call = new CallSign(((StaticText)Callsign[0]).Text);
-				}
-				catch(QsoException)
-				{
-					return "Not a valid callsign";
-				}
-				if(!CallSign.IsValid(call.Call))
-				{
-					return "Not a valid callsign";
-				}
-			}
-			return null;
-		}
-		
+
 		/// <summary>
 		/// Constructor used to create a clone of a UserPrefs object
 		/// </summary>
@@ -1425,143 +1405,23 @@ namespace hamqsler
         }	
         
         /// <summary>
-        /// Retrieves both the text to display in the frequency column for a band when no freq is specified,
-        /// and the HamBand object for the band
+        /// Retrieves both the text to display in the frequency column for a band when no freq 
+        /// is specified, and the upper and lower limits for the band
         /// </summary>
         /// <param name="property">Name of the UserPreferences property that contains the text</param>
         /// <param name="band">HamBand object that corresponds to the property</param>
         /// <returns>String that contains the text to display</returns>
-        private string GetBandProperties(string property, out HamBand band)
+        private string GetBandProperties(string property, out string band, out string lower, 
+                                         out string upper)
         {
         	string freq = null;
-        	band = null;
-        	// At first glance this would appear to be a good candidate for polymorphism.
-        	// However, this is called from the IDataErrorInfo validation routine (this[string propName])
-        	// where only the property name as a string is provided. The only solution I can think of
-        	// is to create a Dictionary whose key is the property name and value contains
-        	// both the address of the property and the band name. This would tend to require even
-        	// more code to be written, and would obfuscate what is actually going on.
-        	// HACK: When adding new bands, be sure to add a case in this switch
-        	// HACK: Is there a way to convert a property name to call the actual property?
-        	switch (property) {
-        		case "Frequency2190m":
-        			freq = Frequency2190m;
-        			band = HamBands.getHamBand("2190m");
-        			break;
-        		case "Frequency560m":
-        			freq = Frequency560m;
-        			band = HamBands.getHamBand("560m");
-        			break;
-        		case "Frequency160m":
-        			freq = Frequency160m;
-        			band = HamBands.getHamBand("160m");
-        			break;
-        		case "Frequency80m":
-        			freq = Frequency80m;
-        			band = HamBands.getHamBand("80m");
-        			break;
-        		case "Frequency60m":
-        			freq = Frequency60m;
-        			band = HamBands.getHamBand("60m");
-        			break;
-        		case "Frequency40m":
-        			freq = Frequency40m;
-        			band = HamBands.getHamBand("40m");
-        			break;
-        		case "Frequency30m":
-        			freq = Frequency30m;
-        			band = HamBands.getHamBand("30m");
-        			break;
-        		case "Frequency20m":
-        			freq = Frequency20m;
-        			band = HamBands.getHamBand("20m");
-        			break;
-        		case "Frequency17m":
-        			freq = Frequency17m;
-        			band = HamBands.getHamBand("17m");
-        			break;
-        		case "Frequency15m":
-        			freq = Frequency15m;
-        			band = HamBands.getHamBand("15m");
-        			break;
-        		case "Frequency12m":
-        			freq = Frequency12m;
-        			band = HamBands.getHamBand("12m");
-        			break;
-        		case "Frequency10m":
-        			freq = Frequency10m;
-        			band = HamBands.getHamBand("10m");
-        			break;
-        		case "Frequency6m":
-        			freq = Frequency6m;
-        			band = HamBands.getHamBand("6m");
-        			break;
-        		case "Frequency4m":
-        			freq = Frequency4m;
-        			band = HamBands.getHamBand("4m");
-        			break;
-        		case "Frequency2m":
-        			freq = Frequency2m;
-        			band = HamBands.getHamBand("2m");
-        			break;
-        		case "Frequency1p25m":
-        			freq = Frequency1p25m;
-        			band = HamBands.getHamBand("1.25m");
-        			break;
-        		case "Frequency70cm":
-        			freq = Frequency70cm;
-        			band = HamBands.getHamBand("70cm");
-        			break;
-        		case "Frequency33cm":
-        			freq = Frequency33cm;
-        			band = HamBands.getHamBand("33cm");
-        			break;
-        		case "Frequency23cm":
-        			freq = Frequency23cm;
-        			band = HamBands.getHamBand("23cm");
-        			break;
-        		case "Frequency13cm":
-        			freq = Frequency13cm;
-        			band = HamBands.getHamBand("13cm");
-        			break;
-        		case "Frequency9cm":
-        			freq = Frequency9cm;
-        			band = HamBands.getHamBand("9cm");
-        			break;
-        		case "Frequency6cm":
-        			freq = Frequency6cm;
-        			band = HamBands.getHamBand("6cm");
-        			break;
-        		case "Frequency3cm":
-        			freq = Frequency3cm;
-        			band = HamBands.getHamBand("3cm");
-        			break;
-        		case "Frequency1p25cm":
-        			freq = Frequency1p25cm;
-        			band = HamBands.getHamBand("1.25cm");
-        			break;
-        		case "Frequency6mm":
-        			freq = Frequency6mm;
-        			band = HamBands.getHamBand("6mm");
-        			break;
-        		case "Frequency4mm":
-        			freq = Frequency4mm;
-        			band = HamBands.getHamBand("4mm");
-        			break;
-        		case "Frequency2p5mm":
-        			freq = Frequency2p5mm;
-        			band = HamBands.getHamBand("2.5mm");
-        			break;
-        		case "Frequency2mm":
-        			freq = Frequency2mm;
-        			band = HamBands.getHamBand("2mm");
-        			break;
-        		case "Frequency1mm":
-        			freq = Frequency1mm;
-        			band = HamBands.getHamBand("1mm");
-        			break;
-        	}
-        	return freq;
+
+			PropertyInfo prefsPropInfo = this.GetType().GetProperty(property);
+        	freq = prefsPropInfo.GetValue(this, null) as string;
+			band = property.Substring("Frequency".Length);
+			band = band.Replace('p', '.');
+        	App.AdifEnums.GetBandLimits(band, out lower, out upper);
+			return freq;
         }
         
 	}

@@ -19,7 +19,7 @@
  */
 using System;
 using System.Collections.Generic;
-using Qsos;
+using System.Globalization;
 
 namespace hamqsler
 {
@@ -30,10 +30,14 @@ namespace hamqsler
 	{
 		public override int Compare(string band1, string band2)
 		{
-			HamBand hb1 = HamBands.getHamBand(band1.ToLower());
-			HamBand hb2 = HamBands.getHamBand(band2.ToLower());
-			float f1 = hb1.LowerEdge;
-			float f2 = hb2.LowerEdge;
+			string lower1 = null;
+			string upper1 = null;
+			string lower2 = null;
+			string upper2 = null;
+			App.AdifEnums.GetBandLimits(band1, out lower1, out upper1);
+			App.AdifEnums.GetBandLimits(band2, out lower2, out upper2);
+			float f1 = float.Parse(lower1, CultureInfo.InvariantCulture);
+			float f2 = float.Parse(lower2, CultureInfo.InvariantCulture);
 			return f1.CompareTo(f2);
 		}
 	}

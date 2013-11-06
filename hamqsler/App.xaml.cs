@@ -32,7 +32,6 @@ using System.Windows.Threading;
 using System.Xml;
 
 using QslBureaus;
-using Qsos;
 
 namespace hamqsler
 {

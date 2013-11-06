@@ -127,7 +127,7 @@
 		<EnumValue Description='560m Band' LowerFreq='.501' UpperFreq='.504'>560m</EnumValue>
 		<EnumValue Description='160m Band' LowerFreq='1.8' UpperFreq='2.0'>160m</EnumValue>
 		<EnumValue Description='80m Band' LowerFreq='3.5' UpperFreq='4.0'>80m</EnumValue>
-		<EnumValue Description='60m Band' LowerFreq='5.102' UpperFreq='5.4065'>260m</EnumValue>
+		<EnumValue Description='60m Band' LowerFreq='5.102' UpperFreq='5.4065'>60m</EnumValue>
 		<EnumValue Description='40m Band' LowerFreq='7.0' UpperFreq='7.3'>40m</EnumValue>
 		<EnumValue Description='30m Band' LowerFreq='10.0' UpperFreq='10.15'>30m</EnumValue>
 		<EnumValue Description='20m Band' LowerFreq='14.0' UpperFreq='14.35'>20m</EnumValue>

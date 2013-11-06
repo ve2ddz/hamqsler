@@ -18,16 +18,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Reflection;
+using hamqsler;
 
 namespace hamqslerTest
 {
 	class Program
 	{
+		public static hamqsler.App app = new hamqsler.App();
+		
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
 			
-			// TODO: Implement Functionality Here
+			// TODO: Insert code here
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);

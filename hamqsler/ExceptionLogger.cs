@@ -30,7 +30,7 @@ namespace hamqsler
 	/// <summary>
 	/// Class for handling the logging and display of exceptions
 	/// </summary>
-	public class ExceptionLogger : Qsos.Logger
+	public class ExceptionLogger
     {
     	public const bool SHOWTRACE = true;
     	public const bool DONTSHOWTRACE = false;

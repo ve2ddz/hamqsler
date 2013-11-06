@@ -21,8 +21,6 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 
-using Qsos;
-
 namespace hamqsler
 {
 	/// <summary>
@@ -42,10 +40,17 @@ namespace hamqsler
 		{
 			get 
 			{
-				string startDate = StartDate;
-				return startDate != string.Empty && 
-			                 DateTimeValidator.DateIsValid(startDate) ?
-					startDate : "19451101";
+				DateField df = new DateField(StartDate);
+				string err = string.Empty;
+				string mod = string.Empty;
+				DateTime dt = DateTime.UtcNow;
+				string today = string.Format("{0:d4}{1:d2}{2:d2}", dt.Year, dt.Month, dt.Day);
+				if(today.CompareTo(StartDate) < 0)
+				{
+					return today;
+				}
+				return StartDate != string.Empty && df.Validate(out err, out mod) ?
+					StartDate : "19300101";
 			}
 		}
 			                            
@@ -61,10 +66,11 @@ namespace hamqsler
 		{
 			get 
 			{
-				string startTime = StartTime;
-				return startTime != string.Empty &&
-			                 DateTimeValidator.TimeIsValid(startTime) ?
-					startTime : "0000";
+				TimeField time = new TimeField(StartTime);
+				string err = string.Empty;
+				string mod = string.Empty;
+				return StartTime != string.Empty && time.Validate(out err, out mod) ?
+					StartTime : "0000";
 			}
 		}
 
@@ -80,10 +86,17 @@ namespace hamqsler
 		{
 			get 
 			{
-				string endDate = EndDate;
-				return endDate != string.Empty &&
-			                  DateTimeValidator.DateIsValid(endDate) ?
-					endDate : string.Format("{0:yyyyMMdd}", DateTime.UtcNow);
+				DateField df = new DateField(EndDate);
+				string err = string.Empty;
+				string mod = string.Empty;
+				DateTime dt = DateTime.UtcNow;
+				string today = string.Format("{0:d4}{1:d2}{2:d2}", dt.Year, dt.Month, dt.Day);
+				if(today.CompareTo(EndDate) < 0)
+				{
+					return today;
+				}
+				return EndDate != string.Empty && df.Validate(out err, out mod) ?
+					EndDate : "19300101";
 			}
 		}
 		
@@ -99,24 +112,11 @@ namespace hamqsler
 		{
 			get 
 			{
-				string endTime = EndTime;
-				if(endTime == string.Empty ||
-				   !DateTimeValidator.TimeIsValid(endTime))
-				{
-					endTime = "235959";
-				}
-				DateTime now = DateTime.UtcNow;
-				string nowDate = string.Format("{0:yyyyMMdd}", now);
-				// there is an extremely tiny window in which nowDate is at the
-				// very end of a day and ValidEndDate returns the next day,
-				// so it is very important that we code the following test
-				// with that in mind
-				int compare = string.Compare(nowDate, ValidEndDate);
-				if(compare <= 0)
-				{
-					endTime = string.Format("{0:HHmmss}", now);
-				}
-				return endTime;
+				TimeField time = new TimeField(EndTime);
+				string err = string.Empty;
+				string mod = string.Empty;
+				return EndTime != string.Empty && time.Validate(out err, out mod) ?
+					EndTime : "0000";
 			}			
 		}
 		
@@ -162,9 +162,12 @@ namespace hamqsler
 		/// <returns>validation string (error string or null if no error)</returns>
 		private string ValidateStartDate()
 		{
-			if(!DateTimeValidator.DateIsValid(StartDate))
+			DateField df = new DateField(StartDate);
+			string err = string.Empty;
+			string mod = string.Empty;
+			if(!df.Validate(out err, out mod))
 		    {
-		   		return "Invalid date: must be in format 'YYYYMMDD' and between 19451101 and today";
+		   		return err;
 		    }
 			return null;
 		}
@@ -175,9 +178,12 @@ namespace hamqsler
 		/// <returns>validation string (error string or null if no error)</returns>
 		private string ValidateStartTime()
 		{
-			if(!DateTimeValidator.TimeIsValid(StartTime))
+			TimeField time = new TimeField(EndTime);
+			string err = string.Empty;
+			string mod = string.Empty;
+			if(!time.Validate(out err, out mod))
 			{
-				return "Invalid time: must be in format HHMM or HHMMSS";
+				return err;
 			}
 			return null;
 		}
@@ -188,9 +194,12 @@ namespace hamqsler
 		/// <returns>validation string (error string or null if no error)</returns>
 		private string ValidateEndDate()
 		{
-			if(!DateTimeValidator.DateIsValid(EndDate))
+			DateField df = new DateField(EndDate);
+			string err = string.Empty;
+			string mod = string.Empty;
+			if(!df.Validate(out err, out mod))
 		    {
-		   		return "Invalid date: must be in format 'YYYYMMDD' and between 19451101 and today";
+		   		return err;
 		    }
 			return null;
 		}
@@ -201,9 +210,12 @@ namespace hamqsler
 		/// <returns>validation string (error string or null if no error)</returns>
 		private string ValidateEndTime()
 		{
-			if(!DateTimeValidator.TimeIsValid(EndTime))
+			TimeField time = new TimeField(EndTime);
+			string err = string.Empty;
+			string mod = string.Empty;
+			if(!time.Validate(out err, out mod))
 			{
-				return "Invalid time: must be in format HHMM or HHMMSS";
+				return err;
 			}
 			return null;
 		}

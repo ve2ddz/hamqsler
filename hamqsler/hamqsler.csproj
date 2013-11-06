@@ -416,10 +416,6 @@
       <Project>{ABAFD1CD-0843-491E-987F-562AB898D953}</Project>
       <Name>QslBureaus</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Qsos\Qsos.csproj">
-      <Project>{4457D328-BC0E-4D99-AB72-77A51D111B74}</Project>
-      <Name>Qsos</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Samples" />

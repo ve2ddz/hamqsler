@@ -25,8 +25,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-using Qsos;
-
 namespace hamqsler
 {
 	/// <summary>
@@ -493,7 +491,7 @@ namespace hamqsler
 			foreach(QsoWithInclude qwi in this)
 			{
 				string manager = qwi.Manager;
-				if(!CallSign.IsValid(manager))
+				if(!Call.IsValid(manager))
 				{
 					manager = string.Empty;
 				}

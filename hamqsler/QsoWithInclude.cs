@@ -19,7 +19,6 @@
  */
 using System;
 using System.ComponentModel;
-using Qsos;
 
 namespace hamqsler
 {
@@ -209,16 +208,11 @@ namespace hamqsler
 				string mcdt = manager + "-" + callsign + date + time;
 				if(manager != string.Empty)
 				{
-					try
-					{
-						// now check if manager is valid and modify return value if not
-						CallSign mgr = new CallSign(Manager);
-						if(mgr.FullCall != mgr.Call)
-						{
-							mcdt = "-" + callsign + date + time;
-						}
-					}
-					catch(QsoException)		// thrown if manager not valid callsign
+					// now check if manager is valid and modify return value if not
+					Call mgr = new Call(Manager);
+					string err = string.Empty;
+					string mod = string.Empty;
+					if(mgr.Value != mgr.GetCall() || !mgr.Validate(out err, out mod))
 					{
 						mcdt = "-" + callsign + date + time;
 					}
@@ -259,7 +253,7 @@ namespace hamqsler
 			sent = q["qsl_sent", string.Empty].ToUpper();
 			rcvd = q["qsl_rcvd", string.Empty].ToUpper();
 			sendVia = q["qsl_sent_via", string.Empty].ToUpper();
-			string mcall = (CallSign.IsValid(manager) ? manager : callsign);
+			string mcall = (Call.IsValid(manager) ? manager : callsign);
 			bureau = QslBureaus.QslBureaus.Bureau(mcall);
 			qso = q;
 		}
@@ -288,20 +282,10 @@ namespace hamqsler
 					{
 						return null;
 					}
-					CallSign mgr;
-					try
-					{
-						mgr = new CallSign(Manager);
-					}
-					catch(QsoException)
-					{
-						return "Must either be empty or a valid callsign";
-					}
-					if(mgr.FullCall == mgr.Call)
-					{
-						return null;
-					}
-					else
+					Call mgr = new Call(Manager);
+					string err = string.Empty;
+					string mod = string.Empty;
+					if(mgr.Value != mgr.GetCall() || !mgr.Validate(out err, out mod))
 					{
 						return "Must either be empty or a valid callsign";
 					}

@@ -22,8 +22,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 
-using Qsos;
-
 namespace hamqsler
 {
 	/// <summary>
@@ -183,16 +181,10 @@ namespace hamqsler
 		/// <returns>validation string (error string or null if no error)</returns>
 		private string ValidateCallsign()
 		{
-			CallSign call;
-			try
-			{
-				call = new CallSign(Callsign);
-			}
-			catch(QsoException)
-			{
-				return "Not a valid callsign";
-			}
-			if(!CallSign.IsValid(call.Call))
+			string err = string.Empty;
+			string mod = string.Empty;
+			Call call = new Call(Callsign);
+			if(!call.Validate(out err, out mod))
 			{
 				return "Not a valid callsign";
 			}
@@ -209,22 +201,16 @@ namespace hamqsler
 			{
 				return null;
 			}
-			CallSign mgrCall;
-			try
-			{
-				mgrCall = new CallSign(Manager);
-			}
-			catch (QsoException)
+			string err = string.Empty;
+			string mod = string.Empty;
+			Call mgrCall = new Call(Manager);
+			if(!mgrCall.Validate(out err, out mod))
 			{
 				return "Not a valid callsign";
 			}
-			if(mgrCall.FullCall != mgrCall.Call)
+			if(mgrCall.Value != mgrCall.GetCall())
 			{
 				return "Manager callsign must not contain modifiers (e.g. VA3HJ, not XE1/VA3HJ)";
-			}
-			if(!CallSign.IsValid(Manager))
-			{
-				return "Not a valid callsign";
 			}
 			return null;
 		}
@@ -235,9 +221,12 @@ namespace hamqsler
 		/// <returns>Validation string (error string, or null if no error)</returns>
 		private string ValidateStartDate()
 		{
-			if(!DateTimeValidator.DateIsValid(StartDate))
+			DateField df = new DateField(StartDate);
+			string err = string.Empty;
+			string mod = string.Empty;
+			if(!df.Validate(out err, out mod))
 			{
-				return "Date is not valid. Must be between 19451101 and today";
+				return err;
 			}
 			return null;
 		}
@@ -248,9 +237,12 @@ namespace hamqsler
 		/// <returns>Validation string (error string, or null if no error)</returns>
 		private string ValidateStartTime()
 		{
-			if(!DateTimeValidator.TimeIsValid(StartTime))
+			TimeField time = new TimeField(StartTime);
+			string err = string.Empty;
+			string mod = string.Empty;
+			if(!time.Validate(out err, out mod))
 			{
-				return "Time is not valid. Must be between 000000 and 235959, or 0000 and 2359";
+				return err;
 			}
 			return null;
 		}
@@ -261,9 +253,15 @@ namespace hamqsler
 		/// <returns>Validation string (error string, or null if no error)</returns>
 		private string ValidateMode()
 		{
-			if(Mode == string.Empty)
+			if(Mode != string.Empty)
 			{
-				return "A mode must be specified";
+				Mode mode = new Mode(Mode, App.AdifEnums);
+				string err = string.Empty;
+				string mod = string.Empty;
+				if(!mode.Validate(out err, out mod))
+				{
+					return err;
+				}
 			}
 			return null;
 		}
@@ -276,20 +274,14 @@ namespace hamqsler
 		{
 			if(Frequency != string.Empty)
 			{
-				float freq;
 				string frequency = Frequency.Replace(",", ".");
-				float.TryParse(frequency, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out freq);
-				HamBand hb;
-				try
-				{
-					hb = HamBands.getHamBand(freq);
-				}
-				catch(QsoException)
+				string band = null;
+				if(!App.AdifEnums.GetBandFromFrequency(frequency, out band))
 				{
 					return "Frequency is not within an enumerated ham band and therefore cannot " +
 						"be validated against this Band setting";
 				}
-				if(!Band.Equals(string.Empty) && Band != hb.Band)
+				if(!Band.Equals(string.Empty) && Band != band)
 				{
 					return "Band does not contain the specified frequency";
 				}
@@ -303,25 +295,18 @@ namespace hamqsler
 		/// <returns>Validation string (error string, or null if no error)</returns>
 		private string ValidateFrequency()
 		{
-			if(Frequency == string.Empty)
+			if(Frequency != string.Empty)
 			{
-				return null;
-			}
-			float freq;
-			string frequency = Frequency.Replace(",", ".");
-			float.TryParse(frequency, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out freq);
-			HamBand hb;
-			try
-			{
-				hb = HamBands.getHamBand(freq);
-			}
-			catch(QsoException)
-			{
-				return "Frequency is not within an enumerated ham band";
-			}
-			if(Band != string.Empty && Band != hb.Band)
-			{
-				return "Frequency is not within the selected band";
+				string frequency = Frequency.Replace(",", ".");
+				string band = null;
+				if(!App.AdifEnums.GetBandFromFrequency(frequency, out band))
+				{
+					return "Frequency is not within an enumerated ham band.";
+				}
+				if(!Band.Equals(string.Empty) && Band != band)
+				{
+					return "Frequency is not within the selected band";
+				}
 			}
 			return null;
 		}

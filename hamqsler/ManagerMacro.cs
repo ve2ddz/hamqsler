@@ -21,8 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 
-using Qsos;
-
 namespace hamqsler
 {
 	/// <summary>
@@ -110,7 +108,7 @@ namespace hamqsler
 			else if(qsos != null && qsos.Count != 0)
 			{
 				string manager = qsos[0].Manager;
-				if(CallSign.IsValid(manager))
+				if(Call.IsValid(manager))
 				{
 					return manager;
 				}
