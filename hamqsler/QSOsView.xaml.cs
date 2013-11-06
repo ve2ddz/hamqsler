@@ -482,9 +482,13 @@ namespace hamqsler
 			string startDateTime = startEndDateTime.ValidStartDate + 
 				startEndDateTime.ValidStartTime;
 			string endDateTime = startEndDateTime.ValidEndDate + 
-				startEndDateTime.EndTime;
+				startEndDateTime.ValidEndTime;
 			// if start later than end, show error message to indicate that no QSOs will be included
-			if(String.Compare(startDateTime, endDateTime, true) > 0)
+			if(String.Compare(startDateTime, endDateTime, true) > 0 &&
+			   !startEndDateTime.EndDate.Equals(string.Empty) &&
+ 			   !startEndDateTime.EndTime.Equals(string.Empty) &&
+			   !startEndDateTime.StartTime.Equals(string.Empty) &&
+			   !startEndDateTime.StartDate.Equals(string.Empty))
 			{
 				MessageBox.Show("Start date and time later than end date and time.\n\r" +
 				                "No QSOs are included.", "Date/Time Error",
