@@ -147,7 +147,7 @@ namespace hamqsler
             this.Clear();
 			// check if a change was made to the qso contents, and set IsDirty if this is the case.
 			// This check must be performed here because the call to Clear sets IsDirty to false;
-			if(errLen < errorString.Length)
+			if(errorString != null && errLen < errorString.Length)
 			{
 				IsDirty = true;
 			}
