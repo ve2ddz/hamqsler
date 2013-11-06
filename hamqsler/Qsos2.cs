@@ -273,15 +273,19 @@ namespace hamqsler
 		public string ToAdifString()
 		{
 			DateTime now = DateTime.Now.ToUniversalTime();
+			string date = string.Format("{0:d4}{1:d2}{2:d2}", now.Year, now.Month, now.Day);
+			string time = string.Format("{0:d2}{1:d2}{2:d2}", now.Hour, now.Minute, now.Second);
 			string adif = string.Format("Generated on {0} at {1} UTC." +
 			                            Environment.NewLine +
 			                            "<adif_ver:{2}>{3}" +
+			                            Environment.NewLine +
+			                            "<created_timestamp:15>{4} {5}" +
 			                            Environment.NewLine +
 			                            "<programid:8>HamQSLer" +
 			                            Environment.NewLine,
 			                            now.ToLongDateString(), now.ToShortTimeString(),
 			                            adifEnums.Version.Length,
-			                       		adifEnums.Version);
+			                       		adifEnums.Version, date, time);
 			for(int i = 0; i < UserDefs.Count; i++)
 			{
 				adif += UserDefs[i].ToAdifString(i+1) + Environment.NewLine;
