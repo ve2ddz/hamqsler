@@ -63,11 +63,11 @@ namespace hamqsler
 		/// <param name="qsos">DisplayQsos object to copy</param>
 		public DisplayQsos(DisplayQsos qsos)
 		{
-			IsDirty = qsos.IsDirty;
 			foreach(QsoWithInclude qwi in qsos)
 			{
 				AddQso(qwi);
 			}
+			IsDirty = qsos.IsDirty;
 		}
 		
 		/// <summary>
@@ -151,10 +151,12 @@ namespace hamqsler
 			{
 				IsDirty = true;
 			}
+			bool dirty = IsDirty;
             foreach(QsoWithInclude qwi in qList3)
             {
             	this.AddQso(qwi);
             }
+            IsDirty = dirty;
             UserPreferences prefs = ((App)App.Current).UserPreferences;            
 			if(prefs.AdifReloadOnStartup)
 			{
