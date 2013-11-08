@@ -19,6 +19,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace hamqsler
@@ -275,17 +276,24 @@ namespace hamqsler
 			DateTime now = DateTime.Now.ToUniversalTime();
 			string date = string.Format("{0:d4}{1:d2}{2:d2}", now.Year, now.Month, now.Day);
 			string time = string.Format("{0:d2}{1:d2}{2:d2}", now.Hour, now.Minute, now.Second);
-			string adif = string.Format("Generated on {0} at {1} UTC." +
+			string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			int index = version.LastIndexOf('.');
+			version = version.Substring(0, index);
+			string adifVer = adifEnums.Version;
+			index = adifVer.LastIndexOf('.');
+			adifVer = adifVer.Substring(0, index);
+			string adif = string.Format("Adif File" +
 			                            Environment.NewLine +
-			                            "<adif_ver:{2}>{3}" +
+			                            "<adif_ver:{0}>{1}" +
 			                            Environment.NewLine +
-			                            "<created_timestamp:15>{4} {5}" +
+			                            "<created_timestamp:15>{2} {3}" +
 			                            Environment.NewLine +
 			                            "<programid:8>HamQSLer" +
+			                            Environment.NewLine +
+			                            "<programversion:{4}>{5}" +
 			                            Environment.NewLine,
-			                            now.ToLongDateString(), now.ToShortTimeString(),
-			                            adifEnums.Version.Length,
-			                       		adifEnums.Version, date, time);
+			                            adifVer.Length, adifVer, date, time,
+			                       		version.Length, version);
 			for(int i = 0; i < UserDefs.Count; i++)
 			{
 				adif += UserDefs[i].ToAdifString(i+1) + Environment.NewLine;

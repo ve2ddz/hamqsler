@@ -369,25 +369,14 @@ namespace hamqslerTest
 			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
 			Assert.AreEqual(null, error);
 			DateTime now = DateTime.Now.ToUniversalTime();
-			string firstLine = string.Format("Generated on {0} at {1} UTC.", now.ToLongDateString(),
-			                                 now.ToShortTimeString());
 			string date = string.Format("{0:d4}{1:d2}{2:d2}", now.Year, now.Month, now.Day);
 			string time = string.Format("{0:d2}{1:d2}{2:d2}", now.Hour, now.Minute, now.Second);
 			string createdLine = string.Format("<created_timestamp:15>{0} {1}", date, time);
 			string adifString = qsos.ToAdifString();
 			string[] lines = adifString.Split('\r');
-			if(!lines[0].Equals(firstLine))
-			{
-				now = now.AddSeconds(1.0);
-				firstLine = string.Format("Generated on {0} at {1} UTC.", now.ToLongDateString(),
-			                              now.ToShortTimeString());			
-				if(!lines[0].Equals(firstLine))
-				{
-					Assert.Fail("Date and time on first line not within 1 second of current time");
-				}
-			}
 			if(!lines[2].Equals("\n" + createdLine))
 			{
+				now = now.AddSeconds(1.0);
 				date = string.Format("{0:d4}{1:d2}{2:d2}", now.Year, now.Month, now.Day);
 				time = string.Format("{0:d2}{1:d2}{2:d2}", now.Hour, now.Minute, now.Second);
 				createdLine = string.Format("\n<created_timestamp:15>{0} {1}", date, time);
@@ -396,11 +385,19 @@ namespace hamqslerTest
 					Assert.Fail("Date and time on created_timestamp line not within 1 second of current time");
 				}
 			}
-			string adifVer = qsos.AdifEnums.Version;
-			string compString = firstLine + Environment.NewLine +
+				string adifVer = qsos.AdifEnums.Version;
+				int index = adifVer.LastIndexOf('.');
+				adifVer = adifVer.Substring(0, index);
+				Assembly assembly = Assembly.GetAssembly(qsos.GetType());
+				string version = assembly.GetName().Version.ToString();
+				index = version.LastIndexOf('.');
+				version = version.Substring(0, index);
+				string compString = "Adif File" + Environment.NewLine +
 				string.Format("<adif_ver:{0}>{1}", adifVer.Length, adifVer) + Environment.NewLine +
 				createdLine + Environment.NewLine + 
 				"<programid:8>HamQSLer" + Environment.NewLine +
+				string.Format("<programversion:{0}>{1}", version.Length, version) +
+				Environment.NewLine +
 				"<Userdef1:8:N>QRP_ARCI" +Environment.NewLine +
 				"<Userdef2:19:E>SweaterSize,{S,M,L}" +Environment.NewLine +
 				"<Userdef3:15:N>ShoeSize,{5:20}" +Environment.NewLine +
