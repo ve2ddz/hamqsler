@@ -99,6 +99,10 @@ namespace hamqsler
 			int errLen = errorString.Length;
 			bool qsoError = !qsos2.Add(adifFileContents, ref errorString, aEnums);
 			List<QsoWithInclude>qList = new List<QsoWithInclude>();
+			foreach(QsoWithInclude q in this)
+			{
+				qList.Add(q);
+			}
 			foreach(Qso2 qso in qsos2)
 			{
 				QsoWithInclude qwi = new QsoWithInclude(qso);
