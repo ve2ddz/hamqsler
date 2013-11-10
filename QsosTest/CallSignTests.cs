@@ -180,6 +180,14 @@ namespace QsosTests
 			CallSign c = new CallSign("VX31763");
 			Assert.AreEqual("VX31763", c.Call);
 		}
+		
+		// test ctor for special callsign XV2V40J
+		[Test]
+		public void TestCTorXV2V40J()
+		{
+			CallSign c = new CallSign("XV2V40J");
+			Assert.AreEqual("XV2V40J", c.Call);
+		}
 	}
 }
 
