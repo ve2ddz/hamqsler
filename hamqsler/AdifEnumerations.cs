@@ -376,6 +376,11 @@ namespace hamqsler
 			return true;
 		}
 		
+		/// <summary>
+		/// Get submodes related to the mode
+		/// </summary>
+		/// <param name="mode">mode to retrieve submodes for</param>
+		/// <returns>string array containing the submodes</returns>
 		public string[] GetSubmodesFromMode(string mode)
 		{
 			List<string>smodes = new List<string>();
