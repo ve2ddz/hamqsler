@@ -95,7 +95,8 @@ namespace Qsos
 			"TE1856",
 			"8J2KSG7X",
 			"ZW1CCOM54",
-			"VX31763"
+			"VX31763",
+			"XV2V40J"
 		};
 
         // static constructor used to load the List above
