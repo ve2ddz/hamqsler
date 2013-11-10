@@ -76,7 +76,8 @@ namespace hamqsler
 			"XM31812",
 			"TE1856",
 			"8J2KSG7X",
-			"ZW1CCOM54"			
+			"ZW1CCOM54",
+			"XV2V40J"			
 		};
 
 		/// <summary>

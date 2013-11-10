@@ -316,6 +316,13 @@ namespace hamqslerTest
 			Assert.IsTrue(Call.IsValid("8J2KSG7X"));
 		}
 		
+		
+		// test IsValid for XV2V40J
+		[Test]
+		public void TestIsValidXV2V40J()
+		{
+			Assert.IsTrue(Call.IsValid("XV2V40J"));
+		}
 		// test IsValid for 5C5CW
 		[Test]
 		public void TestIsValid5C5CW()
