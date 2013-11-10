@@ -418,5 +418,31 @@ namespace hamqslerTest
 			Assert.AreEqual("DOMINO", newMode);
 			Assert.AreEqual("DOMINOF", subMode);
 		}
+		
+		// test GetSubmodesFromMode for valid mode
+		[Test]
+		public void TestGetSubmodesFromModeValidMode()
+		{
+			string[] submodes = aEnums.GetSubmodesFromMode("SSB");
+			Assert.AreEqual(2, submodes.Length);
+			Assert.AreEqual("LSB", submodes[0]);
+			Assert.AreEqual("USB", submodes[1]);
+		}
+		
+		// test GetSubmodesFromMode for valid mode but no submodes
+		[Test]
+		public void TestGetSubmodesFromModeValidModeNoSubmodes()
+		{
+			string[] submodes = aEnums.GetSubmodesFromMode("AM");
+			Assert.AreEqual(0, submodes.Length);
+		}
+		
+		// test GetSubmodesFromMode for empty mode
+		[Test]
+		public void TestGetSubmodesFromModeEmptyMode()
+		{
+			string[] submodes = aEnums.GetSubmodesFromMode(string.Empty);
+			Assert.AreEqual(0, submodes.Length);
+		}
 	}
 }

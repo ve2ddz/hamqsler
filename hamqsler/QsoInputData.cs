@@ -75,6 +75,15 @@ namespace hamqsler
 			set {SetValue(ModeProperty, value);}
 		}
 		
+		private static readonly DependencyProperty SubmodeProperty =
+			DependencyProperty.Register("Submode", typeof(string), typeof(QsoInputData),
+			                            new PropertyMetadata(string.Empty));
+		public string Submode
+		{
+			get {return (string)GetValue(SubmodeProperty);}
+			set {SetValue(SubmodeProperty, value);}
+		}
+		
 		private static readonly DependencyProperty RSTProperty =
 			DependencyProperty.Register("RST", typeof(string), typeof(QsoInputData),
 			                            new PropertyMetadata(string.Empty));

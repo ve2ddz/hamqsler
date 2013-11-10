@@ -375,5 +375,21 @@ namespace hamqsler
 			}
 			return true;
 		}
+		
+		public string[] GetSubmodesFromMode(string mode)
+		{
+			List<string>smodes = new List<string>();
+			string[] submodes = GetEnumeratedValues("Submode");
+			foreach(string sub in submodes)
+			{
+				XElement val = GetEnumValue("Submode", sub);
+				XAttribute modeOfSubmode = val.Attribute("Mode");
+				if(modeOfSubmode.Value.Equals(mode))
+				{
+					smodes.Add(sub);
+				}
+			}
+			return smodes.ToArray();
+		}
 	}
 }

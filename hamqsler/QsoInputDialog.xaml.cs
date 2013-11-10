@@ -47,6 +47,7 @@ namespace hamqsler
 		{
 			dispQsos = qsos;
 			InitializeComponent();
+			LoadModes();
 			this.DataContext = QsoData;
 		}
 		
@@ -313,5 +314,44 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Load modes defined in AdifEnumerations into ModeComboBox
+		/// </summary>
+		private void LoadModes()
+		{
+			AdifEnumerations aEnums = App.AdifEnums;
+			string[] modes = aEnums.GetEnumeratedValues("Mode");
+			foreach(string mode in modes)
+			{
+				if(!aEnums.IsDeprecated("Mode", mode) &&
+				   !aEnums.IsDeleted("Mode", mode))
+				{
+					ModeComboBox.Items.Add(mode);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Handler for ModeComboBox SelectionChanged event
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">SelectionChangedEvent object</param>
+		void ModeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			SubmodeComboBox.Items.Clear();
+			if(e.AddedItems.Count > 0)
+			{
+				string mode = e.AddedItems[0] as string;
+				if(!mode.Equals(string.Empty))
+				{
+					AdifEnumerations aEnums = App.AdifEnums;
+					string[] submodes = aEnums.GetSubmodesFromMode(mode);
+					foreach(string submode in submodes)
+					{
+						SubmodeComboBox.Items.Add(submode);
+					}
+				}
+			}
+		}
 	}
 }
