@@ -281,7 +281,14 @@ namespace hamqsler
 			List<string> modes = new List<string>();
 			foreach(QsoWithInclude qwi in this)
 			{
-				modes.Add(qwi.Mode);
+				if(!qwi.Submode.Equals(string.Empty))
+				{
+					modes.Add(qwi.Submode);
+				}
+				else
+				{
+					modes.Add(qwi.Mode);
+				}
 			}
 			List<string> modes2 = new List<string>(modes.Distinct());
 			modes2.Sort();
@@ -362,6 +369,10 @@ namespace hamqsler
 				string band = qwi.Band.ToLower();
 				bool include = bands[band];
 				string mode = qwi.Mode;
+				if(!qwi.Submode.Equals(string.Empty))
+				{
+					mode = qwi.Submode;
+				}
 				include = include && modes[mode];
 				include = include && IncludeByDatesTimes(qwi, seDateTime);
 				string rcvd = qwi.Rcvd;

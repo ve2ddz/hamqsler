@@ -36,7 +36,7 @@ namespace hamqsler
 		public override bool Equals(QsoWithInclude q1, QsoWithInclude q2)
 		{
 			return q1.BureauManagerCallDateTime == q2.BureauManagerCallDateTime &&
-				q1.Mode == q2.Mode && q1.Band == q2.Band &&
+				q1.Mode == q2.Mode && q1.Submode == q2.Submode &&q1.Band == q2.Band &&
 				q1.Frequency == q2.Frequency &&
 				q1.RST == q2.RST;
 		}

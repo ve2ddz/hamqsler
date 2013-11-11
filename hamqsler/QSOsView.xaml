@@ -101,6 +101,8 @@
 										Binding Path=Frequency, Mode=OneWay}"/>
 								<GridViewColumn Header="Mode" DisplayMemberBinding="{Binding Path=Mode,
 										Mode=OneWay}"/>
+								<GridViewColumn Header="Submode" DisplayMemberBinding="{Binding Path=Submode,
+										Mode=OneWay}"/>
 								<GridViewColumn Header="RST" DisplayMemberBinding="{Binding Path=RST,
 										Mode=OneWay}"/>
 								<GridViewColumn Header="Sent" DisplayMemberBinding="{Binding Path=Sent,
@@ -166,10 +168,47 @@
 						<Grid x:Name="ModeGrid">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="Auto"/>
+<!--								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/> -->
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
 								<RowDefinition Height="Auto"/>
 								<RowDefinition Height="Auto"/>
 								<RowDefinition Height="Auto"/>

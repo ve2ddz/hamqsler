@@ -77,6 +77,12 @@ namespace hamqsler
 			get {return mode;}
 		}
 		
+		private string submode;
+		public string Submode
+		{
+			get {return submode;}
+		}
+		
 		private string rst;
 		public string RST
 		{
@@ -249,6 +255,7 @@ namespace hamqsler
 			band = q["band", string.Empty].ToLower();
 			frequency = q["freq", string.Empty];
 			mode = q["mode", string.Empty].ToUpper();
+			submode = q["submode", string.Empty].ToUpper();
 			rst = q["rst_sent", string.Empty];
 			sent = q["qsl_sent", string.Empty].ToUpper();
 			rcvd = q["qsl_rcvd", string.Empty].ToUpper();

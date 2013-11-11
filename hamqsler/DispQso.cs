@@ -76,7 +76,13 @@ namespace hamqsler
 			set {mode = value;}
 		}
 		
-		private string rst = string.Empty;
+		private string submode = string.Empty;
+		public string Submode
+		{
+			get {return submode;}
+			set {submode = value;}
+		}
+				private string rst = string.Empty;
 		public string RST
 		{
 			get {return rst;}

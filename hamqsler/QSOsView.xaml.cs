@@ -212,7 +212,7 @@ namespace hamqsler
 			// remove old checkboxes
 			ModeGrid.Children.RemoveRange(0, ModeGrid.Children.Count);
 			// add in new checkboxes
-			int numCheckBoxes = 0;
+			int row = 0;
 			foreach(string mode in DisplayQsos.GetModes())
 			{
 				CheckBox bcb = new CheckBox();
@@ -222,12 +222,8 @@ namespace hamqsler
 				bcb.Checked += OnModeCheckBoxChecked;
 				bcb.Unchecked += OnModeCheckBoxChecked;
 				ModeGrid.Children.Add(bcb);
-				int column = 0;
-				if(numCheckBoxes%2 != 0)
-					column = 2;
-				Grid.SetColumn(bcb, column);
-				Grid.SetRow(bcb, numCheckBoxes/2);
-				numCheckBoxes++;
+				Grid.SetRow(bcb, row++);
+//				row++;
 			}
 		}
 		
