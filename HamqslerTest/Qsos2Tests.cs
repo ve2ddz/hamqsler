@@ -376,7 +376,7 @@ namespace hamqslerTest
 			string[] lines = adifString.Split('\r');
 			if(!lines[2].Equals("\n" + createdLine))
 			{
-				now = now.AddSeconds(1.0);
+				now = now.AddSeconds(-1.0);
 				date = string.Format("{0:d4}{1:d2}{2:d2}", now.Year, now.Month, now.Day);
 				time = string.Format("{0:d2}{1:d2}{2:d2}", now.Hour, now.Minute, now.Second);
 				createdLine = string.Format("\n<created_timestamp:15>{0} {1}", date, time);
