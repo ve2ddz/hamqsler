@@ -156,7 +156,7 @@ namespace hamqslerTest
 			QsoInputData iData = new QsoInputData();
 			iData.Mode = "SQUIBB";
 			string error = iData["Mode"];
-			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'SQUIBB' was not found in enumeration.", error);
+			Assert.AreEqual(null, error);
 		}
 
 		// test IDataErrorInfo interface with valid band, no freq

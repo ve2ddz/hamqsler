@@ -36,5 +36,23 @@ namespace hamqsler
 		public Mode(string mode, AdifEnumerations aEnums) : base(mode, "Mode", aEnums)
 		{
 		}
+		
+		/// <summary>
+		/// Validate this field. Note: only test for null. Must (for ADIF files < ADIF 3.0.4).
+		/// </summary>
+		/// <param name="err">Error message if fails validation, null otherwise</param>
+		/// <param name="modString">Message indicating what values were modified - returns null</param>
+		/// <returns>False if value is null, true otherwise.</returns>
+		public override bool Validate(out string err, out string modStr)
+		{
+			err = null;
+			modStr = null;
+			if(Value == null)
+			{
+				err = "Value is null.";
+				return false;
+			}
+			return true;
+		}
 	}
 }

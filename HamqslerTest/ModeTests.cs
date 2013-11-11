@@ -56,18 +56,20 @@ namespace hamqslerTest
 		}
 		
 		// test Validate with invalid mode
+		// Should validate as true. Further validation and handling is performed in
+		// ModifyValues
 		[Test]
-		public void TestValidateInvalidMode()
+		public void TestValidateInvalidMode(
+			[Values("BADMODE", "")] string modeName)
 		{
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
             Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Mode mode = new Mode("BADMODE", aEnums);
+			Mode mode = new Mode(modeName, aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assert.IsFalse(mode.Validate(out err, out modStr));
-			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'BADMODE' was not found in enumeration.",
-			                err);
+			Assert.IsTrue(mode.Validate(out err, out modStr));
+			Assert.IsNull(err);
 			Assert.IsNull(modStr);
 		}
 
