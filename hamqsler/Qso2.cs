@@ -706,7 +706,7 @@ namespace hamqsler
 		
 		/// <summary>
 		/// Validate the QSO. This ensures that the QSO has at least the minimum fields:
-		/// call, mode, qso_date, time_on, and either band or freq.
+		/// call, mode or submode, qso_date, time_on, and either band or freq.
 		/// </summary>
 		/// <param name="err">Error message if QSO is not valid, null otherwise.</param>
 		/// <returns>true if QSO is valid, false otherwise</returns>
@@ -720,9 +720,11 @@ namespace hamqsler
 				return false;
 			}
 			string mode = this["mode"];
-			if(mode == null || mode == string.Empty)
+			string submode = this["submode"];
+			if((mode == null || mode.Equals(string.Empty)) &&
+			   (submode == null || submode.Equals(string.Empty)))
 			{
-				err = "\tInvalid QSO: Mode not specified.";
+				err = "\tInvalid QSO: Mode and submode not specified.";
 				return false;
 			}
 			string freq = this["freq"];
