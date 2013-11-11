@@ -1092,6 +1092,23 @@
 							the frequency.</para>
 						</entry>
 					</row>
+					<row>
+						<entry>MODE</entry>
+						<entry>
+							<para>If SUBMODE exists, the MODE is checked to ensure
+							that it corresponds to the submode. If not, MODE is changed
+							to correspond to the mode for the submode.</para>
+							<para>If SUBMODE does not exist and the MODE is in the
+							Mode enumeration but is deprecated,
+							SUBMODE is set to the mode value, and MODE is set to the
+							mode that corresponds to the submode. The mode and submode
+							enumerations are described in the 
+							<link xlink:href="http://www.adif.org/">ADIF standard</link>.</para>
+							<para>If SUBMODE does not exist and MODE is not a member of
+							the Mode enumeration, SUBMODE is set to the mode value,
+							and MODE is set to an empty string.</para>
+						</entry>
+					</row>
 				</tbody>
 			</tgroup>
 		</table>

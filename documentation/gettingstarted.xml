@@ -918,7 +918,9 @@
 		<section>
 			<title>Selecting QSOs by Mode</title>
 			<para>Click on the Mode tab; it looks like
-			the image below.</para>
+			the image below. Note that the list contains submode values from the
+			QSOs, and only contains a mode value if the QSO does not have a submode
+			field.</para>
 			<figure xml:id="modeproperties">
 				<title>Mode Properties</title>
 				<mediaobject>

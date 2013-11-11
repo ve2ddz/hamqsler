@@ -30,7 +30,7 @@
 	<caution>
 		<para><literal>HamQSLer</literal> validates QSO records to ensure that they contain 
 		at least a minimum set of
-		data: start date and time for the QSO, frequency or band used, mode used for the QSO,
+		data: start date and time for the QSO, frequency or band used, mode and/or submode used for the QSO,
 		and the callsign of the station contacted. Validity checking is performed on each
 		field within a QSO. For example, if a frequency is specified, it must be within
 		the ADIF specified ham bands, and the callsign must be valid. Full information on the checking
@@ -125,6 +125,19 @@
 					cycle through all of the modes that begin with that letter.</para>
 				</listitem>
 			</itemizedlist>
+			<para>Once a mode has been selected, the submode combo box is loaded with the list of
+			submodes that correspond to the selected mode. The submode may be selected using any of the
+			methods outlined above for selecting a mode.</para>
+			<para>Not all possible submodes for each mode are enumerated in the submode combo box, only
+			the common ones. This combo box is editable; you may enter a different value using the
+			keyboard.</para>
+			<caution>
+				<para>If you enter a submode using the keyboard, then export the QSOs to an ADIF file and
+				import the file into another program, the receiving program may not accept
+				the submode. The ADIF standard does not specify that any program must accept all submode
+				values; how that program handles submode values not enumerated in the standard is up
+				to the program's author.</para>
+			</caution>
 			<para>The band dropdown box contains a list of all valid amateur radio bands. A
 			band may be selected by using any of the methods outlined above for selecting
 			an item from the mode dropdown.</para>
