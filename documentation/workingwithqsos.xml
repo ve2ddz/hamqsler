@@ -318,7 +318,7 @@
 			<para>The manager text box must either be empty, or contain a valid callsign with
 			no leading or trailing qualifiers.</para>
 			<para>The start date must be exactly 8 digits long, be of the form YYYYMMDD and
-			be a date between 19451101 and today.</para>
+			be a date between 19300101 and today.</para>
 			<para>The start time must be either 4 digits of the form HHMM, or 6 digits of the
 			form HHMMSS. The time must be between 0000 and 2359 or between 000000 and 235959.</para>
 			<para>The signal report field accepts any text up to three characters in length. The
@@ -720,7 +720,7 @@
 					<para>Click the Reset button to reset the start and end dates and times to the
 					earliest and latest dates and times for the loaded QSOs.</para>
 					<caution>
-						<para>The entered dates and times must be between 19451101 and the current
+						<para>The entered dates and times must be between 19300101 and the current
 						date and time.</para>
 					</caution>
 					<tip>

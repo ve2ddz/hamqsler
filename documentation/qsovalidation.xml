@@ -129,6 +129,9 @@
 									<listitem>
 										<para>DD is a 2-Digit day specifier, where 1 &lt;= DD &lt;= DaysInMonth(MM)  [use leading zeroes]</para>
 									</listitem>
+									<listitem>
+										<para>Date is not be later than today.</para>
+									</listitem>
 								</itemizedlist>
 							</entry>
 						</row>
@@ -1032,7 +1035,7 @@
 				<para>Call;</para>
 			</listitem>
 			<listitem>
-				<para>Mode;</para>
+				<para>Mode and/or submode;</para>
 			</listitem>
 			<listitem>
 				<para>Start date;</para>

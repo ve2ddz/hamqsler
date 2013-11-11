@@ -39,7 +39,7 @@
 		characters to represent a valid callsign, the red border will disappear.</para>
 		<para>As each character is entered in a field, the entire field is checked
 		for validity. The start date field is validated to ensure that it contains
-		exactly 8 digits and that the date entered is between 19451101 and today. If
+		exactly 8 digits and that the date entered is between 19300101 and today. If
 		a date outside this range is entered, the red border remains visible to
 		indicate that the entered date is invalid.</para>
 		<para>The reason that the field has been marked as invalid may be
