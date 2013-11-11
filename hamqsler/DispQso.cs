@@ -127,6 +127,7 @@ namespace hamqsler
 			Band = qwi.Band;
 			Frequency = qwi.Frequency;
 			Mode = qwi.Mode;
+			Submode = qwi.Submode;
 			RST = qwi.RST;
 			Qsl = qwi.Rcvd;
 			Qso = qwi.Qso;

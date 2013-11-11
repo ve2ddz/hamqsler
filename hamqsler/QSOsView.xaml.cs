@@ -223,7 +223,6 @@ namespace hamqsler
 				bcb.Unchecked += OnModeCheckBoxChecked;
 				ModeGrid.Children.Add(bcb);
 				Grid.SetRow(bcb, row++);
-//				row++;
 			}
 		}
 		

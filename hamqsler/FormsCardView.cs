@@ -812,8 +812,10 @@ namespace hamqsler
 						qso.Frequency : bandFreqs[qso.Band];
 					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
 						g, freq, font, box.LineTextBrush, colWidths[3], xStart, y);
+					string mode = qso.Submode.Equals(string.Empty) ?
+						qso.Mode : qso.Submode;
 					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
-						g, qso.Mode, font, box.LineTextBrush, colWidths[4], xStart, y);
+						g, mode, font, box.LineTextBrush, colWidths[4], xStart, y);
 					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
 						g, qso.RST, font, box.LineTextBrush, colWidths[5], xStart, y);
 					string qsl = string.Empty;
