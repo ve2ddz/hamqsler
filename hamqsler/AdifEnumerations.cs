@@ -396,5 +396,21 @@ namespace hamqsler
 			}
 			return smodes.ToArray();
 		}
+		
+		/// <summary>
+		/// Get mode related to submode
+		/// </summary>
+		/// <param name="submode">submode to retrieve mode for</param>
+		/// <returns>Mode corresponding to the submode</returns>
+		public string GetModeFromSubmode(string submode)
+		{
+			XElement sub = GetEnumValue("Submode", submode);
+			if(sub == null)
+			{
+				return string.Empty;
+			}
+			XAttribute mode = sub.Attribute("Mode");
+			return mode.Value;
+		}
 	}
 }

@@ -54,5 +54,45 @@ namespace hamqsler
 			}
 			return true;
 		}
+		
+		/// <summary>
+		/// Check value for this field and modify it or other fields in QSO if required
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string indicating changes made, or null if no changes</returns>
+	public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			string submode = qso["Submode", string.Empty];
+			
+			if(!aEnums.IsInEnumeration("Mode", Value))
+			{
+				if(submode.Equals(string.Empty))
+				{
+					qso["Submode"] = Value;
+					qso["Mode"] = string.Empty;
+					mod = "Mode not found in Mode enumeration. Submode set to mode value and mode cleared.";
+				}
+				else
+				{
+					string mode = aEnums.GetModeFromSubmode(submode);
+					qso["Mode"] = mode;
+					mod = "Mode not found in Mode enumeration. Mode set to mode for submode.";
+				}
+			}
+			else
+			{
+				if(!submode.Equals(string.Empty))
+				{
+					string mode = aEnums.GetModeFromSubmode(submode);
+					if(!Value.Equals(mode))
+					{
+						qso["Mode"] = mode;
+						mod = "Mode - submode mismatch. Mode set to proper mode for submode.";
+					}
+				}
+			}
+			return mod;
+		}
 	}
 }

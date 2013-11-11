@@ -444,5 +444,22 @@ namespace hamqslerTest
 			string[] submodes = aEnums.GetSubmodesFromMode(string.Empty);
 			Assert.AreEqual(0, submodes.Length);
 		}
+		
+		// test GetModeFromSubmode with valid submode
+		[Test]
+		public void TestGetModeFromSubmodeValidSubmode()
+		{
+			string mode = aEnums.GetModeFromSubmode("USB");
+			Assert.AreEqual("SSB", mode);
+		}
+		
+		// test GetModeFromSubmode with 'invalid' mode
+		[Test]
+		public void TestGetModeFromSubmodeInvalidSubmode()
+		{
+			string mode = aEnums.GetModeFromSubmode("PSB");
+			Assert.AreEqual(string.Empty, mode);
+		}
+		
 	}
 }

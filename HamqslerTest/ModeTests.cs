@@ -29,6 +29,17 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ModeTests
 	{
+		AdifEnumerations aEnums = null;
+		
+		// test fixture setup
+		[TestFixtureSetUp]
+		public void Setup()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);			
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
@@ -86,6 +97,89 @@ namespace hamqslerTest
 			Assert.IsFalse(mode.Validate(out err, out modStr));
 			Assert.AreEqual("Value is null.", err);
 			Assert.IsNull(modStr);
+		}
+		
+		// test ModifyValues with valid mode and no submode
+		[Test]
+		public void TestModifyValuesWithValidModeNoSubmode()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Mode:2>AM", aEnums, ref err);
+			AdifField field = qso.GetField("Mode");
+			Assert.IsNotNull(field);
+			Mode mode = field as Mode;
+			Assert.IsNotNull(mode);
+			Assert.AreEqual(null, mode.ModifyValues(qso));
+		}
+		
+		
+		// test ModifyValues with valid mode and valid submode
+		[Test]
+		public void TestModifyValuesWithValidModeValidSubmode()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Mode:3>PSK<Submode:5>PSK31", aEnums, ref err);
+			AdifField field = qso.GetField("Mode");
+			Assert.IsNotNull(field);
+			Mode mode = field as Mode;
+			Assert.IsNotNull(mode);
+			Assert.AreEqual(null, mode.ModifyValues(qso));
+			Submode sub = qso.GetField("Submode") as Submode;
+			Assert.IsNotNull(sub);
+			Assert.AreEqual("PSK31", sub.Value);
+		}
+		// test ModifyValues with invalid mode and no submode
+		[Test]
+		public void TestModifyValuesWithInalidModeNoSubmode()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Mode:6>SQUIBB", aEnums, ref err);
+			AdifField field = qso.GetField("Mode");
+			Assert.IsNotNull(field);
+			Mode mode = field as Mode;
+			Assert.IsNotNull(mode);
+			Assert.AreEqual("Mode not found in Mode enumeration. Submode set to mode value and mode cleared.",
+			                mode.ModifyValues(qso));
+			Assert.AreEqual("", mode.Value);
+			Submode submode = qso.GetField("Submode") as Submode;
+			Assert.IsNotNull(submode);
+			Assert.AreEqual("SQUIBB", submode.Value);
+		}
+		
+		// test ModifyValues with invalid mode and submode set
+		[Test]
+		public void TestModifyValuesWithInalidModeWithValidSubmode()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Mode:6>SQUIBB<Submode:3>LSB", aEnums, ref err);
+			AdifField field = qso.GetField("Mode");
+			Assert.IsNotNull(field);
+			Mode mode = field as Mode;
+			Assert.IsNotNull(mode);
+			Assert.AreEqual("Mode not found in Mode enumeration. Mode set to mode for submode.",
+			                mode.ModifyValues(qso));
+			Assert.AreEqual("SSB", mode.Value);
+			Submode submode = qso.GetField("Submode") as Submode;
+			Assert.IsNotNull(submode);
+			Assert.AreEqual("LSB", submode.Value);
+		}
+		
+		// test ModifyValues with valid mode and mismatched submode
+		[Test]
+		public void TestModifyValuesWithValidModeWithMismatchedSubmode()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Mode:3>PSK<Submode:3>LSB", aEnums, ref err);
+			AdifField field = qso.GetField("Mode");
+			Assert.IsNotNull(field);
+			Mode mode = field as Mode;
+			Assert.IsNotNull(mode);
+			Assert.AreEqual("Mode - submode mismatch. Mode set to proper mode for submode.",
+			                mode.ModifyValues(qso));
+			Assert.AreEqual("SSB", mode.Value);
+			Submode submode = qso.GetField("Submode") as Submode;
+			Assert.IsNotNull(submode);
+			Assert.AreEqual("LSB", submode.Value);
 		}
 	}
 }
