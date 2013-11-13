@@ -41,7 +41,7 @@ namespace hamqslerTest
 		// test IDataErrorInfo interface with valid Frequency
 		[Test, Sequential]
 		public void TestValidFrequency(
-			[Values("Frequency2190m", "Frequency560m",
+			[Values("Frequency2190m", "Frequency630m", "Frequency560m",
 			        "Frequency160m", "Frequency80m", "Frequency60m",
 			        "Frequency40m", "Frequency30m", "Frequency20m",
 			        "Frequency17m", "Frequency15m", "Frequency12m",
@@ -51,7 +51,7 @@ namespace hamqslerTest
 			        "Frequency9cm", "Frequency6cm", "Frequency3cm",
 			        "Frequency1p25cm", "Frequency6mm", "Frequency4mm",
 			        "Frequency2p5mm", "Frequency2mm", "Frequency1mm")] string property,
-			[Values("0.136", "0.501",
+			[Values("0.136", "0.472", "0.501",
 			        "1.8", "3.5", "5.2",
 			        "7", "10.1", "14",
 			        "18.1", "21", "24.9",
@@ -72,7 +72,7 @@ namespace hamqslerTest
 		// test IDataErrorInfo interface with invalid Frequency
 		[Test, Sequential]
 		public void TestInvalidFrequency(
-			[Values("Frequency2190m", "Frequency560m",
+			[Values("Frequency2190m", "Frequency630m", "Frequency560m",
 			        "Frequency160m", "Frequency80m", "Frequency60m",
 			        "Frequency40m", "Frequency30m", "Frequency20m",
 			        "Frequency17m", "Frequency15m", "Frequency12m",

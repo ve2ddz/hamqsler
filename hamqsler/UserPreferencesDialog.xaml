@@ -663,8 +663,21 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 					</TextBox.Text>
 				</TextBox>
 				<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">560m:</TextBlock>
+						HorizontalAlignment="Right">630m:</TextBlock>
 				<TextBox Grid.Row="4" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+						Name="F630m" PreviewTextInput="BandFrequency_PreviewTextInput">
+					<TextBox.Text>
+						<Binding Path="Frequency630m" NotifyOnValidationError="True"
+						UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<DataErrorValidationRule/>
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+				<TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						HorizontalAlignment="Right">560m:</TextBlock>
+				<TextBox Grid.Row="5" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F560m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency560m" NotifyOnValidationError="True"
@@ -675,9 +688,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">160m:</TextBlock>
-				<TextBox Grid.Row="5" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="6" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F160m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency160m" NotifyOnValidationError="True"
@@ -688,9 +701,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="7" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">80m:</TextBlock>
-				<TextBox Grid.Row="6" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="7" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F80m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency80m" NotifyOnValidationError="True"
@@ -701,9 +714,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="7" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="8" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">60m:</TextBlock>
-				<TextBox Grid.Row="7" Grid.Column="1" Margin="5" MaxWidth="70" MaxLength="8"
+				<TextBox Grid.Row="8" Grid.Column="1" Margin="5" MaxWidth="70" MaxLength="8"
 						Name="F60m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency60m" NotifyOnValidationError="True"
@@ -714,9 +727,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="8" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="9" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">40m:</TextBlock>
-				<TextBox Grid.Row="8" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="9" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F40m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency40m" NotifyOnValidationError="True"
@@ -727,9 +740,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="9" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="10" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">30m:</TextBlock>
-				<TextBox Grid.Row="9" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="10" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F30m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency30m" NotifyOnValidationError="True"
@@ -740,9 +753,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="10" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="11" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">20m:</TextBlock>
-				<TextBox Grid.Row="10" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="11" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F20m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency20m" NotifyOnValidationError="True"
@@ -753,9 +766,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="11" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="12" Grid.Column="0" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">17m:</TextBlock>
-				<TextBox Grid.Row="11" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="12" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F17m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency17m" NotifyOnValidationError="True"
@@ -766,9 +779,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="12" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">15m:</TextBlock>
-				<TextBox Grid.Row="12" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="3" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F15m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency15m" NotifyOnValidationError="True"
@@ -779,9 +792,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">12m:</TextBlock>
-				<TextBox Grid.Row="3" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="4" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F12m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency12m" NotifyOnValidationError="True"
@@ -792,9 +805,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">10m:</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="5" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F10m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency10m" NotifyOnValidationError="True"
@@ -805,9 +818,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">6m:</TextBlock>
-				<TextBox Grid.Row="5" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="6" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F6m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency6m" NotifyOnValidationError="True"
@@ -818,9 +831,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="7" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">4m:</TextBlock>
-				<TextBox Grid.Row="6" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="7" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F4m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency4m" NotifyOnValidationError="True"
@@ -831,9 +844,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="7" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="8" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">2m:</TextBlock>
-				<TextBox Grid.Row="7" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="8" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F2m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency2m" NotifyOnValidationError="True"
@@ -844,9 +857,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="8" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="9" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">1.25m:</TextBlock>
-				<TextBox Grid.Row="8" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="9" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F1p25m" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency1p25m" NotifyOnValidationError="True"
@@ -857,9 +870,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="9" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="10" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">70cm:</TextBlock>
-				<TextBox Grid.Row="9" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="10" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F70cm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency70cm" NotifyOnValidationError="True"
@@ -870,9 +883,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="10" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="11" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">33cm:</TextBlock>
-				<TextBox Grid.Row="10" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="11" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F33cm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency33cm" NotifyOnValidationError="True"
@@ -883,9 +896,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="11" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="12" Grid.Column="3" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">23cm:</TextBlock>
-				<TextBox Grid.Row="11" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="12" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F23cm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency23cm" NotifyOnValidationError="True"
@@ -896,9 +909,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="12" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="3" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">13cm:</TextBlock>
-				<TextBox Grid.Row="12" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="3" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F13cm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency13cm" NotifyOnValidationError="True"
@@ -909,9 +922,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="3" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="4" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">9cm:</TextBlock>
-				<TextBox Grid.Row="3" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="4" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F9cm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency9cm" NotifyOnValidationError="True"
@@ -922,9 +935,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="4" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="5" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">6cm:</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="7" Margin="5" MaxWidth="70" MaxLength="8"
+				<TextBox Grid.Row="5" Grid.Column="7" Margin="5" MaxWidth="70" MaxLength="8"
 						Name="F6cm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency6cm" NotifyOnValidationError="True"
@@ -935,9 +948,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="5" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="6" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">3cm:</TextBlock>
-				<TextBox Grid.Row="5" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="6" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F3cm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency3cm" NotifyOnValidationError="True"
@@ -948,9 +961,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="6" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="7" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">1.25cm:</TextBlock>
-				<TextBox Grid.Row="6" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="7" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F1p25cm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency1p25cm" NotifyOnValidationError="True"
@@ -961,9 +974,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="7" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="8" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">6mm:</TextBlock>
-				<TextBox Grid.Row="7" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="8" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F6mm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency6mm" NotifyOnValidationError="True"
@@ -974,9 +987,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="8" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="9" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">4mm:</TextBlock>
-				<TextBox Grid.Row="8" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="9" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F4mm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency4mm" NotifyOnValidationError="True"
@@ -987,9 +1000,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="9" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="10" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">2.5mm:</TextBlock>
-				<TextBox Grid.Row="9" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="10" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F2p5mm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency2p5mm" NotifyOnValidationError="True"
@@ -1000,9 +1013,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="10" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="11" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">2mm:</TextBlock>
-				<TextBox Grid.Row="10" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="11" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F2mm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency2mm" NotifyOnValidationError="True"
@@ -1013,9 +1026,9 @@ in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
 						</Binding>
 					</TextBox.Text>
 				</TextBox>
-				<TextBlock Grid.Row="11" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+				<TextBlock Grid.Row="12" Grid.Column="6" Margin="5" VerticalAlignment="Center"
 						HorizontalAlignment="Right">1mm:</TextBlock>
-				<TextBox Grid.Row="11" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+				<TextBox Grid.Row="12" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
 						Name="F1mm" PreviewTextInput="BandFrequency_PreviewTextInput">
 					<TextBox.Text>
 						<Binding Path="Frequency1mm" NotifyOnValidationError="True"

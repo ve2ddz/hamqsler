@@ -142,6 +142,7 @@ namespace hamqsler
 			months["12"] = prefs.DecemberText;
 
 			bandFreqs.Add("2190m", prefs.Frequency2190m);
+			bandFreqs.Add("630m", prefs.Frequency630m);
 			bandFreqs.Add("560m", prefs.Frequency560m);
 			bandFreqs.Add("160m", prefs.Frequency160m);
 			bandFreqs.Add("80m", prefs.Frequency80m);

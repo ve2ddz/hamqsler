@@ -577,6 +577,16 @@ namespace hamqsler
 			set {SetValue(Frequency2190mProperty, value);}
 		}
 		
+		// Frequency substitution for 630m
+		private static readonly DependencyProperty Frequency630mProperty = 
+			DependencyProperty.Register("Frequency630m", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("0.472"));
+		public string Frequency630m
+		{
+			get {return (string)GetValue(Frequency630mProperty);}
+			set {SetValue(Frequency630mProperty, value);}
+		}
+		
 		// Frequency substitution for 560m
 		private static readonly	DependencyProperty Frequency560mProperty = 
 			DependencyProperty.Register("Frequency560m", typeof(string),
@@ -1042,6 +1052,7 @@ namespace hamqsler
 			NovemberText = prefs.NovemberText;
 			DecemberText = prefs.DecemberText;
 			Frequency2190m = prefs.Frequency2190m;
+			Frequency630m = prefs.Frequency630m;
 			Frequency560m = prefs.Frequency560m;
 			Frequency160m = prefs.Frequency160m;
 			Frequency80m = prefs.Frequency80m;

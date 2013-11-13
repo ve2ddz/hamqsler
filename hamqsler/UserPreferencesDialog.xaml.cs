@@ -112,6 +112,7 @@ namespace hamqsler
 		{
 			e.CanExecute = true;
 			if(Validation.GetHasError(F2190m) ||
+			   Validation.GetHasError(F630m) ||
 			  Validation.GetHasError(F560m)	||
 			  Validation.GetHasError(F160m) ||
 			  Validation.GetHasError(F80m)	||
