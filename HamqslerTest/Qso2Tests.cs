@@ -936,7 +936,7 @@ namespace hamqslerTest
 			       "<Call:6>VA3JNO<Mode:3>SSB<band:3>40m<time_on:6>124316",
 			       "<Call:6>VA3JNO<Mode:3>SSB<band:3>40m<qso_date:8>20130615")] string q,
 			[Values("\tInvalid QSO: Call not specified.",
-			       "\tInvalid QSO: Mode not specified.",
+			       "\tInvalid QSO: Mode and submode not specified.",
 			       "\tInvalid QSO: Neither a band or frequency specified.",
 			       "\tInvalid QSO: Qso_Date not specified.",
 			       "\tInvalid QSO: Time_On not specified.")] string errMsg)
