@@ -1100,6 +1100,18 @@
 						</entry>
 					</row>
 					<row>
+						<entry>CONTEST_ID</entry>
+						<entry>
+							<para>If an ID is deprecated, it is changed to
+							the replacement value. The IDs that are changed are:</para>
+							<itemizedlist spacing='compact'>
+								<listitem>
+									<para>URE-DX -> UKRAINIAN DX</para>
+								</listitem>
+							</itemizedlist>
+						</entry>
+					</row>
+					<row>
 						<entry>CREDIT_GRANTED</entry>
 						<entry>
 							<para>Any value that is not in the Credit enumeration
