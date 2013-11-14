@@ -1080,6 +1080,14 @@
 				</thead>
 				<tbody>
 					<row>
+						<entry>ARRL_SECT</entry>
+						<entry>
+							<para>If a section is deprecated, it is changed to
+							the replacement value. This currently only affects
+							NWT which is changed to NT.</para>
+						</entry>
+					</row>
+					<row>
 						<entry>BAND</entry>
 						<entry>
 							<para>See FREQ.</para>
