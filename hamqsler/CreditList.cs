@@ -180,10 +180,12 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Replace Award with Credit if there is an equivalent
+		/// Replace Awards with Credits if there are equivalents
 		/// </summary>
-		public void ReplaceAwardsWithCredits()
+		/// <param name="mod"></param>
+		public void ReplaceAwardsWithCredits(ref string mod)
 		{
+			mod = null;
 			Credit[] creds = new Credit[Credits.Count];
 			Credits.CopyTo(creds);
 			string err = string.Empty;
@@ -197,11 +199,15 @@ namespace hamqsler
 					if(replacement == null)
 					{
 						Credits.Remove(credit);
+						mod += string.Format("\t\tAward '{0}' deleted because there is no equivalent Credit." +
+						                     Environment.NewLine, credit.CreditName);
 					}
 					else
 					{
 						Credits.Remove(credit);
 						this.Add(new Credit(replacement, credit.AdifEnums));
+						mod += string.Format("\t\tAward '{0}' replaced with Credit '{1}'." +
+						                     Environment.NewLine, credit, replacement);
 					}
 				}
 			}

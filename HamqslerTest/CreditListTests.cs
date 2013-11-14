@@ -336,8 +336,9 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
 			string err = string.Empty;
-			credit.ReplaceAwardsWithCredits();
+			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:24>IOTA,DXCC_BAND,DXCC_MODE", credit.ToAdifString());
+			Assert.IsNull(err);
 		}
 		
 		// test ReplaceAwardWithCredit with award and credits
@@ -349,8 +350,10 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,DXCC_BAND,CQWAZ_CW", aEnums);
 			string err = string.Empty;
-			credit.ReplaceAwardsWithCredits();
+			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:25>IOTA,DXCC_BAND,CQWAZ_MODE", credit.ToAdifString());
+			Assert.AreEqual("\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
+			                Environment.NewLine, err);
 		}
 
 		// test ReplaceAwardWithCredit with award that has no replacement
@@ -362,8 +365,12 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW", aEnums);
 			string err = string.Empty;
-			credit.ReplaceAwardsWithCredits();
+			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:15>IOTA,CQWAZ_MODE", credit.ToAdifString());
+			Assert.AreEqual("\t\tAward 'JCG' deleted because there is no equivalent Credit." +
+			                Environment.NewLine +
+			                "\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
+			                Environment.NewLine, err);
 		}
 
 		// test ReplaceAwardWithCredit with award that has same replacement as a credit in the list
@@ -375,8 +382,12 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE", aEnums);
 			string err = string.Empty;
-			credit.ReplaceAwardsWithCredits();
+			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:15>IOTA,CQWAZ_MODE", credit.ToAdifString());
+			Assert.AreEqual("\t\tAward 'JCG' deleted because there is no equivalent Credit." +
+			                Environment.NewLine +
+			                "\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
+			                Environment.NewLine, err);
 		}
 
 
@@ -390,7 +401,7 @@ namespace hamqslerTest
 			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW", aEnums);
 			string err = string.Empty;
-			credit.ReplaceAwardsWithCredits();
+			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:36>IOTA,CQWAZ_MODE,CQWAZ_MODE:CARD&LOTW", credit.ToAdifString());
 		}
 	}

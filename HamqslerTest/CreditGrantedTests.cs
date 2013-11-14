@@ -61,5 +61,87 @@ namespace hamqslerTest
 			Credit_Granted credit = new Credit_Granted("IOTA, DXCC_BAND:CARD&LOTW,DXCC_MODE", aEnums);
 			Assert.AreEqual("<Credit_Granted:34>IOTA,DXCC_BAND:CARD&LOTW,DXCC_MODE", credit.ToAdifString());
 		}
+		
+		// test ReplaceAwardWithCredit with credits only
+		[Test]
+		public void TestReplaceAwardsWithCreditsOnlyCredits()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Credit_Granted credit = new Credit_Granted("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
+			string err = string.Empty;
+			credit.ReplaceAwardsWithCredits(ref err);
+			Assert.AreEqual("<Credit_Granted:24>IOTA,DXCC_BAND,DXCC_MODE", credit.ToAdifString());
+			Assert.IsNull(err);
+		}
+		
+		// test ReplaceAwardWithCredit with award and credits
+		[Test]
+		public void TestReplaceAwardsWithCreditsAwardAndCredits()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Credit_Granted credit = new Credit_Granted("IOTA,DXCC_BAND,CQWAZ_CW", aEnums);
+			string err = string.Empty;
+			credit.ReplaceAwardsWithCredits(ref err);
+			Assert.AreEqual("<Credit_Granted:25>IOTA,DXCC_BAND,CQWAZ_MODE", credit.ToAdifString());
+			Assert.AreEqual("\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
+			                Environment.NewLine, err);
+		}
+
+		// test ReplaceAwardWithCredit with award that has no replacement
+		[Test]
+		public void TestReplaceAwardsWithCreditsNoReplacementAward()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW", aEnums);
+			string err = string.Empty;
+			credit.ReplaceAwardsWithCredits(ref err);
+			Assert.AreEqual("<Credit_Granted:15>IOTA,CQWAZ_MODE", credit.ToAdifString());
+			Assert.AreEqual("\t\tAward 'JCG' deleted because there is no equivalent Credit." +
+			                Environment.NewLine +
+			                "\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
+			                Environment.NewLine, err);
+		}
+
+		// test ReplaceAwardWithCredit with award that has same replacement as a credit in the list
+		[Test]
+		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCredit()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE", aEnums);
+			string err = string.Empty;
+			credit.ReplaceAwardsWithCredits(ref err);
+			Assert.AreEqual("<Credit_Granted:15>IOTA,CQWAZ_MODE", credit.ToAdifString());
+			Assert.AreEqual("\t\tAward 'JCG' deleted because there is no equivalent Credit." +
+			                Environment.NewLine +
+			                "\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
+			                Environment.NewLine, err);
+		}
+
+
+		// test ReplaceAwardWithCredit with award that has same replacement as a credit in the list
+		// but without the QSL medium value
+		[Test]
+		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCreditWithoutMedium()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			AdifEnumerations aEnums = new AdifEnumerations(str);
+			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW", aEnums);
+			string err = string.Empty;
+			credit.ReplaceAwardsWithCredits(ref err);
+			Assert.AreEqual("<Credit_Granted:36>IOTA,CQWAZ_MODE,CQWAZ_MODE:CARD&LOTW", credit.ToAdifString());
+			Assert.AreEqual("\t\tAward 'JCG' deleted because there is no equivalent Credit." +
+			                Environment.NewLine +
+			                "\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
+			                Environment.NewLine, err);
+		}
 	}
 }

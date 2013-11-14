@@ -171,10 +171,22 @@ namespace hamqsler
 						break;
 					case "CREDIT_GRANTED":
 						Credit_Granted credGranted = new Credit_Granted(values[i], aEnums);
+						string error = string.Empty;
+						credGranted.ReplaceAwardsWithCredits(ref error);
+						if(err != null)
+						{
+							errorString += "\tCredit_Granted:" + Environment.NewLine + error;
+						}
 						ValidateAndAddField(credGranted, values[i], ref errorString);
 						break;
 					case "CREDIT_SUBMITTED":
 						Credit_Submitted credSubmitted = new Credit_Submitted(values[i], aEnums);
+						error = string.Empty;
+						credSubmitted.ReplaceAwardsWithCredits(ref error);
+						if(err != null)
+						{
+							errorString += "\tCredit_Submitted:" + Environment.NewLine + error;
+						}
 						ValidateAndAddField(credSubmitted, values[i], ref errorString);
 						break;
 					case "DISTANCE":

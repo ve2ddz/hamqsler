@@ -1032,7 +1032,7 @@ namespace hamqslerTest
 		
 		// test GetAdifField for field that exists in this QSO
 		[Test]
-		public void GetAdifField()
+		public void TestGetAdifField()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
 			                    aEnums, ref errorString);
@@ -1042,12 +1042,27 @@ namespace hamqslerTest
 		
 		// test GetAdifField for field that does not exist in this QSO
 		[Test]
-		public void GetAdifFieldNoField()
+		public void TestGetAdifFieldNoField()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
 			                    aEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Assert.IsNull(qso.GetField("time_off"));
+		}
+		
+		// test ctor with Credit_Granted field with changes required
+		[Test]
+		public void TestCreditGranted()
+		{
+			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615" +
+			                    "<time_on:6>124316<name:3>Jim" +
+			                    "<credit_granted:38>IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW",
+			                    aEnums, ref errorString);
+			Assert.AreEqual("\tCredit_Granted:" + Environment.NewLine +
+			                "\t\tAward 'JCG' deleted because there is no equivalent Credit." +
+			                Environment.NewLine +
+			                "\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
+			                Environment.NewLine, errorString);
 		}
 	}
 }
