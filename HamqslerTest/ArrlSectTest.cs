@@ -72,5 +72,20 @@ namespace hamqslerTest
 			Arrl_Sect sect = new Arrl_Sect("NT", aEnums);
 			Assert.AreEqual("<Arrl_Sect:2>NT", sect.ToAdifString());
 		}
+		
+		// test modification of NWT section to NT
+		[Test]
+		public void TestModifyNWT()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<arrl_sect:3>NWT", aEnums, ref err);
+			Arrl_Sect nwt = qso.GetField("Arrl_Sect") as Arrl_Sect;
+			Assert.IsNotNull(nwt);
+			string mod = nwt.ModifyValues(qso);
+			Assert.AreEqual("NT", nwt.Value);
+			Assert.AreEqual("\tArrl_Sect:" + Environment.NewLine +
+			                "\t\tDeprecated section 'NWT' changed to 'NT'." +
+			                Environment.NewLine, mod);
+		}
 	}
 }

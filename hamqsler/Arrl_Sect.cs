@@ -36,5 +36,24 @@ namespace hamqsler
 		public Arrl_Sect(string value, AdifEnumerations aEnums) : base(value, "Arrl_Section", aEnums)
 		{
 		}
+		
+		/// <summary>
+		/// Modify value for any section that is deprecated or deleted.
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string containing modifications made</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			if(aEnums.IsDeprecated("Arrl_Section", Value))
+			{
+				string value = Value;
+				Value = aEnums.GetReplacementValue("Arrl_Section", value);
+				mod = "\tArrl_Sect:" + Environment.NewLine +
+					"\t\tDeprecated section 'NWT' changed to 'NT'." +
+					Environment.NewLine;
+			}
+			return mod;
+		}
 	}
 }

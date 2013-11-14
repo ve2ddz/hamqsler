@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
-<AdifEnumerations Version='3.0.4.0'>
+<AdifEnumerations Version='3.0.4.2'>
 	<Ant_Path Description='Antenna Path'>
 		<EnumValue Description='grayline'>G</EnumValue>
 		<EnumValue Description='other'>O</EnumValue>
@@ -52,7 +52,7 @@
 		<EnumValue Description='Northern New Jersey'>NNJ</EnumValue>
 		<EnumValue Description='Northern New York'>NNY</EnumValue>
 		<EnumValue Description='Norhtwest Territories/Yukon/Nunavut'>NT</EnumValue>
-		<EnumValue Description='Norhtwest Territories/Yukon/Nunavut' Deprecated='Yes' ReplaceWith='NT'>NWT</EnumValue>
+		<EnumValue Description='Northwest Territories/Yukon/Nunavut' Deprecated='Yes' ReplaceWith='NT'>NWT</EnumValue>
 		<EnumValue Description='Alabama'>AL</EnumValue>
 		<EnumValue Description='Ohio'>OH</EnumValue>
 		<EnumValue Description='Oklahoma'>OK</EnumValue>
