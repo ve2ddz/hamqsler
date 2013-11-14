@@ -29,13 +29,21 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ContestIdTests
 	{
+		AdifEnumerations aEnums = null;
+		
+		// test fixture setup
+		[TestFixtureSetUp]
+		public void Setup()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);			
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
 			Assert.AreEqual("<Contest_Id:17>RAC-CANADA-WINTER", id.ToAdifString());
 		}
@@ -45,9 +53,6 @@ namespace hamqslerTest
 		public void TestIsInEnumerationTrue()
 		{
 			string err = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
 			Assert.IsTrue(id.IsInEnumeration(out err));
 			Assert.AreEqual(null, err);
@@ -58,9 +63,6 @@ namespace hamqslerTest
 		public void TestIsInEnumerationFalse()
 		{
 			string err = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Contest_Id id = new Contest_Id("e6", aEnums);
 			Assert.IsFalse(id.IsInEnumeration(out err));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'e6' " +
@@ -73,9 +75,6 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
 			Assert.IsTrue(id.Validate(out err, out modStr));
 			Assert.IsNull(err);
@@ -88,13 +87,26 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Contest_Id id = new Contest_Id("e6", aEnums);
 			Assert.IsTrue(id.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
+		}
+		
+		// test ModifyValues for URE_DX
+		[Test]
+		public void TestModifyValuesUre_Dx()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<contest_ID:6>URE-DX", aEnums, ref err);
+			Contest_Id id = qso.GetField("Contest_Id") as Contest_Id;
+			Assert.IsNotNull(id);
+			modStr = id.ModifyValues(qso);
+			Assert.AreEqual("UKRAINIAN DX", id.Value);
+			Assert.AreEqual("\tContest_Id:" + Environment.NewLine +
+			                "\t\tDeprecated value 'URE-DX' changed to 'UKRAINIAN DX'." +
+			                Environment.NewLine, modStr);
 		}
 	}
 }

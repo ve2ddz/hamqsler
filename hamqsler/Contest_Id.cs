@@ -37,5 +37,24 @@ namespace hamqsler
 			: base(id, "Contest_ID", aEnums)
 		{
 		}
+		
+		/// <summary>
+		///  Change deprecated values to their replacements
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string containing message about changes made</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			if(aEnums.IsDeprecated("Contest_ID", Value))
+			{
+				string value = Value;
+				Value = aEnums.GetReplacementValue("Contest_ID", value);
+				mod = string.Format("\tContest_Id:" + Environment.NewLine +
+					"\t\tDeprecated value '{0}' changed to '{1}'." +
+					Environment.NewLine, value, Value);
+			}
+			return mod;
+		}
 	}
 }

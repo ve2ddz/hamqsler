@@ -352,7 +352,7 @@
 		<EnumValue Description='Open Ukraine RTTY Championship'>UKR-CHAMP-RTTY</EnumValue>
 		<EnumValue Description='UKSMG 6m Marathon'>UKSMG-6M-MARATHON</EnumValue>
 		<EnumValue Description='UKSMG Summer Es Contest'>UKSMG-SUMMER-ES</EnumValue>
-		<EnumValue Description='Ukrainian DX Contest' Deprecated='Yes' ReplaceWith='UKRAINIAN DX'>URE-DX </EnumValue>
+		<EnumValue Description='Ukrainian DX Contest' Deprecated='Yes' ReplaceWith='UKRAINIAN DX'>URE-DX</EnumValue>
 		<EnumValue Description='Mobile Amateur Awards Club'>US-COUNTIES-QSO</EnumValue>
 		<EnumValue Description='Utah QSO Party'>UT-QSO-PARTY</EnumValue>
 		<EnumValue Description='RCV Venezuelan Independence Day Contest'>VENEZ-IND-DAY</EnumValue>
