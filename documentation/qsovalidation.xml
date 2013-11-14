@@ -1106,6 +1106,9 @@
 							the replacement value. The IDs that are changed are:</para>
 							<itemizedlist spacing='compact'>
 								<listitem>
+									<para>EA-RTTY -> EA-WW-RTTY</para>
+								</listitem>
+								<listitem>
 									<para>URE-DX -> UKRAINIAN DX</para>
 								</listitem>
 							</itemizedlist>

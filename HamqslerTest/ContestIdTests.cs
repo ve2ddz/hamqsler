@@ -108,5 +108,21 @@ namespace hamqslerTest
 			                "\t\tDeprecated value 'URE-DX' changed to 'UKRAINIAN DX'." +
 			                Environment.NewLine, modStr);
 		}
+		
+		// test ModifyValues for EA-RTTY
+		[Test]
+		public void TestModifyValuesEa_Rtty()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<contest_ID:7>EA-RTTY", aEnums, ref err);
+			Contest_Id id = qso.GetField("Contest_Id") as Contest_Id;
+			Assert.IsNotNull(id);
+			modStr = id.ModifyValues(qso);
+			Assert.AreEqual("EA-WW-RTTY", id.Value);
+			Assert.AreEqual("\tContest_Id:" + Environment.NewLine +
+			                "\t\tDeprecated value 'EA-RTTY' changed to 'EA-WW-RTTY'." +
+			                Environment.NewLine, modStr);
+		}
 	}
 }
