@@ -1020,6 +1020,18 @@
 							<entry>S</entry>
 							<entry></entry>
 						</row>
+						<row>
+							<entry>User Defined Fields</entry>
+							<entry>Any data type that is represented by a single character</entry>
+							<entry>
+								<para>Validation is performed according to data type.</para>
+								<para>If data type is Number and a range of values
+								is specified, the value must be within the range.</para>
+								<para>If data type is Enumeration, the value must be one
+								of the values specified in the enumeration list for
+								the field.</para>
+							</entry>
+						</row>
 					</tbody>
 				</tgroup>
 			</table>
@@ -1067,6 +1079,54 @@
 				</row>
 				</thead>
 				<tbody>
+					<row>
+						<entry>BAND</entry>
+						<entry>
+							<para>See FREQ.</para>
+						</entry>
+					</row>
+					<row>
+						<entry>BAND_RX</entry>
+						<entry>
+							<para>See FREQ_RX.</para>
+						</entry>
+					</row>
+					<row>
+						<entry>CREDIT_GRANTED</entry>
+						<entry>
+							<para>Any value that is not in the Credit enumeration
+							is checked to see if it is in the Award enumeration.
+							If found there:</para>
+							<itemizedlist spacing='compact'>
+								<listitem>
+									<para>If there is an equivalent Credit value,
+									the Credit value replaces the Award value.</para>
+								</listitem>
+								<listitem>
+									<para>If there is no equivalent Credit value,
+									the value is deleted from CREDIT_GRANTED.</para>
+								</listitem>
+							</itemizedlist>
+						</entry>
+					</row>
+					<row>
+						<entry>CREDIT_SUBMITTED</entry>
+						<entry>
+							<para>Any value that is not in the Credit enumeration
+							is checked to see if it is in the Award enumeration.
+							If found there:</para>
+							<itemizedlist spacing='compact'>
+								<listitem>
+									<para>If there is an equivalent Credit value,
+									the Credit value replaces the Award value.</para>
+								</listitem>
+								<listitem>
+									<para>If there is no equivalent Credit value,
+									the value is deleted from CREDIT_SUBMITTED.</para>
+								</listitem>
+							</itemizedlist>
+						</entry>
+					</row>
 					<row>
 						<entry>FREQ</entry>
 						<entry>
