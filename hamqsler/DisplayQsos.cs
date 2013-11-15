@@ -153,6 +153,7 @@ namespace hamqsler
 			}
             if (qsoError)
             {
+                IsDirty = true;
                 return "One or more QSOs contains an invalid field.\n\rThese QSOs have not been imported.\n\r" +
                     "See the log file for details.";
             }
@@ -174,11 +175,13 @@ namespace hamqsler
 			}
 			// sort and put QSOs back
             qList.Sort(comparer);
+            bool dirty = IsDirty;
             this.Clear();
             foreach(QsoWithInclude qwi in qList)
             {
             	this.Add(qwi);
             }
+            IsDirty = dirty;
             NeedsSorting = false;			
 		}
 		
@@ -415,7 +418,9 @@ namespace hamqsler
 		                        ref Dictionary<string, bool> sentViaStatuses)
 		{
 			List<QsoWithInclude> qsos = this.ToList();
+			bool dirty = IsDirty;
 			this.Clear();
+			IsDirty = dirty;
 			foreach(QsoWithInclude qwi in qsos)
 			{
 				string band = qwi.Band.ToLower();
@@ -510,6 +515,7 @@ namespace hamqsler
 		public new void Clear()
 		{
 			base.Clear();
+			IsDirty = false;
 			NeedsSorting = false;
 		}
 		

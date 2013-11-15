@@ -226,6 +226,7 @@ namespace hamqsler
 				Qso qso = BuildQsoFromInput();
 				QsoWithInclude qwi = new QsoWithInclude(qso);
 				dispQsos.Add(qwi);
+				dispQsos.IsDirty = true;
 				QsoData.ClearQsoData();
 				return true;
 			} 
