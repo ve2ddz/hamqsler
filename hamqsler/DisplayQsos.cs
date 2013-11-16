@@ -293,12 +293,14 @@ namespace hamqsler
 			// but there is no action for making a change to one of more elements,
 			// only add, remove, reset, move.
 			List<QsoWithInclude> list = this.ToList();
+			bool dirty = IsDirty;
 			this.Clear();
 			foreach(QsoWithInclude qso in list)
 			{
 				qso.Include = true;
 				this.Add(qso);
 			}
+			IsDirty = dirty;
 		}
 		
 		/// <summary>
@@ -312,12 +314,14 @@ namespace hamqsler
 			// but there is no action for making a change to one of more elements,
 			// only add, remove, reset, move.
 			List<QsoWithInclude> list = this.ToList();
+			bool dirty = IsDirty;
 			this.Clear();
 			foreach(QsoWithInclude qso in list)
 			{
 				qso.Include = false;
 				this.Add(qso);
 			}
+			IsDirty = dirty;
 		}
 		
 		/// <summary>
@@ -533,11 +537,13 @@ namespace hamqsler
 			}
 			// necessary to remove and add all Qsos so that display is updated.
 			List<QsoWithInclude> qsos = this.ToList();
+			bool dirty = IsDirty;
 			this.Clear();
 			foreach(QsoWithInclude qso in qsos)
 			{
 				this.Add(qso);
 			}
+			IsDirty = dirty;
 		}
 		
 		/// <summary>
