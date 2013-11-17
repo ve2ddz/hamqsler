@@ -124,5 +124,21 @@ namespace hamqslerTest
 			                "\t\tDeprecated value 'EA-RTTY' changed to 'EA-WW-RTTY'." +
 			                Environment.NewLine, modStr);
 		}
+		
+		// test ModifyValues for Virginia QSO Party
+		[Test]
+		public void TestModifyValuesVirginia_QSO_Party()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<contest_ID:18>Virginia QSO Party", aEnums, ref err);
+			Contest_Id id = qso.GetField("Contest_Id") as Contest_Id;
+			Assert.IsNotNull(id);
+			modStr = id.ModifyValues(qso);
+			Assert.AreEqual("VA-QSO-PARTY", id.Value);
+			Assert.AreEqual("\tContest_Id:" + Environment.NewLine +
+			                "\t\tDeprecated value 'Virginia QSO Party' changed to 'VA-QSO-PARTY'." +
+			                Environment.NewLine, modStr);
+		}
 	}
 }
