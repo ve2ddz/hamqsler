@@ -227,8 +227,6 @@ namespace hamqsler
 			return true;
 		}
 		
-		
-		
 		/// <summary>
 		/// Executed handler for OK button. Saves QSO info and closes dialog
 		/// </summary>

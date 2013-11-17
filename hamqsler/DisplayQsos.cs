@@ -169,7 +169,9 @@ namespace hamqsler
 			}
             if (qsoError || errorString != null)
             {
-                return errorString;
+                IsDirty = true;
+                return "One or more QSOs contains an invalid field.\n\rThese QSOs have not been imported.\n\r" +
+                    "See the log file for details.";
             }
             NeedsSorting = false;
             return null;	// no error
@@ -189,13 +191,14 @@ namespace hamqsler
 			}
 			// sort and put QSOs back
             qList.Sort(comparer);
-            bool dirty = this.IsDirty;
+            bool dirty = IsDirty;
             this.Clear();
             this.IsDirty = dirty;
             foreach(QsoWithInclude qwi in qList)
             {
             	this.Add(qwi);
             }
+            IsDirty = dirty;
             NeedsSorting = false;			
 		}
 		
@@ -229,12 +232,14 @@ namespace hamqsler
 			// but there is no action for making a change to one of more elements,
 			// only add, remove, reset, move.
 			List<QsoWithInclude> list = this.ToList();
+			bool dirty = IsDirty;
 			this.Clear();
 			foreach(QsoWithInclude qso in list)
 			{
 				qso.Include = true;
 				this.Add(qso);
 			}
+			IsDirty = dirty;
 		}
 		
 		/// <summary>
@@ -248,12 +253,14 @@ namespace hamqsler
 			// but there is no action for making a change to one of more elements,
 			// only add, remove, reset, move.
 			List<QsoWithInclude> list = this.ToList();
+			bool dirty = IsDirty;
 			this.Clear();
 			foreach(QsoWithInclude qso in list)
 			{
 				qso.Include = false;
 				this.Add(qso);
 			}
+			IsDirty = dirty;
 		}
 		
 		/// <summary>
@@ -361,9 +368,9 @@ namespace hamqsler
 		                        ref Dictionary<string, bool> sentViaStatuses)
 		{
 			List<QsoWithInclude> qsos = this.ToList();
-			bool dirty = this.IsDirty;
+			bool dirty = IsDirty;
 			this.Clear();
-			this.IsDirty = dirty;
+			IsDirty = dirty;
 			foreach(QsoWithInclude qwi in qsos)
 			{
 				string band = qwi.Band.ToLower();
@@ -481,11 +488,13 @@ namespace hamqsler
 			}
 			// necessary to remove and add all Qsos so that display is updated.
 			List<QsoWithInclude> qsos = this.ToList();
+			bool dirty = IsDirty;
 			this.Clear();
 			foreach(QsoWithInclude qso in qsos)
 			{
 				this.Add(qso);
 			}
+			IsDirty = dirty;
 		}
 		
 		/// <summary>
