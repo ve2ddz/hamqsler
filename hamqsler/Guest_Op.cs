@@ -54,5 +54,30 @@ namespace hamqsler
 		    }
 			return true;
 		}
+		
+		/// <summary>
+		/// Delete this field and change to Operator field if that does not already exist.
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>Message indicating any modifications made</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			Operator op = qso.GetField("Operator") as Operator;
+			if(op == null)
+			{
+				op = new Operator(Value);
+				qso.Fields.Add(op);
+				mod = "\tGuest_Op field changed to Operator field." +
+			                Environment.NewLine;
+			}
+			else
+			{
+				mod = "\tGuest_Op field cannot be changed to Operator field because Operator field already exists. Guest_Op field deleted." +
+			           		Environment.NewLine;
+			}
+			qso.Fields.Remove(this);
+			return mod;
+		}
 	}
 }

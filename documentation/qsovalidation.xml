@@ -1188,6 +1188,14 @@
 						</entry>
 					</row>
 					<row>
+						<entry>GUEST_OP</entry>
+						<entry>If OPERATOR field does not exist in the QSO, then
+						GUEST_OP field is changed to OPERATOR field. If OPERATOR
+						field does exist in the QSO, GUEST_OP field is simply
+						deleted.
+						</entry>
+					</row>
+					<row>
 						<entry>LOTW_QSL_RCVD</entry>
 						<entry>If the value is "V", the field is deleted, and replaced
 						with CREDIT_GRANTED values of DXCC:LOTW, DXCC_BAND:LOTW, and DXCC_MODE:LOTW.

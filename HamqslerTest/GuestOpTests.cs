@@ -18,6 +18,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using hamqsler;
 
@@ -27,6 +29,17 @@ namespace hamqslerTest
 	[TestFixture]
 	public class GuestOpTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test Validate with valid callsign
 		[Test]
 		public void TestValidateValidCall()
@@ -61,6 +74,34 @@ namespace hamqslerTest
 			Assert.IsFalse(op.Validate(out err, out modStr));
 			Assert.AreEqual("\tNot a valid callsign.", err);
 			Assert.IsNull(modStr);
+		}
+
+		// test ModifyValues with valid callsign
+		[Test]
+		public void TestModifyValuesValidCall()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Guest_Op:5>VA3HJ", aEnums, ref err);
+			Guest_Op guest = qso.GetField("Guest_Op") as Guest_Op;
+			string mod = guest.ModifyValues(qso);
+			guest = qso.GetField("Guest_Op") as Guest_Op;
+			Assert.IsNull(guest);
+			Assert.AreEqual("\tGuest_Op field changed to Operator field." +
+			                Environment.NewLine, mod);
+		}
+
+		// test ModifyValues with valid callsign and existing Operator
+		[Test]
+		public void TestModifyValuesWithOperatorField()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Guest_Op:5>VA3HJ<Operator:6>VA3JNO", aEnums, ref err);
+			Guest_Op guest = qso.GetField("Guest_Op") as Guest_Op;
+			string mod = guest.ModifyValues(qso);
+			guest = qso.GetField("Guest_Op") as Guest_Op;
+			Assert.IsNull(guest);
+			Assert.AreEqual("\tGuest_Op field cannot be changed to Operator field because Operator field already exists. Guest_Op field deleted." +
+			                Environment.NewLine, mod);
 		}
 	}
 }
