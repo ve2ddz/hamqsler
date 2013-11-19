@@ -76,7 +76,7 @@ namespace hamqslerTest
 			Assert.IsNull(modStr);
 		}
 
-		// test ModifyValues with valid callsign
+		// test ModifyValues with valid callsign, no Operator
 		[Test]
 		public void TestModifyValuesValidCall()
 		{
@@ -86,7 +86,14 @@ namespace hamqslerTest
 			string mod = guest.ModifyValues(qso);
 			guest = qso.GetField("Guest_Op") as Guest_Op;
 			Assert.IsNull(guest);
+			Operator op = qso.GetField("Operator") as Operator;
+			Assert.IsNotNull(op);
+			Station_Callsign call = qso.GetField("Station_Callsign") as Station_Callsign;
+			Assert.IsNotNull(call);
+			Assert.AreEqual(op.Value, call.Value);
 			Assert.AreEqual("\tGuest_Op field changed to Operator field." +
+			                Environment.NewLine +
+			                "\tStation_Callsign field generated from Operator field." +
 			                Environment.NewLine, mod);
 		}
 

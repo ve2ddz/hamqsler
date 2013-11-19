@@ -1234,6 +1234,13 @@
 						<entry>If the value is "M", the field is deleted.
 						</entry>
 					</row>
+					<row>
+						<entry>STATION_CALLSIGN</entry>
+						<entry>If STATION_CALLSIGN field does not exist, create it
+						from OPERATOR field if that field exists. See also
+						GUEST_OP.
+						</entry>
+					</row>
 				</tbody>
 			</tgroup>
 		</table>

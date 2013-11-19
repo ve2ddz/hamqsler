@@ -58,5 +58,25 @@ namespace hamqsler
 			}
 			return true;
 		}
+		
+		/// <summary>
+		/// Generate Station_Callsign field from this field, if does not exist
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string describing the modification made</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			Station_Callsign call = qso.GetField("Station_Callsign") as Station_Callsign;
+			if(call == null)
+			{
+				call = new Station_Callsign(Value);
+				qso.Fields.Add(call);
+				call.ModifyValues(qso);
+				mod = "\tStation_Callsign field generated from Operator field." +
+			                Environment.NewLine;
+			}
+			return mod;
+		}
 	}
 }

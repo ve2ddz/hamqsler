@@ -70,6 +70,11 @@ namespace hamqsler
 				qso.Fields.Add(op);
 				mod = "\tGuest_Op field changed to Operator field." +
 			                Environment.NewLine;
+				string mod2 = op.ModifyValues(qso);
+				if(mod2 != null)
+				{
+					mod += mod2;
+				}
 			}
 			else
 			{

@@ -18,6 +18,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using hamqsler;
 
@@ -27,6 +29,17 @@ namespace hamqslerTest
 	[TestFixture]
 	public class OperatorTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
@@ -69,6 +82,41 @@ namespace hamqslerTest
 			Assert.IsFalse(op.Validate(out err, out modStr));
 			Assert.AreEqual("\tCallsign 'VA3HJ/W8' contains modifiers.", err);
 			Assert.IsNull(modStr);
+		}
+		
+		// test ModifyValues with no Station_Callsign
+		[Test]
+		public void TestModifyValuesNoStation_Callsign()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Operator:5>VA3HJ", aEnums, ref err);
+			Operator op = qso.GetField("Operator") as Operator;
+			Assert.IsNotNull(op);
+			err = op.ModifyValues(qso);
+			op = qso.GetField("Operator") as Operator;
+			Assert.IsNotNull(op);
+			Assert.AreEqual("\tStation_Callsign field generated from Operator field." +
+			                Environment.NewLine, err);
+			Station_Callsign call = qso.GetField("Station_Callsign") as Station_Callsign;
+			Assert.IsNotNull(call);
+			Assert.AreEqual("VA3HJ", call.Value);
+		}
+		
+		// test ModifyValues with Station_Callsign
+		[Test]
+		public void TestModifyValuesStation_Callsign()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Operator:5>VA3HJ<Station_Callsign:6>VA3JNO", aEnums, ref err);
+			Operator op = qso.GetField("Operator") as Operator;
+			Assert.IsNotNull(op);
+			err = op.ModifyValues(qso);
+			op = qso.GetField("Operator") as Operator;
+			Assert.IsNotNull(op);
+			Assert.IsNull(err);
+			Station_Callsign call = qso.GetField("Station_Callsign") as Station_Callsign;
+			Assert.IsNotNull(call);
+			Assert.AreEqual("VA3JNO", call.Value);
 		}
 	}
 }
