@@ -1219,6 +1219,13 @@
 						</entry>
 					</row>
 					<row>
+						<entry>OWNER_CALLSIGN</entry>
+						<entry>If OWNER_CALLSIGN field does not exist, create it
+						from STATION_CALLSIGN field if that field exists. See also
+						STATION_CALLSIGN.
+						</entry>
+					</row>
+					<row>
 						<entry>QSL_RCVD</entry>
 						<entry>If the value is "V", the field is deleted, and replaced
 						with CREDIT_GRANTED values of DXCC:CARD, DXCC_BAND:CARD, and DXCC_MODE:CARD.

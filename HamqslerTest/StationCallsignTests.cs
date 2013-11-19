@@ -18,6 +18,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using hamqsler;
 
@@ -27,6 +29,17 @@ namespace hamqslerTest
 	[TestFixture]
 	public class StationCallsignTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
@@ -69,6 +82,40 @@ namespace hamqslerTest
 			Assert.IsTrue(oCall.Validate(out err, out modStr));
 			Assert.AreEqual(null, err);
 			Assert.IsNull(modStr);
+		}
+		
+		// test ModifyValues with no Owner_Callsign
+		[Test]
+		public void TestModifyValuesNoOwnerCallsign()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("", aEnums, ref err);
+			Station_Callsign call = new Station_Callsign("VA3HJ");
+			qso.Fields.Add(call);
+			Owner_Callsign owner = qso.GetField("Owner_Callsign") as Owner_Callsign;
+			Assert.IsNull(owner);
+			string mod = call.ModifyValues(qso);
+			owner = qso.GetField("Owner_Callsign") as Owner_Callsign;
+			Assert.IsNotNull(owner);
+			Assert.AreEqual(call.Value, owner.Value);
+			Assert.AreEqual("\tOwner_Callsign field generated from Station_Callsign" +
+			                Environment.NewLine, mod);
+		}
+		
+		// test ModifyValues with Owner_Callsign
+		[Test]
+		public void TestModifyValuesWithOwnerCallsign()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Station_Callsign:5>VA3HJ<Owner_Callsign:6>VA3JNO", aEnums, ref err);
+			Station_Callsign call = qso.GetField("Station_Callsign") as Station_Callsign;
+			Assert.IsNotNull(call);
+			string mod = call.ModifyValues(qso);
+			Owner_Callsign owner = qso.GetField("Owner_Callsign") as Owner_Callsign;
+			Assert.IsNotNull(owner);
+			Assert.AreNotEqual(call.Value, owner.Value);
+			Assert.AreEqual("VA3JNO", owner.Value);
+			Assert.IsNull(mod);
 		}
 	}
 }

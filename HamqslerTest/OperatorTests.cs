@@ -100,6 +100,7 @@ namespace hamqslerTest
 			Station_Callsign call = qso.GetField("Station_Callsign") as Station_Callsign;
 			Assert.IsNotNull(call);
 			Assert.AreEqual("VA3HJ", call.Value);
+			
 		}
 		
 		// test ModifyValues with Station_Callsign

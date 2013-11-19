@@ -36,5 +36,25 @@ namespace hamqsler
 		public Station_Callsign(string call) : base(call)
 		{
 		}
+		
+		/// <summary>
+		/// Generate Owner_Callsign field if it does not exist
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string indicating changes made</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			Owner_Callsign owner = qso.GetField("Owner_Callsign") as Owner_Callsign;
+			if(owner == null)
+			{
+				owner = new Owner_Callsign(Value);
+				qso.Fields.Add(owner);
+				owner.ModifyValues(qso);
+				mod = "\tOwner_Callsign field generated from Station_Callsign" +
+			                Environment.NewLine;
+			}
+			return mod;
+		}
 	}
 }
