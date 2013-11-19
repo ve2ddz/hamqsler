@@ -36,5 +36,36 @@ namespace hamqsler
 		public Eqsl_Qsl_Rcvd(string rcvd, AdifEnumerations aEnums) : base(rcvd, "Qsl_Rcvd", aEnums)
 		{
 		}
+		
+		/// <summary>
+		///  Change deprecated values to their replacements
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string containing message about changes made</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = string.Empty;
+			string modStr = null;
+			if(Value.Equals("V"))
+			{
+				Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
+				if(granted == null)
+				{
+					Credit_Granted credGranted = new Credit_Granted("DXCC:eqsl,DXCC_BAND:eqsl,DXCC_Mode:eqsl",
+				                                            aEnums);
+					qso.Fields.Add(credGranted);
+				}
+				else
+				{
+					granted.Add(new Credit("DXCC:EQSL", aEnums));
+					granted.Add(new Credit("DXCC_BAND:EQSL", aEnums));
+					granted.Add(new Credit("DXCC_MODE:EQSL", aEnums));
+				}
+				qso.Fields.Remove(this);
+				modStr = "\tValue 'V' is deprecated and replaced with Credit_Granted values: 'DXCC:EQSL', 'DXCC_BAND:EQSL', and 'DXCC_MODE:EQSL'." +
+		                Environment.NewLine;
+			}
+			return modStr;
+		}
 	}
 }

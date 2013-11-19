@@ -1136,6 +1136,12 @@
 						</entry>
 					</row>
 					<row>
+						<entry>EQSL_QSL_RCVD</entry>
+						<entry>If the value is "V", the field is deleted, and replaced
+						with CREDIT_GRANTED values of DXCC:EQSL, DXCC_BAND:EQSL, and DXCC_MODE:EQSL.
+						</entry>
+					</row>
+					<row>
 						<entry>CREDIT_SUBMITTED</entry>
 						<entry>
 							<para>Any value that is not in the Credit enumeration
@@ -1182,6 +1188,12 @@
 						</entry>
 					</row>
 					<row>
+						<entry>LOTW_QSL_RCVD</entry>
+						<entry>If the value is "V", the field is deleted, and replaced
+						with CREDIT_GRANTED values of DXCC:LOTW, DXCC_BAND:LOTW, and DXCC_MODE:LOTW.
+						</entry>
+					</row>
+					<row>
 						<entry>MODE</entry>
 						<entry>
 							<para>If SUBMODE exists, the MODE is checked to ensure
@@ -1196,6 +1208,12 @@
 							<para>If SUBMODE does not exist and MODE is not a member of
 							the Mode enumeration, SUBMODE is set to the mode value,
 							and MODE is set to an empty string.</para>
+						</entry>
+					</row>
+					<row>
+						<entry>QSL_RCVD</entry>
+						<entry>If the value is "V", the field is deleted, and replaced
+						with CREDIT_GRANTED values of DXCC:CARD, DXCC_BAND:CARD, and DXCC_MODE:CARD.
 						</entry>
 					</row>
 				</tbody>

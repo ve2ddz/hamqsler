@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
@@ -29,13 +30,21 @@ namespace hamqslerTest
 	[TestFixture]
 	public class EqslQslRcvdTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Eqsl_Qsl_Rcvd rcvd = new Eqsl_Qsl_Rcvd("Y", aEnums);
 			Assert.AreEqual("<Eqsl_Qsl_Rcvd:1>Y", rcvd.ToAdifString());
 		}
@@ -44,9 +53,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidValue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Eqsl_Qsl_Rcvd rcvd = new Eqsl_Qsl_Rcvd("Y", aEnums);
@@ -59,9 +65,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidValue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Eqsl_Qsl_Rcvd rcvd = new Eqsl_Qsl_Rcvd("F", aEnums);
@@ -70,6 +73,60 @@ namespace hamqslerTest
 			                err);
 			Assert.IsNull(modStr);
 		}
-		
+
+		// test ModifyValues with value 'V' with no other Credits_Granted
+		[Test]
+		public void TestModifyValuesVNoCreditsGranted()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<Eqsl_Qsl_Rcvd:1>V", aEnums,ref err);
+			Eqsl_Qsl_Rcvd rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
+			Assert.IsNotNull(rcvd);
+			modStr = rcvd.ModifyValues(qso);
+			rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
+			Assert.IsNull(rcvd);
+			Assert.AreEqual("\tValue 'V' is deprecated and replaced with Credit_Granted values: " +
+			                "'DXCC:EQSL', 'DXCC_BAND:EQSL', and 'DXCC_MODE:EQSL'." +
+			                Environment.NewLine, modStr);
+			Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
+			Assert.IsNotNull(granted);
+			List<Credit> credits = granted.GetCredits("DXCC");
+			Assert.AreEqual(1, credits.Count);
+			Assert.IsTrue(credits[0].IsInMedia("EQSL"));
+			credits = granted.GetCredits("DXCC_BAND");
+			Assert.IsTrue(credits[0].IsInMedia("EQSL"));
+			credits = granted.GetCredits("DXCC_Mode");
+			Assert.IsTrue(credits[0].IsInMedia("eqsl"));
+		}
+
+		// test ModifyValues with value 'V' with Other Credits
+		[Test]
+		public void TestModifyValuesVCreditsGranted()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<Credit_Granted:14>DXCC:CARD&LOTW<Eqsl_Qsl_Rcvd:1>V", 
+			                    aEnums, ref err);
+			Assert.IsNull(err);
+			Eqsl_Qsl_Rcvd rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
+			Assert.IsNotNull(rcvd);
+			modStr = rcvd.ModifyValues(qso);
+			rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
+			Assert.IsNull(rcvd);
+			Assert.AreEqual("\tValue 'V' is deprecated and replaced with Credit_Granted values: " +
+			                "'DXCC:EQSL', 'DXCC_BAND:EQSL', and 'DXCC_MODE:EQSL'." +
+			                Environment.NewLine, modStr);
+			Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
+			Assert.IsNotNull(granted);
+			List<Credit> credits = granted.GetCredits("DXCC");
+			Assert.AreEqual(1, credits.Count);
+			Assert.AreEqual("DXCC:CARD&LOTW&EQSL", credits[0].ToString());
+			Assert.IsTrue(credits[0].IsInMedia("EQSL"));
+			credits = granted.GetCredits("DXCC_BAND");
+			Assert.IsTrue(credits[0].IsInMedia("EQSL"));
+			credits = granted.GetCredits("DXCC_Mode");
+			Assert.IsTrue(credits[0].IsInMedia("eqsl"));
+		}
 	}
 }

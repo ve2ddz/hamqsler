@@ -30,13 +30,21 @@ namespace hamqslerTest
 	[TestFixture]
 	public class CreditListTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test GetCredits with single matching credit in list
 		[Test]
 		public void TestGetCreditsSingleMatchingCredit()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA", aEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
@@ -48,13 +56,25 @@ namespace hamqslerTest
 			Assert.AreEqual(null, media[0]);
 		}
 		
+		// test GetCredits with single matching credit, case mismatch
+		[Test]
+		public void TestGetCreditsSingleMatchingCreditCaseMismatch()
+		{
+			Credit credit = new Credit("Iota", aEnums);
+			CreditList list = new CreditList();
+			list.Add(credit);
+			List<Credit> credits = list.GetCredits("iota");
+			Assert.AreEqual(1, credits.Count);
+			Assert.AreEqual("IOTA", credits[0].CreditName);
+			string[] media = new string[credits[0].Media.Count];
+			credits[0].Media.CopyTo(media);
+			Assert.AreEqual(null, media[0]);
+		}
+		
 		// test GetCredits with 2 matching credits in list
 		[Test]
 		public void TestGetCreditsTwoMatchingCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA", aEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
@@ -79,9 +99,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetCreditsNoMatchingCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA", aEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
@@ -97,9 +114,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddSingleCredit()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA", aEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
@@ -116,9 +130,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddTwoCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA", aEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
@@ -141,9 +152,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddTwoCreditsNullAndMedium()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA", aEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
@@ -167,9 +175,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddTwoCreditsBothNullMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA", aEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
@@ -190,9 +195,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddTwoCreditsDifferentMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit credit = new Credit("IOTA:EQSL&LOTW", aEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
@@ -214,9 +216,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestConstructorWithString4Credits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList list = new CreditList("WAS:LOTW,IOTA,DXCC_BAND:LOTW&CARD,DXCC_MODE:LOTW&CARD",
 			                                aEnums);
 			Assert.AreEqual(4, list.Count);
@@ -226,9 +225,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestConstructorWithString1CreditNoMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList list = new CreditList("IOTA", aEnums);
 			Assert.AreEqual(1, list.Count);
 		}
@@ -237,9 +233,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString1Credit()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList list = new CreditList("IOTA", aEnums);
 			Assert.AreEqual("<CreditList:4>IOTA", list.ToAdifString());
 		}
@@ -248,9 +241,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString4Credits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList list = new CreditList("WAS:LOTW,IOTA,DXCC_BAND:LOTW&CARD,DXCC_MODE:LOTW&CARD", aEnums);
 			Assert.AreEqual("<CreditList:53>WAS:LOTW,IOTA,DXCC_BAND:LOTW&CARD,DXCC_MODE:LOTW&CARD", list.ToAdifString());
 		}
@@ -259,9 +249,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString0Credits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList list = new CreditList();
 			Assert.AreEqual("<CreditList:0>", list.ToAdifString());
 		}
@@ -271,9 +258,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidSingleCredit()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -286,9 +270,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidMultipleCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -301,9 +282,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidSingleCredit()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA2", aEnums);
 			string err = string.Empty;
 			string modStr =string.Empty;
@@ -316,9 +294,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidSingleCreditInList()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,DXCC_BANE,DXCC_MODE", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -331,9 +306,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsOnlyCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -345,9 +317,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardAndCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,DXCC_BAND,CQWAZ_CW", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -360,9 +329,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsNoReplacementAward()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -377,9 +343,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCredit()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -396,13 +359,26 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCreditWithoutMedium()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:36>IOTA,CQWAZ_MODE,CQWAZ_MODE:CARD&LOTW", credit.ToAdifString());
+		}
+
+		// test add credit with medium, credit exists but medium different
+		[Test]
+		public void TestAddMediumToExistingCredit()
+		{
+			CreditList credits = new CreditList("DXCC:CARD&LOTW", aEnums);
+			List<Credit> creds = credits.GetCredits("DXCC");
+			Assert.AreEqual(1, creds.Count);
+			Assert.AreEqual("DXCC:CARD&LOTW", creds[0].ToString());
+			credits.Add(new Credit("DXCC:EQSL", aEnums));
+			creds = credits.GetCredits("DXCC");
+			Assert.AreEqual("DXCC:CARD&LOTW&EQSL", creds[0].ToString());
+			Assert.IsTrue(creds[0].IsInMedia("EQSL"));
+			Assert.IsTrue(creds[0].IsInMedia("LOTW"));
+			Assert.IsTrue(creds[0].IsInMedia("CARD"));
 		}
 	}
 }

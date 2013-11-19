@@ -75,7 +75,7 @@ namespace hamqsler
 			string[] creds = credits.Split(',');
 			foreach(string credit in creds)
 			{
-				Credit c = new Credit(credit.Trim(' '), aEnums);
+				Credit c = new Credit(credit.Trim(' ').ToUpper(), aEnums);
 				this.Add(c);
 			}
 		}
@@ -90,7 +90,7 @@ namespace hamqsler
 			List<Credit> credits = new List<Credit>();
 			foreach(Credit c in creditList)
 			{
-				if(c.CreditName.Equals(creditName))
+				if(c.CreditName.Equals(creditName.ToUpper()))
 				{
 					credits.Add(c);
 				}

@@ -54,6 +54,7 @@ namespace hamqsler
 		public Credit(string credit, AdifEnumerations aEnums)
 		{
 			adifEnums = aEnums;
+			credit = credit.ToUpper();
 			string[] parts = credit.Split(':');
 			creditName = parts[0];
 			if(parts.Length > 1)

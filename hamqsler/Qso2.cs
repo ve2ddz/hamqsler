@@ -173,7 +173,7 @@ namespace hamqsler
 						Credit_Granted credGranted = new Credit_Granted(values[i], aEnums);
 						string error = string.Empty;
 						credGranted.ReplaceAwardsWithCredits(ref error);
-						if(err != null)
+						if(error != null)
 						{
 							errorString += "\tCredit_Granted:" + Environment.NewLine + error;
 						}
@@ -183,7 +183,7 @@ namespace hamqsler
 						Credit_Submitted credSubmitted = new Credit_Submitted(values[i], aEnums);
 						error = string.Empty;
 						credSubmitted.ReplaceAwardsWithCredits(ref error);
-						if(err != null)
+						if(error != null)
 						{
 							errorString += "\tCredit_Submitted:" + Environment.NewLine + error;
 						}
@@ -693,7 +693,7 @@ namespace hamqsler
 		/// <param name="field">AdifField object to validate</param>
 		/// <param name="value">field value</param>
 		/// <param name="errorString">string containing error and modified messages</param>
-		private void ValidateAndAddField(AdifField field, string value, ref string errorString)
+		public void ValidateAndAddField(AdifField field, string value, ref string errorString)
 		{
 			string err = string.Empty;
 			string mod = string.Empty;

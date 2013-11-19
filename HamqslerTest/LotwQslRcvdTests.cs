@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
@@ -29,13 +30,21 @@ namespace hamqslerTest
 	[TestFixture]
 	public class LotwQslRcvdTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("Y", aEnums);
 			Assert.AreEqual("<Lotw_Qsl_Rcvd:1>Y", rcvd.ToAdifString());
 		}
@@ -44,9 +53,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidValue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("Y", aEnums);
@@ -59,9 +65,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidValue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("F", aEnums);
@@ -69,6 +72,31 @@ namespace hamqslerTest
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
 			Assert.IsNull(modStr);
+		}
+
+		// test ModifyValues with value 'V'
+		[Test]
+		public void TestModifyValuesV()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<Lotw_Qsl_Rcvd:1>V", aEnums,ref err);
+			Lotw_Qsl_Rcvd rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
+			Assert.IsNotNull(rcvd);
+			modStr = rcvd.ModifyValues(qso);
+			rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
+			Assert.IsNull(rcvd);
+			Assert.AreEqual("\tValue 'V' is deprecated and replaced with Credit_Granted values: " +
+			                "'DXCC:LOTW', 'DXCC_BAND:LOTW', and 'DXCC_MODE:LOTW'." +
+			                Environment.NewLine, modStr);
+			Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
+			Assert.IsNotNull(granted);
+			List<Credit> credits = granted.GetCredits("DXCC");
+			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
+			credits = granted.GetCredits("DXCC_BAND");
+			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
+			credits = granted.GetCredits("DXCC_Mode");
+			Assert.IsTrue(credits[0].IsInMedia("lotw"));
 		}
 	}
 }

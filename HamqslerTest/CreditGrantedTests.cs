@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
@@ -29,13 +30,21 @@ namespace hamqslerTest
 	[TestFixture]
 	public class CreditGrantedTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit_Granted credit = new Credit_Granted("IOTA", aEnums);
 			Assert.AreEqual("<Credit_Granted:4>IOTA", credit.ToAdifString());
 		}
@@ -44,9 +53,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifStringMultipleCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit_Granted credit = new Credit_Granted("IOTA, DXCC_BAND,DXCC_MODE", aEnums);
 			Assert.AreEqual("<Credit_Granted:24>IOTA,DXCC_BAND,DXCC_MODE", credit.ToAdifString());
 		}
@@ -55,20 +61,27 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifStringMultipleCreditsWithMedium()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit_Granted credit = new Credit_Granted("IOTA, DXCC_BAND:CARD&LOTW,DXCC_MODE", aEnums);
 			Assert.AreEqual("<Credit_Granted:34>IOTA,DXCC_BAND:CARD&LOTW,DXCC_MODE", credit.ToAdifString());
+		}
+		
+		// test Validate with multiple credits and QSL media
+		[Test]
+		public void TestValidateMultipleCreditsQslMedia()
+		{
+			string err = string.Empty;
+			string mod = string.Empty;
+			Credit_Granted credit = new Credit_Granted("DXCC:card,DXCC_BAND:card,DXCC_Mode:card", aEnums);
+			bool valid = credit.Validate(out err, out mod);
+			Assert.IsTrue(valid);
+			Assert.AreEqual(null, err);
+			Assert.AreEqual(null, mod);
 		}
 		
 		// test ReplaceAwardWithCredit with credits only
 		[Test]
 		public void TestReplaceAwardsWithCreditsOnlyCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit_Granted credit = new Credit_Granted("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -80,9 +93,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardAndCredits()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit_Granted credit = new Credit_Granted("IOTA,DXCC_BAND,CQWAZ_CW", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -95,9 +105,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsNoReplacementAward()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -112,9 +119,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCredit()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -131,9 +135,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCreditWithoutMedium()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW", aEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
@@ -142,6 +143,25 @@ namespace hamqslerTest
 			                Environment.NewLine +
 			                "\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
 			                Environment.NewLine, err);
+		}
+
+		// test add credit with medium, credit exists but medium different
+		[Test]
+		public void TestAddMediumToExistingCredit()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Credit_Granted:49>DXCC:CARD&LOTW,DXCC_MODE:CARD&LOTW,DXCC_BAND:CARD",
+			                    aEnums, ref err);
+			Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
+			List<Credit> creds = granted.GetCredits("DXCC");
+			Assert.AreEqual(1, creds.Count);
+			Assert.AreEqual(2, creds[0].Media.Count);
+			Assert.AreEqual("DXCC:CARD&LOTW", creds[0].ToString());
+			granted.Add(new Credit("DXCC:EQSL", aEnums));
+			creds = granted.GetCredits("DXCC");
+			Assert.AreEqual(3, creds[0].Media.Count);
+			Assert.AreEqual("DXCC:CARD&LOTW&EQSL", creds[0].ToString());
+			Assert.IsTrue(creds[0].IsInMedia("EQSL"));
 		}
 	}
 }

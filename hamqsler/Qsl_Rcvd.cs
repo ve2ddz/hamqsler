@@ -37,5 +37,37 @@ namespace hamqsler
 			: base(rcvd, "Qsl_Rcvd", aEnums)
 		{
 		}
+		
+		/// <summary>
+		///  Change deprecated values to their replacements
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string containing message about changes made</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = string.Empty;
+			string modStr = null;
+			if(Value.Equals("V"))
+			{
+				Credit_Granted granted = new Credit_Granted("DXCC:card,DXCC_BAND:card,DXCC_Mode:card",
+				                                            aEnums);
+				qso.ValidateAndAddField(granted, string.Empty, ref mod);
+				qso.Fields.Remove(this);
+				
+				if(mod != null && mod.Length != 0)
+				{
+					modStr = "\tError encountered attempting to replace Qsl_Rcvd value 'V' with "
+						+ "Credit_Granted values of 'DXCC:card,DXCC_BAND:card,DXCC_Mode:card'." +
+						Environment.NewLine + 
+						"\t" + mod + Environment.NewLine;
+				}
+				else
+				{
+					modStr = "\tValue 'V' is deprecated and replaced with Credit_Granted values: 'DXCC:CARD', 'DXCC_BAND:CARD', and 'DXCC_MODE:CARD'." +
+			                Environment.NewLine;
+				}
+			}
+			return modStr;
+		}
 	}
 }

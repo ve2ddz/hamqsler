@@ -36,5 +36,37 @@ namespace hamqsler
 		public Lotw_Qsl_Rcvd(string rcvd, AdifEnumerations aEnums) : base(rcvd, "Qsl_Rcvd", aEnums)
 		{
 		}
+		
+		/// <summary>
+		///  Change deprecated values to their replacements
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string containing message about changes made</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = string.Empty;
+			string modStr = null;
+			if(Value.Equals("V"))
+			{
+				Credit_Granted granted = new Credit_Granted("DXCC:lotw,DXCC_BAND:lotw,DXCC_Mode:lotw",
+				                                            aEnums);
+				qso.ValidateAndAddField(granted, string.Empty, ref mod);
+				qso.Fields.Remove(this);
+				
+				if(mod != null && mod.Length != 0)
+				{
+					modStr = "\tError encountered attempting to replace Lotw_Qsl_Rcvd value 'V' with "
+						+ "Credit_Granted values of 'DXCC:lotw,DXCC_BAND:lotw,DXCC_Mode:lotw'." +
+						Environment.NewLine + 
+						"\t" + mod + Environment.NewLine;
+				}
+				else
+				{
+					modStr = "\tValue 'V' is deprecated and replaced with Credit_Granted values: 'DXCC:LOTW', 'DXCC_BAND:LOTW', and 'DXCC_MODE:LOTW'." +
+			                Environment.NewLine;
+				}
+			}
+			return modStr;
+		}
 	}
 }
