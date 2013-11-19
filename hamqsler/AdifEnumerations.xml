@@ -965,7 +965,7 @@
 		<EnumValue Description='Bureau'>B</EnumValue>
 		<EnumValue Description='Direct'>D</EnumValue>
 		<EnumValue Description='Electronic'>E</EnumValue>
-		<EnumValue Description='Manager' Deprecated='Yes' Replacewith=''>M</EnumValue>
+		<EnumValue Description='Manager' Deprecated='Yes'>M</EnumValue>
 	</Qsl_Via>
 	<Qso_Complete Description='QSO complete enumeration'>
 		<EnumValue Description='Yes'>Y</EnumValue>

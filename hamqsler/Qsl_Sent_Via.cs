@@ -37,5 +37,32 @@ namespace hamqsler
 			: base(via, "Qsl_Via", aEnums)
 		{
 		}
+		
+		/// <summary>
+		/// Modify value of field based on IsDeprecated value
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns></returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			if(aEnums.IsDeprecated("Qsl_Via", Value))
+			{
+				string repValue = aEnums.GetReplacementValue("Qsl_Via", Value);
+				if(repValue == null)
+				{
+					mod = string.Format("\tQsl_Sent_Via value '{0}' deprecated with no replacement value. Field deleted."
+					                    + Environment.NewLine, Value);
+					qso.Fields.Remove(this);
+				}
+				else
+				{
+					mod = string.Format("\tQsl_Sent_Via value '{0]' replaced with value '{1}'." +
+					                    Environment.NewLine, Value, repValue);
+					Value = repValue;
+				}
+			}
+			return mod;
+		}
 	}
 }

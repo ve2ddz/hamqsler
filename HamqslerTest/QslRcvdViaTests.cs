@@ -29,13 +29,21 @@ namespace hamqslerTest
 	[TestFixture]
 	public class QslRcvdViaTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("B", aEnums);
 			Assert.AreEqual("<Qsl_Rcvd_Via:1>B", status.ToAdifString());
 		}
@@ -44,9 +52,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValid()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("B", aEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -59,9 +64,6 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalid()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("F", aEnums);
@@ -69,6 +71,39 @@ namespace hamqslerTest
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'F' was not found in enumeration.", 
 			                err);
 			Assert.IsNull(modStr);
+		}
+		
+		// test ModifyValues with non-M status
+		[Test]
+		public void TestModifyValuesEStatus()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<Qsl_Rcvd_Via:1>E", aEnums, ref err);
+			Qsl_Rcvd_Via status = qso.GetField("Qsl_Rcvd_Via") as Qsl_Rcvd_Via;
+			Assert.IsNotNull(status);
+			string mod = status.ModifyValues(qso);
+			Assert.IsNull(mod);
+			status = qso.GetField("Qsl_Rcvd_Via") as Qsl_Rcvd_Via;
+			Assert.IsNotNull(status);
+			Assert.AreEqual("E", status.Value);
+		}
+
+		
+		// test ModifyValues with M status
+		[Test]
+		public void TestModifyValuesMStatus()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<Qsl_Rcvd_Via:1>M", aEnums, ref err);
+			Qsl_Rcvd_Via status = qso.GetField("Qsl_Rcvd_Via") as Qsl_Rcvd_Via;
+			Assert.IsNotNull(status);
+			string mod = status.ModifyValues(qso);
+			Assert.AreEqual("\tQsl_Rcvd_Via value 'M' deprecated with no replacement value. Field deleted."
+			                + Environment.NewLine, mod);
+			status = qso.GetField("Qsl_Rcvd_Via") as Qsl_Rcvd_Via;
+			Assert.IsNull(status);
 		}
 	}
 }

@@ -1216,6 +1216,16 @@
 						with CREDIT_GRANTED values of DXCC:CARD, DXCC_BAND:CARD, and DXCC_MODE:CARD.
 						</entry>
 					</row>
+					<row>
+						<entry>QSL_RCVD_VIA</entry>
+						<entry>If the value is "M", the field is deleted.
+						</entry>
+					</row>
+					<row>
+						<entry>QSL_SENT_VIA</entry>
+						<entry>If the value is "M", the field is deleted.
+						</entry>
+					</row>
 				</tbody>
 			</tgroup>
 		</table>
