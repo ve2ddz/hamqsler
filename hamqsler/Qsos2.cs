@@ -149,7 +149,11 @@ namespace hamqsler
 							}
 							error += modString + Environment.NewLine + Environment.NewLine;
 						}
-						modString = f.ModifyValues2(qso);
+					}
+					foreach(AdifField field in fields)
+					{
+						AdifField f = qso.GetField(field.Name);
+						string modString = f.ModifyValues2(qso);
 						if(modString != null)
 						{
 							if(!qsoAddedToError)
