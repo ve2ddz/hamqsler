@@ -136,5 +136,17 @@ namespace hamqsler
 		{
 			return null;
 		}
+
+		/// <summary>
+		/// Check value for this field and modify it or other fields in QSO if required.
+		/// Call this after call to ModifyValues for changes that should occur after
+		/// the normal modifications
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string indicating changes made, or null if no changes</returns>
+		public virtual string ModifyValues2(Qso2 qso)
+		{
+			return null;
+		}
 	}
 }

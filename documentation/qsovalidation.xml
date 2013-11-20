@@ -1136,12 +1136,6 @@
 						</entry>
 					</row>
 					<row>
-						<entry>EQSL_QSL_RCVD</entry>
-						<entry>If the value is "V", the field is deleted, and replaced
-						with CREDIT_GRANTED values of DXCC:EQSL, DXCC_BAND:EQSL, and DXCC_MODE:EQSL.
-						</entry>
-					</row>
-					<row>
 						<entry>CREDIT_SUBMITTED</entry>
 						<entry>
 							<para>Any value that is not in the Credit enumeration
@@ -1157,6 +1151,20 @@
 									the value is deleted from CREDIT_SUBMITTED.</para>
 								</listitem>
 							</itemizedlist>
+						</entry>
+					</row>
+					<row>
+						<entry>EQSL_QSL_RCVD</entry>
+						<entry>If the value is "V", the field is deleted, and replaced
+						with CREDIT_GRANTED values of DXCC:EQSL, DXCC_BAND:EQSL, and DXCC_MODE:EQSL.
+						</entry>
+					</row>
+					<row>
+						<entry>EQSL_QSLRDATE</entry>
+						<entry>EQSL_QSLRDATE is valid only if EQSL_QSL_RCVD 
+						is "Y", "I", or "V". If EQSL_QSL_RCVD is any other value,
+						or if EQSL_QSL_RCVD is not present, then the EQSL_QSLRDATE
+						field is not valid and is deleted.
 						</entry>
 					</row>
 					<row>

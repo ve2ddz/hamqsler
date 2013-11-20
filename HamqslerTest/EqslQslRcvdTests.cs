@@ -74,9 +74,9 @@ namespace hamqslerTest
 			Assert.IsNull(modStr);
 		}
 
-		// test ModifyValues with value 'V' with no other Credits_Granted
+		// test ModifyValues2 with value 'V' with no other Credits_Granted
 		[Test]
-		public void TestModifyValuesVNoCreditsGranted()
+		public void TestModifyValues2VNoCreditsGranted()
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -84,6 +84,10 @@ namespace hamqslerTest
 			Eqsl_Qsl_Rcvd rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
 			Assert.IsNotNull(rcvd);
 			modStr = rcvd.ModifyValues(qso);
+			rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
+			Assert.IsNotNull(rcvd);
+			Assert.IsNull(modStr);
+			modStr = rcvd.ModifyValues2(qso);
 			rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
 			Assert.IsNull(rcvd);
 			Assert.AreEqual("\tValue 'V' is deprecated and replaced with Credit_Granted values: " +
@@ -102,7 +106,7 @@ namespace hamqslerTest
 
 		// test ModifyValues with value 'V' with Other Credits
 		[Test]
-		public void TestModifyValuesVCreditsGranted()
+		public void TestModifyValues2VCreditsGranted()
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -111,7 +115,7 @@ namespace hamqslerTest
 			Assert.IsNull(err);
 			Eqsl_Qsl_Rcvd rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
 			Assert.IsNotNull(rcvd);
-			modStr = rcvd.ModifyValues(qso);
+			modStr = rcvd.ModifyValues2(qso);
 			rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
 			Assert.IsNull(rcvd);
 			Assert.AreEqual("\tValue 'V' is deprecated and replaced with Credit_Granted values: " +

@@ -88,5 +88,15 @@ namespace hamqslerTest
 			AdifField f1 = new AdifField();
 			Assert.IsNull(f1.ModifyValues(qso));
 		}
+		
+		// test ModifyValues2
+		[Test]
+		public void TestModifyValues2()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2(string.Empty, null, ref err, null);
+			AdifField f1 = new AdifField();
+			Assert.IsNull(f1.ModifyValues2(qso));
+		}
 	}
 }

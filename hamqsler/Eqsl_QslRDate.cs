@@ -35,5 +35,25 @@ namespace hamqsler
 		public Eqsl_QslRDate(string date) : base(date)
 		{
 		}
+		
+		/// <summary>
+		/// This field is valid only if Eqsl_Qsl_Rcvd is Y, I, or V.
+		/// Delete field if other value or null
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string containing modification message</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			Eqsl_Qsl_Rcvd rcvd = qso.GetField("Eqsl_Qsl_Rcvd") as Eqsl_Qsl_Rcvd;
+			if(rcvd == null || (rcvd.Value != "Y" && rcvd.Value != "I" && rcvd.Value != "V"))
+			{
+				qso.Fields.Remove(this);
+				mod = "\tEqsl_QslRDate field deleted. This field is only valid when " +
+						"Eqsl_Qsl_Rcvd field is Y, I, or V." +
+		                Environment.NewLine;
+			}
+			return mod;
+		}
 	}
 }

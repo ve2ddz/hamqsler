@@ -149,6 +149,15 @@ namespace hamqsler
 							}
 							error += modString + Environment.NewLine + Environment.NewLine;
 						}
+						modString = f.ModifyValues2(qso);
+						if(modString != null)
+						{
+							if(!qsoAddedToError)
+							{
+								error += adifQso + "<eor>" + Environment.NewLine;
+							}
+							error += modString + Environment.NewLine + Environment.NewLine;
+						}
 					}
 					this.Add(qso);
 				}
