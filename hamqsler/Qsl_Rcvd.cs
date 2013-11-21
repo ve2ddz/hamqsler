@@ -40,32 +40,35 @@ namespace hamqsler
 		
 		/// <summary>
 		///  Change deprecated values to their replacements
+		/// 
 		/// </summary>
 		/// <param name="qso">Qso2 object containing this field</param>
 		/// <returns>string containing message about changes made</returns>
-		public override string ModifyValues(Qso2 qso)
+		public override string ModifyValues2(Qso2 qso)
 		{
+			// this code must be in ModifyValues2, not ModifyValues, because this code changes
+			// status of 'V' which must be present when Eqsl_QslRDate.ModifyValues is called.
+			// We cannot guarantee the order in which objects in Qso2.Fields is stored.
 			string mod = string.Empty;
 			string modStr = null;
 			if(Value.Equals("V"))
 			{
-				Credit_Granted granted = new Credit_Granted("DXCC:card,DXCC_BAND:card,DXCC_Mode:card",
-				                                            aEnums);
-				qso.ValidateAndAddField(granted, string.Empty, ref mod);
-				qso.Fields.Remove(this);
-				
-				if(mod != null && mod.Length != 0)
+				Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
+				if(granted == null)
 				{
-					modStr = "\tError encountered attempting to replace Qsl_Rcvd value 'V' with "
-						+ "Credit_Granted values of 'DXCC:card,DXCC_BAND:card,DXCC_Mode:card'." +
-						Environment.NewLine + 
-						"\t" + mod + Environment.NewLine;
+					Credit_Granted credGranted = new Credit_Granted("DXCC:CARD,DXCC_BAND:CARD,DXCC_Mode:CARD",
+				                                            aEnums);
+					qso.Fields.Add(credGranted);
 				}
 				else
 				{
-					modStr = "\tValue 'V' is deprecated and replaced with Credit_Granted values: 'DXCC:CARD', 'DXCC_BAND:CARD', and 'DXCC_MODE:CARD'." +
-			                Environment.NewLine;
+					granted.Add(new Credit("DXCC:CARD", aEnums));
+					granted.Add(new Credit("DXCC_BAND:CARD", aEnums));
+					granted.Add(new Credit("DXCC_MODE:CARD", aEnums));
 				}
+				qso.Fields.Remove(this);
+				modStr = "\tValue 'V' is deprecated and replaced with Credit_Granted values: 'DXCC:CARD', 'DXCC_BAND:CARD', and 'DXCC_MODE:CARD'." +
+		                Environment.NewLine;
 			}
 			return modStr;
 		}

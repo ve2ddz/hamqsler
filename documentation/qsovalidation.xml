@@ -1258,6 +1258,14 @@
 						</entry>
 					</row>
 					<row>
+						<entry>QSLRDATE</entry>
+						<entry>QSLRDATE is valid only if QSL_RCVD 
+						is "Y", "I", or "V". If QSL_RCVD is any other value,
+						or if QSL_RCVD is not present, then the QSLRDATE
+						field is not valid and is deleted.
+						</entry>
+					</row>
+					<row>
 						<entry>STATION_CALLSIGN</entry>
 						<entry>If STATION_CALLSIGN field does not exist, create it
 						from OPERATOR field if that field exists. See also
