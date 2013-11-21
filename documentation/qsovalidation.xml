@@ -1226,6 +1226,14 @@
 						</entry>
 					</row>
 					<row>
+						<entry>LOTW_QSLSDATE</entry>
+						<entry>LOTW_QSLSDATE is valid only if LOTW_QSL_SENT 
+						is "Y", "Q", or "I". If LOTW_QSL_SENT is any other value,
+						or if LOTW_QSL_SENT is not present, then the LOTW_QSLSDATE
+						field is not valid and is deleted.
+						</entry>
+					</row>
+					<row>
 						<entry>MODE</entry>
 						<entry>
 							<para>If SUBMODE exists, the MODE is checked to ensure

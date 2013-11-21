@@ -35,5 +35,25 @@ namespace hamqsler
 		public Lotw_QslSDate(string date) : base(date)
 		{
 		}
+		
+		/// <summary>
+		/// This field is valid only if Lotw_Qsl_Sent is Y, Q, or I.
+		/// Delete field if other value or null
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string containing modification message</returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			Lotw_Qsl_Sent sent = qso.GetField("Lotw_Qsl_Sent") as Lotw_Qsl_Sent;
+			if(sent == null || (sent.Value != "Y" && sent.Value != "Q" && sent.Value != "I"))
+			{
+				qso.Fields.Remove(this);
+				mod = "\tLotw_QslSDate field deleted. This field is only valid when " +
+						"Lotw_Qsl_Sent field is Y, Q, or I." +
+		                Environment.NewLine;
+			}
+			return mod;
+		}
 	}
 }
