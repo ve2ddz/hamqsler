@@ -1266,6 +1266,14 @@
 						</entry>
 					</row>
 					<row>
+						<entry>QSLSDATE</entry>
+						<entry>QSLSDATE is valid only if QSL_SENT 
+						is "Y", "Q", or "I". If QSL_SENT is any other value,
+						or if QSL_SENT is not present, then the QSLSDATE
+						field is not valid and is deleted.
+						</entry>
+					</row>
+					<row>
 						<entry>STATION_CALLSIGN</entry>
 						<entry>If STATION_CALLSIGN field does not exist, create it
 						from OPERATOR field if that field exists. See also
