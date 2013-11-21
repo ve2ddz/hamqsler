@@ -35,5 +35,32 @@ namespace hamqsler
 		public VE_Prov(string prov) : base(prov)
 		{
 		}
+
+		/// <summary>
+		/// Change VE_PROV to STATE
+		/// </summary>
+		/// <param name="qso">Qso2 object containing this field</param>
+		/// <returns>string indicating the change made</returns></returns>
+		public override string ModifyValues(Qso2 qso)
+		{
+			string mod = null;
+			State state = qso.GetField("State") as State;
+			if(state == null)
+			{
+				state = new State(Value);
+				qso.Fields.Add(state);
+				mod = "\tVE_Prov field deprecated. VE_Prov field deleted and replace with State field." +
+					Environment.NewLine;
+				state.ModifyValues(qso);
+				
+			}
+			else
+			{
+				mod = "\tVE_Prov field deprecated. State field already exists, so VE_Prov field deleted." +
+			                Environment.NewLine;
+			}
+			qso.Fields.Remove(this);
+			return mod;
+		}
 	}
 }

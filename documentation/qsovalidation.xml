@@ -1296,6 +1296,13 @@
 						GUEST_OP.
 						</entry>
 					</row>
+					<row>
+						<entry>VE_PROV</entry>
+						<entry>If STATE field does not exist, create it
+						from VE_PROV value. If STATE field does exist, do not
+						replace it. In either case, delete VE_PROV.
+						</entry>
+					</row>
 				</tbody>
 			</tgroup>
 		</table>
