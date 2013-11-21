@@ -74,7 +74,7 @@ namespace hamqslerTest
 			Assert.IsNull(modStr);
 		}
 
-		// test ModifyValues with value 'V'
+		// test ModifyValues2 with value 'V'
 		[Test]
 		public void TestModifyValuesV()
 		{
@@ -83,7 +83,7 @@ namespace hamqslerTest
 			Qso2 qso = new Qso2("<Lotw_Qsl_Rcvd:1>V", aEnums,ref err);
 			Lotw_Qsl_Rcvd rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
 			Assert.IsNotNull(rcvd);
-			modStr = rcvd.ModifyValues(qso);
+			modStr = rcvd.ModifyValues2(qso);
 			rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
 			Assert.IsNull(rcvd);
 			Assert.AreEqual("\tValue 'V' is deprecated and replaced with Credit_Granted values: " +
@@ -97,6 +97,65 @@ namespace hamqslerTest
 			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
 			credits = granted.GetCredits("DXCC_Mode");
 			Assert.IsTrue(credits[0].IsInMedia("lotw"));
+		}
+
+		// test ModifyValues2 with value 'V' with no other Credits_Granted
+		[Test]
+		public void TestModifyValues2VNoCreditsGranted()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<Lotw_Qsl_Rcvd:1>V", aEnums,ref err);
+			Lotw_Qsl_Rcvd rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
+			Assert.IsNotNull(rcvd);
+			modStr = rcvd.ModifyValues(qso);
+			rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
+			Assert.IsNotNull(rcvd);
+			Assert.IsNull(modStr);
+			modStr = rcvd.ModifyValues2(qso);
+			rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
+			Assert.IsNull(rcvd);
+			Assert.AreEqual("\tValue 'V' is deprecated and replaced with Credit_Granted values: " +
+			                "'DXCC:LOTW', 'DXCC_BAND:LOTW', and 'DXCC_MODE:LOTW'." +
+			                Environment.NewLine, modStr);
+			Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
+			Assert.IsNotNull(granted);
+			List<Credit> credits = granted.GetCredits("DXCC");
+			Assert.AreEqual(1, credits.Count);
+			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
+			credits = granted.GetCredits("DXCC_BAND");
+			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
+			credits = granted.GetCredits("DXCC_Mode");
+			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
+		}
+
+		// test ModifyValues with value 'V' with Other Credits
+		[Test]
+		public void TestModifyValues2VCreditsGranted()
+		{
+			string err = string.Empty;
+			string modStr = string.Empty;
+			Qso2 qso = new Qso2("<Credit_Granted:14>DXCC:CARD&EQSL<Lotw_Qsl_Rcvd:1>V", 
+			                    aEnums, ref err);
+			Assert.IsNull(err);
+			Lotw_Qsl_Rcvd rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
+			Assert.IsNotNull(rcvd);
+			modStr = rcvd.ModifyValues2(qso);
+			rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
+			Assert.IsNull(rcvd);
+			Assert.AreEqual("\tValue 'V' is deprecated and replaced with Credit_Granted values: " +
+			                "'DXCC:LOTW', 'DXCC_BAND:LOTW', and 'DXCC_MODE:LOTW'." +
+			                Environment.NewLine, modStr);
+			Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
+			Assert.IsNotNull(granted);
+			List<Credit> credits = granted.GetCredits("DXCC");
+			Assert.AreEqual(1, credits.Count);
+			Assert.AreEqual("DXCC:CARD&EQSL&LOTW", credits[0].ToString());
+			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
+			credits = granted.GetCredits("DXCC_BAND");
+			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
+			credits = granted.GetCredits("DXCC_Mode");
+			Assert.IsTrue(credits[0].IsInMedia("LOTW"));
 		}
 	}
 }

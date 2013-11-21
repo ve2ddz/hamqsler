@@ -18,6 +18,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using hamqsler;
 
@@ -27,6 +29,17 @@ namespace hamqslerTest
 	[TestFixture]
 	public class LotwQslRDateTests
 	{
+		AdifEnumerations aEnums;
+		
+		// fixture setup
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+			aEnums = new AdifEnumerations(str);
+		}
+
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
@@ -57,6 +70,56 @@ namespace hamqslerTest
 			Assert.IsFalse(date.Validate(out err, out modStr));
 			Assert.AreEqual("\tDate must be 19300101 or later.", err);
 			Assert.IsNull(modStr);
+		}
+		
+		// test ModifyValues with Eqsl_Qsl_Rcvd value of Y, I, V
+		[Test]
+		public void TestModifyValuesTrue(
+			[Values("Y", "I", "V")] string rcvd)
+		{
+			string adif = string.Format("<Lotw_Qsl_Rcvd:1>{0}<Lotw_QslRDate:8>20120916",
+			 	                           rcvd);
+			string err = string.Empty;
+			Qso2 qso = new Qso2(adif, aEnums, ref err);
+			Lotw_QslRDate date = qso.GetField("Lotw_QslRDate") as Lotw_QslRDate;
+			Assert.IsNotNull(date);
+			err = date.ModifyValues(qso);
+			date = qso.GetField("Lotw_QslRDate") as Lotw_QslRDate;
+			Assert.IsNotNull(date);
+			Assert.IsNull(err);
+		}
+		
+		// test ModifyValues with Eqsl_Qsl_Rcvd value of N, R
+		[Test]
+		public void TestModifyValuesFalse(
+			[Values("N", "R")] string rcvd)
+		{
+			string adif = string.Format("<Lotw_Qsl_Rcvd:1>{0}<Lotw_QslRDate:8>20120916",
+			 	                           rcvd);
+			string err = string.Empty;
+			Qso2 qso = new Qso2(adif, aEnums, ref err);
+			Lotw_QslRDate date = qso.GetField("Lotw_QslRDate") as Lotw_QslRDate;
+			Assert.IsNotNull(date);
+			err = date.ModifyValues(qso);
+			date = qso.GetField("Lotw_QslRDate") as Lotw_QslRDate;
+			Assert.IsNull(date);
+			Assert.AreEqual("\tLotw_QslRDate field deleted. This field is only valid when Lotw_Qsl_Rcvd field is Y, I, or V." +
+			                 Environment.NewLine, err);
+		}
+		
+		// test ModifyValues with no Eqsl_Qsl_Rcvd
+		[Test]
+		public void TestModifyValuesNull()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Lotw_QslRDate:8>20120916", aEnums, ref err);
+			Lotw_QslRDate date = qso.GetField("Lotw_QslRDate") as Lotw_QslRDate;
+			Assert.IsNotNull(date);
+			err = date.ModifyValues(qso);
+			date = qso.GetField("Lotw_QslRDate") as Lotw_QslRDate;
+			Assert.IsNull(date);
+			Assert.AreEqual("\tLotw_QslRDate field deleted. This field is only valid when Lotw_Qsl_Rcvd field is Y, I, or V." +
+			                 Environment.NewLine, err);
 		}
 	}
 }
