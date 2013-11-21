@@ -1168,6 +1168,14 @@
 						</entry>
 					</row>
 					<row>
+						<entry>EQSL_QSLSDATE</entry>
+						<entry>EQSL_QSLSDATE is valid only if EQSL_QSL_SENT 
+						is "Y", "Q", or "I". If EQSL_QSL_SENT is any other value,
+						or if EQSL_QSL_SENT is not present, then the EQSL_QSLSDATE
+						field is not valid and is deleted.
+						</entry>
+					</row>
+					<row>
 						<entry>FREQ</entry>
 						<entry>
 							<para>If BAND does not exist, a BAND field is
