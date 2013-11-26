@@ -61,7 +61,7 @@ namespace hamqslerTest
 			Assert.IsNull(prov);
 			State state = qso.GetField("State") as State;
 			Assert.AreEqual("ON", state.Value);
-			Assert.AreEqual("\tVE_Prov field deprecated. VE_Prov field deleted and replace with State field." +
+			Assert.AreEqual("\tVE_Prov field deprecated. VE_Prov field deleted and replaced with State field." +
 			                Environment.NewLine, mod);
 		}
 		

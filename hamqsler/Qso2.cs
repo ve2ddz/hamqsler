@@ -19,6 +19,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace hamqsler
 {
@@ -27,6 +28,9 @@ namespace hamqsler
 	/// </summary>
 	public class Qso2
 	{
+		private static Dictionary<string, string> fieldsWithDefaultValues =
+			new Dictionary<string, string>();
+
 		private AdifEnumerations adifEnums = null;
 		private Qsos2 qsos2 = null;
 		public Qsos2 Qsos
@@ -44,6 +48,16 @@ namespace hamqsler
 		public int Count
 		{
 			get {return fields.Count;}
+		}
+		
+		static Qso2()
+		{
+			fieldsWithDefaultValues.Add("Eqsl_Qsl_Rcvd", "N");
+			fieldsWithDefaultValues.Add("Eqsl_Qsl_Sent", "N");
+			fieldsWithDefaultValues.Add("Lotw_Qsl_Rcvd", "N");
+			fieldsWithDefaultValues.Add("Lotw_Qsl_Sent", "N");
+			fieldsWithDefaultValues.Add("Qsl_Rcvd", "N");
+			fieldsWithDefaultValues.Add("Qsl_Sent", "N");
 		}
 		
 		/// <summary>
@@ -785,6 +799,10 @@ namespace hamqsler
                 	{
                 		return field.Value;
                 	}
+                }
+                if(fieldsWithDefaultValues.ContainsKey(key))
+                {
+                	return fieldsWithDefaultValues[key];
                 }
                 return null;
             }

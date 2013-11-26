@@ -137,31 +137,36 @@ namespace hamqsler
 					{
 						fields.Add(field);
 					}
+					string modString = null;
 					foreach(AdifField field in fields)
 					{
 						AdifField f = qso.GetField(field.Name);
-						string modString = f.ModifyValues(qso);
-						if(modString != null)
+						string mod = f.ModifyValues(qso);
+						if(mod != null)
 						{
-							if(!qsoAddedToError)
-							{
-								error += adifQso + "<eor>" + Environment.NewLine;
-							}
-							error += modString + Environment.NewLine + Environment.NewLine;
+							modString += mod + Environment.NewLine;
 						}
 					}
+					
 					foreach(AdifField field in fields)
 					{
 						AdifField f = qso.GetField(field.Name);
-						string modString = f.ModifyValues2(qso);
-						if(modString != null)
+						if(f != null) // field may be deleted in f.ModifyValues, called above
 						{
-							if(!qsoAddedToError)
+							string mod = f.ModifyValues2(qso);
+							if(mod != null)
 							{
-								error += adifQso + "<eor>" + Environment.NewLine;
+								modString += mod + Environment.NewLine;
 							}
-							error += modString + Environment.NewLine + Environment.NewLine;
 						}
+					}
+					if(modString != null)
+					{
+						if(!qsoAddedToError)
+						{
+							error += adifQso + "<eor>" + Environment.NewLine;
+						}
+						error += modString + Environment.NewLine;
 					}
 					this.Add(qso);
 				}
@@ -171,7 +176,8 @@ namespace hamqsler
 					{
 						error += adifQso + "<eor>" + Environment.NewLine;
 					}
-					error += valError + " - QSO not added." + Environment.NewLine;
+					error += valError + " - QSO not added." + Environment.NewLine +
+						Environment.NewLine;
 				}
 				adif = adif.Substring(eor + 5);
 				eor = adif.ToUpper().IndexOf("<EOR>");

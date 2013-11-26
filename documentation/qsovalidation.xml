@@ -2,7 +2,7 @@
 <appendix xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en"
 		  xmlns:xlink="http://www.w3.org/1999/xlink" 
 		  xml:id="qsoandfieldvalidation">
-	<title>QSO and QSO Field Validation</title>
+	<title>QSO and QSO Field Validation and Default Field Values.</title>
 	<para>When an ADIF file is imported into HamQSLer, the following four
 	validation checks are performed:</para>
 	<itemizedlist spacing='compact'>
@@ -40,6 +40,8 @@
 	a message box is displayed to inform the user that changes have been made and to
 	view the log file for a description of all of the changes. If no changes
 	or modifications have been made, the message box is not displayed.</para>
+	<para>The ADIF specification also defines default values for some fields. These
+	are discussed in the Default Field Values section, below.</para>
 	<section>
 		<title>QSO Field Validation</title>
 		<section>
@@ -1302,6 +1304,54 @@
 						from VE_PROV value. If STATE field does exist, do not
 						replace it. In either case, delete VE_PROV.
 						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+	<section>
+		<title>Default Field Values</title>
+		<para>Default values are defined for a number of fields. These default
+		values are provided if a field is not included in a QSO record. Note,
+		these values are not added to the QSO, they are just provided when
+		the program requests the field from a QSO record.</para>
+		<para>The following table lists the fields that have default values
+		and their values.</para>
+		<table frame='all' xml:id='DefaultValues'>
+			<title>QSO Field Default Values</title>
+			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+				<colspec colname='Field' colwidth='100'/>
+				<colspec colname='Value' colwidth='50'/>
+				<thead>
+				<row>
+					<entry namest='Field'>QSO Field</entry>
+					<entry namest='Value'>Value</entry>
+				</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>Eqsl_Qsl_Rcvd</entry>
+						<entry>N</entry>
+					</row>
+					<row>
+						<entry>Eqsl_Qsl_Sent</entry>
+						<entry>N</entry>
+					</row>
+					<row>
+						<entry>Lotw_Qsl_Rcvd</entry>
+						<entry>N</entry>
+					</row>
+					<row>
+						<entry>Lotw_Qsl_Sent</entry>
+						<entry>N</entry>
+					</row>
+					<row>
+						<entry>Qsl_Rcvd</entry>
+						<entry>N</entry>
+					</row>
+					<row>
+						<entry>Qsl_Sent</entry>
+						<entry>N</entry>
 					</row>
 				</tbody>
 			</tgroup>

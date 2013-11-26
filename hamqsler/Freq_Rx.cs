@@ -59,8 +59,6 @@ namespace hamqsler
 			}
 			else
 			{
-//				string band = string.Empty;
-//				adifEnums.GetBandFromFrequency(Value, out band);
 				Band_Rx fBand = new Band_Rx(bandFromFreq, adifEnums);
 				qso.Fields.Add(fBand);
 				mods = "\tFreq_Rx specified, but Band_Rx is not. Band_Rx field generated.";

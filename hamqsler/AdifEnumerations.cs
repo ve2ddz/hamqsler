@@ -199,6 +199,14 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Check if EnumValue for value contains Deleted attribute with value 'Yes'
+		/// </summary>
+		/// <param name="enumeration">Enumeration in the AdifEnumerations document</param>
+		/// <param name="value">EnumValue to check for</param>
+		/// <exception cref="XmlException">XmlException thrown if the enumeration is not included
+		/// in the Enumeration file, or if the value is not found in the enumeration in the file.</exception>
+		/// <returns>true if Deleted='Yes' found, false otherwise</returns>
 		public bool IsDeleted(string enumeration, string value)
 		{
 			XElement val = GetEnumValue(enumeration, value);

@@ -70,14 +70,14 @@ namespace hamqsler
 				if(submode.Equals(string.Empty))
 				{
 					qso["Submode"] = Value;
-					qso["Mode"] = string.Empty;
-					mod = "Mode not found in Mode enumeration. Submode set to mode value and mode cleared.";
+					qso.Fields.Remove(this);
+					mod = "\tMode not found in Mode enumeration. Submode set to mode value and mode cleared.";
 				}
 				else
 				{
 					string mode = aEnums.GetModeFromSubmode(submode);
 					qso["Mode"] = mode;
-					mod = "Mode not found in Mode enumeration. Mode set to mode for submode.";
+					mod = "\tMode not found in Mode enumeration. Mode set to mode for submode.";
 				}
 			}
 			else
@@ -88,7 +88,7 @@ namespace hamqsler
 					if(!Value.Equals(mode))
 					{
 						qso["Mode"] = mode;
-						mod = "Mode - submode mismatch. Mode set to proper mode for submode.";
+						mod = "\tMode - submode mismatch. Mode set to proper mode for submode.";
 					}
 				}
 			}

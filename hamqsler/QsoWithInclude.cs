@@ -257,8 +257,8 @@ namespace hamqsler
 			mode = q["mode", string.Empty].ToUpper();
 			submode = q["submode", string.Empty].ToUpper();
 			rst = q["rst_sent", string.Empty];
-			sent = q["qsl_sent", string.Empty].ToUpper();
-			rcvd = q["qsl_rcvd", string.Empty].ToUpper();
+			sent = q["qsl_sent", "N"].ToUpper();
+			rcvd = q["qsl_rcvd", "N"].ToUpper();
 			sendVia = q["qsl_sent_via", string.Empty].ToUpper();
 			string mcall = (Call.IsValid(manager) ? manager : callsign);
 			bureau = QslBureaus.QslBureaus.Bureau(mcall);

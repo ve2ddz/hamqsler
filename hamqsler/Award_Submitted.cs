@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 
 namespace hamqsler
 {
@@ -57,7 +58,12 @@ namespace hamqsler
 		{
 			error = null;
 			modStr = null;
+			HashSet<string> awards = new HashSet<string>();
 			foreach(string award in DelimList.Items)
+			{
+				awards.Add(award);
+			}
+			foreach(string award in awards)
 			{
 				string[] parts = award.Split('_');
 				string sponsor = parts[0] + "_";
@@ -66,6 +72,7 @@ namespace hamqsler
 					modStr += string.Format("\tThe sponsors portion of Awards_Submitted is an enumeration." +
 					    Environment.NewLine +
 						"\t\tThe value '{0}' was not found in enumeration", sponsor);
+					DelimList.Items.Remove(award);
 				}
 			}
 			return true;

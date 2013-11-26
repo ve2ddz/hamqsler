@@ -130,7 +130,7 @@ namespace hamqslerTest
 		}
 		// test ModifyValues with invalid mode and no submode
 		[Test]
-		public void TestModifyValuesWithInalidModeNoSubmode()
+		public void TestModifyValuesWithInvalidModeNoSubmode()
 		{
 			string err = string.Empty;
 			Qso2 qso = new Qso2("<Mode:6>SQUIBB", aEnums, ref err);
@@ -138,9 +138,9 @@ namespace hamqslerTest
 			Assert.IsNotNull(field);
 			Mode mode = field as Mode;
 			Assert.IsNotNull(mode);
-			Assert.AreEqual("Mode not found in Mode enumeration. Submode set to mode value and mode cleared.",
+			Assert.AreEqual("\tMode not found in Mode enumeration. Submode set to mode value and mode cleared.",
 			                mode.ModifyValues(qso));
-			Assert.AreEqual("", mode.Value);
+			Assert.AreEqual(null, qso["Mode"]);
 			Submode submode = qso.GetField("Submode") as Submode;
 			Assert.IsNotNull(submode);
 			Assert.AreEqual("SQUIBB", submode.Value);
@@ -156,7 +156,7 @@ namespace hamqslerTest
 			Assert.IsNotNull(field);
 			Mode mode = field as Mode;
 			Assert.IsNotNull(mode);
-			Assert.AreEqual("Mode not found in Mode enumeration. Mode set to mode for submode.",
+			Assert.AreEqual("\tMode not found in Mode enumeration. Mode set to mode for submode.",
 			                mode.ModifyValues(qso));
 			Assert.AreEqual("SSB", mode.Value);
 			Submode submode = qso.GetField("Submode") as Submode;
@@ -174,7 +174,7 @@ namespace hamqslerTest
 			Assert.IsNotNull(field);
 			Mode mode = field as Mode;
 			Assert.IsNotNull(mode);
-			Assert.AreEqual("Mode - submode mismatch. Mode set to proper mode for submode.",
+			Assert.AreEqual("\tMode - submode mismatch. Mode set to proper mode for submode.",
 			                mode.ModifyValues(qso));
 			Assert.AreEqual("SSB", mode.Value);
 			Submode submode = qso.GetField("Submode") as Submode;

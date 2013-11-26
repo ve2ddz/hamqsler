@@ -276,7 +276,8 @@ namespace hamqslerTest
 							"\tQso_Date:2013100< - \tDate must contain number characters only. - Field deleted." +
 							 Environment.NewLine + Environment.NewLine +
 							 "\tInvalid QSO: Qso_Date not specified. - QSO not added." +
-							 Environment.NewLine  + Environment.NewLine, error);
+							 Environment.NewLine  + Environment.NewLine +
+							 Environment.NewLine, error);
 		}
 		
 		// test Import
@@ -425,7 +426,8 @@ namespace hamqslerTest
 			Assert.AreEqual(1, qsos.Count);
 			Assert.AreEqual("<mode:2>CW<band:3>10m<call:5>VA3HJ<Time_On:4>1017<eor>" +
 			                Environment.NewLine + "\tInvalid QSO: Qso_Date not specified. - QSO not added." +
-			                Environment.NewLine + Environment.NewLine, error);
+			                Environment.NewLine + Environment.NewLine +
+			                Environment.NewLine, error);
 		}
 	}
 }

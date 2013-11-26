@@ -46,7 +46,8 @@ namespace hamqsler
 		public override string ModifyValues(Qso2 qso)
 		{
 			string mod = null;
-			if(aEnums.IsDeprecated("Contest_ID", Value))
+			if(aEnums.IsInEnumeration("Contest_ID", Value) &&
+			   aEnums.IsDeprecated("Contest_ID", Value))
 			{
 				string value = Value;
 				Value = aEnums.GetReplacementValue("Contest_ID", value);

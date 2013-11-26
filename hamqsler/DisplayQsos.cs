@@ -78,6 +78,7 @@ namespace hamqsler
 		public string ImportQsos(string adifFile, QSOsView.OrderOfSort so, AdifEnumerations aEnums)
 		{
             this.Clear();			// remove all entries from the ObservableCollection
+            qsos2.ClearQsos();
             IsDirty = false;
             NeedsSorting = false;
             UserPreferences prefs = ((App)App.Current).UserPreferences;
@@ -149,6 +150,7 @@ namespace hamqsler
             // now add the items in sorted order
             qList3.Sort(comparer);
             this.Clear();
+            qsos2.ClearQsos();
 			// check if a change was made to the qso contents, and set IsDirty if this is the case.
 			// This check must be performed here because the call to Clear sets IsDirty to false;
 			if(errorString != null && errLen < errorString.Length)
@@ -170,8 +172,7 @@ namespace hamqsler
             if (qsoError || errorString != null)
             {
                 IsDirty = true;
-                return "One or more QSOs contains an invalid field.\n\rThese QSOs have not been imported.\n\r" +
-                    "See the log file for details.";
+				return errorString;
             }
             NeedsSorting = false;
             return null;	// no error
@@ -209,12 +210,6 @@ namespace hamqsler
 		public Byte[] GetQsosAsAdif2()
 		{
 			string adif = qsos2.ToAdifString();		// generate header
-			// add each QSO
-			foreach(QsoWithInclude qwi in this)
-			{
-				Qso2 qso = qwi.Qso;
-				adif += qso.ToAdifString() + "\r\n";
-			}
 			// change encoding to ASCII
 			ASCIIEncoding ascii = new ASCIIEncoding();
 			Byte[] encodedBytes = ascii.GetBytes(adif);
@@ -457,9 +452,11 @@ namespace hamqsler
 		/// </summary>
 		public void UpdateQSOsWithManager()
 		{
+			qsos2.Clear();
 			foreach(QsoWithInclude qwi in this)
 			{
 				qwi.UpdateManager();
+				qsos2.Add(qwi.Qso);
 			}
 		}
 		
@@ -469,7 +466,6 @@ namespace hamqsler
 		public new void Clear()
 		{
 			base.Clear();
-			qsos2.Clear();
             IsDirty = false;
             NeedsSorting = false;
 		}

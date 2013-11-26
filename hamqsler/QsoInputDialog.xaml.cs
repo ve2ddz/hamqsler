@@ -266,6 +266,7 @@ namespace hamqsler
 			qso["qso_date"] = QsoData.StartDate;
 			qso["time_on"] = QsoData.StartTime;
 			qso["mode"] = QsoData.Mode;
+			qso["submode"] = QsoData.Submode;
 			qso["rst_sent"] = QsoData.RST;
 			QsoData.Frequency = QsoData.Frequency.Replace(",", ".");
 			if(QsoData.Band != string.Empty)

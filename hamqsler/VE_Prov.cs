@@ -49,7 +49,7 @@ namespace hamqsler
 			{
 				state = new State(Value);
 				qso.Fields.Add(state);
-				mod = "\tVE_Prov field deprecated. VE_Prov field deleted and replace with State field." +
+				mod = "\tVE_Prov field deprecated. VE_Prov field deleted and replaced with State field." +
 					Environment.NewLine;
 				state.ModifyValues(qso);
 				

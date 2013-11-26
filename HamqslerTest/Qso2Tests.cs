@@ -110,8 +110,8 @@ namespace hamqslerTest
 		public void TestFields3()
 		{
 			Qso2 qso = new Qso2("<arrl_sect:2>NT" +
-			                    "<award_Granted:37>ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500" +
-			                    "<award_Submitted:37>ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500" +
+			                    "<award_Granted:25>ARRL_DXCC_CW,CQ_USACA_500" +
+			                    "<award_Submitted:25>ARRL_DXCC_CW,CQ_USACA_500" +
 			                    "<Band_Rx:2>6m<Check:2>96<Class:2>3A",
 			                    aEnums, ref errorString);
 			Assert.AreEqual(6, qso.Count);
@@ -122,8 +122,8 @@ namespace hamqslerTest
 			Assert.AreEqual("Check", qso.Fields[4].Name);
 			Assert.AreEqual("Class", qso.Fields[5].Name);
 			Assert.AreEqual("NT", qso.Fields[0].Value);
-			Assert.AreEqual("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", qso.Fields[1].Value);
-			Assert.AreEqual("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", qso.Fields[2].Value);
+			Assert.AreEqual("ARRL_DXCC_CW,CQ_USACA_500", qso.Fields[1].Value);
+			Assert.AreEqual("ARRL_DXCC_CW,CQ_USACA_500", qso.Fields[2].Value);
 			Assert.AreEqual("6m", qso.Fields[3].Value);
 			Assert.AreEqual("96", qso.Fields[4].Value);
 			Assert.AreEqual("3A", qso.Fields[5].Value);
@@ -1063,6 +1063,19 @@ namespace hamqslerTest
 			                Environment.NewLine +
 			                "\t\tAward 'CQWAZ_CW' replaced with Credit 'CQWAZ_MODE'." +
 			                Environment.NewLine, errorString);
+		}
+		
+		// test SetDefaultValues
+		[Test, Sequential]
+		public void TestSetDefaultValues(
+			[Values("Eqsl_Qsl_Rcvd", "Eqsl_Qsl_Sent", "Lotw_Qsl_Rcvd", "Lotw_Qsl_Sent",
+			        "Qsl_Rcvd", "Qsl_Rcvd")] string field,
+			[Values("N", "N", "N", "N",
+			        "N", "N")] string def)
+		{
+			string errorString = string.Empty;
+			Qso2 qso = new Qso2(string.Empty, aEnums, ref errorString);
+			Assert.AreEqual(def, qso[field]);
 		}
 	}
 }
