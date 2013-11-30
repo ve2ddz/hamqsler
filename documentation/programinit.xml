@@ -36,6 +36,12 @@
 				to the <filename class='directory'>AppData</filename> directory.</para>
 			</listitem>
 			<listitem>
+				<para>The existence of the file <filename>CallsBureaus.xml</filename>
+				in the <filename class='directory'>AppData</filename> is checked. If the
+				file does not exist, it is copied from the within the program
+				to the <filename class='directory'>AppData</filename> directory.</para>
+			</listitem>
+			<listitem>
 				<para>Creates a new log file.</para>
 			</listitem>
 			<listitem>
@@ -51,8 +57,9 @@
 			<listitem>
 				<para>Retrieves program and data file version information from the website, and
 				informs the user if new versions are available. Downloads the
-				<filename>AdifEnumerations.xml</filename> file from the website
-				if a new version of the file is available.</para>
+				<filename>AdifEnumerations.xml</filename> file and 
+				<filename>CallsBureaus.xml</filename> file from the website
+				if  new versions of the files are available.</para>
 				<tip>
 					<para>A setting is provided in user preferences to turn on or turn off checking for
 					new program and data file versions. See the 
@@ -223,10 +230,21 @@
 				</listitem>
 			</varlistentry>
 			<varlistentry>
+				<term>Error attempting to download AdifEnumerations.xml file. Will load default file.</term>
+				<listitem>
+					<para>An error occurred while attempting to download
+					<filename>AdifEnumerations.xml</filename> from the website. There are many reasons
+					for this. See the log file for information on the error.</para>
+					<para>The original <filename>AdifEnumerations.xml</filename>
+					file that was included with this version of <literal>HamQSLer</literal>
+					will be loaded.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
 				<term>Error occurred loading AdifEnumerations file. Will load default file.</term>
 				<listitem>
 					<para>An error occurred while attempting to load the
-					<filename>AdifEnumerations.xml</filename> from
+					<filename>AdifEnumerations.xml</filename> file from
 					<filename class='directory'>AppData</filename>. There are many reasons
 					for this. See the log file for information on the error.</para>
 					<para>The original <filename>AdifEnumerations.xml</filename>
@@ -238,9 +256,59 @@
 				<term>New AdifEnumerations file downloaded.</term>
 				<listitem>
 					<para>A new version of the
-					<filename>AdifEnumerations.xml</filename> has been downloaded
+					<filename>AdifEnumerations.xml</filename> file has been downloaded
 					from the website. The version number of the file is printed
 					to the log file.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Cannot access downloaded AdifEnumerations file. Will load default file.</term>
+				<listitem>
+					<para>A new version of the
+					<filename>AdifEnumerations.xml</filename> file has been downloaded
+					from the website. There is an error in the file and it cannot be
+					read. See the log file for more information.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Error attempting to download CallsBureaus.xml file. Will load default file.</term>
+				<listitem>
+					<para>An error occurred while attempting to download
+					<filename>CallsBureaus.xml</filename> from the website. There are many reasons
+					for this. See the log file for information on the error.</para>
+					<para>The original <filename>CallsBureaus.xml</filename>
+					file that was included with this version of <literal>HamQSLer</literal>
+					will be loaded.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Error occurred loading CallsBureaus file. Will load default file.</term>
+				<listitem>
+					<para>An error occurred while attempting to load the
+					<filename>CallsBureaus.xml</filename> file from
+					<filename class='directory'>AppData</filename>. There are many reasons
+					for this. See the log file for information on the error.</para>
+					<para>The original <filename>CallsBureaus.xml</filename>
+					file that was included with this version of <literal>HamQSLer</literal>
+					will be loaded.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>New CallsBureaus file downloaded.</term>
+				<listitem>
+					<para>A new version of the
+					<filename>CallsBureaus.xml</filename> file has been downloaded
+					from the website. The version number of the file is printed
+					to the log file.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Cannot access downloaded CallsBureaus file. Will load default file.</term>
+				<listitem>
+					<para>A new version of the
+					<filename>CallsBureaus.xml</filename> file has been downloaded
+					from the website. There is an error in the file and it cannot be
+					read. See the log file for more information.</para>
 				</listitem>
 			</varlistentry>
 		</variablelist>

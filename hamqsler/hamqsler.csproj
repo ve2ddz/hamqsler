@@ -123,6 +123,7 @@
     <Compile Include="BureauComparer.cs" />
     <Compile Include="Call.cs" />
     <Compile Include="CallComparer.cs" />
+    <Compile Include="CallsBureaus.cs" />
     <Compile Include="CardPrintDocument.cs" />
     <Compile Include="CardPropertiesGroupBox.xaml.cs">
       <DependentUpon>CardPropertiesGroupBox.xaml</DependentUpon>
@@ -422,6 +423,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AdifEnumerations.xml" />
+    <EmbeddedResource Include="CallsBureaus.xml" />
     <None Include="Samples\sample.adi">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

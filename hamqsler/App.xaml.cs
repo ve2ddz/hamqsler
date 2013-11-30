@@ -55,6 +55,13 @@ namespace hamqsler
 			set {adifEnums = value;}
 		}
 		
+		private static CallsBureaus callBureaus;
+		public static CallsBureaus CallBureaus
+		{
+			get {return callBureaus;}
+			set {callBureaus = value;}
+		}
+		
 		string created = string.Empty;
 		
 		/// <summary>
@@ -192,6 +199,32 @@ namespace hamqsler
 		        		Environment.NewLine;
 				}
 
+				// check for CallsBureaus.xml file and copy if needed.
+				fInfo = new FileInfo(appDataFolder.FullName + "/CallsBureaus.xml");
+				if(!fInfo.Exists)
+				{
+					try
+					{
+						CopyDefaultCallsBureausXml();
+					}
+					catch(Exception e)
+					{
+						MessageBox.Show("The CallsBureaus.xml file needs to be initialized in " +
+						                "the AppData directory, but the following error is prevent that:"
+						                + Environment.NewLine +
+						                e.Message +
+						                Environment.NewLine + Environment.NewLine +
+						                "Program must terminate.",
+						                "Program Initialization Error",
+						                MessageBoxButton.OK,
+						                MessageBoxImage.Error);
+						// force program termination
+						System.Diagnostics.Process.GetCurrentProcess().Kill();
+					}
+		        	created += @"CallsBureaus.xml not found in AppData\HamQSLer. Copied from program." +
+		        		Environment.NewLine;
+				}
+
 				// check if Samples directory exists and create it if it doesn't
 				DirectoryInfo samplesDirInfo = new DirectoryInfo(hamqsler + "/Samples");
 				if (!samplesDirInfo.Exists)
@@ -294,7 +327,8 @@ namespace hamqsler
 			logger.Log(string.Format("HamQSLer started" + newline +
 			                         "HamQSLer version: {3}" + newline +
 			                         "AdifEnumerations version: {5}" + newline +
-			                         "QslBureaus version: {6}" + newline +
+			                         "CallsBureaus version: {6}" + newline +
+			                         "QslBureaus version: {7}" + newline +
 			                         "CLR version: {2}" + newline +
 			                         "OS: {0}" + newline + 
 			                         "Processors: {1}" + newline +
@@ -305,6 +339,7 @@ namespace hamqsler
 			                         Assembly.GetExecutingAssembly().GetName().Version.ToString(),
 			                         CultureInfo.CurrentCulture.Name,
 			                         adifEnums.Version,
+			                         CallBureaus.Version,
 			                         aName2.Version.ToString()
 			                ));
 			if(!created.Equals(string.Empty))
@@ -339,13 +374,19 @@ namespace hamqsler
 		/// Boolean indicating if a new stable version of HamQSLer is available for download</param>
 		/// <param name="newDevelopmentVersion">
 		/// Boolean indicating if a new development version of HamQSLer is available for download</param>
+		/// <param name="adifEnumVersion">
+		/// Boolean indicating if a new version of AdifEnumerations.xml is available for download</param>
+		/// <param name="newCallsBureausVersion">
+		/// Boolean indicating if a new version of CallsBureaus.xml is available for download</param>
 		internal void GetProgramVersions(out bool webError, out bool newStableVersion,
-		                                out bool newDevelopmentVersion, out bool adifEnumVersion)
+		                                out bool newDevelopmentVersion, out bool adifEnumVersion,
+		                               out bool newCallsBureausVersion)
         {
 			webError = false;
 			newStableVersion = false;
 			newDevelopmentVersion = false;
 			adifEnumVersion = false;
+			newCallsBureausVersion = false;
 			Dictionary<string, string> versions = new Dictionary<string, string>();
             // create request for website
             HttpWebRequest httpRequest = null;
@@ -403,7 +444,7 @@ namespace hamqsler
             }
             catch (WebException e)
             {
-                DecodeWebException(e);
+            	DecodeWebException(e, "hamqslerVersion.txt");
 				webError = true;
             }
             catch (Exception e)
@@ -438,6 +479,9 @@ namespace hamqsler
 						case "AdifEnumerations":
 							adifEnumVersion = CheckAdifEnumerationsVersion(versions[key]);
 							break;
+						case "CallsBureaus":
+							newCallsBureausVersion = CheckCallsBureausVersion(versions[key]);
+							break;
 					}
 				}
             }
@@ -447,7 +491,9 @@ namespace hamqsler
     	/// Decodes and logs web exception info
     	/// </summary>
     	/// <param name="e">WebException being decoded</param>
-        private void DecodeWebException(WebException e)
+    	/// <param name="fileName">Name of the file that program was attempting
+    	/// to download when the error occurred.</param>
+        private void DecodeWebException(WebException e, string fileName)
         {
         	// get status and response
             WebExceptionStatus status = e.Status;
@@ -457,17 +503,19 @@ namespace hamqsler
                 case WebExceptionStatus.Timeout:
                     break;
                 case WebExceptionStatus.ConnectFailure:
-                    logger.Log("Website access error: ConnectFailure.\r\n"
-                        + "Probable cause is one of:\r\n"
-                        + "\tWrong proxy server name or IP address specified;\r\n"
-                        + "\tWrong proxy server port number;\r\n"
-                        + "\tProxy server is down;\r\n"
-                        + "\tYour Internet connection is down; or,\r\n"
-                        + "\twww.va3hj.ca is down.");
+                    logger.Log("Website access error: ConnectFailure." + Environment.NewLine
+                        + "Probable cause is one of:" + Environment.NewLine
+                        + "\tWrong proxy server name or IP address specified;" + Environment.NewLine
+                        + "\tWrong proxy server port number;" + Environment.NewLine
+                        + "\tProxy server is down;" + Environment.NewLine
+                        + "\tYour Internet connection is down; or," + Environment.NewLine
+                        + "\twww.va3hj.ca is down." + Environment.NewLine);
                     break;
                 default:
-                    logger.Log("Website access error: " + status.ToString()
-                        + "\r\nError: " + e.Message);
+                    logger.Log("Website error accessing file '" + fileName + "': " 
+                               + status.ToString()
+                       		   + Environment.NewLine + "Error: "
+                       		   + e.Message + Environment.NewLine);
                     break;
             }
         }
@@ -475,6 +523,7 @@ namespace hamqsler
 		/// <summary>
 		/// Checks program version number
 		/// </summary>
+    	/// <param name="version">Version number to check program version against</param>
 		/// <returns>
 		/// Boolean indicating whether a new version of the program is available or not
 		/// </returns>
@@ -503,8 +552,21 @@ namespace hamqsler
 		}
 		
 		/// <summary>
+		/// Load CallsBureaus from CallsBureaus.xml
+		/// </summary>
+		public void GetCallsBureaus()
+		{
+			string fileName = Path.Combine(Environment.GetFolderPath(
+				Environment.SpecialFolder.ApplicationData), @"HamQSLer\CallsBureaus.xml");
+			Stream str = new FileStream(fileName, FileMode.Open);
+			CallBureaus = new CallsBureaus(str);
+			str.Close();
+		}
+
+		/// <summary>
 		/// Checks AdifEnumerations.xml version number
 		/// </summary>
+    	/// <param name="version">Version number to check AdifEnumerations version against</param>
 		/// <returns>
 		/// Boolean indicating whether a new version of the AdifEnumerations.xml file is available or not
 		/// </returns>
@@ -526,10 +588,34 @@ namespace hamqsler
 		}
 		
 		/// <summary>
-		/// Download AdifEnumerations.xml from the website
+		/// Checks CallsBureaus.xml version number
 		/// </summary>
+    	/// <param name="version">Version number to check CallsBureaus version against</param>
+		/// <returns>
+		/// Boolean indicating whether a new version of the CallsBureaus.xml file is available or not
+		/// </returns>
+		private bool CheckCallsBureausVersion(string version)
+		{
+			// get this file's version info
+			// this code assumes that each part of the vers
+			string ver = CallBureaus.Version;
+			string[] verBits = ver.Split('.');
+			string vers = string.Format("{0}{1}{2}", 
+			                            (verBits[0].Length == 1 ? "0" : "") + verBits[0],
+			                            (verBits[1].Length == 1 ? "0" : "") + verBits[1],
+			                            (verBits[2].Length == 1 ? "0" : "") + verBits[2]);
+			if(vers.CompareTo(version) < 0)
+				return true;
+			else
+				return false;
+		}
+		
+		/// <summary>
+		/// Download configuration file from the website
+		/// </summary>
+    	/// <param name="fileName">Name of configuration file to download</param>
 		/// <returns>true if an error occurred retrieving the file, false otherwise</returns>
-		public bool DownloadAdifEnumerationsXml()
+		public bool DownloadConfigFileFromWebsite(string fileName)
 		{
 			bool webError = false;
             // create request for website
@@ -538,7 +624,7 @@ namespace hamqsler
             StreamReader resStream = null;
 			// get this program's version info
 	        Version ver = Assembly.GetExecutingAssembly().GetName().Version;
-            string location = string.Format("http://www.va3hj.ca/AdifEnumerations.xml");
+            string location = string.Format("http://www.va3hj.ca/{0}", fileName);
             try
             {
             	// build the http request
@@ -570,7 +656,7 @@ namespace hamqsler
 				string appDataDirName =  Path.Combine(Environment.GetFolderPath(
 							Environment.SpecialFolder.ApplicationData), "HamQSLer");
 				DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
-				FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/AdifEnumerations.xml");
+				FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/" +fileName);
 	        	string adifStr = resStream.ReadToEnd();
 	        	File.WriteAllText(fInfo.FullName, adifStr);
             }
@@ -581,12 +667,12 @@ namespace hamqsler
             }
             catch (WebException e)
             {
-                DecodeWebException(e);
+                DecodeWebException(e, fileName);
 				webError = true;
             }
             catch (Exception e)
             {
-                logger.Log("Error retrieving AdifEnumerations from website: " + e.Message);
+                logger.Log("Error retrieving " + fileName + " from website: " + e.Message);
 				webError = true;
             }
             finally
@@ -602,7 +688,6 @@ namespace hamqsler
             }
  			return webError;
 		}
-		
 		/// <summary>
 		/// Copies the AdifEnumerations.xml file stored within the program assembly to AppData
 		/// </summary>
@@ -614,6 +699,25 @@ namespace hamqsler
 			FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/AdifEnumerations.xml");
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
         	Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
+        	FileStream fStream = File.Open(fInfo.FullName, FileMode.Create);
+        	byte[] bytes = new Byte[str.Length];
+        	str.Read(bytes, 0, (int)str.Length);
+        	fStream.Write(bytes, 0, (int)str.Length);
+        	fStream.Close();
+        	str.Close();
+		}
+		
+		/// <summary>
+		/// Copies the CallsBureaus.xml file stored within the program assembly to AppData
+		/// </summary>
+		public void CopyDefaultCallsBureausXml()
+		{
+			string appDataDirName =  Path.Combine(Environment.GetFolderPath(
+						Environment.SpecialFolder.ApplicationData), "HamQSLer");
+			DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
+			FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/CallsBureaus.xml");
+			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
+        	Stream str = assembly.GetManifestResourceStream("hamqsler.CallsBureaus.xml");
         	FileStream fStream = File.Open(fInfo.FullName, FileMode.Create);
         	byte[] bytes = new Byte[str.Length];
         	str.Read(bytes, 0, (int)str.Length);

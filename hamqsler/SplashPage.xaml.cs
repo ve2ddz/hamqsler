@@ -19,6 +19,7 @@
  */
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml;
@@ -74,11 +75,11 @@ namespace hamqsler
 			bool showHamqslerLabel = ((App)Application.Current).BuildHamQslerDirectories(out directoriesError);
 			if(directoriesError)		// error occurred creating directories
 			{
-				ShowHamQslerCreatedProblemLabel();
+				ShowSplashPageLabel(hamqslerCreatedProblemLabel);
 			}
 			else if(showHamqslerLabel)		// created directories/copied files
 			{
-				ShowHamQslerCreatedLabel();
+				ShowSplashPageLabel(hamqslerCreatedLabel);
 			}
 			// create ExceptionLogger
 			bool securityException = false;
@@ -86,11 +87,11 @@ namespace hamqsler
 			((App)Application.Current).CreateExceptionLogger(out securityException, out accessException);
 			if(securityException)
 			{
-				ShowLogPermissionErrorLabel();
+				ShowSplashPageLabel(logPermissionErrorLabel);
 			}
 			else if(accessException)
 			{
-				ShowLogAccessErrorLabel();
+				ShowSplashPageLabel(logAccessErrorLabel);
 			}
 			try
 			{
@@ -103,7 +104,7 @@ namespace hamqsler
 				{
 					((App)App.Current).CopyDefaultAdifEnumerationsXml();
 					((App)App.Current).GetAdifEnumerations();
-					ShowAdifEnumerationsErrorLabel();
+					ShowSplashPageLabel(adifEnumerationsErrorLabel);
 				}
 				catch(Exception e)
 				{
@@ -111,6 +112,39 @@ namespace hamqsler
 					MessageBox.Show("Problem accessing AdifEnumerations.xml file." +
 					                Environment.NewLine +
 					                "Also encountered error attempting to replace AdifEnumerations.xml" +
+					                Environment.NewLine +
+					                "file with default file shipped with the program." +
+					                Environment.NewLine +
+					                "See log file for information on the errors." +
+					                Environment.NewLine +
+					                Environment.NewLine +
+					                "Program cannot continue without this file. Program will terminate.",
+					                "AdifEnumerations.xml Error",
+					                MessageBoxButton.OK,
+					                MessageBoxImage.Error);
+					// force program termination
+					System.Diagnostics.Process.GetCurrentProcess().Kill();
+				}
+			}
+			try
+			{
+				((App)App.Current).GetCallsBureaus();
+			}
+			catch(XmlException xe)
+			{
+				App.Logger.Log(xe, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
+				try
+				{
+					((App)App.Current).CopyDefaultCallsBureausXml();
+					((App)App.Current).GetCallsBureaus();
+					ShowSplashPageLabel(callsBureausErrorLabel);
+				}
+				catch(Exception e)
+				{
+					App.Logger.Log(e, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
+					MessageBox.Show("Problem accessing CallsBureaus.xml file." +
+					                Environment.NewLine +
+					                "Also encountered error attempting to replace CallsBureaus.xml" +
 					                Environment.NewLine +
 					                "file with default file shipped with the program." +
 					                Environment.NewLine +
@@ -135,7 +169,8 @@ namespace hamqsler
 			bool newStableVersion = false;
 			bool newDevelopmentVersion = false;
 			bool newAdifEnumerationsVersion = false;
-			ShowCheckingForUpdatesLabel();
+			bool newCallsBureausVersion = false;
+			ShowSplashPageLabel(checkingForUpdatesLabel);
 			// updates will contain program and file names with most recent versions available for download
 			// cannot proceed until UserPreferences have been created.
 			if(((App)Application.Current).UserPreferences.CheckForNewVersions)
@@ -143,38 +178,51 @@ namespace hamqsler
 				((App)Application.Current).GetProgramVersions(out webError,
 					                  						  out newStableVersion,
 					                  						  out newDevelopmentVersion,
-					                  						 out newAdifEnumerationsVersion);
+					                  						 out newAdifEnumerationsVersion,
+					                  						out newCallsBureausVersion);
 				if(webError)		// error retrieving file containing version info
 				{
-					ShowWebErrorLabel();
+					ShowSplashPageLabel(webErrorLabel);
 				}
 				else
 				{			
 					if(newStableVersion)
 					{
-						ShowNewStableVersionLabel();
+						ShowSplashPageLabel(newStableVersionLabel);
 					}
 					if(((App)Application.Current).UserPreferences.CheckForDevelopmentVersions &&
 					   newDevelopmentVersion)
 					{
-						ShowNewDevelopmentVersionLabel();
+						ShowSplashPageLabel(newDevelopmentVersionLabel);
 					}
 					if(newAdifEnumerationsVersion)
 					{
 						try
 						{
-							((App)Application.Current).DownloadAdifEnumerationsXml();
+							bool wError = ((App)Application.Current).
+								DownloadConfigFileFromWebsite("AdifEnumerations.xml");
+							webError = webError || wError;
 							((App)Application.Current).GetAdifEnumerations();
+							if(!wError)
+							{
+								ShowSplashPageLabel(newAdifEnumerationsLabel);
+								App.Logger.Log("AdifEnumerations.xml version " + App.AdifEnums.Version +
+								           " downloaded.");
+							}
+							else
+							{
+								ShowSplashPageLabel(cannotDownloadAdifEnumerationsErrorLabel);
+							}
 						}
 						catch(Exception e)
 						{
 							App.Logger.Log(e);
-							ShowNewAdifEnumsErrorLabel();
+							ShowSplashPageLabel(newAdifEnumsErrorLabel);
 							try
 							{
 								((App)App.Current).CopyDefaultAdifEnumerationsXml();
 								((App)App.Current).GetAdifEnumerations();
-								ShowAdifEnumerationsErrorLabel();
+								ShowSplashPageLabel(adifEnumerationsErrorLabel);
 							}
 							catch(Exception ex)
 							{
@@ -196,12 +244,61 @@ namespace hamqsler
 								System.Diagnostics.Process.GetCurrentProcess().Kill();
 							}
 						}
-						ShowNewAdifEnumerationsLabel();
-						App.Logger.Log("AdifEnumerations.xml version " + App.AdifEnums.Version +
-						           " downloaded.");
+						ShowSplashPageLabel(newAdifEnumerationsLabel);
+					}
+					if(newCallsBureausVersion)
+					{
+						try
+						{
+							bool wError = ((App)Application.Current).
+								DownloadConfigFileFromWebsite("CallsBureaus.xml");
+							webError = webError || wError;
+							((App)Application.Current).GetCallsBureaus();
+							if(!wError)
+							{
+								ShowSplashPageLabel(newCallsBureausLabel);
+								App.Logger.Log("CallsBureaus.xml version " + App.CallBureaus.Version +
+								           " downloaded.");
+							}
+							else
+							{
+								ShowSplashPageLabel(cannotDownloadCallsBureausErrorLabel);
+							}
+						}
+						catch(Exception e)
+						{
+							App.Logger.Log(e);
+							ShowSplashPageLabel(newCallsBureausErrorLabel);
+							try
+							{
+								((App)App.Current).CopyDefaultCallsBureausXml();
+								((App)App.Current).GetCallsBureaus();
+								ShowSplashPageLabel(callsBureausErrorLabel);
+							}
+							catch(Exception ex)
+							{
+								App.Logger.Log(ex, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
+								MessageBox.Show("Problem accessing downloaded CallsBureaus.xml file." +
+								                Environment.NewLine +
+								                "Also encountered error attempting to replace CallsBureaus.xml" +
+								                Environment.NewLine +
+								                "file with default file shipped with the program." +
+								                Environment.NewLine +
+								                "See log file for information on the errors." +
+								                Environment.NewLine +
+								                Environment.NewLine +
+								                "Program cannot continue without this file. Program will terminate.",
+								                "AdifEnumerations.xml Error",
+								                MessageBoxButton.OK,
+								                MessageBoxImage.Error);
+								// force program termination
+								System.Diagnostics.Process.GetCurrentProcess().Kill();
+							}
+						}
 					}
 				}
-				HideCheckingForUpdatesLabel();
+				checkingForUpdatesLabel.Visibility = Visibility.Collapsed;
+				UpdateUI();
 			}
 			
 			if(directoriesError || newStableVersion || newDevelopmentVersion ||
@@ -245,32 +342,23 @@ namespace hamqsler
 					out showUserPrefsLabel, out userPrefsError);
 			if(userPrefsError)			// error reading or writing UserPreferences file
 			{
-				ShowUserPrefsErrorLabel();
+				ShowSplashPageLabel(userPrefsErrorLabel);
 			}
 			else if(showUserPrefsLabel)		// UserPreferences file has been created
 			{
-				ShowUserPrefsCreatedLabel();
+				ShowSplashPageLabel(userPrefsCreatedLabel);
 			}			
 		}
 
 		/// <summary>
 		/// Shows the hamQslerCreatedLabel.
 		/// </summary>
-		public void ShowHamQslerCreatedLabel()
+		public void ShowSplashPageLabel(Label label)
 		{
-			hamqslerCreatedLabel.Visibility = Visibility.Visible;
+			label.Visibility = Visibility.Visible;
 			UpdateUI();
 		}
-		
-		/// <summary>
-		/// Shows the hamQslerCreatedProblemLabel.
-		/// </summary>
-		public void ShowHamQslerCreatedProblemLabel()
-		{
-			hamqslerCreatedProblemLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
+
 		/// <summary>
 		/// Shows the OkButton.
 		/// </summary>
@@ -285,111 +373,6 @@ namespace hamqsler
 		public void ShowTerminateButton()
 		{
 			termButton.Visibility = Visibility.Visible;
-		}
-		
-		/// <summary>
-		/// Shows the userPrefsErrorLabel.
-		/// </summary>
-		public void ShowUserPrefsErrorLabel()
-		{
-			userPrefsErrorLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Shows the userPrefsCreatedLabel.
-		/// </summary>
-		public void ShowUserPrefsCreatedLabel()
-		{
-			userPrefsCreatedLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-	}
-		
-		/// <summary>
-		/// Shows the webErrorLabel.
-		/// </summary>
-		public void ShowWebErrorLabel()
-		{
-			webErrorLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Shows the newStableVersionLabel.
-		/// </summary>
-		public void ShowNewStableVersionLabel()
-		{
-			newStableVersionLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Shows the newDevelopmentVersionLabel.
-		/// </summary>
-		public void ShowNewDevelopmentVersionLabel()
-		{
-			newDevelopmentVersionLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Shows the adifEnumerationsErrorLabel.
-		/// </summary>
-		public void ShowAdifEnumerationsErrorLabel()
-		{
-			adifEnumerationsErrorLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Shows the newDevelopmentVersionLabel.
-		/// </summary>
-		public void ShowNewAdifEnumerationsLabel()
-		{
-			newAdifEnumerationsLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Shows the newAdifEnumsErrorLabel.
-		/// </summary>
-		public void ShowNewAdifEnumsErrorLabel()
-		{
-			newAdifEnumsErrorLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Shows the checkingForUpdatesLabel.
-		/// </summary>
-		public void ShowCheckingForUpdatesLabel()
-		{
-			checkingForUpdatesLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Hides the checkingForUpdatesLabel.
-		/// </summary>
-		public void HideCheckingForUpdatesLabel()
-		{
-			checkingForUpdatesLabel.Visibility = Visibility.Collapsed;
-			UpdateUI();
-		}
-		
-		/// <summary>
-		/// Show the logPermissionErrorLabel
-		/// </summary>
-		private void ShowLogPermissionErrorLabel()
-		{
-			logPermissionErrorLabel.Visibility = Visibility.Visible;
-			UpdateUI();
-		}
-		
-		private void ShowLogAccessErrorLabel()
-		{
-			logAccessErrorLabel.Visibility = Visibility.Visible;
-			UpdateUI();
 		}
 		
 		/// <summary>

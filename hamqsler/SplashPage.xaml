@@ -74,18 +74,12 @@
 			<Label Name="hamqslerCreatedProblemLabel" Visibility="Collapsed"
 							>Problem creating hamqsler directories or copying 
 							files to your 'Documents' directory</Label>
-			<TextBlock Name="logPermissionErrorLabel" Visibility="Collapsed" TextWrapping="Wrap"
-						Margin="5,2,2,2">
-				<TextBlock.Text>
-					You do not have the required permission to access log file.
-					You may continue to use HamQSLer but no logging will be done.
-				</TextBlock.Text>
-			</TextBlock>
-			<TextBlock Name="logAccessErrorLabel" Visibility="Collapsed" TextWrapping="Wrap"
-				Margin="5,2,2,2">
-				You cannot access the log file. You may continue to use HamQSLer
-				but no logging will be done.
-			</TextBlock>
+			<Label Name="logPermissionErrorLabel" Visibility="Collapsed"
+							>You do not have the required permission to access log file.
+					You may continue to use HamQSLer but no logging will be done.</Label>
+			<Label Name="logAccessErrorLabel" Visibility="Collapsed"
+							>You cannot access the log file. You may continue to use HamQSLer
+				but no logging will be done.</Label>
 			<Label Name="userPrefsErrorLabel" Visibility="Collapsed"
 							>Error occurred while attempting to access user
 							preferences file. Preferences have been created.</Label>
@@ -98,12 +92,22 @@
 							>New stable version of HamQSLer is available.</Label>
 			<Label Name="newDevelopmentVersionLabel" Visibility="Collapsed"
 							>New development version of HamQSLer is available.</Label>
+			<Label Name="cannotDownloadAdifEnumerationsErrorLabel" Visibility="Collapsed"
+							>Error attempting to download AdifEnumerations.xml file. Will load default file.</Label>
 			<Label Name="adifEnumerationsErrorLabel" Visibility="Collapsed"
 							>Error occurred loading AdifEnumerations file. Will load default file.</Label>
 			<Label Name="newAdifEnumerationsLabel" Visibility="Collapsed"
 							>New AdifEnumerations file downloaded.</Label>
 			<Label Name="newAdifEnumsErrorLabel" Visibility="Collapsed"
 							>Cannot access downloaded AdifEnumerations file. Will load default file.</Label>
+			<Label Name="cannotDownloadCallsBureausErrorLabel" Visibility="Collapsed"
+							>Error attempting to download CallsBureaus.xml file. Will load default file.</Label>
+			<Label Name="callsBureausErrorLabel" Visibility="Collapsed"
+							>Error occurred loading CallsBureaus file. Will load default file.</Label>
+			<Label Name="newCallsBureausLabel" Visibility="Collapsed"
+							>New CallsBureaus file downloaded.</Label>
+			<Label Name="newCallsBureausErrorLabel" Visibility="Collapsed"
+							>Cannot access downloaded CallsBureaus file. Will load default file.</Label>
 			<Label Name="checkingForUpdatesLabel" Visibility="Collapsed"
 							>Checking for program update and data file revisions.</Label>
 		</StackPanel>

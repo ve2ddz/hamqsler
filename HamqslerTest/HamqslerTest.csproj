@@ -31,6 +31,7 @@
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="hamqsler">
@@ -80,6 +81,7 @@
     <Compile Include="BandRxTests.cs" />
     <Compile Include="BandTests.cs" />
     <Compile Include="BooleanFieldTests.cs" />
+    <Compile Include="CallsBureausTests.cs" />
     <Compile Include="CallTests.cs" />
     <Compile Include="CheckTests.cs" />
     <Compile Include="ClassTests.cs" />

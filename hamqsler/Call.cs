@@ -57,29 +57,6 @@ namespace hamqsler
 		{
 			get {return prefixes;}
 		}
-		
-		// the following array contains valid, non-standard callsigns
-		private static string[] nsCalls = {
-			"BM100",
-			"BN100",
-			"BO100",
-			"BP100",
-			"BQ100",
-			"BU100",
-			"BV100",
-			"BW100",
-			"BX100",
-			"LM9L40Y",
-			"OEH20",
-			"SX1912",
-			"VI6ARG30",
-			"XM31812",
-			"TE1856",
-			"8J2KSG7X",
-			"ZW1CCOM54",
-			"XV2V40J"			
-		};
-
 		/// <summary>
 		/// Static constructor
 		/// </summary>
@@ -202,14 +179,7 @@ namespace hamqsler
 			else 	
 			{
 				// special callsigns
-				foreach(string nsCall in nsCalls)
-				{
-					if(callsign == nsCall)
-					{
-						return true;
-					}
-				}
-				return false;
+				return App.CallBureaus.IsNonStandardCall(callsign);
 			}
 		}
 	}

@@ -27,6 +27,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class CallTests
 	{
+		// test fixture setup
+		[TestFixtureSetUp]
+		public void FixtureSetup()
+		{
+			Program.app.GetCallsBureaus();
+		}
+
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
