@@ -93,6 +93,12 @@ namespace hamqsler
 			{
 				ShowSplashPageLabel(logAccessErrorLabel);
 			}
+			// load existing UserPreferences file, or create new one
+			// it is necessary to run this on the UI thread because UserPreferences is a
+			// Dependency object.
+			GetUserPreferences();
+
+			bool adifError = false;
 			try
 			{
 				App.AdifEnums.LoadDocument();
@@ -102,9 +108,10 @@ namespace hamqsler
 				App.Logger.Log(xe, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
 				try
 				{
-					((App)App.Current).CopyDefaultAdifEnumerationsXml();
+					App.AdifEnums.CopyDefaultXmlFile();
 					App.AdifEnums.LoadDocument();
 					ShowSplashPageLabel(adifEnumerationsErrorLabel);
+					adifError = true;
 				}
 				catch(Exception e)
 				{
@@ -126,6 +133,7 @@ namespace hamqsler
 					System.Diagnostics.Process.GetCurrentProcess().Kill();
 				}
 			}
+			bool callsBureausError = false;
 			try
 			{
 				App.CallBureaus.LoadDocument();
@@ -138,6 +146,7 @@ namespace hamqsler
 					App.CallBureaus.CopyDefaultXmlFile();
 					App.CallBureaus.LoadDocument();
 					ShowSplashPageLabel(callsBureausErrorLabel);
+					callsBureausError = true;
 				}
 				catch(Exception e)
 				{
@@ -160,10 +169,6 @@ namespace hamqsler
 				}
 			}
 			((App)Application.Current).LogRuntimeInfo();		// output run start info
-			// load existing UserPreferences file, or create new one
-			// it is necessary to run this on the UI thread because UserPreferences is a
-			// Dependency object.
-			GetUserPreferences();
 			// check for new program version and data file updates
 			bool webError = false;
 			bool newStableVersion = false;
@@ -199,8 +204,7 @@ namespace hamqsler
 					{
 						try
 						{
-							bool wError = ((App)Application.Current).
-								DownloadConfigFileFromWebsite("AdifEnumerations.xml");
+							bool wError = App.AdifEnums.DownloadFileFromWebsite();
 							webError = webError || wError;
 							App.AdifEnums.LoadDocument();
 							if(!wError)
@@ -220,7 +224,8 @@ namespace hamqsler
 							ShowSplashPageLabel(newAdifEnumsErrorLabel);
 							try
 							{
-								((App)App.Current).CopyDefaultAdifEnumerationsXml();
+							bool wError = App.CallBureaus.DownloadFileFromWebsite();
+							webError = webError || wError;
 								App.AdifEnums.LoadDocument();
 								ShowSplashPageLabel(adifEnumerationsErrorLabel);
 							}
@@ -307,7 +312,8 @@ namespace hamqsler
 			}
 			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
 						directoriesError || newStableVersion || newDevelopmentVersion ||
-						securityException || accessException || newAdifEnumerationsVersion)
+						securityException || accessException || newAdifEnumerationsVersion ||
+						adifError || callsBureausError)
 			{
 				ShowContinueButton();
 			}

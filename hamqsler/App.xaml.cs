@@ -180,7 +180,7 @@ namespace hamqsler
 				{
 					try
 					{
-						CopyDefaultAdifEnumerationsXml();
+						AdifEnums.CopyDefaultXmlFile();
 					}
 					catch(Exception e)
 					{
@@ -469,19 +469,20 @@ namespace hamqsler
 				// have version info, so check if any updates available
 				foreach(string key in versions.Keys)
 				{
+					string value = versions[key];
 					switch(key)
 					{
 						case "stable":
-							newStableVersion = CheckHamQslerVersion(versions[key]);
+							newStableVersion = CheckHamQslerVersion(value);
 							break;
 						case "development":
-							newDevelopmentVersion = CheckHamQslerVersion(versions[key]);
+							newDevelopmentVersion = CheckHamQslerVersion(value);
 							break;
 						case "AdifEnumerations":
-							adifEnumVersion = CheckAdifEnumerationsVersion(versions[key]);
+							adifEnumVersion = AdifEnums.CheckVersion(value);
 							break;
 						case "CallsBureaus":
-							newCallsBureausVersion = CheckCallsBureausVersion(versions[key]);
+							newCallsBureausVersion = CallBureaus.CheckVersion(value);
 							break;
 					}
 				}
@@ -538,162 +539,6 @@ namespace hamqsler
 				return true;
 			else
 				return false;
-		}
-		
-		/// <summary>
-		/// Load AdifEnumerations from AdifEnumerations.xml
-		/// </summary>
-/*		public void GetAdifEnumerations()
-		{
-			string fileName = Path.Combine(Environment.GetFolderPath(
-				Environment.SpecialFolder.ApplicationData), @"HamQSLer\AdifEnumerations.xml");
-			Stream str = new FileStream(fileName, FileMode.Open);
-			AdifEnums.LoadDocument(str);
-			str.Close();
-		}*/
-
-		/// <summary>
-		/// Checks AdifEnumerations.xml version number
-		/// </summary>
-    	/// <param name="version">Version number to check AdifEnumerations version against</param>
-		/// <returns>
-		/// Boolean indicating whether a new version of the AdifEnumerations.xml file is available or not
-		/// </returns>
-		private bool CheckAdifEnumerationsVersion(string version)
-		{
-			// get this file's version info
-			// this code assumes that each part of the vers
-			string ver = adifEnums.Version;
-			string[] verBits = ver.Split('.');
-			string vers = string.Format("{0}{1}{2}{3}", 
-			                            (verBits[0].Length == 1 ? "0" : "") + verBits[0],
-			                            (verBits[1].Length == 1 ? "0" : "") + verBits[1],
-			                            (verBits[2].Length == 1 ? "0" : "") + verBits[2],
-			                            (verBits[3].Length == 1 ? "0" : "") + verBits[3]);
-			if(vers.CompareTo(version) < 0)
-				return true;
-			else
-				return false;
-		}
-		
-		/// <summary>
-		/// Checks CallsBureaus.xml version number
-		/// </summary>
-    	/// <param name="version">Version number to check CallsBureaus version against</param>
-		/// <returns>
-		/// Boolean indicating whether a new version of the CallsBureaus.xml file is available or not
-		/// </returns>
-		private bool CheckCallsBureausVersion(string version)
-		{
-			// get this file's version info
-			// this code assumes that each part of the vers
-			string ver = CallBureaus.Version;
-			string[] verBits = ver.Split('.');
-			string vers = string.Format("{0}{1}{2}", 
-			                            (verBits[0].Length == 1 ? "0" : "") + verBits[0],
-			                            (verBits[1].Length == 1 ? "0" : "") + verBits[1],
-			                            (verBits[2].Length == 1 ? "0" : "") + verBits[2]);
-			if(vers.CompareTo(version) < 0)
-				return true;
-			else
-				return false;
-		}
-		
-		/// <summary>
-		/// Download configuration file from the website
-		/// </summary>
-    	/// <param name="fileName">Name of configuration file to download</param>
-		/// <returns>true if an error occurred retrieving the file, false otherwise</returns>
-		public bool DownloadConfigFileFromWebsite(string fileName)
-		{
-			bool webError = false;
-            // create request for website
-            HttpWebRequest httpRequest = null;
-            HttpWebResponse response = null;
-            StreamReader resStream = null;
-			// get this program's version info
-	        Version ver = Assembly.GetExecutingAssembly().GetName().Version;
-            string location = string.Format("http://www.va3hj.ca/{0}", fileName);
-            try
-            {
-            	// build the http request
-                httpRequest = (HttpWebRequest)WebRequest.Create(location);
-                httpRequest.Timeout = WEBREQUESTTIMEOUT;
-				string proxy = userPrefs.HttpProxyServer;
-				int proxyPort = userPrefs.HttpProxyServerPortNumber;
-                if (proxy != string.Empty)
-                {
-                    httpRequest.Proxy = new WebProxy(proxy, proxyPort);
-                }
-				// get OS information for including in UserAgent
-				string os = "Unknown";
-                string osVer = Environment.OSVersion.VersionString;
-                Regex osRegex = new Regex("(Windows NT [\\d]\\.[\\d])");
-                Match match = osRegex.Match(osVer);
-				os = match.Value;
-                httpRequest.UserAgent = string.Format("HamQsler ({0}; [{1}])",
-                            os, CultureInfo.CurrentCulture.Name);
-
-                // *** Retrieve request info headers
-                response = (HttpWebResponse)httpRequest.GetResponse();
-
-                Encoding enc = Encoding.UTF8;
-                // get response from website
-                resStream = new StreamReader(response.GetResponseStream(), enc);
-                
-                // copy file to AppData folder
-				string appDataDirName =  Path.Combine(Environment.GetFolderPath(
-							Environment.SpecialFolder.ApplicationData), "HamQSLer");
-				DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
-				FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/" +fileName);
-	        	string adifStr = resStream.ReadToEnd();
-	        	File.WriteAllText(fInfo.FullName, adifStr);
-            }
-            catch (SecurityException e)
-            {
-                logger.Log(e);
-				webError = true;
-            }
-            catch (WebException e)
-            {
-                DecodeWebException(e, fileName);
-				webError = true;
-            }
-            catch (Exception e)
-            {
-                logger.Log("Error retrieving " + fileName + " from website: " + e.Message);
-				webError = true;
-            }
-            finally
-            {
-                if (response != null)
-                {
-                    response.Close();
-                }
-                if (resStream != null)
-                {
-                    resStream.Close();
-                }
-            }
- 			return webError;
-		}
-		/// <summary>
-		/// Copies the AdifEnumerations.xml file stored within the program assembly to AppData
-		/// </summary>
-		public void CopyDefaultAdifEnumerationsXml()
-		{
-			string appDataDirName =  Path.Combine(Environment.GetFolderPath(
-						Environment.SpecialFolder.ApplicationData), "HamQSLer");
-			DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
-			FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/AdifEnumerations.xml");
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-        	Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-        	FileStream fStream = File.Open(fInfo.FullName, FileMode.Create);
-        	byte[] bytes = new Byte[str.Length];
-        	str.Read(bytes, 0, (int)str.Length);
-        	fStream.Write(bytes, 0, (int)str.Length);
-        	fStream.Close();
-        	str.Close();
 		}
 	}
 }

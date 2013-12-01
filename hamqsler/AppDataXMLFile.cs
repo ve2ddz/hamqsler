@@ -33,7 +33,7 @@ namespace hamqsler
 	/// <summary>
 	/// Description of AppDataXMLFile.
 	/// </summary>
-	public class AppDataXMLFile
+	public abstract class AppDataXMLFile
 	{
 		private string xmlFile = null;
 		
@@ -49,6 +49,13 @@ namespace hamqsler
 		{
 			xmlFile = fName;
 		}
+		
+		/// <summary>
+		/// Check version of XML file against version provided in argument
+		/// </summary>
+		/// <param name="version">Version to check against</param>
+		/// <returns>true if argument is later than version in XML file</returns>
+		public abstract bool CheckVersion(string version);
 		
 		/// <summary>
 		/// Copies the XML file stored within the program assembly to AppData
@@ -77,8 +84,18 @@ namespace hamqsler
 			string fileName = Path.Combine(Environment.GetFolderPath(
 				Environment.SpecialFolder.ApplicationData), @"HamQSLer\" + xmlFile);
 			Stream str = new FileStream(fileName, FileMode.Open);
-			xDoc = XDocument.Load(str);
-			str.Close();
+			try
+			{
+				xDoc = XDocument.Load(str);
+			}
+			catch(XmlException xe)
+			{
+				throw xe;
+			}
+			finally
+			{
+				str.Close();
+			}
 		}
 		
 		/// <summary>

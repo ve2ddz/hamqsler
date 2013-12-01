@@ -417,5 +417,27 @@ namespace hamqsler
 			XAttribute mode = sub.Attribute("Mode");
 			return mode.Value;
 		}
+				
+		/// <summary>
+		/// Check version of XML file against version provided in argument
+		/// </summary>
+		/// <param name="version">Version to check against</param>
+		/// <returns>true if argument is later than version in XML file</returns>
+		public override bool CheckVersion(string version)
+		{
+			// get this file's version info
+			// this code assumes that each part of the vers
+			string ver = Version;
+			string[] verBits = ver.Split('.');
+			string vers = string.Format("{0}{1}{2}{3}", 
+			                            (verBits[0].Length == 1 ? "0" : "") + verBits[0],
+			                            (verBits[1].Length == 1 ? "0" : "") + verBits[1],
+			                            (verBits[2].Length == 1 ? "0" : "") + verBits[2],
+			                            (verBits[3].Length == 1 ? "0" : "") + verBits[3]);
+			if(vers.CompareTo(version) < 0)
+				return true;
+			else
+				return false;
+		}
 	}
 }
