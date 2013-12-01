@@ -95,7 +95,7 @@ namespace hamqsler
 			}
 			try
 			{
-				((App)App.Current).GetAdifEnumerations();
+				App.AdifEnums.LoadDocument();
 			}
 			catch(XmlException xe)
 			{
@@ -103,7 +103,7 @@ namespace hamqsler
 				try
 				{
 					((App)App.Current).CopyDefaultAdifEnumerationsXml();
-					((App)App.Current).GetAdifEnumerations();
+					App.AdifEnums.LoadDocument();
 					ShowSplashPageLabel(adifEnumerationsErrorLabel);
 				}
 				catch(Exception e)
@@ -128,15 +128,15 @@ namespace hamqsler
 			}
 			try
 			{
-				((App)App.Current).GetCallsBureaus();
+				App.CallBureaus.LoadDocument();
 			}
 			catch(XmlException xe)
 			{
 				App.Logger.Log(xe, ExceptionLogger.SHOWTRACE, ExceptionLogger.DONTSHOWMESSAGE);
 				try
 				{
-					((App)App.Current).CopyDefaultCallsBureausXml();
-					((App)App.Current).GetCallsBureaus();
+					App.CallBureaus.CopyDefaultXmlFile();
+					App.CallBureaus.LoadDocument();
 					ShowSplashPageLabel(callsBureausErrorLabel);
 				}
 				catch(Exception e)
@@ -202,7 +202,7 @@ namespace hamqsler
 							bool wError = ((App)Application.Current).
 								DownloadConfigFileFromWebsite("AdifEnumerations.xml");
 							webError = webError || wError;
-							((App)Application.Current).GetAdifEnumerations();
+							App.AdifEnums.LoadDocument();
 							if(!wError)
 							{
 								ShowSplashPageLabel(newAdifEnumerationsLabel);
@@ -221,7 +221,7 @@ namespace hamqsler
 							try
 							{
 								((App)App.Current).CopyDefaultAdifEnumerationsXml();
-								((App)App.Current).GetAdifEnumerations();
+								App.AdifEnums.LoadDocument();
 								ShowSplashPageLabel(adifEnumerationsErrorLabel);
 							}
 							catch(Exception ex)
@@ -250,10 +250,9 @@ namespace hamqsler
 					{
 						try
 						{
-							bool wError = ((App)Application.Current).
-								DownloadConfigFileFromWebsite("CallsBureaus.xml");
+							bool wError = App.CallBureaus.DownloadFileFromWebsite();
 							webError = webError || wError;
-							((App)Application.Current).GetCallsBureaus();
+							App.CallBureaus.LoadDocument();
 							if(!wError)
 							{
 								ShowSplashPageLabel(newCallsBureausLabel);
@@ -271,8 +270,8 @@ namespace hamqsler
 							ShowSplashPageLabel(newCallsBureausErrorLabel);
 							try
 							{
-								((App)App.Current).CopyDefaultCallsBureausXml();
-								((App)App.Current).GetCallsBureaus();
+								App.CallBureaus.CopyDefaultXmlFile();
+								App.CallBureaus.LoadDocument();
 								ShowSplashPageLabel(callsBureausErrorLabel);
 							}
 							catch(Exception ex)

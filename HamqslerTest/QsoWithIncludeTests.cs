@@ -31,7 +31,7 @@ namespace hamqslerTest
 		[TestFixtureSetUp]
 		public void FixtureSetup()
 		{
-			Program.app.GetAdifEnumerations();
+			App.AdifEnums.LoadDocument();
 		}
 
 		// test IDataErrorInfo interface with valid Manager

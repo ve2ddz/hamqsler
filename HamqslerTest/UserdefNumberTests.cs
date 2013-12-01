@@ -29,16 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class UserdefNumberTests
 	{
-		AdifEnumerations aEnums;
 		Userdef userdef1;
 		// TestFixtureSetup
 		[TestFixtureSetUp]
 		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
-			userdef1 = new Userdef("EPC", "N", aEnums);
+			App.AdifEnums.LoadDocument();
+			userdef1 = new Userdef("EPC", "N", App.AdifEnums);
 		}
 		
 		// test ToAdifString
@@ -77,7 +74,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidRange()
 		{
-			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", aEnums);
+			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", App.AdifEnums);
 			UserdefNumber uds = new UserdefNumber("14.315", userdef2);
 			string err = string.Empty;
 			string modStr = string.Empty;
@@ -90,7 +87,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateOutsideRange()
 		{
-			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", aEnums);
+			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", App.AdifEnums);
 			UserdefNumber uds = new UserdefNumber("1", userdef2);
 			string err = string.Empty;
 			string modStr = string.Empty;			
@@ -103,7 +100,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestNameAccessor()
 		{
-			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", aEnums);
+			Userdef userdef2 = new Userdef("EPC2", "N", "5", "20.", App.AdifEnums);
 			UserdefNumber uds = new UserdefNumber("6.5", userdef2);
 			string err = string.Empty;
 			string modStr = string.Empty;

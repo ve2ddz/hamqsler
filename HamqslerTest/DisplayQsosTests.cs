@@ -31,17 +31,9 @@ namespace hamqslerTest
 	[TestFixture]
 	public class DisplayQsosTests
 	{
-		AdifEnumerations aEnums;
 		string errorString = string.Empty;
-		// test fixture setup
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
-		}
 		
+		// test fixture setup
 		// test Add with Qsos2 object
 		[Test]
 		public void TestAddQso()
@@ -49,7 +41,7 @@ namespace hamqslerTest
 			Qsos2 qsos = new Qsos2();
 			string err = string.Empty;
 			Qso2 qso = new Qso2("<Mode:3>SSB<Band:3>40m<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref err, qsos);
+			                    App.AdifEnums, ref err, qsos);
 			QsoWithInclude qwi = new QsoWithInclude(qso);
 			DisplayQsos dQsos = new DisplayQsos();
 			Assert.IsFalse(dQsos.IsDirty);
@@ -67,7 +59,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			Qso2 qso = new Qso2("<Mode:3>SSB<Band:3>40m<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref err);
+			                    App.AdifEnums, ref err);
 			QsoWithInclude qwi = new QsoWithInclude(qso);
 			DisplayQsos dQsos = new DisplayQsos();
 			Assert.IsFalse(dQsos.IsDirty);
@@ -84,7 +76,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			Qso2 qso = new Qso2("<Mode:3>SSB<Band:3>40m<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref err);
+			                    App.AdifEnums, ref err);
 			QsoWithInclude qwi = new QsoWithInclude(qso);
 			DisplayQsos dQsos = new DisplayQsos();
 			dQsos.AddQso(qwi);

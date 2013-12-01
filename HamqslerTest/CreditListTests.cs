@@ -30,22 +30,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class CreditListTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test GetCredits with single matching credit in list
 		[Test]
 		public void TestGetCreditsSingleMatchingCredit()
 		{
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
 			List<Credit> credits = list.GetCredits("IOTA");
@@ -60,7 +56,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetCreditsSingleMatchingCreditCaseMismatch()
 		{
-			Credit credit = new Credit("Iota", aEnums);
+			Credit credit = new Credit("Iota", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
 			List<Credit> credits = list.GetCredits("iota");
@@ -75,12 +71,12 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetCreditsTwoMatchingCredits()
 		{
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
-			Credit notIOTA = new Credit("WAS", aEnums);
+			Credit notIOTA = new Credit("WAS", App.AdifEnums);
 			list.Add(notIOTA);
-			Credit credit2 = new Credit("IOTA:Card&Lotw", aEnums);
+			Credit credit2 = new Credit("IOTA:Card&Lotw", App.AdifEnums);
 			list.Add(credit2);
 			List<Credit> credits = list.GetCredits("IOTA");
 			Assert.AreEqual(2, credits.Count);
@@ -99,12 +95,12 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetCreditsNoMatchingCredits()
 		{
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
-			Credit notIOTA = new Credit("WAS", aEnums);
+			Credit notIOTA = new Credit("WAS", App.AdifEnums);
 			list.Add(notIOTA);
-			Credit credit2 = new Credit("IOTA:Card&Lotw", aEnums);
+			Credit credit2 = new Credit("IOTA:Card&Lotw", App.AdifEnums);
 			list.Add(credit2);
 			List<Credit> credits = list.GetCredits("WAB");
 			Assert.AreEqual(0, credits.Count);
@@ -114,7 +110,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddSingleCredit()
 		{
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
 			Assert.AreEqual(1, list.Count);
@@ -130,11 +126,11 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddTwoCredits()
 		{
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
 			Assert.AreEqual(1, list.Count);
-			Credit c2 = new Credit("WAS:CARD", aEnums);
+			Credit c2 = new Credit("WAS:CARD", App.AdifEnums);
 			list.Add(c2);
 			Assert.AreEqual(2, list.Count);
 			List<Credit> credits = list.GetCredits("IOTA");
@@ -152,11 +148,11 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddTwoCreditsNullAndMedium()
 		{
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
 			Assert.AreEqual(1, list.Count);
-			Credit c2 = new Credit("IOTA:CARD", aEnums);
+			Credit c2 = new Credit("IOTA:CARD", App.AdifEnums);
 			list.Add(c2);
 			Assert.AreEqual(2, list.Count);
 			List<Credit> credits = list.GetCredits("IOTA");
@@ -175,11 +171,11 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddTwoCreditsBothNullMedia()
 		{
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
 			Assert.AreEqual(1, list.Count);
-			Credit c2 = new Credit("IOTA", aEnums);
+			Credit c2 = new Credit("IOTA", App.AdifEnums);
 			list.Add(c2);
 			Assert.AreEqual(1, list.Count);
 			List<Credit> credits = list.GetCredits("IOTA");
@@ -195,10 +191,10 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddTwoCreditsDifferentMedia()
 		{
-			Credit credit = new Credit("IOTA:EQSL&LOTW", aEnums);
+			Credit credit = new Credit("IOTA:EQSL&LOTW", App.AdifEnums);
 			CreditList list = new CreditList();
 			list.Add(credit);
-			Credit c2 = new Credit("IOTA:CARD", aEnums);
+			Credit c2 = new Credit("IOTA:CARD", App.AdifEnums);
 			list.Add(c2);
 			Assert.AreEqual(1, list.Count);
 			List<Credit> credits = list.GetCredits("IOTA");
@@ -217,7 +213,7 @@ namespace hamqslerTest
 		public void TestConstructorWithString4Credits()
 		{
 			CreditList list = new CreditList("WAS:LOTW,IOTA,DXCC_BAND:LOTW&CARD,DXCC_MODE:LOTW&CARD",
-			                                aEnums);
+			                                App.AdifEnums);
 			Assert.AreEqual(4, list.Count);
 		}
 		
@@ -225,7 +221,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestConstructorWithString1CreditNoMedia()
 		{
-			CreditList list = new CreditList("IOTA", aEnums);
+			CreditList list = new CreditList("IOTA", App.AdifEnums);
 			Assert.AreEqual(1, list.Count);
 		}
 		
@@ -233,7 +229,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString1Credit()
 		{
-			CreditList list = new CreditList("IOTA", aEnums);
+			CreditList list = new CreditList("IOTA", App.AdifEnums);
 			Assert.AreEqual("<CreditList:4>IOTA", list.ToAdifString());
 		}
 		
@@ -241,7 +237,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString4Credits()
 		{
-			CreditList list = new CreditList("WAS:LOTW,IOTA,DXCC_BAND:LOTW&CARD,DXCC_MODE:LOTW&CARD", aEnums);
+			CreditList list = 
+				new CreditList("WAS:LOTW,IOTA,DXCC_BAND:LOTW&CARD,DXCC_MODE:LOTW&CARD", App.AdifEnums);
 			Assert.AreEqual("<CreditList:53>WAS:LOTW,IOTA,DXCC_BAND:LOTW&CARD,DXCC_MODE:LOTW&CARD", list.ToAdifString());
 		}
 		
@@ -258,7 +255,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidSingleCredit()
 		{
-			CreditList credit = new CreditList("IOTA", aEnums);
+			CreditList credit = new CreditList("IOTA", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(credit.Validate(out err, out modStr));
@@ -270,7 +267,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidMultipleCredits()
 		{
-			CreditList credit = new CreditList("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
+			CreditList credit = new CreditList("IOTA,DXCC_BAND,DXCC_MODE", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(credit.Validate(out err, out modStr));
@@ -282,7 +279,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidSingleCredit()
 		{
-			CreditList credit = new CreditList("IOTA2", aEnums);
+			CreditList credit = new CreditList("IOTA2", App.AdifEnums);
 			string err = string.Empty;
 			string modStr =string.Empty;
 			Assert.IsFalse(credit.Validate(out err, out modStr));
@@ -294,7 +291,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidSingleCreditInList()
 		{
-			CreditList credit = new CreditList("IOTA,DXCC_BANE,DXCC_MODE", aEnums);
+			CreditList credit = new CreditList("IOTA,DXCC_BANE,DXCC_MODE", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(credit.Validate(out err, out modStr));
@@ -306,7 +303,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsOnlyCredits()
 		{
-			CreditList credit = new CreditList("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
+			CreditList credit = new CreditList("IOTA,DXCC_BAND,DXCC_MODE", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:24>IOTA,DXCC_BAND,DXCC_MODE", credit.ToAdifString());
@@ -317,7 +314,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardAndCredits()
 		{
-			CreditList credit = new CreditList("IOTA,DXCC_BAND,CQWAZ_CW", aEnums);
+			CreditList credit = new CreditList("IOTA,DXCC_BAND,CQWAZ_CW", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:25>IOTA,DXCC_BAND,CQWAZ_MODE", credit.ToAdifString());
@@ -329,7 +326,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsNoReplacementAward()
 		{
-			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW", aEnums);
+			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:15>IOTA,CQWAZ_MODE", credit.ToAdifString());
@@ -343,7 +340,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCredit()
 		{
-			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE", aEnums);
+			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:15>IOTA,CQWAZ_MODE", credit.ToAdifString());
@@ -359,7 +356,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCreditWithoutMedium()
 		{
-			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW", aEnums);
+			CreditList credit = new CreditList("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<CreditList:36>IOTA,CQWAZ_MODE,CQWAZ_MODE:CARD&LOTW", credit.ToAdifString());
@@ -369,11 +366,11 @@ namespace hamqslerTest
 		[Test]
 		public void TestAddMediumToExistingCredit()
 		{
-			CreditList credits = new CreditList("DXCC:CARD&LOTW", aEnums);
+			CreditList credits = new CreditList("DXCC:CARD&LOTW", App.AdifEnums);
 			List<Credit> creds = credits.GetCredits("DXCC");
 			Assert.AreEqual(1, creds.Count);
 			Assert.AreEqual("DXCC:CARD&LOTW", creds[0].ToString());
-			credits.Add(new Credit("DXCC:EQSL", aEnums));
+			credits.Add(new Credit("DXCC:EQSL", App.AdifEnums));
 			creds = credits.GetCredits("DXCC");
 			Assert.AreEqual("DXCC:CARD&LOTW&EQSL", creds[0].ToString());
 			Assert.IsTrue(creds[0].IsInMedia("EQSL"));

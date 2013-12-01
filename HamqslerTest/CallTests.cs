@@ -31,7 +31,7 @@ namespace hamqslerTest
 		[TestFixtureSetUp]
 		public void FixtureSetup()
 		{
-			Program.app.GetCallsBureaus();
+			App.CallBureaus.LoadDocument();
 		}
 
 		// test ToAdifString

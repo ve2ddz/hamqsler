@@ -29,15 +29,13 @@ namespace hamqsler
 	/// <summary>
 	/// Description of CallsBureaus.
 	/// </summary>
-	public class CallsBureaus
+	public class CallsBureaus : AppDataXMLFile
 	{
-		XDocument CallsBureausDoc = null;
-		
 		public string Version
 		{
 			get 
 			{
-				XAttribute version = CallsBureausDoc.Root.Attribute("Version");
+				XAttribute version = xDoc.Root.Attribute("Version");
 				if(version != null)
 				{
 					return version.Value;
@@ -53,9 +51,8 @@ namespace hamqsler
 		/// Constructor
 		/// </summary>
 		/// <param name="cbStream">stream containing the XML document</param>
-		public CallsBureaus(Stream cbStream)
+		public CallsBureaus() : base("CallsBureaus.xml")
 		{
-			CallsBureausDoc = XDocument.Load(cbStream);
 		}
 		
 		/// <summary>
@@ -66,7 +63,7 @@ namespace hamqsler
 		public bool IsNonStandardCall(string call)
 		{
 				var vals = from val in 
-					CallsBureausDoc.Descendants("NonStandardCalls").Descendants("Call")
+					xDoc.Descendants("NonStandardCalls").Descendants("Call")
 					select val;
 				foreach(var val in vals)
 				{

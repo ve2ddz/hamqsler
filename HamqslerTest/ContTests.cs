@@ -29,14 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ContTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString()
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
- 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Cont cont = new Cont("AF", aEnums);
+			Cont cont = new Cont("AF", App.AdifEnums);
 			Assert.AreEqual("<Cont:2>AF", cont.ToAdifString());
 		}
 		
@@ -46,10 +50,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr =string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
- 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Cont cont = new Cont("AF", aEnums);
+			Cont cont = new Cont("AF", App.AdifEnums);
 			Assert.IsTrue(cont.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -61,10 +62,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
- 			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Cont cont = new Cont("AX", aEnums);
+			Cont cont = new Cont("AX", App.AdifEnums);
 			Assert.IsFalse(cont.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'AX' " +
 			                "was not found in enumeration.", err);

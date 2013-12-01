@@ -29,14 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class DXCCTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DXCC dxcc = new DXCC("512", aEnums);
+			DXCC dxcc = new DXCC("512", App.AdifEnums);
 			Assert.AreEqual("<DXCC:3>512", dxcc.ToAdifString());
 		}
 		
@@ -44,10 +48,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidCountryCode()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DXCC dxcc = new DXCC("1", aEnums);
+			DXCC dxcc = new DXCC("1", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(dxcc.Validate(out err, out modStr));
@@ -59,10 +60,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidCountryCode()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DXCC dxcc = new DXCC("1023", aEnums);
+			DXCC dxcc = new DXCC("1023", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(dxcc.Validate(out err, out modStr));
@@ -75,10 +73,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetCountryNameValidCountryCode()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DXCC dxcc = new DXCC("1", aEnums);
+			DXCC dxcc = new DXCC("1", App.AdifEnums);
 			string err = string.Empty;
 			Assert.AreEqual("CANADA", dxcc.GetCountryName(out err));
 			Assert.AreEqual(null, err);
@@ -88,10 +83,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetCountryNameInvalidCountryCode()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			DXCC dxcc = new DXCC("1023", aEnums);
+			DXCC dxcc = new DXCC("1023", App.AdifEnums);
 			string err = string.Empty;
 			Assert.AreEqual(null, dxcc.GetCountryName(out err));
 			Assert.AreEqual("\tCountry code '1023' is not a valid code. Country name cannot be retrieved.", 

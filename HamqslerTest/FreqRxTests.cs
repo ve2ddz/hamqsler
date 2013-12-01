@@ -29,22 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class FreqRxTests
 	{
-		AdifEnumerations aEnums = null;
-		
-		// test fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Setup()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);			
+			App.AdifEnums.LoadDocument();
 		}
 		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Freq_Rx freq = new Freq_Rx("14.235", aEnums);
+			Freq_Rx freq = new Freq_Rx("14.235", App.AdifEnums);
 			Assert.AreEqual("<Freq_Rx:6>14.235", freq.ToAdifString());
 		}
 		
@@ -52,7 +48,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidFreq()
 		{
-			Freq_Rx freq = new Freq_Rx("14.235", aEnums);
+			Freq_Rx freq = new Freq_Rx("14.235", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(freq.Validate(out err, out modStr));
@@ -64,7 +60,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateFreqOutsideBands()
 		{
-			Freq_Rx freq = new Freq_Rx("14.463", aEnums);
+			Freq_Rx freq = new Freq_Rx("14.463", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
@@ -76,7 +72,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateFreqNonNumber()
 		{
-			Freq_Rx freq = new Freq_Rx("Fred", aEnums);
+			Freq_Rx freq = new Freq_Rx("Fred", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
@@ -88,7 +84,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateFreqNonNumber2()
 		{
-			Freq_Rx freq = new Freq_Rx("14.235F", aEnums);
+			Freq_Rx freq = new Freq_Rx("14.235F", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(freq.Validate(out err, out modStr));
@@ -101,7 +97,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithMatchingValues()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Freq_Rx:6>14.263<Band_Rx:3>20m", aEnums, ref err);
+			Qso2 qso = new Qso2("<Freq_Rx:6>14.263<Band_Rx:3>20m", App.AdifEnums, ref err);
 			Assert.IsNull(err);
 			AdifField field = qso.GetField("Freq_Rx");
 			Assert.IsNotNull(field);
@@ -115,7 +111,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithMisMatchedValues()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Freq_Rx:6>14.263<Band_Rx:3>10m", aEnums, ref err);
+			Qso2 qso = new Qso2("<Freq_Rx:6>14.263<Band_Rx:3>10m", App.AdifEnums, ref err);
 			Assert.IsNull(err);
 			AdifField field = qso.GetField("Freq_Rx");
 			Assert.IsNotNull(field);
@@ -132,7 +128,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithoutBand()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Freq_Rx:5>7.263", aEnums, ref err);
+			Qso2 qso = new Qso2("<Freq_Rx:5>7.263", App.AdifEnums, ref err);
 			Assert.IsNull(err);
 			AdifField field = qso.GetField("Freq_Rx");
 			Assert.IsNotNull(field);

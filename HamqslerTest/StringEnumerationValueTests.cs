@@ -29,6 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class StringEnumerationValueTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
@@ -42,10 +49,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString2()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			StringEnumerationValue se = new StringEnumerationValue("e6", "Contest_ID", aEnums);
+			StringEnumerationValue se = new StringEnumerationValue("e6", "Contest_ID", App.AdifEnums);
 			Assert.AreEqual("<StringEnumerationValue:2>e6", se.ToAdifString());
 		}
 		
@@ -54,10 +58,7 @@ namespace hamqslerTest
 		public void TestIsInEnumerationTrue()
 		{
 			string err = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			StringEnumerationValue se = new StringEnumerationValue("RAC-CANADA-DAY", "Contest_ID", aEnums);
+			StringEnumerationValue se = new StringEnumerationValue("RAC-CANADA-DAY", "Contest_ID", App.AdifEnums);
 			Assert.IsTrue(se.IsInEnumeration(out err));
 			Assert.AreEqual(null, err);
 		}
@@ -67,10 +68,7 @@ namespace hamqslerTest
 		public void TestIsInEnumerationFalse()
 		{
 			string err = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			StringEnumerationValue se = new StringEnumerationValue("e4", "Contest_ID", aEnums);
+			StringEnumerationValue se = new StringEnumerationValue("e4", "Contest_ID", App.AdifEnums);
 			Assert.IsFalse(se.IsInEnumeration(out err));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'e4' " +
 			                    "was not found in enumeration.", err);
@@ -82,10 +80,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			StringEnumerationValue se = new StringEnumerationValue("RAC-CANADA-DAY", "Contest_ID", aEnums);
+			StringEnumerationValue se = new StringEnumerationValue("RAC-CANADA-DAY", "Contest_ID", App.AdifEnums);
 			Assert.IsTrue(se.Validate(out err,out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -97,10 +92,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			StringEnumerationValue se = new StringEnumerationValue("e4", "Contest_ID", aEnums);
+			StringEnumerationValue se = new StringEnumerationValue("e4", "Contest_ID", App.AdifEnums);
 			Assert.IsTrue(se.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);

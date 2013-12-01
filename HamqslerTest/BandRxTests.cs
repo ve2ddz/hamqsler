@@ -29,22 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class BandRxTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test Validate with valid value
 		[Test]
 		public void TestValidate2190m()
 		{
-			Band_Rx band = new Band_Rx("2190m", aEnums);
+			Band_Rx band = new Band_Rx("2190m", App.AdifEnums);
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(band.Validate(out error, out modStr));
@@ -56,7 +52,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidate1mm()
 		{
-			Band_Rx band = new Band_Rx("1mm", aEnums);
+			Band_Rx band = new Band_Rx("1mm", App.AdifEnums);
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(band.Validate(out error, out modStr));
@@ -68,7 +64,7 @@ namespace hamqslerTest
 			[Test]
 			public void TestValidate1MM()
 			{
-				Band_Rx band = new Band_Rx("1MM", aEnums);
+				Band_Rx band = new Band_Rx("1MM", App.AdifEnums);
 				string error = string.Empty;
 				string modStr = string.Empty;
 				Assert.IsTrue(band.Validate(out error, out modStr));
@@ -80,7 +76,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateBadValue()
 		{
-			Band_Rx band = new Band_Rx("23mm", aEnums);
+			Band_Rx band = new Band_Rx("23mm", App.AdifEnums);
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(band.Validate(out error, out modStr));
@@ -93,7 +89,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString()
 		{
-			Band_Rx band = new Band_Rx("23cm", aEnums);
+			Band_Rx band = new Band_Rx("23cm", App.AdifEnums);
 			Assert.AreEqual("<Band_Rx:4>23cm", band.ToAdifString());
 		}
 		
@@ -101,7 +97,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsWithinBandValidFreq()
 		{
-			Band_Rx band = new Band_Rx("40m", aEnums);
+			Band_Rx band = new Band_Rx("40m", App.AdifEnums);
 			Assert.IsTrue(band.IsWithinBand("7.102"));
 		}
 		
@@ -109,7 +105,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsWithinBandBadFreq()
 		{
-			Band_Rx band = new Band_Rx("40m", aEnums);
+			Band_Rx band = new Band_Rx("40m", App.AdifEnums);
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
 
@@ -117,7 +113,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsWithinBandBadFreqM()
 		{
-			Band_Rx band = new Band_Rx("40M", aEnums);
+			Band_Rx band = new Band_Rx("40M", App.AdifEnums);
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
 	}

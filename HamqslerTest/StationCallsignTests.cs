@@ -29,17 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class StationCallsignTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
@@ -89,7 +85,7 @@ namespace hamqslerTest
 		public void TestModifyValuesNoOwnerCallsign()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("", aEnums, ref err);
+			Qso2 qso = new Qso2("", App.AdifEnums, ref err);
 			Station_Callsign call = new Station_Callsign("VA3HJ");
 			qso.Fields.Add(call);
 			Owner_Callsign owner = qso.GetField("Owner_Callsign") as Owner_Callsign;
@@ -107,7 +103,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithOwnerCallsign()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Station_Callsign:5>VA3HJ<Owner_Callsign:6>VA3JNO", aEnums, ref err);
+			Qso2 qso = new Qso2("<Station_Callsign:5>VA3HJ<Owner_Callsign:6>VA3JNO", App.AdifEnums, ref err);
 			Station_Callsign call = qso.GetField("Station_Callsign") as Station_Callsign;
 			Assert.IsNotNull(call);
 			string mod = call.ModifyValues(qso);

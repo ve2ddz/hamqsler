@@ -30,22 +30,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class CreditGrantedTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Credit_Granted credit = new Credit_Granted("IOTA", aEnums);
+			Credit_Granted credit = new Credit_Granted("IOTA", App.AdifEnums);
 			Assert.AreEqual("<Credit_Granted:4>IOTA", credit.ToAdifString());
 		}
 		
@@ -53,7 +49,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifStringMultipleCredits()
 		{
-			Credit_Granted credit = new Credit_Granted("IOTA, DXCC_BAND,DXCC_MODE", aEnums);
+			Credit_Granted credit = new Credit_Granted("IOTA, DXCC_BAND,DXCC_MODE", App.AdifEnums);
 			Assert.AreEqual("<Credit_Granted:24>IOTA,DXCC_BAND,DXCC_MODE", credit.ToAdifString());
 		}
 		
@@ -61,7 +57,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifStringMultipleCreditsWithMedium()
 		{
-			Credit_Granted credit = new Credit_Granted("IOTA, DXCC_BAND:CARD&LOTW,DXCC_MODE", aEnums);
+			Credit_Granted credit = 
+				new Credit_Granted("IOTA, DXCC_BAND:CARD&LOTW,DXCC_MODE", App.AdifEnums);
 			Assert.AreEqual("<Credit_Granted:34>IOTA,DXCC_BAND:CARD&LOTW,DXCC_MODE", credit.ToAdifString());
 		}
 		
@@ -71,7 +68,8 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string mod = string.Empty;
-			Credit_Granted credit = new Credit_Granted("DXCC:card,DXCC_BAND:card,DXCC_Mode:card", aEnums);
+			Credit_Granted credit = 
+				new Credit_Granted("DXCC:card,DXCC_BAND:card,DXCC_Mode:card", App.AdifEnums);
 			bool valid = credit.Validate(out err, out mod);
 			Assert.IsTrue(valid);
 			Assert.AreEqual(null, err);
@@ -82,7 +80,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsOnlyCredits()
 		{
-			Credit_Granted credit = new Credit_Granted("IOTA,DXCC_BAND,DXCC_MODE", aEnums);
+			Credit_Granted credit = 
+				new Credit_Granted("IOTA,DXCC_BAND,DXCC_MODE", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<Credit_Granted:24>IOTA,DXCC_BAND,DXCC_MODE", credit.ToAdifString());
@@ -93,7 +92,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardAndCredits()
 		{
-			Credit_Granted credit = new Credit_Granted("IOTA,DXCC_BAND,CQWAZ_CW", aEnums);
+			Credit_Granted credit = 
+				new Credit_Granted("IOTA,DXCC_BAND,CQWAZ_CW", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<Credit_Granted:25>IOTA,DXCC_BAND,CQWAZ_MODE", credit.ToAdifString());
@@ -105,7 +105,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsNoReplacementAward()
 		{
-			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW", aEnums);
+			Credit_Granted credit = 
+				new Credit_Granted("IOTA,JCG,CQWAZ_CW", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<Credit_Granted:15>IOTA,CQWAZ_MODE", credit.ToAdifString());
@@ -119,7 +120,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCredit()
 		{
-			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE", aEnums);
+			Credit_Granted credit = 
+				new Credit_Granted("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<Credit_Granted:15>IOTA,CQWAZ_MODE", credit.ToAdifString());
@@ -135,7 +137,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestReplaceAwardsWithCreditsAwardReplacementSameAsCreditWithoutMedium()
 		{
-			Credit_Granted credit = new Credit_Granted("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW", aEnums);
+			Credit_Granted credit = 
+				new Credit_Granted("IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW", App.AdifEnums);
 			string err = string.Empty;
 			credit.ReplaceAwardsWithCredits(ref err);
 			Assert.AreEqual("<Credit_Granted:36>IOTA,CQWAZ_MODE,CQWAZ_MODE:CARD&LOTW", credit.ToAdifString());
@@ -151,13 +154,13 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			Qso2 qso = new Qso2("<Credit_Granted:49>DXCC:CARD&LOTW,DXCC_MODE:CARD&LOTW,DXCC_BAND:CARD",
-			                    aEnums, ref err);
+			                    App.AdifEnums, ref err);
 			Credit_Granted granted = qso.GetField("Credit_Granted") as Credit_Granted;
 			List<Credit> creds = granted.GetCredits("DXCC");
 			Assert.AreEqual(1, creds.Count);
 			Assert.AreEqual(2, creds[0].Media.Count);
 			Assert.AreEqual("DXCC:CARD&LOTW", creds[0].ToString());
-			granted.Add(new Credit("DXCC:EQSL", aEnums));
+			granted.Add(new Credit("DXCC:EQSL", App.AdifEnums));
 			creds = granted.GetCredits("DXCC");
 			Assert.AreEqual(3, creds[0].Media.Count);
 			Assert.AreEqual("DXCC:CARD&LOTW&EQSL", creds[0].ToString());

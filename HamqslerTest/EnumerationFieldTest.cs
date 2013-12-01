@@ -31,17 +31,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class EnumerationFieldTest
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test that Enumeration fields set properly
 		[Test]
 		public void TestEnumerationSet()
@@ -77,7 +73,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestEnumerationSet2()
 		{
-			EnumerationField ef = new EnumerationField("Arrl_Sect", aEnums);
+			EnumerationField ef = new EnumerationField("Arrl_Sect", App.AdifEnums);
 			Assert.AreEqual("Arrl_Sect", ef.EnumName);
 		}
 		
@@ -86,7 +82,7 @@ namespace hamqslerTest
 		public void TestValueInEnumeration2()
 		{
 			string err = string.Empty;
-			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			EnumerationField ef = new EnumerationField("Arrl_Section", App.AdifEnums);
 			Assert.IsTrue(ef.IsInEnumeration("NT", out err));
 			Assert.AreEqual(null, err);
 		}
@@ -96,7 +92,7 @@ namespace hamqslerTest
 		public void TestValueInEnumeration3()
 		{
 			string err = string.Empty;
-			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			EnumerationField ef = new EnumerationField("Arrl_Section", App.AdifEnums);
 			Assert.IsTrue(ef.IsInEnumeration("EB", out err));
 			Assert.AreEqual(null, err);
 		}
@@ -117,7 +113,7 @@ namespace hamqslerTest
 		public void TestValueNotInEnumeration1()
 		{
 			string err = string.Empty;
-			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			EnumerationField ef = new EnumerationField("Arrl_Section", App.AdifEnums);
 			Assert.IsFalse(ef.IsInEnumeration("ABCD", out err));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
 			                err);
@@ -158,7 +154,7 @@ namespace hamqslerTest
 		public void TestValidateTrue2()
 		{
 			string err = string.Empty;
-			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			EnumerationField ef = new EnumerationField("Arrl_Section", App.AdifEnums);
 			Assert.IsTrue(ef.Validate("NT", out err));
 		}
 		
@@ -167,7 +163,7 @@ namespace hamqslerTest
 		public void TestValidateTrue3()
 		{
 			string err = string.Empty;
-			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			EnumerationField ef = new EnumerationField("Arrl_Section", App.AdifEnums);
 			Assert.IsTrue(ef.Validate("EB", out err));
 		}
 		
@@ -176,7 +172,7 @@ namespace hamqslerTest
 		public void TestValidateFalse1()
 		{
 			string err = string.Empty;
-			EnumerationField ef = new EnumerationField("Arrl_Section", aEnums);
+			EnumerationField ef = new EnumerationField("Arrl_Section", App.AdifEnums);
 			Assert.IsFalse(ef.Validate("ABCD", out err));
 		}
 		

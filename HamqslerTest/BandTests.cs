@@ -29,22 +29,18 @@
 		[TestFixture]
 		public class BandTests
 		{
-			AdifEnumerations aEnums;
-			
-			// fixture setup
-			[TestFixtureSetUp]
-			public void Init()
-			{
-				Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-		        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-				aEnums = new AdifEnumerations(str);
-			}
-	
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 			// test Validate with valid value
 			[Test]
 			public void TestValidate2190m()
 			{
-				Band band = new Band("2190m", aEnums);
+				Band band = new Band("2190m", App.AdifEnums);
 				string error = string.Empty;
 				string modStr = string.Empty;
 				Assert.IsTrue(band.Validate(out error, out modStr));
@@ -56,7 +52,7 @@
 			[Test]
 			public void TestValidate1mm()
 			{
-				Band band = new Band("1mm", aEnums);
+				Band band = new Band("1mm", App.AdifEnums);
 				string error = string.Empty;
 				string modStr = string.Empty;
 				Assert.IsTrue(band.Validate(out error, out modStr));
@@ -68,7 +64,7 @@
 			[Test]
 			public void TestValidate1MM()
 			{
-				Band band = new Band("1MM", aEnums);
+				Band band = new Band("1MM", App.AdifEnums);
 				string error = string.Empty;
 				string modStr = string.Empty;
 				Assert.IsTrue(band.Validate(out error, out modStr));
@@ -80,7 +76,7 @@
 			[Test]
 			public void TestValidateBadValue()
 			{
-			Band band = new Band("23mm", aEnums);
+			Band band = new Band("23mm", App.AdifEnums);
 			string error = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(band.Validate(out error, out modStr));
@@ -93,7 +89,7 @@
 		[Test]
 		public void TestToAdifString()
 		{
-			Band band = new Band("23cm", aEnums);
+			Band band = new Band("23cm", App.AdifEnums);
 			Assert.AreEqual("<Band:4>23cm", band.ToAdifString());
 		}
 		
@@ -101,7 +97,7 @@
 		[Test]
 		public void TestIsWithinBandValidFreq()
 		{
-			Band band = new Band("40m", aEnums);
+			Band band = new Band("40m", App.AdifEnums);
 			Assert.IsTrue(band.IsWithinBand("7.102"));
 		}
 		
@@ -109,7 +105,7 @@
 		[Test]
 		public void TestIsWithinBandBadFreq()
 		{
-			Band band = new Band("40m", aEnums);
+			Band band = new Band("40m", App.AdifEnums);
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
 
@@ -117,7 +113,7 @@
 		[Test]
 		public void TestIsWithinBandBadFreqM()
 		{
-			Band band = new Band("40M", aEnums);
+			Band band = new Band("40M", App.AdifEnums);
 			Assert.IsFalse(band.IsWithinBand("14.302"));
 		}
 	}

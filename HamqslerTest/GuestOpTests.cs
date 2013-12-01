@@ -29,17 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class GuestOpTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test Validate with valid callsign
 		[Test]
 		public void TestValidateValidCall()
@@ -81,7 +77,7 @@ namespace hamqslerTest
 		public void TestModifyValuesValidCall()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Guest_Op:5>VA3HJ", aEnums, ref err);
+			Qso2 qso = new Qso2("<Guest_Op:5>VA3HJ", App.AdifEnums, ref err);
 			Guest_Op guest = qso.GetField("Guest_Op") as Guest_Op;
 			string mod = guest.ModifyValues(qso);
 			guest = qso.GetField("Guest_Op") as Guest_Op;
@@ -102,7 +98,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithOperatorField()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Guest_Op:5>VA3HJ<Operator:6>VA3JNO", aEnums, ref err);
+			Qso2 qso = new Qso2("<Guest_Op:5>VA3HJ<Operator:6>VA3JNO", App.AdifEnums, ref err);
 			Guest_Op guest = qso.GetField("Guest_Op") as Guest_Op;
 			string mod = guest.ModifyValues(qso);
 			guest = qso.GetField("Guest_Op") as Guest_Op;

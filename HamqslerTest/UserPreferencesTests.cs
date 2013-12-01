@@ -34,7 +34,11 @@ namespace hamqslerTest
 		[TestFixtureSetUp]
 		public void FixtureSetup()
 		{
-			prefs = new UserPreferences();			
+			bool init, err;
+			Program.app.CreateExceptionLogger(out init, out err);
+			Program.app.GetUserPreferences(out init, out err);
+			System.Diagnostics.Debug.Assert(!err);
+			prefs = Program.app.UserPreferences;
 			prefsType = prefs.GetType();
 		}
 		

@@ -29,15 +29,19 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ClublogQsoUploadStatusTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestMethod()
 		{
 			string err = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Clublog_Qso_Upload_Status status = new Clublog_Qso_Upload_Status("Y", aEnums);
+			Clublog_Qso_Upload_Status status = new Clublog_Qso_Upload_Status("Y", App.AdifEnums);
 			Assert.AreEqual("<Clublog_Qso_Upload_Status:1>Y", status.ToAdifString());
 		}
 		
@@ -47,10 +51,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Clublog_Qso_Upload_Status status = new Clublog_Qso_Upload_Status("Y", aEnums);
+			Clublog_Qso_Upload_Status status = new Clublog_Qso_Upload_Status("Y", App.AdifEnums);
 			Assert.IsTrue(status.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -62,10 +63,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Clublog_Qso_Upload_Status status = new Clublog_Qso_Upload_Status("B", aEnums);
+			Clublog_Qso_Upload_Status status = new Clublog_Qso_Upload_Status("B", App.AdifEnums);
 			Assert.IsFalse(status.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'B' was not found in enumeration.",
 			                err);

@@ -29,24 +29,20 @@ namespace hamqslerTest
 	[TestFixture]
 	public class AntPathTest
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test that constructor creates valid object
 		[Test]
 		public void TestConstructor()
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Ant_Path ap = new Ant_Path("G", aEnums);
+			Ant_Path ap = new Ant_Path("G", App.AdifEnums);
 			Assert.IsTrue(ap.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -59,7 +55,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Ant_Path ap = new Ant_Path("F", aEnums);
+			Ant_Path ap = new Ant_Path("F", App.AdifEnums);
 			Assert.IsFalse(ap.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
@@ -72,7 +68,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 		    // get the hamqsler assembly
-			Ant_Path ap = new Ant_Path("G", aEnums);
+			Ant_Path ap = new Ant_Path("G", App.AdifEnums);
 			Assert.AreEqual("<Ant_Path:1>G", ap.ToAdifString());
 		}
 	}

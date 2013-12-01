@@ -30,14 +30,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class CreditTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test CreditName accessor for credit without QSL medium
 		[Test]
 		public void TestCreditNameNoMedium()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			Assert.AreEqual("IOTA", credit.CreditName);
 		}
 		
@@ -45,10 +49,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestCreditNameMultipleMediums()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA:Lotw&card", aEnums);
+			Credit credit = new Credit("IOTA:Lotw&card", App.AdifEnums);
 			Assert.AreEqual("IOTA", credit.CreditName);
 		}
 		
@@ -56,10 +57,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestMediaNoMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			string[] media = new string[credit.Media.Count];
 			credit.Media.CopyTo(media);
 			Assert.IsNull(media[0]);
@@ -69,10 +67,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestMediaTwoMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA:Lotw&card", aEnums);
+			Credit credit = new Credit("IOTA:Lotw&card", App.AdifEnums);
 			string[] media = new string[credit.Media.Count];
 			credit.Media.CopyTo(media);
 			Assert.AreEqual("LOTW", media[0]);
@@ -83,10 +78,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToStringSingleCredit()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			Assert.AreEqual("IOTA", credit.ToString());
 		}
 		
@@ -94,10 +86,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToStringCreditAndSingleMedium()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA:CARD&Lotw", aEnums);
+			Credit credit = new Credit("IOTA:CARD&Lotw", App.AdifEnums);
 			Assert.AreEqual("IOTA:CARD&LOTW", credit.ToString());
 		}
 		
@@ -105,10 +94,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsInMediaNull()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			Assert.IsTrue(credit.IsInMedia(null));
 		}
 		
@@ -116,10 +102,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsInMediaTrue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA:Card&Lotw&eQSL", aEnums);
+			Credit credit = new Credit("IOTA:Card&Lotw&eQSL", App.AdifEnums);
 			Assert.IsTrue(credit.IsInMedia("CARD"));
 			Assert.IsTrue(credit.IsInMedia("LOTW"));
 			Assert.IsTrue(credit.IsInMedia("eqsl"));
@@ -129,10 +112,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestIsInMediaFalse()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA:Card&Lotw&eQSL", aEnums);
+			Credit credit = new Credit("IOTA:Card&Lotw&eQSL", App.AdifEnums);
 			Assert.IsFalse(credit.IsInMedia("QRZCOM"));
 		}
 		
@@ -140,10 +120,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidCreditNoMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(credit.Validate(out err, out modStr));
@@ -155,10 +132,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidCreditNoMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA2", aEnums);
+			Credit credit = new Credit("IOTA2", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(credit.Validate(out err, out modStr));
@@ -170,10 +144,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidCreditSingleInvalidMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA:crad", aEnums);
+			Credit credit = new Credit("IOTA:crad", App.AdifEnums);
 			string err = string.Empty;
 			string modStr =string.Empty;
 			Assert.IsFalse(credit.Validate(out err, out modStr));
@@ -185,10 +156,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidCreditNullAndValidMedia()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Credit credit = new Credit("IOTA", aEnums);
+			Credit credit = new Credit("IOTA", App.AdifEnums);
 			credit.Media.Add("Card");
 			credit.Media.Add("LotW");
 			string err = string.Empty;

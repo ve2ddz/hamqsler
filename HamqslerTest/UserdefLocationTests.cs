@@ -29,16 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class UserdefLocationTests
 	{
-		AdifEnumerations aEnums;
 		Userdef userdef1;
 		// TestFixtureSetup
 		[TestFixtureSetUp]
 		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
-			userdef1 = new Userdef("MumbaiLatitude", "L", aEnums);
+			App.AdifEnums.LoadDocument();
+			userdef1 = new Userdef("MumbaiLatitude", "L", App.AdifEnums);
 		}
 		
 		// test ToAdifString

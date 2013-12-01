@@ -28,17 +28,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class EnumerationValueTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test Validate returns true for value in enumeration
 		[Test]
 		public void TestValidateTrue()
@@ -72,7 +68,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			EnumerationValue ef = new EnumerationValue("NT", "Arrl_Section", aEnums);
+			EnumerationValue ef = new EnumerationValue("NT", "Arrl_Section", App.AdifEnums);
 			Assert.IsTrue(ef.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -84,7 +80,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			EnumerationValue ef = new EnumerationValue("ABCD", "Arrl_Section", aEnums);
+			EnumerationValue ef = new EnumerationValue("ABCD", "Arrl_Section", App.AdifEnums);
 			Assert.IsFalse(ef.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
 			                err);
@@ -97,7 +93,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			EnumerationValue ef = new EnumerationValue(null, "Arrl_Section", aEnums);
+			EnumerationValue ef = new EnumerationValue(null, "Arrl_Section", App.AdifEnums);
 			Assert.IsFalse(ef.Validate(out err, out modStr));
 			Assert.AreEqual("Value is null.", err);
 			Assert.IsNull(modStr);
@@ -108,7 +104,7 @@ namespace hamqslerTest
 		public void TestToAdifString()
 		{
 			string err = string.Empty;
-			EnumerationValue ef = new EnumerationValue("NT", "Arrl_Section", aEnums);
+			EnumerationValue ef = new EnumerationValue("NT", "Arrl_Section", App.AdifEnums);
 			Assert.AreEqual("<EnumerationValue:2>NT", ef.ToAdifString());
 		}
 	}

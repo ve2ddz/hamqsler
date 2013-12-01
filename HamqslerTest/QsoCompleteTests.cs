@@ -29,14 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class QsoCompleteTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Qso_Complete qc = new Qso_Complete("NIL", aEnums);
+			Qso_Complete qc = new Qso_Complete("NIL", App.AdifEnums);
 			Assert.AreEqual("<Qso_Complete:3>NIL", qc.ToAdifString());
 		}
 
@@ -44,10 +48,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidValue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Qso_Complete qc = new Qso_Complete("?", aEnums);
+			Qso_Complete qc = new Qso_Complete("?", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(qc.Validate(out err, out modStr));
@@ -59,10 +60,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidValue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Qso_Complete qc = new Qso_Complete("F", aEnums);
+			Qso_Complete qc = new Qso_Complete("F", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(qc.Validate(out err, out modStr));

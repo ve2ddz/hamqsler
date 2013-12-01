@@ -29,17 +29,14 @@ namespace hamqslerTest
 	[TestFixture]
 	public class UserdefEnumerationTests
 	{
-		AdifEnumerations aEnums;
 		Userdef userdef1;
 		// TestFixtureSetup
 		[TestFixtureSetUp]
 		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 			string[] enums = {"A", "B", "E", "V"};
-			userdef1 = new Userdef("HamQSLerQSLStatus", "E", enums, aEnums);
+			userdef1 = new Userdef("HamQSLerQSLStatus", "E", enums, App.AdifEnums);
 		}
 		
 		// test ToAdifString

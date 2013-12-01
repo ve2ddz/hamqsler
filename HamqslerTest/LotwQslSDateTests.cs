@@ -29,17 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class LotwQslSDateTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
@@ -80,7 +76,7 @@ namespace hamqslerTest
 			string adif = string.Format("<Lotw_Qsl_Sent:1>{0}<Lotw_QslSDate:8>20120916",
 			 	                           sent);
 			string err = string.Empty;
-			Qso2 qso = new Qso2(adif, aEnums, ref err);
+			Qso2 qso = new Qso2(adif, App.AdifEnums, ref err);
 			Lotw_QslSDate date = qso.GetField("Lotw_QslSDate") as Lotw_QslSDate;
 			Assert.IsNotNull(date);
 			err = date.ModifyValues(qso);
@@ -97,7 +93,7 @@ namespace hamqslerTest
 			string adif = string.Format("<Lotw_Qsl_Sent:1>{0}<Lotw_QslSDate:8>20120916",
 			 	                           sent);
 			string err = string.Empty;
-			Qso2 qso = new Qso2(adif, aEnums, ref err);
+			Qso2 qso = new Qso2(adif, App.AdifEnums, ref err);
 			Lotw_QslSDate date = qso.GetField("Lotw_QslSDate") as Lotw_QslSDate;
 			Assert.IsNotNull(date);
 			err = date.ModifyValues(qso);
@@ -112,7 +108,7 @@ namespace hamqslerTest
 		public void TestModifyValuesNull()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Lotw_QslSDate:8>20120916", aEnums, ref err);
+			Qso2 qso = new Qso2("<Lotw_QslSDate:8>20120916", App.AdifEnums, ref err);
 			Lotw_QslSDate date = qso.GetField("Lotw_QslSDate") as Lotw_QslSDate;
 			Assert.IsNotNull(date);
 			err = date.ModifyValues(qso);

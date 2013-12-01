@@ -29,14 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class PropModeTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Prop_Mode pm = new Prop_Mode("EME", aEnums);
+			Prop_Mode pm = new Prop_Mode("EME", App.AdifEnums);
 			Assert.AreEqual("<Prop_Mode:3>EME", pm.ToAdifString());
 		}
 
@@ -44,10 +48,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestTValidateValidMode()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Prop_Mode pm = new Prop_Mode("EME", aEnums);
+			Prop_Mode pm = new Prop_Mode("EME", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(pm.Validate(out err, out modStr));
@@ -59,10 +60,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestTValidateInvalidMode()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Prop_Mode pm = new Prop_Mode("PMS", aEnums);
+			Prop_Mode pm = new Prop_Mode("PMS", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(pm.Validate(out err, out modStr));

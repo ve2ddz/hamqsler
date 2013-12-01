@@ -28,16 +28,13 @@ namespace hamqslerTest
 	// tests for UserdefTime class
 	public class UserdefTimeTests
 	{
-		AdifEnumerations aEnums;
 		Userdef userdef1;
 		// TestFixtureSetup
 		[TestFixtureSetUp]
 		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
-			userdef1 = new Userdef("QslTime", "T", aEnums);
+			App.AdifEnums.LoadDocument();
+			userdef1 = new Userdef("QslTime", "T", App.AdifEnums);
 		}
 		
 		// test ToAdifString

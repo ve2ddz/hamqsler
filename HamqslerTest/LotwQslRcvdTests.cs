@@ -30,22 +30,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class LotwQslRcvdTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("Y", aEnums);
+			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("Y", App.AdifEnums);
 			Assert.AreEqual("<Lotw_Qsl_Rcvd:1>Y", rcvd.ToAdifString());
 		}
 		
@@ -55,7 +51,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("Y", aEnums);
+			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("Y", App.AdifEnums);
 			Assert.IsTrue(rcvd.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -67,7 +63,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("F", aEnums);
+			Lotw_Qsl_Rcvd rcvd = new Lotw_Qsl_Rcvd("F", App.AdifEnums);
 			Assert.IsFalse(rcvd.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);
@@ -80,7 +76,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Qso2 qso = new Qso2("<Lotw_Qsl_Rcvd:1>V", aEnums,ref err);
+			Qso2 qso = new Qso2("<Lotw_Qsl_Rcvd:1>V", App.AdifEnums,ref err);
 			Lotw_Qsl_Rcvd rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
 			Assert.IsNotNull(rcvd);
 			modStr = rcvd.ModifyValues2(qso);
@@ -105,7 +101,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Qso2 qso = new Qso2("<Lotw_Qsl_Rcvd:1>V", aEnums,ref err);
+			Qso2 qso = new Qso2("<Lotw_Qsl_Rcvd:1>V", App.AdifEnums,ref err);
 			Lotw_Qsl_Rcvd rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
 			Assert.IsNotNull(rcvd);
 			modStr = rcvd.ModifyValues(qso);
@@ -136,7 +132,7 @@ namespace hamqslerTest
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Qso2 qso = new Qso2("<Credit_Granted:14>DXCC:CARD&EQSL<Lotw_Qsl_Rcvd:1>V", 
-			                    aEnums, ref err);
+			                    App.AdifEnums, ref err);
 			Assert.IsNull(err);
 			Lotw_Qsl_Rcvd rcvd = qso.GetField("Lotw_Qsl_Rcvd") as Lotw_Qsl_Rcvd;
 			Assert.IsNotNull(rcvd);

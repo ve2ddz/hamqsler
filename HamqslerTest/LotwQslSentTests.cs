@@ -29,14 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class LotwQslSentTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Lotw_Qsl_Sent rcvd = new Lotw_Qsl_Sent("Y", aEnums);
+			Lotw_Qsl_Sent rcvd = new Lotw_Qsl_Sent("Y", App.AdifEnums);
 			Assert.AreEqual("<Lotw_Qsl_Sent:1>Y", rcvd.ToAdifString());
 		}
 		
@@ -44,12 +48,9 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidValue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Lotw_Qsl_Sent rcvd = new Lotw_Qsl_Sent("Y", aEnums);
+			Lotw_Qsl_Sent rcvd = new Lotw_Qsl_Sent("Y", App.AdifEnums);
 			Assert.IsTrue(rcvd.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -59,12 +60,9 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidValue()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Lotw_Qsl_Sent rcvd = new Lotw_Qsl_Sent("F", aEnums);
+			Lotw_Qsl_Sent rcvd = new Lotw_Qsl_Sent("F", App.AdifEnums);
 			Assert.IsFalse(rcvd.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'F' was not found in enumeration.",
 			                err);

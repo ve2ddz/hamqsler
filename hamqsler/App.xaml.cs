@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Security;
@@ -48,14 +49,14 @@ namespace hamqsler
 			get {return logger;}
 		}
 		
-		private static AdifEnumerations adifEnums;
+		private static AdifEnumerations adifEnums = new AdifEnumerations();
 		public static AdifEnumerations AdifEnums
 		{
 			get {return adifEnums;}
 			set {adifEnums = value;}
 		}
 		
-		private static CallsBureaus callBureaus;
+		private static CallsBureaus callBureaus = new CallsBureaus();
 		public static CallsBureaus CallBureaus
 		{
 			get {return callBureaus;}
@@ -205,7 +206,7 @@ namespace hamqsler
 				{
 					try
 					{
-						CopyDefaultCallsBureausXml();
+						CallBureaus.CopyDefaultXmlFile();
 					}
 					catch(Exception e)
 					{
@@ -301,7 +302,7 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="securityException">security exception indicator</param>
 		/// <param name="accessException">access exception indicator</param>
-		internal void CreateExceptionLogger(out bool securityException, out bool accessException)
+		public void CreateExceptionLogger(out bool securityException, out bool accessException)
 		{
 			logger = new ExceptionLogger(Environment.GetFolderPath(
 					Environment.SpecialFolder.MyDocuments) + "/hamqsler/Logs/hamqsler.log",
@@ -356,7 +357,7 @@ namespace hamqsler
 		/// initialized.</param>
 		/// <param name="userPrefsError">boolean indicating if an error occurred while loading
 		/// the prefs object</param>
-		internal void GetUserPreferences(
+		public void GetUserPreferences(
 				out bool userPrefsIntialized, out bool userPrefsError)
 		{
 			userPrefs = UserPreferences.CreateUserPreferences(false, out userPrefsIntialized,
@@ -493,7 +494,7 @@ namespace hamqsler
     	/// <param name="e">WebException being decoded</param>
     	/// <param name="fileName">Name of the file that program was attempting
     	/// to download when the error occurred.</param>
-        private void DecodeWebException(WebException e, string fileName)
+        public void DecodeWebException(WebException e, string fileName)
         {
         	// get status and response
             WebExceptionStatus status = e.Status;
@@ -542,26 +543,14 @@ namespace hamqsler
 		/// <summary>
 		/// Load AdifEnumerations from AdifEnumerations.xml
 		/// </summary>
-		public void GetAdifEnumerations()
+/*		public void GetAdifEnumerations()
 		{
 			string fileName = Path.Combine(Environment.GetFolderPath(
 				Environment.SpecialFolder.ApplicationData), @"HamQSLer\AdifEnumerations.xml");
 			Stream str = new FileStream(fileName, FileMode.Open);
-			AdifEnums = new AdifEnumerations(str);
+			AdifEnums.LoadDocument(str);
 			str.Close();
-		}
-		
-		/// <summary>
-		/// Load CallsBureaus from CallsBureaus.xml
-		/// </summary>
-		public void GetCallsBureaus()
-		{
-			string fileName = Path.Combine(Environment.GetFolderPath(
-				Environment.SpecialFolder.ApplicationData), @"HamQSLer\CallsBureaus.xml");
-			Stream str = new FileStream(fileName, FileMode.Open);
-			CallBureaus = new CallsBureaus(str);
-			str.Close();
-		}
+		}*/
 
 		/// <summary>
 		/// Checks AdifEnumerations.xml version number
@@ -699,25 +688,6 @@ namespace hamqsler
 			FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/AdifEnumerations.xml");
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
         	Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-        	FileStream fStream = File.Open(fInfo.FullName, FileMode.Create);
-        	byte[] bytes = new Byte[str.Length];
-        	str.Read(bytes, 0, (int)str.Length);
-        	fStream.Write(bytes, 0, (int)str.Length);
-        	fStream.Close();
-        	str.Close();
-		}
-		
-		/// <summary>
-		/// Copies the CallsBureaus.xml file stored within the program assembly to AppData
-		/// </summary>
-		public void CopyDefaultCallsBureausXml()
-		{
-			string appDataDirName =  Path.Combine(Environment.GetFolderPath(
-						Environment.SpecialFolder.ApplicationData), "HamQSLer");
-			DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
-			FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/CallsBureaus.xml");
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-        	Stream str = assembly.GetManifestResourceStream("hamqsler.CallsBureaus.xml");
         	FileStream fStream = File.Open(fInfo.FullName, FileMode.Create);
         	byte[] bytes = new Byte[str.Length];
         	str.Read(bytes, 0, (int)str.Length);

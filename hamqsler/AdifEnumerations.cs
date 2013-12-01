@@ -32,15 +32,13 @@ namespace hamqsler
 	/// <summary>
 	/// Container for AdifEnumerations. These are read in from AdifEnumerations.xml
 	/// </summary>
-	public class AdifEnumerations
+	public class AdifEnumerations : AppDataXMLFile
 	{
-		XDocument AdifEnumerationsDoc = null;
-		
 		public string Version
 		{
 			get 
 			{
-				XAttribute version = AdifEnumerationsDoc.Root.Attribute("Version");
+				XAttribute version = xDoc.Root.Attribute("Version");
 				if(version != null)
 				{
 					return version.Value;
@@ -55,9 +53,8 @@ namespace hamqsler
 		/// <summary>
 		/// Default constructor 
 		/// </summary>
-		public AdifEnumerations(Stream adifStream)
+		public AdifEnumerations() : base("AdifEnumerations.xml")
 		{
-            AdifEnumerationsDoc = XDocument.Load(adifStream);
 		}
 		
 		/// <summary>
@@ -69,7 +66,7 @@ namespace hamqsler
 		/// <returns>true if within value is in enumeration, false otherwise</returns>
 		public bool IsInEnumeration(string enumeration, string value)
 		{
-			List<XElement> elts = AdifEnumerationsDoc.Descendants(enumeration).ToList();
+			List<XElement> elts = xDoc.Descendants(enumeration).ToList();
 			
 			if(elts.Count == 0)
 			{
@@ -97,7 +94,7 @@ namespace hamqsler
 		/// <returns>Value of Meaning attribute for the value, null if no attribute</returns>
 		public string GetDescription(string enumeration, string value)
 		{
-			List<XElement> elts = AdifEnumerationsDoc.Descendants(enumeration).ToList();
+			List<XElement> elts = xDoc.Descendants(enumeration).ToList();
 			IEnumerable<XElement> enums = elts[0].Descendants("EnumValue");
 			foreach(XElement elt in enums)
 			{
@@ -118,7 +115,7 @@ namespace hamqsler
 		/// <returns>an array of strings containing the retrieved values</returns>
 		public string[] GetEnumeratedValues(string enumeration)
 		{
-			IEnumerable<XElement> elts = AdifEnumerationsDoc.Descendants(enumeration);
+			IEnumerable<XElement> elts = xDoc.Descendants(enumeration);
 			if(elts.Count() > 0)
 			{
 				var vals = from val in elts.Descendants("EnumValue") select val;
@@ -149,7 +146,7 @@ namespace hamqsler
 		/// <returns>EnumValue XElement for value or null</returns>
 		private XElement GetEnumValue(string enumeration, string value)
 		{
-			IEnumerable<XElement> elts = AdifEnumerationsDoc.Descendants(enumeration);
+			IEnumerable<XElement> elts = xDoc.Descendants(enumeration);
 			if(elts.Count() > 0)
 			{
 				var vals = from val in elts.Descendants("EnumValue") select val;
@@ -290,7 +287,7 @@ namespace hamqsler
 		public bool GetBandFromFrequency(string freq, out string band)
 		{
 			band = string.Empty;
-			List<XElement> elts = AdifEnumerationsDoc.Descendants("Band").ToList();
+			List<XElement> elts = xDoc.Descendants("Band").ToList();
 			IEnumerable<XElement> bands = elts.Descendants("EnumValue");
 			float f = float.Parse(freq, CultureInfo.InvariantCulture);
 			foreach(XElement b in bands)
@@ -317,7 +314,7 @@ namespace hamqsler
 		public bool GetCountryCodeFromName(string name, out string code)
 		{
 			code = string.Empty;
-			List<XElement> elts = AdifEnumerationsDoc.Descendants("Country_Code").ToList();
+			List<XElement> elts = xDoc.Descendants("Country_Code").ToList();
 			IEnumerable<XElement> codes = elts.Descendants("EnumValue");
 			foreach(XElement c in codes)
 			{

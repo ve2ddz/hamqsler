@@ -29,22 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class QslRcvdViaTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("B", aEnums);
+			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("B", App.AdifEnums);
 			Assert.AreEqual("<Qsl_Rcvd_Via:1>B", status.ToAdifString());
 		}
 
@@ -52,7 +48,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValid()
 		{
-			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("B", aEnums);
+			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("B", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(status.Validate(out err, out modStr));
@@ -66,7 +62,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("F", aEnums);
+			Qsl_Rcvd_Via status = new Qsl_Rcvd_Via("F", App.AdifEnums);
 			Assert.IsFalse(status.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'F' was not found in enumeration.", 
 			                err);
@@ -79,7 +75,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Qso2 qso = new Qso2("<Qsl_Rcvd_Via:1>E", aEnums, ref err);
+			Qso2 qso = new Qso2("<Qsl_Rcvd_Via:1>E", App.AdifEnums, ref err);
 			Qsl_Rcvd_Via status = qso.GetField("Qsl_Rcvd_Via") as Qsl_Rcvd_Via;
 			Assert.IsNotNull(status);
 			string mod = status.ModifyValues(qso);
@@ -96,7 +92,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Qso2 qso = new Qso2("<Qsl_Rcvd_Via:1>M", aEnums, ref err);
+			Qso2 qso = new Qso2("<Qsl_Rcvd_Via:1>M", App.AdifEnums, ref err);
 			Qsl_Rcvd_Via status = qso.GetField("Qsl_Rcvd_Via") as Qsl_Rcvd_Via;
 			Assert.IsNotNull(status);
 			string mod = status.ModifyValues(qso);

@@ -29,22 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class UserdefTests
 	{
-		AdifEnumerations aEnums;
-		
 		// fixture setup
 		[TestFixtureSetUp]
 		public void Init()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
 
 		// test ToAdifString with no Enumeration or range
 		[Test]
 		public void TestToAdifString()
 		{
-			Userdef ud = new Userdef("EPC", "N", aEnums);
+			Userdef ud = new Userdef("EPC", "N", App.AdifEnums);
 			Assert.AreEqual("<Userdef1:3:N>EPC", ud.ToAdifString(1));
 		}
 		
@@ -53,7 +49,7 @@ namespace hamqslerTest
 		public void TestToAdifStringEnumeration()
 		{
 			string[] sizes = {"S","M","L"};
-			Userdef ud = new Userdef("SweaterSize", "E", sizes, aEnums);
+			Userdef ud = new Userdef("SweaterSize", "E", sizes, App.AdifEnums);
 			Assert.AreEqual("<Userdef2:19:E>SweaterSize,{S,M,L}", ud.ToAdifString(2));
 		}
 		
@@ -61,7 +57,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifStringERange()
 		{
-			Userdef ud = new Userdef("ShoeSize", "N", "5", "20", aEnums);
+			Userdef ud = new Userdef("ShoeSize", "N", "5", "20", App.AdifEnums);
 			Assert.AreEqual("<Userdef3:15:N>ShoeSize,{5:20}", ud.ToAdifString(3));
 		}
 		
@@ -69,7 +65,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValid()
 		{
-			Userdef ud = new Userdef("EPC", "N", aEnums);
+			Userdef ud = new Userdef("EPC", "N", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(ud.Validate(out err, out modStr));
@@ -82,7 +78,7 @@ namespace hamqslerTest
 		public void TestValidateValidEnums()
 		{
 			string[] sizes = {"S","M","L"};
-			Userdef ud = new Userdef("SweaterSize", "E", sizes, aEnums);
+			Userdef ud = new Userdef("SweaterSize", "E", sizes, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(ud.Validate(out err, out modStr));
@@ -94,7 +90,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidRange()
 		{
-			Userdef ud = new Userdef("ShoeSize", "E", "5", "20", aEnums);
+			Userdef ud = new Userdef("ShoeSize", "E", "5", "20", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(ud.Validate(out err, out modStr));
@@ -106,7 +102,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNoName()
 		{
-			Userdef ud = new Userdef("", "N", aEnums);
+			Userdef ud = new Userdef("", "N", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
@@ -118,7 +114,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNullName()
 		{
-			Userdef ud = new Userdef(null, "N", aEnums);
+			Userdef ud = new Userdef(null, "N", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
@@ -130,7 +126,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNoDataType()
 		{
-			Userdef ud = new Userdef("EPC", "", aEnums);
+			Userdef ud = new Userdef("EPC", "", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
@@ -142,7 +138,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNullDataType()
 		{
-			Userdef ud = new Userdef("EPC", null, aEnums);
+			Userdef ud = new Userdef("EPC", null, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
@@ -154,7 +150,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidDataType()
 		{
-			Userdef ud = new Userdef("EPC", "Q", aEnums);
+			Userdef ud = new Userdef("EPC", "Q", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
@@ -167,7 +163,7 @@ namespace hamqslerTest
 		public void TestValidateNonEnumeration()
 		{
 			string[] sizes = {};
-			Userdef ud = new Userdef("SweaterSize", "E", sizes, aEnums);
+			Userdef ud = new Userdef("SweaterSize", "E", sizes, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
@@ -179,7 +175,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNullEnumeration()
 		{
-			Userdef ud = new Userdef("SweaterSize", "E", null, aEnums);
+			Userdef ud = new Userdef("SweaterSize", "E", null, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
@@ -192,7 +188,7 @@ namespace hamqslerTest
 		public void TestValidateNonNumberlLowerLimit(
 			[Values("", null, "E5", ".5", "-.5", "+.5")] string lower)
 		{
-			Userdef ud = new Userdef("ShoeSize", "E", lower, "20", aEnums);
+			Userdef ud = new Userdef("ShoeSize", "E", lower, "20", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));
@@ -205,7 +201,7 @@ namespace hamqslerTest
 		public void TestValidateNonNumberlUpperLimit(
 			[Values("", null, "E5", ".5", "-.5", "+.5")] string upper)
 		{
-			Userdef ud = new Userdef("ShoeSize", "E", "5", upper, aEnums);
+			Userdef ud = new Userdef("ShoeSize", "E", "5", upper, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(ud.Validate(out err, out modStr));

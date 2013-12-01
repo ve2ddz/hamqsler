@@ -32,17 +32,15 @@ namespace hamqslerTest
 	[TestFixture]
 	public class Qso2Tests
 	{
-		AdifEnumerations aEnums;
 		string errorString = string.Empty;
-		// test fixture setup
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
-		}
 		
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+				
 		// test Count
 		[Test, Sequential]
 		public void TestCount(
@@ -50,7 +48,7 @@ namespace hamqslerTest
 			 string record,
 			 [Values(0, 5)] int count)
 		{
-			Qso2 qso = new Qso2(record, aEnums, ref errorString);
+			Qso2 qso = new Qso2(record, App.AdifEnums, ref errorString);
 			Assert.AreEqual(count, qso.Count);
 			Assert.IsNullOrEmpty(errorString);
 		}
@@ -60,7 +58,7 @@ namespace hamqslerTest
 		public void TestFields()
 		{
 			Qso2 qso = new Qso2( "<mode:2>CW<band:3>10m<call:5>VA3HJ  <Qso_Date:8>20131001<Time_On:4>1017",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual("Mode", qso.Fields[0].Name);
 			Assert.AreEqual("Band", qso.Fields[1].Name);
 			Assert.AreEqual("Call", qso.Fields[2].Name);
@@ -86,7 +84,7 @@ namespace hamqslerTest
 			                 	"<ant_az:2>27 " +
 			                 	"<ANT_EL:3>-84" +
 			                 	"<ANT_PATH:1>L",
-			                 	aEnums, ref errorString);
+			                 	App.AdifEnums, ref errorString);
 			Assert.AreEqual(6, qso.Count);
 			Assert.AreEqual("A_Index", qso.Fields[0].Name);
 			Assert.AreEqual("Address", qso.Fields[1].Name);
@@ -113,7 +111,7 @@ namespace hamqslerTest
 			                    "<award_Granted:25>ARRL_DXCC_CW,CQ_USACA_500" +
 			                    "<award_Submitted:25>ARRL_DXCC_CW,CQ_USACA_500" +
 			                    "<Band_Rx:2>6m<Check:2>96<Class:2>3A",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(6, qso.Count);
 			Assert.AreEqual("Arrl_Sect", qso.Fields[0].Name);
 			Assert.AreEqual("Award_Granted", qso.Fields[1].Name);
@@ -139,7 +137,7 @@ namespace hamqslerTest
 			                    "<CoMMent:9>A comment" +
 			                    "<Cont:2>NA" +
 			                    "<Contacted_OP:5>VA3HJ",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual("Clublog_Qso_Upload_Date", qso.Fields[0].Name);
 			Assert.AreEqual("Clublog_Qso_Upload_Status", qso.Fields[1].Name);
 			Assert.AreEqual("Cnty", qso.Fields[2].Name);
@@ -165,7 +163,7 @@ namespace hamqslerTest
 			                    "<Credit_Granted:29>CQDX:CARD,CQDX_BAND:CARD&LOTW" +
 			                    "<Credit_Submitted:29>CQDX:CARD,CQDX_BAND:CARD&LOTW" +
 			                    "<Distance:6>1097.6",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual("Contest_Id", qso.Fields[0].Name);
 			Assert.AreEqual("Country", qso.Fields[1].Name);
 			Assert.AreEqual("CQZ", qso.Fields[2].Name);
@@ -192,7 +190,7 @@ namespace hamqslerTest
 			                    "<eqsl_Qslrdate:8>20130619" +
 			                    "<eqsl_qslsdate:8>20130712" +
 			                    "<eqsl_qsl_rcvd:1>Y",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual("DXCC", qso.Fields[0].Name);
 			Assert.AreEqual("Email", qso.Fields[1].Name);
 			Assert.AreEqual("Eq_Call", qso.Fields[2].Name);
@@ -219,7 +217,7 @@ namespace hamqslerTest
 			                    "<Force_init:1>N" +
 			                    "<FREQ:5>7.035" +
 			                    "<Freq_Rx:5>7.135",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Eqsl_Qsl_Sent", qso.Fields[0].Name);
 			Assert.AreEqual("Fists", qso.Fields[1].Name);
@@ -247,7 +245,7 @@ namespace hamqslerTest
 			                    "<HrdLog_Qso_Upload_Status:1>Y" +
 			                    "<IOTA:6>NA-001" +
 			                    "<IOTA_ISland_id:12>Newfoundland",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("GridSquare", qso.Fields[0].Name);
 			Assert.AreEqual("Guest_Op", qso.Fields[1].Name);
@@ -275,7 +273,7 @@ namespace hamqslerTest
 			                    "<Lon:11>W079 43.526" +
 			                    "<Lotw_qslrdate:8>20130612" +
 			                    "<LOTW_QSLSdate:8>20120502",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("ITUZ", qso.Fields[0].Name);
 			Assert.AreEqual("K_Index", qso.Fields[1].Name);
@@ -303,7 +301,7 @@ namespace hamqslerTest
 			                    "<ms_shower:8>Perseids" +
 			                    "<my_city:13>Burlington ON" +
 			                    "<my_CNTY:9>ON,Halton",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Lotw_Qsl_Rcvd", qso.Fields[0].Name);
 			Assert.AreEqual("Lotw_Qsl_Sent", qso.Fields[1].Name);
@@ -331,7 +329,7 @@ namespace hamqslerTest
 			                    "<MY_FISTS:4>1234" +
 			                    "<My_Gridsquare:4>FN03" +
 			                    "<My_IOTA:6>EU-126",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("My_Country", qso.Fields[0].Name);
 			Assert.AreEqual("My_CQ_Zone", qso.Fields[1].Name);
@@ -359,7 +357,7 @@ namespace hamqslerTest
 			                    "<my_lon:11>W079 43.795" +
 			                    "<my_Name:3>Jim" +
 			                    "<my_postal_code:7>L7R 1E1",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("My_Iota_Island_ID", qso.Fields[0].Name);
 			Assert.AreEqual("My_ITU_Zone", qso.Fields[1].Name);
@@ -387,7 +385,7 @@ namespace hamqslerTest
 			                    "<MY_Sota_Ref:10>VE3/ON-046" +
 			                    "<My_State:2>ON" +
 			                    "<My_Street:13>360 Pearl St.",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("My_Rig", qso.Fields[0].Name);
 			Assert.AreEqual("My_Sig", qso.Fields[1].Name);
@@ -416,7 +414,7 @@ namespace hamqslerTest
 			                    "for this QSO." +
 			                    "<nr_bursts:2>47" +
 			                    "<nr_pings:2>32",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("My_Usaca_Counties", qso.Fields[0].Name);
 			Assert.AreEqual("My_VUCC_Grids", qso.Fields[1].Name);
@@ -445,7 +443,7 @@ namespace hamqslerTest
 			                    "<Precedence:2>96" +
 			                    "<Prop_Mode:3>ECH" +
 			                    "<Public_Key:16>A456FCBA234999FC",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Operator", qso.Fields[0].Name);
 			Assert.AreEqual("Owner_Callsign", qso.Fields[1].Name);
@@ -474,7 +472,7 @@ namespace hamqslerTest
 			                    "<QslRDate:8>19980328" +
 			                    "<QslSDate:8>19960516" +
 			                    "<Qsl_Rcvd:1>Y",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("QrzCom_Qso_Upload_Date", qso.Fields[0].Name);
 			Assert.AreEqual("QrzCom_Qso_Upload_Status", qso.Fields[1].Name);
@@ -503,7 +501,7 @@ namespace hamqslerTest
 			                    "<Qsl_Via:5>VA3HJ " +
 			                    "<Qso_Complete:3>NIL" +
 			                    "<Qso_Date_Off:8>19990801",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Qsl_Rcvd_Via", qso.Fields[0].Name);
 			Assert.AreEqual("Qsl_Sent", qso.Fields[1].Name);
@@ -531,7 +529,7 @@ namespace hamqslerTest
 			                    "<Rst_Rcvd:3>579" +
 			                    "<Rst_Sent:3>-22" +
 			                    "<Rx_Pwr:5>0.125",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Qso_Random", qso.Fields[0].Name);
 			Assert.AreEqual("Qth", qso.Fields[1].Name);
@@ -559,7 +557,7 @@ namespace hamqslerTest
 			                    "<Sig:3>CNE" +
 			                    "<Sig_Info:10>Some event" +
 			                    "<SKCC:3>102",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Sat_Mode", qso.Fields[0].Name);
 			Assert.AreEqual("Sat_Mode", qso.Fields[1].Name);
@@ -587,7 +585,7 @@ namespace hamqslerTest
 			                    "<State:2>ON" +
 			                    "<Station_Callsign:5>VA3HJ" +
 			                    "<Stx:2>19",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Sota_Ref", qso.Fields[0].Name);
 			Assert.AreEqual("Srx", qso.Fields[1].Name);
@@ -615,7 +613,7 @@ namespace hamqslerTest
 			                    "<Ten_Ten:5>23174" +
 			                    "<Time_Off:6>123456" +
 			                    "<Tx_Pwr:3>100",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Stx_String", qso.Fields[0].Name);
 			Assert.AreEqual("Submode", qso.Fields[1].Name);
@@ -641,7 +639,7 @@ namespace hamqslerTest
 			                    "<VE_Prov:2>ON" +
 			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07" +
 			                    "<Web:19>http://www.va3hj.ca",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("Usaca_Counties", qso.Fields[0].Name);
 			Assert.AreEqual("VE_Prov", qso.Fields[1].Name);
@@ -659,7 +657,7 @@ namespace hamqslerTest
 		public void TestApplicationDefinedField()
 		{
 			errorString = string.Empty;
-			Qso2 qso = new Qso2("<APP_HAMQSLER_TEST:10:S>Test value", aEnums, ref errorString);
+			Qso2 qso = new Qso2("<APP_HAMQSLER_TEST:10:S>Test value", App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("APP_HAMQSLER_TEST", qso.Fields[0].Name);
 			Assert.AreEqual("Test value", qso.Fields[0].Value);
@@ -671,7 +669,7 @@ namespace hamqslerTest
 		public void TestApplicationDefinedFieldNoDataType()
 		{
 			errorString = string.Empty;
-			Qso2 qso = new Qso2("<APP_HAMQSLER_TEST:10>Test value", aEnums, ref errorString);
+			Qso2 qso = new Qso2("<APP_HAMQSLER_TEST:10>Test value", App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("APP_HAMQSLER_TEST", qso.Fields[0].Name);
 			Assert.AreEqual("Test value", qso.Fields[0].Value);
@@ -683,8 +681,8 @@ namespace hamqslerTest
 		public void TestUserDefinedFieldValueBoolValue()
 		{
 			Qsos2 qsos = new Qsos2();
-			qsos.UserDefs.Add(new Userdef("HamQSLerTrue", "B", aEnums));
-			Qso2 qso = new Qso2("<HamQSLerTrue:1>Y", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("HamQSLerTrue", "B", App.AdifEnums));
+			Qso2 qso = new Qso2("<HamQSLerTrue:1>Y", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual(1, qso.Fields.Count);
 			Assert.AreEqual("HamQSLerTrue", qso.Fields[0].Name);
@@ -696,8 +694,8 @@ namespace hamqslerTest
 		public void TestUserDefinedFieldValueDateValue()
 		{
 			Qsos2 qsos = new Qsos2();
-			qsos.UserDefs.Add(new Userdef("HamQSLerDate", "D", aEnums));
-			Qso2 qso = new Qso2("<HamQSLerDate:8>19990615", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("HamQSLerDate", "D", App.AdifEnums));
+			Qso2 qso = new Qso2("<HamQSLerDate:8>19990615", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual(1, qso.Fields.Count);
 			Assert.AreEqual("HamQSLerDate", qso.Fields[0].Name);
@@ -710,8 +708,8 @@ namespace hamqslerTest
 		{
 			Qsos2 qsos = new Qsos2();
 			string[] enums = {"S", "M", "L"};
-			qsos.UserDefs.Add(new Userdef("SweaterSize", "E", enums, aEnums));
-			Qso2 qso = new Qso2("<SweaterSize:1>M", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("SweaterSize", "E", enums, App.AdifEnums));
+			Qso2 qso = new Qso2("<SweaterSize:1>M", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual(1, qso.Fields.Count);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual("SweaterSize", qso.Fields[0].Name);
@@ -723,8 +721,8 @@ namespace hamqslerTest
 		public void TestUserDefinedFieldValueLocationValue()
 		{
 			Qsos2 qsos = new Qsos2();
-			qsos.UserDefs.Add(new Userdef("MumbaiLatitude", "L", aEnums));
-			Qso2 qso = new Qso2("<MumbaiLatitude:11>N010 27.315", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("MumbaiLatitude", "L", App.AdifEnums));
+			Qso2 qso = new Qso2("<MumbaiLatitude:11>N010 27.315", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual(1, qso.Fields.Count);
 			Assert.AreEqual("MumbaiLatitude", qso.Fields[0].Name);
@@ -736,8 +734,8 @@ namespace hamqslerTest
 		public void TestUserDefinedFieldValueMultilineStringValue()
 		{
 			Qsos2 qsos = new Qsos2();
-			qsos.UserDefs.Add(new Userdef("Multi", "M", aEnums));
-			Qso2 qso = new Qso2("<Multi:12>Line1\n\rLine2", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("Multi", "M", App.AdifEnums));
+			Qso2 qso = new Qso2("<Multi:12>Line1\n\rLine2", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual(1, qso.Fields.Count);
 			Assert.AreEqual("Multi", qso.Fields[0].Name);
@@ -749,8 +747,8 @@ namespace hamqslerTest
 		public void TestUserDefinedFieldValueNumberValue()
 		{
 			Qsos2 qsos = new Qsos2();
-			qsos.UserDefs.Add(new Userdef("EPC", "N", aEnums));
-			Qso2 qso = new Qso2("<EPC:2>12", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("EPC", "N", App.AdifEnums));
+			Qso2 qso = new Qso2("<EPC:2>12", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual(1, qso.Fields.Count);
 			Assert.AreEqual("EPC", qso.Fields[0].Name);
@@ -762,8 +760,8 @@ namespace hamqslerTest
 		public void TestUserDefinedFieldValueStringValue()
 		{
 			Qsos2 qsos = new Qsos2();
-			qsos.UserDefs.Add(new Userdef("Hopefield", "S", aEnums));
-			Qso2 qso = new Qso2("<Hopefield:4>hope", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("Hopefield", "S", App.AdifEnums));
+			Qso2 qso = new Qso2("<Hopefield:4>hope", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual(1, qso.Fields.Count);
 			Assert.AreEqual("Hopefield", qso.Fields[0].Name);
@@ -775,8 +773,8 @@ namespace hamqslerTest
 		public void TestUserDefinedFieldValueTimeValue()
 		{
 			Qsos2 qsos = new Qsos2();
-			qsos.UserDefs.Add(new Userdef("LocalTime", "T", aEnums));
-			Qso2 qso = new Qso2("<LocalTime:4>1245", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("LocalTime", "T", App.AdifEnums));
+			Qso2 qso = new Qso2("<LocalTime:4>1245", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual(null, errorString);
 			Assert.AreEqual(1, qso.Fields.Count);
 			Assert.AreEqual("LocalTime", qso.Fields[0].Name);
@@ -788,8 +786,8 @@ namespace hamqslerTest
 		public void TestUserDefinedFieldInvalidDataType()
 		{
 			Qsos2 qsos = new Qsos2();
-			qsos.UserDefs.Add(new Userdef("LocalTime", "X", aEnums));
-			Qso2 qso = new Qso2("<LocalTime:4>1245", aEnums, ref errorString, qsos);
+			qsos.UserDefs.Add(new Userdef("LocalTime", "X", App.AdifEnums));
+			Qso2 qso = new Qso2("<LocalTime:4>1245", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual("\t'LocalTime' has unsupported data type. Field deleted.", errorString);
 			Assert.AreEqual(0, qso.Fields.Count);
 		}
@@ -799,7 +797,7 @@ namespace hamqslerTest
 		public void TestInvalidField()
 		{
 			Qsos2 qsos = new Qsos2();
-			Qso2 qso = new Qso2("<LocalTime:4>1245", aEnums, ref errorString, qsos);
+			Qso2 qso = new Qso2("<LocalTime:4>1245", App.AdifEnums, ref errorString, qsos);
 			Assert.AreEqual("\t'LocalTime' field not valid field type and" +
                              " not a user defined type. Field deleted." +
                              Environment.NewLine, errorString);
@@ -811,7 +809,7 @@ namespace hamqslerTest
 		public void TestGetField()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			Assert.AreEqual("EN98,FM08,EM97,FM07", qso["vucc_grids"]);
 		}
 		
@@ -822,7 +820,7 @@ namespace hamqslerTest
 		public void TestGetFieldNullFieldName()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			string val = qso[null];
 			Assert.Fail("Should have generated ArgumentNullException");
 		}
@@ -833,7 +831,7 @@ namespace hamqslerTest
 		public void TestGetFieldEmptyFieldName()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			string val = qso[string.Empty];
 			Assert.Fail("Should have generated ArgumentException");
 		}
@@ -843,7 +841,7 @@ namespace hamqslerTest
 		public void TestGetFieldNoField()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			string val = qso["band"];
 			Assert.AreEqual(null, val);
 		}
@@ -853,7 +851,7 @@ namespace hamqslerTest
 		public void TestSetFieldExistingField()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			qso["VE_pROV"] = "AB";
 			Assert.AreEqual("AB", qso["ve_prov"]);
 		}
@@ -864,7 +862,7 @@ namespace hamqslerTest
 		public void TestSetFieldExistingFieldInvalidValue()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			qso["VUCC_Grids"] = "EN98,FM08,EM97";
 			Assert.Fail("Should have generated ArgumentException");
 		}
@@ -876,7 +874,7 @@ namespace hamqslerTest
 		public void TestSetFieldNullField()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			qso[null] = "AB";
 			Assert.Fail("Should have generated ArgumentNullException");
 		}
@@ -887,7 +885,7 @@ namespace hamqslerTest
 		public void TestSetFieldEmptyKey()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			qso[string.Empty] = "AB";
 			Assert.Fail("Should have generated ArgumentException");
 		}
@@ -897,7 +895,7 @@ namespace hamqslerTest
 		public void TestSetFieldValidKeyNotExistingField()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			qso["band"] = "10m";
 			Assert.AreEqual("10m", qso["BAND"]);
 		}
@@ -911,7 +909,7 @@ namespace hamqslerTest
 		public void TestSetFieldValidKeyNotExistingFieldInvalidValue()
 		{
 			Qso2 qso = new Qso2("<VE_Prov:2>ON" +
-			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", aEnums, ref errorString);
+			                    "<VUCC_Grids:19>EN98,FM08,EM97,FM07", App.AdifEnums, ref errorString);
 			qso["band"] = "11m";
 			Assert.Fail("Should have generated ArgumentException");
 		}
@@ -922,7 +920,7 @@ namespace hamqslerTest
 			[Values("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
 			       "<Call:6>VA3JNO<Mode:3>SSB<band:3>40m<qso_date:8>20130615<time_on:6>124316")] string q)
 		{
-			Qso2 qso = new Qso2(q, aEnums, ref errorString);
+			Qso2 qso = new Qso2(q, App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Assert.AreEqual(null, errorString);
 		}
@@ -941,7 +939,7 @@ namespace hamqslerTest
 			       "\tInvalid QSO: Qso_Date not specified.",
 			       "\tInvalid QSO: Time_On not specified.")] string errMsg)
 		{
-			Qso2 qso = new Qso2(q, aEnums, ref errorString);
+			Qso2 qso = new Qso2(q, App.AdifEnums, ref errorString);
 			Assert.AreEqual(null, errorString);
 			Assert.IsFalse(qso.Validate(ref errorString));
 			Assert.AreEqual(errMsg, errorString);
@@ -952,7 +950,7 @@ namespace hamqslerTest
 		public void TestToAdifString()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Assert.AreEqual("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<Qso_Date:8>20130615<Time_On:6>124316<eor>",
 			                qso.ToAdifString());
@@ -963,10 +961,10 @@ namespace hamqslerTest
 		public void TestEqualsWithEqualQsos()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(q2.Validate(ref errorString));
 			Assert.IsTrue(qso.Equals(q2));
 		}
@@ -976,10 +974,10 @@ namespace hamqslerTest
 		public void TestEqualsWithDiffDates()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130622<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(q2.Validate(ref errorString));
 			Assert.IsFalse(qso.Equals(q2));
 		}
@@ -989,10 +987,10 @@ namespace hamqslerTest
 		public void TestEqualsWithDiffNumberOfFields()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<time_off:6>124522",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(q2.Validate(ref errorString));
 			Assert.IsFalse(qso.Equals(q2));
 		}
@@ -1002,10 +1000,10 @@ namespace hamqslerTest
 		public void TestEqualsWithDiffField()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<time_off:6>124522",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(q2.Validate(ref errorString));
 			Assert.IsFalse(qso.Equals(q2));
 		}
@@ -1015,7 +1013,7 @@ namespace hamqslerTest
 		public void TestGetFieldWithDefault()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Assert.AreEqual("SSB", qso["mode", "CW"]);
 		}
@@ -1025,7 +1023,7 @@ namespace hamqslerTest
 		public void TestGetNoFieldWithDefault()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Assert.AreEqual("CW", qso["mode2", "CW"]);
 		}
@@ -1035,7 +1033,7 @@ namespace hamqslerTest
 		public void TestGetAdifField()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			AdifField field = qso.GetField("Call");
 			Assert.IsTrue(field is Call);
 		}
@@ -1045,7 +1043,7 @@ namespace hamqslerTest
 		public void TestGetAdifFieldNoField()
 		{
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316<name:3>Jim",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.IsTrue(qso.Validate(ref errorString));
 			Assert.IsNull(qso.GetField("time_off"));
 		}
@@ -1057,7 +1055,7 @@ namespace hamqslerTest
 			Qso2 qso = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615" +
 			                    "<time_on:6>124316<name:3>Jim" +
 			                    "<credit_granted:38>IOTA,JCG,CQWAZ_CW,CQWAZ_MODE:CARD&LOTW",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Assert.AreEqual("\tCredit_Granted:" + Environment.NewLine +
 			                "\t\tAward 'JCG' deleted because there is no equivalent Credit." +
 			                Environment.NewLine +
@@ -1074,7 +1072,7 @@ namespace hamqslerTest
 			        "N", "N")] string def)
 		{
 			string errorString = string.Empty;
-			Qso2 qso = new Qso2(string.Empty, aEnums, ref errorString);
+			Qso2 qso = new Qso2(string.Empty, App.AdifEnums, ref errorString);
 			Assert.AreEqual(def, qso[field]);
 		}
 	}

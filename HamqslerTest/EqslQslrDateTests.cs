@@ -29,18 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class EqslQslRDateTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
-		// test ToAdifString
+		
 		[Test]
 		public void TestToAdifString()
 		{
@@ -80,7 +75,7 @@ namespace hamqslerTest
 			string adif = string.Format("<Eqsl_Qsl_Rcvd:1>{0}<Eqsl_QslRDate:8>20120916",
 			 	                           rcvd);
 			string err = string.Empty;
-			Qso2 qso = new Qso2(adif, aEnums, ref err);
+			Qso2 qso = new Qso2(adif, App.AdifEnums, ref err);
 			Eqsl_QslRDate date = qso.GetField("Eqsl_QslRDate") as Eqsl_QslRDate;
 			Assert.IsNotNull(date);
 			err = date.ModifyValues(qso);
@@ -97,7 +92,7 @@ namespace hamqslerTest
 			string adif = string.Format("<Eqsl_Qsl_Rcvd:1>{0}<Eqsl_QslRDate:8>20120916",
 			 	                           rcvd);
 			string err = string.Empty;
-			Qso2 qso = new Qso2(adif, aEnums, ref err);
+			Qso2 qso = new Qso2(adif, App.AdifEnums, ref err);
 			Eqsl_QslRDate date = qso.GetField("Eqsl_QslRDate") as Eqsl_QslRDate;
 			Assert.IsNotNull(date);
 			err = date.ModifyValues(qso);
@@ -112,7 +107,7 @@ namespace hamqslerTest
 		public void TestModifyValuesNull()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Eqsl_QslRDate:8>20120916", aEnums, ref err);
+			Qso2 qso = new Qso2("<Eqsl_QslRDate:8>20120916", App.AdifEnums, ref err);
 			Eqsl_QslRDate date = qso.GetField("Eqsl_QslRDate") as Eqsl_QslRDate;
 			Assert.IsNotNull(date);
 			err = date.ModifyValues(qso);

@@ -29,16 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class UserdefStringTests
 	{
-		AdifEnumerations aEnums;
 		Userdef userdef1;
 		// TestFixtureSetup
 		[TestFixtureSetUp]
 		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
-			userdef1 = new Userdef("EPC", "S", aEnums);
+			App.AdifEnums.LoadDocument();
+			userdef1 = new Userdef("EPC", "S", App.AdifEnums);
 		}
 		
 		// test ToAdifString

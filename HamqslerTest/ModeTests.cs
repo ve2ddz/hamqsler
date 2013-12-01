@@ -29,25 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ModeTests
 	{
-		AdifEnumerations aEnums = null;
-		
-		// test fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Setup()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);			
+			App.AdifEnums.LoadDocument();
 		}
 		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Mode mode = new Mode("PSK", aEnums);
+			Mode mode = new Mode("PSK", App.AdifEnums);
 			Assert.AreEqual("<Mode:3>PSK", mode.ToAdifString());
 		}
 		
@@ -55,10 +48,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidMode()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Mode mode = new Mode("PSK", aEnums);
+			Mode mode = new Mode("PSK", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(mode.Validate(out err, out modStr));
@@ -73,10 +63,7 @@ namespace hamqslerTest
 		public void TestValidateInvalidMode(
 			[Values("BADMODE", "")] string modeName)
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Mode mode = new Mode(modeName, aEnums);
+			Mode mode = new Mode(modeName, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(mode.Validate(out err, out modStr));
@@ -88,10 +75,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNullMode()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Mode mode = new Mode(null, aEnums);
+			Mode mode = new Mode(null, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(mode.Validate(out err, out modStr));
@@ -104,7 +88,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithValidModeNoSubmode()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Mode:2>AM", aEnums, ref err);
+			Qso2 qso = new Qso2("<Mode:2>AM", App.AdifEnums, ref err);
 			AdifField field = qso.GetField("Mode");
 			Assert.IsNotNull(field);
 			Mode mode = field as Mode;
@@ -118,7 +102,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithValidModeValidSubmode()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Mode:3>PSK<Submode:5>PSK31", aEnums, ref err);
+			Qso2 qso = new Qso2("<Mode:3>PSK<Submode:5>PSK31", App.AdifEnums, ref err);
 			AdifField field = qso.GetField("Mode");
 			Assert.IsNotNull(field);
 			Mode mode = field as Mode;
@@ -133,7 +117,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithInvalidModeNoSubmode()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Mode:6>SQUIBB", aEnums, ref err);
+			Qso2 qso = new Qso2("<Mode:6>SQUIBB", App.AdifEnums, ref err);
 			AdifField field = qso.GetField("Mode");
 			Assert.IsNotNull(field);
 			Mode mode = field as Mode;
@@ -151,7 +135,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithInalidModeWithValidSubmode()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Mode:6>SQUIBB<Submode:3>LSB", aEnums, ref err);
+			Qso2 qso = new Qso2("<Mode:6>SQUIBB<Submode:3>LSB", App.AdifEnums, ref err);
 			AdifField field = qso.GetField("Mode");
 			Assert.IsNotNull(field);
 			Mode mode = field as Mode;
@@ -169,7 +153,7 @@ namespace hamqslerTest
 		public void TestModifyValuesWithValidModeWithMismatchedSubmode()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Mode:3>PSK<Submode:3>LSB", aEnums, ref err);
+			Qso2 qso = new Qso2("<Mode:3>PSK<Submode:3>LSB", App.AdifEnums, ref err);
 			AdifField field = qso.GetField("Mode");
 			Assert.IsNotNull(field);
 			Mode mode = field as Mode;

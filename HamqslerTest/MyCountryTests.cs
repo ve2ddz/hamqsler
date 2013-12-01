@@ -29,14 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class MyCountryTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Country country = new My_Country("United States", aEnums);
+			My_Country country = new My_Country("United States", App.AdifEnums);
 			Assert.AreEqual("<My_Country:13>UNITED STATES", country.ToAdifString());
 		}
 		
@@ -46,10 +50,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Country country = new My_Country("UNITED STATES", aEnums);
+			My_Country country = new My_Country("UNITED STATES", App.AdifEnums);
 			Assert.IsTrue(country.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -61,10 +62,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Country country = new My_Country("COCHISE", aEnums);
+			My_Country country = new My_Country("COCHISE", App.AdifEnums);
 			Assert.IsFalse(country.Validate(out err, out modStr));
 			Assert.AreEqual("\t'COCHISE' is not a valid country", err);
 			Assert.IsNull(modStr);

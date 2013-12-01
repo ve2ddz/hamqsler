@@ -33,17 +33,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class AdifEnumerationsTest
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test constructor and get version
 		[Test]
 		public void TestVersion()
@@ -53,7 +49,8 @@ namespace hamqslerTest
 							"" + Environment.NewLine +
 							"</AdifEnumerations>" + Environment.NewLine;
 			MemoryStream str = new MemoryStream(Encoding.ASCII.GetBytes(adifEn));
-			AdifEnumerations aEnums = new AdifEnumerations(str);
+			AdifEnumerations aEnums = new AdifEnumerations();
+			aEnums.LoadDocument(str);
 			Assert.AreEqual("3.0.4.0", aEnums.Version);
 		}
 		
@@ -66,7 +63,8 @@ namespace hamqslerTest
 							"" + Environment.NewLine +
 							"</AdifEnumerations>" + Environment.NewLine;
 			MemoryStream str = new MemoryStream(Encoding.ASCII.GetBytes(adifEn));
-			AdifEnumerations aEnums = new AdifEnumerations(str);
+			AdifEnumerations aEnums = new AdifEnumerations();
+			aEnums.LoadDocument(str);
 			Assert.IsNull(aEnums.Version);
 		}
 		
@@ -74,49 +72,49 @@ namespace hamqslerTest
 		[Test]
 		public void TestLoadingAdifEnumerationsXml()
 		{
-			Assert.IsNotNull(aEnums.Version);
+			Assert.IsNotNull(App.AdifEnums.Version);
 		}
 		
 		// test Ant_Path Enumeration
 		[Test]
 		public void TestAntPathEnumG()
 		{
-			Assert.IsTrue(aEnums.IsInEnumeration("Ant_Path", "G"));
+			Assert.IsTrue(App.AdifEnums.IsInEnumeration("Ant_Path", "G"));
 		}
 
 		// test Ant_Path Enumeration
 		[Test]
 		public void TestAntPathEnumO()
 		{
-			Assert.IsTrue(aEnums.IsInEnumeration("Ant_Path", "O"));
+			Assert.IsTrue(App.AdifEnums.IsInEnumeration("Ant_Path", "O"));
 		}
 
 		// test Ant_Path Enumeration
 		[Test]
 		public void TestAntPathEnumS()
 		{
-			Assert.IsTrue(aEnums.IsInEnumeration("Ant_Path", "S"));
+			Assert.IsTrue(App.AdifEnums.IsInEnumeration("Ant_Path", "S"));
 		}
 
 		// test Ant_Path Enumeration
 		[Test]
 		public void TestAntPathEnumL()
 		{
-			Assert.IsTrue(aEnums.IsInEnumeration("Ant_Path", "L"));
+			Assert.IsTrue(App.AdifEnums.IsInEnumeration("Ant_Path", "L"));
 		}
 
 		// test Ant_Path Enumeration with non value
 		[Test]
 		public void TestAntPathEnumNoMatch()
 		{
-			Assert.IsFalse(aEnums.IsInEnumeration("Ant_Path", "Q"));
+			Assert.IsFalse(App.AdifEnums.IsInEnumeration("Ant_Path", "Q"));
 		}
 		
 		// test GetDescription using Ant_Path enumeration
 		[Test]
 		public void TestGetDescriptionWithEnum()
 		{
-			string desc = aEnums.GetDescription("Ant_Path", "O");
+			string desc = App.AdifEnums.GetDescription("Ant_Path", "O");
 			Assert.IsNotNull(desc);
 			Assert.AreEqual("other", desc);
 		}
@@ -126,7 +124,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetDescriptionWithBadEnum()
 		{
-			string desc = aEnums.GetDescription("Ant_Path", "X");
+			string desc = App.AdifEnums.GetDescription("Ant_Path", "X");
 			Assert.IsNull(desc);
 		}
 		
@@ -134,7 +132,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetEnumeratedValues()
 		{
-			string[] values = aEnums.GetEnumeratedValues("Ant_Path");
+			string[] values = App.AdifEnums.GetEnumeratedValues("Ant_Path");
 			string[] testValues = {"G", "O", "S", "L"};
 			for(int i = 0; i < values.Length; i++)
 			{
@@ -147,21 +145,21 @@ namespace hamqslerTest
 		[ExpectedException(typeof(XmlException))]
 		public void TestGetEnumeratedValuesWithNoEnumeration()
 		{
-			string[] values = aEnums.GetEnumeratedValues("Ant_Path2");
+			string[] values = App.AdifEnums.GetEnumeratedValues("Ant_Path2");
 		}
 		
 		// test if enumeration value is deprecated
 		[Test]
 		public void TestIsDeprecated()
 		{
-			Assert.IsTrue(aEnums.IsDeprecated("Arrl_Section", "NWT"));
+			Assert.IsTrue(App.AdifEnums.IsDeprecated("Arrl_Section", "NWT"));
 		}
 			
 		// test if enumeration value is not deprecated
 		[Test]
 		public void TestIsNotDeprecated()
 		{
-			Assert.IsFalse(aEnums.IsDeprecated("Arrl_Section", "NT"));
+			Assert.IsFalse(App.AdifEnums.IsDeprecated("Arrl_Section", "NT"));
 		}
 		
 		// test if IsDeprecated throws XmlException if value not found
@@ -169,7 +167,7 @@ namespace hamqslerTest
 		[ExpectedException(typeof(XmlException))]
 		public void TestIsDeprecatedThrowsExceptionValueNotFound()
 		{
-			aEnums.IsDeprecated("Arrl_Section", "NXTW");
+			App.AdifEnums.IsDeprecated("Arrl_Section", "NXTW");
 		}
 		
 		// test if IsDeprecated throws XmlException if enumeration not found
@@ -177,21 +175,21 @@ namespace hamqslerTest
 		[ExpectedException(typeof(XmlException))]
 		public void TestIfDeprecatedThrowsExceptionEnumerationNotFound()
 		{
-			aEnums.IsDeprecated("Arrl2", "NT");
+			App.AdifEnums.IsDeprecated("Arrl2", "NT");
 		}
 		
 		// test if enumeration value is deleted
 		[Test]
 		public void TestIsDeleted()
 		{
-			Assert.IsTrue(aEnums.IsDeleted("Country_Code", "8"));
+			Assert.IsTrue(App.AdifEnums.IsDeleted("Country_Code", "8"));
 		}
 		
 		// test if enumeration value is deleted for not deleted value
 		[Test]
 		public void TestIsDeletedNotDeletedValue()
 		{
-			Assert.IsFalse(aEnums.IsDeleted("Country_Code", "1"));
+			Assert.IsFalse(App.AdifEnums.IsDeleted("Country_Code", "1"));
 		}
 		
 		// test if IsDeleted throws XmlException if enumeration not found
@@ -199,21 +197,21 @@ namespace hamqslerTest
 		[ExpectedException(typeof(XmlException))]
 		public void TestIfIsDeletedThrowsExceptionEnumerationNotFound()
 		{
-			aEnums.IsDeleted("Country_Code", "1026");
+			App.AdifEnums.IsDeleted("Country_Code", "1026");
 		}
 		
 		// test GetReplacementValue when IsDeprecated and replacement value exists
 		[Test]
 		public void TestGetReplacementValueForValidReplacement()
 		{
-			Assert.AreEqual("NT", aEnums.GetReplacementValue("Arrl_Section", "NWT"));
+			Assert.AreEqual("NT", App.AdifEnums.GetReplacementValue("Arrl_Section", "NWT"));
 		}
 		
 		// test GetReplacementValue when IsDeprecated not set
 		[Test]
 		public void TestGetReplacementValueNoReplacement()
 		{
-			Assert.IsNull(aEnums.GetReplacementValue("Arrl_Section", "ON"));
+			Assert.IsNull(App.AdifEnums.GetReplacementValue("Arrl_Section", "ON"));
 		}
 			
 		// test GetBandLimits for valid band
@@ -222,7 +220,7 @@ namespace hamqslerTest
 		{
 			string lowerLimit = string.Empty;
 			string upperLimit = string.Empty;
-			Assert.IsTrue(aEnums.GetBandLimits("2190m", out lowerLimit, out upperLimit));
+			Assert.IsTrue(App.AdifEnums.GetBandLimits("2190m", out lowerLimit, out upperLimit));
 			Assert.AreEqual(".136", lowerLimit);
 			Assert.AreEqual(".137", upperLimit);
 		}
@@ -233,7 +231,7 @@ namespace hamqslerTest
 		{
 			string lowerLimit = string.Empty;
 			string upperLimit = string.Empty;
-			Assert.IsTrue(aEnums.GetBandLimits("1mm", out lowerLimit, out upperLimit));
+			Assert.IsTrue(App.AdifEnums.GetBandLimits("1mm", out lowerLimit, out upperLimit));
 			Assert.AreEqual("241000", lowerLimit);
 			Assert.AreEqual("250000", upperLimit);
 		}
@@ -244,7 +242,7 @@ namespace hamqslerTest
 		{
 			string lowerLimit = string.Empty;
 			string upperLimit = string.Empty;
-			Assert.IsFalse(aEnums.GetBandLimits("11mm", out lowerLimit, out upperLimit));
+			Assert.IsFalse(App.AdifEnums.GetBandLimits("11mm", out lowerLimit, out upperLimit));
 		}
 		
 		// test GetBandFromFrequency for valid band
@@ -252,7 +250,7 @@ namespace hamqslerTest
 		public void TestGetBandFromFrequency4m()
 		{
 			string band = string.Empty;
-			Assert.IsTrue(aEnums.GetBandFromFrequency("70.58", out band));
+			Assert.IsTrue(App.AdifEnums.GetBandFromFrequency("70.58", out band));
 			Assert.AreEqual("4m", band);
 		}
 		
@@ -261,7 +259,7 @@ namespace hamqslerTest
 		public void TestGetBandFromFrequencyLowerEdge()
 		{
 			string band = string.Empty;
-			Assert.IsTrue(aEnums.GetBandFromFrequency("7", out band));
+			Assert.IsTrue(App.AdifEnums.GetBandFromFrequency("7", out band));
 			Assert.AreEqual("40m", band);
 		}
 		
@@ -270,7 +268,7 @@ namespace hamqslerTest
 		public void TestGetBandFromFrequencyUpperEdge()
 		{
 			string band = string.Empty;
-			Assert.IsTrue(aEnums.GetBandFromFrequency(".479", out band));
+			Assert.IsTrue(App.AdifEnums.GetBandFromFrequency(".479", out band));
 			Assert.AreEqual("630m", band);
 		}
 
@@ -279,42 +277,42 @@ namespace hamqslerTest
 		public void TestGetBandFromFrequencyInvalidFreq()
 		{
 			string band = string.Empty;
-			Assert.IsFalse(aEnums.GetBandFromFrequency(".485", out band));
+			Assert.IsFalse(App.AdifEnums.GetBandFromFrequency(".485", out band));
 		}
 
 		// test IsInEnumeration for Country Code
 		[Test]
 		public void TestIsInCountryCodeEnumeration()
 		{
-			Assert.IsTrue(aEnums.IsInEnumeration("Country_Code", "26"));
+			Assert.IsTrue(App.AdifEnums.IsInEnumeration("Country_Code", "26"));
 		}
 
 		// test IsInEnumeration for Country Code invalid code
 		[Test]
 		public void TestIsNotInCountryCodeEnumeration()
 		{
-			Assert.IsFalse(aEnums.IsInEnumeration("Country_Code", "73"));
+			Assert.IsFalse(App.AdifEnums.IsInEnumeration("Country_Code", "73"));
 		}
 
 		// test GetDescription for Country Code
 		[Test]
-		public void TestGetDesscriptionCountryCode()
+		public void TestGetDescriptionCountryCode()
 		{
-			Assert.AreEqual("BRITISH SOMALI", aEnums.GetDescription("Country_Code", "26"));
+			Assert.AreEqual("BRITISH SOMALI", App.AdifEnums.GetDescription("Country_Code", "26"));
 		}
 
 		// test GetDescription for Country Code with '&' in description
 		[Test]
 		public void TestGetDescriptionCountryCodeAmpersand()
 		{
-			Assert.AreEqual("AUCKLAND & CAMPBELL", aEnums.GetDescription("Country_Code", "16"));
+			Assert.AreEqual("AUCKLAND & CAMPBELL", App.AdifEnums.GetDescription("Country_Code", "16"));
 		}
 
 		// test GetDescription for Country Code invalid code
 		[Test]
 		public void TestGetDesscriptionInvalidCountryCode()
 		{
-			Assert.AreEqual(null, aEnums.GetDescription("Country_Code", "73"));
+			Assert.AreEqual(null, App.AdifEnums.GetDescription("Country_Code", "73"));
 		}
 		
 		// test GetCountryCodeFromName with valid name
@@ -322,7 +320,7 @@ namespace hamqslerTest
 		public void TestGetCountryCodeFromValidName()
 		{
 			string code = string.Empty;
-			bool found = aEnums.GetCountryCodeFromName("BRITISH SOMALI", out code);
+			bool found = App.AdifEnums.GetCountryCodeFromName("BRITISH SOMALI", out code);
 			Assert.IsTrue(found);
 			Assert.AreEqual("26", code);
 		}
@@ -332,7 +330,7 @@ namespace hamqslerTest
 		public void TestGetCountryCodeFromValidNameAmpersand()
 		{
 			string code = string.Empty;
-			bool found = aEnums.GetCountryCodeFromName("AUCKLAND & CAMPBELL", out code);
+			bool found = App.AdifEnums.GetCountryCodeFromName("AUCKLAND & CAMPBELL", out code);
 			Assert.IsTrue(found);
 			Assert.AreEqual("16", code);
 		}
@@ -342,7 +340,7 @@ namespace hamqslerTest
 		public void TestGetCountryCodeFromInvalidName()
 		{
 			string code = string.Empty;
-			bool found = aEnums.GetCountryCodeFromName("BOOGALOO", out code);
+			bool found = App.AdifEnums.GetCountryCodeFromName("BOOGALOO", out code);
 			Assert.IsFalse(found);
 			Assert.AreEqual(string.Empty, code);
 		}
@@ -352,7 +350,7 @@ namespace hamqslerTest
 		public void TestGetCreditEquivalentForAwardWithReplacement()
 		{
 			string credit = string.Empty;
-			Assert.AreEqual("DXCC_MODE", aEnums.GetCreditEquivalentForAward("DXCC_CW"));
+			Assert.AreEqual("DXCC_MODE", App.AdifEnums.GetCreditEquivalentForAward("DXCC_CW"));
 		}
 
 		// test GetCreditEquivalentForAward with replacement value
@@ -360,7 +358,7 @@ namespace hamqslerTest
 		public void TestGetCreditEquivalentForAwardWithReplacement2()
 		{
 			string credit = string.Empty;
-			Assert.AreEqual("IOTA", aEnums.GetCreditEquivalentForAward("IOTA"));
+			Assert.AreEqual("IOTA", App.AdifEnums.GetCreditEquivalentForAward("IOTA"));
 		}
 
 		// test GetCreditEquivalentForAward with no replacement value
@@ -368,7 +366,7 @@ namespace hamqslerTest
 		public void TestGetCreditEquivalentForAwardWithNoReplacement()
 		{
 			string credit = string.Empty;
-			Assert.AreEqual(null, aEnums.GetCreditEquivalentForAward("CPAWARD"));
+			Assert.AreEqual(null, App.AdifEnums.GetCreditEquivalentForAward("CPAWARD"));
 		}
 		
 		// test GetModeAndSubmode for null mode
@@ -378,7 +376,7 @@ namespace hamqslerTest
 			string mode = null;
 			string newMode = string.Empty;
 			string subMode = string.Empty;
-			bool status = aEnums.GetModeAndSubmode(mode, out newMode, out subMode);
+			bool status = App.AdifEnums.GetModeAndSubmode(mode, out newMode, out subMode);
 			Assert.IsFalse(status);
 		}
 
@@ -389,7 +387,7 @@ namespace hamqslerTest
 			string mode = "BADFMODE";
 			string newMode = string.Empty;
 			string subMode = string.Empty;
-			bool status = aEnums.GetModeAndSubmode(mode, out newMode, out subMode);
+			bool status = App.AdifEnums.GetModeAndSubmode(mode, out newMode, out subMode);
 			Assert.IsFalse(status);
 		}
 
@@ -400,7 +398,7 @@ namespace hamqslerTest
 			string mode = "AM";
 			string newMode = string.Empty;
 			string subMode = string.Empty;
-			bool status = aEnums.GetModeAndSubmode(mode, out newMode, out subMode);
+			bool status = App.AdifEnums.GetModeAndSubmode(mode, out newMode, out subMode);
 			Assert.IsTrue(status);
 			Assert.AreEqual(mode, newMode);
 			Assert.AreEqual(null, subMode);
@@ -413,7 +411,7 @@ namespace hamqslerTest
 			string mode = "DOMINOF";
 			string newMode = string.Empty;
 			string subMode = string.Empty;
-			bool status = aEnums.GetModeAndSubmode(mode, out newMode, out subMode);
+			bool status = App.AdifEnums.GetModeAndSubmode(mode, out newMode, out subMode);
 			Assert.IsTrue(status);
 			Assert.AreEqual("DOMINO", newMode);
 			Assert.AreEqual("DOMINOF", subMode);
@@ -423,7 +421,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetSubmodesFromModeValidMode()
 		{
-			string[] submodes = aEnums.GetSubmodesFromMode("SSB");
+			string[] submodes = App.AdifEnums.GetSubmodesFromMode("SSB");
 			Assert.AreEqual(2, submodes.Length);
 			Assert.AreEqual("LSB", submodes[0]);
 			Assert.AreEqual("USB", submodes[1]);
@@ -433,7 +431,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetSubmodesFromModeValidModeNoSubmodes()
 		{
-			string[] submodes = aEnums.GetSubmodesFromMode("AM");
+			string[] submodes = App.AdifEnums.GetSubmodesFromMode("AM");
 			Assert.AreEqual(0, submodes.Length);
 		}
 		
@@ -441,7 +439,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetSubmodesFromModeEmptyMode()
 		{
-			string[] submodes = aEnums.GetSubmodesFromMode(string.Empty);
+			string[] submodes = App.AdifEnums.GetSubmodesFromMode(string.Empty);
 			Assert.AreEqual(0, submodes.Length);
 		}
 		
@@ -449,7 +447,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetModeFromSubmodeValidSubmode()
 		{
-			string mode = aEnums.GetModeFromSubmode("USB");
+			string mode = App.AdifEnums.GetModeFromSubmode("USB");
 			Assert.AreEqual("SSB", mode);
 		}
 		
@@ -457,7 +455,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestGetModeFromSubmodeInvalidSubmode()
 		{
-			string mode = aEnums.GetModeFromSubmode("PSB");
+			string mode = App.AdifEnums.GetModeFromSubmode("PSB");
 			Assert.AreEqual(string.Empty, mode);
 		}
 		

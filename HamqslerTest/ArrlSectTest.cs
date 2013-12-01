@@ -28,24 +28,19 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ArrlSectTest
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
-		// test that constructor creates valid object
+		
 		[Test]
 		public void TestConstructor()
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Arrl_Sect sect = new Arrl_Sect("NT", aEnums);
+			Arrl_Sect sect = new Arrl_Sect("NT", App.AdifEnums);
 			Assert.IsTrue(sect.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -58,7 +53,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Arrl_Sect sect = new Arrl_Sect("ABCD", aEnums);
+			Arrl_Sect sect = new Arrl_Sect("ABCD", App.AdifEnums);
 			Assert.IsFalse(sect.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'ABCD' was not found in enumeration.",
 			                err);
@@ -69,7 +64,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString()
 		{
-			Arrl_Sect sect = new Arrl_Sect("NT", aEnums);
+			Arrl_Sect sect = new Arrl_Sect("NT", App.AdifEnums);
 			Assert.AreEqual("<Arrl_Sect:2>NT", sect.ToAdifString());
 		}
 		
@@ -78,7 +73,7 @@ namespace hamqslerTest
 		public void TestModifyNWT()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<arrl_sect:3>NWT", aEnums, ref err);
+			Qso2 qso = new Qso2("<arrl_sect:3>NWT", App.AdifEnums, ref err);
 			Arrl_Sect nwt = qso.GetField("Arrl_Sect") as Arrl_Sect;
 			Assert.IsNotNull(nwt);
 			string mod = nwt.ModifyValues(qso);

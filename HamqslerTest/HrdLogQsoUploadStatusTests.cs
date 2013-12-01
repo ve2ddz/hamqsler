@@ -29,15 +29,20 @@ namespace hamqslerTest
 	[TestFixture]
 	public class HrdLog_Qso_Upload_Status
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestMethod()
 		{
 			string err = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			hamqsler.HrdLog_Qso_Upload_Status status = new hamqsler.HrdLog_Qso_Upload_Status("Y", aEnums);
+			hamqsler.HrdLog_Qso_Upload_Status status = 
+				new hamqsler.HrdLog_Qso_Upload_Status("Y", App.AdifEnums);
 			Assert.AreEqual("<HrdLog_Qso_Upload_Status:1>Y", status.ToAdifString());
 		}
 		
@@ -47,10 +52,8 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			hamqsler.HrdLog_Qso_Upload_Status status = new hamqsler.HrdLog_Qso_Upload_Status("Y", aEnums);
+			hamqsler.HrdLog_Qso_Upload_Status status = 
+				new hamqsler.HrdLog_Qso_Upload_Status("Y", App.AdifEnums);
 			Assert.IsTrue(status.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -62,10 +65,8 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			hamqsler.HrdLog_Qso_Upload_Status status = new hamqsler.HrdLog_Qso_Upload_Status("B", aEnums);
+			hamqsler.HrdLog_Qso_Upload_Status status = 
+				new hamqsler.HrdLog_Qso_Upload_Status("B", App.AdifEnums);
 			Assert.IsFalse(status.Validate(out err, out modStr));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'B' was not found in enumeration.",
 			                err);

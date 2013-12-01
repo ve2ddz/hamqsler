@@ -29,22 +29,11 @@ namespace hamqslerTest
 	[TestFixture]
 	public class ContestIdTests
 	{
-		AdifEnumerations aEnums = null;
-		
-		// test fixture setup
-		[TestFixtureSetUp]
-		public void Setup()
-		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);			
-		}
-		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
+			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", App.AdifEnums);
 			Assert.AreEqual("<Contest_Id:17>RAC-CANADA-WINTER", id.ToAdifString());
 		}
 		
@@ -53,7 +42,7 @@ namespace hamqslerTest
 		public void TestIsInEnumerationTrue()
 		{
 			string err = string.Empty;
-			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
+			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", App.AdifEnums);
 			Assert.IsTrue(id.IsInEnumeration(out err));
 			Assert.AreEqual(null, err);
 		}
@@ -63,7 +52,7 @@ namespace hamqslerTest
 		public void TestIsInEnumerationFalse()
 		{
 			string err = string.Empty;
-			Contest_Id id = new Contest_Id("e6", aEnums);
+			Contest_Id id = new Contest_Id("e6", App.AdifEnums);
 			Assert.IsFalse(id.IsInEnumeration(out err));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'e6' " +
 			                    "was not found in enumeration.", err);
@@ -75,7 +64,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", aEnums);
+			Contest_Id id = new Contest_Id("RAC-CANADA-WINTER", App.AdifEnums);
 			Assert.IsTrue(id.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -87,7 +76,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Contest_Id id = new Contest_Id("e6", aEnums);
+			Contest_Id id = new Contest_Id("e6", App.AdifEnums);
 			Assert.IsTrue(id.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -99,7 +88,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Qso2 qso = new Qso2("<contest_ID:6>URE-DX", aEnums, ref err);
+			Qso2 qso = new Qso2("<contest_ID:6>URE-DX", App.AdifEnums, ref err);
 			Contest_Id id = qso.GetField("Contest_Id") as Contest_Id;
 			Assert.IsNotNull(id);
 			modStr = id.ModifyValues(qso);
@@ -115,7 +104,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Qso2 qso = new Qso2("<contest_ID:7>EA-RTTY", aEnums, ref err);
+			Qso2 qso = new Qso2("<contest_ID:7>EA-RTTY", App.AdifEnums, ref err);
 			Contest_Id id = qso.GetField("Contest_Id") as Contest_Id;
 			Assert.IsNotNull(id);
 			modStr = id.ModifyValues(qso);
@@ -131,7 +120,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Qso2 qso = new Qso2("<contest_ID:18>Virginia QSO Party", aEnums, ref err);
+			Qso2 qso = new Qso2("<contest_ID:18>Virginia QSO Party", App.AdifEnums, ref err);
 			Contest_Id id = qso.GetField("Contest_Id") as Contest_Id;
 			Assert.IsNotNull(id);
 			modStr = id.ModifyValues(qso);

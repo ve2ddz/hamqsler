@@ -29,14 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class MyIotaTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Iota iota = new My_Iota("NA-001", aEnums);
+			My_Iota iota = new My_Iota("NA-001", App.AdifEnums);
 			Assert.AreEqual("<My_Iota:6>NA-001", iota.ToAdifString());
 		}
 		
@@ -44,10 +48,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateValidDesignator()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Iota iota = new My_Iota("NA-001", aEnums);
+			My_Iota iota = new My_Iota("NA-001", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(iota.Validate(out err, out modStr));
@@ -59,10 +60,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidDesignator2()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Iota iota = new My_Iota("SNA-001", aEnums);
+			My_Iota iota = new My_Iota("SNA-001", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
@@ -74,10 +72,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidDesignator3()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Iota iota = new My_Iota("NA-0011", aEnums);
+			My_Iota iota = new My_Iota("NA-0011", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
@@ -89,10 +84,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateInvalidDesignator4()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Iota iota = new My_Iota("NA-0F1", aEnums);
+			My_Iota iota = new My_Iota("NA-0F1", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
@@ -104,10 +96,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateBadFormat()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Iota iota = new My_Iota("BA0001", aEnums);
+			My_Iota iota = new My_Iota("BA0001", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));
@@ -119,10 +108,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateBadContinent()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			My_Iota iota = new My_Iota("BA-001", aEnums);
+			My_Iota iota = new My_Iota("BA-001", App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsFalse(iota.Validate(out err, out modStr));

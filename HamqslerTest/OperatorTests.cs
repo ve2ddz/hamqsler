@@ -29,17 +29,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class OperatorTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
@@ -89,7 +85,7 @@ namespace hamqslerTest
 		public void TestModifyValuesNoStation_Callsign()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Operator:5>VA3HJ", aEnums, ref err);
+			Qso2 qso = new Qso2("<Operator:5>VA3HJ", App.AdifEnums, ref err);
 			Operator op = qso.GetField("Operator") as Operator;
 			Assert.IsNotNull(op);
 			err = op.ModifyValues(qso);
@@ -108,7 +104,7 @@ namespace hamqslerTest
 		public void TestModifyValuesStation_Callsign()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<Operator:5>VA3HJ<Station_Callsign:6>VA3JNO", aEnums, ref err);
+			Qso2 qso = new Qso2("<Operator:5>VA3HJ<Station_Callsign:6>VA3JNO", App.AdifEnums, ref err);
 			Operator op = qso.GetField("Operator") as Operator;
 			Assert.IsNotNull(op);
 			err = op.ModifyValues(qso);

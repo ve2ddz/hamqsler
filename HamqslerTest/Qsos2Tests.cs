@@ -29,17 +29,16 @@ namespace hamqslerTest
 	[TestFixture]
 	public class Qsos2Tests
 	{
-		AdifEnumerations aEnums;
 		string error;
 		Qsos2 qsos;
-		// test fixture setup
+		
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void FixtureSetUp()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
+		
 		
 		// test setup
 		[SetUp]
@@ -54,7 +53,7 @@ namespace hamqslerTest
 		public void TestEmptyAdifFile(
 			[Values(null, "")] string adif)
 		{
-			Assert.IsFalse(qsos.Add(adif, ref error, aEnums));
+			Assert.IsFalse(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual("No QSOs found." + Environment.NewLine, error);
 		}
 		
@@ -63,7 +62,7 @@ namespace hamqslerTest
 		public void Test1QSONoHeader()
 		{
 			string adif = "<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.Count);
 		}
 		
@@ -72,7 +71,7 @@ namespace hamqslerTest
 		public void TestNoRecord()
 		{
 			string adif = "<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017";
-			Assert.IsFalse(qsos.Add(adif, ref error, aEnums));
+			Assert.IsFalse(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual("No QSOs found." + Environment.NewLine, error);
 		}
 		
@@ -83,7 +82,7 @@ namespace hamqslerTest
 			string adif = "<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>" +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(2, qsos.Count);
 			Assert.AreEqual("Data found after end of last QSO record: " +
 			                "'<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20111001<Time_On:4>1017'"
@@ -101,7 +100,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(2, qsos.Count);
 			Assert.AreEqual(null, error);
 		}
@@ -117,7 +116,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(null, error);
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("QRP_ARCI", qsos.UserDefs[0].UName);
@@ -134,7 +133,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual("some header text" + Environment.NewLine +
 							"<adif_ver:5>3.0.4" + Environment.NewLine +
 							"<userdef1:8:H>QRP_ARCI" +Environment.NewLine +
@@ -155,9 +154,9 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("some header text" + Environment.NewLine +
 							"<adif_ver:5>3.0.4" + Environment.NewLine +
@@ -178,7 +177,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("SweaterSize", qsos.UserDefs[0].UName);
 			Assert.AreEqual("S,M,L", qsos.UserDefs[0].EnumField.ToString());
@@ -195,7 +194,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(0, qsos.UserDefs.Count);
 			Assert.AreEqual("some header text" + Environment.NewLine +
 							"<adif_ver:5>3.0.4" + Environment.NewLine +
@@ -216,7 +215,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("ShoeSize", qsos.UserDefs[0].UName);
 			Assert.AreEqual("5", qsos.UserDefs[0].LowerValue);
@@ -234,7 +233,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual("ShoeSize", qsos.UserDefs[0].UName);
 			Assert.AreEqual(string.Empty, qsos.UserDefs[0].LowerValue);
@@ -252,7 +251,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual("some header text" + Environment.NewLine +
 							"<adif_ver:5>3.0.4" + Environment.NewLine +
 							"<userdef1:14:N>ShoeSize" +Environment.NewLine +
@@ -270,7 +269,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>2013100<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual("<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>2013100<Time_On:4>1017<eor>" +
 							Environment.NewLine +
 							"\tQso_Date:2013100< - \tDate must contain number characters only. - Field deleted." +
@@ -291,10 +290,10 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Import(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual(2, qsos.Count);
-			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Import(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual(null, error);
 			Assert.AreEqual(2, qsos.Count);
@@ -311,7 +310,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Import(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual(1, qsos.Count);
 		}
@@ -327,7 +326,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20121001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Import(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.UserDefs.Count);
 			Assert.AreEqual(2, qsos.Count);
 			qsos.ClearQsos();
@@ -347,10 +346,10 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Import(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.Count);
 			
-			Assert.IsTrue(qsos.Add(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Add(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.Count);
 		}
 		
@@ -367,7 +366,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:6>VA3JNO<Qso_Date:8>20130801<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Import(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(null, error);
 			DateTime now = DateTime.Now.ToUniversalTime();
 			string date = string.Format("{0:d4}{1:d2}{2:d2}", now.Year, now.Month, now.Day);
@@ -422,7 +421,7 @@ namespace hamqslerTest
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Time_On:4>1017<eor>" +
 				Environment.NewLine +
 				"<mode:2>CW<band:3>10m<call:5>VA3HJ<Qso_Date:8>20131001<Time_On:4>1017<eor>";
-			Assert.IsTrue(qsos.Import(adif, ref error, aEnums));
+			Assert.IsTrue(qsos.Import(adif, ref error, App.AdifEnums));
 			Assert.AreEqual(1, qsos.Count);
 			Assert.AreEqual("<mode:2>CW<band:3>10m<call:5>VA3HJ<Time_On:4>1017<eor>" +
 			                Environment.NewLine + "\tInvalid QSO: Qso_Date not specified. - QSO not added." +

@@ -29,15 +29,11 @@ namespace hamqslerTest
 	[TestFixture]
 	public class VEProvTests
 	{
-		AdifEnumerations aEnums;
-		
 		// fixture setup
 		[TestFixtureSetUp]
 		public void Init()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
 
 		// test ToAdifString
@@ -53,7 +49,7 @@ namespace hamqslerTest
 		public void TestModifyValuesNoState()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<VE_PROV:2>ON", aEnums, ref err);
+			Qso2 qso = new Qso2("<VE_PROV:2>ON", App.AdifEnums, ref err);
 			VE_Prov prov = qso.GetField("VE_Prov") as VE_Prov;
 			Assert.IsNotNull(prov);
 			string mod = prov.ModifyValues(qso);
@@ -70,7 +66,7 @@ namespace hamqslerTest
 		public void TestModifyValuesState()
 		{
 			string err = string.Empty;
-			Qso2 qso = new Qso2("<VE_PROV:2>ON<STATE:2>AB", aEnums, ref err);
+			Qso2 qso = new Qso2("<VE_PROV:2>ON<STATE:2>AB", App.AdifEnums, ref err);
 			VE_Prov prov = qso.GetField("VE_Prov") as VE_Prov;
 			Assert.IsNotNull(prov);
 			string mod = prov.ModifyValues(qso);

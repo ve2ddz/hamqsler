@@ -29,15 +29,12 @@ namespace hamqslerTest
 	[TestFixture]
 	public class QsoEqualityComparerTests
 	{
-		AdifEnumerations aEnums;
 		string errorString = string.Empty;
-		// test fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void SetUp()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
 		
 		// test Equals with equal Qsos
@@ -45,9 +42,9 @@ namespace hamqslerTest
 		public void TestEqualsEqualQsos()
 		{
 			Qso2 q1 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			QsoEqualityComparer comparer = new QsoEqualityComparer();
 			Assert.IsTrue(comparer.Equals(q1, q2));
 		}
@@ -58,9 +55,9 @@ namespace hamqslerTest
 		public void TestEqualsUnEqualQsos()
 		{
 			Qso2 q1 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130615<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			Qso2 q2 = new Qso2("<Call:6>VA3JNO<Mode:3>SSB<Freq:5>7.235<qso_date:8>20130622<time_on:6>124316",
-			                    aEnums, ref errorString);
+			                    App.AdifEnums, ref errorString);
 			QsoEqualityComparer comparer = new QsoEqualityComparer();
 			Assert.IsFalse(comparer.Equals(q1, q2));
 		}

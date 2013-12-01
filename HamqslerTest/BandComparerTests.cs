@@ -27,13 +27,13 @@ namespace hamqslerTest
 	[TestFixture]
 	public class BandComparerTests
 	{
-		// test fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void FixtureSetup()
+		public void TestSepup()
 		{
-			Program.app.GetAdifEnumerations();
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		// test Compare with band1 < band2
 		[Test]
 		public void TestCompare1Less2()

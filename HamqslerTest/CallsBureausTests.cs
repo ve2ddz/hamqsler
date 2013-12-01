@@ -37,7 +37,8 @@ namespace hamqslerTest
 		{
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
 	        Stream str = assembly.GetManifestResourceStream("hamqsler.CallsBureaus.xml");
-			callsBureaus = new CallsBureaus(str);
+			callsBureaus = new CallsBureaus();
+			callsBureaus.LoadDocument(str);
 		}
 
 		// test constructor and get version
@@ -49,7 +50,9 @@ namespace hamqslerTest
 							"<Call>BM100</Call>" + Environment.NewLine +
 							"</CallsBureaus>" + Environment.NewLine;
 			MemoryStream str = new MemoryStream(Encoding.ASCII.GetBytes(cbString));
-			CallsBureaus cBureaus = new CallsBureaus(str);
+			CallsBureaus cBureaus = new CallsBureaus();
+			cBureaus.LoadDocument(str);
+			str.Close();
 			Assert.AreEqual("0.5.2", cBureaus.Version);
 		}
 		

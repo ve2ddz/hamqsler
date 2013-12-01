@@ -29,14 +29,18 @@ namespace hamqslerTest
 	[TestFixture]
 	public class SubmodeTests
 	{
+		// TestFixtureSetup
+		[TestFixtureSetUp]
+		public void TestSepup()
+		{
+			App.AdifEnums.LoadDocument();
+		}
+		
 		// test ToAdifString
 		[Test]
 		public void TestToAdifString()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Submode sm = new Submode("ROS-EME",  aEnums);
+			Submode sm = new Submode("ROS-EME",  App.AdifEnums);
 			Assert.AreEqual("<Submode:7>ROS-EME", sm.ToAdifString());
 		}
 		
@@ -45,10 +49,7 @@ namespace hamqslerTest
 		public void TestIsInEnumerationTrue()
 		{
 			string err = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Submode sm = new Submode("ROS-EME", aEnums);
+			Submode sm = new Submode("ROS-EME", App.AdifEnums);
 			Assert.IsTrue(sm.IsInEnumeration(out err));
 			Assert.AreEqual(null, err);
 		}
@@ -58,10 +59,7 @@ namespace hamqslerTest
 		public void TestIsInEnumerationFalse()
 		{
 			string err = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Submode sm = new Submode("e6", aEnums);
+			Submode sm = new Submode("e6", App.AdifEnums);
 			Assert.IsFalse(sm.IsInEnumeration(out err));
 			Assert.AreEqual("\tThis QSO Field is of type enumeration. The value 'e6' " +
 			                    "was not found in enumeration.", err);
@@ -73,10 +71,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Submode sm = new Submode("ROS_MF", aEnums);
+			Submode sm = new Submode("ROS_MF", App.AdifEnums);
 			Assert.IsTrue(sm.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);
@@ -88,10 +83,7 @@ namespace hamqslerTest
 		{
 			string err = string.Empty;
 			string modStr = string.Empty;
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-            Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			AdifEnumerations aEnums = new AdifEnumerations(str);
-			Submode id = new Submode("e6", aEnums);
+			Submode id = new Submode("e6", App.AdifEnums);
 			Assert.IsTrue(id.Validate(out err, out modStr));
 			Assert.IsNull(err);
 			Assert.IsNull(modStr);

@@ -31,24 +31,21 @@ namespace hamqslerTest
 	[TestFixture]
 	public class AwardGrantedTests
 	{
-		AdifEnumerations aEnums;
-		
-		// fixture setup
+		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void Init()
+		public void TestSepup()
 		{
-			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
-	        Stream str = assembly.GetManifestResourceStream("hamqsler.AdifEnumerations.xml");
-			aEnums = new AdifEnumerations(str);
+			App.AdifEnums.LoadDocument();
 		}
-
+		
 		/// <summary>
 		/// Test Count accessor
 		/// </summary>
 		[Test]
 		public void TestCount()
 		{
-			Award_Granted aSub = new Award_Granted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
+			Award_Granted aSub = new Award_Granted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", 
+			                                       App.AdifEnums);
 			Assert.AreEqual(3, aSub.Count);
 		}
 		
@@ -58,7 +55,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateOK()
 		{
-			Award_Granted aSub = new Award_Granted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
+			Award_Granted aSub = new Award_Granted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", 
+			                                       App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(aSub.Validate(out err, out modStr));
@@ -70,7 +68,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateBadEntry()
 		{
-			Award_Granted aSub = new Award_Granted("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", aEnums);
+			Award_Granted aSub = new Award_Granted("ARRL_DXCC_CW,DARCDOC_100,CQ_USACA_500", 
+			                                       App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(aSub.Validate(out err, out modStr));
@@ -85,7 +84,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNoAwards()
 		{
-			Award_Granted aSub = new Award_Granted(string.Empty, aEnums);
+			Award_Granted aSub = new Award_Granted(string.Empty, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(aSub.Validate(out err, out modStr));
@@ -96,7 +95,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestValidateNull()
 		{
-			Award_Granted aSub = new Award_Granted(null, aEnums);
+			Award_Granted aSub = new Award_Granted(null, App.AdifEnums);
 			string err = string.Empty;
 			string modStr = string.Empty;
 			Assert.IsTrue(aSub.Validate(out err, out modStr));
@@ -108,7 +107,8 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifString()
 		{
-			Award_Granted aSub = new Award_Granted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", aEnums);
+			Award_Granted aSub = new Award_Granted("ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500", 
+			                                       App.AdifEnums);
 			Assert.AreEqual("<Award_Granted:38>ARRL_DXCC_CW,DARC_DOC_100,CQ_USACA_500",
 			                aSub.ToAdifString());
 		}
@@ -117,7 +117,7 @@ namespace hamqslerTest
 		[Test]
 		public void TestToAdifStringNull()
 		{
-			Award_Granted aSub = new Award_Granted(null, aEnums);
+			Award_Granted aSub = new Award_Granted(null, App.AdifEnums);
 			Assert.AreEqual("<Award_Granted:0>",
 			                aSub.ToAdifString());
 		}
