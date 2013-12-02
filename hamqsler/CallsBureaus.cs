@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -94,6 +95,43 @@ namespace hamqsler
 				return true;
 			else
 				return false;
+		}
+		
+		/// <summary>
+		/// Determine if the input call is a prefix
+		/// </summary>
+		/// <param name="call">Callsign to check</param>
+		/// <returns>true if a valid prefix, false otherwise</returns>
+		public bool IsPrefix(string call)
+		{
+			var prefixes = from val in 
+				xDoc.Descendants("PrefixRegexes").Descendants("PrefixRegex")
+				select val;
+            foreach (string prefix in prefixes)
+            {
+                // if prefix, then ignore it
+                Regex reg = new Regex(prefix);
+                if (reg.IsMatch(call))
+                {
+                    return true;
+                }
+            }
+			return false;
+		}
+		
+		public bool IsCallAndPrefix(string call)
+		{
+			var callsPrefixes = from val in
+				xDoc.Descendants("CallsAndPrefixes").Descendants("CallAndPrefix")
+				select val;
+			foreach(string pre in callsPrefixes)
+			{
+				if(call.Equals(pre))
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

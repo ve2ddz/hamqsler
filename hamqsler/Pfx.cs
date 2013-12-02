@@ -49,19 +49,13 @@ namespace hamqsler
 			modStr = null;
 			if(!Regex.IsMatch(Value, "^[0-9][A-Za-z][0-9]*$|^[A-Za-z]{1,2}[0-9]+$"))
 			{
-				string[] prefixes = Call.Prefixes;
-				foreach(string pre in prefixes)
+				if(App.CallBureaus.IsPrefix(Value))
 				{
-					if(Regex.IsMatch(Value, pre))
-					{
-						return true;
-					}
-					// VP2E is a special case. Can be both a callsign and a prefix, so not included
-					// in prefixes list.
-					if(Regex.IsMatch(Value, "VP2E"))
-					{
-						return true;
-					}
+					return true;
+				}
+				if(App.CallBureaus.IsCallAndPrefix(Value))
+				{
+					return true;
 				}
 				err = string.Format("\t'{0}' is not a valid prefix.", Value);
 				return false;

@@ -28,47 +28,6 @@ namespace hamqsler
 	/// </summary>
 	public class Call : StringField
 	{
-        // List for holding the regular expressions for ARRL prefixes that might be 
-        // misinterpreted as callsigns
-        private static List<Regex> arrlPrefixes = new List<Regex>();
-		
-		// the following array contains prefixes that may be misinterpreted as callsigns,
-		// so special processing will be required.
-		private static string[] prefixes = {
-			"3D2[CR]",
-			"BV9P",
-			"CE0[AXZ]",
-			"E51[NS]",
-			"FO0[AM]",
-			"FT[0-9][WX]",
-			"HK0[AM]",
-			"JD1[MO]",
-			"KH[57]K",
-			"PY0[FT]",
-			"R1FJ",
-			"R1MV",
-			"VK0[HM]",
-			"VK9[CLMNWX]",
-			"VP2[MV]",
-			"VP6[DP]",
-			"VP8[FGHOS]"
-		};
-		public static string[] Prefixes
-		{
-			get {return prefixes;}
-		}
-		/// <summary>
-		/// Static constructor
-		/// </summary>
-		static Call()
-		{
-			foreach(string prefix in prefixes)
-			{
-				arrlPrefixes.Add(new Regex("^" + prefix + "$"));
-			}
-
-		}
-		
 		/// <summary>
 		/// Constructor
 		/// Note: no validation of input is performed in the constructor. Call Validate after
@@ -116,23 +75,12 @@ namespace hamqsler
 			string[] parts = Value.Split('/');
 			foreach(string c in parts)
 			{
-				string cc = c;
-				if(Call.IsValid(c))
+			if(Call.IsValid(c))
 				{
-                    foreach (Regex reg in arrlPrefixes)
-                    {
-                        // if prefix, then ignore it
-                        if (reg.IsMatch(c))
-                        {
-                            cc = null;
-                            break;
-                        }
-                    }
-                    // not a prefix, so add to list
-                    if (cc != null)
-                    {
-                        calls.Add(cc);
-                    }
+                    if(!App.CallBureaus.IsPrefix(c))
+					{
+						calls.Add(c);
+					}
 				}
 			}
 			if(calls.Count < 1)
@@ -148,12 +96,11 @@ namespace hamqsler
                 // if more than one valid call
                 foreach (string c in calls)
                 {
-                    // VP2E is special case where it is both a valid prefix and a valid callsign
-                    if (c.Equals("VP2E"))
-                    {
-                        calls.Remove("VP2E");
-                        break;
-                    }
+                	if(App.CallBureaus.IsCallAndPrefix(c))
+                	{
+                		calls.Remove(c);
+                		break;
+                	}
                 }
                 // now assume that the first call is the valid one.
                 // this will be the case except in strange circumstances.

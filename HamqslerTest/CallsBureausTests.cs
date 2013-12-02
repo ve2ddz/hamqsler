@@ -76,5 +76,27 @@ namespace hamqslerTest
 		{
 			Assert.AreEqual(found, callsBureaus.IsNonStandardCall(call));
 		}
+		
+		// test IsPrefix
+		[Test, Sequential]
+		public void TestIsPrefix(
+			[Values("3D2R", "BV9P", "CE0Z", "E51S", "FO0A", "FT4X", "HK0A",
+			        "KH5K", "PY0T", "R1FJ", "R1MV", "VK0M", "VK9N", "VP2V",
+			        "VP6D", "VP8O", "JD1M", "ZY6T")] string call,
+			[Values(true, true, true, true, true, true, true,
+			        true, true, true, true, true, true, true,
+			        true, true, true, false)] bool found)
+		{
+			Assert.AreEqual(found, callsBureaus.IsPrefix(call));
+		}
+		
+		// test IsCallAndPrefix
+		[Test, Sequential]
+		public void TestIsCallAndPrefix(
+			[Values("VP2E", "R1MV")] string pre,
+			[Values(true, false)] bool isBoth)
+		{
+			Assert.AreEqual(isBoth, callsBureaus.IsCallAndPrefix(pre));
+		}
 	}
 }

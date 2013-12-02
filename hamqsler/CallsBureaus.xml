@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0"?>
-<CallsBureaus Version="0.1.0">
+<CallsBureaus Version="0.1.2">
+	<CallsAndPrefixes>
+		<CallAndPrefix>VP2E</CallAndPrefix>
+	</CallsAndPrefixes>
 	<NonStandardCalls>
 		<Call>8J1TS50A</Call>
 		<Call>8J2KSG7X</Call>
@@ -22,4 +25,23 @@
 		<Call>XV2V40J</Call>
 		<Call>ZW1CCOM54</Call>
 	</NonStandardCalls>
+	<PrefixRegexes>
+		<PrefixRegex>^3D2[CR]$</PrefixRegex>
+		<PrefixRegex>^BV9P$</PrefixRegex>
+		<PrefixRegex>^CE0[AXZ]$</PrefixRegex>
+		<PrefixRegex>^E51[NS]$</PrefixRegex>
+		<PrefixRegex>^FO0[AM]$</PrefixRegex>
+		<PrefixRegex>^FT[0-9][WX]$</PrefixRegex>
+		<PrefixRegex>^HK0[AM]$</PrefixRegex>
+		<PrefixRegex>^JD1[MO]$</PrefixRegex>		
+		<PrefixRegex>^KH[57]K$</PrefixRegex>
+		<PrefixRegex>^PY0[FT]$</PrefixRegex>
+		<PrefixRegex>^R1FJ$</PrefixRegex>
+		<PrefixRegex>^R1MV$</PrefixRegex>
+		<PrefixRegex>^VK0[HM]$</PrefixRegex>
+		<PrefixRegex>^VK9[CLMNWX]$</PrefixRegex>
+		<PrefixRegex>^VP2[MV]$</PrefixRegex>
+		<PrefixRegex>^VP6[DP]$</PrefixRegex>
+		<PrefixRegex>^VP8[FGHOS]$</PrefixRegex>
+	</PrefixRegexes>
 </CallsBureaus>
