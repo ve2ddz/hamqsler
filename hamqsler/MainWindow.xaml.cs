@@ -1059,6 +1059,7 @@ namespace hamqsler
 		/// <param name="e">not used</param>
 		public void ImportQsosCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
+			qsosView.ClearDatesTimes();
 			ImportOrAddQsos(qsosView.DisplayQsos.ImportQsos);
 			qsosView.ShowIncludeSelectors();
 		}

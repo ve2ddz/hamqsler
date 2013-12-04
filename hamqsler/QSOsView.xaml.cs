@@ -566,5 +566,18 @@ namespace hamqsler
 		{
 			qsosListView.SelectedItems.Clear();
 		}
+		
+		/// <summary>
+		/// Clear the values in the StartEndDateTime object to prevent a warning
+		/// message from being displayed under certain conditions when importing a
+		/// new ADIF file.
+		/// </summary>
+		public void ClearDatesTimes()
+		{
+			startEndDateTime.EndDate = string.Empty;
+			startEndDateTime.EndTime = string.Empty;
+			startEndDateTime.StartDate = string.Empty;
+			startEndDateTime.StartTime = string.Empty;
+		}
 	}
 }
