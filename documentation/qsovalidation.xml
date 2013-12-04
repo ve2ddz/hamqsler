@@ -364,9 +364,10 @@
 									</listitem>
 									<listitem>
 										<para>One of the special callsigns defined
-										in HamQSLer. At the moment, these special
-										callsigns are defined in the program, but in
-										future will be maintained in a data file.</para>
+										in the CallsBureaus.xml file. This file
+										is typically saved in the user's
+										<filename class='directory'>AppData\Roaming\HamQSLer</filename>
+										directory.</para>
 									</listitem>
 								</itemizedlist>
 							</entry>
@@ -760,14 +761,7 @@
 									</listitem>
 									<listitem>
 										<para>One digit followed by one letter, 
-										followed by zero or more digits.</para>
-									</listitem>
-									<listitem>
-										<para>One of the special prefixes defined
-										in HamQSLer. At the moment, these special
-										prefixes are defined in the program, but in
-										future will be maintained in a data file.</para>
-										<para>For example: VP2V, R1MV</para>
+										followed by one or more digits.</para>
 									</listitem>
 								</itemizedlist>
 							</entry>

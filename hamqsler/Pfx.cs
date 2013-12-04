@@ -49,14 +49,6 @@ namespace hamqsler
 			modStr = null;
 			if(!Regex.IsMatch(Value, "^[0-9][A-Za-z][0-9]*$|^[A-Za-z]{1,2}[0-9]+$"))
 			{
-				if(App.CallBureaus.IsPrefix(Value))
-				{
-					return true;
-				}
-				if(App.CallBureaus.IsCallAndPrefix(Value))
-				{
-					return true;
-				}
 				err = string.Format("\t'{0}' is not a valid prefix.", Value);
 				return false;
 			}
