@@ -99,10 +99,10 @@
 					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
 				</StackPanel.Visibility>
 				<CheckBox Name="programUpdatesCheckBox" Margin="5"
-				          ToolTip="Check this if you want program to check website
-				          for updates to program and associated data files"
+				          ToolTip="Check this if you want program to check website for updates to program and to download updated associated data files"
 				          IsChecked="{Binding Path=CheckForNewVersions, Mode=TwoWay}"
-						  Content="Check for Program and Data File Updates"/>
+						  Content="Check for Program Updates and Download Data File Updates"
+						  Unchecked="ProgramUpdatesCheckBox_Unchecked"/>
 				<CheckBox Name="developmentUpdatesCheckBox" Margin="20,5,5,5"
 							ToolTip="Check this if you want to be informed of new stable and development releases"
 							Content="Stable and Development Program Releases"

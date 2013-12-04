@@ -429,5 +429,19 @@ namespace hamqsler
 			
 		}
 		
+		void ProgramUpdatesCheckBox_Unchecked(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("You are disabling checks for new program versions as well as" +
+			                Environment.NewLine +
+			                "checks for new data files. You will not be informed that new" +
+			                Environment.NewLine +
+			                "versions of HamQSLer are available, and will not receive" +
+			                Environment.NewLine +
+			                "updates to files containing ADIF enumeration values, non-standard" +
+			                Environment.NewLine +
+			                "callsigns, and QSL Bureau changes.",
+			                "Updates Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+		}
+		
 	}
 }

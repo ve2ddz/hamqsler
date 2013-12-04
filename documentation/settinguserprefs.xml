@@ -64,13 +64,24 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>The Check for Program and Data File Updates checkbox controls whether 
+			<para>The Check for Program Updates and Download Data File Updates checkbox controls whether 
 			<literal>HamQSLer</literal>
-			checks for new program and data file versions during initialization. With the
-			checkbox checked, the program checks for new versions, and with the checkbox
-			unchecked, the program does not check for new versions. The
+			checks for new program versions and data file versions during initialization. With the
+			checkbox checked, the program checks for new versions of the program, and downloads updated
+			data files. With the checkbox
+			unchecked, the program does not check for new versions and does not download new
+			data files. The
 			default value (the value set when the user preferences file is first created)
 			is to check for new versions.</para>
+			<tip>
+				<para>The data files that are downloaded contain updates to ADIF enumerations
+				(values such as new Contest IDs, new country codes and names, and so forth). The
+				data files also contain non-standard callsigns and the list of QSL bureaus. If
+				these files are not downloaded, you will not receive updates until the next version
+				of the program is downloaded.</para>
+				<para>You should always check this checkbox unless your computer is not normally
+				connected to the Internet.</para>
+			</tip>
 			<para>The Stable and Development Program Releases checkbox determines whether
 			<literal>HamQSLer</literal> should check only for data file updates and stable program
 			updates, or if it should also check for development updates. If this checkbox
