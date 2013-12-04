@@ -21,8 +21,6 @@ using System;
 using System.Reflection;
 using System.Windows;
 
-using QslBureaus;
-
 namespace hamqsler
 {
 	/// <summary>
@@ -48,15 +46,15 @@ namespace hamqsler
 			set {SetValue(AdifEnumerationsVersionProperty, value);}
 		}
 		
-		private static readonly DependencyProperty QslBureausLibraryVersionProperty =
-			DependencyProperty.Register("QslBureausLibraryVersion", typeof(string), typeof(AboutDialog),
+		private static readonly DependencyProperty CallsBureausVersionProperty =
+			DependencyProperty.Register("CallsBureausVersion", typeof(string), typeof(AboutDialog),
 			                            new PropertyMetadata("not specified"));
-		public string QslBureausLibraryVersion
+		public string CallsBureausVersion
 		{
-			get {return (string)GetValue(QslBureausLibraryVersionProperty);}
-			set {SetValue(QslBureausLibraryVersionProperty, value);}
+			get {return (string)GetValue(CallsBureausVersionProperty);}
+			set {SetValue(CallsBureausVersionProperty, value);}
 		}
-		
+
 		private static readonly DependencyProperty CLRVersionProperty =
 			DependencyProperty.Register("CLRVersion", typeof(string), typeof(AboutDialog),
 			                            new PropertyMetadata("not specified"));
@@ -92,9 +90,8 @@ namespace hamqsler
 				Copyright = ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
 			}
 			AdifEnumerationsVersion = App.AdifEnums.Version;
+			CallsBureausVersion = App.CallBureaus.Version;
 			HamQSLerVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-			Assembly assembly = Assembly.GetAssembly(new QslBureau().GetType());
-			QslBureausLibraryVersion = assembly.GetName().Version.ToString();
 			Version ver = Environment.Version;
 			CLRVersion = string.Format("{0}.{1}.{2}.{3}", ver.Major, ver.Minor, ver.Build, ver.Revision);
 

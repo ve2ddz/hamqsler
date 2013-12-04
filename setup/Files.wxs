@@ -25,7 +25,6 @@
 					<Component Id="HamqslerEXE" Guid="6CAA5943-D261-49A0-8585-F8752D374D94" DiskId="1">
 						<File Id="hamqsler.exe" Name="hamqsler.exe" Source="..\hamqsler\bin\Release\hamqsler.exe">
 						</File>
-						<File Id="QslBureaus.dll" Name="QslBureaus.dll" Source="..\hamqsler\bin\Release\QslBureaus.dll" />
 						<File Id="license.rtf" Name="license.rtf" Source="license.rtf" />
 					</Component>
 					<Directory Id="SamplesDir" Name="Samples">

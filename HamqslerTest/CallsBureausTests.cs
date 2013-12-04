@@ -98,5 +98,20 @@ namespace hamqslerTest
 		{
 			Assert.AreEqual(isBoth, callsBureaus.IsCallAndPrefix(pre));
 		}
+		
+		// test GetBureau
+		[Test, Sequential]
+		public void TestGetBureau(
+			[Values("VA1CCP", "1A0DP", "KG4A", "KG4AXY", "KG4AB", "KP2ADH",
+			       "NP3D", "WP4DD", "AH2XC", "KH3XC", "NH6XC", "WH7XC",
+			       "AH8XC", "AL0PM", "NL7C", "KB4ZNS", "W4BB", "R3AXB",
+			      "U1AQ", "UT2AX", "TU6XV", "ZA3MM", "ET3XI", "VQ9MT")] string call,
+			[Values("VE10", "ZZZZ", "W4A0", "W4A0", "W9B0", "W9C0",
+			       "W9D0", "W9D0", "W9H2", "W9H3", "W9H6", "W9H6",
+			      "ZZZZ", "W9L0", "W9L0", "W4A0", "W400", "R000",
+			     "R000", "UR00", "ZZZZ", "ZZZZ", "ZZZZ", "ZZZZ")] string bureau)
+		{
+			Assert.AreEqual(bureau, callsBureaus.GetBureau(call));
+		}
 	}
 }

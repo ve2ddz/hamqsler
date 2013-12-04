@@ -1,5 +1,40 @@
 ﻿<?xml version="1.0"?>
-<CallsBureaus Version="0.1.2">
+<!--
+//  Author:
+//       Jim <jimorcheson@gmail.com>
+// 
+//  Copyright (c) 2009-2011 VA3HJ Software
+// 	Copyright (c) 2013 Jim Orcheson
+// 
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+// 
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+// 
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+
+  Information Sources:
+    QslBureau information is per the QSL bureau list on the IARU website at
+      http://www.iaru.org/iaruqsl.html
+    Most Regex values are based on the regular expressions provided by Simon Brown HB9DRV
+      at http://mannindustries.net/hrd/temp/test/logbook/LogbookCountryDataEx-2009-02-19.xml
+    Canadian Bureaus are based on information provided by Radio Amateurs of Canada at
+      http://www.rac.ca/service/qsl1.htm
+    Regular expressions for Canadian Bureaus are based on callsign information in
+      "Call Sign Policy and Special Event Prefixes (RIC-9)" issued by Industry Canada -
+      http://www.ic.gc.ca/eic/site/smt-gst.nsf/vwapj/ric9e.pdf/$FILE/ric9e.pdf
+
+	Non-Standard calls are retrieved from the ARRL DX Bulletin
+-->
+
+<CallsBureaus Version="0.1.4">
 	<CallsAndPrefixes>
 		<CallAndPrefix>VP2E</CallAndPrefix>
 	</CallsAndPrefixes>
@@ -44,4 +79,184 @@
 		<PrefixRegex>^VP6[DP]$</PrefixRegex>
 		<PrefixRegex>^VP8[FGHOS]$</PrefixRegex>
 	</PrefixRegexes>
+	<QslBureaus>
+	  <QslBureau Bureau="3A00" Regex="^3A.*"/>
+	  <QslBureau Bureau="3V00" Regex="^3V.*|^TS.*"/>
+	  <QslBureau Bureau="4L00" Regex="^4L.*"/>
+	  <QslBureau Bureau="4S00" Regex="^4[P-S].*"/>
+	  <QslBureau Bureau="4U00" Regex="^4U1ITU$"/>
+	  <QslBureau Bureau="4X00" Regex="^4[XZ].*"/>
+	  <QslBureau Bureau="5B00" Regex="^5B.*|^C4.*|^H2.*|^P3.*"/>
+	  <QslBureau Bureau="5H00" Regex="^5[HI].*"/>
+	  <QslBureau Bureau="5N00" Regex="^5[NO].*"/>
+	  <QslBureau Bureau="5W00" Regex="^5W.*"/>
+	  <QslBureau Bureau="5X00" Regex="^5X.*"/>
+	  <QslBureau Bureau="5Z00" Regex="^5[YZ].*"/>
+	  <QslBureau Bureau="6W00" Regex="^6[VW].*"/>
+	  <QslBureau Bureau="6Y00" Regex="^6Y.*"/>
+	  <QslBureau Bureau="7X00" Regex="^7[RT-Y].*"/>
+	  <QslBureau Bureau="8P00" Regex="^8P.*"/>
+	  <QslBureau Bureau="8R00" Regex="^8R.*"/>
+	  <QslBureau Bureau="9A00" Regex="^9A.*"/>
+	  <QslBureau Bureau="9G00" Regex="^9G.*"/>
+	  <QslBureau Bureau="9H00" Regex="^9H.*"/>
+	  <QslBureau Bureau="9J00" Regex="^9[IJ].*"/>
+	  <QslBureau Bureau="9K00" Regex="^9K.*"/>
+	  <QslBureau Bureau="9M00" Regex="^9[MW].*"/>
+	  <QslBureau Bureau="9Q00" Regex="^9[O-T].*"/>
+	  <QslBureau Bureau="9V00" Regex="^9V.*|^S6.*"/>
+	  <QslBureau Bureau="9Y00" Regex="^9[YZ].*"/>
+	  <QslBureau Bureau="A200" Regex="^A2.*|^8O.*"/>
+	  <QslBureau Bureau="A400" Regex="^A4.*"/>
+	  <QslBureau Bureau="A700" Regex="^A7.*"/>
+	  <QslBureau Bureau="A900" Regex="^A9.*"/>
+	  <QslBureau Bureau="AP00" Regex="^[6A][P-S].*"/>
+	  <QslBureau Bureau="BV00" Regex="^B[M-QU-X].*"/>
+	  <QslBureau Bureau="BY00" Regex="^B[0-9].*|^B[A-LR-TYZ].*|^3[H-U].*|^XS.*"/>
+	  <QslBureau Bureau="C300" Regex="^C3.*"/>
+	  <QslBureau Bureau="C900" Regex="^C[89].*"/>
+	  <QslBureau Bureau="CE00" Regex="^C[A-E].*|^3G.*|^X[QR].*"/>
+	  <QslBureau Bureau="CO00" Regex="^C[LMO].*|^T4.*"/>
+	  <QslBureau Bureau="CP00" Regex="^CP.*"/>
+	  <QslBureau Bureau="CT00" Regex="^C[Q-U].*|^XX.*"/>
+	  <QslBureau Bureau="CX00" Regex="^C[V-X].*"/>
+	  <QslBureau Bureau="DL00" Regex="^D[A-R].*|^Y[2-9].*"/>
+	  <QslBureau Bureau="DU00" Regex="^4[D-I].*|^D[U-Z].*"/>
+	  <QslBureau Bureau="E700" Regex="^E7.*"/>
+	  <QslBureau Bureau="EA00" Regex="^E[A-H].*|^A[M-O].*"/>
+	  <QslBureau Bureau="EI00" Regex="^E[IJ].*"/>
+	  <QslBureau Bureau="EK00" Regex="^EX.*"/>
+	  <QslBureau Bureau="EL00" Regex="^EL.*|^5[LM].*|^A8.*|^D5.*|^6Z.*"/>
+	  <QslBureau Bureau="EP00" Regex="^E[PQ].*|^9[B-D].*"/>
+	  <QslBureau Bureau="ER00" Regex="^ER.*"/>
+	  <QslBureau Bureau="ES00" Regex="^ES.*"/>
+	  <QslBureau Bureau="EU00" Regex="^E[U-W]"/>
+	  <QslBureau Bureau="EX00" Regex="^EX.*"/>
+	  <QslBureau Bureau="EY00" Regex="^EY.*"/>
+	  <QslBureau Bureau="EZ00" Regex="^EZ.*"/>
+	  <QslBureau Bureau="F000" Regex="^F[0-9].*|^F[A-JL-NP-Z].*|^H[WXY].*|^T[KMO-Q].*"/>
+	  <QslBureau Bureau="FK00" Regex="^FK.*"/>
+	  <QslBureau Bureau="FO00" Regex="^FO.*"/>
+	  <QslBureau Bureau="G000" Regex="^[GM][0-9].*|^[GM2][A-Z].*"/>
+	  <QslBureau Bureau="H400" Regex="^H4.*"/>
+	  <QslBureau Bureau="HA00" Regex="^H[AG].*"/>
+	  <QslBureau Bureau="HB00" Regex="^H[BE]0.*"/>
+	  <QslBureau Bureau="HB10" Regex="^H[BE][1-9].*"/>
+	  <QslBureau Bureau="HC00" Regex="^H[CD].*"/>
+	  <QslBureau Bureau="HI00" Regex="^HI.*"/>
+	  <QslBureau Bureau="HK00" Regex="^[H5][JK].*"/>
+	  <QslBureau Bureau="HL00" Regex="^HL[0-8].*|^6[K-N].*|^D[7-9ST].*"/>
+	  <QslBureau Bureau="HL90" Regex="^HL9.*"/>
+	  <QslBureau Bureau="HP00" Regex="^3[EF].*|^H[389OP].*"/>
+	  <QslBureau Bureau="HR00" Regex="^H[QR].*"/>
+	  <QslBureau Bureau="HS00" Regex="^E2.*|^HS.*"/>
+	  <QslBureau Bureau="I000" Regex="^I[0-9A-Z].*"/>
+	  <QslBureau Bureau="J200" Regex="^J2.*"/>
+	  <QslBureau Bureau="J300" Regex="^J3.*"/>
+	  <QslBureau Bureau="J700" Regex="^J7.*"/>
+	  <QslBureau Bureau="JA00" Regex="^J[A-S].*|^[78][J-N].*"/>
+	  <QslBureau Bureau="JT00" Regex="^J[T-V].*"/>
+	  <QslBureau Bureau="JY00" Regex="^JY.*"/>
+	  <QslBureau Bureau="LA00" Regex="^L[A-N].*|^J[WX].*|^3Y.*"/>
+	  <QslBureau Bureau="LU00" Regex="^L[O-W].*|^A[YZ].*|^L[2-9].*"/>
+	  <QslBureau Bureau="LX00" Regex="^LX.*"/>
+	  <QslBureau Bureau="LY00" Regex="^LY.*"/>
+	  <QslBureau Bureau="LZ00" Regex="^LZ.*"/>
+	  <QslBureau Bureau="OA00" Regex="^O[A-C].*|^4T.*"/>
+	  <QslBureau Bureau="OD00" Regex="^OD.*"/>
+	  <QslBureau Bureau="OE00" Regex="^OE.*"/>
+	  <QslBureau Bureau="OH00" Regex="^O[F-J].*"/>
+	  <QslBureau Bureau="OK00" Regex="^O[KL].*"/>
+	  <QslBureau Bureau="OM00" Regex="^OM.*"/>
+	  <QslBureau Bureau="ON00" Regex="^O[N-T].*"/>
+	  <QslBureau Bureau="OY00" Regex="^OY.*"/>
+	  <QslBureau Bureau="OZ00" Regex="^O[U-XZ].*|^5[PQ].*|^XP.*"/>
+	  <QslBureau Bureau="P400" Regex="^P4.*"/>
+	  <QslBureau Bureau="PA00" Regex="^P[A-I].*"/>
+	  <QslBureau Bureau="PJ00" Regex="^PJ.*"/>
+	  <QslBureau Bureau="PY00" Regex="^P[P-Y].*|^Z[V-Z].*"/>
+	  <QslBureau Bureau="R000" Regex="^R[0-9A-Z].*|^U[A-I].*|^U[0-9].*"/>
+	  <QslBureau Bureau="S200" Regex="^S[23].*"/>
+	  <QslBureau Bureau="S500" Regex="^S5.*"/>
+	  <QslBureau Bureau="SM00" Regex="^S[A-M].*|^[78]S.*"/>
+	  <QslBureau Bureau="SP00" Regex="^S[N-R].*|^3Z.*|^HF.*"/>
+	  <QslBureau Bureau="SV00" Regex="^S[V-Z].*|^J4.*"/>
+	  <QslBureau Bureau="T700" Regex="^T7.*"/>
+	  <QslBureau Bureau="TA00" Regex="^T[A-C].*|^YM.*"/>
+	  <QslBureau Bureau="TF00" Regex="^TF.*"/>
+	  <QslBureau Bureau="TG00" Regex="^T[DG].*"/>
+	  <QslBureau Bureau="TI00" Regex="^T[EI].*"/>
+	  <QslBureau Bureau="TR00" Regex="^TR.*"/>
+	  <QslBureau Bureau="TZ00" Regex="^TZ.*"/>
+	  <QslBureau Bureau="UJ00" Regex="^U[J-M].*"/>
+	  <QslBureau Bureau="UN00" Regex="^U[N-Q].*"/>
+	  <QslBureau Bureau="UR00" Regex="^U[R-Z].*|^E[M-O].*"/>
+	  <QslBureau Bureau="V200" Regex="^V2.*"/>
+	  <QslBureau Bureau="V500" Regex="^V5.*"/>
+	  <QslBureau Bureau="V800" Regex="^V8.*"/>
+	  <QslBureau Bureau="VE10" Regex="^VE0.*|^V[ABCEGX]1.*|^C[FGJK]1.*|^X[LM]1.*"/>
+	  <QslBureau Bureau="VE20" Regex="^V[ABCEGX]2.*|^C[FGJK]2.*|^X[LM]2.*"/>
+	  <QslBureau Bureau="VE30" Regex="^V[ABCEGX]3.*|^C[FGJK]3.*|^X[LM]3.*"/>
+	  <QslBureau Bureau="VE40" Regex="^V[ABCEGX]4.*|^C[FGJK]4.*|^X[LM]4.*"/>
+	  <QslBureau Bureau="VE50" Regex="^V[ABCEGX]5.*|^C[FGJK]5.*|^X[LM]5.*"/>
+	  <QslBureau Bureau="VE60" Regex="^V[ABCEGX]6.*|^C[FGJK]6.*|^X[LM]6.*"/>
+	  <QslBureau Bureau="VE70" Regex="^V[ABCEGX]7.*|^C[FGJK]7.*|^X[LM]7.*"/>
+	  <QslBureau Bureau="VE80" Regex="^V[CEX]8.*|^C[GK]8.*|^XM8.*|^V[FY]0.*|^C[IZ]0.*|^X[KO]0.*"/>
+	  <QslBureau Bureau="VE90" Regex="^V[CEX]9.*|^C[GK]9.*|^XM9.*|^V[FY]2.*|^C[IZ]2.*|^X[KO]2.*"/>
+	  <QslBureau Bureau="VO00" Regex="^V[OD][12].*|^C[HY][12].*|^X[JN][12].*"/>
+	  <QslBureau Bureau="VY10" Regex="^V[FY]1.*|^C[IZ]1.*|^X[KO]1.*"/>
+	  <QslBureau Bureau="VK10" Regex="^V[H-NZ]1.*|^AX1.*"/>
+	  <QslBureau Bureau="VK20" Regex="^V[H-NZ]2.*|^AX2.*"/>
+	  <QslBureau Bureau="VK30" Regex="^V[H-NZ]3.*|^AX3.*"/>
+	  <QslBureau Bureau="VK40" Regex="^V[H-NZ]4.*|^AX4.*"/>
+	  <QslBureau Bureau="VK50" Regex="^V[H-NZ]5.*|^AX5.*"/>
+	  <QslBureau Bureau="VK60" Regex="^V[H-NZ]6.*|^AX6.*"/>
+	  <QslBureau Bureau="VK70" Regex="^V[H-NZ]7.*|^AX7.*"/>
+	  <QslBureau Bureau="VK80" Regex="^V[H-NZ]8.*|^AX8.*"/>
+	  <QslBureau Bureau="VK90" Regex="^V[H-NZ][90].*|^AX[90].*"/>
+	  <QslBureau Bureau="VP2V" Regex="^VP2V.*"/>
+	  <QslBureau Bureau="VP50" Regex="^VP5.*"/>
+	  <QslBureau Bureau="VP80" Regex="^VP8.*"/>
+	  <QslBureau Bureau="VP90" Regex="^VP9.*"/>
+	  <QslBureau Bureau="VR20" Regex="^VR[0-57-9].*|^VS[69].*"/>
+	  <QslBureau Bureau="VU00" Regex="^[AV][T-W].*|^8[T-Y].*"/>
+	  <QslBureau Bureau="W100" Regex="^[KNW]1.*|^A[A-K]1.*|^[KNW][A-GI-KM-Z]1.*"/>
+	  <QslBureau Bureau="W200" Regex="^[KNW]2.*|^A[A-GI-K]2.*|^[KNW][A-GI-KM-OQ-Z]2.*"/>
+	  <QslBureau Bureau="W300" Regex="^[KNW]3.*|^A[A-GI-K]3.*|^[KNW][A-GI-KM-OQ-Z]3.*"/>
+	  <QslBureau Bureau="W400" Regex="^[KNW]4.*"/>
+	  <QslBureau Bureau="W4A0" Regex="^A[A-K]4.*|^[NW][A-KM-OQ-Z]4.*|^K[A-FH-KM-OQ-Z]4.*|^KG4[A-Z]$|^KG4[A-Z][A-Z][A-Z]$"/>
+	  <QslBureau Bureau="W500" Regex="^[KNW]5.*|^A[A-K]5.*|^[KNW][A-KM-Z]5.*"/>
+	  <QslBureau Bureau="W600" Regex="^[KNW]6.*|^A[A-GI-K]6.*|^[KNW][A-GI-KM-Z]6.*"/>
+	  <QslBureau Bureau="W700" Regex="^[KNW]7.*|^A[A-GI-K]7.*|^[KNW][A-GI-KM-Z]7.*"/>
+	  <QslBureau Bureau="W800" Regex="^[KNW]8.*|^A[A-GI-K]8.*|^[KNW][A-GI-KM-Z]8.*"/>
+	  <QslBureau Bureau="W900" Regex="^[KNW]9.*|^A[A-K]9.*|^[KNW][A-KM-Z]9.*"/>
+	  <QslBureau Bureau="W9A0" Regex="^[KNW]0.*|^A[A-K]0.*|^[KNW][A-KM-Z]0.*"/>
+	  <QslBureau Bureau="W9B0" Regex="^KG4[A-Z][A-Z]$"/>
+	  <QslBureau Bureau="W9C0" Regex="^[KNW]P2.*"/>
+	  <QslBureau Bureau="W9D0" Regex="^[KNW]P[34].*"/>
+	  <QslBureau Bureau="W9H2" Regex="^[AKNW]H2.*"/>
+	  <QslBureau Bureau="W9H3" Regex="^[AKNW]H3.*"/>
+	  <QslBureau Bureau="W9H6" Regex="^[AKNW]H[67].*"/>
+	  <QslBureau Bureau="W9L0" Regex="^[AKNW]L.*"/>
+	  <QslBureau Bureau="XE00" Regex="^X[A-I].*|^4[A-C].*|^6[D-J].*"/>
+	  <QslBureau Bureau="XT00" Regex="^XT.*"/>
+	  <QslBureau Bureau="XX90" Regex="^XX9.*"/>
+	  <QslBureau Bureau="YB00" Regex="^Y[B-H].*|^[78][A-I].*|^JZ.*|^P[K-O].*"/>
+	  <QslBureau Bureau="YI00" Regex="^YI.*|^HN.*"/>
+	  <QslBureau Bureau="YJ00" Regex="^YJ.*"/>
+	  <QslBureau Bureau="YK00" Regex="^YK.*|^6C.*"/>
+	  <QslBureau Bureau="YL00" Regex="^YL.*"/>
+	  <QslBureau Bureau="YN00" Regex="^YN.*|^H[67T].*"/>
+	  <QslBureau Bureau="YO00" Regex="^Y[O-R].*"/>
+	  <QslBureau Bureau="YS00" Regex="^YS.*|^HU.*"/>
+	  <QslBureau Bureau="YU00" Regex="^Y[TU].*|^4O.*"/>
+	  <QslBureau Bureau="YV00" Regex="^Y[V-Y].*|^4M.*"/>
+	  <QslBureau Bureau="Z300" Regex="^Z3.*"/>
+	  <QslBureau Bureau="ZB00"  Regex="^ZB.*"/>
+	  <QslBureau Bureau="ZC40" Regex="^ZC4.*"/>
+	  <QslBureau Bureau="ZF00" Regex="^ZF.*"/>
+	  <QslBureau Bureau="ZL00" Regex="^Z[K-M].*"/>
+	  <QslBureau Bureau="ZP00" Regex="^ZP.*"/>
+	  <QslBureau Bureau="ZS00" Regex="^Z[R-U].*|^8S.*"/>
+	</QslBureaus>
 </CallsBureaus>

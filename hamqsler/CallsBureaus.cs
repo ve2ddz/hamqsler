@@ -32,6 +32,8 @@ namespace hamqsler
 	/// </summary>
 	public class CallsBureaus : AppDataXMLFile
 	{
+		public static readonly string NoBureau = "ZZZZ";
+		
 		public string Version
 		{
 			get 
@@ -119,6 +121,11 @@ namespace hamqsler
 			return false;
 		}
 		
+		/// <summary>
+		/// Determine if the input call is valid as both a call and a prefix
+		/// </summary>
+		/// <param name="call">Callsign to check</param>
+		/// <returns>true if call is both callsign and prefix, false otherwise</returns>
 		public bool IsCallAndPrefix(string call)
 		{
 			var callsPrefixes = from val in
@@ -133,5 +140,27 @@ namespace hamqsler
 			}
 			return false;
 		}
+		
+		/// <summary>
+		/// Get QSL bureau for the input call
+		/// </summary>
+		/// <param name="call">callsign to get bureau for</param>
+		/// <returns>QSL bureau for the call, or "ZZZZ" if no bureau.</returns>
+		public string GetBureau(string call)
+		{
+			var bureaus = from val in
+				xDoc.Descendants("QslBureaus").Descendants("QslBureau")
+				select val;
+			foreach(XElement bureau in bureaus)
+			{
+				if(Regex.IsMatch(call, bureau.Attribute("Regex").Value))
+				{
+					return bureau.Attribute("Bureau").Value;
+				}
+			}
+			return NoBureau;
+		}
+		
+		
 	}
 }

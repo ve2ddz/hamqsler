@@ -32,8 +32,6 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Xml;
 
-using QslBureaus;
-
 namespace hamqsler
 {
 	/// <summary>
@@ -315,11 +313,6 @@ namespace hamqsler
 		internal void LogRuntimeInfo()
 		{
 			string os = Environment.OSVersion.VersionString;			
-			Assembly assembly = Assembly.GetAssembly(new QslBureau().GetType());
-			// get version of QsosLibary
-			// AdifString object only used so that I can get the Type for it to get
-			// the Assembly it is in
-			AssemblyName aName2 = assembly.GetName();
 			// get CLR version info
 			Version ver = Environment.Version;
 			// get newline for this platform
@@ -329,7 +322,6 @@ namespace hamqsler
 			                         "HamQSLer version: {3}" + newline +
 			                         "AdifEnumerations version: {5}" + newline +
 			                         "CallsBureaus version: {6}" + newline +
-			                         "QslBureaus version: {7}" + newline +
 			                         "CLR version: {2}" + newline +
 			                         "OS: {0}" + newline + 
 			                         "Processors: {1}" + newline +
@@ -340,8 +332,7 @@ namespace hamqsler
 			                         Assembly.GetExecutingAssembly().GetName().Version.ToString(),
 			                         CultureInfo.CurrentCulture.Name,
 			                         adifEnums.Version,
-			                         CallBureaus.Version,
-			                         aName2.Version.ToString()
+			                         CallBureaus.Version
 			                ));
 			if(!created.Equals(string.Empty))
 			{

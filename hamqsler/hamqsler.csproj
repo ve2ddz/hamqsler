@@ -414,12 +414,6 @@
     <Page Include="UserPreferencesDialog.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QslBureaus\QslBureaus.csproj">
-      <Project>{ABAFD1CD-0843-491E-987F-562AB898D953}</Project>
-      <Name>QslBureaus</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Samples" />
   </ItemGroup>
   <ItemGroup>
