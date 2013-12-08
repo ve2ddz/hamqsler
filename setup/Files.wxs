@@ -45,6 +45,16 @@
 					</Directory>
 				</Directory>
 			</Directory>
+			<Directory Id="WIX_DIR_COMMON_DOCUMENTS" Name="CommonDocumentsFolder">
+	            <Directory Id="HamQSLer" Name="HamQSLer">
+	                <Component Id="ConfigurationFiles" Guid="AE99046C-9C5D-4420-A625-C4AAD7065E88"  >
+	                    <RemoveFolder Id="HamQSLer" On="uninstall" />  
+	                    <CreateFolder />
+						<File Id="AdifEnumerations.xml" Name="AdifEnumerations.xml" Source="..\hamqsler\AdifEnumerations.xml" />
+						<File Id="CallsBureaus.xml" Name="CallsBureaus.xml" Source="..\hamqsler\CallsBureaus.xml" />
+	                </Component>
+				</Directory>
+			</Directory>
 			<Directory Id="ProgramMenuFolder">
 				<Directory Id="ApplicationProgramsFolder" Name="HamQSLer">
 					<Component Id="HamQSLerShortcut" Guid="00AAF0E8-FB8F-4B5F-8B4A-D41A4DC84F2E">

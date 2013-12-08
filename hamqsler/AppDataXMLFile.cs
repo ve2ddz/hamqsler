@@ -63,7 +63,7 @@ namespace hamqsler
 		public void CopyDefaultXmlFile()
 		{
 			string appDataDirName =  Path.Combine(Environment.GetFolderPath(
-						Environment.SpecialFolder.ApplicationData), "HamQSLer");
+						Environment.SpecialFolder.CommonDocuments), "HamQSLer");
 			DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
 			FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/" + xmlFile);
 			Assembly assembly = Assembly.GetAssembly((new AdifField()).GetType());
@@ -82,7 +82,7 @@ namespace hamqsler
 		public void LoadDocument()
 		{
 			string fileName = Path.Combine(Environment.GetFolderPath(
-				Environment.SpecialFolder.ApplicationData), @"HamQSLer\" + xmlFile);
+				Environment.SpecialFolder.CommonDocuments), @"HamQSLer\" + xmlFile);
 			Stream str = new FileStream(fileName, FileMode.Open);
 			try
 			{
@@ -149,7 +149,7 @@ namespace hamqsler
                 
                 // copy file to AppData folder
 				string appDataDirName =  Path.Combine(Environment.GetFolderPath(
-							Environment.SpecialFolder.ApplicationData), "HamQSLer");
+							Environment.SpecialFolder.CommonDocuments), "HamQSLer");
 				DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
 				FileInfo fInfo = new FileInfo(appDataFolder.FullName + "/" + xmlFile);
 	        	string adifStr = resStream.ReadToEnd();

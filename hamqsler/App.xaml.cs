@@ -164,7 +164,7 @@ namespace hamqsler
 				
 				// check if AppDataFolder\HamQSLer directory exists and create it if it doesn't
 				string appDataDirName =  Path.Combine(Environment.GetFolderPath(
-							Environment.SpecialFolder.ApplicationData), "HamQSLer");
+							Environment.SpecialFolder.CommonDocuments), "HamQSLer");
 				DirectoryInfo appDataFolder = new DirectoryInfo(appDataDirName);
 				if(!appDataFolder.Exists)
 				{

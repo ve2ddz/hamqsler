@@ -313,7 +313,7 @@ namespace hamqsler
 			if(userPrefsError || showHamqslerLabel || showUserPrefsLabel || webError ||		// info message
 						directoriesError || newStableVersion || newDevelopmentVersion ||
 						securityException || accessException || newAdifEnumerationsVersion ||
-						adifError || callsBureausError)
+						newCallsBureausVersion || adifError || callsBureausError)
 			{
 				ShowContinueButton();
 			}
