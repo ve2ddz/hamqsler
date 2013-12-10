@@ -37,6 +37,9 @@ namespace hamqsler
 
 		private static int BEEPFREQUENCY = 800;		// Hz
 		private static int BEEPDURATION = 200;		// ms
+		
+		private static int NOSELECTION = -1;
+		private int qsoColumnSelected = NOSELECTION;
 
 		private static readonly DependencyProperty UserPrefsProperty =
 			DependencyProperty.Register("UserPrefs", typeof(UserPreferences),
@@ -415,6 +418,11 @@ namespace hamqsler
 			}
 		}
 		
+		/// <summary>
+		/// Handler for PreviewTextInput events on TextBoxes - checks for length of input
+		/// </summary>
+		/// <param name="sender">Textbox being checked</param>
+		/// <param name="e">TextCompositionEventArgs object</param>
 		private void CheckLength(object sender, TextCompositionEventArgs e)
 		{
 			TextBox box = sender as TextBox;
@@ -429,6 +437,11 @@ namespace hamqsler
 			
 		}
 		
+		/// <summary>
+		/// Handler for ProgramUpdatesCheckBox unchecked event - display warning when unchecking
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
 		void ProgramUpdatesCheckBox_Unchecked(object sender, RoutedEventArgs e)
 		{
 			MessageBox.Show("You are disabling checks for new program versions as well as" +
@@ -443,5 +456,62 @@ namespace hamqsler
 			                "Updates Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 		}
 		
+		/// <summary>
+		/// Handler for QsoColumnsOrderListBox KeyUp event.
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">KeyEventArgs object</param>
+		void QsoColumnsOrderListBox_KeyUp(object sender, KeyEventArgs e)
+		{
+			switch(e.Key)
+			{
+				case Key.Up:	// move selected column up in order
+					if(qsoColumnSelected != 0)
+					{
+						string prevSel = ((TextBlock)qsoColumnsOrderListBox.Items[qsoColumnSelected]).Text;
+						string newSel = ((TextBlock)qsoColumnsOrderListBox.Items[qsoColumnSelected - 1]).Text;
+						((TextBlock)qsoColumnsOrderListBox.Items[qsoColumnSelected - 1]).Text = prevSel;
+						((TextBlock)qsoColumnsOrderListBox.Items[qsoColumnSelected]).Text = newSel;
+						qsoColumnSelected = qsoColumnsOrderListBox.SelectedIndex;
+					}
+					else
+					{
+						Console.Beep(BEEPFREQUENCY, BEEPDURATION);					
+					}
+					break;
+				case Key.Down:	// move selected column down in order
+					if(qsoColumnSelected != 5)
+					{
+						string prevSel = ((TextBlock)qsoColumnsOrderListBox.Items[qsoColumnSelected]).Text;
+						string newSel = ((TextBlock)qsoColumnsOrderListBox.Items[qsoColumnSelected + 1]).Text;
+						((TextBlock)qsoColumnsOrderListBox.Items[qsoColumnSelected + 1]).Text = prevSel;
+						((TextBlock)qsoColumnsOrderListBox.Items[qsoColumnSelected]).Text = newSel;
+						qsoColumnSelected = qsoColumnsOrderListBox.SelectedIndex;
+					}
+					else
+					{
+						Console.Beep(BEEPFREQUENCY, BEEPDURATION);					
+					}
+					break;
+				case Key.Tab:	// select first column if none selected
+					if(qsoColumnSelected == NOSELECTION)
+					{
+						qsoColumnsOrderListBox.SelectedIndex = 0;
+						qsoColumnSelected = 0;
+					}
+					break;
+			}
+		}
+		
+		/// <summary>
+		/// Handler for qsoColumnsOrderListBox MouseDown event
+		/// </summary>
+		/// <param name="sender">TextBlock item that was clicked</param>
+		/// <param name="e">not used</param>
+		void QsoColumnsOrderListBox_TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			// set the selected column to the one that was clicked
+			qsoColumnSelected = qsoColumnsOrderListBox.Items.IndexOf(sender);
+		}
 	}
 }

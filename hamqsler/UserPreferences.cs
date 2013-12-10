@@ -329,6 +329,66 @@ namespace hamqsler
 			set {SetValue(ViaTextProperty, value);}
 		}
 		
+		private static readonly DependencyProperty QsoColumn1Property =
+			DependencyProperty.Register("QsoColumn1", typeof(string),
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata("Date"));
+		public string QsoColumn1
+		{
+			get {return GetValue(QsoColumn1Property) as string;}
+			set {SetValue(QsoColumn1Property, value);}
+		}
+		
+		private static readonly DependencyProperty QsoColumn2Property =
+			DependencyProperty.Register("QsoColumn2", typeof(string),
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata("Time"));
+		public string QsoColumn2
+		{
+			get {return GetValue(QsoColumn2Property) as string;}
+			set {SetValue(QsoColumn2Property, value);}
+		}
+		
+		private static readonly DependencyProperty QsoColumn3Property =
+			DependencyProperty.Register("QsoColumn3", typeof(string),
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata("Band or Frequency"));
+		public string QsoColumn3
+		{
+			get {return GetValue(QsoColumn3Property) as string;}
+			set {SetValue(QsoColumn3Property, value);}
+		}
+		
+		private static readonly DependencyProperty QsoColumn4Property =
+			DependencyProperty.Register("QsoColumn4", typeof(string),
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata("Mode"));
+		public string QsoColumn4
+		{
+			get {return GetValue(QsoColumn4Property) as string;}
+			set {SetValue(QsoColumn4Property, value);}
+		}
+		
+		private static readonly DependencyProperty QsoColumn5Property =
+			DependencyProperty.Register("QsoColumn5", typeof(string),
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata("RST"));
+		public string QsoColumn5
+		{
+			get {return GetValue(QsoColumn5Property) as string;}
+			set {SetValue(QsoColumn5Property, value);}
+		}
+		
+		private static readonly DependencyProperty QsoColumn6Property =
+			DependencyProperty.Register("QsoColumn6", typeof(string),
+			                            typeof(UserPreferences), 
+			                            new PropertyMetadata("QSL"));
+		public string QsoColumn6
+		{
+			get {return GetValue(QsoColumn6Property) as string;}
+			set {SetValue(QsoColumn6Property, value);}
+		}
+		
 		// Date Text Headers
 		private static readonly DependencyProperty YYYYMMDDTextProperty =
 			DependencyProperty.Register("YYYYMMDDText", typeof(string),
@@ -1015,6 +1075,12 @@ namespace hamqsler
 			{
 				Salutation.Add(part);
 			}
+			QsoColumn1 = prefs.QsoColumn1;
+			QsoColumn2 = prefs.QsoColumn2;
+			QsoColumn3 = prefs.QsoColumn3;
+			QsoColumn4 = prefs.QsoColumn4;
+			QsoColumn5 = prefs.QsoColumn5;
+			QsoColumn6 = prefs.QsoColumn6;
 			DefaultQsosBoxFontFace = prefs.DefaultQsosBoxFontFace;
 			SetValue(ConfirmingTextPropertyKey, new TextParts());
 			foreach(TextPart part in prefs.ConfirmingText)

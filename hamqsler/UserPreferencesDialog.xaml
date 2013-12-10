@@ -77,6 +77,7 @@
 				<TreeViewItem Name="SalutationText" Header="Salutation Text"/>
 			</TreeViewItem>
 			<TreeViewItem Header="QSOs Box">
+				<TreeViewItem Name="QsoColumnsOrder" Header="QSO Columns Order"/>
 				<TreeViewItem Name="DefaultQSOsBoxFont" Header="Default QSOs Box Font"/>
 				<TreeViewItem Name="ConfirmingText" Header="Confirming Text"/>
 				<TreeViewItem Name="DateFormats" Header="Date Formats"/>
@@ -219,6 +220,41 @@
 				<Button Name="DefaultImagesFolderButton" Grid.Row="0" Grid.Column="2"
 				        Margin="5" MinWidth="30" Click="DefaultImagesFolderButton_Click"
 				        ToolTip="Select a new default folder">...</Button>
+			</Grid>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.Visibility>
+					<Binding ElementName="QsoColumnsOrder" Path="IsSelected"
+					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+				</Grid.Visibility>
+				<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+						HorizontalAlignment="Center" Foreground="Blue" FontSize="20"
+						Margin="10"
+						>Select a column type and press Up or Down key to reposition</TextBlock>
+				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+						>QSO Columns Order:</TextBlock>
+				<ListBox Name="qsoColumnsOrderListBox" HorizontalContentAlignment="Stretch"
+						Grid.Row="1" Grid.Column="1" KeyUp="QsoColumnsOrderListBox_KeyUp">
+					<TextBlock Text="{Binding QsoColumn1, Mode=TwoWay}"
+					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+					<TextBlock Text="{Binding QsoColumn2, Mode=TwoWay}"
+					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+					<TextBlock Text="{Binding QsoColumn3, Mode=TwoWay}"
+					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+					<TextBlock Text="{Binding QsoColumn4, Mode=TwoWay}"
+					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+					<TextBlock Text="{Binding QsoColumn5, Mode=TwoWay}"
+					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+					<TextBlock Text="{Binding QsoColumn6, Mode=TwoWay}"
+					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+				</ListBox>
 			</Grid>
 			<Grid>
 				<Grid.ColumnDefinitions>
