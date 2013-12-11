@@ -425,6 +425,41 @@
 		column of the box, and the frequency values printed for QSOs whose records contain
 		a band field but no frequency field.</para>
 		<section>
+			<title>QSO Columns Order</title>
+			<para>The QSO Columns Order determines the order that columns are printed
+			in the Qsos box. This order applies to all cards regardless of when the
+			cards were created; that is, any change to the order affects all cards
+			immediately.</para>
+			<figure xml:id="qsocolumnsorder">
+				<title>Default QSOs Box Font Preference</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/qsocolumnsorder.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The image above shows the user preferences dialog with the QSO
+			Columns Order subtopic selected. The box on the right contains the
+			list of columns that are painted or printed in the Qsos Box, with
+			the column at the top of the list being painted in the left column
+			of the Qsos Box on the card. The column immediately below the first
+			is painted in the column immediately to the right of the first one
+			in the Qsos Box, and so forth until all columns are printed. Using
+			this box, you may change the order in which columns are printed. To
+			change the order, select the column that you want to move by moving
+			the mouse cursor over the column type in the list and clicking the
+			left mouse button. Move the selected column by pressing the up or
+			down arrow key on the keyboard.</para>
+			<caution>
+				<para>The order that the columns are typically printed on QSL cards
+				is fairly standard: that is, the date column is normally printed
+				on the left, followed by the time column. The signal report is usually
+				printed near or at the right on the card. Therefore, it is recommended
+				that only the order of the Band or Frequency, and Mode columns be
+				changed to prevent momentary confusion in the person receiving the card.</para>
+			</caution>
+		</section>
+		<section>
 			<title>Default QSOs Box Font Preference</title>
 			<para>The default Qsos Box font is the font that all text in the Qsos Box
 			is displayed in when a new card is created. While designing a card, the user 
