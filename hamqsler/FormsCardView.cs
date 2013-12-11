@@ -24,6 +24,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Drawing.Text;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace hamqsler
@@ -465,8 +466,8 @@ namespace hamqsler
 			Font font = new Font(new System.Drawing.FontFamily(
 				qBox.FontName), qBox.FontSize * fontAdjustmentFactor, 
 				FontStyle.Regular, GraphicsUnit.Point);
-			List<string> colHeaders = CreateColumnHeaders(qBox);
-			List<float> colWidths = CreateColumnWidths(g, font, colHeaders, qBox);
+			Dictionary<string, string> colHeaders = CreateColumnHeaders(qBox);
+			Dictionary<string, float> colWidths = CreateColumnWidths(g, font, colHeaders, qBox);
 			GraphicsPath path = CreateOutsideBoxPath(qBox);
 			FillQsosBoxBackground(g, path, qBox);
 			CreateInsideBoxPath(g, ref path, font, colHeaders, colWidths, qBox);
@@ -568,8 +569,8 @@ namespace hamqsler
 		/// <param name="colWidths">Width of each column in the Qsos box</param>
 		/// <param name="box">Qsos box being dreawn</param>
 		private void CreateInsideBoxPath(Graphics g, ref GraphicsPath path, Font font, 
-		                                 List<string> colHeaders,
-		                                 List<float> colWidths, QsosWFBox box)
+		                                 Dictionary<string, string> colHeaders,
+		                                 Dictionary<string, float> colWidths, QsosWFBox box)
 		{
 			int left = CardLocation.X + box.X;
 			int top = CardLocation.Y + box.Y;
@@ -588,11 +589,16 @@ namespace hamqsler
 			int lineX = left;
 			int topY = top + (int)size.Height + 3;
 			path.AddLine(left, bottom - (int)size.Height + 3, left, topY);
-			for(int col = 0; col < colWidths.Count - 1; col++)
+			UserPreferences prefs = ((App)App.Current).UserPreferences;
+			Type prefsType =prefs.GetType();
+			for(int col = 1; col < 6; col++)
 			{
-				if(col != colWidths.Count - 2 || box.ShowPseTnx)
+				string colType = "QsoColumn" + col.ToString();
+				PropertyInfo prefsPropInfo = prefsType.GetProperty(colType);
+				string columnType = prefsPropInfo.GetValue(prefs, null) as string;
+				if(col != 5 || box.ShowPseTnx)
 				{
-					lineX += (int)colWidths[col];
+					lineX += (int)colWidths[columnType];
 					path.AddLine(lineX, topY, lineX, bottom);
 					// the following line is needed to prevent diagonal lines between the end
 					// of the line just drawn and the strt of the next line (if any);
@@ -606,30 +612,30 @@ namespace hamqsler
 		/// </summary>
 		/// <param name="box">Qsos box for which we are creating the headers</param>
 		/// <returns>List of column leaders</returns>
-		protected List<string> CreateColumnHeaders(QsosWFBox box)
+		protected Dictionary<string, string> CreateColumnHeaders(QsosWFBox box)
 		{
-			List<string> headers = new List<string>();
+			Dictionary<string, string> headers = new Dictionary<string, string>();
 			switch(box.DateFormat)
 			{
 				case "YYYY-MM-DD":
-					headers.Add(box.YYYYMMDDText.Equals(string.Empty) ? "YYYY-MM-DD" :
-					            box.YYYYMMDDText);
+					headers["Date"] = box.YYYYMMDDText.Equals(string.Empty) ? "YYYY-MM-DD" :
+					            box.YYYYMMDDText;
 					break;
 				case "DD-MMM-YY":
-					headers.Add(box.DDMMMYYText.Equals(string.Empty) ? "DD-MMM-YY" :
-					            box.DDMMMYYText);
+					headers["Date"] = box.DDMMMYYText.Equals(string.Empty) ? "DD-MMM-YY" :
+					            box.DDMMMYYText;
 					break;
 				case "DD-MM-YY":
-					headers.Add(box.DDMMYYText.Equals(string.Empty) ? "DD-MM-YY" :
-					            box.DDMMYYText);
+					headers["Date"] = box.DDMMYYText.Equals(string.Empty) ? "DD-MM-YY" :
+					            box.DDMMYYText;
 					break;
 			}
-			headers.Add(box.TimeText.Equals(string.Empty) ? "Time" : box.TimeText);
-			headers.Add(box.BandText.Equals(string.Empty) ? "Band" : box.BandText);
-			headers.Add(box.FreqText.Equals(string.Empty) ? "MHz" : box.FreqText);
-			headers.Add(box.ModeText.Equals(string.Empty) ? "Mode" : box.ModeText);
-			headers.Add(box.RSTText.Equals(string.Empty) ? "RST" : box.RSTText);
-			headers.Add(box.QSLText.Equals(string.Empty) ? "QSL" : box.QSLText);
+			headers["Time"] = box.TimeText.Equals(string.Empty) ? "Time" : box.TimeText;
+			headers["Band"] = box.BandText.Equals(string.Empty) ? "Band" : box.BandText;
+			headers["Freq"] = box.FreqText.Equals(string.Empty) ? "MHz" : box.FreqText;
+			headers["Mode"] = box.ModeText.Equals(string.Empty) ? "Mode" : box.ModeText;
+			headers["RST"] = box.RSTText.Equals(string.Empty) ? "RST" : box.RSTText;
+			headers["QSL"] = box.QSLText.Equals(string.Empty) ? "QSL" : box.QSLText;
 			return headers;
 		}
 		
@@ -641,72 +647,96 @@ namespace hamqsler
 		/// <param name="headers">List of column headers</param>
 		/// <param name="box">Qsos box for which the column widths are being created</param>
 		/// <returns>List of column widths</returns>
-		protected List<float> CreateColumnWidths(Graphics g, Font font, List<string> headers, 
+		protected Dictionary<string, float> CreateColumnWidths(Graphics g, Font font, 
+		                                         Dictionary<string, string> headers,
 		                                         QsosWFBox box)
 		{
-			List<float> colWidths = new List<float>();
+			Dictionary<string, float> colWidths = new Dictionary<string, float>();
 			int width = 0;
-			// date column width
-			int dateLen = box.DateFormat.Length;
-			string dateMeasure = string.Empty;
-			for(int i = 0; i < dateLen; i++)
+			UserPreferences prefs = ((App)App.Current).UserPreferences;
+			Type prefsType =prefs.GetType();
+			for(int col = 1; col <=6; col++)
 			{
-				dateMeasure += "M";
-			}
-			SizeF size =g.MeasureString(dateMeasure, font);
-			colWidths.Add((int)size.Width);
-			// time column width
-			size = g.MeasureString("000000", font);
-			width = (int)size.Width;
-			size = g.MeasureString(headers[1], font);
-			colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
-			if(box.ShowFrequency)
-			{
-				colWidths.Add(0);		// band column width
-				// assuming frequency limited to 8 characters
-				size = g.MeasureString("241000.0", font);
-				width = (int)size.Width;
-				size = g.MeasureString(headers[3], font);
-				colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
-			}
-			else
-			{
-				// assuming 2190m is the largest band width
-				size = g.MeasureString("2190m", font);
-				width = (int)size.Width;
-				size = g.MeasureString(headers[2], font);
-				colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
-				colWidths.Add(0);			// frequency column width
-			}
-			// mode column width
-			// assuming mode is limited to 12 characters (e.g. OLIVIA-BEACON)
-			size = g.MeasureString("MMMMMMMMMMMM", font);
-			colWidths.Add((int)size.Width);
-			// rst column width
-			// assuming signal report limited to 3 chars
-			size = g.MeasureString("599", font);
-			width = (int)size.Width;
-			size = g.MeasureString(headers[4], font);
-			colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
-			// qsl column width
-			if(box.ShowPseTnx)
-			{
-				// take largest width of header text, Pse text and Tnx text
-				size = g.MeasureString(headers[5], font);
-				width = (int)size.Width;
-				size = g.MeasureString(box.PseText, font);
-				width = width >= (int)size.Width ? width : (int)size.Width;
-				size = g.MeasureString(box.TnxText, font);
-				colWidths.Add(width >= (int)size.Width ? width : (int)size.Width);
-			}
-			else
-			{
-				colWidths.Add(0);
+				string colType = "QsoColumn" + col.ToString();
+				PropertyInfo prefsPropInfo = prefsType.GetProperty(colType);
+				string columnType = prefsPropInfo.GetValue(prefs, null) as string;
+				switch(columnType)
+				{
+					case "Date":
+						// date column width
+						int dateLen = box.DateFormat.Length;
+						string dateMeasure = string.Empty;
+						for(int i = 0; i < dateLen; i++)
+						{
+							dateMeasure += "M";
+						}
+						SizeF size =g.MeasureString(dateMeasure, font);
+						colWidths["Date"] = (int)size.Width;
+						break;
+					case "Time":
+						// time column width
+						size = g.MeasureString("000000", font);
+						width = (int)size.Width;
+						size = g.MeasureString(headers["Time"], font);
+						colWidths["Time"] = width >= (int)size.Width ? width : (int)size.Width;
+						break;
+					case "Band or Frequency":
+						if(box.ShowFrequency)
+						{
+							// assuming frequency limited to 8 characters
+							size = g.MeasureString("241000.0", font);
+							width = (int)size.Width;
+							size = g.MeasureString(headers["Freq"], font);
+							colWidths["Band or Frequency"] = width >= (int)size.Width ? width : 
+								(int)size.Width;
+						}
+						else
+						{
+							// assuming 2190m is the largest band width
+							size = g.MeasureString("2190m", font);
+							width = (int)size.Width;
+							size = g.MeasureString(headers["Band"], font);
+							colWidths["Band or Frequency"] = width >= (int)size.Width ? width : 
+								(int)size.Width;
+						}
+						break;
+					case "Mode":
+						// mode column width
+						// assuming mode is limited to 12 characters (e.g. OLIVIA-BEACON)
+						size = g.MeasureString("MMMMMMMMMMMM", font);
+						colWidths["Mode"] = (int)size.Width;
+						break;
+					case "RST":
+						// rst column width
+						// assuming signal report limited to 3 chars
+						size = g.MeasureString("599", font);
+						width = (int)size.Width;
+						size = g.MeasureString(headers["RST"], font);
+						colWidths["RST"] = width >= (int)size.Width ? width : (int)size.Width;
+						break;
+					case "QSL":
+						// qsl column width
+						if(box.ShowPseTnx)
+						{
+							// take largest width of header text, Pse text and Tnx text
+							size = g.MeasureString(headers["QSL"], font);
+							width = (int)size.Width;
+							size = g.MeasureString(box.PseText, font);
+							width = width >= (int)size.Width ? width : (int)size.Width;
+							size = g.MeasureString(box.TnxText, font);
+							colWidths["QSL"] = width >= (int)size.Width ? width : (int)size.Width;
+						}
+						else
+						{
+							colWidths["QSL"] = 0;
+						}
+						break;
+				}
 			}
 			float totalColWidths = 0;
-			for(int col = 0; col < colWidths.Count; col++)
+			foreach(string key in colWidths.Keys)
 			{
-				totalColWidths += colWidths[col];
+				totalColWidths += colWidths[key];
 			}
 			BoxMinimumWidth = (int)(totalColWidths + 5);
 			if(box.Width < BoxMinimumWidth)
@@ -714,14 +744,12 @@ namespace hamqsler
 				box.ItemSize = new Size(BoxMinimumWidth, box.Height);
 			}
 			float colExpansion = (box.Width - totalColWidths) / (box.ShowPseTnx ? 6: 5);
-			for(int col = 0; col < colWidths.Count; col++)
+			Dictionary<string, float> colW = new Dictionary<string, float>();
+			foreach(string key in colWidths.Keys)
 			{
-				if(colWidths[col] != 0)
-				{
-					colWidths[col] += colExpansion;
-				}
+				colW[key] = colWidths[key] + colExpansion;
 			}
-			return colWidths;
+			return colW;
 		}
 		
 		/// <summary>
@@ -732,22 +760,54 @@ namespace hamqsler
 		/// <param name="colHeaders">List of headers to draw</param>
 		/// <param name="colWidths">List of widths for the columns</param>
 		/// <param name="box">Qsos box object which is being drawn</param>
-		private void DrawHeaders(Graphics g, Font font, List<string> colHeaders, 
-		                         List<float> colWidths, QsosWFBox box)
+		private void DrawHeaders(Graphics g, Font font, Dictionary<string, string> colHeaders, 
+		                         Dictionary<string, float> colWidths, QsosWFBox box)
 		{
-			SizeF size = g.MeasureString(colHeaders[0], font);
+			UserPreferences prefs = ((App)App.Current).UserPreferences;
+			SizeF size = g.MeasureString(colHeaders["Date"], font);
 			float colPosition = CardLocation.X + box.X;
 			float textY = (float)(CardLocation.Y + box.Y + size.Height + 3 + 2);
-			for(int col = 0; col < colWidths.Count; col++)
+			for(int colNum = 1; colNum <= 6; colNum++)
 			{
-				if(colWidths[col] > 0)
+				string colType = "QsoColumn" + colNum.ToString();
+				Type prefsType =prefs.GetType();
+				PropertyInfo prefsPropInfo = prefsType.GetProperty(colType);
+				string columnType = prefsPropInfo.GetValue(prefs, null) as string;
+				string header = string.Empty;
+				switch(columnType)
 				{
-					size = g.MeasureString(colHeaders[col], font);
-					float startX = colPosition + (colWidths[col] - size.Width) / 2;
-					g.DrawString(colHeaders[col], font, box.LineTextBrush,
-					             startX, textY);
+					case "Date":
+						header = colHeaders["Date"];
+						break;
+					case "Time":
+						header = colHeaders["Time"];
+						break;
+					case "Band or Frequency":
+						if(box.ShowFrequency)
+						{
+							header = colHeaders["Freq"];
+						}
+						else
+						{
+							header = colHeaders["Band"];
+						}
+						break;
+					case "Mode":
+						header = colHeaders["Mode"];
+						break;
+					case "RST":
+						header = colHeaders["RST"];
+						break;
+					case "QSL":
+						
+						header = qslCard.QsosBox.ShowPseTnx ? colHeaders["QSL"] : string.Empty;
+						break;
 				}
-				colPosition += colWidths[col];
+				size = g.MeasureString(header, font);
+				float startX = colPosition + (colWidths[columnType] - size.Width) / 2;
+				g.DrawString(header, font, box.LineTextBrush,
+				             startX, textY);
+				colPosition += colWidths[columnType];
 			}
 		}
 		
@@ -793,43 +853,66 @@ namespace hamqsler
 		/// <param name="colWidths">List of column widths in the QSOs Box</param>
 		/// <param name="box">QsosWFBox object that is being drawn</param>
 		private void DrawQsos(Graphics g, List<DispQso> qsos, Font font, 
-		                         List<float> colWidths, QsosWFBox box)
+		                         Dictionary<string, float> colWidths, QsosWFBox box)
 		{
 			if(qsos != null)
 			{
+				UserPreferences prefs = ((App)App.Current).UserPreferences;
+				Type prefsType =prefs.GetType();
 				SizeF size = g.MeasureString("X", font);
 				float y = CardLocation.Y + box.Y + 2 * (size.Height + 3) + 1;
 				foreach(DispQso qso in qsos)
 				{
 					float xStart = CardLocation.X + box.X;
-					string date = GenerateDateText(qso.Date, box.DateFormat);
-					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
-						g, date, font, box.LineTextBrush, colWidths[0], xStart, y);
-					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
-						g, qso.Time, font, box.LineTextBrush, colWidths[1], xStart, y);
-					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
-						g, qso.Band, font, box.LineTextBrush, colWidths[2], xStart, y);
-					string freq = qso.Frequency != string.Empty ?
-						qso.Frequency : bandFreqs[qso.Band];
-					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
-						g, freq, font, box.LineTextBrush, colWidths[3], xStart, y);
-					string mode = qso.Submode.Equals(string.Empty) ?
-						qso.Mode : qso.Submode;
-					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
-						g, mode, font, box.LineTextBrush, colWidths[4], xStart, y);
-					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
-						g, qso.RST, font, box.LineTextBrush, colWidths[5], xStart, y);
-					string qsl = string.Empty;
-					if(qso.Qsl.Equals("No") || qso.Qsl.Equals("Requested") || qso.Qsl.Equals(string.Empty))
+					for(int col = 1; col <= 6; col++)
 					{
-						qsl = box.PseText;
+						string colType = "QsoColumn" + col.ToString();
+						PropertyInfo prefsPropInfo = prefsType.GetProperty(colType);
+						string columnType = prefsPropInfo.GetValue(prefs, null) as string;
+						string value = string.Empty;
+						switch(columnType)
+						{
+							case "Date":
+								value = GenerateDateText(qso.Date, box.DateFormat);
+								break;
+							case "Time":
+								value = qso.Time;
+								break;
+							case "Band or Frequency":
+								if(box.ShowFrequency)
+								{
+									value = qso.Frequency != string.Empty ?
+										qso.Frequency : bandFreqs[qso.Band];
+								}
+								else
+								{
+									value = qso.Band;
+								}
+								break;
+							case "Mode":
+								value = qso.Submode.Equals(string.Empty) ?
+									qso.Mode : qso.Submode;
+								break;
+							case "RST":
+								value = qso.RST;
+								break;
+							case "QSL":
+								if(qslCard.QsosBox.ShowPseTnx)
+								{
+									if(qso.Qsl.Equals("No") || qso.Qsl.Equals("Requested") || qso.Qsl.Equals(string.Empty))
+									{
+										value = box.PseText;
+									}
+									else
+									{
+										value = box.TnxText;
+									}
+								}
+								break;
+						}
+						xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
+							g, value, font, box.LineTextBrush, colWidths[columnType], xStart, y);
 					}
-					else
-					{
-						qsl = box.TnxText;
-					}
-					xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(
-						g, qsl, font, box.LineTextBrush, colWidths[6], xStart, y);
 					y += (int)size.Height + 3;
 				}
 			}
