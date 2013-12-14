@@ -29,6 +29,17 @@ namespace hamqsler
 	[Serializable]
 	public class QsosWFBox : CardWFItem
 	{
+		// determines horizontal anchor position for QsosBox when the number of QSOs being printed
+		// is less than the maximum number of QSOs
+		private static readonly DependencyProperty VerticalAnchorPointProperty =
+			DependencyProperty.Register("VerticalAnchorPoint", typeof(string),
+			                            typeof(QsosWFBox), new PropertyMetadata("Top"));
+		public string VerticalAnchorPoint
+		{
+			get {return GetValue(VerticalAnchorPointProperty) as string;}
+			set {SetValue(VerticalAnchorPointProperty, value);}
+		}
+			
 		// determines whether to show Manager ("via (Manager)")
 		private static readonly DependencyProperty ShowManagerProperty =
 			DependencyProperty.Register("ShowManager", typeof(bool),
@@ -556,6 +567,7 @@ namespace hamqsler
 			{
 
 				if(e.Property == QslCardProperty ||
+				   e.Property == VerticalAnchorPointProperty ||
 				   e.Property == FontNameProperty ||
 				   e.Property == FontSizeProperty ||
 		           e.Property == ShowPseTnxProperty |

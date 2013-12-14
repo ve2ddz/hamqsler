@@ -267,31 +267,43 @@
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
-						<TextBlock Margin="5" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"
+							<TextBlock Margin="5" Grid.Column="0" Grid.Row="0"
+							           HorizontalAlignment="Right"
+								VerticalAlignment="Center">Anchor Box At:</TextBlock>
+							<ComboBox Margin="5" Grid.Column="1" Grid.Row="0"
+							          HorizontalAlignment="Left"
+									ToolTip="Select vertical anchor point for Qsos Box when there are fewer than the maximumn number of QSOs being printed."
+									Text="{Binding VerticalAnchorPoint, Mode=TwoWay}">
+								<ComboBoxItem Content="Top"/>
+								<ComboBoxItem Content="Middle"/>
+								<ComboBoxItem Content="Bottom"/>
+							</ComboBox>
+						<TextBlock Margin="5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"
 								VerticalAlignment="Center">Show Manager:</TextBlock>
-						<CheckBox  Margin="5" Grid.Row="0" Grid.Column="1"
+						<CheckBox  Margin="5" Grid.Row="1" Grid.Column="1"
 								ToolTip="Set this checkbutton to show 'via (Manager)' text
 after the callsign on the first line of the QSOs Box."
 								IsChecked="{Binding ShowManager, Mode=TwoWay}"/>
-						<TextBlock Margin="5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"
+						<TextBlock Margin="5" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right"
 								VerticalAlignment="Center">Show Band Column:</TextBlock>
-						<RadioButton Margin="5" Grid.Row="1" Grid.Column="1"
+						<RadioButton Margin="5" Grid.Row="2" Grid.Column="1"
 								ToolTip="Set this radio button to show the Band column rather than
 the Frequency column on the card" IsChecked="True"/>
-						<TextBlock Margin="5" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right"
+						<TextBlock Margin="5" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right"
 								VerticalAlignment="Center">Show Freq Column:</TextBlock>
-						<RadioButton Margin="5" Grid.Row="2" Grid.Column="1"
+						<RadioButton Margin="5" Grid.Row="3" Grid.Column="1"
 								ToolTip="Set this radio button to show the Frequency column
 rather than the Band column on the card" IsChecked="{Binding ShowFrequency, Mode=TwoWay}"/>
-						<TextBlock Margin="5" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right"
+						<TextBlock Margin="5" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"
 								VerticalAlignment="Center">Show QSL Column:</TextBlock>
-						<CheckBox Margin="5" Grid.Row="3" Grid.Column="1"
+						<CheckBox Margin="5" Grid.Row="4" Grid.Column="1"
 								ToolTip="Set this checkbutton to show the QSL column on the card"
 								IsChecked="{Binding ShowPseTnx, Mode=TwoWay}"/>
-						<TextBlock Margin="5" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"
+						<TextBlock Margin="5" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"
 								VerticalAlignment="Center">Date Format:</TextBlock>
-						<ComboBox Margin="5" Grid.Row="4" Grid.Column="1"
+						<ComboBox Margin="5" Grid.Row="5" Grid.Column="1"
 								HorizontalAlignment="Left"  FontSize="10.5"
 								ToolTip="Set the format that dates will be printed in"
 								Text="{Binding DateFormat, Mode=TwoWay}">
@@ -299,9 +311,9 @@ rather than the Band column on the card" IsChecked="{Binding ShowFrequency, Mode
 							<ComboBoxItem Content="DD-MMM-YY"/>
 							<ComboBoxItem Content="DD-MM-YY"/>
 						</ComboBox>
-						<TextBlock Margin="5" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"
+						<TextBlock Margin="5" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right"
 								VerticalAlignment="Center">Max Qsos:</TextBlock>
-						<ComboBox Margin="5" Grid.Row="5" Grid.Column="1"
+						<ComboBox Margin="5" Grid.Row="6" Grid.Column="1"
 								HorizontalAlignment="Left"
 								ToolTip="Set the maximum number of QSOs that can be printed on
 this card">
@@ -324,7 +336,7 @@ this card">
 							<ComboBoxItem Content="14"/>
 							<ComboBoxItem Content="15"/>
 						</ComboBox>
-						<GroupBox Header="Line and Text" Margin="3" Grid.Row="6" Grid.ColumnSpan="2">
+						<GroupBox Header="Line and Text" Margin="3" Grid.Row="7" Grid.ColumnSpan="2">
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="120"/>
@@ -406,7 +418,7 @@ this card">
 								</GroupBox>
 							</Grid>
 						</GroupBox>
-						<GroupBox Header="Background" Margin="3" Grid.Row="7" Grid.ColumnSpan="2">
+						<GroupBox Header="Background" Margin="3" Grid.Row="8" Grid.ColumnSpan="2">
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="120"/>
