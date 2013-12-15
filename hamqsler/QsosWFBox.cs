@@ -493,6 +493,7 @@ namespace hamqsler
 
 		/// <summary>
 		/// Calculate the size of the QsosBox based on text size and number of QSOs
+		/// and the vertical anchor point
 		/// </summary>
 		/// <param name="g">Graphics object the card is being drawn on</param>
 		/// <param name="qsosCount">Number of QSOs to be displayed</param>
@@ -515,13 +516,29 @@ namespace hamqsler
 						this.FontName), this.FontSize * fontAdjustmentFactor,
 			        	System.Drawing.FontStyle.Regular, 
 			        	System.Drawing.GraphicsUnit.Point);
-				System.Drawing.SizeF size =g.MeasureString("SampleText", font);
+				System.Drawing.SizeF size = g.MeasureString("SampleText", font);
+				int maximumBoxHeight = ((int)size.Height + 2) * (2 + MaximumQsos) + MaximumQsos + 2;
 				if(qsosCount == 0)
 				{
 					qsosCount = MaximumQsos;
 				}
-				this.ItemSize = new System.Drawing.Size(width,
-				                                        ((int)size.Height + 2) * (2 + qsosCount) + qsosCount + 2);
+				int boxHeight = ((int)size.Height + 2) * (2 + qsosCount) + qsosCount + 2;
+				this.ItemSize = new System.Drawing.Size(width, boxHeight);
+				                                        
+				if(qsosCount != MaximumQsos)
+				{
+					switch(VerticalAnchorPoint)
+					{
+						case "Top":
+							break;
+						case "Middle":
+							this.Y += (maximumBoxHeight - boxHeight) / 2;
+							break;
+						case "Bottom":
+							this.Y += maximumBoxHeight - boxHeight;
+							break;
+					}
+				}
 			}
 		}
 		
@@ -598,6 +615,7 @@ namespace hamqsler
 		{
 			QsosWFBox box = new QsosWFBox(true);
 			box.CopyBaseProperties(this);
+			box.VerticalAnchorPoint = this.VerticalAnchorPoint;
 			box.ShowManager = this.ShowManager;
 			box.ShowFrequency = this.ShowFrequency;
 			box.ShowPseTnx = this.ShowPseTnx;
