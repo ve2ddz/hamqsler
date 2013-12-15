@@ -1141,6 +1141,16 @@ namespace hamqsler
 			clearBackground.Name = "ClearBackgroundItem";
 			clearBackground.Click += OnClearBackgroundClicked;
 			contextMenu.Items.Add(clearBackground);
+			
+			contextMenu.Items.Add(new System.Windows.Controls.Separator());
+			
+			System.Windows.Controls.MenuItem showAnchor = new System.Windows.Controls.MenuItem();
+			showAnchor.Header = "Show QsosBox Vertical Anchor";
+			showAnchor.Name = "ShowAnchor";
+			showAnchor.IsChecked = ((MainWindow)App.Current.MainWindow).ShowQsosBoxVerticalAnchor;
+			showAnchor.Click += OnShowAnchor;
+			
+			contextMenu.Items.Add(showAnchor);
 		}
 		
 		/// <summary>
@@ -1186,6 +1196,12 @@ namespace hamqsler
 							mi.IsEnabled = selectedCardItem != null &&
 								selectedCardItem.GetType() !=
 								typeof(BackgroundWFImage);
+							break;
+						case "ShowAnchor":
+							mi.IsEnabled = selectedCardItem != null &&
+								QslCard.QsosBox != null &&
+								QslCard.QsosBox.IsSelected;
+							mi.IsChecked = ((MainWindow)App.Current.MainWindow).ShowQsosBoxVerticalAnchor;
 							break;
 					}
 				}
@@ -1274,6 +1290,24 @@ namespace hamqsler
 			// pass processing to MainWindow.DeleteItemCommand_Executed
 			((MainWindow)App.Current.MainWindow).DeleteItemCommand_Executed(
 				sender, null);
+		}
+		
+		/// <summary>
+		/// Handler for context menu's Show QsosBox Vertical Anchor menu item clicked event
+		/// </summary>
+		/// <param name="sender">menu item that was clicked (Show QsosBox Vertical Anchor</param>
+		/// <param name="e">not used</param>
+		private void OnShowAnchor(object sender, System.Windows.RoutedEventArgs e)
+		{
+			// set MainWindow.ShowQsosBoxVerticalAnchor property.
+			// Changing that property will cause the anchor to be shown
+			System.Windows.Controls.MenuItem mItem = 
+				sender as System.Windows.Controls.MenuItem;
+			if(mItem != null)
+			{
+				((MainWindow)App.Current.MainWindow).ShowQsosBoxVerticalAnchor =
+					!mItem.IsChecked;
+			}
 		}
 		
 		/// <summary>
