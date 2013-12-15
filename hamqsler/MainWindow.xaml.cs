@@ -35,6 +35,15 @@ namespace hamqsler
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private static readonly DependencyProperty ShowQsosBoxVerticalAnchorProperty =
+			DependencyProperty.Register("ShowQsosBoxVerticalAnchor", typeof(bool),
+			                            typeof(MainWindow), new PropertyMetadata(false));
+		public bool ShowQsosBoxVerticalAnchor
+		{
+			get {return (bool) GetValue(ShowQsosBoxVerticalAnchorProperty);}
+			set {SetValue(ShowQsosBoxVerticalAnchorProperty, value);}
+		}
+		
 		public static double PIXELSPERINCH = 100;
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so,
@@ -1910,6 +1919,28 @@ namespace hamqsler
 				prefs.AdifFiles.Add(fileName);
 				prefs.SerializeAsXml();
 			}			
+		}
+		
+		/// <summary>
+		/// Handle PropertyChanged events
+		/// </summary>
+		/// <param name="e">DependencyPropertyChangedEventArgs object describing the event</param>
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if(e.Property == ShowQsosBoxVerticalAnchorProperty)
+			{
+				TabItem[] tabItems = new TabItem[mainTabControl.Items.Count];
+				mainTabControl.Items.CopyTo(tabItems, 0);
+				foreach(TabItem ti in tabItems)
+				{
+					CardTabItem cardTab = ti as CardTabItem;
+					if(cardTab != null)
+					{
+						cardTab.cardPanel.QslCard.RaiseDispPropertyChangedEvent();
+					}
+				}
+			}
 		}
 	}
 }

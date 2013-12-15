@@ -490,6 +490,11 @@ namespace hamqsler
 						CardLocation.X + qBox.X, CardLocation.Y + qBox.Y, 
 						qBox.Width, qBox.Height));
 				}
+				if(((MainWindow)App.Current.MainWindow).ShowQsosBoxVerticalAnchor && 
+					QslCard.QsosBox != null && QslCard.QsosBox.IsSelected)
+				{
+					ShowQsosBoxAnchorPoint(g);
+				}
 			}
 		}
 		
@@ -1413,5 +1418,56 @@ namespace hamqsler
 			this.Invalidate();
 		}
 		
+		/// <summary>
+		/// Show the anchor and lines to show where the anchor point is
+		/// </summary>
+		/// <param name="g">Graphics object used to draw the anchor and lines</param>
+		private void ShowQsosBoxAnchorPoint(Graphics g)
+		{
+			Font font = new Font(new System.Drawing.FontFamily(
+				"DejaVu Sans"), 12, FontStyle.Bold, GraphicsUnit.Point);
+			SizeF size = g.MeasureString("\u2693", font);
+			float anchorY = CardLocation.Y + QslCard.QsosBox.Y - size.Height / 2;
+			switch(QslCard.QsosBox.VerticalAnchorPoint)
+			{
+				case "Top":
+					break;
+				case "Middle":
+					anchorY += QslCard.QsosBox.Height / 2;
+					break;
+				case "Bottom":
+					anchorY += QslCard.QsosBox.Height;
+					break;
+			}
+			float lineY = anchorY + size.Height / 2;
+			Pen pen = new Pen(System.Drawing.Color.Red, 2);
+			float lineStart, lineEnd, anchorX, arrowStartX;
+			if(CardLocation.X + QslCard.QsosBox.X >= size.Width + 10)
+			{
+				anchorX = 0;
+				lineStart = size.Width + 2;
+				lineEnd = CardLocation.X + QslCard.QsosBox.X - 5;
+				arrowStartX = lineEnd - 5;
+				
+			}
+			else
+			{
+				anchorX = this.Width - size.Width;
+				lineStart = anchorX - 2;
+				lineEnd = CardLocation.X + QslCard.QsosBox.X + QslCard.QsosBox.Width + 5;
+				arrowStartX = lineEnd + 5;
+				
+			}
+			// to prevent anchor and lines outside the card boundaries being displayed
+			// at 40% opacity, set the clipping region to the size of this FormsCardView object,
+			// draw the anchor and lines, then restore the old clipping region
+			GraphicsState state = g.Save();
+			g.Clip = new Region(new Rectangle(0, 0,  this.Width, this.Height));
+			g.DrawString("\u2693", font, Brushes.Red, anchorX, anchorY);
+			g.DrawLine(pen, lineStart, lineY, lineEnd, lineY);
+			g.DrawLine(pen, arrowStartX, lineY - 3, lineEnd, lineY);
+			g.DrawLine(pen, arrowStartX, lineY + 3, lineEnd, lineY);
+			g.Restore(state);
+		}
 	}
 }

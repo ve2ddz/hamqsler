@@ -237,6 +237,14 @@
 				          Command="{x:Static local:MainWindow.UserPreferencesCommand}"
 						ToolTip="Edit the user preferences"/>
 			</MenuItem>
+			<MenuItem Header="View">
+				<MenuItem Header="Show QsosBox Anchor Point"  Name="ShowVerticalAnchorPoint"
+				          IsCheckable="True"
+				          IsChecked="{Binding RelativeSource={RelativeSource 
+								FindAncestor, AncestorType={x:Type Window}}, 
+								Path=ShowQsosBoxVerticalAnchor, Mode=TwoWay}"
+						  ToolTip="Show Qsos Box Anchor Point in design mode"/>
+			</MenuItem>
 			<MenuItem Header="Select" Name="SelectMenu"
 					  SubmenuOpened="SelectMenu_SubmenuOpened"
 					  Command="{x:Static local:MainWindow.SelectCommand}">
