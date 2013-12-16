@@ -300,12 +300,12 @@
 			<keycombo action="click">
 				<mousebutton>right mouse button</mousebutton>
 			</keycombo> 
-			to display the card context menu.</para>
-			<figure xml:id="selectcontextmenu">
-				<title>Select Context Menu</title>
+			to display the card design context menu.</para>
+			<figure xml:id="carddesigncontextmenu2">
+				<title>Card Design Context Menu</title>
 				<mediaobject>
 					<imageobject>
-						<imagedata fileref="images/selectcontextmenu.png" />
+						<imagedata fileref="images/carddesigncontextmenu.png" />
 					</imageobject>
 				</mediaobject>
 			</figure>
@@ -624,7 +624,12 @@
 			values.</para>
 			<section>
 				<title>Setting QSOs and Fields Properties</title>
-				<para>Let's look at each property. The Show Manager checkbox
+				<para>Let's look at each property. The Anchor Box At dropdown box is not discussed in this
+				tutorial, so do not make any changes. The use and effect of this
+				dropdown box is discussed in the
+				<link linkend="carddesign"><emphasis role='underline'>Working
+				With Cards</emphasis></link> chapter.</para>
+				<para>The Show Manager checkbox
 				when checked adds the text "via ZZZZZZ" to the confirmation
 				line in design mode, and will replace "ZZZZZZ" with the
 				other station's QSL manager if one exists and is included

@@ -384,6 +384,13 @@
 							<link linkend='clearbackground'><emphasis role='underline'>Clearing 
 							the Background Image</emphasis></link> for more information.</entry>
 						</row>
+						<row>
+							<entry>Show QsosBox Vertical Anchor</entry>
+							<entry>Shows the QsosBox vertical anchor when the
+							QsosBox is selected. See
+							<link linkend='settingqsosboxproperties'><emphasis role='underline'>Setting
+							Qsos Box Properties</emphasis></link> for more information.</entry>
+						</row>
 					</tbody>
 				</tgroup>
 			</table>
@@ -1203,6 +1210,64 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
+			<para>When printing or saving images of cards, the QsosBox is anchored vertically at one
+			of three positions: top, middle, or bottom of the QsosBox. For example, the 
+			following four images show the results of printing a simple QSL card
+			and using the QSOs from the sample.adi file. The first image shows the
+			sample card in design mode and the other three images show the 
+			result with a different anchor point selected. Note the position of
+			the text in red in each of the images.</para>
+			<figure xml:id="anchorcarddesignmode">
+				<title>Simple Card in Design Mode</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/anchorcarddesignmode.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<figure xml:id="anchorcardtop">
+				<title>Printed Card With QsosBox Anchored at Top</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/anchorcardtop.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<figure xml:id="anchorchardmiddle">
+				<title>Printed Card With QsosBox Anchored at Middle</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/anchorcardmiddle.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<figure xml:id="anchorcardbottom">
+				<title>Printed Card With QsosBox Anchored at Bottom</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/anchorcardbottom.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>To set the vertical anchor point, select the point from the
+			Anchor Box At dropdown box.</para>
+			<para>You can view the anchor point on the card in design mode by
+			selecting the QsosBox and then selecting the Show QsosBox Vertical Anchor
+			menu item from either the View dropdown menu or the Card Design
+			Context Menu. When set, the menu item is checked and when not set,
+			the menu item is not checked. The following image shows the card used above
+			in design mode with the anchor point set to "Middle".</para>
+			<figure xml:id="anchoratmiddle">
+				<title>Card in Design Mode Showing Anchor at Middle</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/anchoratmiddle.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Note the red anchor character at the right of the image and the
+			red line from the anchor character to the vertical middle of the
+			QsosBox.</para>
 			<para>The default confirming text, that is, the confirming text that is displayed
 			if you have not changed it in user preferences, is "Confirming Two-Way QSOs With
 			<emphasis>callsign</emphasis> via <emphasis>manager</emphasis>". The state of
