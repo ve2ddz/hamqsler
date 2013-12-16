@@ -96,6 +96,11 @@
 		<CommandBinding Command="{x:Static local:MainWindow.UserPreferencesCommand}"
 						Executed="UserPreferencesCommand_Executed"/>
 	
+		<CommandBinding Command="{x:Static local:MainWindow.ViewCommand}"
+		                CanExecute="ViewCommand_CanExecute"/>
+		<CommandBinding Command="{x:Static local:MainWindow.ShowQsosBoxVerticalAnchorCommand}"
+						CanExecute="ShowQsosBoxVerticalAnchorCommand_CanExecute"/>
+	
 		<CommandBinding Command="{x:Static local:MainWindow.SelectCommand}"
 		                CanExecute="SelectCommand_CanExecute"/>
 		<CommandBinding Command="{x:Static local:MainWindow.SelectItemCommand}"
@@ -237,8 +242,11 @@
 				          Command="{x:Static local:MainWindow.UserPreferencesCommand}"
 						ToolTip="Edit the user preferences"/>
 			</MenuItem>
-			<MenuItem Header="View">
+			<MenuItem Header="View"
+					  Command="{x:Static local:MainWindow.ViewCommand}">
+
 				<MenuItem Header="Show QsosBox Anchor Point"  Name="ShowVerticalAnchorPoint"
+				          Command="{x:Static local:MainWindow.ShowQsosBoxVerticalAnchorCommand}"
 				          IsCheckable="True"
 				          IsChecked="{Binding RelativeSource={RelativeSource 
 								FindAncestor, AncestorType={x:Type Window}}, 

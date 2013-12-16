@@ -79,6 +79,9 @@ namespace hamqsler
 		public static RoutedCommand ClearBackgroundCommand = new RoutedCommand();
 		public static RoutedCommand UserPreferencesCommand = new RoutedCommand();
 		
+		public static RoutedCommand ViewCommand = new RoutedCommand();
+		public static RoutedCommand ShowQsosBoxVerticalAnchorCommand = new RoutedCommand();
+		
 		public static RoutedCommand SelectCommand = new RoutedCommand();
 		public static RoutedCommand SelectItemCommand = new RoutedCommand();
 		public static RoutedCommand NoneCommand = new RoutedCommand();
@@ -389,6 +392,38 @@ namespace hamqsler
 				e.CanExecute = false;
 			}
 		}
+		
+		/// <summary>
+		/// CanExecute handler for View dropdown menu
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">CanExecuteRoutedEventArgs object</param>
+		private void ViewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			if(this.mainTabControl != null)
+			{
+				TabItem ti = this.mainTabControl.SelectedItem as TabItem;
+				CardTabItem cti = this.mainTabControl.SelectedItem as CardTabItem;
+				e.CanExecute = cti != null;
+			}
+			else
+			{
+				e.CanExecute = false;
+			}
+		}
+		
+		/// <summary>
+		/// CanExecute handler for Show QsosBox Vertical Anchor menu item
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ShowQsosBoxVerticalAnchorCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			TabItem ti = this.mainTabControl.SelectedItem as TabItem;
+			CardTabItem cti = this.mainTabControl.SelectedItem as CardTabItem;
+			e.CanExecute = cti != null && cti.cardPanel.QslCard.QsosBox != null &&
+				cti.cardPanel.QslCard.QsosBox.IsSelected;
+        }
 		
 		/// <summary>
 		/// CanExecute handler for SelectItem menu items
