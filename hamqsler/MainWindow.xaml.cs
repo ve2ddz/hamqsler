@@ -44,6 +44,24 @@ namespace hamqsler
 			set {SetValue(ShowQsosBoxVerticalAnchorProperty, value);}
 		}
 		
+		private static readonly DependencyProperty ShowAlignmentGridProperty =
+			DependencyProperty.Register("ShowAlignmentGrid", typeof(bool),
+			                            typeof(MainWindow), new PropertyMetadata(false));
+		public bool ShowAlignmentGrid
+		{
+			get {return (bool) GetValue(ShowAlignmentGridProperty);}
+			set {SetValue(ShowAlignmentGridProperty, value);}
+		}
+		
+		private static readonly DependencyProperty GridColorProperty =
+			DependencyProperty.Register("GridColor", typeof(string),
+			                            typeof(MainWindow), new PropertyMetadata("Black"));
+		public string GridColor
+		{
+			get {return GetValue(GridColorProperty) as string;}
+			set {SetValue(GridColorProperty, value);}
+		}
+		
 		public static double PIXELSPERINCH = 100;
 		
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so,
@@ -1963,7 +1981,9 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property == ShowQsosBoxVerticalAnchorProperty)
+			if(e.Property == ShowQsosBoxVerticalAnchorProperty ||
+			   e.Property == ShowAlignmentGridProperty ||
+			   e.Property == GridColorProperty)
 			{
 				TabItem[] tabItems = new TabItem[mainTabControl.Items.Count];
 				mainTabControl.Items.CopyTo(tabItems, 0);

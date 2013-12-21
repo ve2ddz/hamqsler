@@ -185,6 +185,10 @@
     <Compile Include="FloatToPercentConverter.cs" />
     <Compile Include="FontSizeConverter.cs" />
     <Compile Include="Force_Init.cs" />
+    <Compile Include="FormsCardViewContextMenu.xaml.cs">
+      <DependentUpon>FormsCardViewContextMenu.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FormsColorToWPFSolidColorBrushConverter.cs" />
     <Compile Include="FormsCardView.cs" />
     <Compile Include="Freq.cs" />
@@ -392,6 +396,7 @@
     <Page Include="CardTabItem.xaml" />
     <Page Include="CountMacroGroupBox.xaml" />
     <Page Include="CustomPaperSizesDialog.xaml" />
+    <Page Include="FormsCardViewContextMenu.xaml" />
     <Page Include="HamQSLerPrintDialog.xaml" />
     <Page Include="JpegPropsDialog.xaml" />
     <Page Include="MainWindow.xaml" />

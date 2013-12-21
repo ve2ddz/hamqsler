@@ -244,7 +244,6 @@
 			</MenuItem>
 			<MenuItem Header="View"
 					  Command="{x:Static local:MainWindow.ViewCommand}">
-
 				<MenuItem Header="Show QsosBox Anchor Point"  Name="ShowVerticalAnchorPoint"
 				          Command="{x:Static local:MainWindow.ShowQsosBoxVerticalAnchorCommand}"
 				          IsCheckable="True"
@@ -252,6 +251,48 @@
 								FindAncestor, AncestorType={x:Type Window}}, 
 								Path=ShowQsosBoxVerticalAnchor, Mode=TwoWay}"
 						  ToolTip="Show Qsos Box Anchor Point in design mode"/>
+				<MenuItem Header="Show Card Alignment Grid"  Name="ShowCardAlignmentGrid"
+				          IsCheckable="True"
+				          IsChecked="{Binding RelativeSource={RelativeSource 
+								FindAncestor, AncestorType={x:Type Window}}, 
+								Path=ShowAlignmentGrid, Mode=TwoWay}"
+						  ToolTip="Show card alignment grid to help position card items"/>
+				<MenuItem Name="GridColorItem" IsEnabled="{Binding ElementName=ShowCardAlignmentGrid,
+								Path=IsChecked}" ToolTip="Select grid color">
+					<MenuItem.Template>
+	                    <ControlTemplate>
+							<StackPanel Orientation="Horizontal">
+		                    	<TextBlock Margin="50,0,5,0" Text="Grid Color:"
+										IsEnabled="{Binding ElementName=ShowCardAlignmentGrid,
+											Path=IsChecked}">
+									<TextBlock.Style>
+										<Style>
+											<Setter Property="Control.Foreground" Value="Gray"/>
+											<Style.Triggers>
+												<Trigger Property="Control.IsEnabled" Value="True">
+													<Setter Property="Control.Foreground" Value="Black"/>
+												</Trigger>
+											</Style.Triggers>
+										</Style>
+									</TextBlock.Style>
+								</TextBlock>
+		                        <ComboBox Name="ComboBox1" Width="100"
+										Text="{Binding RelativeSource={RelativeSource 
+											FindAncestor, AncestorType={x:Type Window}}, 
+											Path=GridColor, Mode=TwoWay}">
+		                    		<ComboBoxItem Content="White"/>
+		                    		<ComboBoxItem Content="Black"/>
+		                    		<ComboBoxItem Content="Red"/>
+									<ComboBoxItem Content="Green"/>
+									<ComboBoxItem Content="Blue"/>
+									<ComboBoxItem Content="Cyan"/>
+									<ComboBoxItem Content="Yellow"/>
+									<ComboBoxItem Content="Magenta"/>
+		                        </ComboBox>
+							</StackPanel>
+	                    </ControlTemplate>
+	                </MenuItem.Template>
+				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="Select" Name="SelectMenu"
 					  SubmenuOpened="SelectMenu_SubmenuOpened"

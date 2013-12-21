@@ -1,0 +1,96 @@
+﻿<ContextMenu x:Class="hamqsler.FormsCardViewContextMenu"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:hamqsler">
+	<ContextMenu.CommandBindings>
+		<CommandBinding Command="{x:Static local:FormsCardViewContextMenu.SelectItemCommand}"
+						CanExecute="SelectItemCommand_CanExecute"
+						Executed="SelectItemCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:FormsCardViewContextMenu.DeselectItemCommand}"
+						CanExecute="DeselectItemCommand_CanExecute"
+						Executed="DeselectItemCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:FormsCardViewContextMenu.AddImageCommand}"
+						CanExecute="AddImageCommand_CanExecute"
+						Executed="AddImageCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:FormsCardViewContextMenu.AddTextItemCommand}"
+						CanExecute="AddTextItemCommand_CanExecute"
+						Executed="AddTextItemCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:FormsCardViewContextMenu.AddQsosBoxCommand}"
+						CanExecute="AddQsosBoxCommand_CanExecute"
+						Executed="AddQsosBoxCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:FormsCardViewContextMenu.DeleteSelectedItemCommand}"
+						CanExecute="DeleteSelectedItemCommand_CanExecute"
+						Executed="DeleteSelectedItemCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:FormsCardViewContextMenu.ClearBackgroundImageCommand}"
+						CanExecute="ClearBackgroundImageCommand_CanExecute"
+						Executed="ClearBackgroundImageCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:FormsCardViewContextMenu.ShowQsosBoxAnchorCommand}"
+						CanExecute="ShowQsosBoxAnchorCommand_CanExecute"/>
+	</ContextMenu.CommandBindings>
+	<MenuItem Header="Select HighlightedItem" Name="SelectItem"
+			  Command="{x:Static local:FormsCardViewContextMenu.SelectItemCommand}"/>
+	<MenuItem Header="Deselect Item" Name="DeselectItem"
+			  Command="{x:Static local:FormsCardViewContextMenu.DeselectItemCommand}"/>
+	<MenuItem Header="Add Image" Name="AddImage" InputGestureText="Ctrl-I"
+			  Command="{x:Static local:FormsCardViewContextMenu.AddImageCommand}"/>
+	<MenuItem Header="Add Text" Name="AddTextItem" InputGestureText="Ctrl-T"
+			  Command="{x:Static local:FormsCardViewContextMenu.AddTextItemCommand}"/>
+	<MenuItem Header="Add Qsos Box" Name="AddQsosBox"
+			  Command="{x:Static local:FormsCardViewContextMenu.AddQsosBoxCommand}"/>
+	<Separator/>
+	<MenuItem Header="Delete Selected Item" Name="DeleteItem" InputGestureText="Delete"
+			  Command="{x:Static local:FormsCardViewContextMenu.DeleteSelectedItemCommand}"/>
+	<MenuItem Header="Clear Background Image" Name="ClearBackgroundItem" InputGestureText="Ctrl-Delete"
+			  Command="{x:Static local:FormsCardViewContextMenu.ClearBackgroundImageCommand}"/>
+	<Separator/>
+	<MenuItem Header="Show QsosBox Anchor Point"  Name="ShowVerticalAnchorPoint"
+	          IsCheckable="True"
+	          IsChecked="{Binding RelativeSource={RelativeSource 
+					FindAncestor, AncestorType={x:Type ContextMenu}}, 
+					Path=DataContext.ShowQsosBoxVerticalAnchor, Mode=TwoWay}"
+			  ToolTip="Show Qsos Box Anchor Point in design mode"
+			  Command="{x:Static local:FormsCardViewContextMenu.ShowQsosBoxAnchorCommand}"/>
+	<MenuItem Header="Show Card Alignment Grid"  Name="ShowCardAlignmentGrid"
+	          IsCheckable="True"
+	          IsChecked="{Binding RelativeSource={RelativeSource 
+					FindAncestor, AncestorType={x:Type ContextMenu}}, 
+					Path=DataContext.ShowAlignmentGrid, Mode=TwoWay}"
+			  ToolTip="Show card alignment grid to help position card items"/>
+	<MenuItem Name="GridColorItem" IsEnabled="{Binding ElementName=ShowCardAlignmentGrid,
+					Path=IsChecked}" ToolTip="Select grid color">
+		<MenuItem.Template>
+            <ControlTemplate>
+				<StackPanel Orientation="Horizontal">
+                	<TextBlock Margin="50,0,5,0"  VerticalAlignment="Center" Text="Grid Color:"
+							IsEnabled="{Binding ElementName=ShowCardAlignmentGrid,
+								Path=IsChecked}">
+						<TextBlock.Style>
+							<Style>
+								<Setter Property="Control.Foreground" Value="Gray"/>
+								<Style.Triggers>
+									<Trigger Property="Control.IsEnabled" Value="True">
+										<Setter Property="Control.Foreground" Value="Black"/>
+									</Trigger>
+								</Style.Triggers>
+							</Style>
+						</TextBlock.Style>
+					</TextBlock>
+                    <ComboBox Name="ComboBox1" Width="100"
+							Text="{Binding  RelativeSource={RelativeSource 
+					FindAncestor, AncestorType={x:Type ContextMenu}}, 
+					Path=DataContext.GridColor, Mode=TwoWay}"
+							ToolTip="Select grid color">
+                		<ComboBoxItem Content="White"/>
+                		<ComboBoxItem Content="Black"/>
+                		<ComboBoxItem Content="Red"/>
+						<ComboBoxItem Content="Green"/>
+						<ComboBoxItem Content="Blue"/>
+						<ComboBoxItem Content="Cyan"/>
+						<ComboBoxItem Content="Yellow"/>
+						<ComboBoxItem Content="Magenta"/>
+                    </ComboBox>
+				</StackPanel>
+            </ControlTemplate>
+        </MenuItem.Template>
+	</MenuItem>
+</ContextMenu>

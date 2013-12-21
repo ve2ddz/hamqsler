@@ -19,12 +19,14 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Drawing.Text;
 using System.Reflection;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace hamqsler
@@ -32,7 +34,7 @@ namespace hamqsler
 	/// <summary>
 	/// Control that displays a CardWF object (QslCard).
 	/// </summary>
-	public class FormsCardView : Panel
+	public class FormsCardView : System.Windows.Forms.Panel
 	{
 		/// <summary>
 		/// Callsign property (displayed as part of ConfirmingText message)
@@ -116,9 +118,14 @@ namespace hamqsler
 		private const int boxRoundX = 5;
 		private const int boxRoundY = 5;
 		
-		private System.Windows.Controls.ContextMenu contextMenu = 
-			new System.Windows.Controls.ContextMenu();
+		private const float numHorizontalGridLines = 40;
+		
+		private FormsCardViewContextMenu contextMenu;
 		private CardWFItem highlightedCardItem;
+		public CardWFItem HighlightedCardItem
+		{
+			get {return highlightedCardItem;}
+		}
 		
 		private static Dictionary<string, string> months = new Dictionary<string, string>();
 		private static Dictionary<string, string> bandFreqs = new Dictionary<string, string>();
@@ -312,6 +319,10 @@ namespace hamqsler
 			{
 				g.DrawRectangle(Pens.Black, new Rectangle(
 					CardLocation.X, CardLocation.Y, QslCard.Width - 1, QslCard.Height - 1));
+			}
+			if(QslCard.IsInDesignMode && ((MainWindow)App.Current.MainWindow).ShowAlignmentGrid)
+			{
+				PaintAlignmentGrid(g);
 			}
 
 		}
@@ -978,6 +989,53 @@ namespace hamqsler
 			return xStart;
 		}
 		
+		private void PaintAlignmentGrid(Graphics g)
+		{
+			// To set the opacity, we must first create a bitmap containing the
+			// background at 100% opacity, then draw that on the final Graphics object
+			// at the required opacity.
+			Bitmap bitmap = new Bitmap(CardLocation.X + QslCard.Width, 
+			                           CardLocation.Y + QslCard.Height);
+			Graphics bGraphics = Graphics.FromImage(bitmap);
+			Pen pen = new Pen((Color)TypeDescriptor.GetConverter(typeof(Color)).
+			                  ConvertFromString(((MainWindow)App.Current.MainWindow).GridColor), 1);
+			float spacing = QslCard.Width / numHorizontalGridLines;
+			float numVerticalGridLines = QslCard.Height / spacing;
+			for(float i = 1; i < numVerticalGridLines; i++)
+			{
+				bGraphics.DrawLine(pen, CardLocation.X, CardLocation.Y + i * spacing, 
+				           CardLocation.X + QslCard.Width,
+				           CardLocation.Y + i * spacing);
+			}
+			for(float j = 1; j < numHorizontalGridLines; j++)
+			{
+				bGraphics.DrawLine(pen, CardLocation.X + j * spacing, CardLocation.Y, 
+				           CardLocation.X + j * spacing,
+				           CardLocation.Y + QslCard.Height);
+			}
+		    // Create a color matrix that is partially opaque
+		    float[][] matrixItems ={ 
+		                               new float[] {1, 0, 0, 0, 0},
+		                               new float[] {0, 1, 0, 0, 0},
+		                               new float[] {0, 0, 1, 0, 0},
+		                               new float[] {0, 0, 0, 0.3F, 0},
+		                               new float[] {0, 0, 0, 0, 1}}; 
+		    ColorMatrix colorMatrix = new ColorMatrix(matrixItems);
+		    // Create an ImageAttributes object and set its color matrix.
+		    ImageAttributes imageAttrs = new ImageAttributes();
+		    imageAttrs.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default,
+		        ColorAdjustType.Bitmap);
+			g.DrawImage(bitmap, new Rectangle(CardLocation.X,
+			                                  CardLocation.Y,
+			                                  QslCard.Width, QslCard.Height),
+			                                  CardLocation.X,
+			                                  CardLocation.Y,
+			                                  QslCard.Width, QslCard.Height,
+			                                  GraphicsUnit.Pixel, imageAttrs);
+			bGraphics.Dispose();
+			bitmap.Dispose();
+		}
+		
 		/// <summary>
 		/// Handler for MouseMove events
 		/// </summary>
@@ -1042,6 +1100,7 @@ namespace hamqsler
 		/// <param name="e">MouseEventArgs object that describes this event</param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
+			highlightedCardItem = QslCard.GetHighlightedItem();
 			base.OnMouseDown(e);
 			if(e.Button == MouseButtons.Left)
 			{
@@ -1084,232 +1143,10 @@ namespace hamqsler
 		/// </summary>
 		private void BuildContextMenu()
 		{
-			contextMenu.Opened += OnContextMenuOpen;
-			System.Windows.Controls.MenuItem select = 
-				new System.Windows.Controls.MenuItem();
-			select.Header = "Select Highlighted Item";
-			select.Name = "SelectItem";
-			select.Click += OnSelectItemClicked;
-			contextMenu.Items.Add(select);
-			
-			System.Windows.Controls.MenuItem  deselect = 
-				new System.Windows.Controls.MenuItem();
-			deselect.Header = "Deselect Item";
-			deselect.Name = "DeselectItem";
-			deselect.Click += OnDeselectItemClicked;
-			contextMenu.Items.Add(deselect);
-			
-			contextMenu.Items.Add(new System.Windows.Controls.Separator());
-			
-			System.Windows.Controls.MenuItem addImage =
-				new System.Windows.Controls.MenuItem();
-			addImage.Header = "Add Image";
-			addImage.InputGestureText = "Ctrl-I";
-			addImage.Name = "AddImage";
-			addImage.Click += OnAddImageClicked;
-			contextMenu.Items.Add(addImage);
-			
-			System.Windows.Controls.MenuItem addText =
-				new System.Windows.Controls.MenuItem();
-			addText.Header = "Add Text Item";
-			addText.InputGestureText = "Ctrl-T";
-			addText.Name = "AddText";
-			addText.Click += OnAddTextClicked;
-			contextMenu.Items.Add(addText);
-			
-			System.Windows.Controls.MenuItem addQsosBox = 
-				new System.Windows.Controls.MenuItem();
-			addQsosBox.Header = "Add Qsos Box";
-			addQsosBox.Name = "AddQsosBox";
-			addQsosBox.Click += OnAddQsosBoxClicked;
-			contextMenu.Items.Add(addQsosBox);
-			
-			contextMenu.Items.Add(new System.Windows.Controls.Separator());
-			
-			System.Windows.Controls.MenuItem deleteItem =
-				new System.Windows.Controls.MenuItem();
-			deleteItem.Header = "Delete Selected Item";
-			deleteItem.InputGestureText = "Delete";
-			deleteItem.Name = "DeleteItem";
-			deleteItem.Click += OnDeleteItemClicked;
-			contextMenu.Items.Add(deleteItem);
-
-			System.Windows.Controls.MenuItem clearBackground =
-				new System.Windows.Controls.MenuItem();
-			clearBackground.Header = "Clear Background Image";
-			clearBackground.InputGestureText = "Ctrl-Delete";
-			clearBackground.Name = "ClearBackgroundItem";
-			clearBackground.Click += OnClearBackgroundClicked;
-			contextMenu.Items.Add(clearBackground);
-			
-			contextMenu.Items.Add(new System.Windows.Controls.Separator());
-			
-			System.Windows.Controls.MenuItem showAnchor = new System.Windows.Controls.MenuItem();
-			showAnchor.Header = "Show QsosBox Vertical Anchor";
-			showAnchor.Name = "ShowAnchor";
-			showAnchor.IsChecked = ((MainWindow)App.Current.MainWindow).ShowQsosBoxVerticalAnchor;
-			showAnchor.Click += OnShowAnchor;
-			
-			contextMenu.Items.Add(showAnchor);
+			contextMenu = new FormsCardViewContextMenu();
+			contextMenu.FormsView = this;
+			contextMenu.DataContext = App.Current.MainWindow;
 		}
-		
-		/// <summary>
-		/// Handler for context menu's opened event
-		/// </summary>
-		/// <param name="sender">not used</param>
-		/// <param name="e">not used</param>
-		private void OnContextMenuOpen(object sender, System.Windows.RoutedEventArgs e)
-		{
-			highlightedCardItem = QslCard.GetHighlightedItem();
-			CardWFItem selectedCardItem = QslCard.GetSelectedItem();
-			// determine the IsEnabled property for each menu item
-			foreach(System.Windows.Controls.Control ctrl in contextMenu.Items)
-			{
-				System.Windows.Controls.MenuItem mi = ctrl as System.Windows.Controls.MenuItem;
-				if(mi != null)
-				{
-					switch(mi.Name)
-					{
-						case "SelectItem":
-							mi.IsEnabled = highlightedCardItem != null;
-							break;
-						case "DeselectItem":
-							mi.IsEnabled = selectedCardItem != null;
-							break;
-						case "ClearBackgroundItem":
-							mi.IsEnabled = QslCard.BackgroundImage.ImageFileName != null &&
-								QslCard.BackgroundImage.ImageFileName != string.Empty &&
-								(selectedCardItem == null || 
-								 selectedCardItem == QslCard.BackgroundImage);
-							break;
-						case "AddImage":
-							mi.IsEnabled = selectedCardItem == null;
-							break;
-						case "AddText":
-							mi.IsEnabled = selectedCardItem == null;
-							break;
-						case "AddQsosBox":
-							mi.IsEnabled = selectedCardItem == null &&
-								QslCard.QsosBox == null;
-							break;
-						case "DeleteItem":
-							mi.IsEnabled = selectedCardItem != null &&
-								selectedCardItem.GetType() !=
-								typeof(BackgroundWFImage);
-							break;
-						case "ShowAnchor":
-							mi.IsEnabled = selectedCardItem != null &&
-								QslCard.QsosBox != null &&
-								QslCard.QsosBox.IsSelected;
-							mi.IsChecked = ((MainWindow)App.Current.MainWindow).ShowQsosBoxVerticalAnchor;
-							break;
-					}
-				}
-			}
-		}
-		
-		/// <summary>
-		/// Handler for context menu's Select Item menu item clicked event
-		/// </summary>
-		/// <param name="sender">menu item that was clicked (Select Item)</param>
-		/// <param name="e">RoutedEventArgs object</param>
-		private void OnSelectItemClicked(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// pass processing to MainWindow.OnSelectItem_Clicked
-			System.Windows.Controls.MenuItem mi = sender as System.Windows.Controls.MenuItem;
-			mi.Tag = highlightedCardItem;
-			((MainWindow)App.Current.MainWindow).OnSelectItem_Clicked(sender, e);
-		}
-		
-		/// <summary>
-		/// Handler for context menu's Deselect Item menu item clicked event
-		/// </summary>
-		/// <param name="sender">menu item that was clicked (Deselect Item)</param>
-		/// <param name="e">RoutedEventArgs object</param>
-		private void OnDeselectItemClicked(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// pass processing to MainWindow.OnNone_Clicked
-			((MainWindow)App.Current.MainWindow).OnNone_Clicked(sender, e);
-		}
-		
-		/// <summary>
-		/// Handler for context menu's Clear Background Image menu item clicked event
-		/// </summary>
-		/// <param name="sender">menu item that was clicked (Clear Background Image)</param>
-		/// <param name="e">RoutedEventArgs object</param>
-		private void OnClearBackgroundClicked(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// pass processing to MainWindow.ClearBackgroundCommand_Executed
-			((MainWindow)App.Current.MainWindow).ClearBackgroundCommand_Executed(
-				sender, null);
-		}
-		
-		/// <summary>
-		/// Handler for context menu's Add Image menu item clicked event
-		/// </summary>
-		/// <param name="sender">menu item that was clicked (Add Image)</param>
-		/// <param name="e">RoutedEventArgs object</param>
-		private void OnAddImageClicked(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// pass processing to MainWindow.AddImageCommand_Executed
-			((MainWindow)App.Current.MainWindow).AddImageCommand_Executed(
-				sender, null);
-		}
-		
-		/// <summary>
-		/// Handler for context menu's Add Text Item menu item clicked event
-		/// </summary>
-		/// <param name="sender">menu item that was clicked (Add Text Item)</param>
-		/// <param name="e">RoutedEventArgs object</param>
-		private void OnAddTextClicked(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// pass processing to MainWindow.AddTextCommand_Executed
-			((MainWindow)App.Current.MainWindow).AddTextCommand_Executed(
-				sender, null);
-		}
-		
-		/// <summary>
-		/// Handler for context menu's Add Qsos Box menu item clicked event
-		/// </summary>
-		/// <param name="sender">menu item that was clicked (Add Qsos Box)</param>
-		/// <param name="e">>RoutedEventArgs object</param>
-		private void OnAddQsosBoxClicked(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// pass processing to MainWindow.AddQsosBoxCommand_Executed
-			((MainWindow)App.Current.MainWindow).AddQsosBoxCommand_Executed(
-				sender, null);
-		}
-		
-		/// <summary>
-		/// Handler for context menu's Delete Item menu item clicked event
-		/// </summary>
-		/// <param name="sender">menu item that was clicked (Delete Item)</param>
-		/// <param name="e">>RoutedEventArgs object</param>
-		private void OnDeleteItemClicked(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// pass processing to MainWindow.DeleteItemCommand_Executed
-			((MainWindow)App.Current.MainWindow).DeleteItemCommand_Executed(
-				sender, null);
-		}
-		
-		/// <summary>
-		/// Handler for context menu's Show QsosBox Vertical Anchor menu item clicked event
-		/// </summary>
-		/// <param name="sender">menu item that was clicked (Show QsosBox Vertical Anchor</param>
-		/// <param name="e">not used</param>
-		private void OnShowAnchor(object sender, System.Windows.RoutedEventArgs e)
-		{
-			// set MainWindow.ShowQsosBoxVerticalAnchor property.
-			// Changing that property will cause the anchor to be shown
-			System.Windows.Controls.MenuItem mItem = 
-				sender as System.Windows.Controls.MenuItem;
-			if(mItem != null)
-			{
-				((MainWindow)App.Current.MainWindow).ShowQsosBoxVerticalAnchor =
-					!mItem.IsChecked;
-			}
-		}
-		
 		/// <summary>
 		/// Get the cursor to display when an image card item is selected. The cursor
 		/// that is returned is determined by the location of the mouse relative
