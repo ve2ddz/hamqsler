@@ -391,6 +391,18 @@
 							<link linkend='settingqsosboxproperties'><emphasis role='underline'>Setting
 							Qsos Box Properties</emphasis></link> for more information.</entry>
 						</row>
+						<row>
+							<entry>Show Card Alignment Grid</entry>
+							<entry>Shows a set of equally spaced horizontal and vertical
+							lines on the card in design mode. These lines may be used
+							to position card items relative to each other.</entry>
+						</row>
+						<row>
+							<entry>Grid Color Dropdown Box</entry>
+							<entry>Allows the user to select the color of the
+							card alignment grid. This menu item is active only
+							when the Show Card Alignment Grid menu item is checked.</entry>
+						</row>
 					</tbody>
 				</tgroup>
 			</table>
@@ -452,6 +464,53 @@
 							<entry>Clears the background image. See
 							<link linkend='clearbackground'><emphasis role='underline'>Clearing 
 							the Background Image</emphasis></link> for more information.</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+		<section xml:id='viewmenu'>
+			<title>View Dropdown Menu</title>
+			<para>The image below shows the contents of the View dropdown menu.</para>
+			<figure xml:id="viewmenugridgreen2">
+				<title>Sample Select Dropdown Menu</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/viewmenugridgreen.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The following table shows the menu items and their actions.</para>
+			<table frame='all'>
+				<title>View Dropdown Menu Items and Actions</title>
+				<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+					<colspec colname='MenuItem' colwidth='125pt'/>
+					<colspec colname='Action'/>
+					<thead>
+					<row>
+						<entry namest='MenuItem'>Menu Item</entry>
+						<entry namest='Action'>Action</entry>
+					</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>Show QsosBox Vertical Anchor</entry>
+							<entry>Shows the QsosBox vertical anchor when the
+							QsosBox is selected. See
+							<link linkend='settingqsosboxproperties'><emphasis role='underline'>Setting
+							Qsos Box Properties</emphasis></link> for more information.</entry>
+						</row>
+						<row>
+							<entry>Show Card Alignment Grid</entry>
+							<entry>Shows a set of equally spaced horizontal and vertical
+							lines on the card in design mode. These lines may be used
+							to position card items relative to each other.</entry>
+						</row>
+						<row>
+							<entry>Grid Color Dropdown Box</entry>
+							<entry>Allows the user to select the color of the
+							card alignment grid. This menu item is active only
+							when the Show Card Alignment Grid menu item is checked.</entry>
 						</row>
 					</tbody>
 				</tgroup>
@@ -855,6 +914,36 @@
 				</tbody>
 			</tgroup>
 		</table>
+		<para>To help with positioning card items relative to one another, a card alignment
+		grid is provided. For example, in the getting started tutorial, you used
+		the card alignment grid to help position the left edges of the callsign
+		and salutation text items and the left edge of the Qsos Box. You also
+		aligned the top of the text of both the callsign and name and QTH text items.</para>
+		<para>The card alignment grid is displayed by checking the Show Card Alignment Grid
+		menu item in either the 
+		<link linkend='viewmenu'><emphasis role='underline'>View Dropdown
+		Menu</emphasis></link> or the 
+		<link linkend='carddesigncontextmenu'><emphasis role='underline'>Card Design Context 
+		Menu</emphasis></link>.</para>
+		<para>A grid color dropdown box is provided as a menu item below the Show
+		Card Alignment Grid menu item in both the View Dropdown Menu and the
+		Card Design Context Menu. This dropdown box may be used to select the color of
+		the alignment grid. The grid is displayed at 30% opacity so that it does not
+		detract excessively from the card items on the card. The image below shows
+		a card in design mode with the alignment grid being displayed in green. This
+		image shows the card that is created in the getting started tutorial after
+		the background image has been added, but no property changes have been
+		made to any of the text items.</para>
+		<figure xml:id="cardwithgrid2">
+			<title>Card With Green Alignment Grid</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/cardwithgrid.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The alignment grid is visible only in card design mode; it is not
+		shown on the cards when cards are printed.</para>
 	</section>
 	<section>
 		<title>Setting Card Item Properties</title>

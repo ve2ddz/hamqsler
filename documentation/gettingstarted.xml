@@ -444,7 +444,40 @@
 		<section>
 			<title>Setting Text Items</title>
 			<para>Deselect the background image using either the
-			context menu or Select dropdown menu. Select the callsign
+			context menu or Select dropdown menu. Now display the card alignment
+			grid. You do this by selecting the Show Card Alignment Grid menu item
+			from either the View dropdown menu or the card design context menu. This
+			will set a checkmark on the menu item and display a grid on the card
+			that may be used to help align card items. When the menu item is
+			checked, the menu item containing the grid color dropdown box is
+			enabled. Open the View dropdown menu, or display the card design
+			context menu and click on the grid color dropdown box. Select
+			<literal>Green</literal>. This is the color that will best show
+			the grid against the background image. If you are not following
+			this tutorial exactly and have loaded a different background image,
+			select the other colors in turn to find the best color for the grid.
+			At this point, the View dropdown menu, and the last three items on the
+			card design context menu will look like the image immediately below,
+			and the card will look like the image following that.</para>
+			<figure xml:id="viewmenugridgreen">
+				<title>View Menu With Green Grid Color</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/viewmenugridgreen.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<figure xml:id="cardwithgrid">
+				<title>Card With Green Alignment Grid</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/cardwithgrid.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Now click the left mouse button anywhere outside the menu
+			to close it.</para>
+			<para>Select the callsign
 			text item. The text item properties panel, shown below,
 			 will now be displayed in the properties panel.</para>
 			<figure xml:id="textitemproperties">
@@ -525,16 +558,18 @@
 			checkbuttons.</para>
 			<para>Move the mouse cursor over the callsign text on the
 			card. The mouse cursor will change to the move cursor. Press
-			and hold the left mouse button, and drag the text to be near
-			the top left corner of the card, then release the mouse 
+			and hold the left mouse button, and drag the text so that the 
+			left edge of the text is on the grid line that second from the
+			left edge of the card and the top of the text is on the grid line
+			that is two down from the top of the card. Release the mouse 
 			button.</para>
 			<para>Deselect the callsign text and select the text with
 			your name and QTH. Change the color of the text to the same
 			orange color as the callsign. Adjust the position of the
 			text so that the top of the top line of the text is in
-			line with the top of the callsign text. Position the text
-			so that it is to the right of the callsign. Deselect the 
-			text item.</para>
+			line with the top of the callsign text (the top of the text is
+			on the second grid line from the top of the card) and is to the 
+			right of the callsign. Deselect the text item.</para>
 			<tip>
 				<para>See 
 				<link linkend='nonkeyboardchars'><emphasis role='underline'>Appendix C</emphasis></link>
@@ -583,8 +618,9 @@
 			count macro or its text in this tutorial, so click the Close button to
 			close the dialog.</para>
 			<para>Change the color of the text to the same orange color
-			as the other text items, and make any adjustments to the
-			position of the text that you would like. Deselect the salutation
+			as the other text items, and adjust the
+			position of the text so that the left edge of the text is aligned with
+			the left edge of the callsign text and the QsosBox. Deselect the salutation
 			text item.</para>
 			<para>Your card should now look like this:</para>
 			<figure xml:id="cardaftertextitemschanged">
@@ -775,8 +811,10 @@
 				and font size selected, and will not shrink any more. The minimum width
 				is determined by the width required to print the contents of all
 				columns without the contents overlapping to other columns.</para>
-				<para>Resize the QSOs Box to approximately the width it was before.
-				Deselect the Qsos Box. Your card should look similar
+				<para>Resize the QSOs Box to the width it was before.
+				Deselect the Qsos Box, and hide the card alignment grid by clicking
+				on the Show Card Alignment Grid menu item in either the View dropdown
+				menu or the card design context menu. Your card should look similar
 				to the image below:</para>
 				<figure xml:id="samplecard">
 					<title>Card After Design Complete</title>
