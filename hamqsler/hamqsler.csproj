@@ -424,7 +424,7 @@
   <ItemGroup>
     <EmbeddedResource Include="AdifEnumerations.xml" />
     <EmbeddedResource Include="CallsBureaus.xml" />
-    <None Include="Samples\sample.adi">
+    <None Include="Samples\sample2.adi">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Samples\sample.jpg">

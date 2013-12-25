@@ -102,6 +102,7 @@
     <Compile Include="DelimitedListEnumerationTests.cs" />
     <Compile Include="DelimitedListTests.cs" />
     <Compile Include="DisplayQsosTests.cs" />
+    <Compile Include="DispQsoTests.cs" />
     <Compile Include="DistanceTests.cs" />
     <Compile Include="DXCCTests.cs" />
     <Compile Include="EmailTests.cs" />

@@ -29,7 +29,7 @@
 					</Component>
 					<Directory Id="SamplesDir" Name="Samples">
 						<Component Id="SampleFiles" Guid="ABBAD4A0-D63B-4015-96A8-3EF3C70B97C8" DiskId="1">
-							<File Id="sample.adi" Name="sample.adi" Source="..\hamqsler\Samples\sample.adi" />
+							<File Id="sample2.adi" Name="sampl2e.adi" Source="..\hamqsler\Samples\sample2.adi" />
 							<File Id="sample.jpg" Name="sample.jpg" Source="..\hamqsler\Samples\sample.jpg" />
 						</Component>
 					</Directory>

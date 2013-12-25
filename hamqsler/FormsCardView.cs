@@ -913,17 +913,7 @@ namespace hamqsler
 								value = qso.RST;
 								break;
 							case "QSL":
-								if(qslCard.QsosBox.ShowPseTnx)
-								{
-									if(qso.Qsl.Equals("No") || qso.Qsl.Equals("Requested") || qso.Qsl.Equals(string.Empty))
-									{
-										value = box.PseText;
-									}
-									else
-									{
-										value = box.TnxText;
-									}
-								}
+								value = qso.Qsl;
 								break;
 						}
 						xStart = PrintQsoDataColumnAndAdjustToNextStartColumn(

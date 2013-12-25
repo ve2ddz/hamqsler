@@ -129,8 +129,32 @@ namespace hamqsler
 			Mode = qwi.Mode;
 			Submode = qwi.Submode;
 			RST = qwi.RST;
-			Qsl = qwi.Rcvd;
+			Qsl = QslStatus(qwi);
 			Qso = qwi.Qso;
+		}
+		
+		/// <summary>
+		/// Helper method that determines Qsl value based on Qsl_Sent and Qsl_Rcvd values
+		/// </summary>
+		/// <param name="qwi">QsoWithInclude object that describes the QSO</param>
+		/// <returns>"Pse", "Tnx" or empty string depending on the Qsl_Sent and Qsl_Rcvd values</returns>
+		private string QslStatus(QsoWithInclude qwi)
+		{
+			string status = string.Empty;
+			if(qwi.Sent.Equals("Requested") || qwi.Sent.Equals("Queued"))
+			{
+				switch(qwi.Rcvd)
+				{
+					case "Yes":
+						status = "Tnx";
+						break;
+					case "No":
+					case "Requested":
+						status = "Pse";
+						break;
+				}
+			}
+			return status;
 		}
 	}
 }
