@@ -241,33 +241,6 @@ namespace hamqsler
 					showHamqslerCreatedLabel = false;
 					return showHamqslerCreatedLabel;
 				}
-				// must check if sample.adi needs updating.
-				// old sample.adi contains DXKeeper in second and third lines.
-				FileInfo sampleAdi = new FileInfo(samplesDirInfo.FullName + "/sample.adi");
-				if(sampleAdi.Exists)
-				{
-					StreamReader reader = sampleAdi.OpenText();
-					bool oldSampleAdiFound = false;
-					int lNum = 0;
-					while(!reader.EndOfStream && lNum < 3)
-					{
-						string line = reader.ReadLine();
-						if(line.Contains("DXKeeper"))
-						{
-							// old sample.adi found
-							oldSampleAdiFound = true;
-							lNum = 10;		// force end of while loop
-						}
-						lNum++;
-					}
-					reader.Close();
-					if(oldSampleAdiFound)
-					{
-						sampleAdi.Delete();
-						created += "Old version of '" + sampleAdi.Name + "' deleted." +
-							Environment.NewLine;
-					}
-				}
 				// now check for existence of sample files and copy if don't exist
 				FileInfo[] files = samplesInfo.GetFiles();
 				foreach (FileInfo file in files)

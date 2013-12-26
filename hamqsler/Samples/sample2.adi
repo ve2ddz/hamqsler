@@ -1,0 +1,12 @@
+Adif File
+<adif_ver:5>3.0.4
+<created_timestamp:15>20131107 134539
+<programid:8>HamQSLer
+<programversion:5>1.3.0
+<eoh>
+<Freq_Rx:5>7.213<Freq:5>10.13<Call:6>VA3JNO<Pfx:3>VA3<DXCC:1>1<Mode:3>SSB<Submode:3>LSB<Name:3>Jim<Qsl_Rcvd:1>I<Qsl_Sent:1>R<Qso_Date:8>20010617<Qth:12>Oakville, ON<Rst_Rcvd:2>59<Rst_Sent:2>59<Time_Off:6>000400<Time_On:6>001722<Tx_Pwr:4>100.<Cont:2>NA<ITUZ:1>4<CQZ:1>4<Pfx:3>VA3<Eqsl_Qsl_Sent:1>R<Lotw_Qsl_Sent:1>R<Qsl_Via:5>VA3HJ<Band_Rx:3>40m<Band:3>30m<eor>
+<Band:3>12m<Call:6>CG3JNO<Pfx:3>CG3<DXCC:1>1<Mode:4>RTTY<Name:3>Jim<Qsl_Rcvd:1>N<Qsl_Sent:1>R<Qso_Date:8>20010721<Qth:12>Oakville, ON<Rst_Rcvd:3>599<Rst_Sent:3>599<Time_Off:6>191940<Time_On:6>191940<Tx_Pwr:4>100.<Cont:2>NA<ITUZ:1>4<CQZ:1>4<Pfx:3>VA3<Eqsl_Qsl_Sent:1>R<Lotw_Qsl_Sent:1>R<Qsl_Sent_Via:1>D<Qsl_Via:0><eor>
+<Freq:5>14.12<Call:6>VA3JNO<Pfx:3>VA3<DXCC:1>1<Mode:2>CW<Name:3>Jim<Qsl_Rcvd:1>N<Qsl_Sent:1>R<Qso_Date:8>20010919<Qth:12>Oakville, ON<Rst_Rcvd:3>599<Rst_Sent:3>599<Time_Off:6>221730<Time_On:6>221044<Tx_Pwr:4>100.<Cont:2>NA<ITUZ:1>4<CQZ:1>4<Pfx:3>VA3<Eqsl_Qsl_Sent:1>R<Lotw_Qsl_Sent:1>R<Qsl_Via:5>VA3HJ<Band:3>20m<eor>
+<Band:3>40m<Call:6>VA3JNO<Pfx:3>VA3<DXCC:1>1<Mode:2>CW<Name:3>Jim<Qsl_Rcvd:1>Y<Qsl_Sent:1>Q<Qso_Date:8>20021221<Qth:12>Oakville, ON<Rst_Rcvd:3>599<Rst_Sent:3>599<Time_Off:6>121933<Time_On:6>130100<Tx_Pwr:4>100.<Cont:2>NA<ITUZ:1>4<CQZ:1>4<Pfx:3>VA3<Eqsl_Qsl_Sent:1>R<Lotw_Qsl_Sent:1>R<Qsl_Via:0><eor>
+<Band:3>12m<Call:5>5C5CW<Pfx:3>5C5<Mode:3>SSB<Submode:3>USB<Name:5>Ralph<Qsl_Rcvd:1>R<Qsl_Sent:1>R<Qso_Date:8>20030721<Qth:12>Oakville, ON<Rst_Rcvd:2>56<Rst_Sent:2>55<Time_Off:6>191940<Time_On:6>191940<Tx_Pwr:4>100.<Pfx:3>5C5<Eqsl_Qsl_Sent:1>R<Lotw_Qsl_Sent:1>R<Qsl_Via:0><eor>
+<Band:3>15m<Call:6>VA3JNO<Pfx:3>VA3<DXCC:1>1<Mode:6>OLIVIA<Submode:14>OLIVIA 16/1000<Name:3>Jim<Qsl_Rcvd:1>R<Qsl_Sent:1>N<Qso_Date:8>20051012<Qth:12>Oakville, ON<Rst_Rcvd:3>599<Rst_Sent:3>599<Time_Off:6>182613<Time_On:6>184545<Tx_Pwr:4>100.<Cont:2>NA<ITUZ:1>4<CQZ:1>4<Pfx:3>VA3<Eqsl_Qsl_Sent:1>R<Lotw_Qsl_Sent:1>R<Qsl_Via:0><eor>
