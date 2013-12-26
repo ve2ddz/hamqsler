@@ -257,10 +257,19 @@ namespace hamqsler
 			{
 				CheckBox bcb = new CheckBox();
 				bcb.Content = status;
-				bcb.IsChecked = true;
 				bcb.Margin=new Thickness(20, 5, 20, 5);
-				bcb.Checked += OnSentCheckBoxChecked;
-				bcb.Unchecked += OnSentCheckBoxChecked;
+				if(status.Equals("Queued") || status.Equals("Requested"))
+				{
+					bcb.IsChecked = true;
+					bcb.IsEnabled = true;
+					bcb.Checked += OnSentCheckBoxChecked;
+					bcb.Unchecked += OnSentCheckBoxChecked;
+				}
+				else
+				{
+					bcb.IsChecked = false;
+					bcb.IsEnabled = false;
+				}
 				SentPanel.Children.Add(bcb);
 			}
 		}
@@ -277,8 +286,8 @@ namespace hamqsler
 			{
 				CheckBox bcb = new CheckBox();
 				bcb.Content = status;
-				bcb.IsChecked = true;
 				bcb.Margin=new Thickness(20, 5, 20, 5);
+				bcb.IsChecked = true;
 				bcb.Checked += OnSentViaCheckBoxChecked;
 				bcb.Unchecked += OnSentViaCheckBoxChecked;
 				SendViaPanel.Children.Add(bcb);
