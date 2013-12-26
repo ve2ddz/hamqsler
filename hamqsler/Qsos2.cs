@@ -46,6 +46,7 @@ namespace hamqsler
 		/// </summary>
 		public Qsos2() : base(new QsoEqualityComparer())
 		{
+			adifEnums = App.AdifEnums;
 		}
 		
 		/// <summary>
