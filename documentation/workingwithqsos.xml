@@ -266,6 +266,8 @@
 				</tbody>
 			</tgroup>
 		</table>
+		<para>The QSL Rcvd and QSL Sent values also have an effect on the values printed in
+		the QSL column in the QsosBox. See</para>
 		<para>As a minimum, the callsign, start date, start time, mode, and band or frequency
 		values must be entered in this dialog. Once valid values have been entered in these boxes,
 		the Add+ and OK buttons are enabled to allow the QSO to be added to the QSOs view.</para>
@@ -518,6 +520,10 @@
 						<row>
 							<entry>Mode</entry>
 							<entry>The mode used for the QSO.</entry>
+						</row>
+						<row>
+							<entry>Submode</entry>
+							<entry>The submode used for the QSO.</entry>
 						</row>
 						<row>
 							<entry>RST</entry>
@@ -786,5 +792,86 @@
 				QSOs dropdown menu.</para>
 			</section>
 		</section>
+	</section>
+	<section>
+		<title>Effect of QSL Sent and QSL Rcvd Values on Text Printed in QSL Column</title>
+		<para>The values set for QSL Sent and QSL Rcvd for each QSO determine the value
+		that is printed in the QSL column for that QSO. The table below shows the values
+		printed for each combination of Sent and Rcvd statuses. Any Sent statuses
+		other than those shown mean that the QSO is not printed.</para>
+		<table frame='all'>
+			<title>Text Printed in QSL Column</title>
+			<tgroup cols='2' align='center' colsep='1' rowsep='1'>
+				<colspec colname='SentStatus' colwidth='85pt'/>
+				<colspec colname='RcvdStatus'/>
+				<thead>
+					<row>
+						<entry namest='SentStatus'></entry>
+						<entry namest='RcvdStatus'>Rcvd Status</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<informaltable>
+								<tgroup cols='1' align='center' colsep='1' rowsep='1'>
+									<colspec colname='SentStatus' colwidth='85pt'/>
+									<thead>
+										<row>
+											<entry>Sent Status</entry>
+										</row>
+									</thead>
+									<tbody>
+										<row>
+											<entry>Requested</entry>
+										</row>
+										<row>
+											<entry>Queued</entry>
+										</row>
+									</tbody>
+								</tgroup>
+							</informaltable>
+						</entry>
+						<entry>
+							<informaltable>
+								<tgroup cols='4' align='center' colsep='1' rowsep='1'>
+									<colspec colname='SentStatus' colwidth='85pt'/>
+									<thead>
+										<row>
+											<entry>Yes</entry>
+											<entry>No</entry>
+											<entry>Requested</entry>
+											<entry>Ignore</entry>
+										</row>
+									</thead>
+									<tbody>
+										<row>
+											<entry>Tnx</entry>
+											<entry>Pse</entry>
+											<entry>Pse</entry>
+											<entry></entry>
+										</row>
+										<row>
+											<entry>Tnx</entry>
+											<entry>Pse</entry>
+											<entry>Pse</entry>
+											<entry></entry>
+										</row>
+									</tbody>
+								</tgroup>
+							</informaltable>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+		<tip>
+			<para>If you print multiple QSOs on a card for the same band and
+			mode, you probably only want to request a card for one of those
+			QSOs. For that QSO, make sure that the Rcvd status is set to No
+			or Requested; for the other QSOs, set the Rcvd status to Ignore.
+			The QSOs with Rcvd status of Ignore will have their value in the
+			QSL column set to an empty string.</para>
+		</tip>
 	</section>
 </chapter>

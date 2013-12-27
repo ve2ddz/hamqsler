@@ -871,6 +871,9 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<para>Note that the Include checkbox for the last QSO is not checked and
+		is disabled. The reason for this will be explained below in the section
+		titled Selecting QSOs by QSL Statuses</para>
 		<section>
 			<title>Selecting QSOs Sort Order</title>
 			<para>The QSOs properties panel is shown below.</para>
@@ -956,7 +959,7 @@
 			the Include column of the third QSO is now
 			unchecked; this is the only QSO that took place
 			on the 40m band.</para>
-			<para>Leave this unchecked.</para>
+			<para>Check the 40m checkbox so that this QSO will be printed.</para>
 		</section>
 		<section>
 			<title>Selecting QSOs by Mode</title>
@@ -975,7 +978,7 @@
 			
 			<para>Uncheck the CW checkbox. All QSOs in the CW mode are
 			deselected. Reselect the CW mode checkbox. Again all QSOs
-			except the QSO on 40m are selected.</para>
+			except the fourth one are selected.</para>
 			<para>Leave all modes checked.</para>
 		</section>
 		<section>
@@ -1006,7 +1009,10 @@
 			<title>Selecting QSOs by QSL Statuses</title>
 			<para>The image below shows the content of the QSL Status tab.
 			It contains three sections, one for Rcvd statuses, one for
-			Sent statuses, and one for Sent Via statuses. </para>
+			Sent statuses, and one for Sent Via statuses. Additional or fewer
+			checkboxes may be present depending on the QSOs loaded into the
+			program. There is one checkbox for each status that exists in
+			at least one loaded QSO.</para>
 			<figure xml:id="qslstatusproperties">
 				<title>Expanded QSL Status Properties</title>
 				<mediaobject>
@@ -1015,9 +1021,15 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
+			<para>Note that the No Sent Status is unchecked and disabled. This is
+			because of the meaning of the various Sent statuses. The No status
+			means do not send a QSL card for this QSO. This checkbox, and the
+			corresponding QSOs in the QSOs panel are unchecked and disabled. The
+			only Sent statuses for which QSOs may be selected are Queued and
+			Requested.</para>
 			<para>Select various statuses to see the QSOs that are selected
 			and deselected. When you are finished, make sure that all
-			checkboxes are checked.</para>
+			checkboxes except the No Sent status checkbox are checked.</para>
 		</section>
 		<section>
 			<title>Selecting Individual QSOs</title>
@@ -1031,7 +1043,7 @@
 			chapter titled 
 			<link linkend="workingwithqsos"><emphasis role='underline'>Working
 			With QSOs</emphasis></link>.</para>
-			<para>Before proceeding, make sure that only the third QSO
+			<para>Before proceeding, make sure that only the fourth QSO
 			is unchecked.</para>
 		</section>
 	</section>
@@ -1057,7 +1069,7 @@
 			or 6.35 mm. Printer margins and the reasons for forcing printing
 			inside the printer margins are discussed in the 
 			<link linkend="outputtingcards"><emphasis role='underline'>Outputting 
-			Cards</emphasis></link> chapter</para>
+			Cards</emphasis></link> chapter.</para>
 			<para>There are two checkboxes that affect the card in display mode as
 			well as print mode:</para>
 			<itemizedlist spacing='compact'>
