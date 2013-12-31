@@ -221,13 +221,13 @@
 	</section>
 	<section>
 		<title>Creating a New Card</title>
-		<para>A new card may be created by selecting the Cards => New menu item. This
-		opens another submenu from which to select the card size and orientation that
-		you want. At this time, there are three card sizes available:</para>
+		<para>A new card may be created by selecting the Cards => New Card... menu item. This
+		displays a New One Sided Card Dialog from which to select the card size and orientation that
+		you want. There are three card sizes available:</para>
 		<itemizedlist spacing='compact'>
 			<listitem>
-				<para>Bureau sized card in landscape mode (5.5 inches wide by 3.5 inches high,
-				or 139.7 mm wide by 88.9 mm high). This is the standard size for QSL cards
+				<para>Bureau sized card(5.5 inches by 3.5 inches,
+				or 139.7 mm by 88.9 mm). This is the standard size for QSL cards
 				and is the size preferred by all QSL bureaus. There are three known suppliers
 				of perforated cardstock for this size of card. See the
 				<link linkend='outputtingcards'><emphasis role='underline'>Outputting
@@ -235,8 +235,8 @@
 				information.</para>
 			</listitem>
 			<listitem>
-				<para>5.5 inches wide by 4.25 inches wide in landscape mode (139.7 mm wide by
-				107.95 mm high). Four of these cards may be printed in a two by two layout
+				<para>5.5 inches by 4.25 inches (139.7 mm by
+				107.95 mm). Four of these cards may be printed in a two by two layout
 				on US Letter sized card stock. A number of micro-perforated cardstocks are
 				available in this size. See the
 				<link linkend='outputtingcards'><emphasis role='underline'>Outputting
@@ -244,13 +244,25 @@
 				information.</para>
 			</listitem>
 			<listitem>
-				<para>6 inches wide by 4 inches high in landscape mode (152.4 mm wide by
-				101.6 mm high). This corresponds to standard 4 inch by 6 inch or 10 cm by
+				<para>6 inches by 4 inches (152.4 mm by
+				101.6 mm). This corresponds to standard 4 inch by 6 inch or 10 cm by
 				15 cm photopaper.</para>
 			</listitem>
 		</itemizedlist>
-		<para>Select the menu item for the card size that you want. 
-		The new card will be displayed in a new
+		<para>There are also two orientations: landscape, where the width of the card
+		is greater than its height; and portrait, where the height of the card is
+		greater than its width.</para>
+		<para>The image below shows the dialog that is displayed. Select the card size
+		and orientation that you want, then click the OK button.</para>
+		<figure xml:id="newonesidedcardialog2">
+			<title>New One Sided Card Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newonesidedcarddialog.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The new card will be displayed in a new
 		tab in the main window; this tab displays the card in design mode in the panel
 		on the left, and a properties panel on the right. If you set up the various text 
 		items properties in User Preferences, as outlined in the 

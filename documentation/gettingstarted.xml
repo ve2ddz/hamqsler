@@ -269,14 +269,26 @@
 			<title>Creating a Default Card</title>
 			<para>To create a card, click on the 
 			<guimenu>Cards</guimenu> dropdown
-			menu. Click on <guisubmenu>New</guisubmenu>, and then 
-			<guimenuitem>Bureau Card</guimenuitem>. Note that you
+			menu. Click on <guisubmenu>New Card...</guisubmenu> to open the
+			New One Sided Card Dialog. Note that you
 			can also just type 
 				<keycombo action="simul">
 					<keycap>Ctrl</keycap>
 					<keycap>N</keycap>
-				</keycombo>.
+				</keycombo>. The dialog shown in the image below is displayed.
 			</para>
+			<figure xml:id="newonesidedcarddialog">
+				<title>New One Sized Card Dialog</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/newonesidedcarddialog.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>There are three possible card sizes, and two orientations. For
+			this tutorial, we want to create a bureau sized card in landscape
+			orientation, which is the default.  Just click the OK button to create
+			the card.</para>
 			<para>The image below shows the main window when you have
 			performed this action. Note that the properties panel contains
 			Default Printer Properties and Default Print Properties.
