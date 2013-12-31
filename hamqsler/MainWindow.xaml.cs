@@ -67,6 +67,7 @@ namespace hamqsler
 		public delegate string AddOrImportDelegate(string fName, QSOsView.OrderOfSort so,
 		                                          AdifEnumerations aEnums);
 
+		public static RoutedCommand NewOneSidedCardCommand = new RoutedCommand();
 		public static RoutedCommand NewBureauCardCommand = new RoutedCommand();
 		public static RoutedCommand New45CardCommand = new RoutedCommand();
 		public static RoutedCommand New46CardCommand = new RoutedCommand();
@@ -1997,5 +1998,29 @@ namespace hamqsler
 				}
 			}
 		}
+		
+		/// <summary>
+		/// Handler for NewOneSidedCard menu item clicked
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void NewOneSidedCardCommand_Executed(object sender, RoutedEventArgs e)
+		{
+			NewOneSidedCardDialog newCardDialog = new NewOneSidedCardDialog();
+			newCardDialog.Owner = this;
+			if((bool)newCardDialog.ShowDialog())
+			{
+				Size cardSize = newCardDialog.CardSize;
+				// create a CardTabItem and add it to the mainTabControl
+				CardTabItem cardTab = new CardTabItem((int)cardSize.Width, (int)cardSize.Height);
+				mainTabControl.Items.Add(cardTab);
+				cardTab.IsSelected = true;		// select the new tab
+				cardTab.cardPanel.QslCard.IsDirty = false;
+				cardTab.SetTabLabel();
+				// need to call SetTitle here because mainTabControl SelectionChanged event is not fired.
+				SetTitle(cardTab.cardPanel.QslCard.FileName, cardTab.cardPanel.QslCard.IsDirty);				
+			}
+		}
+		
 	}
 }

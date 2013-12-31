@@ -24,6 +24,8 @@
 	Title="HamQSLer" Height="600" Width="1000" WindowStartupLocation="CenterScreen"
 	Closed="Window_Closed" Loaded="Window_Loaded" Closing="Window_Closing">
 	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:MainWindow.NewOneSidedCardCommand}"
+						Executed="NewOneSidedCardCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.NewBureauCardCommand}"
 						Executed="NewBureauCardCommand_Executed"/>
 		<CommandBinding Command="{x:Static local:MainWindow.New45CardCommand}"
@@ -124,7 +126,7 @@
 		</Window.CommandBindings>
 		<Window.InputBindings>
 			<KeyBinding Key="N" Modifiers="Control" 
-		                Command="{x:Static local:MainWindow.NewBureauCardCommand}"/>
+		                Command="{x:Static local:MainWindow.NewOneSidedCardCommand}"/>
 			<KeyBinding Key="O" Modifiers="Control" 
 		                Command="{x:Static local:MainWindow.CardOpenCommand}"/>
 			<KeyBinding Key="S" Modifiers="Control" 
@@ -149,18 +151,8 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_Cards">
-				<MenuItem Header="_New">
-					<MenuItem Name="BureauCardMenuItem" Header="Bureau Card" 
-					          InputGestureText="Ctrl-N"
-					          Command="{x:Static local:MainWindow.NewBureauCardCommand}"
-							  ToolTip="Create a new Bureau sized QSL card"/>
-					<MenuItem Header="4 1/4 by 5 1/2 inch Card" 
-					          Command="{x:Static local:MainWindow.New45CardCommand}"
-							  ToolTip="Create a new 4 1/4 by 5 1/2 inch QSL card"/>
-					<MenuItem Header="4 by 6 inch (10 by 15 cm) Card" 
-					          Command="{x:Static local:MainWindow.New46CardCommand}"
-							  ToolTip="Create a new 4 by 6 inch (10 by 15 cm QSL card)"/>
-				</MenuItem>
+				<MenuItem Header="_New Card..." InputGestureText="Ctrl-N"
+					      Command="{x:Static local:MainWindow.NewOneSidedCardCommand}"/>
 				<MenuItem Header="_Open Card..."
 				          InputGestureText="Ctrl-O"
 						Command="{x:Static local:MainWindow.CardOpenCommand}"

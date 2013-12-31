@@ -293,6 +293,7 @@ namespace hamqsler
 				// only be done with Graphics.DrawImage, not Graphics.DrawString, etc.
 				Bitmap designSurface = new Bitmap(this.Width, this.Height);
 				Graphics bGraphics = Graphics.FromImage(designSurface);
+				bGraphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 				PaintCardItems(bGraphics, Qsos, fontAdjustmentFactor);
 				// create a graphics path that excludes the card itself
 				GraphicsPath path = new GraphicsPath();

@@ -32,6 +32,13 @@ namespace hamqsler
 	[Serializable]
 	public class CardWF : CardWFItem
 	{
+		public static int BureauCardWide = 550;
+		public static int BureauCardHigh = 350;
+		public static int FiveCardWide = 550;
+		public static int FiveCardHigh = 425;
+		public static int SixCardWide = 600;
+		public static int SixCardHigh = 400;
+		
 		private static readonly DependencyProperty IsDirtyProperty =
 			DependencyProperty.Register("IsDirty", typeof(bool),
 			                            typeof(CardWF), new PropertyMetadata(false));
@@ -174,6 +181,11 @@ namespace hamqsler
 			TextItems.Add(salutation);
 			// QsosBox
 			QsosBox.QslCard = this;
+			if(height > width)
+			{
+				// set font size smaller to prevent box from extending beyond right edge of card
+				QsosBox.FontSize = 7.0F;
+			}
 		}
 		
 		/// <summary>

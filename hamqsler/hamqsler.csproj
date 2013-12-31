@@ -257,6 +257,10 @@
     <Compile Include="My_Usaca_Counties.cs" />
     <Compile Include="My_VUCC_Grids.cs" />
     <Compile Include="Name.cs" />
+    <Compile Include="NewOneSidedCardDialog.xaml.cs">
+      <DependentUpon>NewOneSidedCardDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Notes.cs" />
     <Compile Include="Nr_Bursts.cs" />
     <Compile Include="Nr_Pings.cs" />
@@ -402,10 +406,9 @@
     <Page Include="MainWindow.xaml" />
     <Page Include="ManagerExistsMacroGroupBox.xaml" />
     <Page Include="ManagerMacroGroupBox.xaml" />
+    <Page Include="NewOneSidedCardDialog.xaml" />
     <Page Include="Print4UpDialog.xaml" />
-    <Page Include="PrinterMarginsDialog.xaml">
-      <DependentUpon>PrintPropertiesPanel.xaml</DependentUpon>
-    </Page>
+    <Page Include="PrinterMarginsDialog.xaml" />
     <Page Include="PrintImageableAreaErrorDialog.xaml" />
     <Page Include="PrintPropertiesPanel.xaml" />
     <Page Include="QsoInputDialog.xaml" />
