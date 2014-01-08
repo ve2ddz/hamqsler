@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012, 2013 Jim Orcheson
+ *  Copyright (c) 2012, 2013, 2014 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -141,18 +141,16 @@ namespace hamqsler
 		private string QslStatus(QsoWithInclude qwi)
 		{
 			string status = string.Empty;
-			if(qwi.Sent.Equals("Requested") || qwi.Sent.Equals("Queued"))
+			switch(qwi.Rcvd)
 			{
-				switch(qwi.Rcvd)
-				{
-					case "Yes":
-						status = "Tnx";
-						break;
-					case "No":
-					case "Requested":
-						status = "Pse";
-						break;
-				}
+				case "Yes":
+					status = "Tnx";
+					break;
+				case "No":
+				case "Requested":
+				case "Ignore":
+					status = "Pse";
+					break;
 			}
 			return status;
 		}

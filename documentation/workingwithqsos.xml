@@ -793,7 +793,7 @@
 			</section>
 		</section>
 	</section>
-	<section>
+<!-- 	<section>
 		<title>Effect of QSL Sent and QSL Rcvd Values on Text Printed in QSL Column</title>
 		<para>The values set for QSL Sent and QSL Rcvd for each QSO determine the value
 		that is printed in the QSL column for that QSO. The table below shows the values
@@ -823,10 +823,19 @@
 									</thead>
 									<tbody>
 										<row>
+											<entry>Yes</entry>
+										</row>
+										<row>
+											<entry>No</entry>
+										</row>
+										<row>
 											<entry>Requested</entry>
 										</row>
 										<row>
 											<entry>Queued</entry>
+										</row>
+										<row>
+											<entry>Ignore</entry>
 										</row>
 									</tbody>
 								</tgroup>
@@ -849,13 +858,31 @@
 											<entry>Tnx</entry>
 											<entry>Pse</entry>
 											<entry>Pse</entry>
-											<entry></entry>
+											<entry>Pse</entry>
 										</row>
 										<row>
 											<entry>Tnx</entry>
 											<entry>Pse</entry>
 											<entry>Pse</entry>
-											<entry></entry>
+											<entry>Pse</entry>
+										</row>
+										<row>
+											<entry>Tnx</entry>
+											<entry>Pse</entry>
+											<entry>Pse</entry>
+											<entry>Pse</entry>
+										</row>
+										<row>
+											<entry>Tnx</entry>
+											<entry>Pse</entry>
+											<entry>Pse</entry>
+											<entry>Pse</entry>
+										</row>
+										<row>
+											<entry>Tnx</entry>
+											<entry>Pse</entry>
+											<entry>Pse</entry>
+											<entry>Pse</entry>
 										</row>
 									</tbody>
 								</tgroup>
@@ -873,5 +900,5 @@
 			The QSOs with Rcvd status of Ignore will have their value in the
 			QSL column set to an empty string.</para>
 		</tip>
-	</section>
+	</section> -->
 </chapter>

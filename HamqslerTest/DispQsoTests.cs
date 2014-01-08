@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2013 Jim Orcheson
+ *  Copyright (c) 2013, 2014 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,11 +50,11 @@ namespace hamqslerTest
 			        "Y", "N", "R", "I",
 			        "Y", "N", "R", "I",
 			        "Y", "N", "R", "I")] string rcvd,
-			[Values("", "", "", "",
-			        "", "", "", "",
-			        "Tnx", "Pse", "Pse", "",
-			        "Tnx", "Pse", "Pse", "",
-			        "", "", "", "")] string qsl)
+			[Values("Tnx", "Pse", "Pse", "Pse",
+			        "Tnx", "Pse", "Pse", "Pse",
+			        "Tnx", "Pse", "Pse", "Pse",
+			        "Tnx", "Pse", "Pse", "Pse",
+			        "Tnx", "Pse", "Pse", "Pse")] string qsl)
 		{
 			qso["Qsl_Sent"] = sent;
 			qso["Qsl_Rcvd"] = rcvd;
