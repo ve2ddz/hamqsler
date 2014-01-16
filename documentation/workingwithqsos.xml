@@ -688,7 +688,7 @@
 						<title>QSL Status Filter Tab</title>
 						<mediaobject>
 							<imageobject>
-								<imagedata fileref="images/qslstatusfilter.png" />
+								<imagedata fileref="images/qslstatusproperties.png" />
 							</imageobject>
 						</mediaobject>
 					</figure>

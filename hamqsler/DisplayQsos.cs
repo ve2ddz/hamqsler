@@ -231,7 +231,7 @@ namespace hamqsler
 			this.Clear();
 			foreach(QsoWithInclude qso in list)
 			{
-				qso.Include = qso.Sent.Equals("Queued") || qso.Sent.Equals("Requested");
+				qso.Include = true;
 				this.Add(qso);
 			}
 			IsDirty = dirty;

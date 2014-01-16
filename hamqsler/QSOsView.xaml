@@ -66,23 +66,7 @@
 												      HorizontalAlignment="Center"
 												      Visibility="Visible"
 												      IsChecked="{Binding Path=Include, Mode=TwoWay}"
-													  Click="IncludeClicked">
-												<CheckBox.Style>
-													<Style>
-														<Style.Setters>
-															<Setter Property="Control.IsEnabled" Value="False"/>
-														</Style.Setters>
-														<Style.Triggers>
-															<DataTrigger Binding='{Binding Path=Sent}' Value='Queued'>
-																<Setter Property="Control.IsEnabled" Value="True"/>									
-															</DataTrigger>
-															<DataTrigger Binding='{Binding Path=Sent}' Value='Requested'>
-																<Setter Property="Control.IsEnabled" Value="True"/>									
-															</DataTrigger>
-														</Style.Triggers>
-													</Style>
-												</CheckBox.Style>
-											</CheckBox>
+													  Click="IncludeClicked"/>
 										</DataTemplate>
 									</GridViewColumn.CellTemplate>
 								</GridViewColumn>

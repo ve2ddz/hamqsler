@@ -258,18 +258,9 @@ namespace hamqsler
 				CheckBox bcb = new CheckBox();
 				bcb.Content = status;
 				bcb.Margin=new Thickness(20, 5, 20, 5);
-				if(status.Equals("Queued") || status.Equals("Requested"))
-				{
-					bcb.IsChecked = true;
-					bcb.IsEnabled = true;
-					bcb.Checked += OnSentCheckBoxChecked;
-					bcb.Unchecked += OnSentCheckBoxChecked;
-				}
-				else
-				{
-					bcb.IsChecked = false;
-					bcb.IsEnabled = false;
-				}
+				bcb.Checked += OnSentCheckBoxChecked;
+				bcb.Unchecked += OnSentCheckBoxChecked;
+				bcb.IsChecked = status.Equals("Queued") || status.Equals("Requested");
 				SentPanel.Children.Add(bcb);
 			}
 		}

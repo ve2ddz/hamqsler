@@ -288,7 +288,7 @@
 			<para>There are three possible card sizes, and two orientations. For
 			this tutorial, we want to create a bureau sized card in landscape
 			orientation, which is the default.  Just click the OK button to create
-			the card.</para>
+			the card.d</para>
 			<para>The image below shows the main window when you have
 			performed this action. Note that the properties panel contains
 			Default Printer Properties and Default Print Properties.
@@ -883,8 +883,8 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>Note that the Include checkbox for the last QSO is not checked and
-		is disabled. The reason for this will be explained below in the section
+		<para>Note that the Include checkbox for the last QSO is not checked. 
+		The reason for this will be explained below in the section
 		titled Selecting QSOs by QSL Statuses</para>
 		<section>
 			<title>Selecting QSOs Sort Order</title>
@@ -1033,12 +1033,11 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>Note that the No Sent Status is unchecked and disabled. This is
+			<para>Note that the No Sent Status is unchecked. This is
 			because of the meaning of the various Sent statuses. The No status
 			means do not send a QSL card for this QSO. This checkbox, and the
-			corresponding QSOs in the QSOs panel are unchecked and disabled. The
-			only Sent statuses for which QSOs may be selected are Queued and
-			Requested.</para>
+			corresponding QSOs in the QSOs panel are unchecked. You may select
+			these QSOs by checking the No status checkbox.</para>
 			<para>Select various statuses to see the QSOs that are selected
 			and deselected. When you are finished, make sure that all
 			checkboxes except the No Sent status checkbox are checked.</para>
