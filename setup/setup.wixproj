@@ -6,11 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Package</OutputType>
     <RootNamespace>Setup</RootNamespace>
-<<<<<<< HEAD
     <OutputName>HamQSLer-1.3.0</OutputName>
-=======
-    <OutputName>HamQSLer-1.2.4</OutputName>
->>>>>>> master
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <SupressIces>ICE45</SupressIces>
