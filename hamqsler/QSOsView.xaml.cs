@@ -253,15 +253,21 @@ namespace hamqsler
 			// remove old checkboxes
 			SentPanel.Children.RemoveRange(0, SentPanel.Children.Count);
 			// create button for each status
-			foreach(string status in DisplayQsos.GetSentStatuses())
+			List<string>sents = DisplayQsos.GetSentStatuses();
+			foreach(string status in sents)
 			{
 				CheckBox bcb = new CheckBox();
 				bcb.Content = status;
 				bcb.Margin=new Thickness(20, 5, 20, 5);
 				bcb.Checked += OnSentCheckBoxChecked;
 				bcb.Unchecked += OnSentCheckBoxChecked;
-				bcb.IsChecked = status.Equals("Queued") || status.Equals("Requested");
 				SentPanel.Children.Add(bcb);
+			}
+			foreach(UIElement uie in SentPanel.Children)
+			{
+				CheckBox bcb = uie as CheckBox;
+				string status = bcb.Content as string;
+				bcb.IsChecked = status.Equals("Queued") || status.Equals("Requested");
 			}
 		}
 		
