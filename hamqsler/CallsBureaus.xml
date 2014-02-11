@@ -31,10 +31,10 @@
       "Call Sign Policy and Special Event Prefixes (RIC-9)" issued by Industry Canada -
       http://www.ic.gc.ca/eic/site/smt-gst.nsf/vwapj/ric9e.pdf/$FILE/ric9e.pdf
 
-	Non-Standard calls are retrieved from the ARRL DX Bulletin
+	Non-Standard calls are retrieved from the ARRL DX Bulletin, OPDX
 -->
 
-<CallsBureaus Version="0.1.5">
+<CallsBureaus Version="1.0.0">
 	<CallsAndPrefixes>
 		<CallAndPrefix>VP2E</CallAndPrefix>
 	</CallsAndPrefixes>
@@ -51,6 +51,7 @@
 		<Call>BW100</Call>
 		<Call>BX100</Call>
 		<Call>LM1814</Call>
+		<Call>LM2T75Y</Call>
 		<Call>LM9L40Y</Call>
 		<Call>OD70</Call>
 		<Call>OEH20</Call>
