@@ -550,13 +550,13 @@ namespace hamqsler
 		/// <returns>True if all Adif fields in the list are equal for the two Qsos. Equality
 		/// means same values in both Qsos, or no value in both Qsos.
 		/// False otherwise.</returns>
-		private bool AdifFieldsEqual(HashSet<string> fields, QsoWithInclude q1, QsoWithInclude q2)
+		public bool AdifFieldsEqual(HashSet<string> fields, QsoWithInclude q1, QsoWithInclude q2)
 		{
 			foreach(string field in fields)
 			{
 				if(q1.Qso[field] != null)
 				{
-					if(q2.Qso[field] != null)
+					if(q2.Qso[field] == null)
 					{
 						return false;
 					}

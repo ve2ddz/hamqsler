@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
@@ -87,6 +88,34 @@ namespace hamqslerTest
 			Assert.AreEqual(0, dQsos.Count);
 			Assert.IsFalse(dQsos.IsDirty);
 			Assert.IsFalse(dQsos.NeedsSorting);
+		}
+		
+		// test AdifFieldsEqual
+		[Test, Sequential]
+		public void TestAdifFieldsEqual([Values(null, null, "VA3HJ", "VA3HJ", "VA3HJ")] string call1,
+		                                [Values(null, "VA3HJ", null, "VA3HJ", "VA3JNO")] string call2,
+		                                [Values(true, false, false, true, false)] bool areEqual)
+		{
+			DisplayQsos dQsos = new DisplayQsos();
+			string err = null;
+			Qsos2 qsos = new Qsos2();
+			Qso2 qso1 = new Qso2("<Mode:3>SSB<Band:3>40m<qso_date:8>20130615<time_on:6>124316",
+				                    App.AdifEnums, ref err, qsos);
+			Qso2 qso2 = new Qso2("<Mode:3>SSB<Band:3>20m<qso_date:8>20130615<time_on:6>201306",
+				                    App.AdifEnums, ref err, qsos);
+			if(call1 != null)
+			{
+				qso1["Call"] = call1;
+			}
+			if(call2 != null)
+			{
+				qso2["Call"] = call2;
+			}
+			QsoWithInclude q1 = new QsoWithInclude(qso1);
+			QsoWithInclude q2 = new QsoWithInclude(qso2);
+			HashSet<string> fields = new HashSet<string>();
+			fields.Add("call");
+			Assert.AreEqual(areEqual, dQsos.AdifFieldsEqual(fields, q1, q2));
 		}
 	}
 }
