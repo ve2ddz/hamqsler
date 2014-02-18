@@ -113,6 +113,16 @@ namespace hamqsler
 			set {SetValue(SetCardMarginsProperty, value);}
 		}
 		
+		private static readonly DependencyProperty PrintCardsVerticalProperty =
+			DependencyProperty.Register("PrintCardsVertical", typeof(bool),
+			                            typeof(PrintPropertiesPanel),
+			                            new PropertyMetadata(false));
+		public bool PrintCardsVertical
+		{
+			get {return (bool) GetValue(PrintCardsVerticalProperty);}
+			set {SetValue(PrintCardsVerticalProperty, value);}
+		}
+		
 		private static readonly DependencyProperty LayoutProperty =
 			DependencyProperty.Register("Layout", typeof(PrintProperties.CardLayouts),
 			                            typeof(PrintPropertiesPanel),
@@ -335,6 +345,7 @@ namespace hamqsler
 			   e.Property == PrintCardOutlinesProperty ||
 			   e.Property == FillLastPageProperty ||
 			   e.Property == SetCardMarginsProperty ||
+			   e.Property == PrintCardsVerticalProperty ||
 			   e.Property == LayoutProperty)
 			{
 				if(PrintPropertiesChanged != null)
@@ -934,6 +945,5 @@ namespace hamqsler
 				}
 			}
 		}
-		
 	}
 }

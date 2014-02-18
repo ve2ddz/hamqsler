@@ -235,6 +235,16 @@ namespace hamqsler
 			set {SetValue(SetCardMarginsProperty, value);}
 		}
 		
+		private static readonly DependencyProperty PrintCardsVerticalProperty =
+			DependencyProperty.Register("PrintCardsVertical", typeof(bool),
+			                            typeof(UserPreferences),
+			                            new PropertyMetadata(false));
+		public bool PrintCardsVertical
+		{
+			get {return (bool)GetValue(PrintCardsVerticalProperty);}
+			set {SetValue(PrintCardsVerticalProperty, value);}
+		}
+		
 		private static readonly DependencyProperty CustomPaperSizesProperty =
 			DependencyProperty.Register("CustomPaperSizes", 
 			                            typeof(List<System.Drawing.Printing.PaperSize>),
@@ -1058,6 +1068,7 @@ namespace hamqsler
 			PrintCardOutlines = prefs.PrintCardOutlines;
 			FillLastPage = prefs.FillLastPage;
 			SetCardMargins = prefs.SetCardMargins;
+			PrintCardsVertical = prefs.PrintCardsVertical;
 
 			DefaultTextItemsFontFace = prefs.DefaultTextItemsFontFace;
 			SetValue(CallsignPropertyKey, new TextParts());

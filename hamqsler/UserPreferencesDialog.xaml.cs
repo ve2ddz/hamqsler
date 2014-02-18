@@ -56,6 +56,7 @@ namespace hamqsler
 			InitializeComponent();
 			printPropertiesPanel.printerPropertiesGroupBox.Header = "Default Printer Properties";
 			printPropertiesPanel.printPropertiesGroupBox.Header = "Default Print Properties";
+			printPropertiesPanel.printerPropertiesGroupBox.Header = "Default Card Print Order";
 			printPropertiesPanel.cardsLayoutGroupBox.Visibility = Visibility.Collapsed;
 			printPropertiesPanel.PrintPropertiesChanged += OnPrintPropertiesChanged;
 			Mouse.OverrideCursor = Cursors.Arrow;
@@ -394,6 +395,7 @@ namespace hamqsler
 			UserPrefs.PrintCardOutlines = printPropertiesPanel.PrintCardOutlines;
 			UserPrefs.FillLastPage = printPropertiesPanel.FillLastPage;
 			UserPrefs.SetCardMargins = printPropertiesPanel.SetCardMargins;
+			UserPrefs.PrintCardsVertical = printPropertiesPanel.PrintCardsVertical;
 		}
 		
 		/// <summary>
@@ -403,7 +405,7 @@ namespace hamqsler
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-			if(e.Property ==UserPrefsProperty)
+			if(e.Property == UserPrefsProperty)
 			{
 				// pass the print properties on to printPropertiesPanel
 				UserPreferences prefs = new UserPreferences(UserPrefs);
@@ -415,6 +417,7 @@ namespace hamqsler
 				printPropertiesPanel.PrintCardOutlines = prefs.PrintCardOutlines;
 				printPropertiesPanel.FillLastPage = prefs.FillLastPage;
 				printPropertiesPanel.SetCardMargins = prefs.SetCardMargins;
+				printPropertiesPanel.PrintCardsVertical = prefs.PrintCardsVertical;
 			}
 		}
 		

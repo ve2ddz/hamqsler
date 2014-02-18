@@ -85,6 +85,12 @@ namespace hamqsler
 			set {printPropsPanel.SetCardMargins = value;}
 		}
 		
+		public bool PrintCardsVertical
+		{
+			get {return printPropsPanel.PrintCardsVertical;}
+			set {printPropsPanel.PrintCardsVertical = value;}
+		}
+		
 		public PrintProperties.CardLayouts Layout
 		{
 			get {return printPropsPanel.Layout;}
@@ -109,6 +115,7 @@ namespace hamqsler
 		public HamQSLerPrintDialog()
 		{
 			InitializeComponent();
+			PrintCardsVertical = ((App)App.Current).UserPreferences.PrintCardsVertical;
 		}
 		
 		/// <summary>

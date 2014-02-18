@@ -75,9 +75,12 @@
 							IsChecked="{Binding Path=PrintCardOutlines, Mode=TwoWay}"
 							ToolTip="Print outline around each card for easier cutting"/>
 					<CheckBox x:Name="fillLastPageButton"
-							Content="Fill Last Page With Blank Cards"
 							Margin="5" 
 							IsChecked="{Binding Path=FillLastPage, Mode=TwoWay}">
+						<CheckBox.Content>
+							<TextBlock>Fill Last Page or Column<LineBreak/>
+							with Blank Cards</TextBlock>
+						</CheckBox.Content>
 						<CheckBox.ToolTip>
 							<TextBlock>
 								Fill last page with blank cards if the last page<LineBreak/>
@@ -97,6 +100,120 @@
 							</TextBlock>
 						</CheckBox.ToolTip>
 					</CheckBox>
+				</StackPanel>
+			</GroupBox>
+			<GroupBox Header="Card Print Order" x:Name="cardPrintOrderGroupBox">
+				<StackPanel Orientation="Vertical">
+					<RadioButton Margin="5" x:Name="printOrderHorizontalButton"
+								 GroupName="printOrderGroup" Height="85" Width="115"
+								 HorizontalAlignment="Left">
+						<RadioButton.Style>
+							<Style>
+								<Setter Property="RadioButton.IsChecked" Value="True"/>
+							</Style>
+						</RadioButton.Style>
+						<RadioButton.ToolTip>
+							<TextBlock>
+								Assuming four cards per page, print cards 1 through 4 on the first<LineBreak/>
+								page, cards 5 through 8 on the second page, and so forth.
+							</TextBlock>
+						</RadioButton.ToolTip>
+						<Canvas Width="100" Height="85">
+							<Rectangle Width="100" Height="65" Fill="Pink" Stroke="Red"
+							 		   Canvas.Top="0" Canvas.Left="0"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="1" Canvas.Left="1"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="1" Canvas.Left="51"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="32" Canvas.Left="1"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="32" Canvas.Left="51"/>
+							<Rectangle Width="100" Height="65" Fill="Pink" Stroke="Red"
+							 		   Canvas.Top="10" Canvas.Left="10"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="11" Canvas.Left="11"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="11" Canvas.Left="61"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="42" Canvas.Left="11"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="42" Canvas.Left="61"/>
+							<Rectangle Width="100" Height="65" Fill="Pink" Stroke="Red"
+							 		   Canvas.Top="20" Canvas.Left="20"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="21" Canvas.Left="21"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="21" Canvas.Left="71"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="52" Canvas.Left="21"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="52" Canvas.Left="71"/>
+							<TextBlock Canvas.Top="29" Canvas.Left="44" Foreground="Red"
+									   FontSize="10" FontWeight="Bold">1</TextBlock>
+							<TextBlock Canvas.Top="29" Canvas.Left="91" Foreground="Red"
+									   FontSize="10" FontWeight="Bold">2</TextBlock>
+							<TextBlock Canvas.Top="59" Canvas.Left="44" Foreground="Red"
+									   FontSize="10" FontWeight="Bold">3</TextBlock>
+							<TextBlock Canvas.Top="59" Canvas.Left="91" Foreground="Red"
+									   FontSize="10" FontWeight="Bold">4</TextBlock>
+						</Canvas>
+					</RadioButton>
+					<RadioButton Margin="5" x:Name="printOrderVerticalButton"
+								 GroupName="printOrderGroup" Height="85" Width="115"
+								 IsChecked="{Binding Path=PrintCardsVertical}"
+								 HorizontalAlignment="Left">
+						<RadioButton.ToolTip>
+							<TextBlock>
+								Assuming four cards per page, print card #1 in the upper left <LineBreak/>
+								corner of the first page, card #2 in the upper left corner of<LineBreak/>
+								the second page, and so forth for every page that is required,<LineBreak/>
+								then print the next cards in the upper right corner of each page,<LineBreak/>
+								then the lower left corner of each page, and finally the lower<LineBreak/>
+								right corner of each page.
+							</TextBlock>
+						</RadioButton.ToolTip>
+						<Canvas Width="100" Height="85">
+							<Rectangle Width="100" Height="65" Fill="Pink" Stroke="Red"
+							 		   Canvas.Top="0" Canvas.Left="0"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="1" Canvas.Left="1"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="1" Canvas.Left="51"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="32" Canvas.Left="1"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="32" Canvas.Left="51"/>
+							<Rectangle Width="100" Height="65" Fill="Pink" Stroke="Red"
+							 		   Canvas.Top="10" Canvas.Left="10"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="11" Canvas.Left="11"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="11" Canvas.Left="61"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="42" Canvas.Left="11"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="42" Canvas.Left="61"/>
+							<Rectangle Width="100" Height="65" Fill="Pink" Stroke="Red"
+							 		   Canvas.Top="20" Canvas.Left="20"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="21" Canvas.Left="21"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="21" Canvas.Left="71"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="52" Canvas.Left="21"/>
+							<Rectangle Width="48" Height="30" Fill="White" Stroke="Blue"
+							 		   Canvas.Top="52" Canvas.Left="71"/>
+							<TextBlock Canvas.Top="29" Canvas.Left="44" Foreground="Red"
+									   FontSize="10" FontWeight="Bold">1</TextBlock>
+							<TextBlock Canvas.Top="29" Canvas.Left="91" Foreground="Red"
+									   FontSize="10" FontWeight="Bold">4</TextBlock>
+							<TextBlock Canvas.Top="59" Canvas.Left="44" Foreground="Red"
+									   FontSize="10" FontWeight="Bold">7</TextBlock>
+							<TextBlock Canvas.Top="59" Canvas.Left="88" Foreground="Red"
+									   FontSize="10" FontWeight="Bold">10</TextBlock>
+						</Canvas>
+					</RadioButton>
 				</StackPanel>
 			</GroupBox>
 		</StackPanel>

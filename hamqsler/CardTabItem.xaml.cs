@@ -53,6 +53,8 @@ namespace hamqsler
 			cardProperties.Visibility = Visibility.Visible;
 			cardProperties.printPropsPanel.cardsLayoutGroupBox.Visibility = 
 				Visibility.Collapsed;
+			cardProperties.printPropsPanel.cardPrintOrderGroupBox.Visibility =
+				Visibility.Collapsed;
 			cardProperties.QslCard = cardPanel.QslCard;
 			cardPanel.QslCard.DispPropertyChanged += OnQslCardDispPropertyChanged;
 			// load list of font names that are available to Windows Forms
@@ -75,6 +77,8 @@ namespace hamqsler
 			cardPanel.AddCard(card);
 			cardProperties.Visibility = Visibility.Visible;
 			cardProperties.printPropsPanel.cardsLayoutGroupBox.Visibility = 
+				Visibility.Collapsed;
+			cardProperties.printPropsPanel.cardPrintOrderGroupBox.Visibility =
 				Visibility.Collapsed;
 			cardProperties.QslCard = cardPanel.QslCard;
 			cardPanel.QslCard.DispPropertyChanged += OnQslCardDispPropertyChanged;

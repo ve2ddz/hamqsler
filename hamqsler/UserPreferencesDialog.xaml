@@ -22,7 +22,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:hamqsler"
 		xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"        
-        Title="User Preferences" Height="500" Width="830">
+        Title="User Preferences" Height="600" Width="830">
 	<Window.Resources>
 		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 		
@@ -59,8 +59,9 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<TreeView Grid.Column="0" Grid.Row="0" Margin="5" MaxHeight="420" Name="propertiesBox"
-				IsEnabled="{Binding ElementName=okButton, Path=IsEnabled}">
+		<TreeView Grid.Column="0" Grid.Row="0" Margin="5" Height="497" Name="propertiesBox"
+				IsEnabled="{Binding ElementName=okButton, Path=IsEnabled}"
+				VerticalAlignment="Top">
 			<TreeViewItem Header="Program">
 				<TreeViewItem Name="VersionCheck" Header="Program Version Check"/>
 				<TreeViewItem Name="ProxySettings" Header="HTTP Proxy Settings"/>
@@ -93,7 +94,7 @@
 				<TreeViewItem Name="DebugOptions" Header="Debug Options"/>
 			</TreeViewItem>
 		</TreeView>
-		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="420">
+		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="580">
 			<StackPanel Orientation="Vertical">
 				<StackPanel.Visibility>
 					<Binding ElementName="VersionCheck" Path="IsSelected"

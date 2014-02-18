@@ -121,6 +121,16 @@ namespace hamqsler
 			set {SetValue(SetCardMarginsProperty, value);}
 		}
 		
+		private static readonly DependencyProperty PrintCardsVerticalProperty =
+			DependencyProperty.Register("PrintCardsVertical", typeof(bool),
+			                            typeof(PrintProperties),
+			                            new PropertyMetadata(false));
+		public bool PrintCardsVertical
+		{
+			get {return (bool)GetValue(PrintCardsVerticalProperty);}
+			set {SetValue(PrintCardsVerticalProperty, value);}
+		}
+		
 		private static readonly DependencyProperty LayoutProperty =
 			DependencyProperty.Register("Layout", typeof(CardLayouts),
 			                            typeof(PrintProperties),
@@ -154,6 +164,7 @@ namespace hamqsler
 			PrintCardOutlines = prefs.PrintCardOutlines;
 			FillLastPage = prefs.FillLastPage;
 			SetCardMargins = prefs.SetCardMargins;
+			PrintCardsVertical = prefs.PrintCardsVertical;
 			Layout = PrintProperties.CardLayouts.PortraitTopLeft;
 			if(App.Logger.DebugPrinting)
 			{
@@ -184,7 +195,7 @@ namespace hamqsler
 			this.PrintCardOutlines = props.PrintCardOutlines;
 			this.FillLastPage = props.FillLastPage;
 			this.SetCardMargins = props.SetCardMargins;
-			this.Layout = props.Layout;
+			this.PrintCardsVertical = props.PrintCardsVertical;
 		}
 		
 		/// <summary>
@@ -198,18 +209,19 @@ namespace hamqsler
 				              "\tPrinter Name: {0}" + newLine +
 				              "\tPaperSize: {1} {10} x {11}" + newLine +
 				              "\tResolution: {2} {3} x {4}" + newLine +
-				              "\tPaperSource: {10}" + newLine +
+				              "\tPaperSource: {12}" + newLine +
 				              "\tInsideMargins: {5}" + newLine +
 				              "\tPrintCardOutlines: {6}" + newLine +
 				              "\tFillLastPage: {7}" + newLine +
 				              "\tSetCardMargins: {8}" + newLine +
+				              "\tPrintCardsVertical: {13}" + newLine +
 				              "\tLayout: {9}" + newLine,
 				              PrinterName, PrinterPaperSize.PaperName,
 				              Resolution.Kind, Resolution.X, Resolution.Y, 
 				              InsideMargins, PrintCardOutlines,
 				              FillLastPage, SetCardMargins, Layout,
 				              PrinterPaperSize.Width, PrinterPaperSize.Height,
-				              Source.SourceName);
+				              Source.SourceName.Length, PrintCardsVertical);
 		}
 		
 		/// <summary>
@@ -227,6 +239,7 @@ namespace hamqsler
 				e.Property == PrintCardOutlinesProperty ||
 				e.Property == FillLastPageProperty ||
 			    e.Property == SetCardMarginsProperty ||
+			    e.Property == PrintCardsVerticalProperty ||
 			    e.Property == LayoutProperty)
 			{
 				if(PrintPropertiesChanged != null)
