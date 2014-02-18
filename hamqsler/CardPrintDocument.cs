@@ -200,9 +200,12 @@ namespace hamqsler
 			float hardX = this.PrinterSettings.DefaultPageSettings.HardMarginX;
 			float hardY = this.PrinterSettings.DefaultPageSettings.HardMarginY;
 			int cardsPerPage = cardsWide * cardsHigh;
-			for(int hCards = 0; hCards < cardsWide; hCards++)
+			int pageNumber = cardsPrinted / cardsPerPage;
+			int numberOfPages = (dispQsos.Count + cardsPerPage -1) / cardsPerPage;
+			int cardNumOnPage = 0;
+			for(int vCards = 0; vCards < cardsHigh; vCards++)
 			{
-				for(int vCards = 0; vCards < cardsHigh; vCards++)
+				for(int hCards = 0; hCards < cardsWide; hCards++)
 				{
 					if(cardsPrinted < dispQsos.Count || PrintProperties.FillLastPage)
 					{
@@ -220,12 +223,18 @@ namespace hamqsler
 						}
 						g.TranslateTransform(x, y);
 						List<DispQso> qs = null;
-						if(cardsPrinted < dispQsos.Count)
+						int cardNumber = cardsPrinted;
+						if(PrintProperties.PrintCardsVertical)
 						{
-							qs = dispQsos[cardsPrinted];
+							cardNumber = pageNumber + numberOfPages * cardNumOnPage;
+						}
+						if(cardNumber < dispQsos.Count)
+						{
+							qs = dispQsos[cardNumber];
 						}
 						view.PaintCard(g, qs);
 						g.Restore(gState);
+						cardNumOnPage++;
 						cardsPrinted++;
 					}
 				}

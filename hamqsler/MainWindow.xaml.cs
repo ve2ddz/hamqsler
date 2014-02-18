@@ -1056,6 +1056,7 @@ namespace hamqsler
 				props.PrintCardOutlines = printDialog.PrintCardOutlines;
 				props.FillLastPage = printDialog.FillLastPage;
 				props.SetCardMargins = printDialog.SetCardMargins;
+				props.PrintCardsVertical = printDialog.PrintCardsVertical;
 				props.Layout = printDialog.Layout;
 				if(App.Logger.DebugPrinting)
 				{
