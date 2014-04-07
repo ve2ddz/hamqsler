@@ -3,7 +3,7 @@
    Author:
         Jim Orcheson <jimorcheson@gmail.com>
   
-   Copyright © 2013 Jim Orcheson
+   Copyright © 2013, 2014 Jim Orcheson
   
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -41,17 +41,17 @@
     		<RemoveExistingProducts After="InstallInitialize"/>
 		</InstallExecuteSequence>
 		<!--Windows version must be Windows XP or later.-->
-		<Condition Message="This application is only supported on Windows XP, Windows Server 2003, or higher.">
-      		VersionNT &gt;= 501
+		<Condition Message="This application is only supported on Windows Vista SP2, Windows 7 SP1, Windows 8 or Windows 8.1.">
+      		VersionNT &gt;= 600
 		</Condition>
 		<!--Must be administrator to install-->
 		<Condition Message="You need to be an administator to install this product">
 			Privileged
 		</Condition>
-		<!--Need .Net 4.0 or later-->
-		<PropertyRef Id="NETFRAMEWORK40CLIENT" />
-		<Condition Message="This application requires .NET Framework 4.0. Please install Microsoft .NET 4.0, then run this installer again.">
- 			(NETFRAMEWORK40CLIENT)
+		<!--Need .Net 4.5 or later-->
+		<PropertyRef Id="NETFRAMEWORK45" />
+		<Condition Message="This application requires .NET Framework 4.5.1. Please install Microsoft .NET 4.5.1, then run this installer again.">
+ 			(NETFRAMEWORK45)
 		</Condition>
 		<!-- Need to reference WIX_DIR_COMMON_DOCUMENTS -->
 		<PropertyRef Id="WIX_DIR_COMMON_DOCUMENTS"/> 

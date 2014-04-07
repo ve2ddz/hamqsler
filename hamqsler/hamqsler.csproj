@@ -7,8 +7,9 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>hamqsler</RootNamespace>
     <AssemblyName>hamqsler</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ApplicationIcon>hamqsler.ico</ApplicationIcon>
     <NoWin32Manifest>False</NoWin32Manifest>
@@ -427,13 +428,9 @@
   <ItemGroup>
     <EmbeddedResource Include="AdifEnumerations.xml" />
     <EmbeddedResource Include="CallsBureaus.xml" />
-    <None Include="Samples\sample2.adi">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Samples\sample.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+    <None Include="Samples\sample2.adi" />
+    <None Include="app.config" />
+   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CardPanel.resx">
       <DependentUpon>CardPanel.cs</DependentUpon>
