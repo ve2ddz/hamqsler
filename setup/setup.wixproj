@@ -12,6 +12,8 @@
     <SupressIces>ICE45</SupressIces>
     <WixVariables>WixUILicenseRtf=license.rtf</WixVariables>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <TargetFrameworkProfile />
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -40,6 +42,7 @@
     <Compile Include="Setup.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="license.rtf" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />

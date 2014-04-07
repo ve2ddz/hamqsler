@@ -7,8 +7,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>QslBureausTests</RootNamespace>
     <AssemblyName>QslBureausTests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>False</NoWin32Manifest>
   </PropertyGroup>
@@ -34,11 +35,14 @@
     <StartAction>Program</StartAction>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="hamqsler">
+      <HintPath>..\hamqsler\bin\Release\hamqsler.exe</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="QslBureaus">
-      <HintPath>..\QslBureaus\bin\Debug\QslBureaus.dll</HintPath>
+      <HintPath>..\QslBureaus\bin\Release\QslBureaus.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -60,6 +64,7 @@
     <Compile Include="QslBureauTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
