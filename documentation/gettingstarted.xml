@@ -1147,11 +1147,35 @@
 				</mediaobject>
 			</figure>
 			<para>As you can see, the printer properties and print properties are
-			displayed again. The settings in this dialog match the settings for
+			displayed again. A card print order panel is also displayed.
+			The settings in this dialog match the settings for
 			the card. This is your last chance to make changes before printing.</para>
 			<para>Check the "Print Card Outlines" and "Fill Last Page With Blank Cards"
 			checkboxes.</para>
-			<para>The third group box on the dialog is the cards layout group box.
+			<para>The Card Print Order panel contains two radio buttons for selecting
+			the order in which the cards will be printed. The images for the radio
+			buttons assume that you are printing four cards per page,and ten to twelve
+			cards in total. If you selected
+			a paper size, or a card layout with a different number of cards per page,
+			the print order still applies: either horizontal, or vertical.</para>
+			<para>The horizontal print order prints cards consecutively on a page. In this
+			case, the first card is printed in the first card print position on the
+			first page, the second card is printed in the second card print position on the
+			first page, and so on. Once the cards are cut out after printing, you must
+			sort the cards in order for each page before sorting cards from the next page.</para>
+			<para>The vertical print order prints the first card in the
+			first card position on the first page, the second card in the first card
+			position on the second page, and so forth for the number of pages that will
+			be printed. For example, if four cards are being printed per page and there
+			are twelve cards to be printed, the first, fourth, seventh, and tenth cards
+			are printed on the first page, the second, fifth, eighth, and eleventh cards
+			are printed on the second page, and the third, sixth, ninth, and twelveth
+			cards are printed on the third page. This order allows you to cut all of the
+			cards from the pages and then simply stack the cards from the first postion
+			on top of all of the cards from the second position, and so forth. If you print a
+			large number of cards at one time, this saves considerable time in sorting
+			the cards.</para>
+			<para>The fourth group box on the dialog is the cards layout group box.
 			This box shows various card layouts on the cardstock. The white rectangles
 			surrounded by blue lines represent the cards, with the cardstock
 			shown in pink. If you change paper size and check or uncheck the 
@@ -1160,7 +1184,8 @@
 			of cards that can be printed per page changes.</para>
 			<para>For this tutorial, make sure that the paper size is set to either
 			Letter or A4 size. The "Print Card Outlines" and "Fill Last Page With
-			Blank Cards" checkboxes should also be checked. Click on the radio button at
+			Blank Cards" checkboxes should also be checked. Select the horizontal
+			card print order radio button. Click on the radio button at
 			the right of the first row of card layouts. Now click on the Preview
 			button at the bottom of the dialog. This will create a print preview
 			of the cards as shown in the image below.</para>

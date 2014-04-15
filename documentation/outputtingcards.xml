@@ -502,8 +502,37 @@
 			changes to these properties before the cards are printed. Any changes made
 			only affect this print job; the card properties are not modified by changes
 			made in the print cards dialog.</para>
-			<para>There is one additional group box in the dialog: the cards layout
-			group box. The radio buttons displayed in this box show how the cards will
+			<para>There are two additional group boxes in the dialog: the card print order
+			group box, and the cards layout
+			group box. The radio button that is initially selected in the card print 
+			order group box is determined by the setting in the user preferences file.
+			</para>
+			<para>The radio buttons in the card print order box determine the order
+			in which the cards are printed on the pages. The first radio button selects
+			a horizontal print order: assuming that four cards will be printed per page,
+			the first four cards are printed on the first page, followed by the next
+			four cards on the second page, and so on. The second radio button selects
+			a vertical print order: assuming four cards will be printed per page and
+			twelve cards will be printed, the first card is printed in the upper
+			left corner of the first page, the second card is printed in the upper
+			left corner of the second page, and the third card is printed in the
+			upper left corner of the third page. The fourth card is printed in the
+			upper right corner of the first page, the fifth card is printed in the
+			upper right corner of the second page, and so forth.</para>
+			<para>So why is the card print order selectable? Assume you selected the
+			Sort by Bureau QSOs order in the card sort group box in the QSOs tab of the
+			main program window and the cards are cut out of the pages. 
+			If you print the cards in a horizontal order, you
+			must pick the first card, followed by the second card and so forth from the
+			first page, then individually from the second page, and so forth to ensure
+			that the cards are in the order requested by your QSL bureau. If you print the
+			cards in vertical order, then you only need to place the stack of
+			cards printed in the first position on top of the cards printed in
+			the second position, and so forth. Removing the unprinted cards from the
+			bottom of the stack of cards printed in the last print position makes your
+			cards ready for sending to the QSL bureau with much less work on your
+			part.</para>
+			<para>The radio buttons displayed in the cards layout box show how the cards will
 			be laid out on the cardstock when they are printed. For each layout, the
 			cards are displayed in white with a blue line around them. The area in
 			light pink shows the cardstock on which the cards will be printed. In each

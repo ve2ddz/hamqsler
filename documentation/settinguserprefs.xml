@@ -683,7 +683,8 @@
 		</para>
 		<section>
 			<title>Print Options Preferences</title>
-			<para>Printer and print properties may be set and modified in three locations:
+			<para>Printer, print, and card print order properties may be 
+			set and modified in three locations:
 			</para>
 			<orderedlist>
 				<listitem>
@@ -692,15 +693,17 @@
 				</listitem>
 				<listitem>
 					<para>In the card properties panel, where initial values are
-					obtained from the user preferences file when a card is created.</para>
+					obtained from the user preferences file when a card is created.
+					Card print order properties are not displayed here.</para>
 				</listitem>
 				<listitem>
 					<para>In the print dialog when printing cards.</para>
 				</listitem>
 			</orderedlist>
 			<para>The image below shows the user preferences dialog with the print
-			options subtopic selected. Note that there are two group boxes, one
-			for printer properties and one for print properties.</para>
+			options subtopic selected. Note that there are three group boxes, one
+			for printer properties, for print properties, and one for card print
+			order properties.</para>
 			<figure xml:id="printoptionsprefs">
 				<title>Printer and Print Options Preferences</title>
 				<mediaobject>
@@ -714,7 +717,8 @@
 			the same properties appear three times in <literal>HamQSLer</literal>, 
 			a discussion of print options is deferred to the 
 			<link linkend="outputtingcards"><emphasis role='underline'>Outputting 
-			Cards</emphasis></link> chapter.</para>
+			Cards</emphasis></link> chapter. Card print order is also discussed in
+			that chapter.</para>
 		</section>
 	</section>
 	<section>
