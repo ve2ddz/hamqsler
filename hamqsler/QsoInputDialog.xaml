@@ -145,7 +145,7 @@
 				VerticalAlignment="Center">Submode (optional):</TextBlock>
 		<ComboBox Name="SubmodeComboBox" Grid.Row="5" Grid.Column="1" Margin="5"
 				HorizontalAlignment="Left" MinWidth="96" MaxDropDownHeight="150"
-				IsEditable="True">
+				IsEditable="True" GotKeyboardFocus="SubmodeComboBox_GotKeyboardFocus">
 			<ComboBox.Text>
 				<Binding Path="Submode"
 				UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">

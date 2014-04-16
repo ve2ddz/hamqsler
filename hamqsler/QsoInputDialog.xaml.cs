@@ -20,6 +20,7 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace hamqsler
@@ -349,6 +350,19 @@ namespace hamqsler
 					{
 						SubmodeComboBox.Items.Add(submode);
 					}
+				}
+			}
+		}
+		
+		void SubmodeComboBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+		{
+			ComboBox box = sender as ComboBox;
+			if(box != null)
+			{
+				TextBox txt = box.Template.FindName("PART_EditableTextBox", box) as TextBox;
+				if(txt != null)
+				{
+					txt.CharacterCasing = CharacterCasing.Upper;
 				}
 			}
 		}
