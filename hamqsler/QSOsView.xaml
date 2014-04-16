@@ -39,9 +39,6 @@
 				Executed="CallRadioButtonClick_Executed" CanExecute="CallRadioButtonClick_CanExecute"/>
 		<CommandBinding Command="{x:Static local:QSOsView.BureauRadioButtonClickCommand}"
 				Executed="BureauRadioButtonClick_Executed" CanExecute="BureauRadioButtonClick_CanExecute"/>
-		<CommandBinding Command="{x:Static local:QSOsView.ResortButtonClickCommand}"
-				Executed="ResortButtonClickCommand_Executed" 
-				CanExecute="ResortButtonClickCommand_CanExecute"/>
 	</UserControl.CommandBindings>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -131,10 +128,6 @@
 						<RadioButton Name="bureauRadioButton" Content="Bureau" Margin="5"
 									ToolTip="Sort QSOs by bureau then manager and callsign, then date and time."
 						             Command="{x:Static local:QSOsView.BureauRadioButtonClickCommand}"/>
-						<Separator Margin="3"/>
-						<Button Name="ResortButton" Margin="5" Width="75" Content="Sort"
-									ToolTip="Sort QSOs again"
-									Command="{x:Static local:QSOsView.ResortButtonClickCommand}"/>
 					</StackPanel>
 				</GroupBox>
 				<TabControl Margin="0,5,0,0">

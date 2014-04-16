@@ -53,7 +53,6 @@ namespace hamqsler
 		public static RoutedCommand DateTimeRadioButtonClickCommand = new RoutedCommand();
 		public static RoutedCommand CallRadioButtonClickCommand = new RoutedCommand();
 		public static RoutedCommand BureauRadioButtonClickCommand = new RoutedCommand();
-		public static RoutedCommand ResortButtonClickCommand = new RoutedCommand();
 		
 		private static DependencyProperty DisplayQsosProperty = DependencyProperty.Register(
 			"DisplayQsos", typeof(DisplayQsos), typeof(MainWindow), 
@@ -100,16 +99,6 @@ namespace hamqsler
 		private void BureauRadioButtonClick_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = DisplayQsos.Count > 0;
-		}
-		
-		/// <summary>
-		/// CanExecute for ResortButton
-		/// </summary>
-		/// <param name="sender">not used</param>
-		/// <param name="e">CanExecuteRoutedEventArgs object</param>
-		private void ResortButtonClickCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-		{
-			e.CanExecute = !(SortOrder == OrderOfSort.DATETIME) && DisplayQsos.NeedsSorting;
 		}
 		
 		/// <summary>
@@ -530,16 +519,6 @@ namespace hamqsler
 			}
 		}
 		
-		/// <summary>
-		/// Handler for ResortButton click event
-		/// </summary>
-		/// <param name="sender">not used</param>
-		/// <param name="e">not used</param>
-		void ResortButtonClickCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-			Comparer<QsoWithInclude> comparer = GetComparer();
-			DisplayQsos.SortQSOs(comparer);
-		}
 		/// <summary>
 		/// Handler for click events on the Include checkboxes in qsosListView
 		/// </summary>
