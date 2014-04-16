@@ -19,12 +19,12 @@
 	  xmlns:xlink="http://www.w3.org/1999/xlink">
 	<info>
 		<title>HamQSLer User Manual</title>
-		<subtitle>Version 1.3.0</subtitle>
+		<subtitle>Version 1.3.2</subtitle>
 		<author>
 			<personname><firstname>Jim</firstname><surname>Orcheson</surname></personname>
 		</author>
 		<copyright>
-			<year>2013</year>
+			<year>2013, 2014</year>
 			<holder>VA3HJ Software</holder>
 		</copyright>
 		<legalnotice>
