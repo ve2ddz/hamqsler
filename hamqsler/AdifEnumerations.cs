@@ -124,7 +124,6 @@ namespace hamqsler
 				foreach(var val in vals)
 				{
 					values[i++] = (string)val;
-					System.Diagnostics.Debug.WriteLine(string.Format("{0}: {1}", i, val));
 				}
 				return values;
 			}
