@@ -354,7 +354,14 @@ namespace hamqsler
 			}
 		}
 		
-		void SubmodeComboBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+		/// <summary>
+		/// Handler for SubmodeComboBox GotKeyboardFocus event.
+		/// Force any input characters to be upper case.
+		/// From http://refat38.wordpress.com/2012/05/27/wpf-combobox-force-input-to-uppercase/
+		/// </summary>
+		/// <param name="sender">source of the event (the combobox)</param>
+		/// <param name="e">KeyboardFocusChangedEventArgs object</param>
+		private void SubmodeComboBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
 		{
 			ComboBox box = sender as ComboBox;
 			if(box != null)
