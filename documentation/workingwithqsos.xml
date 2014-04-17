@@ -594,10 +594,9 @@
 			first in the list, then the QSOs for which there is no bureau are placed after the bureau
 			QSOs. QSOs whose QSL_SENT_VIA ADIF field is set to D (Direct) also have their Send Via
 			value set to Direct and are therefore sorted with other Direct QSOs.</para>
-			<para>The QSOs are sorted as soon as a radio button is selected. The Sort button is enabled
-			only when a new QSO is input using the Input QSOs dialog box. When entering QSOs manually,
-			the QSOs are added the bottom of the displayed QSOs. The Sort button must be clicked to
-			properly sort the QSOs in that case.</para>
+			<para>The QSOs are sorted as soon as a radio button is selected. When entering QSOs manually,
+			the QSOs are added to the bottom of the displayed QSOs, and then sorted when the Input QSOs
+			Dialog is closed.</para>
 		</section>
 		<section xml:id='includingQSOs'>
 			<title>Selecting QSOs for Printing</title>
