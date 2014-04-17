@@ -31,7 +31,7 @@ namespace hamqslerTest
 	{
 		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void TestSepup()
+		public void TestSetup()
 		{
 			App.AdifEnums.LoadDocument();
 		}
@@ -164,6 +164,25 @@ namespace hamqslerTest
 			Submode submode = qso.GetField("Submode") as Submode;
 			Assert.IsNotNull(submode);
 			Assert.AreEqual("LSB", submode.Value);
+		}
+		
+		// test ModifyValues with valid mode and undefined submode
+		[Test]
+		public void TestModifyValuesWithValidModeWithUndefinedSubmode()
+		{
+			string err = string.Empty;
+			Qso2 qso = new Qso2("<Mode:3>SSB<Submode:4>FRED", App.AdifEnums, ref err);
+			AdifField field = qso.GetField("Mode");
+			Assert.IsNotNull(field);
+			Mode mode = field as Mode;
+			Assert.IsNotNull(mode);
+			string mod = mode.ModifyValues(qso);
+			Assert.AreEqual("\tSubmode is not defined for the Mode value. Both values are retained.",
+			                mod);
+			Assert.AreEqual("SSB", mode.Value);
+			Submode submode = qso.GetField("Submode") as Submode;
+			Assert.IsNotNull(submode);
+			Assert.AreEqual("FRED", submode.Value);
 		}
 	}
 }

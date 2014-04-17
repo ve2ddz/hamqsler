@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="hamqsler">
-      <HintPath>..\hamqsler\bin\Release\hamqsler.exe</HintPath>
+      <HintPath>..\hamqsler\bin\Debug\hamqsler.exe</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>

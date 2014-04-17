@@ -63,6 +63,7 @@ namespace hamqsler
 	public override string ModifyValues(Qso2 qso)
 		{
 			string mod = null;
+			string initMode = Value;
 			string submode = qso["Submode", string.Empty];
 			
 			if(!aEnums.IsInEnumeration("Mode", Value))
@@ -75,8 +76,7 @@ namespace hamqsler
 				}
 				else
 				{
-					string mode = aEnums.GetModeFromSubmode(submode);
-					qso["Mode"] = mode;
+					qso["Mode"] = aEnums.GetModeFromSubmode(submode);
 					mod = "\tMode not found in Mode enumeration. Mode set to mode for submode.";
 				}
 			}
@@ -85,7 +85,11 @@ namespace hamqsler
 				if(!submode.Equals(string.Empty))
 				{
 					string mode = aEnums.GetModeFromSubmode(submode);
-					if(!Value.Equals(mode))
+					if(mode.Equals(string.Empty))
+					{
+						mod = "\tSubmode is not defined for the Mode value. Both values are retained.";
+					}
+					else if(!mode.Equals(initMode))
 					{
 						qso["Mode"] = mode;
 						mod = "\tMode - submode mismatch. Mode set to proper mode for submode.";
