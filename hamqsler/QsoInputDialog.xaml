@@ -230,7 +230,7 @@
 			</Grid>
 		</GroupBox>
 		<GroupBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="5"
-				Header="QSL (optional)">
+				Header="QSL">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>

@@ -141,7 +141,12 @@
 			<para>The band dropdown box contains a list of all valid amateur radio bands. A
 			band may be selected by using any of the methods outlined above for selecting
 			an item from the mode dropdown.</para>
-			<para>The QSL Rcvd, Sent, and Sent Via fields are optional, with values contained in
+			<para>The QSL Rcvd and Sent fields are preloaded with the default value
+			('No") as defined in the ADIF standard. The Sent Via field is set
+			to "Bureau" because that is the value that is assumed by <literal>HamQSLer</literal>
+			if one of the
+			other values is not selected. All valid values for these three fields are
+			loaded in the
 			dropdown lists. You may select any of the values in the dropdown boxes using the 
 			instructions
 			provided for selecting a mode, above.</para>

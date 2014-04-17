@@ -113,7 +113,7 @@ namespace hamqsler
 		
 		private static readonly DependencyProperty RcvdProperty =
 			DependencyProperty.Register("Rcvd", typeof(string), typeof(QsoInputData),
-			                            new PropertyMetadata(string.Empty));
+			                            new PropertyMetadata("No"));
 		public string Rcvd
 		{
 			get {return (string)GetValue(RcvdProperty);}
@@ -122,7 +122,7 @@ namespace hamqsler
 		
 		private static readonly DependencyProperty SentProperty =
 			DependencyProperty.Register("Sent", typeof(string), typeof(QsoInputData),
-			                            new PropertyMetadata(string.Empty));
+			                            new PropertyMetadata("No"));
 		public string Sent
 		{
 			get {return (string)GetValue(SentProperty);}
@@ -131,7 +131,7 @@ namespace hamqsler
 		
 		private static readonly DependencyProperty SentViaProperty =
 			DependencyProperty.Register("SentVia", typeof(string), typeof(QsoInputData),
-			                            new PropertyMetadata(string.Empty));
+			                            new PropertyMetadata("Bureau"));
 		public string SentVia
 		{
 			get {return (string)GetValue(SentViaProperty);}

@@ -113,7 +113,7 @@ namespace hamqsler
 						status = "Ignore";
 						break;
 					default:
-						status = sent;
+						status = "No";
 						break;
 				}
 				return status;
@@ -143,11 +143,8 @@ namespace hamqsler
 					case "I":
 						retValue = "Ignore";
 						break;
-					case "":
-						retValue = string.Empty;
-						break;
 					default:
-						retValue = "***";
+						retValue = "No";
 						break;
 				}
 				return retValue;
