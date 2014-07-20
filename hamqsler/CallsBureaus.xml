@@ -33,7 +33,7 @@
 	Non-Standard calls are retrieved from the ARRL DX Bulletin, OPDX
 -->
 
-<CallsBureaus Version="1.0.2">
+<CallsBureaus Version="1.0.3">
 	<CallsAndPrefixes>
 		<CallAndPrefix>VP2E</CallAndPrefix>
 	</CallsAndPrefixes>
@@ -51,6 +51,7 @@
 		<Call>BW100</Call>
 		<Call>BX100</Call>
 		<Call>CK3UG50</Call>
+		<Call>EF6</Call>
 		<Call>J6STL35</Call>
 		<Call>LM1814</Call>
 		<Call>LM2T75Y</Call>
