@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012, 2013 Jim Orcheson
+ *  Copyright (c) 2012-2014 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -477,6 +477,16 @@ namespace hamqsler
 			set {SetValue(FrequencyTextProperty, value);}
 		}
 		
+		// Report header by report type per mode
+		private static readonly DependencyProperty ReportTypeByModeProperty =
+			DependencyProperty.Register("ReportTypeByMode", typeof(bool),
+			                            typeof(UserPreferences), new PropertyMetadata(false));
+		public bool ReportTypeByMode
+		{
+			get {return (bool)GetValue(ReportTypeByModeProperty);}
+			set {SetValue(ReportTypeByModeProperty, value);}
+		}
+		
 		// RST header text
 		private static readonly DependencyProperty RSTTextProperty = 
 			DependencyProperty.Register("RSTText", typeof(string),
@@ -485,6 +495,58 @@ namespace hamqsler
 		{
 			get {return (string)GetValue(RSTTextProperty);}
 			set {SetValue(RSTTextProperty, value);}
+		}
+		
+		// RST header text by report type
+		private static readonly DependencyProperty RSTTextByReportTypeProperty = 
+			DependencyProperty.Register("RSTTextByReportType", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("RST"));
+		public string RSTTextByReportType
+		{
+			get {return (string)GetValue(RSTTextByReportTypeProperty);}
+			set {SetValue(RSTTextByReportTypeProperty, value);}
+		}
+		
+		// RS header text by report type
+		private static readonly DependencyProperty RSTextByReportTypeProperty = 
+			DependencyProperty.Register("RSTextByReportType", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("RS"));
+		public string RSTextByReportType
+		{
+			get {return (string)GetValue(RSTextByReportTypeProperty);}
+			set {SetValue(RSTextByReportTypeProperty, value);}
+		}
+		
+		// RSQ header text
+		private static readonly DependencyProperty RSQTextByReportTypeProperty = 
+			DependencyProperty.Register("RSQTextByReportType", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("RSQ"));
+		public string RSQTextByReportType
+		{
+			get {return (string)GetValue(RSQTextByReportTypeProperty);}
+			set {SetValue(RSQTextByReportTypeProperty, value);}
+		}
+		
+		// dB header text
+		private static readonly DependencyProperty DBTextByReportTypeProperty = 
+			DependencyProperty.Register("DBTextByReportType", typeof(string),
+			                            typeof(UserPreferences), new PropertyMetadata("dB"));
+		public string DBTextByReportType
+		{
+			get {return (string)GetValue(DBTextByReportTypeProperty);}
+			set {SetValue(DBTextByReportTypeProperty, value);}
+		}
+		
+		// Report type by mode
+		private static readonly DependencyPropertyKey ReportByModePropertyKey =
+			DependencyProperty.RegisterReadOnly("ReportByMode", typeof(List<DataItem>), 
+			                                    typeof(UserPreferences),
+			                                    new PropertyMetadata(new List<DataItem>()));
+		private static readonly DependencyProperty ReportByModeProperty =
+			ReportByModePropertyKey.DependencyProperty;
+		public List<DataItem> ReportByMode
+		{
+			get {return (List<DataItem>)GetValue(ReportByModeProperty);}
 		}
 		
 		// QSL header text
@@ -983,6 +1045,7 @@ namespace hamqsler
 			SetValue(NameQthPropertyKey, new TextParts());
 			SetValue(SalutationPropertyKey, new TextParts());
 			SetValue(ConfirmingTextPropertyKey, new TextParts());
+			SetValue(ReportByModePropertyKey, new List<DataItem>());
 			if(DefaultPrinterName == null)
 			{
 				PrinterSettings settings = new PrinterSettings();
@@ -1112,7 +1175,17 @@ namespace hamqsler
 			ModeText = prefs.ModeText;
 			BandText = prefs.BandText;
 			FrequencyText = prefs.FrequencyText;
+			ReportTypeByMode = prefs.ReportTypeByMode;
 			RSTText = prefs.RSTText;
+			RSTextByReportType = prefs.RSTextByReportType;
+			RSTTextByReportType = prefs.RSTTextByReportType;
+			RSQTextByReportType = prefs.RSQTextByReportType;
+			DBTextByReportType = prefs.DBTextByReportType;
+			ReportByMode.Clear();
+			foreach(DataItem item in prefs.ReportByMode)
+			{
+				ReportByMode.Add(item);
+			}
 			QSLText = prefs.QSLText;
 			PseText = prefs.PseText;
 			TnxText = prefs.TnxText;
@@ -1164,7 +1237,7 @@ namespace hamqsler
 
         /// <summary>
         ///  Factory for UserPrefs objects.
-        ///  Deserializes UserPrefs object stored in qslPrefs.xml if file exists.
+        ///  Deserializes UserPrefs object stored in .hamqsler if file exists.
         ///  Otherwise creates a default UserPrefs object
         /// </summary>
         /// <param name="showMessages">boolean indicating whether an error message should be
@@ -1510,6 +1583,57 @@ namespace hamqsler
 			band = band.Replace('p', '.');
         	App.AdifEnums.GetBandLimits(band, out lower, out upper);
 			return freq;
+        }
+        
+        /// <summary>
+        /// Build a list of modes and their report types.
+        /// This UserPreferences object is created before the AdifEnumerations object is created,
+        /// but this method calls AdifEnumerations.GetEnumeratedValues, so this method
+        /// must be called after the AdifEnumerations object is created.
+        /// </summary>
+        public void BuildReportByModeList()
+        {
+        	List<DataItem> list = ReportByMode;
+        	List<string> itemKeys = new List<string>(list.Count);
+        	List<DataItem> newList = new List<DataItem>(list.Count);
+        	bool newMode = false;
+        	foreach(DataItem item in list)
+        	{
+        		newList.Add(item);
+        		if(!App.AdifEnums.IsDeprecated("Mode", item.Key))
+        		{
+        			itemKeys.Add(item.Key);
+        		}
+        	}
+        	string[] modes = App.AdifEnums.GetEnumeratedValues("Mode");
+        	foreach(string mode in modes)
+        	{
+        		bool found = false;
+        		foreach(string key in itemKeys)
+        		{
+        			if(mode.Equals(key))
+        			{
+        				found = true;
+        				break;
+        			}
+        		}
+        		if(!found)
+        		{
+        			string modeType = string.Empty;
+        			if(App.AdifEnums.GetDefaultReportType(mode, out modeType))
+        			{
+        				newList.Add(new DataItem(mode, modeType));
+        				newMode = true;
+        			}
+        		}
+        	}
+        	// if a new mode has been defined, save the user preferences.
+        	if(newMode)
+        	{
+        		ReportByMode.Clear();
+        		ReportByMode.AddRange(newList);
+        		SerializeAsXml();
+        	}
         }
         
 	}

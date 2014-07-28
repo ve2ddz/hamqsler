@@ -2,7 +2,7 @@
    Author:
         Jim Orcheson <jimorcheson@gmail.com>
   
-   Copyright © 2012, 2013 Jim Orcheson
+   Copyright © 2012 - 2014 Jim Orcheson
   
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -83,6 +83,7 @@
 				<TreeViewItem Name="ConfirmingText" Header="Confirming Text"/>
 				<TreeViewItem Name="DateFormats" Header="Date Formats"/>
 				<TreeViewItem Name="HeaderText" Header="Header Text"/>
+				<TreeViewItem Name="ReportText" Header="Report Text"/>
 				<TreeViewItem Name="QSLText" Header="QSL Text"/>
 				<TreeViewItem Name="MonthAbreviations" Header="Month Abreviations"/>
 				<TreeViewItem Name="BandsFrequencies" Header="Bands / Frequencies"/>
@@ -94,1041 +95,1214 @@
 				<TreeViewItem Name="DebugOptions" Header="Debug Options"/>
 			</TreeViewItem>
 		</TreeView>
-		<StackPanel Name="propertiesDisplay" Grid.Column="1" Grid.Row="0" Margin="5" MaxHeight="580">
-			<StackPanel Orientation="Vertical">
-				<StackPanel.Visibility>
-					<Binding ElementName="VersionCheck" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</StackPanel.Visibility>
-				<CheckBox Name="programUpdatesCheckBox" Margin="5"
-				          ToolTip="Check this if you want program to check website for updates to program and to download updated associated data files"
-				          IsChecked="{Binding Path=CheckForNewVersions, Mode=TwoWay}"
-						  Content="Check for Program Updates and Download Data File Updates"
-						  Unchecked="ProgramUpdatesCheckBox_Unchecked"/>
-				<CheckBox Name="developmentUpdatesCheckBox" Margin="20,5,5,5"
-							ToolTip="Check this if you want to be informed of new stable and development releases"
-							Content="Stable and Development Program Releases"
-							IsChecked="{Binding Path=CheckForDevelopmentVersions, Mode=TwoWay}"
-							IsEnabled="{Binding ElementName=programUpdatesCheckBox, Path=IsChecked}"/>
-							
+		<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="0" >
+			<StackPanel Name="propertiesDisplay" Margin="5" MaxHeight="580">
+				<StackPanel Orientation="Vertical">
+					<StackPanel.Visibility>
+						<Binding ElementName="VersionCheck" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</StackPanel.Visibility>
+					<CheckBox Name="programUpdatesCheckBox" Margin="5"
+					          ToolTip="Check this if you want program to check website for updates to program and to download updated associated data files"
+					          IsChecked="{Binding Path=CheckForNewVersions, Mode=TwoWay}"
+							  Content="Check for Program Updates and Download Data File Updates"
+							  Unchecked="ProgramUpdatesCheckBox_Unchecked"/>
+					<CheckBox Name="developmentUpdatesCheckBox" Margin="20,5,5,5"
+								ToolTip="Check this if you want to be informed of new stable and development releases"
+								Content="Stable and Development Program Releases"
+								IsChecked="{Binding Path=CheckForDevelopmentVersions, Mode=TwoWay}"
+								IsEnabled="{Binding ElementName=programUpdatesCheckBox, Path=IsChecked}"/>
+								
+				</StackPanel>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="ProxySettings" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5">Proxy Server:</TextBlock>
+					<TextBox Grid.Row="0" Grid.Column="1"  Margin="5"
+					         Text="{Binding Path=HttpProxyServer, Mode=TwoWay}"
+					/>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5">Proxy Server Port:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" MaxLength="6" Margin="5"
+					         Text="{Binding Path=HttpProxyServerPortNumber, Mode=TwoWay}"
+							 PreviewTextInput="CheckLength"/>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="AdifFilesAndFolder" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
+						>Reload ADIF Files on Startup:</TextBlock>
+					<CheckBox Name="reloadAdifCheckButton" Margin="5"
+					          Grid.Row="0" Grid.Column="1"
+					          IsChecked="{Binding Path=AdifReloadOnStartup, Mode=TwoWay}">
+						<CheckBox.ToolTip>
+							<TextBlock>
+								Check this if you want program to reload your ADIF<LineBreak/>
+						          files when you restart HamQSLer
+							</TextBlock>
+						</CheckBox.ToolTip>
+					</CheckBox>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
+						>Default ADIF Files Folder:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
+					         Text="{Binding Path=DefaultAdifFilesFolder}"/>
+					<Button Name="DefaultAdifFilesFolderButton" Grid.Row="1" Grid.Column="2"
+					        Margin="5" MinWidth="30" Click="DefaultAdifFilesFolderButton_Click"
+					        ToolTip="Select a new default folder">...</Button>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="CardsFilesAndFolder" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
+						>Reload Card Files on Startup:</TextBlock>
+					<CheckBox Name="reloadCardFilesCheckButton" Margin="5"
+					          Grid.Row="0" Grid.Column="1"
+					          IsChecked="{Binding Path=CardsReloadOnStartup, Mode=TwoWay}">
+						<CheckBox.ToolTip>
+							<TextBlock>
+								Check this if you want program to reload your cards<LineBreak/>
+					          when you restart HamQSLer
+							</TextBlock>
+						</CheckBox.ToolTip>
+					</CheckBox>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
+						>Default Card Files Folder:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
+					         Text="{Binding Path=DefaultCardFilesFolder}"/>
+					<Button Name="DefaultCardFilesFolderButton" Grid.Row="1" Grid.Column="2"
+					        Margin="5" MinWidth="30" Click="DefaultCardFilesFolderButton_Click"
+					        ToolTip="Select a new default folder">...</Button>
+				</Grid>
+				<Grid >
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="ImagesFolder" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Margin="5" Grid.Row="0" Grid.Column="0">Default Images Folder:</TextBlock>
+					<TextBox Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"
+					         Text="{Binding Path=DefaultImagesFolder}"/>
+					<Button Name="DefaultImagesFolderButton" Grid.Row="0" Grid.Column="2"
+					        Margin="5" MinWidth="30" Click="DefaultImagesFolderButton_Click"
+					        ToolTip="Select a new default folder">...</Button>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="QsoColumnsOrder" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+							HorizontalAlignment="Center" Foreground="Blue" FontSize="20"
+							Margin="10"
+							>Select a column type and press Up or Down key to reposition</TextBlock>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>QSO Columns Order:</TextBlock>
+					<ListBox Name="qsoColumnsOrderListBox" HorizontalContentAlignment="Stretch"
+							Grid.Row="1" Grid.Column="1" KeyUp="QsoColumnsOrderListBox_KeyUp">
+						<TextBlock Text="{Binding QsoColumn1, Mode=TwoWay}"
+						MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+						<TextBlock Text="{Binding QsoColumn2, Mode=TwoWay}"
+						MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+						<TextBlock Text="{Binding QsoColumn3, Mode=TwoWay}"
+						MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+						<TextBlock Text="{Binding QsoColumn4, Mode=TwoWay}"
+						MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+						<TextBlock Text="{Binding QsoColumn5, Mode=TwoWay}"
+						MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+						<TextBlock Text="{Binding QsoColumn6, Mode=TwoWay}"
+						MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
+					</ListBox>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="DefaultTextFont" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>Default Text FontFace:</TextBlock>
+					<ComboBox x:Name="DefaultTextItemsFontFaceComboBox"
+							  Text="{Binding DefaultTextItemsFontFace, Mode=TwoWay}" 
+					          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"
+							  ToolTip="Select the default font face for text items"/>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">Sample:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="5" FontSize="36"
+							FontFamily="{Binding DefaultTextItemsFontFace}" FontWeight="Bold"
+							>ABCDEFabcdef123456</TextBox>
+				</Grid>
+				<Grid>
+					<Grid.Visibility>
+						<Binding ElementName="CallsignText" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="375"/>
+					</Grid.ColumnDefinitions>
+					<GroupBox Grid.Column="1" Margin="5" Header="Default Callsign">
+						<StackPanel>
+							<TextBox  MaxLength="15" Margin="3" x:Name="CallsignTextBox"
+							         CharacterCasing="Upper" FontSize="36"
+							         VerticalAlignment="Stretch"
+									FontFamily="{Binding DefaultTextItemsFontFace}"
+									FontWeight="Bold" PreviewTextInput="CallsignBox_PreviewTextInput"
+									ToolTip="Enter default callsign">
+								<TextBox.Text>
+									<Binding Path="Text"
+											UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+										<Binding.ValidationRules>
+											<DataErrorValidationRule/>
+										</Binding.ValidationRules>
+									</Binding>
+								</TextBox.Text>
+							</TextBox>
+							<Button x:Name="CallsignMacroButton" Margin="3" HorizontalAlignment="Center"
+									Width="75" Content="Macros" Click="CallsignMacroButton_Click"
+									ToolTip="Click to edit default callsign macros"/>
+						</StackPanel>						
+					</GroupBox>
+				</Grid>
+				<Grid>
+					<Grid.Visibility>
+						<Binding ElementName="NameAndQTHText" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<GroupBox Grid.Column="1" Margin="5" Header="Default Name and QTH">
+						<StackPanel>
+							<TextBox Margin="3" MinHeight="50" x:Name="NameQthTextBox"
+									FontFamily="{Binding DefaultTextItemsFontFace}"
+									Text="{Binding Path=Text, Mode=TwoWay}"
+									AcceptsReturn="True" VerticalAlignment="Stretch"
+									ToolTip="Enter your name and address"/>
+							<Button x:Name="NameQTHMacroButton" Margin="3" HorizontalAlignment="Center"
+									Width="75" Content="Macros" Click="NameQTHMacroButton_Click"
+									ToolTip="Click to edit default name and QTH macros"/>
+						</StackPanel>
+					</GroupBox>
+				</Grid>
+				<Grid>
+					<Grid.Visibility>
+						<Binding ElementName="SalutationText" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<GroupBox Grid.Column="1" Margin="5" Header="Default Salutation">
+						<StackPanel>
+					<TextBox Grid.Column="1" Margin="5" x:Name="SalutationTextBox"
+							FontFamily="{Binding DefaultTextItemsFontFace}"
+							ToolTip="Salutation to be printed on the card (e.g. 'Thanks for the QSO. 73, ')"
+							Text="{Binding Path=Text, Mode=TwoWay}"/>
+							<Button x:Name="SalutationMacroButton" Margin="3" HorizontalAlignment="Center"
+									Width="75" Content="Macros" Click="SalutationMacroButton_Click"
+									ToolTip="Click to edit default salutation macros"/>
+						</StackPanel>
+					</GroupBox>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="DefaultQSOsBoxFont" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>Default QSOs Box FontFace:</TextBlock>
+					<ComboBox x:Name="DefaultQsosBoxFontFaceComboBox"
+							  Text="{Binding DefaultQsosBoxFontFace, Mode=TwoWay}" 
+					          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"
+							  ToolTip="Select default font face for QSOs Box text"/>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">Sample:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="5" FontSize="36"
+							FontFamily="{Binding DefaultQsosBoxFontFace}" FontWeight="Bold"
+							>ABCDEFabcdef123456</TextBox>
+				</Grid>
+				<Grid>
+					<Grid.Visibility>
+						<Binding ElementName="ConfirmingText" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<GroupBox Grid.Column="1" Margin="5" Header="Confirming Text">
+						<StackPanel>
+							<TextBox Margin="3" x:Name="ConfirmingTextBox"
+									FontFamily="{Binding DefaultQsosBoxFontFace}"
+									Text="{Binding Path=Text, Mode=TwoWay}"
+									ToolTip="Confirming text printed in the QSOs Box (e.g. 'Confirming 2-Way QSO With ')"
+									/>
+							<Button x:Name="ConfirmingTextMacroButton" Margin="3" 
+							        HorizontalAlignment="Center"
+									Width="75" Content="Macros" Click="ConfirmingTextMacroButton_Click"
+									ToolTip="Click to edit Confirming Text macros"/>
+						</StackPanel>
+					</GroupBox>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="DateFormats" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+								>YYYY-MM-DD Text:</TextBlock>
+					<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding YYYYMMDDText,
+								Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+					         	PreviewTextInput="CheckLength"
+								ToolTip="Text that is displayed in the header of the date column
+	in the QSOs Box when the selected date format is 'YYYY-MM-DD'."/>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+								>DD-MMM-YY Text:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding DDMMMYYText,
+								Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+					         	PreviewTextInput="CheckLength"
+					         	ToolTip="Text that is displayed in the header of the date column
+	in the QSOs Box when the selected date format is 'DD-MMM-YY'."/>
+	
+					<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+								>DD-MM-YY Text:</TextBlock>
+					<TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding  DDMMYYText,
+								Mode=TwoWay}" MaxWidth="250" MaxLength="12"
+					         	PreviewTextInput="CheckLength"
+					         	ToolTip="Text that is displayed in the header of the date column
+	in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
+	
+					<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+								>Default Date Format:</TextBlock>
+					<ComboBox Grid.Row="3" Grid.Column="1" Margin="5" 
+					          	Text="{Binding DefaultDateFormat, Mode=TwoWay}" MaxWidth="250"
+								ToolTip="Date format that is initially applied when a new card is created.">
+						<ComboBoxItem>YYYY-MM-DD</ComboBoxItem>
+						<ComboBoxItem>DD-MMM-YY</ComboBoxItem>
+						<ComboBoxItem>DD-MM-YY</ComboBoxItem>
+					</ComboBox>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="HeaderText" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>Time Header Text:</TextBlock>
+					<TextBox Grid.Row="0" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+							Text="{Binding TimeText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text printed in Time column header in QSOs Box."/>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>Mode Header Text:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+							Text="{Binding ModeText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text printed in Mode column header in QSOs Box."/>
+					<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>Band Header Text:</TextBlock>
+					<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+							Text="{Binding BandText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text printed in Band header in QSOs Box."/>
+					<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>Frequency Header Text:</TextBlock>
+					<TextBox Grid.Row="3" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
+							 Text="{Binding FrequencyText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text printed in Frequency header in QSOs Box."/>
+				</Grid>
+				<StackPanel Orientation="Vertical" Visibility="{Binding ElementName=ReportText,
+								 Path=IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+					<GroupBox Header="Report Header" Margin="5">
+						<StackPanel Orientation="Vertical">
+							<RadioButton Content="Same report Header for all modes" Margin="5"
+										Name="AllModesRadioButton">
+								<RadioButton.ToolTip>
+									<TextBlock>
+										All QSOs with a single receiving station will be printed on cards
+										<LineBreak/>using a single report header as defined in the groupbox
+										<LineBreak/> immediately below.
+									</TextBlock>
+								</RadioButton.ToolTip>
+							</RadioButton>
+							<RadioButton Content="Report Header by report type" Margin="5"
+										Name="ByModeRadioButton" Checked="ByModeRadioButton_Checked"
+										Unchecked="ByModeRadioButton_Checked">
+								<RadioButton.ToolTip>
+									<TextBlock>
+										QSOs with a single receiving station will be printed on cards
+										<LineBreak/>based on the report type for the modes selected below.
+										<LineBreak/>The report header printed on each card will be the report
+										<LineBreak/>header defined in the groupbox immediately below.
+									</TextBlock>
+								</RadioButton.ToolTip>
+							</RadioButton>
+						</StackPanel>
+					</GroupBox>
+	 				<GroupBox Header="Report Header Text" Margin="5">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="120"/>
+								<ColumnDefinition Width="40"/>
+								<ColumnDefinition Width="100"/>
+								<ColumnDefinition Width="40"/>
+								<ColumnDefinition Width="100"/>
+								<ColumnDefinition Width="40"/>
+								<ColumnDefinition Width="100"/>
+								<ColumnDefinition Width="40"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>							
+							</Grid.RowDefinitions>
+							<TextBlock Text="Report Header Text:" Margin="5" Grid.Column="0"
+							        Grid.Row="0" VerticalAlignment="Center"
+									HorizontalAlignment="Right"/>
+							<TextBox Margin="5" MaxWidth="100" MaxLength="3" Grid.Column="1"
+							 		Grid.Row="0" Text="{Binding RSTText, Mode=TwoWay}"
+							         HorizontalAlignment="Left"
+							         IsEnabled="{Binding ElementName=AllModesRadioButton, Path=IsChecked}"
+							        PreviewTextInput="CheckLength">
+								<TextBox.ToolTip>
+									<TextBlock>
+									Text printed in Report header if you select <LineBreak/>'Same report header for all modes' in groupbox above.
+									</TextBlock>
+								</TextBox.ToolTip>
+							</TextBox>
+							<TextBlock Text="RS Text:" Margin="5" Grid.Row="1" Grid.Column="0"
+							        VerticalAlignment="Center"
+									HorizontalAlignment="Right"/>
+							<TextBox Margin="5" Grid.Row="1" Grid.Column="1"
+							         HorizontalAlignment="Left"
+							         IsEnabled="{Binding ElementName=ByModeRadioButton, Path=IsChecked}"
+							 		 Text="{Binding RSTextByReportType, Mode=TwoWay}">
+								<TextBox.ToolTip>
+									<TextBlock>
+										Text printed in Report header for 'RS' report modes<LineBreak/>
+										selected in the groupbox below if you select<LineBreak/>
+										'Report header by report type' in the groupbox above.
+									</TextBlock>
+								</TextBox.ToolTip>
+							</TextBox>
+							<TextBlock Text="RST Text:" Margin="5" Grid.Row="1" Grid.Column="2"
+							        VerticalAlignment="Center"
+									HorizontalAlignment="Right"/>
+							<TextBox Margin="5" Grid.Row="1" Grid.Column="3"
+							         HorizontalAlignment="Left"
+							         IsEnabled="{Binding ElementName=ByModeRadioButton, Path=IsChecked}"
+							 		 Text="{Binding RSTTextByReportType, Mode=TwoWay}">
+								<TextBox.ToolTip>
+									<TextBlock>
+										Text printed in Report header for 'RST' report modes<LineBreak/>
+										selected in the groupbox below if you select<LineBreak/>
+										'Report header by report type' in the groupbox above.
+									</TextBlock>
+								</TextBox.ToolTip>
+							</TextBox>
+							<TextBlock Text="RSQ Text:" Margin="5" Grid.Row="1" Grid.Column="4"
+							        VerticalAlignment="Center"
+									HorizontalAlignment="Right"/>
+							<TextBox Margin="5" Grid.Row="1" Grid.Column="5"
+							         HorizontalAlignment="Left"
+							         IsEnabled="{Binding ElementName=ByModeRadioButton, Path=IsChecked}"
+							 		 Text="{Binding RSQTextByReportType, Mode=TwoWay}">
+								<TextBox.ToolTip>
+									<TextBlock>
+										Text printed in Report header for 'RSQ' report modes<LineBreak/>
+										selected in the groupbox below if you select<LineBreak/>
+										'Report header by report type' in the groupbox above.
+									</TextBlock>
+								</TextBox.ToolTip>
+							</TextBox>
+							<TextBlock Text="dB Text:" Margin="5" Grid.Row="1" Grid.Column="6"
+							        VerticalAlignment="Center"
+									HorizontalAlignment="Right"/>
+							<TextBox Margin="5" Grid.Row="1" Grid.Column="7"
+							         HorizontalAlignment="Left"
+							         IsEnabled="{Binding ElementName=ByModeRadioButton, Path=IsChecked}"
+							 		 Text="{Binding DBTextByReportType, Mode=TwoWay}">
+								<TextBox.ToolTip>
+									<TextBlock>
+										Text printed in Report header for 'dB' report modes<LineBreak/>
+										selected in the groupbox below if you select<LineBreak/>
+										'Report header by report type' in the groupbox above.
+									</TextBlock>
+								</TextBox.ToolTip>
+							</TextBox>
+						</Grid>
+					</GroupBox>
+					<GroupBox Header="Report Type By Mode"
+							IsEnabled="{Binding ElementName=ByModeRadioButton, Path=IsChecked}">
+						<Grid x:Name="reportTypeByModeGrid">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="50"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="50"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<TextBlock Text="Mode" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="0"/>
+							<TextBlock Text="RS" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="1"/>
+							<TextBlock Text="RST" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="2"/>
+							<TextBlock Text="RSQ" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="3"/>
+							<TextBlock Text="dB" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="4"/>
+							<TextBlock Text="Mode" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="6"/>
+							<TextBlock Text="RS" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="7"/>
+							<TextBlock Text="RST" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="8"/>
+							<TextBlock Text="RSQ" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="9"/>
+							<TextBlock Text="dB" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="10"/>
+							<TextBlock Text="Mode" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="12"/>
+							<TextBlock Text="RS" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="13"/>
+							<TextBlock Text="RST" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="14"/>
+							<TextBlock Text="RSQ" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="15"/>
+							<TextBlock Text="dB" HorizontalAlignment="Center" Margin="5"
+							           Grid.Row="0" Grid.Column="16"/>
+						</Grid>
+					</GroupBox>
+				</StackPanel>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="QSLText" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>QSL Header Text:</TextBlock>
+					<TextBox Grid.Row="0" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
+							Text="{Binding QSLText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text displayed as header in the QSL column in QSOs Box."/>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>QSL Please Text:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
+							Text="{Binding PseText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text printed in QSL column for each QSO when 'QSL_RCVD' value is anything other than 'Yes'."/>
+					<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							>QSL Thanks Text:</TextBlock>
+					<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
+							Text="{Binding TnxText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text printed in QSL column for each QSO when 'QSL_RCVD' value is 'Yes'.}"/>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="MonthAbreviations" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.ColumnSpan="6" Margin="5" HorizontalAlignment="Center"
+							Foreground="Blue"
+							>Text to display for month when date format is 'DD-MMM-YY'</TextBlock>
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>January:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding JanuaryText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for January"/>
+					<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>February:</TextBlock>
+					<TextBox Grid.Row="2" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding FebruaryText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for February"/>
+					<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>March:</TextBlock>
+					<TextBox Grid.Row="3" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding MarchText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for March"/>
+					<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>April:</TextBlock>
+					<TextBox Grid.Row="4" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding AprilText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for April"/>
+					<TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>May:</TextBlock>
+					<TextBox Grid.Row="5" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding MayText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for May"/>
+					<TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>June:</TextBlock>
+					<TextBox Grid.Row="6" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding JuneText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for June"/>
+					<TextBlock Grid.Row="1" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>July:</TextBlock>
+					<TextBox Grid.Row="1" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding JulyText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for July"/>
+					<TextBlock Grid.Row="2" Grid.Column="3" Margin="3" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>August:</TextBlock>
+					<TextBox Grid.Row="2" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding AugustText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for August"/>
+					<TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>September:</TextBlock>
+					<TextBox Grid.Row="3" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding SeptemberText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for September"/>
+					<TextBlock Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>October:</TextBlock>
+					<TextBox Grid.Row="4" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding OctoberText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for October"/>
+					<TextBlock Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>November:</TextBlock>
+					<TextBox Grid.Row="5" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding NovemberText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for November"/>
+					<TextBlock Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right"
+							>December:</TextBlock>
+					<TextBox Grid.Row="6" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
+							Text="{Binding DecemberText, Mode=TwoWay}"
+					        PreviewTextInput="CheckLength"
+							ToolTip="Text for December"/>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="BandsFrequencies" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<TextBlock Grid.Row="0" Grid.ColumnSpan="8" Margin="5,2,5,1" HorizontalAlignment="Center"
+							Foreground="Blue"
+							>Value to display in Frequency column in QSOs Box when a band is specified for a QSO,
+					</TextBlock>
+					<TextBlock Grid.Row="1" Grid.ColumnSpan="8" Margin="5,2,5,1" HorizontalAlignment="Center"
+							Foreground="Blue"
+							>but no frequency is specified. Values must be in MHz and within band limits.</TextBlock>
+					<TextBlock Grid.Row="2" Grid.ColumnSpan="8" Margin="5,2,5,5" HorizontalAlignment="Center"
+							Foreground="Blue"
+							>Use '.' or ',' as decimal separator.</TextBlock>
+					<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">2190m:</TextBlock>
+					<TextBox Grid.Row="3" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F2190m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency2190m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">630m:</TextBlock>
+					<TextBox Grid.Row="4" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F630m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency630m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">560m:</TextBlock>
+					<TextBox Grid.Row="5" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F560m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency560m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">160m:</TextBlock>
+					<TextBox Grid.Row="6" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F160m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency160m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="7" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">80m:</TextBlock>
+					<TextBox Grid.Row="7" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F80m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency80m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="8" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">60m:</TextBlock>
+					<TextBox Grid.Row="8" Grid.Column="1" Margin="5" MaxWidth="70" MaxLength="8"
+							Name="F60m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency60m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="9" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">40m:</TextBlock>
+					<TextBox Grid.Row="9" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F40m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency40m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="10" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">30m:</TextBlock>
+					<TextBox Grid.Row="10" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F30m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency30m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="11" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">20m:</TextBlock>
+					<TextBox Grid.Row="11" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F20m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency20m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="12" Grid.Column="0" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">17m:</TextBlock>
+					<TextBox Grid.Row="12" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F17m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency17m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">15m:</TextBlock>
+					<TextBox Grid.Row="3" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F15m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency15m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">12m:</TextBlock>
+					<TextBox Grid.Row="4" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F12m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency12m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">10m:</TextBlock>
+					<TextBox Grid.Row="5" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F10m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency10m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">6m:</TextBlock>
+					<TextBox Grid.Row="6" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F6m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency6m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="7" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">4m:</TextBlock>
+					<TextBox Grid.Row="7" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F4m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency4m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="8" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">2m:</TextBlock>
+					<TextBox Grid.Row="8" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F2m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency2m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="9" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">1.25m:</TextBlock>
+					<TextBox Grid.Row="9" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F1p25m" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency1p25m" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="10" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">70cm:</TextBlock>
+					<TextBox Grid.Row="10" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F70cm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency70cm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="11" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">33cm:</TextBlock>
+					<TextBox Grid.Row="11" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F33cm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency33cm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="12" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">23cm:</TextBlock>
+					<TextBox Grid.Row="12" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F23cm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency23cm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="3" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">13cm:</TextBlock>
+					<TextBox Grid.Row="3" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F13cm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency13cm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="4" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">9cm:</TextBlock>
+					<TextBox Grid.Row="4" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F9cm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency9cm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="5" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">6cm:</TextBlock>
+					<TextBox Grid.Row="5" Grid.Column="7" Margin="5" MaxWidth="70" MaxLength="8"
+							Name="F6cm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency6cm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="6" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">3cm:</TextBlock>
+					<TextBox Grid.Row="6" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F3cm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency3cm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="7" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">1.25cm:</TextBlock>
+					<TextBox Grid.Row="7" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F1p25cm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency1p25cm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="8" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">6mm:</TextBlock>
+					<TextBox Grid.Row="8" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F6mm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency6mm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="9" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">4mm:</TextBlock>
+					<TextBox Grid.Row="9" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F4mm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency4mm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="10" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">2.5mm:</TextBlock>
+					<TextBox Grid.Row="10" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F2p5mm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency2p5mm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="11" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">2mm:</TextBlock>
+					<TextBox Grid.Row="11" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F2mm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency2mm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+					<TextBlock Grid.Row="12" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+							HorizontalAlignment="Right">1mm:</TextBlock>
+					<TextBox Grid.Row="12" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
+							Name="F1mm" PreviewTextInput="BandFrequency_PreviewTextInput">
+						<TextBox.Text>
+							<Binding Path="Frequency1mm" NotifyOnValidationError="True"
+							UpdateSourceTrigger="PropertyChanged">
+								<Binding.ValidationRules>
+									<DataErrorValidationRule/>
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+					</TextBox>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="PrintOptions" Path="IsSelected"
+						         Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<local:PrintPropertiesPanel x:Name="printPropertiesPanel"/>
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.Visibility>
+						<Binding ElementName="DebugOptions" Path="IsSelected"
+								 Converter="{StaticResource BooleanToVisibilityConverter}"/>
+					</Grid.Visibility>
+					<CheckBox Grid.Column="0" Grid.Row="0" Margin="5"
+							  Content="Debug Logging"
+							  IsChecked="{Binding Path=DebugLogging, Mode=TwoWay}">
+						<CheckBox.ToolTip>
+							<TextBlock>
+								Turn on Logging debugging.<LineBreak/>
+								Warning: May write a lot of output to the log file.
+							</TextBlock>
+						</CheckBox.ToolTip>
+					</CheckBox>
+					<CheckBox Grid.Column="0" Grid.Row="1" Margin="5" 
+							  Content="Debug Printing" 
+							  IsChecked="{Binding Path=DebugPrinting, Mode=TwoWay}">
+						<CheckBox.ToolTip>
+							<TextBlock>
+								Turn on print debugging.<LineBreak/>
+								Warning: This may write a lot of output to the<LineBreak/>
+								log file and slow down program execution,<LineBreak/>
+								especially when printing.
+							</TextBlock>
+						</CheckBox.ToolTip>
+					</CheckBox>
+				</Grid>
 			</StackPanel>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="ProxySettings" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5">Proxy Server:</TextBlock>
-				<TextBox Grid.Row="0" Grid.Column="1"  Margin="5"
-				         Text="{Binding Path=HttpProxyServer, Mode=TwoWay}"
-				/>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5">Proxy Server Port:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" MaxLength="6" Margin="5"
-				         Text="{Binding Path=HttpProxyServerPortNumber, Mode=TwoWay}"
-						 PreviewTextInput="CheckLength"/>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="AdifFilesAndFolder" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
-					>Reload ADIF Files on Startup:</TextBlock>
-				<CheckBox Name="reloadAdifCheckButton" Margin="5"
-				          Grid.Row="0" Grid.Column="1"
-				          IsChecked="{Binding Path=AdifReloadOnStartup, Mode=TwoWay}">
-					<CheckBox.ToolTip>
-						<TextBlock>
-							Check this if you want program to reload your ADIF<LineBreak/>
-					          files when you restart HamQSLer
-						</TextBlock>
-					</CheckBox.ToolTip>
-				</CheckBox>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
-					>Default ADIF Files Folder:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
-				         Text="{Binding Path=DefaultAdifFilesFolder}"/>
-				<Button Name="DefaultAdifFilesFolderButton" Grid.Row="1" Grid.Column="2"
-				        Margin="5" MinWidth="30" Click="DefaultAdifFilesFolderButton_Click"
-				        ToolTip="Select a new default folder">...</Button>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="CardsFilesAndFolder" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5"
-					>Reload Card Files on Startup:</TextBlock>
-				<CheckBox Name="reloadCardFilesCheckButton" Margin="5"
-				          Grid.Row="0" Grid.Column="1"
-				          IsChecked="{Binding Path=CardsReloadOnStartup, Mode=TwoWay}">
-					<CheckBox.ToolTip>
-						<TextBlock>
-							Check this if you want program to reload your cards<LineBreak/>
-				          when you restart HamQSLer
-						</TextBlock>
-					</CheckBox.ToolTip>
-				</CheckBox>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5"
-					>Default Card Files Folder:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True"
-				         Text="{Binding Path=DefaultCardFilesFolder}"/>
-				<Button Name="DefaultCardFilesFolderButton" Grid.Row="1" Grid.Column="2"
-				        Margin="5" MinWidth="30" Click="DefaultCardFilesFolderButton_Click"
-				        ToolTip="Select a new default folder">...</Button>
-			</Grid>
-			<Grid >
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="ImagesFolder" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Margin="5" Grid.Row="0" Grid.Column="0">Default Images Folder:</TextBlock>
-				<TextBox Margin="5" Grid.Row="0" Grid.Column="1" IsReadOnly="True"
-				         Text="{Binding Path=DefaultImagesFolder}"/>
-				<Button Name="DefaultImagesFolderButton" Grid.Row="0" Grid.Column="2"
-				        Margin="5" MinWidth="30" Click="DefaultImagesFolderButton_Click"
-				        ToolTip="Select a new default folder">...</Button>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="QsoColumnsOrder" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-						HorizontalAlignment="Center" Foreground="Blue" FontSize="20"
-						Margin="10"
-						>Select a column type and press Up or Down key to reposition</TextBlock>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>QSO Columns Order:</TextBlock>
-				<ListBox Name="qsoColumnsOrderListBox" HorizontalContentAlignment="Stretch"
-						Grid.Row="1" Grid.Column="1" KeyUp="QsoColumnsOrderListBox_KeyUp">
-					<TextBlock Text="{Binding QsoColumn1, Mode=TwoWay}"
-					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
-					<TextBlock Text="{Binding QsoColumn2, Mode=TwoWay}"
-					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
-					<TextBlock Text="{Binding QsoColumn3, Mode=TwoWay}"
-					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
-					<TextBlock Text="{Binding QsoColumn4, Mode=TwoWay}"
-					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
-					<TextBlock Text="{Binding QsoColumn5, Mode=TwoWay}"
-					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
-					<TextBlock Text="{Binding QsoColumn6, Mode=TwoWay}"
-					MouseDown="QsoColumnsOrderListBox_TextBlock_MouseDown"/>
-				</ListBox>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="DefaultTextFont" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Default Text FontFace:</TextBlock>
-				<ComboBox x:Name="DefaultTextItemsFontFaceComboBox"
-						  Text="{Binding DefaultTextItemsFontFace, Mode=TwoWay}" 
-				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"
-						  ToolTip="Select the default font face for text items"/>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">Sample:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" FontSize="36"
-						FontFamily="{Binding DefaultTextItemsFontFace}" FontWeight="Bold"
-						>ABCDEFabcdef123456</TextBox>
-			</Grid>
-			<Grid>
-				<Grid.Visibility>
-					<Binding ElementName="CallsignText" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="375"/>
-				</Grid.ColumnDefinitions>
-				<GroupBox Grid.Column="1" Margin="5" Header="Default Callsign">
-					<StackPanel>
-						<TextBox  MaxLength="15" Margin="3" x:Name="CallsignTextBox"
-						         CharacterCasing="Upper" FontSize="36"
-						         VerticalAlignment="Stretch"
-								FontFamily="{Binding DefaultTextItemsFontFace}"
-								FontWeight="Bold" PreviewTextInput="CallsignBox_PreviewTextInput"
-								ToolTip="Enter default callsign">
-							<TextBox.Text>
-								<Binding Path="Text"
-										UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-									<Binding.ValidationRules>
-										<DataErrorValidationRule/>
-									</Binding.ValidationRules>
-								</Binding>
-							</TextBox.Text>
-						</TextBox>
-						<Button x:Name="CallsignMacroButton" Margin="3" HorizontalAlignment="Center"
-								Width="75" Content="Macros" Click="CallsignMacroButton_Click"
-								ToolTip="Click to edit default callsign macros"/>
-					</StackPanel>						
-				</GroupBox>
-			</Grid>
-			<Grid>
-				<Grid.Visibility>
-					<Binding ElementName="NameAndQTHText" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<GroupBox Grid.Column="1" Margin="5" Header="Default Name and QTH">
-					<StackPanel>
-						<TextBox Margin="3" MinHeight="50" x:Name="NameQthTextBox"
-								FontFamily="{Binding DefaultTextItemsFontFace}"
-								Text="{Binding Path=Text, Mode=TwoWay}"
-								AcceptsReturn="True" VerticalAlignment="Stretch"
-								ToolTip="Enter your name and address"/>
-						<Button x:Name="NameQTHMacroButton" Margin="3" HorizontalAlignment="Center"
-								Width="75" Content="Macros" Click="NameQTHMacroButton_Click"
-								ToolTip="Click to edit default name and QTH macros"/>
-					</StackPanel>
-				</GroupBox>
-			</Grid>
-			<Grid>
-				<Grid.Visibility>
-					<Binding ElementName="SalutationText" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<GroupBox Grid.Column="1" Margin="5" Header="Default Salutation">
-					<StackPanel>
-				<TextBox Grid.Column="1" Margin="5" x:Name="SalutationTextBox"
-						FontFamily="{Binding DefaultTextItemsFontFace}"
-						ToolTip="Salutation to be printed on the card (e.g. 'Thanks for the QSO. 73, ')"
-						Text="{Binding Path=Text, Mode=TwoWay}"/>
-						<Button x:Name="SalutationMacroButton" Margin="3" HorizontalAlignment="Center"
-								Width="75" Content="Macros" Click="SalutationMacroButton_Click"
-								ToolTip="Click to edit default salutation macros"/>
-					</StackPanel>
-				</GroupBox>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="DefaultQSOsBoxFont" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Default QSOs Box FontFace:</TextBlock>
-				<ComboBox x:Name="DefaultQsosBoxFontFaceComboBox"
-						  Text="{Binding DefaultQsosBoxFontFace, Mode=TwoWay}" 
-				          Grid.Row="0" Grid.Column="1" Margin="5" IsReadOnly="True"
-						  ToolTip="Select default font face for QSOs Box text"/>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">Sample:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" FontSize="36"
-						FontFamily="{Binding DefaultQsosBoxFontFace}" FontWeight="Bold"
-						>ABCDEFabcdef123456</TextBox>
-			</Grid>
-			<Grid>
-				<Grid.Visibility>
-					<Binding ElementName="ConfirmingText" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<GroupBox Grid.Column="1" Margin="5" Header="Confirming Text">
-					<StackPanel>
-						<TextBox Margin="3" x:Name="ConfirmingTextBox"
-								FontFamily="{Binding DefaultQsosBoxFontFace}"
-								Text="{Binding Path=Text, Mode=TwoWay}"
-								ToolTip="Confirming text printed in the QSOs Box (e.g. 'Confirming 2-Way QSO With ')"
-								/>
-						<Button x:Name="ConfirmingTextMacroButton" Margin="3" 
-						        HorizontalAlignment="Center"
-								Width="75" Content="Macros" Click="ConfirmingTextMacroButton_Click"
-								ToolTip="Click to edit Confirming Text macros"/>
-					</StackPanel>
-				</GroupBox>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="DateFormats" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-							>YYYY-MM-DD Text:</TextBlock>
-				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding YYYYMMDDText,
-							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
-				         	PreviewTextInput="CheckLength"
-							ToolTip="Text that is displayed in the header of the date column
-in the QSOs Box when the selected date format is 'YYYY-MM-DD'."/>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-							>DD-MMM-YY Text:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding DDMMMYYText,
-							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
-				         	PreviewTextInput="CheckLength"
-				         	ToolTip="Text that is displayed in the header of the date column
-in the QSOs Box when the selected date format is 'DD-MMM-YY'."/>
-
-				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-							>DD-MM-YY Text:</TextBlock>
-				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding  DDMMYYText,
-							Mode=TwoWay}" MaxWidth="250" MaxLength="12"
-				         	PreviewTextInput="CheckLength"
-				         	ToolTip="Text that is displayed in the header of the date column
-in the QSOs Box when the selected date format is 'DD-MM-YY'."/>
-
-				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-							>Default Date Format:</TextBlock>
-				<ComboBox Grid.Row="3" Grid.Column="1" Margin="5" 
-				          	Text="{Binding DefaultDateFormat, Mode=TwoWay}" MaxWidth="250"
-							ToolTip="Date format that is initially applied when a new card is created.">
-					<ComboBoxItem>YYYY-MM-DD</ComboBoxItem>
-					<ComboBoxItem>DD-MMM-YY</ComboBoxItem>
-					<ComboBoxItem>DD-MM-YY</ComboBoxItem>
-				</ComboBox>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="HeaderText" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Time Header Text:</TextBlock>
-				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
-						Text="{Binding TimeText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text printed in Time column header in QSOs Box."/>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Mode Header Text:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
-						Text="{Binding ModeText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text printed in Mode column header in QSOs Box."/>
-				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Band Header Text:</TextBlock>
-				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
-						Text="{Binding BandText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text printed in Band header in QSOs Box."/>
-				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>Frequency Header Text:</TextBlock>
-				<TextBox Grid.Row="3" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
-						 Text="{Binding FrequencyText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text printed in Frequency header in QSOs Box."/>
-				<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>RST Header Text:</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="1" Margin="5" MaxWidth="250" MaxLength="6"
-						Text="{Binding RSTText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text printed in RST header in QSOs Box."/>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="QSLText" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>QSL Header Text:</TextBlock>
-				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
-						Text="{Binding QSLText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text displayed as header in the QSL column in QSOs Box."/>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>QSL Please Text:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
-						Text="{Binding PseText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text printed in QSL column for each QSO when 'QSL_RCVD' value is anything other than 'Yes'."/>
-				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						>QSL Thanks Text:</TextBlock>
-				<TextBox Grid.Row="2" Grid.Column="1" Margin="5" MaxWidth="150" MaxLength="3"
-						Text="{Binding TnxText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text printed in QSL column for each QSO when 'QSL_RCVD' value is 'Yes'.}"/>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="MonthAbreviations" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.ColumnSpan="6" Margin="5" HorizontalAlignment="Center"
-						Foreground="Blue"
-						>Text to display for month when date format is 'DD-MMM-YY'</TextBlock>
-				<TextBlock Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>January:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding JanuaryText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for January"/>
-				<TextBlock Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>February:</TextBlock>
-				<TextBox Grid.Row="2" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding FebruaryText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for February"/>
-				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>March:</TextBlock>
-				<TextBox Grid.Row="3" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding MarchText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for March"/>
-				<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>April:</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding AprilText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for April"/>
-				<TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>May:</TextBlock>
-				<TextBox Grid.Row="5" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding MayText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for May"/>
-				<TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>June:</TextBlock>
-				<TextBox Grid.Row="6" Grid.Column="1" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding JuneText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for June"/>
-				<TextBlock Grid.Row="1" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>July:</TextBlock>
-				<TextBox Grid.Row="1" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding JulyText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for July"/>
-				<TextBlock Grid.Row="2" Grid.Column="3" Margin="3" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>August:</TextBlock>
-				<TextBox Grid.Row="2" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding AugustText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for August"/>
-				<TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>September:</TextBlock>
-				<TextBox Grid.Row="3" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding SeptemberText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for September"/>
-				<TextBlock Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>October:</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding OctoberText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for October"/>
-				<TextBlock Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>November:</TextBlock>
-				<TextBox Grid.Row="5" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding NovemberText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for November"/>
-				<TextBlock Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						>December:</TextBlock>
-				<TextBox Grid.Row="6" Grid.Column="4" Margin="5,5,20,5" MaxWidth="150" MaxLength="3"
-						Text="{Binding DecemberText, Mode=TwoWay}"
-				        PreviewTextInput="CheckLength"
-						ToolTip="Text for December"/>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="BandsFrequencies" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<TextBlock Grid.Row="0" Grid.ColumnSpan="8" Margin="5,2,5,1" HorizontalAlignment="Center"
-						Foreground="Blue"
-						>Value to display in Frequency column in QSOs Box when a band is specified for a QSO,
-				</TextBlock>
-				<TextBlock Grid.Row="1" Grid.ColumnSpan="8" Margin="5,2,5,1" HorizontalAlignment="Center"
-						Foreground="Blue"
-						>but no frequency is specified. Values must be in MHz and within band limits.</TextBlock>
-				<TextBlock Grid.Row="2" Grid.ColumnSpan="8" Margin="5,2,5,5" HorizontalAlignment="Center"
-						Foreground="Blue"
-						>Use '.' or ',' as decimal separator.</TextBlock>
-				<TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">2190m:</TextBlock>
-				<TextBox Grid.Row="3" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F2190m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency2190m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">630m:</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F630m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency630m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">560m:</TextBlock>
-				<TextBox Grid.Row="5" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F560m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency560m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">160m:</TextBlock>
-				<TextBox Grid.Row="6" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F160m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency160m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="7" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">80m:</TextBlock>
-				<TextBox Grid.Row="7" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F80m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency80m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="8" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">60m:</TextBlock>
-				<TextBox Grid.Row="8" Grid.Column="1" Margin="5" MaxWidth="70" MaxLength="8"
-						Name="F60m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency60m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="9" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">40m:</TextBlock>
-				<TextBox Grid.Row="9" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F40m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency40m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="10" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">30m:</TextBlock>
-				<TextBox Grid.Row="10" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F30m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency30m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="11" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">20m:</TextBlock>
-				<TextBox Grid.Row="11" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F20m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency20m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="12" Grid.Column="0" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">17m:</TextBlock>
-				<TextBox Grid.Row="12" Grid.Column="1" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F17m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency17m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">15m:</TextBlock>
-				<TextBox Grid.Row="3" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F15m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency15m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">12m:</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F12m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency12m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">10m:</TextBlock>
-				<TextBox Grid.Row="5" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F10m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency10m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">6m:</TextBlock>
-				<TextBox Grid.Row="6" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F6m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency6m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="7" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">4m:</TextBlock>
-				<TextBox Grid.Row="7" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F4m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency4m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="8" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">2m:</TextBlock>
-				<TextBox Grid.Row="8" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F2m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency2m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="9" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">1.25m:</TextBlock>
-				<TextBox Grid.Row="9" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F1p25m" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency1p25m" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="10" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">70cm:</TextBlock>
-				<TextBox Grid.Row="10" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F70cm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency70cm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="11" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">33cm:</TextBlock>
-				<TextBox Grid.Row="11" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F33cm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency33cm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="12" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">23cm:</TextBlock>
-				<TextBox Grid.Row="12" Grid.Column="4" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F23cm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency23cm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="3" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">13cm:</TextBlock>
-				<TextBox Grid.Row="3" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F13cm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency13cm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="4" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">9cm:</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F9cm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency9cm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="5" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">6cm:</TextBlock>
-				<TextBox Grid.Row="5" Grid.Column="7" Margin="5" MaxWidth="70" MaxLength="8"
-						Name="F6cm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency6cm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="6" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">3cm:</TextBlock>
-				<TextBox Grid.Row="6" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F3cm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency3cm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="7" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">1.25cm:</TextBlock>
-				<TextBox Grid.Row="7" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F1p25cm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency1p25cm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="8" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">6mm:</TextBlock>
-				<TextBox Grid.Row="8" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F6mm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency6mm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="9" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">4mm:</TextBlock>
-				<TextBox Grid.Row="9" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F4mm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency4mm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="10" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">2.5mm:</TextBlock>
-				<TextBox Grid.Row="10" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F2p5mm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency2p5mm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="11" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">2mm:</TextBlock>
-				<TextBox Grid.Row="11" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F2mm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency2mm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-				<TextBlock Grid.Row="12" Grid.Column="6" Margin="5" VerticalAlignment="Center"
-						HorizontalAlignment="Right">1mm:</TextBlock>
-				<TextBox Grid.Row="12" Grid.Column="7" Margin="5" MinWidth="70" MaxLength="8"
-						Name="F1mm" PreviewTextInput="BandFrequency_PreviewTextInput">
-					<TextBox.Text>
-						<Binding Path="Frequency1mm" NotifyOnValidationError="True"
-						UpdateSourceTrigger="PropertyChanged">
-							<Binding.ValidationRules>
-								<DataErrorValidationRule/>
-							</Binding.ValidationRules>
-						</Binding>
-					</TextBox.Text>
-				</TextBox>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="PrintOptions" Path="IsSelected"
-					         Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<local:PrintPropertiesPanel x:Name="printPropertiesPanel"/>
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.Visibility>
-					<Binding ElementName="DebugOptions" Path="IsSelected"
-							 Converter="{StaticResource BooleanToVisibilityConverter}"/>
-				</Grid.Visibility>
-				<CheckBox Grid.Column="0" Grid.Row="0" Margin="5"
-						  Content="Debug Logging"
-						  IsChecked="{Binding Path=DebugLogging, Mode=TwoWay}">
-					<CheckBox.ToolTip>
-						<TextBlock>
-							Turn on Logging debugging.<LineBreak/>
-							Warning: May write a lot of output to the log file.
-						</TextBlock>
-					</CheckBox.ToolTip>
-				</CheckBox>
-				<CheckBox Grid.Column="0" Grid.Row="1" Margin="5" 
-						  Content="Debug Printing" 
-						  IsChecked="{Binding Path=DebugPrinting, Mode=TwoWay}">
-					<CheckBox.ToolTip>
-						<TextBlock>
-							Turn on print debugging.<LineBreak/>
-							Warning: This may write a lot of output to the<LineBreak/>
-							log file and slow down program execution,<LineBreak/>
-							especially when printing.
-						</TextBlock>
-					</CheckBox.ToolTip>
-				</CheckBox>
-			</Grid>
-		</StackPanel>
+		</ScrollViewer>
 		<Separator Grid.Row="1" Grid.ColumnSpan="2"/>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="2">
 			<Button Name="applyButton" Margin="2, 10, 10, 10" MinWidth="75" MaxHeight="25"

@@ -2,7 +2,7 @@
    Author:
         Jim Orcheson <jimorcheson@gmail.com>
   
-   Copyright (c) 2013 Jim Orcheson
+   Copyright (c) 2013 - 2014 Jim Orcheson
   
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -161,7 +161,7 @@
 					</RadioButton>
 					<RadioButton Margin="5" x:Name="printOrderVerticalButton"
 								 GroupName="printOrderGroup" Height="85" Width="115"
-								 IsChecked="{Binding Path=PrintCardsVertical}"
+								 IsChecked="{Binding Path=PrintCardsVertical, Mode=TwoWay}"
 								 HorizontalAlignment="Left">
 						<RadioButton.ToolTip>
 							<TextBlock>

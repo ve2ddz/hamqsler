@@ -165,6 +165,7 @@
       <DependentUpon>CustomPaperSizesDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataItem.cs" />
     <Compile Include="DateField.cs" />
     <Compile Include="DateTimeComparer.cs" />
     <Compile Include="DelimitedList.cs" />
@@ -430,7 +431,7 @@
     <EmbeddedResource Include="CallsBureaus.xml" />
     <None Include="Samples\sample2.adi" />
     <None Include="app.config" />
-   </ItemGroup>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CardPanel.resx">
       <DependentUpon>CardPanel.cs</DependentUpon>

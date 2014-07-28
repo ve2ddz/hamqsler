@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2013 Jim Orcheson
+ *  Copyright (c) 2013, 2014 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ namespace hamqslerTest
 	{
 		// TestFixtureSetup
 		[TestFixtureSetUp]
-		public void TestSepup()
+		public void TestSetup()
 		{
 			App.AdifEnums.LoadDocument();
 		}
@@ -457,6 +457,17 @@ namespace hamqslerTest
 		{
 			string mode = App.AdifEnums.GetModeFromSubmode("PSB");
 			Assert.AreEqual(string.Empty, mode);
+		}
+		
+		// test GetDefaultReportType for valid modes
+		[Test, Sequential]
+		public void TestGetDefaultReportTypeValidMode([Values("AM", "CW", "PSK", "JT65")] string mode,
+		                                              [Values("RS", "RST", "RSQ", "dB")] string rpt)
+		{
+			string repType;
+			bool found = App.AdifEnums.GetDefaultReportType(mode, out repType);
+			Assert.IsTrue(found);
+			Assert.AreEqual(rpt, repType);
 		}
 		
 	}

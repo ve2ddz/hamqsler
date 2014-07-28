@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012, 2013 Jim Orcheson
+ *  Copyright (c) 2012 - 2014 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace hamqsler
@@ -40,6 +42,8 @@ namespace hamqsler
 		
 		private static int NOSELECTION = -1;
 		private int qsoColumnSelected = NOSELECTION;
+		
+		private static int NUMMODEREPORTCOLUMNS = 3;
 
 		private static readonly DependencyProperty UserPrefsProperty =
 			DependencyProperty.Register("UserPrefs", typeof(UserPreferences),
@@ -50,6 +54,11 @@ namespace hamqsler
 			get {return GetValue(UserPrefsProperty) as UserPreferences;}
 			set {SetValue(UserPrefsProperty, value);}
 		}
+		
+		private static readonly DependencyProperty ShowTypeByModeProperty =
+			DependencyProperty.Register("ShowTypeByMode", typeof(bool),
+			                            typeof(UserPreferencesDialog),
+			                            new PropertyMetadata(false));
 		
 		public UserPreferencesDialog()
 		{
@@ -104,7 +113,8 @@ namespace hamqsler
 				DefaultTextItemsFontFaceComboBox.Items.Add(family.Name);
 				DefaultQsosBoxFontFaceComboBox.Items.Add(family.Name);
 			}
-
+			BuildReportTypeByModeGrid();
+			SetSameReportTypeHeaderRadioButtons();
 		}
 		
 		/// <summary>
@@ -158,7 +168,11 @@ namespace hamqsler
 		private void OkAndApplyButtonCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			UserPrefs.SerializeAsXml();
-			((App)Application.Current).UserPreferences = UserPrefs;
+//			((App)Application.Current).UserPreferences = new UserPreferences(UserPrefs);
+			bool prefsInit;
+			bool prefsError;
+			((App)Application.Current).UserPreferences = UserPreferences.CreateUserPreferences(
+				false, out prefsInit, out prefsError);
 			e.Handled = true;
 			Button button = e.OriginalSource as Button;
 			if(button != null && button.Name == "okButton")
@@ -408,16 +422,15 @@ namespace hamqsler
 			if(e.Property == UserPrefsProperty)
 			{
 				// pass the print properties on to printPropertiesPanel
-				UserPreferences prefs = new UserPreferences(UserPrefs);
-				printPropertiesPanel.PrinterName = prefs.DefaultPrinterName;
-				printPropertiesPanel.PrinterPaperSize = prefs.DefaultPaperSize;
-				printPropertiesPanel.Resolution = prefs.DefaultPrinterResolution;
-				printPropertiesPanel.Source = prefs.DefaultPaperSource;
-				printPropertiesPanel.InsideMargins = prefs.InsideMargins;
-				printPropertiesPanel.PrintCardOutlines = prefs.PrintCardOutlines;
-				printPropertiesPanel.FillLastPage = prefs.FillLastPage;
-				printPropertiesPanel.SetCardMargins = prefs.SetCardMargins;
-				printPropertiesPanel.PrintCardsVertical = prefs.PrintCardsVertical;
+				printPropertiesPanel.PrinterName = UserPrefs.DefaultPrinterName;
+				printPropertiesPanel.PrinterPaperSize = UserPrefs.DefaultPaperSize;
+				printPropertiesPanel.Resolution = UserPrefs.DefaultPrinterResolution;
+				printPropertiesPanel.Source = UserPrefs.DefaultPaperSource;
+				printPropertiesPanel.InsideMargins = UserPrefs.InsideMargins;
+				printPropertiesPanel.PrintCardOutlines = UserPrefs.PrintCardOutlines;
+				printPropertiesPanel.FillLastPage = UserPrefs.FillLastPage;
+				printPropertiesPanel.SetCardMargins = UserPrefs.SetCardMargins;
+				printPropertiesPanel.PrintCardsVertical = UserPrefs.PrintCardsVertical;
 			}
 		}
 		
@@ -515,6 +528,124 @@ namespace hamqsler
 		{
 			// set the selected column to the one that was clicked
 			qsoColumnSelected = qsoColumnsOrderListBox.Items.IndexOf(sender);
+		}
+		
+		/// <summary>
+		/// Helper method that builds report type by mode panel contents
+		/// </summary>
+		private void BuildReportTypeByModeGrid()
+		{
+			List<DataItem> modeItems = UserPrefs.ReportByMode;
+			int itemsPerColumn = (modeItems.Count + NUMMODEREPORTCOLUMNS - 1) / NUMMODEREPORTCOLUMNS;
+			CreateRowDefinitionsForReportTypeByModeGrid(itemsPerColumn);
+			int item = 0;
+			while(item < modeItems.Count)
+			{
+				CreateColumnItem(modeItems[item], item, itemsPerColumn);
+				item++;
+			}
+		}
+		
+		/// <summary>
+		/// Helper method that creates the row definitions within the report type
+		/// by mode panel
+		/// </summary>
+		/// <param name="rows">number of rows to create RowDefinitions for</param>
+		private void CreateRowDefinitionsForReportTypeByModeGrid(int rows)
+		{
+			for(int row = 0; row < rows; row++)
+			{
+				RowDefinition rowDef = new RowDefinition();
+				reportTypeByModeGrid.RowDefinitions.Add(rowDef);
+			}
+		}
+		
+		/// <summary>
+		/// Helper method that creates a single mode item and its radio buttons in
+		/// the report type by mode panel
+		/// </summary>
+		/// <param name="modeItem">DataItem containing the mode</param>
+		/// <param name="itemNumber">The number of the mode item within the panel</param>
+		/// <param name="itemsPerColumn">Number of items contained in each column in
+		/// the panel</param>
+		private void CreateColumnItem(DataItem modeItem, int itemNumber, int itemsPerColumn)
+		{
+			TextBlock mode = new TextBlock();
+			mode.Text = modeItem.Key;
+			mode.Margin = new Thickness(2);
+			mode.VerticalAlignment = VerticalAlignment.Center;
+			int column = (itemNumber / itemsPerColumn) * 6;
+			int row = (itemNumber % itemsPerColumn) + 1;
+			Grid.SetRow(mode, row);
+			Grid.SetColumn(mode, column);
+			reportTypeByModeGrid.Children.Add(mode);
+			CreateAndAddRadioButton(modeItem, "RS", column + 1, row);
+			CreateAndAddRadioButton(modeItem, "RST", column + 2, row);
+			CreateAndAddRadioButton(modeItem, "RSQ", column + 3, row);
+			CreateAndAddRadioButton(modeItem, "dB", column + 4, row);
+		}
+		
+		/// <summary>
+		/// Helper method that adds a radio button for the mode in the report type
+		/// by mode panel.
+		/// </summary>
+		/// <param name="item">DataItem containing the mode</param>
+		/// <param name="modeType">Indicator of the radio button to check</param>
+		/// <param name="column">Column number to place the radio button in</param>
+		/// <param name="row">Row number to place the radio button in</param>
+		private void CreateAndAddRadioButton(DataItem item, string modeType, int column, int row)
+		{
+			RadioButton rb = new RadioButton();
+			rb.Tag = modeType;
+			rb.GroupName = item.Key;
+			rb.Margin = new Thickness(2);
+			rb.VerticalAlignment = VerticalAlignment.Center;
+			rb.HorizontalAlignment = HorizontalAlignment.Center;
+			Grid.SetRow(rb, row);
+			Grid.SetColumn(rb, column);
+			rb.IsChecked = item.Value.Equals(modeType);
+			rb.Checked += ModeRadioButton_Checked;	// place after rb.IsChecked set so that Checked
+													// not called when first creating the table
+			reportTypeByModeGrid.Children.Add(rb);
+		}
+		
+		/// <summary>
+		/// Helper method that sets AllModesRadioButton and ByModeRadioButton IsChecked
+		/// property based on setting of ReportTypeByMode value in UserPreferences.
+		/// This method should be called only from the UserPreferencesDialog constructor.
+		/// </summary>
+		private void SetSameReportTypeHeaderRadioButtons()
+		{
+			AllModesRadioButton.IsChecked = !UserPrefs.ReportTypeByMode;
+			ByModeRadioButton.IsChecked = UserPrefs.ReportTypeByMode;
+		}
+		
+		/// <summary>
+		/// Sets UserPreferences.ReportTypeByMode whenever there is a change to ByModeRadioButton
+		/// </summary>
+		/// <param name="sender">not used</param>
+		/// <param name="e">not used</param>
+		void ByModeRadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			UserPrefs.ReportTypeByMode = (bool)ByModeRadioButton.IsChecked;
+		}
+		
+		/// <summary>
+		/// Handler for Checked event for any report by mode change.
+		/// </summary>
+		/// <param name="sender">RadioButton object that was checked</param>
+		/// <param name="e">not used</param>
+		private void ModeRadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			RadioButton button = sender as RadioButton;
+			foreach(DataItem item in UserPrefs.ReportByMode)
+			{
+				if(item.Key.Equals(button.GroupName))
+				{
+					item.Value = button.Tag as string;
+					break;
+				}
+			}
 		}
 	}
 }

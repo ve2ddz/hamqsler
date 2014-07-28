@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2013 Jim Orcheson
+ *  Copyright (c) 2013, 2014 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -437,6 +437,28 @@ namespace hamqsler
 				return true;
 			else
 				return false;
+		}
+		
+		/// <summary>
+		/// Retrieve the report type for specified mode.
+		/// </summary>
+		/// <param name="mode">The mode to retrieve the report type for</param>
+		/// <param name="reportType">Report type: one of RS, RST, RSQ, dB</param>
+		/// <returns>true if mode is valid, false otherwise.</returns>
+		public bool GetDefaultReportType(string mode, out string reportType)
+		{
+			reportType = string.Empty;
+			XElement elt = GetEnumValue("Mode", mode);
+			if(elt != null)
+			{
+				XAttribute type = elt.Attribute("DefaultReportType");
+				if(type != null)
+				{
+					reportType = type.Value;			
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

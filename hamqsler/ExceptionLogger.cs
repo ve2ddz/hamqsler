@@ -2,7 +2,7 @@
  *  Author:
  *       Jim Orcheson <jimorcheson@gmail.com>
  * 
- *  Copyright (c) 2012, 2013 Jim Orcheson
+ *  Copyright (c) 2012 - 2014 Jim Orcheson
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,7 +48,16 @@ namespace hamqsler
         
         public bool DebugLogging
         {
-        	get {return ((App)Application.Current).UserPreferences.DebugLogging;}
+        	get {
+	        		if(((App)Application.Current).UserPreferences == null)
+	        		{
+	        			return true;
+	        		}
+	        		else
+	        		{
+	        			return ((App)Application.Current).UserPreferences.DebugLogging;
+	        		}
+        		}
         }
 
         /// <summary>
